@@ -7,11 +7,10 @@ import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
 import { CiSquarePlus } from 'react-icons/ci';
 import Footer from '@/components/footer/footer';
-// import { getBlogData } from '@/utils/getBlogData';
+import { getBlogData } from '@/utils/getBlogData';
 import GetStarted from '@/components/getStarted/getStarted';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import getBlogsData from '@/utils/getBlogData';
 export const runtime = 'experimental-edge';
 
 const useDebounce = (value, delay) => {
@@ -150,13 +149,13 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 <h1 className="h1 text-nowrap">I use</h1>
 
                                 <div className="ml-2 flex items-center gap-3">
-                                    {selectedApps.map((app) => (
-                                        <div key={app.appslugname} className="flex items-center">
-                                            {selectedApps.length === 1 ? (
+                                    {selectedApps?.map((app) => (
+                                        <div key={app?.appslugname} className="flex items-center">
+                                            {selectedApps?.length === 1 ? (
                                                 <span className="h1 text-red-500 ml-2">{app.name}</span>
                                             ) : (
                                                 <Image
-                                                    src={app.iconurl || 'https://placehold.co/36x36'}
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
                                                     width={36}
                                                     height={36}
                                                     alt={app.name}
@@ -167,7 +166,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                     ))}
                                 </div>
 
-                                {selectedApps.length === 0 || showAppDropdown ? (
+                                {selectedApps?.length === 0 || showAppDropdown ? (
                                     <div className="relative overflow-visible" ref={dropdownRef}>
                                         <input
                                             type="text"
@@ -180,7 +179,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                         />
                                         {showAppDropdown && (
                                             <ul className="absolute mt-2 bg-base-100 shadow-xl z-10 max-h-[290px] w-[300px] overflow-scroll p-0 border border-gray-300 rounded-lg">
-                                                {selectedApps.map((app) => (
+                                                {selectedApps?.map((app) => (
                                                     <DropdownItem
                                                         key={app.appslugname}
                                                         app={app}
@@ -191,11 +190,11 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                                 {searchData
                                                     ?.filter(
                                                         (app) =>
-                                                            !selectedApps.some(
+                                                            !selectedApps?.some(
                                                                 (selected) => selected.appslugname === app.appslugname
                                                             )
                                                     )
-                                                    .map((app, index) => (
+                                                    ?.map((app, index) => (
                                                         <DropdownItem
                                                             key={index}
                                                             app={app}
@@ -280,7 +279,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 <div className="flex flex-col h-full">
                                     {combinationLoading ? (
                                         <>
-                                            {[...Array(9)].map((_, i) => (
+                                            {[...Array(9)]?.map((_, i) => (
                                                 <div
                                                     key={i}
                                                     className="flex justify-center items-center w-full h-[86px] p-4 skeleton bg-slate-100 border-b flex-shrink-0"
@@ -291,7 +290,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                         renderCombos?.combinations?.map((combo, index) => {
                                             const triggerName = renderCombos?.plugins[
                                                 combo?.trigger?.name
-                                            ]?.events?.find((event) => event?.rowid === combo.trigger?.id)?.name;
+                                            ]?.events?.find((event) => event?.rowid === combo?.trigger?.id)?.name;
                                             const actionName = renderCombos?.plugins[
                                                 combo?.actions[0]?.name
                                             ]?.events?.find((event) => event?.rowid === combo?.actions[0]?.id)?.name;
@@ -313,8 +312,8 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                                     key={index}
                                                     target="blank"
                                                     href={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
-                                                        .map((action) => action.id)
-                                                        .join(
+                                                        ?.map((action) => action.id)
+                                                        ?.join(
                                                             ','
                                                         )}&integrations=${integrations}&action&utm_source=${utm}`}
                                                     className="px-4 py-6 flex items-center gap-4 border-b hover:bg-white flex-shrink-0"
@@ -389,7 +388,7 @@ export async function getServerSideProps() {
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/autmation_solutions'`);
     const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
     const blogTags = 'automation';
-    const blogData = await getBlogsData(blogTags);
+    const blogData = await getBlogData(blogTags);
     return {
         props: {
             navData: navData,
