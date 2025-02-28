@@ -8,7 +8,7 @@ import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
@@ -28,6 +28,24 @@ export default function IntegrationsAppOneComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const utm = pageInfo?.url;
+    const [utmSource, setUtmSource] = useState('');
+    useEffect(() => {
+        const storedUtm = sessionStorage.getItem('utmData');
+
+        if (storedUtm) {
+            try {
+                const parsedUtm = JSON.parse(storedUtm);
+
+                if (parsedUtm && typeof parsedUtm === 'object') {
+                    const queryString = new URLSearchParams(parsedUtm).toString();
+                    setUtmSource(queryString);
+                }
+            } catch (error) {
+                console.error('Error parsing UTM data:', error);
+            }
+        }
+    }, []);
+
     return (
         <>
             <IntegrationsHeadComp
@@ -54,7 +72,7 @@ export default function IntegrationsAppOneComp({
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
-                            <Link target="_blank" href={`/login?utm_source=${utm}`}>
+                            <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`}>
                                 <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>

@@ -2,8 +2,10 @@ import { MdMenu, MdLogin, MdPersonAdd } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
+import { useEffect, useState } from 'react';
 
 export default function Navbar({ navData, utm }) {
+    const [utmSource, setUtmSource] = useState('');
     let shorterData;
     if (navData?.length > 0) {
         shorterData = navData?.sort((a, b) => {
@@ -41,6 +43,23 @@ export default function Navbar({ navData, utm }) {
     } else {
         backgroundClass = textClass + ' hover:bg-black hover:text-white ';
     }
+
+    useEffect(() => {
+        const storedUtm = sessionStorage.getItem('utmData');
+
+        if (storedUtm) {
+            try {
+                const parsedUtm = JSON.parse(storedUtm);
+
+                if (parsedUtm && typeof parsedUtm === 'object') {
+                    const queryString = new URLSearchParams(parsedUtm).toString();
+                    setUtmSource(queryString);
+                }
+            } catch (error) {
+                console.error('Error parsing UTM data:', error);
+            }
+        }
+    }, []);
 
     return (
         <>
@@ -89,7 +108,7 @@ export default function Navbar({ navData, utm }) {
                         })}
                     <Link
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10]`}
-                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}?utm_source=${utm}`}
+                        href={`https://flow.viasocket.com?${utmSource}`}
                     >
                         Login
                     </Link>
@@ -151,7 +170,7 @@ export default function Navbar({ navData, utm }) {
                 <div className=" flex">
                     <Link
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
-                        href={`https://flow.viasocket.com?utm_source=${utm}`}
+                        href={`https://flow.viasocket.com?${utmSource}`}
                         aria-label="Login"
                     >
                         <MdLogin size={24} />
