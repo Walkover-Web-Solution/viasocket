@@ -105,7 +105,7 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
                         {howItWorksData.map((step, index) => (
                             <div
                                 key={index}
-                                className="lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <h3 className="h2 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
@@ -127,22 +127,6 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
                     </Link>
                 </div>
 
-                {/* <div className="container cont cont__py flex flex-col lg:flex-row  justify-center items-center">
-                    <div className="h-full w-full lg:w-1/2 flex flex-col justify-center gap-4">
-                        <div>
-                            <h2 className="h1 font-semibold">Give Your Chatbot the Power of 5,000+ Integrations</h2>
-                            <p className="text-2xl">
-                                You can connect your chatbot to over 5000 apps on viaSocket. Automate tasks, streamline
-                                workflows and enhance your chatbot's capabilities—all in just a few clicks. Explore the
-                                possibilities and watch your chatbot evolve.
-                            </p>
-                        </div>
-                        <Link href=" https://viasocket.com/blog/give-your-chatbot-the-power-of-5000-integrations/">
-                            <button className="btn btn-accent">Read More</button>
-                        </Link>
-                    </div>
-                    <div className="flex justify-center items-center mt-8 lg:mt-0 relative w-full md:w-2/5 h-2/3 min-h-[400px] mx-auto bg-gray-300"></div>
-                </div> */}
                 <div className="container h-dvh min-h-fit">
                     <div className="flex flex-col lg:flex-row h-full gap-12">
                         <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 ">
@@ -164,6 +148,27 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
                     </div>
                 </div>
 
+                <div className="container cont cont__py border border-black justify-center items-center text-center gap-8">
+                    <div className="flex flex-col gap-8">
+                        <h2 className="h1">Embed Pricing</h2>
+                        <p className="h2">Start from : $500/month + $0.0005/invocation</p>
+                    </div>
+                    <div>
+                        <h3 className="text-2xl md:text-3xl text-nowrap font-medium text-accent">Pay as You Grow!</h3>
+                        <p className="sub__h1 max-w-[700px]">
+                            Starts after 2 year or once your customer count exceeds 1,000, whichever comes later
+                        </p>
+                    </div>
+                    <div className="flex flex-col sm:flex-row gap-8">
+                        <Link href="/signup">
+                            <button className="btn btn-accent text-nowrap">START GROWING NOW</button>
+                        </Link>
+                        <Link href="/support">
+                            <button className="btn btn-outline text-nowrap">Contact Sales</button>
+                        </Link>
+                    </div>
+                </div>
+
                 <div className="container cont cont__py  bg-black text-white  justify-center items-center text-center gap-12">
                     <div className="flex flex-col justify-center items-center">
                         <h2 className="h1  max-w-[1200px]">Start Showing Automation Use Cases on Your Platform</h2>
@@ -173,7 +178,9 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
                         </p>
                     </div>
                     <Link href="https://viasocket.com/faq/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script">
-                        <button className="btn btn-accent">Get your free embed code</button>
+                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
+                            Get your free embed code
+                        </button>
                     </Link>
                 </div>
 
