@@ -4,7 +4,7 @@ import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
 import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, GETSTARTED_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
-import getBlogsData from '@/utils/getBlogData';
+import { getBlogData } from '@/utils/getBlogData';
 import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getNavData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
@@ -249,7 +249,7 @@ export async function getServerSideProps() {
     const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
     const embedData = await getEmbedData(EMBED_FIELDS);
     const blogTags = 'embed';
-    const blogData = await getBlogsData(blogTags);
+    const blogData = await getBlogData(blogTags);
     const tableData = [
         { Feature: 'Time to Implement', embed: 'Minutes', development: 'Weeks/Months' },
         { Feature: 'Developer Resources', embed: 'No Requirements', development: 'Required Development Team' },

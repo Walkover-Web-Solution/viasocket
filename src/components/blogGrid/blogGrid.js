@@ -30,7 +30,7 @@ const BlogGrid = ({ posts }) => {
 const CardComponent = ({ card }) => {
     return (
         <Link
-            href={`/blog/${card?.slug}`}
+            href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
             className="block_border card rounded-none LinkButtonCard"
