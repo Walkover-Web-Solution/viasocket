@@ -191,7 +191,12 @@ export default function IntegrationsAppOneComp({
                         </div>
                         <MdAdd fontSize={36} />
                     </div>
-                    <IntegrationsAppComp pageInfo={pageInfo} integrationsInfo={integrationsInfo} apps={apps} />
+                    <IntegrationsAppComp
+                        pageInfo={pageInfo}
+                        integrationsInfo={integrationsInfo}
+                        apps={apps}
+                        appCategories={appOneDetails?.category}
+                    />
                 </div>
             )}
 

@@ -7,7 +7,7 @@ import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
 import searchApps from '@/utils/searchApps';
 import createURL from '@/utils/createURL';
-export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps }) {
+export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -22,16 +22,35 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps }
             clearTimeout(handler);
         };
     }, [searchTerm]);
+
     useEffect(() => {
         if (debounceValue) {
             const filteredCategories = categories?.categories?.filter((category) =>
-                category.toLowerCase().includes(debounceValue.toLowerCase())
+                category?.toLowerCase()?.includes(debounceValue?.toLowerCase())
             );
             setSearchedCategoies(filteredCategories);
+
             const loadApps = async () => {
                 const fetchedApps = await searchApps(debounceValue);
-                setSearchedApps(fetchedApps || []);
+
+                if (fetchedApps) {
+                    const sortedApps = fetchedApps.sort((a, b) => {
+                        const aNameMatch = a?.name?.toLowerCase()?.includes(debounceValue.toLowerCase());
+                        const bNameMatch = b?.name?.toLowerCase()?.includes(debounceValue.toLowerCase());
+
+                        if (bNameMatch - aNameMatch !== 0) {
+                            return bNameMatch - aNameMatch;
+                        }
+
+                        return a?.name?.localeCompare(b?.name);
+                    });
+
+                    setSearchedApps(sortedApps);
+                } else {
+                    setSearchedApps([]);
+                }
             };
+
             loadApps();
         } else {
             setSearchedApps([]);
@@ -86,7 +105,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps }
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (
                                     searchedCategoies ? (
-                                        searchedCategoies.map((category, index) => {
+                                        searchedCategoies?.map((category, index) => {
                                             return (
                                                 <Link
                                                     key={index}
@@ -145,64 +164,64 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps }
                         <div className={style.appsgrid}>
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
-                                    searchedApps?.map((app, index) => {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={createURL(
-                                                    `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
-                                                )}
-                                                className={style.app}
-                                            >
-                                                <div className="flex items-center gap-2">
-                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                        <Image
-                                                            src={app?.iconurl}
-                                                            width={36}
-                                                            height={36}
-                                                            alt={app?.name}
-                                                            className="h-5 w-fit"
-                                                        />
-                                                    </div>
-                                                    <h2 className="font-bold">{app?.name}</h2>
+                                    searchedApps?.map((app, index) => (
+                                        <Link
+                                            key={index}
+                                            href={createURL(
+                                                `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
+                                            )}
+                                            className={style.app}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <Image
+                                                        src={app?.iconurl}
+                                                        width={36}
+                                                        height={36}
+                                                        alt={app?.name}
+                                                        className="h-5 w-fit"
+                                                    />
                                                 </div>
-                                                <p className={style?.app__des}>{app?.description}</p>
-                                            </Link>
-                                        );
-                                    })
+                                                <h2 className="font-bold">{app?.name}</h2>
+                                            </div>
+                                            <p className={style?.app__des}>{app?.description}</p>
+                                        </Link>
+                                    ))
                                 ) : (
                                     <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
                                         No Apps found for Searched name{' '}
                                     </span>
                                 )
                             ) : (
-                                apps?.map((app, index) => {
-                                    if (app?.appslugname != integrationsInfo?.appone) {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={createURL(
-                                                    `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
-                                                )}
-                                                className={style.app}
-                                            >
-                                                <div className="flex items-center gap-2">
-                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                        <Image
-                                                            src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                            width={36}
-                                                            height={36}
-                                                            alt={app?.name}
-                                                            className="h-5 w-fit"
-                                                        />
+                                apps
+                                    ?.filter((app) => !app?.category?.some((cat) => appCategories?.includes(cat)))
+                                    ?.map((app, index) => {
+                                        if (app?.appslugname != integrationsInfo?.appone) {
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={createURL(
+                                                        `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
+                                                    )}
+                                                    className={style.app}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                            <Image
+                                                                src={app?.iconurl || 'https://placehold.co/40x40'}
+                                                                width={36}
+                                                                height={36}
+                                                                alt={app?.name}
+                                                                className="h-5 w-fit"
+                                                            />
+                                                        </div>
+                                                        <h2 className="font-bold">{app?.name}</h2>
                                                     </div>
-                                                    <h2 className="font-bold">{app?.name}</h2>
-                                                </div>
-                                                <p className={style?.app__des}>{app?.description}</p>
-                                            </Link>
-                                        );
-                                    }
-                                })
+                                                    <p className={style?.app__des}>{app?.description}</p>
+                                                </Link>
+                                            );
+                                        }
+                                    })
                             )}
                         </div>
                     </div>
