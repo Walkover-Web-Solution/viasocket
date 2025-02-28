@@ -31,9 +31,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {
-                console.log('success response', data);
-            },
+            success: (data) => {},
             failure: (error) => {
                 console.log('failure reason', error);
             },
@@ -44,9 +42,8 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
                 redirect_path: redirect_to,
             };
         }
-        configuration.state = JSON.stringify({
-            utm_source: utm_source,
-        });
+        const utm_source = sessionStorage.getItem('utmData');
+        configuration.state = { utm_source: utm_source };
 
         if (typeof window.initVerification === 'function') {
             window.initVerification(configuration);

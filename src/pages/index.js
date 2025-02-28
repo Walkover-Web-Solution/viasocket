@@ -33,11 +33,13 @@ import {
     TESTIMONIALS_FIELDS,
 } from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
-import getBlogData from '@/utils/getBlogData';
+import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
+import getBlogsData from '@/utils/getBlogData';
 
 export const runtime = 'experimental-edge';
+
 
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -176,7 +178,6 @@ const Index = ({
     };
 
     const handleGenerate = async () => {
-        console.log('object');
         setCombinationLoading(true);
         const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
         try {
@@ -225,7 +226,6 @@ const Index = ({
     };
 
     const utm = '/index';
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
@@ -477,7 +477,6 @@ const Index = ({
                                           renderCombos?.plugins[combo?.trigger?.name]?.rowid +
                                           ',' +
                                           renderCombos?.plugins[combo?.actions[0]?.name]?.rowid;
-                                          console.log("🚀 ~ ?renderCombos?.combinations?.map ~ triggerName:", triggerName)
                                       return (
                                           <CombinationCardComp
                                               trigger={{
@@ -497,7 +496,6 @@ const Index = ({
                                           />
                                       );
                                   })
-                                   
                                 : combinationLoading &&
                                   Array.from({ length: 12 }).map((_, index) => (
                                       <div

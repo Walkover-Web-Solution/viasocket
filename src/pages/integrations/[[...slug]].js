@@ -26,8 +26,7 @@ import {
     METADATA_FIELDS,
     NAVIGATION_FIELDS,
 } from '@/const/fields';
-import getBlogData  from '@/utils/getBlogData';
-
+import { getBlogData } from '@/utils/getBlogData';
 export const runtime = 'experimental-edge';
 
 export default function Integrations({
@@ -47,7 +46,6 @@ export default function Integrations({
     disconnecteData,
     blogData,
 }) {
-    
     if (noData) {
         return (
             <>
@@ -82,16 +80,16 @@ export default function Integrations({
         const isDisconnected = pageInfo?.qurey?.status === 'disconnected';
         if (isDisconnected) {
             return (
-                    <IntegrationsDisconnectedComp
-                        pageInfo={pageInfo}
-                        integrationsInfo={integrationsInfo}
-                        metadata={metadata}
-                        blogsData={blogData}
-                        appOneDetails={appOneDetails}
-                        faqData={faqData}
-                        footerData={footerData}
-                        disconnecteData={disconnecteData}
-                    />
+                <IntegrationsDisconnectedComp
+                    pageInfo={pageInfo}
+                    integrationsInfo={integrationsInfo}
+                    metadata={metadata}
+                    blogsData={blogData}
+                    appOneDetails={appOneDetails}
+                    faqData={faqData}
+                    footerData={footerData}
+                    disconnecteData={disconnecteData}
+                />
             );
         } else {
             return (
@@ -138,7 +136,7 @@ export async function getServerSideProps(context) {
         const combosData = await getCombos(integrationsInfo);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
-        const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`
+        const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
         const blogData = await getBlogData(blogTags);
         if (appOneDetails && appTwoDetails) {
             return {
@@ -183,7 +181,7 @@ export async function getServerSideProps(context) {
             `filter=slugname='${integrationsInfo?.appone}' `
         );
         if (appOneDetails) {
-            const blogTags = appOneDetails.appslugname
+            const blogTags = appOneDetails.appslugname;
             const blogData = await getBlogData(blogTags);
             return {
                 props: {
@@ -222,7 +220,7 @@ export async function getServerSideProps(context) {
         );
         const apps = await getApps({ page: integrationsInfo?.page, categoryData });
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
-        const blogTags = 'integration'
+        const blogTags = 'integration';
         const blogData = await getBlogData(blogTags);
         return {
             props: {

@@ -5,11 +5,13 @@ import { useEffect, useState } from 'react';
 import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import Head from 'next/head';
+import HandleUtmSource from '@/utils/handleUtmSource';
 export const runtime = 'experimental-edge';
 
 export default function MyApp({ Component, pageProps, pagesData }) {
     const router = useRouter();
     var browserPath = router.asPath;
+
     useEffect(() => {
         const script = document.createElement('script');
         script.type = 'text/javascript';
@@ -22,6 +24,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
             script.removeEventListener('load', handleLoad);
         };
     }, []);
+
     const rawpathArray = browserPath.split(/[?#]/);
     const pathArray = rawpathArray[0].split('/');
     var showNavbar = false;
@@ -73,7 +76,11 @@ export default function MyApp({ Component, pageProps, pagesData }) {
             document.head.removeChild(script);
         };
     }, []);
-    
+
+    useEffect(() => {
+        HandleUtmSource();
+    }, []);
+
     return (
         <>
             <HeadComp />

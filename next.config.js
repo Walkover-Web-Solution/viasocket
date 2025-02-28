@@ -1,7 +1,7 @@
 module.exports = {
-    experimental: {
-        runtime: 'experimental-edge',
-      },
+    // experimental: {
+    //     runtime: 'experimental-edge',
+    //   },
     images: {
         unoptimized: true,
         loader: 'akamai',
