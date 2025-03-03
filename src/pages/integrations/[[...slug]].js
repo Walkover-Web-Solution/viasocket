@@ -76,7 +76,6 @@ export default function Integrations({
                     combosData={combosData}
                     faqData={faqData}
                     footerData={footerData}
-                    useCaseData={useCaseData}
                 />
             </div>
         );
@@ -93,7 +92,6 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     disconnecteData={disconnecteData}
-                    useCaseData={useCaseData}
                 />
             );
         } else {
@@ -145,7 +143,6 @@ export async function getServerSideProps(context) {
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
         const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
         const blogData = await getBlogData(blogTags);
-        const useCaseData = await getUsecasesData(USECASES_FIELDS);
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -161,7 +158,6 @@ export async function getServerSideProps(context) {
                     appTwoDetails: appTwoDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
-                    useCaseData: useCaseData || [],
                 },
             };
         } else {

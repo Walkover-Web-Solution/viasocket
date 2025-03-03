@@ -23,7 +23,6 @@ export default function IntegrationsAppTwoComp({
     appTwoDetails,
     blogsData,
     metaData,
-    useCaseData,
 }) {
     const [utmSource, setUtmSource] = useState('');
     const utm = pageInfo?.url;
@@ -233,14 +232,6 @@ export default function IntegrationsAppTwoComp({
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
-
-            {useCaseData?.length > 0 && (
-                <UseCaseList
-                    useCaseData={useCaseData}
-                    appOneSlug={appOneDetails.appslugname}
-                    appTwoSlug={appTwoDetails.appslugname}
-                />
-            )}
 
             {blogsData?.length > 0 && (
                 <div className="container">
