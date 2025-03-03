@@ -12,6 +12,7 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
+import UseCaseList from '@/components/useCaseList/UseCaseList';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -222,11 +223,6 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 )}
             </div>
-            {/* {usecases?.length > 0 && (
-                <div className="container mx-auto py-24">
-                    <UseCase usecases={usecases} />
-                </div>
-            )} */}
 
             {combosData?.combinations?.length > 0 &&
                 appOneDetails?.events?.length > 0 &&
@@ -236,6 +232,7 @@ export default function IntegrationsAppTwoComp({
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
+
             {blogsData?.length > 0 && (
                 <div className="container">
                     {' '}

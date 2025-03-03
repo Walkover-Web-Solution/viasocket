@@ -14,6 +14,7 @@ import {
     TESTIMONIALS,
     TRUSTEDBY,
     EMBED,
+    USECASES,
 } from '@/const/tables';
 import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
@@ -116,8 +117,6 @@ export async function getTrustedByData(fields, filter) {
     return handleData(data);
 }
 
-
-
 export async function getDisconnectedData(fields, filter) {
     const data = await getDataFromTable(DISCONNECTED, handleFieldsFilter(fields, filter));
     return handleData(data);
@@ -125,5 +124,11 @@ export async function getDisconnectedData(fields, filter) {
 
 export async function getEmbedData(fields, filter) {
     const data = await getDataFromTable(EMBED, handleFieldsFilter(fields, filter));
+    return handleData(data);
+}
+
+export async function getUsecasesData(fields, filter) {
+    const data = await getDataFromTable(USECASES, handleFieldsFilter(fields, filter));
+    console.log(data);
     return handleData(data);
 }

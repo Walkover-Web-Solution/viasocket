@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
+import UseCaseList from '@/components/useCaseList/UseCaseList';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -24,6 +25,7 @@ export default function IntegrationsAppOneComp({
     blogsData,
     metaData,
     integrations,
+    useCaseData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -224,6 +226,11 @@ export default function IntegrationsAppOneComp({
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
+
+            {useCaseData?.length > 0 && (
+                <UseCaseList useCaseData={useCaseData} appOneSlug={appOneDetails.appslugname} />
+            )}
+
             {blogsData?.length > 0 && (
                 <div className="container ">
                     {' '}
