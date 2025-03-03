@@ -36,6 +36,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
     const [renderCombos, setRenderCombos] = useState([]);
     const [selectedIndustry, setSelectedIndustry] = useState('');
     const [useCase, setUseCase] = useState('');
+    const modalRef = useRef();
 
     const utm = '/index';
 
@@ -62,27 +63,30 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
     }, [fetchAppsData, filterSelectedApps]);
 
     const handleGenerate = async () => {
-        setCombinationLoading(true);
-        const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
-        const industry = selectedIndustry || 'Dummy Industry';
-        const domain = selectedDomain || 'Dummy domain';
-        const useCaseData = useCase || 'use case';
-        try {
-            const combos = await fetchCombos(
-                selectedAppSlugs.length > 0 ? selectedAppSlugs : ['gohighlevel', 'slack', 'airtable'],
-                industry,
-                domain,
-                useCaseData
-            );
-            console.log(combos, ' asoifhoiasfoih');
-            setRenderCombos(combos?.data);
-        } catch (error) {
-            console.error('Error fetching combos:', error);
-        } finally {
-            setCombinationLoading(false);
+        if (selectedApps?.length === 1) {
+            modalRef.current?.showModal();
+        } else {
+            setCombinationLoading(true);
+            const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
+            const industry = selectedIndustry;
+            const domain = selectedDomain;
+            const useCaseData = useCase;
+            try {
+                const combos = await fetchCombos(
+                    selectedAppSlugs.length > 0 ? selectedAppSlugs : ['gohighlevel', 'slack', 'airtable'],
+                    industry,
+                    domain,
+                    useCaseData
+                );
+                console.log(combos, ' asoifhoiasfoih');
+                setRenderCombos(combos?.data);
+            } catch (error) {
+                console.error('Error fetching combos:', error);
+            } finally {
+                setCombinationLoading(false);
+            }
         }
     };
-
     useEffect(() => {
         if (debounceValue !== '') {
             filterApps();
@@ -134,7 +138,17 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
         };
     }, [dropdownRef]);
 
-    console.log(renderCombos, 1234);
+    const excludedApps = [
+        'zapier',
+        'make.com',
+        'pabbly connect',
+        'workato',
+        'relay.app',
+        'Integrately',
+        'Microsoft Power Automate',
+        'IFTTT',
+        'n8n',
+    ];
 
     return (
         <>
@@ -143,7 +157,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                     <div className=" container">
                         <Navbar navData={navData} utm={'/index'} />
                     </div>
-                    <div className="h-full flex flex-col lg:flex-row mt-10 ">
+                    <div className="h-full flex flex-col lg:flex-row mt-8">
                         <div className="h-full w-full lg:w-1/2 flex flex-col justify-center gap-4 px-8 py-20 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
                             <div className="flex items-center w-full group">
                                 <h1 className="h1 text-nowrap">I use</h1>
@@ -260,6 +274,24 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                     onChange={(e) => setSelectedIndustry(e.target.value)}
                                 />
                             </div>
+                            {/* {renderCombos?.app_suggestions?.filter((app) => !excludedApps?.includes(app?.toLowerCase()))
+                                ?.length > 0 && (
+                                <>
+                                    <h1 className="h1 text-nowrap">App Suggestions: </h1>
+                                    <div className="flex items-center flex-wrap">
+                                        {renderCombos?.app_suggestions
+                                            ?.filter((app) => !excludedApps?.includes(app.toLowerCase()))
+                                            .map((app, index, filteredApps) => (
+                                                <div className="border px-4 py-2 rounded-sm">
+                                                    <h1 key={index} className="h2">
+                                                        {app}
+                                                        {index !== filteredApps?.length - 1 && <span>,&nbsp;</span>}
+                                                    </h1>
+                                                </div>
+                                            ))}
+                                    </div>
+                                </>
+                            )} */}
 
                             <textarea
                                 className="mt-6 p-4 w-full h-[150px] input input-bordered"
@@ -267,6 +299,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 value={useCase}
                                 onChange={(e) => setUseCase(e.target.value)}
                             ></textarea>
+
                             <div className="flex justify-end items-center p-2 w-full">
                                 <button className="btn btn-outline bg-black text-white" onClick={handleGenerate}>
                                     Generate
@@ -274,23 +307,27 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                             </div>
                         </div>
 
-                        <div className="w-full lg:w-1/2 h-full bg-gray-100 border-gray-400 border">
-                            <div className="h-full w-full overflow-y-auto">
-                                <div className="flex flex-col h-full">
-                                    {combinationLoading ? (
-                                        <>
-                                            {[...Array(9)].map((_, i) => (
-                                                <div
-                                                    key={i}
-                                                    className="flex justify-center items-center w-full h-[86px] p-4 skeleton bg-slate-100 border-b flex-shrink-0"
-                                                ></div>
-                                            ))}
-                                        </>
-                                    ) : (
-                                        renderCombos?.combinations?.map((combo, index) => {
+                        <div className="w-full lg:w-1/2 h-full bg-gray-100 border-gray-400 border ">
+                            <div className="flex flex-col w-full h-svh overflow-y-scroll scrollbar-thin">
+                                {combinationLoading ? (
+                                    <>
+                                        {[...Array(9)].map((_, i) => (
+                                            <div
+                                                key={i}
+                                                className="flex justify-center items-center w-full h-[86px] p-4 skeleton bg-slate-100 border-b flex-shrink-0"
+                                            ></div>
+                                        ))}
+                                    </>
+                                ) : (
+                                    renderCombos?.combinations
+                                        ?.filter((combo) => {
+                                            return combo?.trigger?.name !== combo?.actions[0]?.name;
+                                        })
+                                        ?.map((combo, index) => {
                                             const triggerName = renderCombos?.plugins[
                                                 combo?.trigger?.name
                                             ]?.events?.find((event) => event?.rowid === combo.trigger?.id)?.name;
+
                                             const actionName = renderCombos?.plugins[
                                                 combo?.actions[0]?.name
                                             ]?.events?.find((event) => event?.rowid === combo?.actions[0]?.id)?.name;
@@ -307,6 +344,8 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                                 ',' +
                                                 renderCombos?.plugins[combo?.actions[0]?.name]?.rowid;
 
+                                            const description = combo?.description;
+
                                             return (
                                                 <a
                                                     key={index}
@@ -322,17 +361,17 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                                     <img src={actionIcon} alt="Action Icon" className="w-6 h-6" />
                                                     <div className="flex gap-4 items-center justify-between w-full">
                                                         <p className="text-lg flex items-center gap-2">
-                                                            {triggerName} → {actionName}
+                                                            {/* {triggerName} → {actionName} */}
+                                                            {description}
                                                         </p>
-                                                        <span className="text-gray-500 text-sm flex items-center">
+                                                        <span className="text-gray-500 text-sm flex items-center text-nowrap">
                                                             Try It <CgArrowTopRight />
                                                         </span>
                                                     </div>
                                                 </a>
                                             );
                                         })
-                                    )}
-                                </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -360,6 +399,14 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                     </div>
                 </div>
             </div>
+            <dialog ref={modalRef} className="modal rounded-md">
+                <div className="modal-box  bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
+                    <p className="h2 text-accent">Please select at least two Apps!</p>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>Close</button>
+                </form>
+            </dialog>
         </>
     );
 }
