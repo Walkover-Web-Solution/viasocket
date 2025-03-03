@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const UseCaseList = ({ useCaseData, appOneSlug, appTwoSlug }) => {
-    const filteredData = useCaseData?.filter(
-        (usecase) => usecase?.slugname === appOneSlug || usecase?.slugname === appTwoSlug
-    );
-
+const UseCaseList = ({ filteredData }) => {
     const allUseCases = filteredData?.flatMap((usecase) => usecase?.usecase?.usecases) || [];
 
     const [activeUseCases, setActiveUseCases] = useState(allUseCases?.[0]?.content || []);
@@ -14,7 +10,7 @@ const UseCaseList = ({ useCaseData, appOneSlug, appTwoSlug }) => {
         if (allUseCases.length > 0) {
             setActiveUseCases(allUseCases[0]?.content);
         }
-    }, [useCaseData]);
+    }, [filteredData]);
 
     return (
         <div className="container cont gap-8">
@@ -52,11 +48,11 @@ const UseCaseList = ({ useCaseData, appOneSlug, appTwoSlug }) => {
                         </div>
                     ))}
                 </div>
-                <div className="w-full flex justify-center items-center border border-black p-4">
-                    <ul>
+                <div className="w-full flex justify-center items-center border border-black p-16">
+                    <ul className="list-disc">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
-                                -{item}
+                                {item}
                             </li>
                         ))}
                     </ul>
