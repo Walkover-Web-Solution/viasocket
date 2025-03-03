@@ -1,33 +1,7 @@
-import { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 
 export default function HeadComp() {
-    useEffect(() => {
-        const favicon = document.getElementById('dynamic-favicon');
-
-        // Set the default favicon
-        favicon.href = '/assets/brand/favicon-16x16.png';
-
-        const handleVisibilityChange = () => {
-            if (document.hidden) {
-                // Change favicon when the page is inactive (tab is not visible)
-                favicon.href = '/assests/brand/favicon-seach.png';
-            } else {
-                // Change favicon when the page is active
-                favicon.href = '/assets/brand/favicon-16x16.png';
-            }
-        };
-
-        // Add event listener to detect visibility change
-        document.addEventListener('visibilitychange', handleVisibilityChange);
-
-        // Cleanup the event listener on component unmount
-        return () => {
-            document.removeEventListener('visibilitychange', handleVisibilityChange);
-        };
-    }, []);
-
     return (
         <>
             <Head>
@@ -36,8 +10,9 @@ export default function HeadComp() {
                         <meta name="robots" content="noindex, nofollow" />
                     ))}
                 <meta name="zoom-domain-verification" content="ZOOM_verify_122f4fb2b7734340b90fb0ae391bb1d0"></meta>
-                <link id="dynamic-favicon" rel="icon" type="image/x-icon" href="/assets/brand/favicon-16x16.png" />
                 <link rel="apple-touch-icon" sizes="76x76" href="/assets/brand/apple-touch-icon.png" />
+                <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png" />
+                <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/favicon-48x48.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-16x16.png" />
                 <link rel="manifest" href="/site.webmanifest" />

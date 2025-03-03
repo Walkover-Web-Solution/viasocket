@@ -24,9 +24,6 @@ export default function MetaHeadComp({ metaData, page, plugin, pathSlugs }) {
 
         const keywords = metaData?.keywords && typeof metaData.keywords === 'string' ? metaData.keywords : '';
 
-        console.log("keyword:", keywords);
-
-
         return (
             <>
                 <Head>
@@ -35,7 +32,7 @@ export default function MetaHeadComp({ metaData, page, plugin, pathSlugs }) {
                     <meta property="og:title" content={title && title} />
                     <meta property="og:description" content={description && description} />
                     <meta property="og:image" content="https://viasocket.com/assets/brand/socket_fav_dark.svg" />
-                    {keywords && <meta name='keywords' content={keywords} />}
+                    {keywords && <meta name="keywords" content={keywords} />}
                 </Head>
             </>
         );
