@@ -17,12 +17,14 @@ export async function getStaticProps() {
     };
 }
 
+export const runtime = 'experimental-edge';
+
 const Privacy = ({ navData, footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
 
-            <div className="container pt-8">
+            <div className="container ">
                 <Navbar navData={navData} utm={'/privacy'} />
             </div>
             <div className="container mb-4 mt-28">
@@ -10657,7 +10659,6 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                                                                         <bdt className="statement-end-if-in-editor" />
                                                                                                                                                                                                     </span>
                                                                                                                                                                                                 </span>
-                                                                                                                                                                             
                                                                                                                                                                                             </span>
                                                                                                                                                                                         </span>
                                                                                                                                                                                     </span>
@@ -10730,7 +10731,7 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                                                         </span>
                                                                                                                                                                                     </span>
                                                                                                                                                                                 </div>
-                                                                                                                                                                             
+
                                                                                                                                                                                 <div
                                                                                                                                                                                     style={{
                                                                                                                                                                                         lineHeight:
@@ -11195,7 +11196,7 @@ const Privacy = ({ navData, footerData, metaData }) => {
                     </div>
                 </div>
             </div>
-            <div className="container py-16">
+            <div className="container pt-16 pb-4">
                 <Footer footerData={footerData} />
             </div>
         </>

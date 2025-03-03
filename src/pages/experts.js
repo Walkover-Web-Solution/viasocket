@@ -1,4 +1,3 @@
-import { getDbdashData } from './api';
 import AgencyList from '@/components/agencyList/agnecyList';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { MdArticle, MdChevronRight, MdOutlineArticle } from 'react-icons/md';
@@ -34,6 +33,7 @@ export async function getServerSideProps() {
         },
     };
 }
+export const runtime = 'experimental-edge';
 
 const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData, footerData }) => {
     let verifiedArr = [];
@@ -56,7 +56,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <div className="pt-8 container">
+            <div className=" container">
                 <Navbar navData={navData} utm={'/experts'} />
             </div>
             <div className="">
@@ -139,7 +139,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                     </div>
                 </div>
             </div>
-            <div className="container py-16">
+            <div className="container pt-16 pb-4">
                 <Footer footerData={footerData} />
             </div>
         </>

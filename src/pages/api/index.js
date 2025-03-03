@@ -22,3 +22,5 @@ export default async function fetchDataAndUpdateState(IDs, getDataFunction) {
         const dbdashData = await getDataFunction(ID);
     }
 }
+
+export const runtime = 'experimental-edge';

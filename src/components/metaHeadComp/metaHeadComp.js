@@ -31,7 +31,7 @@ export default function MetaHeadComp({ metaData, page, plugin, pathSlugs }) {
                     <meta name="description" content={description && description} />
                     <meta property="og:title" content={title && title} />
                     <meta property="og:description" content={description && description} />
-                    <meta property="og:image" content="https://viasocket.com/assets/brand/socket_fav_dark.svg" />
+                    <meta property="og:image" content="https://files.msg91.com/342616/wnitwkyk" />
                     {keywords && <meta name="keywords" content={keywords} />}
                 </Head>
             </>

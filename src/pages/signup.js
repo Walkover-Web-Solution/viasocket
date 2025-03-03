@@ -6,6 +6,8 @@ import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/ut
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 
+export const runtime = 'experimental-edge';
+
 export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
@@ -29,9 +31,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {
-                console.log('success response', data);
-            },
+            success: (data) => {},
             failure: (error) => {
                 console.log('failure reason', error);
             },
@@ -42,9 +42,8 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
                 redirect_path: redirect_to,
             };
         }
-        configuration.state = JSON.stringify({
-            utm_source: utm_source,
-        });
+        const utm_source = sessionStorage.getItem('utmData');
+        configuration.state = utm_source || JSON.stringify({ utm_source: 'website' });
 
         if (typeof window.initVerification === 'function') {
             window.initVerification(configuration);

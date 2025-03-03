@@ -4,6 +4,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
 
+export const runtime = 'experimental-edge';
+
 export async function getStaticProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
@@ -22,7 +24,7 @@ export default function DataDeletionPolicy({ navData, footerData, metaData }) {
         <>
             <MetaHeadComp metaData={metaData} page={'/data-deletion-policy'} />
 
-            <div className="container pt-8">
+            <div className="container">
                 <Navbar navData={navData} utm={'/data-deletion-policy'} />
             </div>
             <div className="container mb-4 mt-28">

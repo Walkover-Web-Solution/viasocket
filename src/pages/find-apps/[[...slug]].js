@@ -4,6 +4,8 @@ import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
 import Head from 'next/head';
 import Image from 'next/image';
 
+export const runtime = 'experimental-edge';
+
 const SelectedAlphabetPage = ({ apps, alphabet, appDetails, step, alphabet2 }) => {
     return (
         <div className="container py-20 gap-8 ">

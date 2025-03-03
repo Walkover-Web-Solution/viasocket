@@ -30,22 +30,30 @@ const BlogGrid = ({ posts }) => {
 const CardComponent = ({ card }) => {
     return (
         <Link
-            href={`/blog/${card?.slug}`}
+            href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
             className="block_border card rounded-none LinkButtonCard"
         >
             {' '}
-            <figure className="h-90">
-                <Image width={720} height={720} src={card?.image} alt={card?.title} />
-            </figure>
-            <div className="card-body gap-4">
-                <div className="flex flex-col gap-1 h-full">
-                    <h3 className=" font-semibold">{card?.title}</h3>
-                    <p className="text-base">{card?.description}</p>
+            <div className="flex flex-col gap-4 h-full">
+                <div className="w-full h-[400px] relative flex-shrink-0">
+                    <Image
+                        src={card?.image}
+                        alt={card?.title}
+                        width={300}
+                        height={200}
+                        className="w-full h-full object-cover"
+                    />
                 </div>
-                <div className="card-actions justify-start mt-auto">
-                    <LinkText children="Know more" />
+                <div className="card-body flex flex-col gap-2 flex-grow">
+                    <div className="flex-grow">
+                        <h3 className="font-semibold">{card?.title}</h3>
+                        <p className="text-base">{card?.description}</p>
+                    </div>
+                    <div className="mt-auto">
+                        <LinkText>Know more</LinkText>
+                    </div>
                 </div>
             </div>
         </Link>

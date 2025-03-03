@@ -80,7 +80,7 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="container my-6">
+            <div className="container">
                 <Navbar navData={navData} utm={'/integrations'} />
             </div>
             <div className="container cont">

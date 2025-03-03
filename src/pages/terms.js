@@ -16,11 +16,13 @@ export async function getStaticProps() {
         },
     };
 }
+export const runtime = 'experimental-edge';
+
 const Terms = ({ navData, footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <div className="pt-8 container">
+            <div className=" container">
                 <Navbar navData={navData} utm={'/terms'} />
             </div>
             <div className="container mt-28">
@@ -147,8 +149,8 @@ const Terms = ({ navData, footerData, metaData }) => {
                                 You can contact us at
                                 <bdt className="block-component" /> our email{' '}
                                 <a href="mailto:support@viasocket.com" target="_blank" data-custom-class="link">
-                                support@viasocket.com
-                                    </a>
+                                    support@viasocket.com
+                                </a>
                             </span>
                         </div>
                         <div className="MsoNormal" style={{ lineHeight: 1 }}>
@@ -6672,7 +6674,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                     .
                 </div>
             </div>
-            <div className="container py-16">
+            <div className="container pt-16 pb-4">
                 <Footer footerData={footerData} />
             </div>
         </>

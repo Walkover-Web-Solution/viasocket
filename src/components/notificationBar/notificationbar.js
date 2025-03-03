@@ -1,6 +1,5 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 export default function NotificationBar() {
     const [data, setData] = useState(null);
@@ -9,8 +8,8 @@ export default function NotificationBar() {
     }, []);
 
     const getDbdashDataa = async () => {
-        const response = await axios.get('https://plugservice-api.viasocket.com/api/notification-content');
-        const dbdashData = response.data;
+        const response = await fetch('https://plugservice-api.viasocket.com/api/notification-content');
+        const dbdashData = await response.json();
         setData(dbdashData.data.rows);
     };
 

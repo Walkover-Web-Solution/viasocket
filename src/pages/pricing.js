@@ -1,4 +1,3 @@
-
 import FAQSection from '@/components/faqSection/faqSection';
 import { useEffect, useState } from 'react';
 import React from 'react';
@@ -19,7 +18,9 @@ import getCountries from '@/utils/getCountries';
 import Image from 'next/image';
 import checkDevelopingCountry from '@/utils/checkDevelopingCountry';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import getBlogData from '@/utils/getBlogData';
+import { getBlogData } from '@/utils/getBlogData';
+
+export const runtime = 'experimental-edge';
 
 export default function pricing({ navData, footerData, faqData, betterChoice, metaData, countries, blogData }) {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -46,7 +47,6 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
     const filterCountries = (searchTerm) => {
         return countries.filter((country) => country?.name?.common?.toLowerCase()?.includes(searchTerm?.toLowerCase()));
     };
-
     const plans = [
         {
             name: 'starter',
@@ -79,7 +79,7 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <div className=" cont py-10 lg:gap-24 gap-6">
+            <div className=" cont pb-4 lg:gap-24 gap-6">
                 <div className="cont container ">
                     <Navbar navData={navData} utm={'/pricing'} borderClass={'border-b-0'} />
                     <div className="">
@@ -303,9 +303,9 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
                         </div>
                     </div>
                     <div className="flex flex-col">
-                    <div className="container cont pb-36">
-                        <BlogGrid posts={blogData} />
-                    </div>
+                        <div className="container cont pb-36">
+                            <BlogGrid posts={blogData} />
+                        </div>
                         <div className="flex flex-col border-black border border-b-0 p-6 md:p-12">
                             {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                         </div>

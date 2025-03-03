@@ -10,7 +10,7 @@ export default function ErrorComp({ navData, footerData, utm }) {
 
     return (
         <>
-            <div className="container pt-8">
+            <div className="container">
                 <Navbar navData={navData} page={utm || '/404'} />
                 <div className="flex flex-col items-center justify-center py-6 w-400px px-2">
                     <Image
