@@ -6,6 +6,7 @@ import {
     getFooterData,
     getMetaData,
     getNavData,
+    getUsecasesData,
 } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
@@ -25,6 +26,7 @@ import {
     INTECATEGORYlIST_FILED,
     METADATA_FIELDS,
     NAVIGATION_FIELDS,
+    USECASES_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 export const runtime = 'experimental-edge';
@@ -45,6 +47,7 @@ export default function Integrations({
     categories,
     disconnecteData,
     blogData,
+    useCaseData,
 }) {
     if (noData) {
         return (
@@ -73,6 +76,7 @@ export default function Integrations({
                     combosData={combosData}
                     faqData={faqData}
                     footerData={footerData}
+                    useCaseData={useCaseData}
                 />
             </div>
         );
@@ -89,6 +93,7 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     disconnecteData={disconnecteData}
+                    useCaseData={useCaseData}
                 />
             );
         } else {
@@ -104,6 +109,7 @@ export default function Integrations({
                         combosData={combosData}
                         faqData={faqData}
                         footerData={footerData}
+                        useCaseData={useCaseData}
                     />
                 </div>
             );
@@ -125,6 +131,7 @@ export default function Integrations({
         );
     }
 }
+
 export async function getServerSideProps(context) {
     const pageInfo = getPageInfo(context);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
@@ -138,6 +145,7 @@ export async function getServerSideProps(context) {
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
         const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
         const blogData = await getBlogData(blogTags);
+        const useCaseData = await getUsecasesData(USECASES_FIELDS);
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -153,6 +161,7 @@ export async function getServerSideProps(context) {
                     appTwoDetails: appTwoDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
+                    useCaseData: useCaseData || [],
                 },
             };
         } else {
@@ -183,6 +192,7 @@ export async function getServerSideProps(context) {
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
             const blogData = await getBlogData(blogTags);
+            const useCaseData = await getUsecasesData(USECASES_FIELDS);
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -198,6 +208,7 @@ export async function getServerSideProps(context) {
                     categoryData: {},
                     disconnecteData: disconnecteData || [],
                     blogData: blogData || [],
+                    useCaseData: useCaseData || [],
                 },
             };
         } else {
