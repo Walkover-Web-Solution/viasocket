@@ -47,6 +47,7 @@ export default function IntegrationsAppOneComp({
             }
         }
     }, []);
+    const filteredData = useCaseData?.filter((usecase) => usecase?.slugname === appOneDetails.appslugname);
 
     return (
         <>
@@ -227,9 +228,7 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
-            {useCaseData?.length > 0 && (
-                <UseCaseList useCaseData={useCaseData} appOneSlug={appOneDetails.appslugname} />
-            )}
+            {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} />}
 
             {blogsData?.length > 0 && (
                 <div className="container ">
