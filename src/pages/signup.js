@@ -43,7 +43,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
             };
         }
         const utm_source = sessionStorage.getItem('utmData');
-        configuration.state = { utm_source: utm_source };
+        configuration.state = utm_source || JSON.stringify({ utm_source: 'website' });
 
         if (typeof window.initVerification === 'function') {
             window.initVerification(configuration);
