@@ -45,7 +45,6 @@ export default function IntegrationsAppOneComp({
             }
         }
     }, []);
-
     return (
         <>
             <IntegrationsHeadComp
