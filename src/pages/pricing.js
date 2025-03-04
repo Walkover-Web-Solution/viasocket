@@ -79,9 +79,11 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
+            <div className="container sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/pricing'} />
+            </div>
             <div className=" cont pb-4 lg:gap-24 gap-6">
                 <div className="cont container ">
-                    <Navbar navData={navData} utm={'/pricing'} borderClass={'border-b-0'} />
                     <div className="">
                         <div className=" flex flex-col justify-center gap-6  ">
                             <div className="border border-black gradient-background">

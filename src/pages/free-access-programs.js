@@ -11,7 +11,7 @@ export default function Programs({ footerData, navData, metaData, programs }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <div className=" container">
+            <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/free-access-programs'} />
             </div>
             <div className="container cont cont__py cont__gap ">
