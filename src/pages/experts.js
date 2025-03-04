@@ -56,7 +56,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <div className=" container">
+            <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/experts'} />
             </div>
             <div className="">

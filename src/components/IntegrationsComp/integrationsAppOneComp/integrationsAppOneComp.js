@@ -13,6 +13,9 @@ import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import { setUtmSource } from '@/utils/handleUtmSource';
+import UseCaseList from '@/components/useCaseList/UseCaseList';
+
+
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -25,6 +28,7 @@ export default function IntegrationsAppOneComp({
     blogsData,
     metaData,
     integrations,
+    useCaseData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -34,6 +38,7 @@ export default function IntegrationsAppOneComp({
         const utmData = setUtmSource();
         setUtmSource(utmData);
     }, []);
+    const filteredData = useCaseData?.filter((usecase) => usecase?.slugname === appOneDetails.appslugname);
 
     return (
         <>
@@ -213,6 +218,9 @@ export default function IntegrationsAppOneComp({
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
+
+            {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} />}
+
             {blogsData?.length > 0 && (
                 <div className="container ">
                     {' '}
