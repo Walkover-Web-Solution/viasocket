@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
 import { useEffect, useState } from 'react';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function Navbar({ navData, utm }) {
     const [utmSource, setUtmSource] = useState('');
@@ -46,20 +47,8 @@ export default function Navbar({ navData, utm }) {
     }
 
     useEffect(() => {
-        const storedUtm = sessionStorage.getItem('utmData');
-
-        if (storedUtm) {
-            try {
-                const parsedUtm = JSON.parse(storedUtm);
-
-                if (parsedUtm && typeof parsedUtm === 'object') {
-                    const queryString = new URLSearchParams(parsedUtm).toString();
-                    setUtmSource(queryString);
-                }
-            } catch (error) {
-                console.error('Error parsing UTM data:', error);
-            }
-        }
+        const utmData = setUtmSource();
+        setUtmSource(utmData);
     }, []);
 
     return (
