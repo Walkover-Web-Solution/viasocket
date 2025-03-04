@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const UseCaseList = ({ filteredData }) => {
+const UseCaseList = ({ filteredData, appname }) => {
     const allUseCases = filteredData?.flatMap((usecase) => usecase?.usecase?.usecases) || [];
 
     const [activeUseCases, setActiveUseCases] = useState(allUseCases?.[0]?.content || []);
@@ -14,7 +14,10 @@ const UseCaseList = ({ filteredData }) => {
 
     return (
         <div className="container cont gap-8">
-            <h1 className="h1">USECASES</h1>
+            <div>
+                <h1 className="h1">{`Real-World Use Cases of ${appname} Integrations`}</h1>
+                <h2 className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</h2>
+            </div>
             <div className="flex gap-4 ">
                 {/* Sidebar with hover and active effect */}
                 <div className="w-fit h-fit flex flex-col justify-center items-center ">
