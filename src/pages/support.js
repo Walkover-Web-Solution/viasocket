@@ -22,7 +22,6 @@ export async function getStaticProps() {
 }
 export const runtime = 'experimental-edge';
 
-
 export default function Support({ navData, footerData, metaData }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
@@ -83,10 +82,9 @@ export default function Support({ navData, footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <div className="container ">
+            <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/support'} />
             </div>
-
             <div className="container flex flex-col justify-center items-center md:gap-16 gap-4 my-12 md:my-24">
                 <div className="flex flex-col gap-3 md:text-center text-start md:items-center md:w-full sm:w-1/2 w-full min-w-[300px}">
                     <h1 className="md:text-5xl text-4xl font-semibold">viaSocket Support</h1>

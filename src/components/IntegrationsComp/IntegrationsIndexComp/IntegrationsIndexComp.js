@@ -80,8 +80,8 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="container">
-                <Navbar navData={navData} utm={'/integrations'} />
+            <div className="container sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="container cont">
                 <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
