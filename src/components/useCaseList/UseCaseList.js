@@ -18,9 +18,9 @@ const UseCaseList = ({ filteredData, appname }) => {
                 <h1 className="h1">{`Real-World Use Cases of ${appname} Integrations`}</h1>
                 <h2 className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</h2>
             </div>
-            <div className="flex gap-4 ">
+            <div className="flex flex-col md:flex-row gap-4 ">
                 {/* Sidebar with hover and active effect */}
-                <div className="w-fit h-fit flex flex-col justify-center items-center ">
+                <div className="w-full h-fit flex flex-col justify-center items-center ">
                     {allUseCases.map((uc, index) => (
                         <div
                             key={index}
@@ -39,7 +39,7 @@ const UseCaseList = ({ filteredData, appname }) => {
                             >
                                 <div className="flex items-center gap-2">
                                     <div
-                                        className={`font-semibold sm:whitespace-nowrap ${
+                                        className={`font-semibold ${
                                             activeIndex === index ? 'text-white' : 'text-black group-hover:text-white'
                                         }`}
                                     >
@@ -51,7 +51,7 @@ const UseCaseList = ({ filteredData, appname }) => {
                         </div>
                     ))}
                 </div>
-                <div className="w-full flex justify-center items-center border border-black p-16">
+                <div className="w-full flex justify-center items-center border border-black p-8 sm:p-16">
                     <ul className="list-disc">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
