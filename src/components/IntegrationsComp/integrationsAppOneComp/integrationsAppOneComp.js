@@ -12,6 +12,7 @@ import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -30,20 +31,8 @@ export default function IntegrationsAppOneComp({
     const utm = pageInfo?.url;
     const [utmSource, setUtmSource] = useState('');
     useEffect(() => {
-        const storedUtm = sessionStorage.getItem('utmData');
-
-        if (storedUtm) {
-            try {
-                const parsedUtm = JSON.parse(storedUtm);
-
-                if (parsedUtm && typeof parsedUtm === 'object') {
-                    const queryString = new URLSearchParams(parsedUtm).toString();
-                    setUtmSource(queryString);
-                }
-            } catch (error) {
-                console.error('Error parsing UTM data:', error);
-            }
-        }
+        const utmData = setUtmSource();
+        setUtmSource(utmData);
     }, []);
 
     return (

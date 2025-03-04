@@ -5,6 +5,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export const runtime = 'experimental-edge';
 
@@ -42,8 +43,8 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
                 redirect_path: redirect_to,
             };
         }
-        const utm_source = sessionStorage.getItem('utmData');
-        configuration.state = utm_source || JSON.stringify({ utm_source: 'website' });
+        const utm_source = setUtmSource();
+        configuration.state = utm_source;
 
         if (typeof window.initVerification === 'function') {
             window.initVerification(configuration);
