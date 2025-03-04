@@ -114,10 +114,10 @@ export default function Navbar({ navData, utm }) {
                         Login
                     </Link>
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} text-white flex w-[150px] border bg-accent`}
+                        className={` ${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent`}
                         href={`/signup?utm_source=${utm}`}
                     >
-                        Start For Free
+                        Start Free Trial
                     </Link>
                 </div>
             </div>
