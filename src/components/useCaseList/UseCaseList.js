@@ -15,9 +15,9 @@ const UseCaseList = ({ filteredData }) => {
     return (
         <div className="container cont gap-8">
             <h1 className="h1">USECASES</h1>
-            <div className="flex gap-4 ">
+            <div className="flex md:flex-row flex-col gap-4 ">
                 {/* Sidebar with hover and active effect */}
-                <div className="w-fit h-fit flex flex-col justify-center items-center ">
+                <div className="w-full h-fit flex flex-col justify-center items-center ">
                     {allUseCases.map((uc, index) => (
                         <div
                             key={index}
@@ -36,7 +36,7 @@ const UseCaseList = ({ filteredData }) => {
                             >
                                 <div className="flex items-center gap-2">
                                     <div
-                                        className={`font-semibold sm:whitespace-nowrap ${
+                                        className={`font-semibold ${
                                             activeIndex === index ? 'text-white' : 'text-black group-hover:text-white'
                                         }`}
                                     >
@@ -48,7 +48,7 @@ const UseCaseList = ({ filteredData }) => {
                         </div>
                     ))}
                 </div>
-                <div className="w-full flex justify-center items-center border border-black p-16">
+                <div className="w-full flex justify-center items-center border border-black p-8 sm:p-16">
                     <ul className="list-disc">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
