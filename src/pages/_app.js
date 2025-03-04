@@ -5,8 +5,7 @@ import { useEffect, useState } from 'react';
 import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import Head from 'next/head';
-import { getUtmSource } from '@/utils/handleUtmSource';
-
+import HandleUtmSource from '@/utils/handleUtmSource';
 export const runtime = 'experimental-edge';
 
 export default function MyApp({ Component, pageProps, pagesData }) {
@@ -79,7 +78,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     }, []);
 
     useEffect(() => {
-        getUtmSource();
+        HandleUtmSource();
     }, []);
 
     return (

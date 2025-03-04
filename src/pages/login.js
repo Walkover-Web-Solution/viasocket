@@ -6,7 +6,6 @@ import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
 import { getFooterData, getIndexFeatures, getMetaData, getNavData } from '@/utils/getData';
-import { setUtmSource } from '@/utils/handleUtmSource';
 
 export const runtime = 'experimental-edge';
 
@@ -21,7 +20,7 @@ export async function getServerSideProps(context) {
         props: {
             navData: navData || [],
             footerData: footerData || [],
-            metaData: [],
+            metaData:[],
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
             features: features || [],
@@ -46,7 +45,8 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
     useEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {},
+            success: (data) => {
+            },
             failure: (error) => {
                 console.log('failure reason', error);
             },
@@ -58,8 +58,9 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
             };
         }
 
-        const utm_source = setUtmSource();
-        configuration.state = utm_source;
+        configuration.state = JSON.stringify({
+            utm_source: utm_source,
+        });
 
         const initializeVerification = () => {
             if (typeof window.initVerification === 'function') {
