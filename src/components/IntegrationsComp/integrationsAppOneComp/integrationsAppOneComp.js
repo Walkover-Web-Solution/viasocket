@@ -230,7 +230,9 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
-            {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} appname={appOneDetails.name} />}
+            {filteredData?.length > 0 && filteredData?.usecase && (
+                <UseCaseList filteredData={filteredData} appname={appOneDetails.name} />
+            )}
 
             {getStartedData && (
                 <div className="container border border-black p-20">
