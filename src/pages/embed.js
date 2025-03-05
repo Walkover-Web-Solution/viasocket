@@ -18,12 +18,14 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
 
     return (
         <>
+            <div className="container sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/index'} />
+            </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
                 <div className="w-full min-h-fit lg:h-dvh  border-b border-black">
                     <div className="container h-full flex flex-col">
-                        <Navbar navData={navData} utm={'/index'} />
                         <div className="flex flex-col lg:flex-row h-full">
-                            <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 ">
+                            <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
                                     <h1 className="h1">
                                         <span className="text-accent">Embed </span>

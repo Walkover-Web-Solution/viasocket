@@ -37,9 +37,9 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import getBlogsData from '@/utils/getBlogData';
+import Navbar from '@/components/navbar/navbar';
 
 export const runtime = 'experimental-edge';
-
 
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -229,11 +229,14 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
+            <div className="container sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/index'} />
+            </div>
             <div
                 className="w-full  hero_gradint cont md:gap-36 sm:gap-24 gap-12"
                 // style={{ background: 'url(/assets/img/gradientHero.svg) center/cover' }}
             >
-                <IndexBannerComp navData={navData} redirect_to={redirect_to} utm_source={utm_source} />
+                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} />
                 <div className="container flex flex-col gap-4 ">
                     <div className="cont  max-w-[1100px]">
                         <h2 className="h1">Ready-Made Workflows for Every Need</h2>

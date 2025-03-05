@@ -25,13 +25,14 @@ export default function Navbar({ navData, utm }) {
         '/404',
         '/data-deletion-policy',
     ];
-    let mode = utm && darkPageArray.includes(utm) ? 'light' : 'dark';
+
+    let mode = 'light';
 
     let borderClass;
     let backgroundClass;
     let textClass;
     if (utm && utm === '/pricing') {
-        borderClass = 'border-b-0';
+        borderClass = '';
     }
     if (utm !== '/index') {
         textClass = 'text-dark ';
@@ -64,7 +65,7 @@ export default function Navbar({ navData, utm }) {
     }, []);
     return (
         <>
-            <div className="pt-4 justify-between lg:flex hidden">
+            <div className="py-4 justify-between lg:flex hidden bg-white">
                 <Link
                     href="/"
                     aria-label="logo"
@@ -114,14 +115,14 @@ export default function Navbar({ navData, utm }) {
                         Login
                     </Link>
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} text-white flex w-[130px] border bg-accent`}
+                        className={` ${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent`}
                         href={`/signup?utm_source=${utm}`}
                     >
-                        Sign Up
+                        Start Free Trial
                     </Link>
                 </div>
             </div>
-            <div className=" justify-between   pt-8  flex lg:hidden">
+            <div className=" justify-between bg-white py-4  flex lg:hidden">
                 <Link
                     href="/"
                     aria-label="logo"
