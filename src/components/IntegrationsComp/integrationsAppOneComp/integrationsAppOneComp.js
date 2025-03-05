@@ -231,7 +231,7 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
-            {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} />}
+            {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} appname={appOneDetails.name} />}
 
             {blogsData?.length > 0 && (
                 <div className="container ">
