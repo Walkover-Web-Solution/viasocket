@@ -14,6 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
+import GetStarted from '@/components/getStarted/getStarted';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -24,6 +25,7 @@ export default function IntegrationsAppTwoComp({
     appTwoDetails,
     blogsData,
     metaData,
+    getStartedData,
 }) {
     const [utmSource, setUtmSource] = useState('');
     const utm = pageInfo?.url;
@@ -233,6 +235,12 @@ export default function IntegrationsAppTwoComp({
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
+
+            {getStartedData && (
+                <div className="container border border-black p-20">
+                    <GetStarted data={getStartedData} isHero={'false'} />
+                </div>
+            )}
 
             {blogsData?.length > 0 && (
                 <div className="container">
