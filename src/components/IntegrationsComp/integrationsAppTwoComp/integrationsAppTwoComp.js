@@ -51,7 +51,6 @@ export default function IntegrationsAppTwoComp({
             setUtmSource('utm_source=website');
         }
     }, []);
-
     return (
         <>
             <IntegrationsHeadComp

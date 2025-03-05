@@ -63,7 +63,6 @@ export default function Navbar({ navData, utm }) {
             setUtmSource('utm_source=website');
         }
     }, []);
-
     return (
         <>
             <div className="py-4 justify-between lg:flex hidden bg-white">

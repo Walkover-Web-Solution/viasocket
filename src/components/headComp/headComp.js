@@ -6,7 +6,7 @@ export default function HeadComp() {
         <>
             <Head>
                 {!process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT ||
-                    (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'production' && (
+                    (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod' && (
                         <meta name="robots" content="noindex, nofollow" />
                     ))}
                 <meta name="zoom-domain-verification" content="ZOOM_verify_122f4fb2b7734340b90fb0ae391bb1d0"></meta>

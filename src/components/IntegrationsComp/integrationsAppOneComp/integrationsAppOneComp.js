@@ -52,6 +52,7 @@ export default function IntegrationsAppOneComp({
             setUtmSource('utm_source=website');
         }
     }, []);
+  
     const filteredData = useCaseData?.filter((usecase) => usecase?.slugname === appOneDetails.appslugname);
 
     return (
