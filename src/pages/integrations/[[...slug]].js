@@ -149,9 +149,6 @@ export async function getServerSideProps(context) {
         const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
         const blogData = await getBlogData(blogTags);
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
-        if (!appOneDetails || Object.keys(appOneDetails).length === 0) {
-            return { notFound: true };
-        }
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
