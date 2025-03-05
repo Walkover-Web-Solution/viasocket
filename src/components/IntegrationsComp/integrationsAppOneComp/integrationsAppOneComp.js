@@ -14,6 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
+import GetStarted from '@/components/getStarted/getStarted';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -27,6 +28,7 @@ export default function IntegrationsAppOneComp({
     metaData,
     integrations,
     useCaseData,
+    getStartedData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -232,6 +234,12 @@ export default function IntegrationsAppOneComp({
             )}
 
             {filteredData?.length > 0 && <UseCaseList filteredData={filteredData} appname={appOneDetails.name} />}
+
+            {getStartedData && (
+                <div className="container border border-black p-20">
+                    <GetStarted data={getStartedData} isHero={'false'} />
+                </div>
+            )}
 
             {blogsData?.length > 0 && (
                 <div className="container ">
