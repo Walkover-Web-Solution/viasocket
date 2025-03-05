@@ -4,6 +4,7 @@ import {
     getDisconnectedData,
     getFaqData,
     getFooterData,
+    getGetStartedData,
     getMetaData,
     getNavData,
     getUsecasesData,
@@ -22,6 +23,7 @@ import {
     DISCONNECTEDBY_FIELDS,
     FAQS_FIELDS,
     FOOTER_FIELDS,
+    GETSTARTED_FIELDS,
     INTECATEGORY_FIELDS,
     INTECATEGORYlIST_FILED,
     METADATA_FIELDS,
@@ -48,6 +50,7 @@ export default function Integrations({
     disconnecteData,
     blogData,
     useCaseData,
+    getStartedData,
 }) {
     if (noData) {
         return (
@@ -76,6 +79,7 @@ export default function Integrations({
                     combosData={combosData}
                     faqData={faqData}
                     footerData={footerData}
+                    getStartedData={getStartedData}
                 />
             </div>
         );
@@ -108,6 +112,7 @@ export default function Integrations({
                         faqData={faqData}
                         footerData={footerData}
                         useCaseData={useCaseData}
+                        getStartedData={getStartedData}
                     />
                 </div>
             );
@@ -143,6 +148,7 @@ export async function getServerSideProps(context) {
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
         const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
         const blogData = await getBlogData(blogTags);
+        const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -158,6 +164,7 @@ export async function getServerSideProps(context) {
                     appTwoDetails: appTwoDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
+                    getStartedData: getStarted || [],
                 },
             };
         } else {
@@ -181,6 +188,7 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: integrationsInfo?.page, categoryData });
         const combosData = await getCombos(integrationsInfo);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
+        const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
         const disconnecteData = await getDisconnectedData(
             DISCONNECTEDBY_FIELDS,
             `filter=slugname='${integrationsInfo?.appone}' `
@@ -205,6 +213,7 @@ export async function getServerSideProps(context) {
                     disconnecteData: disconnecteData || [],
                     blogData: blogData || [],
                     useCaseData: useCaseData || [],
+                    getStartedData: getStarted || [],
                 },
             };
         } else {
