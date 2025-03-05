@@ -46,9 +46,10 @@ export default function IntegrationsAppTwoComp({
             } catch (error) {
                 console.error('Error parsing UTM data:', error);
             }
+        } else {
+            setUtmSource('utm_source=website');
         }
     }, []);
-
     return (
         <>
             <IntegrationsHeadComp

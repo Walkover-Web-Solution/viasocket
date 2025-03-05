@@ -6,7 +6,7 @@ import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
 export default function Footer({ footerData, borderClass }) {
     const groupedData = footerData?.reduce((acc, obj) => {
-        const groupName = obj.group_name;
+        const groupName = obj?.group_name;
         if (!obj?.hidden) {
             if (!acc[groupName]) {
                 acc[groupName] = [];
@@ -19,13 +19,13 @@ export default function Footer({ footerData, borderClass }) {
 
     const renderedGroups =
         groupedData &&
-        Object.entries(groupedData).map(([groupName, items]) => {
-            if (items.length > 0) {
+        Object?.entries(groupedData)?.map(([groupName, items]) => {
+            if (items?.length > 0) {
                 return (
                     <div className="flex flex-col gap-6 w-full" key={groupName}>
                         <h2 className="font-bold">{groupName}</h2>
                         <div className="flex flex-col gap-2">
-                            {items.map(
+                            {items?.map(
                                 (item, index) =>
                                     !item?.hidden && (
                                         <Link
