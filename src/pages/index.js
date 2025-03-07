@@ -250,6 +250,7 @@ const Index = ({
                         <div className="flex flex-wrap gap-2 items-center text-lg  ">
                             <h3 className="">How</h3>
                             <div className="dropdown">
+                            
                                 <h3
                                     onClick={() => {
                                         setShowIndusDropdown(true);
