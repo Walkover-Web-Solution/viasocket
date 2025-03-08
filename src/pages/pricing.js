@@ -28,6 +28,9 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
     const [isDeveloping, setIsDeveloping] = useState(false);
+
+
+    
     useEffect(() => {
         const fetchCountryData = async () => {
             if (selectedCountry) {
