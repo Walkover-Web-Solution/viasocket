@@ -232,6 +232,8 @@ const Index = ({
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
+
+            
             <div
                 className="w-full  hero_gradint cont md:gap-36 sm:gap-24 gap-12"
                 // style={{ background: 'url(/assets/img/gradientHero.svg) center/cover' }}
