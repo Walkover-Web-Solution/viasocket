@@ -59,7 +59,7 @@ export default function IndexBannerComp({ redirect_to, utm_source }) {
                         <div className="flex flex-col gap-1">
                             <ChatBoxComp />
                             <h1 className="h1 text-black text-start">
-                                testing -- Supercharge your <br />
+                                Supercharge your <br />
                                 workflows <strong className="text-accent">with AI </strong>
                             </h1>
                             <h2 className="sub__h1 text-black text-start">
