@@ -124,7 +124,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                 </div>
                             )}
                         </div>
-                        {(actions?.length >= visibleEvents || trigger >= visibleEvents) && (
+                        {(actions?.length > visibleEvents || trigger > visibleEvents) && (
                             <button
                                 onClick={() => {
                                     setVisibleEvents(visibleEvents + 6);
@@ -274,7 +274,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                             </div>
                         )}
                     </div>
-                    {(actions?.length >= visibleEvents || trigger >= visibleEvents) && (
+                    {(actions?.length > visibleEvents || trigger > visibleEvents) && (
                         <button
                             onClick={() => {
                                 setVisibleEvents(visibleEvents + 6);
