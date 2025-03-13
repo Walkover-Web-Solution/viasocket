@@ -129,6 +129,5 @@ export async function getEmbedData(fields, filter) {
 
 export async function getUsecasesData(fields, filter) {
     const data = await getDataFromTable(USECASES, handleFieldsFilter(fields, filter));
-    console.log(data);
     return handleData(data);
 }
