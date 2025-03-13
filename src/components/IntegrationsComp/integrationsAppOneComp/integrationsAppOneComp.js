@@ -52,8 +52,6 @@ export default function IntegrationsAppOneComp({
             setUtmSource('utm_source=website');
         }
     }, []);
-  
-    const filteredData = useCaseData?.filter((usecase) => usecase?.slugname === appOneDetails.appslugname);
 
     return (
         <>
@@ -234,9 +232,7 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
-            {filteredData?.length > 0 && filteredData?.usecase && (
-                <UseCaseList filteredData={filteredData} appname={appOneDetails.name} />
-            )}
+            {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
 
             {getStartedData && (
                 <div className="container border border-black p-20">
