@@ -193,10 +193,14 @@ export async function getServerSideProps(context) {
             DISCONNECTEDBY_FIELDS,
             `filter=slugname='${integrationsInfo?.appone}' `
         );
+
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
             const blogData = await getBlogData(blogTags);
-            const useCaseData = await getUsecasesData(USECASES_FIELDS);
+            const useCaseData = await getUsecasesData(
+                USECASES_FIELDS,
+                `filter=slugname='${appOneDetails?.appslugname}'`
+            );
             return {
                 props: {
                     pageInfo: pageInfo || {},
