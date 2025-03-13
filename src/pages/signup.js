@@ -6,6 +6,7 @@ import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/ut
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import { setUtmSource } from '@/utils/handleUtmSource';
+import Navbar from '@/components/navbar/navbar';
 
 export const runtime = 'experimental-edge';
 
@@ -28,7 +29,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) => {
+const Login = ({ metaData, testimonials, pathArray, redirect_to, navData }) => {
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
@@ -75,6 +76,9 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, utm_source }) =
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/signup'} pathArray={pathArray} />
+            <div className="container">
+                <Navbar navData={navData} utm={'/signup'} />
+            </div>
             <div className="flex flex-col md:flex-row min-h-dvh">
                 <div className="w-full md:min-h-dvh flex">
                     <div className=" w-full h-full flex items-center justify-center">
