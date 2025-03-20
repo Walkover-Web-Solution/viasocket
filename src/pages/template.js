@@ -22,9 +22,13 @@ const Template = ({ navData, footerData, templateData }) => {
             </div>
             <div className="w-full cont md:gap-36 sm:gap-24 gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center">
-                    <div className="flex flex-col gap-8 p-20">
-                        <h1 className="h1">Templates</h1>
-                        <h2 className="sub__h1">example templates</h2>
+                    <div className="flex flex-col items-center justify-center text-center gap-2 p-20 pb-0 max-w-[900px]">
+                        <h1 className="h1">Workflow Templates</h1>
+                        <h2 className="h1 text-accent !font-bold">Click. Build. Succeed.</h2>
+                        <h2 className="sub__h1">
+                            Take a look at our collection of real-world workflows that help you automate repetitive
+                            tasks and boost your growth with viaSocket.
+                        </h2>
                     </div>
                 </div>
 
