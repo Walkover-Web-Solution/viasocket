@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
-const UseCaseList = ({ filteredData, appname }) => {
-    const allUseCases = filteredData?.flatMap((usecase) => usecase?.usecase?.usecases) || [];
+const UseCaseList = ({ useCaseData, appname }) => {
+    const allUseCases = useCaseData?.flatMap((usecase) => usecase?.usecase?.usecases) || [];
 
     const [activeUseCases, setActiveUseCases] = useState(allUseCases?.[0]?.content || []);
     const [activeIndex, setActiveIndex] = useState(0);
@@ -10,7 +10,7 @@ const UseCaseList = ({ filteredData, appname }) => {
         if (allUseCases.length > 0) {
             setActiveUseCases(allUseCases[0]?.content);
         }
-    }, [filteredData]);
+    }, [useCaseData]);
 
     return (
         <div className="container cont gap-8">
