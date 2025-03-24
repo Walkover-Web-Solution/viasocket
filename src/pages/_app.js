@@ -61,14 +61,32 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     }, []);
 
     useEffect(() => {
-        const helloConfig = {
+        // const helloConfig = {
+        //     widgetToken: 'a13cc',
+        //     show_close_button: false,
+        //     hide_launcher: true,
+        // };
+
+        var helloConfig = {
             widgetToken: 'a13cc',
-            show_close_button: false,
-            hide_launcher: true,
+            hide_launcher: false,
+            show_widget_form: true,
+            show_close_button: true,
+            launch_widget: true,
+            show_send_button: true,
+            unique_id: 'user12345',
+            name: 'John Doe',
+            number: '+1234567890',
+            mail: 'john@example.com',
+            country: 'USA',
+            city: 'New York',
+            region: 'New York',
+            workspace_id: 'workspace123',
+            workspace_name: 'Sample Workspace',
         };
 
         const script = document.createElement('script');
-        script.src = 'https://control.msg91.com/app/assets/widget/chat-widget.js';
+        script.src = 'https://blacksea.msg91.com/chat-widget.js';
         script.onload = () => initChatWidget(helloConfig, 50);
 
         document.head.appendChild(script);
