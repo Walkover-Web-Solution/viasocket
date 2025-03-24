@@ -9,18 +9,27 @@ import getTemplates from '@/utils/getTemplates';
 
 export const runtime = 'experimental-edge';
 
-const validTemplates = ['scrivu0vj3zb', 'scriGUNykJjs', 'scriRiJVDmj7', 'scriowH1ryjy', 'scriEBJQRIJj', 'scriFqFSpmdo'];
+const validTemplates = [
+    'scriegTyJDVP',
+    'scriCigs4Nec',
+    'scriLkXFCiT8',
+    'scrigT3BMudV',
+    'scri18TO2dzy',
+    'scriY9PYKUJA',
+    'scri1jQYWdCH',
+    'scriHyYJTU6Q',
+];
 
 const Template = ({ navData, footerData, templateData }) => {
     const [visibleCount, setVisibleCount] = useState(6);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
-    console.log(templateData);
 
     useEffect(() => {
         const filtered = templateData.filter((template) => validTemplates.includes(template.id));
         setFilteredTemplates(filtered);
     }, [templateData]);
 
+    console.log(filteredTemplates);
     const handleLoadMore = () => {
         setVisibleCount((prev) => prev + 6);
     };
