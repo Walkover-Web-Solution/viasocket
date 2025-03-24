@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { HiArrowDown, HiArrowRight } from 'react-icons/hi2';
+import { HiArrowRight } from 'react-icons/hi2';
+import { FiPlus } from 'react-icons/fi';
 import { IoMdStopwatch } from 'react-icons/io';
 import { MdOutlineWebhook } from 'react-icons/md';
 import { GrDocument } from 'react-icons/gr';
@@ -41,7 +42,7 @@ const TemplateCard = ({ template }) => {
                         </div>
                     </div>
 
-                    <div className="h-4 w-0 border border-gray-600"></div>
+                    <div className="h-4 w-0 border border-gray-600 opacity-75"></div>
 
                     <div className="w-3/4 cont bg-[#E1F4FF] rounded-md shadow-md p-2 overflow-hidden">
                         {rootActions?.length > 0 ? (
@@ -63,10 +64,14 @@ const TemplateCard = ({ template }) => {
                             })
                         ) : (
                             <div className="px-2 flex items-center gap-4">
-                                 <HiArrowRight color="black" size={16} />
+                                <HiArrowRight color="black" size={16} />
                                 <p>No steps added</p>
                             </div>
                         )}
+                    </div>
+                    <div className="h-4 w-0 border border-gray-600 opacity-75"></div>
+                    <div className="border border-black p-1 rounded-sm opacity-75">
+                        <FiPlus size={16} />
                     </div>
                 </div>
 
