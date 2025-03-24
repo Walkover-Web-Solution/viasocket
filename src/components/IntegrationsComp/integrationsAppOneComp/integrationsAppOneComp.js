@@ -49,7 +49,7 @@ export default function IntegrationsAppOneComp({
                 console.error('Error parsing UTM data:', error);
             }
         } else {
-            setUtmSource('utm_source=website');
+            setUtmSource(`utm_source=${appOneDetails.appslugname}`);
         }
     }, []);
 
