@@ -38,7 +38,10 @@ const Template = ({ navData, footerData, templateData }) => {
                     ))}
                     {visibleCount < templateData?.length && (
                         <div className="flex max-w-[1200px] w-full justify-end">
-                            <button onClick={handleLoadMore} className="btn btn-outline border-2 border-gray-400 ">
+                            <button
+                                onClick={handleLoadMore}
+                                className="btn btn-outline border-2 border-gray-400 w-full"
+                            >
                                 Load More <MdKeyboardArrowDown size={24} />
                             </button>
                         </div>
