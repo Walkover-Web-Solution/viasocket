@@ -8,6 +8,8 @@ import { getFooterData, getNavData } from '@/utils/getData';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import getTemplates from '@/utils/getTemplates';
 
+export const runtime = 'experimental-edge';
+
 const Template = ({ navData, footerData, templateData }) => {
     const [visibleCount, setVisibleCount] = useState(10);
 
