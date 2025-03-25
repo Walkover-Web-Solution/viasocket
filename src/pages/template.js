@@ -1,20 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { FOOTER_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
-import { arrayOfTemplates } from '@/utils/constant';
 import { getFooterData, getNavData } from '@/utils/getData';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import getTemplates from '@/utils/getTemplates';
 
 export const runtime = 'experimental-edge';
 
-const Template = ({ navData, footerData, templateData }) => {
-    const [visibleCount, setVisibleCount] = useState(10);
+const validTemplates = [
+    'scriegTyJDVP',
+    'scriCigs4Nec',
+    'scriLkXFCiT8',
+    'scrigT3BMudV',
+    'scri18TO2dzy',
+    'scriY9PYKUJA',
+    'scri1jQYWdCH',
+    'scriHyYJTU6Q',
+];
 
+const Template = ({ navData, footerData, templateData }) => {
+    const [visibleCount, setVisibleCount] = useState(6);
+    const [filteredTemplates, setFilteredTemplates] = useState([]);
+
+    useEffect(() => {
+        const filtered = templateData.filter((template) => validTemplates.includes(template.id));
+        setFilteredTemplates(filtered);
+    }, [templateData]);
+
+    console.log(filteredTemplates);
     const handleLoadMore = () => {
-        setVisibleCount((prev) => prev + 10);
+        setVisibleCount((prev) => prev + 6);
     };
 
     return (
@@ -33,12 +50,12 @@ const Template = ({ navData, footerData, templateData }) => {
                         </h2>
                     </div>
                 </div>
-
                 <div className="cont gap-8 items-center">
-                    {templateData?.slice(0, visibleCount)?.map((template) => (
+                    {filteredTemplates.slice(0, visibleCount).map((template) => (
                         <TemplateCard key={template.id} template={template} />
                     ))}
-                    {visibleCount < templateData?.length && (
+
+                    {visibleCount < filteredTemplates.length && (
                         <div className="flex max-w-[1200px] w-full justify-end">
                             <button
                                 onClick={handleLoadMore}
@@ -49,7 +66,6 @@ const Template = ({ navData, footerData, templateData }) => {
                         </div>
                     )}
                 </div>
-
                 <div className="pb-4">
                     <div className="container">
                         <Footer footerData={footerData} />
