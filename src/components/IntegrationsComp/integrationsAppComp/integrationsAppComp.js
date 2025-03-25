@@ -3,10 +3,13 @@ import Image from 'next/image';
 import { MdSearch } from 'react-icons/md';
 import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
-import { APPERPAGE } from '@/const/integrations';
+// import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
 import searchApps from '@/utils/searchApps';
 import createURL from '@/utils/createURL';
+
+const APPERPAGE = 16;
+
 export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -87,7 +90,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     return (
         <>
             <div className="container cont">
-                <label className="input border max-w-[400px] border-black border-b-0 flex items-center gap-2 focus-within:outline-none">
+                <label className="input border max-w-[700px] border-black border-b-0 flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
