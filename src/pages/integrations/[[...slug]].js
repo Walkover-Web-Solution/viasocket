@@ -185,7 +185,7 @@ export async function getServerSideProps(context) {
             INTECATEGORY_FIELDS,
             `filter=slug='${integrationsInfo?.category || 'all'}'`
         );
-        const apps = await getApps({ page: integrationsInfo?.page, categoryData });
+        const apps = await getApps({ page: integrationsInfo?.page, categoryData, limit: 16 });
         const combosData = await getCombos(integrationsInfo);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
