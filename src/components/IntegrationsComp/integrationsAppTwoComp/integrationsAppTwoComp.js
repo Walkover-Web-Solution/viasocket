@@ -47,7 +47,7 @@ export default function IntegrationsAppTwoComp({
                 console.error('Error parsing UTM data:', error);
             }
         } else {
-            setUtmSource('utm_source=website');
+            setUtmSource(`utm_source=integrations/${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
         }
     }, []);
     return (
