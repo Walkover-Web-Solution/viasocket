@@ -3,7 +3,7 @@ import { HiArrowRight } from 'react-icons/hi2';
 import { FiPlus } from 'react-icons/fi';
 import { IoMdStopwatch } from 'react-icons/io';
 import { MdOutlineWebhook } from 'react-icons/md';
-import { GrDocument } from 'react-icons/gr';
+import { DiJsBadge } from 'react-icons/di';
 import Link from 'next/link';
 
 const TemplateCard = ({ template }) => {
@@ -55,7 +55,7 @@ const TemplateCard = ({ template }) => {
                                             {block?.iconUrl ? (
                                                 <Image src={block?.iconUrl} alt={action} width={20} height={20} />
                                             ) : (
-                                                <GrDocument color="black" size={16} />
+                                                <DiJsBadge color="black" size={16} />
                                             )}
                                             <p>{action}</p>
                                         </div>
