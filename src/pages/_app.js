@@ -46,19 +46,41 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 target = target.parentElement;
             }
 
-            if (target && target.tagName === 'A') {
-                event.preventDefault();
-                setShowSkeleton(true);
-                window.location.href = target.href;
+            if (
+                target &&
+                target.tagName === 'A' &&
+                target.href &&
+                !target.href.includes('#') &&
+                target.target !== '_blank'
+            ) {
+                const targetUrl = new URL(target.href);
+
+                if (targetUrl.origin === window.location.origin) {
+                    event.preventDefault();
+                    setShowSkeleton(true);
+                    router.push(targetUrl.pathname + targetUrl.search + targetUrl.hash);
+                }
             }
         };
 
+        const handleRouteChangeComplete = () => {
+            setShowSkeleton(false);
+        };
+
+        const handlePopState = () => {
+            setShowSkeleton(false);
+        };
+
         document.addEventListener('click', handleLinkClick);
+        router.events.on('routeChangeComplete', handleRouteChangeComplete);
+        window.addEventListener('popstate', handlePopState);
 
         return () => {
             document.removeEventListener('click', handleLinkClick);
+            router.events.off('routeChangeComplete', handleRouteChangeComplete);
+            window.removeEventListener('popstate', handlePopState);
         };
-    }, []);
+    }, [router]);
 
     useEffect(() => {
         const helloConfig = {
