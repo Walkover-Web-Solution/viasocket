@@ -90,9 +90,7 @@ const TemplateCard = ({ template }) => {
                                                             }`}
                                                             onClick={() => setSelectedIndex(index)}
                                                         >
-                                                            {index === 0
-                                                                ? 'Path'
-                                                                : `Path ${String.fromCharCode(65 + index)}`}
+                                                            Path {String.fromCharCode(65 + index)}
                                                         </button>
                                                     ))}
                                                 </div>
@@ -151,13 +149,60 @@ const TemplateCard = ({ template }) => {
                         <h1 className="h1">{template?.title}</h1>
                         <h2 className="sub__h1">{template?.metadata?.description}</h2>
                     </div>
-                    <div className="flex flex-wrap gap-2">
-                        {serviceNames?.map((name, index) => (
-                            <span key={index} className="px-4 py-2 bg-black text-white hover:bg-accent">
-                                {name}
-                            </span>
-                        ))}
+                    <div className="flex flex-wrap gap-2 items-center">
+                        {(() => {
+                            const uniqueIcons = new Set();
+                            const iconsToRender = [];
+
+                            // Add the trigger icon to the set
+                            const trigger = template?.published_json_script?.trigger;
+                            const triggerIconUrl = trigger?.iconUrl;
+
+                            if (triggerIconUrl && !uniqueIcons.has(triggerIconUrl)) {
+                                uniqueIcons.add(triggerIconUrl);
+                                iconsToRender.push(
+                                    <div key="trigger" className="border border-black p-1">
+                                        <Image src={triggerIconUrl} width={24} height={24} />
+                                    </div>
+                                );
+                            } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
+                                uniqueIcons.add('trigger-default');
+                                iconsToRender.push(
+                                    <div key="trigger-default" className="border border-black p-1">
+                                        {trigger?.triggerType === 'cron' ? (
+                                            <IoMdStopwatch size={24} />
+                                        ) : (
+                                            <MdOutlineWebhook size={24} />
+                                        )}
+                                    </div>
+                                );
+                            }
+
+                            rootActions.forEach((action) => {
+                                const block = blocks[action];
+                                const iconUrl = block?.iconUrl;
+
+                                if (iconUrl && !uniqueIcons.has(iconUrl)) {
+                                    uniqueIcons.add(iconUrl);
+                                    iconsToRender.push(
+                                        <div key={iconUrl} className="border border-black p-1">
+                                            <Image src={iconUrl} width={24} height={24} />
+                                        </div>
+                                    );
+                                } else if (!iconUrl && !uniqueIcons.has('default-js')) {
+                                    uniqueIcons.add('default-js');
+                                    iconsToRender.push(
+                                        <div key={action} className="border border-black p-1">
+                                            <DiJsBadge size={24} />
+                                        </div>
+                                    );
+                                }
+                            });
+
+                            return iconsToRender;
+                        })()}
                     </div>
+
                     <div className="flex justify-end">
                         <Link href={`https://flow.viasocket.com/template/${template?.id}`}>
                             <button className="btn btn-accent ">Use This Template</button>
