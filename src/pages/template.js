@@ -19,7 +19,7 @@ const validTemplates = [
     'scri1jQYWdCH',
     'scriHyYJTU6Q',
     'scriklTHv7Ww',
-    'scriFqFSpmdo',
+    'scripJJTv2PZ',
     'scrirRkcLV9Z',
     'scriOlocCYZL',
     'scrixtgO9oc0',
