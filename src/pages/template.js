@@ -18,6 +18,14 @@ const validTemplates = [
     'scriY9PYKUJA',
     'scri1jQYWdCH',
     'scriHyYJTU6Q',
+    'scriklTHv7Ww',
+    'scriFqFSpmdo',
+    'scrirRkcLV9Z',
+    'scriOlocCYZL',
+    'scrixtgO9oc0',
+    'scriegTyJDVP',
+    'scriO3u6AJug',
+    'scrimBQIOdxN',
 ];
 
 const Template = ({ navData, footerData, templateData }) => {
