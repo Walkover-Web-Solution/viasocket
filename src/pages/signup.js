@@ -7,6 +7,7 @@ import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS 
 import { MdStar } from 'react-icons/md';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import Navbar from '@/components/navbar/navbar';
+import Footer from '@/components/footer/footer';
 
 export const runtime = 'experimental-edge';
 
@@ -29,7 +30,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ metaData, testimonials, pathArray, redirect_to, navData }) => {
+const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footerData }) => {
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
@@ -135,6 +136,9 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData }) => {
                 </div>
             </div>
             {/* <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" /> */}
+            <div className="container pb-4 mt-12">
+                <Footer footerData={footerData} />
+            </div>
         </>
     );
 };

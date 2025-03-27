@@ -7,6 +7,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
 import { getFooterData, getIndexFeatures, getMetaData, getNavData } from '@/utils/getData';
 import { setUtmSource } from '@/utils/handleUtmSource';
+import Navbar from '@/components/navbar/navbar';
+import Footer from '@/components/footer/footer';
 
 export const runtime = 'experimental-edge';
 
@@ -29,7 +31,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
+const Login = ({ features, metaData, pathArray, redirect_to, utm_source, navData, footerData }) => {
     let featuresArrOne = [];
     let featuresArrTwo = [];
     features.map((feature) => {
@@ -91,9 +93,12 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/login'} pathArray={pathArray} />
+            <div className="container">
+                <Navbar navData={navData} utm={'/signup'} />
+            </div>
             <div className="flex w-screen md:h-screen flex-col-reverse md:flex-row">
                 <div className="md:w-3/5 w-full py-6 px-3 md:p-10 flex flex-col gap-6">
-                    <Link href="/" aria-label="Logo viaSocket">
+                    {/* <Link href="/" aria-label="Logo viaSocket">
                         <Image
                             className="hidden md:block"
                             src="/assets/brand/logo.svg"
@@ -101,7 +106,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
                             height={40}
                             alt="viasocket"
                         />
-                    </Link>
+                    </Link> */}
 
                     <div className="text-2xl font-bold">Features</div>
                     <div className="grid grid-cols-2 gap-6">
@@ -164,6 +169,9 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
                         </Link>
                     </div>
                 </div>
+            </div>
+            <div className="container pb-4 ">
+                <Footer footerData={footerData} />
             </div>
         </>
     );
