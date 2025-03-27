@@ -13,12 +13,11 @@ import {
     NAVIGATION_FIELDS,
     PRICINGBETTERCHOICE_FIELDS,
 } from '@/const/fields';
-import Autocomplete from 'react-autocomplete';
 import getCountries from '@/utils/getCountries';
-import Image from 'next/image';
 import checkDevelopingCountry from '@/utils/checkDevelopingCountry';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
+import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
 
 export const runtime = 'experimental-edge';
 
@@ -103,49 +102,18 @@ export default function pricing({ navData, footerData, faqData, betterChoice, me
                                             </li>
                                         </ul>
                                         <div className="flex gap-2 xl:flex-row lg:flex-col md:flex-row flex-col">
-                                            <div
-                                                tabIndex={0}
-                                                className="dropdown-content flex items-center border border-black menu relative z-[1] w-52 p-2  country-autocomplete"
-                                            >
-                                                <Autocomplete
-                                                    getItemValue={(item) => item?.name?.common}
-                                                    items={filterCountries(inputValue)}
-                                                    renderItem={(item, isHighlighted) => (
-                                                        <div
-                                                            className={`px-2 py-1 cursor-pointer flex items-center gap-2 ${
-                                                                isHighlighted ? 'bg-secondary' : ''
-                                                            }`}
-                                                        >
-                                                            <Image
-                                                                src={item?.flags?.svg || 'http:placehold.co/20x20'}
-                                                                width={16}
-                                                                height={16}
-                                                                alt={item?.flags?.alt}
-                                                            />
-                                                            {item?.name?.common}
-                                                        </div>
-                                                    )}
-                                                    value={inputValue} // Use the new state variable
-                                                    onChange={(e) => setInputValue(e.target.value)} // Update the state on input change
-                                                    onSelect={(val, item) => {
-                                                        setSelectedCountry(item);
-                                                        setInputValue(item?.name?.common); // Update the input value when an item is selected
-                                                    }}
-                                                    inputProps={{
-                                                        placeholder: 'Select Country',
-                                                    }}
-                                                    menuStyle={{
-                                                        position: 'flex',
-                                                        overflow: 'auto',
-                                                        maxHeight: '400px',
-                                                        position: 'absolute',
-                                                        background: 'white',
-                                                        top: '50px',
-                                                        left: '0px',
-                                                    }}
-                                                />
-                                            </div>
-                                            <label className=" border border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
+                                            <CustomAutocomplete
+                                                items={filterCountries(inputValue)}
+                                                value={inputValue}
+                                                onChange={(e) => setInputValue(e.target.value)}
+                                                onSelect={(val, item) => {
+                                                    setSelectedCountry(item);
+                                                    setInputValue(item?.name?.common);
+                                                }}
+                                                placeholder="Select Country"
+                                            />
+
+                                            <label className="border border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
                                                 <span className="text-sm uppercase tracking-wider">Billed Yearly</span>
                                                 <input
                                                     type="checkbox"
