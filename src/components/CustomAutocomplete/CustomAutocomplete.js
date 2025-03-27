@@ -60,6 +60,9 @@ export const CustomAutocomplete = ({
         onChange(e);
         setIsOpen(true);
         setHighlightedIndex(-1);
+        if (newValue === '') {
+            onSelect('', null);
+        }
     };
 
     const handleSelect = (item) => {
