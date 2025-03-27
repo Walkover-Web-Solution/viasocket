@@ -190,6 +190,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         target="_blank"
                                         className={`btn btn-primary ${selectedAction && selectedTrigger ? '' : 'btn-disabled'}`}
                                         href={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger?.rowid}/action?events=${selectedAction?.rowid}`}
+                                        rel="nofollow"
                                     >
                                         Try It
                                     </Link>

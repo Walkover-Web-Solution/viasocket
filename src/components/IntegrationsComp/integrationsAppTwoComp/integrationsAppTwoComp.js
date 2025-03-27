@@ -62,7 +62,7 @@ export default function IntegrationsAppTwoComp({
             <div style={{ background: appOneDetails?.brandcolor }} className="">
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`}>
+                        <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`} rel="nofollow">
                             <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
