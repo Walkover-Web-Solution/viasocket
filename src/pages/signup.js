@@ -97,6 +97,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                                     <Link
                                         className="active-link text-link"
                                         href={`${process.env.NEXT_PUBLIC_FLOW_URL}?utm_source=${'website'}`}
+                                        rel="nofollow"
                                     >
                                         Login
                                     </Link>

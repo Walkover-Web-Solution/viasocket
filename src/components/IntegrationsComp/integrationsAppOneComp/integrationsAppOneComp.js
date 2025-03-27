@@ -79,7 +79,7 @@ export default function IntegrationsAppOneComp({
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
-                            <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`}>
+                            <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`} rel="nofollow">
                                 <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
@@ -106,6 +106,7 @@ export default function IntegrationsAppOneComp({
                     target="_blank"
                     href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?utm_source=${utm}`}
                     className="flex items-center gap-2 container hover:text-blue-600"
+                    rel="nofollow"
                 >
                     Connect to {appOneDetails?.name} <MdOpenInNew />
                 </Link>

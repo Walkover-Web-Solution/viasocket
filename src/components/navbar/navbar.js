@@ -111,6 +111,7 @@ export default function Navbar({ navData, utm }) {
                     <Link
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10]`}
                         href={`https://flow.viasocket.com?${utmSource}`}
+                        rel="nofollow"
                     >
                         Login
                     </Link>
@@ -174,6 +175,7 @@ export default function Navbar({ navData, utm }) {
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
                         href={`https://flow.viasocket.com?${utmSource}`}
                         aria-label="Login"
+                        rel="nofollow"
                     >
                         <MdLogin size={24} />
                     </Link>
