@@ -96,28 +96,18 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source, navData
             <div className="container">
                 <Navbar navData={navData} utm={'/signup'} />
             </div>
-            <div className="flex w-screen md:h-screen flex-col-reverse md:flex-row">
-                <div className="md:w-3/5 w-full py-6 px-3 md:p-10 flex flex-col gap-6">
-                    {/* <Link href="/" aria-label="Logo viaSocket">
-                        <Image
-                            className="hidden md:block"
-                            src="/assets/brand/logo.svg"
-                            width={158.6}
-                            height={40}
-                            alt="viasocket"
-                        />
-                    </Link> */}
-
+            <div className="flex flex-col-reverse md:flex-row md:min-h-[calc(100vh-200px)]">
+                <div className="md:w-3/5 w-full py-6 px-3 md:p-10 flex flex-col gap-6 md:max-w-4xl md:mx-auto">
                     <div className="text-2xl font-bold">Features</div>
                     <div className="grid grid-cols-2 gap-6">
                         {featuresArrTwo.length > 0 &&
                             featuresArrTwo.map((feature, index) => (
                                 <div
                                     key={index}
-                                    className="signup_img md:p-6 p-2 bg-[#D8E2DC] flex flex-col col-span-2 gap-6 "
+                                    className="signup_img md:p-6 p-2 bg-[#D8E2DC] flex flex-col col-span-2 gap-6"
                                 >
                                     <Image
-                                        className=""
+                                        className="w-full h-auto"
                                         src={feature?.image[1] ? feature.image[1] : 'https://placehold.co/1200x400'}
                                         width={1000}
                                         height={800}
@@ -145,7 +135,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source, navData
                     </div>
                 </div>
 
-                <div className="md:w-2/5 w-full bg-white py-6 px-3 md:p-10 flex flex-col gap-4">
+                <div className="md:w-2/5 w-full bg-white py-6 px-3 md:p-10 flex flex-col gap-4 md:mt-10">
                     <Link href="/" className="md:hidden block" aria-label="logo">
                         <Image src="/assets/brand/logo.svg" width={158.6} height={40} alt="viasocket" />
                     </Link>
@@ -170,7 +160,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source, navData
                     </div>
                 </div>
             </div>
-            <div className="container pb-4 ">
+            <div className="container pb-4 mt-6">
                 <Footer footerData={footerData} />
             </div>
         </>
