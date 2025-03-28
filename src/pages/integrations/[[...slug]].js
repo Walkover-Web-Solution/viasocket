@@ -64,9 +64,7 @@ export default function Integrations({
     } else if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
         return (
             <div className="cont md:gap-20 sm:gap-16 gap-12">
-                <Head>
-                    <link rel="canonical" href={`https://viasocket.com${pageInfo?.url || '/'}`} />
-                </Head>
+                <Head>{/* <link rel="canonical" href={`https://viasocket.com${pageInfo?.url || '/'}`} /> */}</Head>
 
                 <IntegrationsAppTwoComp
                     pageInfo={pageInfo}
