@@ -19,7 +19,7 @@ const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedDa
     return (
         <>
             <div className="container sticky top-0 z-[100]">
-                <Navbar navData={navData} utm={'/index'} />
+                <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
                 <div className="w-full min-h-fit lg:h-dvh  border-b border-black">

@@ -45,7 +45,7 @@ const Template = ({ navData, footerData, templateData }) => {
     return (
         <>
             <div className="container sticky top-0 z-[100]">
-                <Navbar navData={navData} utm={'/index'} />
+                <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont md:gap-36 sm:gap-24 gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center">
