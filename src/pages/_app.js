@@ -104,9 +104,22 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         getUtmSource();
     }, []);
 
+    const pathSegments = router.asPath.split('/');
+    const isPaginated = pathSegments.includes('page');
+
+    // Determine the base path (first page)
+    let canonicalUrl = `https://viasocket.com${router.asPath}`;
+    if (isPaginated) {
+        if (pathSegments.includes('category')) {
+            canonicalUrl = `https://viasocket.com/integrations/category/${pathSegments[3]}`;
+        } else {
+            canonicalUrl = `https://viasocket.com/integrations/${pathSegments[2]}`;
+        }
+    }
+
     return (
         <>
-            <HeadComp />
+            <HeadComp canonicalUrl={canonicalUrl} />
             <ChatWidget />
             {/* <Skeleton />  */}
             {showSkeleton ? (
