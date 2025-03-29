@@ -1,11 +1,11 @@
 import ChatBoxComp from '@/components/chatBoxComp/chatBoxComp';
-import Navbar from '@/components/navbar/navbar';
-import { LinkButton } from '@/components/uiComponents/buttons';
+import CustomLogin from '@/components/customLogin/CustomLogin';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import Image from 'next/image';
 import { useLayoutEffect } from 'react';
 import { MdCheck } from 'react-icons/md';
 
-export default function IndexBannerComp({ redirect_to, utm_source }) {
+export default function IndexBannerComp({ redirect_to }) {
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
@@ -20,9 +20,8 @@ export default function IndexBannerComp({ redirect_to, utm_source }) {
                 redirect_path: redirect_to,
             };
         }
-        configuration.state = JSON.stringify({
-            utm_source: utm_source,
-        });
+        const utm_source = setUtmSource();
+        configuration.state = utm_source;
 
         if (typeof window.initVerification === 'function') {
             window.initVerification(configuration);
@@ -69,9 +68,7 @@ export default function IndexBannerComp({ redirect_to, utm_source }) {
                             </h2>
                         </div>
                         <div className="w-full flex lg:flex-row md:flex-col sm:flex-row flex-col gap-8  lg:items-center md:items-start sm:items-center items-start">
-                            <div className="min-h-[222px] min-w-[198px]">
-                                <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" />
-                            </div>
+                            <CustomLogin redirect_to={redirect_to} />
                             <ul className="flex flex-col gap-4">
                                 {signupFeatures.map((feature, index) => {
                                     return (

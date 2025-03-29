@@ -7,6 +7,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
 import { getFooterData, getIndexFeatures, getMetaData, getNavData } from '@/utils/getData';
 import { setUtmSource } from '@/utils/handleUtmSource';
+import CustomLogin from '@/components/customLogin/CustomLogin';
 
 export const runtime = 'experimental-edge';
 
@@ -29,7 +30,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
+const Login = ({ features, metaData, pathArray, redirect_to }) => {
     let featuresArrOne = [];
     let featuresArrTwo = [];
     features.map((feature) => {
@@ -40,53 +41,6 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
             featuresArrTwo.push(feature);
         }
     });
-
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        const configuration = {
-            referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {},
-            failure: (error) => {
-                console.log('failure reason', error);
-            },
-        };
-        if (redirect_to) {
-            configuration.addInfo = {};
-            configuration.addInfo = {
-                redirect_path: redirect_to,
-            };
-        }
-
-        const utm_source = setUtmSource();
-        configuration.state = utm_source;
-
-        const initializeVerification = () => {
-            if (typeof window.initVerification === 'function') {
-                window.initVerification(configuration);
-                setLoading(false); // Set loading to false after function is initialized
-            } else {
-                console.error('initVerification function not found');
-                setLoading(false); // Set loading to false if function is not found
-            }
-        };
-
-        if (typeof window.initVerification === 'function') {
-            initializeVerification();
-        } else {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
-
-            script.onload = initializeVerification;
-
-            document.body.appendChild(script);
-
-            return () => {
-                document.body.removeChild(script);
-            };
-        }
-    }, []);
 
     return (
         <>
@@ -146,17 +100,8 @@ const Login = ({ features, metaData, pathArray, redirect_to, utm_source }) => {
                     </Link>
 
                     <div className="text-2xl font-bold">Login</div>
-                    {loading ? (
-                        <>
-                            <Skeleton height={32} width={210} />
-                            <Skeleton height={32} width={210} style={{ marginTop: '10px' }} />
-                        </>
-                    ) : (
-                        <>
-                            <div id="googleLogin" className="loginBtn_google" />
-                            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_msg91" />
-                        </>
-                    )}
+                    <div id="googleLogin" className="loginBtn_google" />
+                    <CustomLogin redirect_to={redirect_to} />
                     <div className="flex">
                         <span className="text-sm">Create a new Account,</span>
                         <Link href="/signup" className="ms-1 text-sm text-sky-700">
