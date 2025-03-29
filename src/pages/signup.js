@@ -8,6 +8,7 @@ import { MdStar } from 'react-icons/md';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
+import CustomLogin from '@/components/customLogin/CustomLogin';
 
 export const runtime = 'experimental-edge';
 
@@ -31,49 +32,6 @@ export async function getServerSideProps(context) {
 }
 
 const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footerData }) => {
-    useLayoutEffect(() => {
-        const configuration = {
-            referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {},
-            failure: (error) => {
-                console.log('failure reason', error);
-            },
-        };
-        if (redirect_to) {
-            configuration.addInfo = {};
-            configuration.addInfo = {
-                redirect_path: redirect_to,
-            };
-        }
-        const utm_source = setUtmSource();
-        configuration.state = utm_source;
-
-        if (typeof window.initVerification === 'function') {
-            window.initVerification(configuration);
-        } else {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
-
-            const handleLoad = () => {
-                if (typeof window.initVerification === 'function') {
-                    window.initVerification(configuration);
-                } else {
-                    console.error('initVerification function not found');
-                }
-            };
-
-            script.addEventListener('load', handleLoad);
-
-            document.body.appendChild(script);
-
-            return () => {
-                document.body.removeChild(script);
-                script.removeEventListener('load', handleLoad);
-            };
-        }
-    }, []);
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/signup'} pathArray={pathArray} />
@@ -89,9 +47,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                                 <p className="text-center">Start your FREE 30-day trial. No credit card needed.</p>
                             </div>
                             <div className="cont gap-8">
-                                <div className="min-h-[222px]">
-                                    <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" />
-                                </div>
+                                <CustomLogin redirect_to={redirect_to} />
                                 <p>
                                     Already have an account?{' '}
                                     <Link
@@ -136,7 +92,6 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                     </div>
                 </div>
             </div>
-            {/* <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" /> */}
             <div className="container pb-4 mt-12">
                 <Footer footerData={footerData} />
             </div>
