@@ -6,12 +6,12 @@ export default async function getApps(query) {
         const fetchUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all`; // Update the API endpoint
         const params = new URLSearchParams({
             category: (category !== 'All' && category) || '',
-            limit: APPERPAGE,
+            limit: query?.limit || APPERPAGE,
             offset: query?.page ? query?.page * APPERPAGE : 0,
         });
 
         const response = await fetch(`${fetchUrl}?${params.toString()}`);
-        
+
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
