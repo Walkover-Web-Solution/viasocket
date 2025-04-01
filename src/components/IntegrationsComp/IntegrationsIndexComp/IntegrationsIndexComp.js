@@ -11,6 +11,8 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
+import ErrorComp from '@/components/404/404Comp';
+
 export default function IntegrationsIndexComp({
     pageInfo,
     integrationsInfo,
@@ -21,6 +23,10 @@ export default function IntegrationsIndexComp({
     categoryData,
     categories,
 }) {
+    if (!categoryData || Object.keys(categoryData).length === 0) {
+        return <ErrorComp />;
+    }
+
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -138,7 +144,7 @@ export default function IntegrationsIndexComp({
                     </div>
                     <div>
                         <div className="p-4 md:p-8 cont gap-2">
-                            {integrationsInfo?.category && integrationsInfo?.category != 'All' ? (
+                            {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                 <>
                                     <h1 className="h1 text-accent">
                                         <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
@@ -151,7 +157,7 @@ export default function IntegrationsIndexComp({
                                     <h1 className="h1  text-accent italic">
                                         {' '}
                                         5000+
-                                        <span className="text-black not-italic"> viaSocket Integrations</span>
+                                        <span className="text-black not-italic"> Apps</span>
                                     </h1>
                                     <p>
                                         Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
