@@ -148,7 +148,9 @@ export default function IntegrationsIndexComp({
                                 <>
                                     <h1 className="h1 text-accent">
                                         <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
-                                        {decodeURIComponent(categoryData?.name)}
+                                        {integrationsInfo?.category === 'all'
+                                            ? 'Apps'
+                                            : decodeURIComponent(categoryData?.name)}
                                     </h1>
                                     <p>{categoryData?.subheading}</p>
                                 </>
