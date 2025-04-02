@@ -9,54 +9,11 @@ export const CustomAutocomplete = ({
     placeholder = 'Select Country',
     renderItem = null,
     getItemValue = (item) => item?.name?.common,
-    defaultCountry = null, // Can be a string (country name) or an object
 }) => {
     const [inputValue, setInputValue] = useState(value);
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
     const wrapperRef = useRef(null);
-    const defaultApplied = useRef(false);
-
-    // Handle default country on component mount or when items/defaultCountry change
-    useEffect(() => {
-        if (defaultCountry && !defaultApplied.current && items.length > 0) {
-            // If defaultCountry is a string (name), find the matching country object
-            if (typeof defaultCountry === 'string') {
-                const foundCountry = items.find(
-                    (item) =>
-                        getItemValue(item)?.toLowerCase() === defaultCountry.toLowerCase() ||
-                        item?.name?.common?.toLowerCase() === defaultCountry.toLowerCase()
-                );
-
-                if (foundCountry) {
-                    const countryName = getItemValue(foundCountry);
-                    setInputValue(countryName);
-                    onSelect(countryName, foundCountry);
-                    defaultApplied.current = true;
-                }
-            }
-            // If defaultCountry is already an object
-            else {
-                const countryName = getItemValue(defaultCountry);
-                setInputValue(countryName);
-                onSelect(countryName, defaultCountry);
-                defaultApplied.current = true;
-            }
-        }
-    }, [defaultCountry, items, getItemValue, onSelect]);
-
-    // Reset the default applied flag if defaultCountry changes
-    useEffect(() => {
-        if (!defaultCountry) {
-            defaultApplied.current = false;
-        }
-    }, [defaultCountry]);
-
-    useEffect(() => {
-        if (value !== inputValue) {
-            setInputValue(value);
-        }
-    }, [value]);
 
     useEffect(() => {
         function handleClickOutside(event) {
@@ -127,26 +84,15 @@ export const CustomAutocomplete = ({
 
     return (
         <div className="relative" ref={wrapperRef}>
-            <div className="relative w-full h-full">
-                <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-                    {inputValue && (
-                        <img
-                            src={items.find((item) => getItemValue(item) === inputValue)?.flags?.svg}
-                            alt={items.find((item) => getItemValue(item) === inputValue)?.flags?.alt || ''}
-                            className="w-5 h-5"
-                        />
-                    )}
-                </div>
-                <input
-                    type="text"
-                    value={inputValue}
-                    onChange={handleInputChange}
-                    onFocus={() => setIsOpen(true)}
-                    onKeyDown={handleKeyDown}
-                    placeholder={placeholder}
-                    className="w-full h-full p-2 pl-8 bg-transparent border border-black"
-                />
-            </div>
+            <input
+                type="text"
+                value={inputValue}
+                onChange={handleInputChange}
+                onFocus={() => setIsOpen(true)}
+                onKeyDown={handleKeyDown}
+                placeholder={placeholder}
+                className="w-full h-full p-2 bg-transparent border border-black"
+            />
             {isOpen && items.length > 0 && (
                 <div className="absolute z-10 w-full mt-1 bg-white border border-black rounded shadow-lg max-h-60 overflow-auto">
                     {items.map((item, index) => (

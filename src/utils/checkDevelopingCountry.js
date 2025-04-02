@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-export default async function getPricingData(countryCode) {
+export default async function checkDevelopingCountry(country) {
     try {
-        const response = await axios.post(`https://flow.sokt.io/func/scri9yYiEIJq?country_code=${countryCode}`);
+        const response = await axios.post(`https://flow.sokt.io/func/scrirIacMyPX?country=${country}`);
         const responseData = await response?.data;
         return responseData;
     } catch (error) {
