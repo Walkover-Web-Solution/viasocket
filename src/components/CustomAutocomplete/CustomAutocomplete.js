@@ -14,13 +14,12 @@ export const CustomAutocomplete = ({
     const [inputValue, setInputValue] = useState(value);
     const [isOpen, setIsOpen] = useState(false);
     const [highlightedIndex, setHighlightedIndex] = useState(-1);
+    const [selectedFlag, setSelectedFlag] = useState('');
     const wrapperRef = useRef(null);
     const defaultApplied = useRef(false);
 
-    // Handle default country on component mount or when items/defaultCountry change
     useEffect(() => {
         if (defaultCountry && !defaultApplied.current && items.length > 0) {
-            // If defaultCountry is a string (name), find the matching country object
             if (typeof defaultCountry === 'string') {
                 const foundCountry = items.find(
                     (item) =>
@@ -31,21 +30,20 @@ export const CustomAutocomplete = ({
                 if (foundCountry) {
                     const countryName = getItemValue(foundCountry);
                     setInputValue(countryName);
+                    setSelectedFlag(foundCountry?.flags?.svg);
                     onSelect(countryName, foundCountry);
                     defaultApplied.current = true;
                 }
-            }
-            // If defaultCountry is already an object
-            else {
+            } else {
                 const countryName = getItemValue(defaultCountry);
                 setInputValue(countryName);
+                setSelectedFlag(defaultCountry?.flags?.svg);
                 onSelect(countryName, defaultCountry);
                 defaultApplied.current = true;
             }
         }
     }, [defaultCountry, items, getItemValue, onSelect]);
 
-    // Reset the default applied flag if defaultCountry changes
     useEffect(() => {
         if (!defaultCountry) {
             defaultApplied.current = false;
@@ -104,6 +102,7 @@ export const CustomAutocomplete = ({
         setIsOpen(true);
         setHighlightedIndex(-1);
         if (newValue === '') {
+            setSelectedFlag('');
             onSelect('', null);
         }
     };
@@ -111,6 +110,7 @@ export const CustomAutocomplete = ({
     const handleSelect = (item) => {
         const itemValue = getItemValue(item);
         setInputValue(itemValue);
+        setSelectedFlag(item?.flags?.svg);
         onSelect(itemValue, item);
         setIsOpen(false);
     };
@@ -129,9 +129,9 @@ export const CustomAutocomplete = ({
         <div className="relative" ref={wrapperRef}>
             <div className="relative w-full h-full">
                 <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-                    {inputValue && (
+                    {selectedFlag && (
                         <img
-                            src={items.find((item) => getItemValue(item) === inputValue)?.flags?.svg}
+                            src={selectedFlag}
                             alt={items.find((item) => getItemValue(item) === inputValue)?.flags?.alt || ''}
                             className="w-5 h-5"
                         />
