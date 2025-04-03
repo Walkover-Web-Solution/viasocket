@@ -132,7 +132,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             name: 'starter',
             slug: 'starter',
             description: 'For Individuals who need higher limits.',
-            invocations: 10000,
+            invocations: '10,000',
             execution_time: 30,
             min_polling_time: 1,
             active_workflows: 'Unlimited',
@@ -141,7 +141,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             name: 'team',
             slug: 'team',
             description: 'For Teams who want to collaborate on work.',
-            invocations: 10000,
+            invocations: '10,000',
             execution_time: 60,
             min_polling_time: 1,
             active_workflows: 'Unlimited',
@@ -165,8 +165,8 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
             {selectedCountry?.name?.common && (
                 <>
-                    <div className="w-full p-2 text-center bg-[#0FA388]">
-                        <p className="text-lg">
+                    <div className="w-full p-2 text-center bg-black">
+                        <p className="text-lg text-white">
                             <img
                                 src={selectedCountry?.flags?.svg}
                                 alt={selectedCountry?.flags?.alt || 'Country flag'}
@@ -185,18 +185,20 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             <div className="container cont pb-4 lg:gap-24 gap-6">
                 <div className="flex flex-col justify-center gap-6 relative">
                     <div className="border border-black gradient-background">
-                        <div className="h-28 "></div>
+                        <div className="h-20"></div>
                         <div className="grid grid-cols-1 lg:grid-cols-2">
-                            <div className=" flex flex-col gap-8 md:p-12 p-6 justify-center ">
+                            <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">
                                 <h1 className="h1">Simple Pricing for Powerful Automation</h1>
-
-                                <ul className="text-lg cont gap-1">
-                                    <li>Enjoy a 30-Day Free Trial.</li>
-                                    <li>No credit card required.</li>
-                                    <li>
-                                        <strong>Special Offer:</strong> 90% off for developing countries
-                                    </li>
-                                </ul>
+                                <div className="flex flex-row text-xl gap-4">
+                                    <p>Enjoy a 30-Day Free Trial</p>
+                                    <p className="border-l border-black pl-4">No credit card required</p>
+                                </div>
+                                <div className="border border-black p-2 w-fit">
+                                    <p className="text-sm flex flex-wrap items-center gap-2">
+                                        <span className="text-3xl text-accent font-bold">Special Offer: 90% off</span>
+                                        <span className="inline-block align-middle">for developing countries</span>
+                                    </p>
+                                </div>
                                 <div className="flex gap-2 xl:flex-row lg:flex-col md:flex-row flex-col">
                                     <CustomAutocomplete
                                         items={filterCountries(inputValue)}
@@ -226,22 +228,22 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                               className={`flex flex-col justify-between border border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
                                           >
                                               <div className="flex flex-col gap-12 p-8">
-                                                  <div className="h-8 bg-gray-200 rounded-md w-3/4 animate-pulse"></div>
+                                                  <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
                                                   <div className="flex flex-col gap-2">
-                                                      <div className="h-12 bg-gray-200 rounded-md w-1/2 animate-pulse"></div>
-                                                      <div className="h-4 bg-gray-200 rounded-md w-1/4 animate-pulse"></div>
+                                                      <div className="h-12 bg-gray-200 rounded-md w-1/2 skeleton"></div>
+                                                      <div className="h-4 bg-gray-200 rounded-md w-1/4 skeleton"></div>
                                                   </div>
                                                   <ul className="flex flex-col gap-2">
                                                       {[1, 2, 3, 4].map((i) => (
                                                           <li
                                                               key={i}
-                                                              className="h-4 bg-gray-200 rounded-md animate-pulse"
+                                                              className="h-4 bg-gray-200 rounded-md skeleton"
                                                           ></li>
                                                       ))}
                                                   </ul>
-                                                  <div className="h-4 bg-gray-200 rounded-md w-full animate-pulse"></div>
+                                                  <div className="h-4 bg-gray-200 rounded-md w-full skeleton"></div>
                                               </div>
-                                              <div className="h-12 bg-gray-200 rounded-none mt-auto animate-pulse"></div>
+                                              <div className="h-12 bg-gray-200 rounded-none mt-auto skeleton"></div>
                                           </div>
                                       ))
                                     : planDetails.map((plan, i) => {
@@ -272,10 +274,22 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                                           </span>
                                                       </div>
                                                       <ul className="flex flex-col gap-2">
-                                                          <li>Invocations: {plan.invocations}/Month</li>
-                                                          <li>Execution Time Limit: {plan.execution_time} Seconds</li>
-                                                          <li>Min. Polling time: {plan?.min_polling_time} Min</li>
-                                                          <li>{plan?.active_workflows} Active Workflows</li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span> Invocations:{' '}
+                                                              {plan.invocations}/Month
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span> Execution Time
+                                                              Limit: {plan.execution_time} Seconds
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span> Min. Polling
+                                                              time: {plan?.min_polling_time} Min
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span>{' '}
+                                                              {plan?.active_workflows} Active Workflows
+                                                          </li>
                                                       </ul>
                                                       <h2 className="">{plan?.description}</h2>
                                                   </div>
