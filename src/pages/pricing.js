@@ -160,22 +160,13 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
         return Math.floor(finalPrice).toString();
     };
 
-    const LoadingOverlay = () => (
-        <div className="absolute inset-0 bg-white bg-opacity-70 flex items-center justify-center z-10">
-            <div className="flex flex-col items-center">
-                <div className="w-12 h-12 border-4 border-t-4 border-t-black border-gray-200 rounded-full animate-spin"></div>
-                <p className="mt-4 text-lg font-semibold">Loading pricing data...</p>
-            </div>
-        </div>
-    );
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <div className="w-full p-2 text-center bg-[#0FA388]">
-                <p className="text-lg">
-                    {selectedCountry?.name?.common && (
-                        <>
+            {selectedCountry?.name?.common && (
+                <>
+                    <div className="w-full p-2 text-center bg-[#0FA388]">
+                        <p className="text-lg">
                             <img
                                 src={selectedCountry?.flags?.svg}
                                 alt={selectedCountry?.flags?.alt || 'Country flag'}
@@ -183,11 +174,11 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             />
                             {pricingData.isDevelopment
                                 ? `Hello, it looks like you are from ${selectedCountry?.name?.common}. As a resident of a developing nation, we're pleased to offer you an exclusive 90% discount.`
-                                : 'Hello, it looks like you are from the ${selectedCountry?.name?.common}. We are pleased to offer you an enhanced automation experience with our AI-powered automation solution.'}
-                        </>
-                    )}
-                </p>
-            </div>
+                                : `Hello, it looks like you are from the ${selectedCountry?.name?.common}. We are pleased to offer you an enhanced automation experience with our AI-powered automation solution.`}
+                        </p>
+                    </div>
+                </>
+            )}
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
