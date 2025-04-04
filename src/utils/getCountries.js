@@ -1,16 +1,14 @@
+import { getCountriesData } from './getData';
+import { COUNTRIES_FIELDS } from '@/const/fields';
 
 export default async function getCountries() {
     try {
-        const response = await fetch(`https://restcountries.com/v3.1/all?fields=name,flags,cca2`);
-        const responseData = await response.json();
-        responseData.sort((a, b) => {
-            if (a?.name?.common < b?.name?.common) return -1;
-            if (a?.name?.common > b?.name?.common) return 1;
-            return 0;
-        });
-        return responseData;
+        const response1 = await getCountriesData(COUNTRIES_FIELDS);
+        const response2 = await getCountriesData(COUNTRIES_FIELDS, `offset=200`);
+        const combinedResponse = [...response1, ...response2];
+        combinedResponse.sort((a, b) => a.country.localeCompare(b.country));
+        return combinedResponse;
     } catch (error) {
-        console.error('Error fetching combos:', error);
-        return null;
+        console.error('Error fetching countries', error);
     }
 }
