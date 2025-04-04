@@ -27,3 +27,4 @@ export const INTECATEGORYlIST_FILED = ['name', 'slug', 'hidden', 'priority'];
 export const DISCONNECTEDBY_FIELDS = ['slugname', 'description'];
 export const EMBED_FIELDS = ['name', 'description', 'image'];
 export const USECASES_FIELDS = ['slugname', 'usecase'];
+export const COUNTRIES_FIELDS = ['country', 'codes', 'img', 'isdeveloping'];

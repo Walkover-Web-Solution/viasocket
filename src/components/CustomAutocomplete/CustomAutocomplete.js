@@ -8,8 +8,8 @@ export const CustomAutocomplete = ({
     onSelect = () => {},
     placeholder = 'Select Country',
     renderItem = null,
-    getItemValue = (item) => item?.name?.common,
-    defaultCountry = null, // Can be a string (country name) or an object
+    getItemValue = (item) => item?.country,
+    defaultCountry = null, 
 }) => {
     const [inputValue, setInputValue] = useState(value);
     const [isOpen, setIsOpen] = useState(false);
@@ -21,23 +21,21 @@ export const CustomAutocomplete = ({
     useEffect(() => {
         if (defaultCountry && !defaultApplied.current && items.length > 0) {
             if (typeof defaultCountry === 'string') {
-                const foundCountry = items.find(
-                    (item) =>
-                        getItemValue(item)?.toLowerCase() === defaultCountry.toLowerCase() ||
-                        item?.name?.common?.toLowerCase() === defaultCountry.toLowerCase()
+                const foundCountry = items?.find(
+                    (item) => getItemValue(item)?.toLowerCase() === defaultCountry.toLowerCase()
                 );
 
                 if (foundCountry) {
                     const countryName = getItemValue(foundCountry);
                     setInputValue(countryName);
-                    setSelectedFlag(foundCountry?.flags?.svg);
+                    setSelectedFlag(foundCountry?.img);
                     onSelect(countryName, foundCountry);
                     defaultApplied.current = true;
                 }
             } else {
                 const countryName = getItemValue(defaultCountry);
                 setInputValue(countryName);
-                setSelectedFlag(defaultCountry?.flags?.svg);
+                setSelectedFlag(defaultCountry?.img);
                 onSelect(countryName, defaultCountry);
                 defaultApplied.current = true;
             }
@@ -110,7 +108,7 @@ export const CustomAutocomplete = ({
     const handleSelect = (item) => {
         const itemValue = getItemValue(item);
         setInputValue(itemValue);
-        setSelectedFlag(item?.flags?.svg);
+        setSelectedFlag(item?.img);
         onSelect(itemValue, item);
         setIsOpen(false);
     };
@@ -120,8 +118,8 @@ export const CustomAutocomplete = ({
             className={`px-2 py-1 cursor-pointer flex items-center gap-2 ${isHighlighted ? 'bg-secondary' : ''}`}
             onClick={() => handleSelect(item)}
         >
-            <Image src={item?.flags?.svg || 'http:placehold.co/20x20'} width={16} height={16} alt={item?.flags?.alt} />
-            {item?.name?.common}
+            <Image src={item?.img || 'http:placehold.co/20x20'} width={16} height={16} alt={`${item?.country} flag`} />
+            {item?.country}
         </div>
     );
 
@@ -132,7 +130,7 @@ export const CustomAutocomplete = ({
                     {selectedFlag && (
                         <img
                             src={selectedFlag}
-                            alt={items.find((item) => getItemValue(item) === inputValue)?.flags?.alt || ''}
+                            alt={items.find((item) => getItemValue(item) === inputValue)?.country || ''}
                             className="w-5 h-5"
                         />
                     )}

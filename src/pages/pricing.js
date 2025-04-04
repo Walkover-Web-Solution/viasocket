@@ -19,7 +19,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
     const [isToggled, setIsToggled] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
-    const [apiCountry, setApiCountry] = useState(null);
+    const [userCountry, setUserCountry] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [pricingData, setPricingData] = useState({
         isDevelopment: false,
@@ -33,38 +33,11 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             setIsLoading(true);
             try {
                 const countryResponse = await getCountryName();
-                setApiCountry(countryResponse);
-                setSelectedCountry(countryResponse);
-
-                if (countryResponse?.cca2) {
-                    try {
-                        const countryPricingData = await getPricingData(countryResponse.cca2);
-                        if (countryPricingData && typeof countryPricingData === 'object') {
-                            setPricingData({
-                                isDevelopment: countryPricingData.isDevelopment || false,
-                                currencySymbol: countryPricingData.currencySymbol || '$',
-                                starterPlan: countryPricingData.starterPlan || '30',
-                                teamPlan: countryPricingData.teamPlan || '60',
-                            });
-                        } else {
-                            console.warn('Invalid pricing data received, using defaults');
-                            setPricingData({
-                                isDevelopment: false,
-                                currencySymbol: '$',
-                                starterPlan: '30',
-                                teamPlan: '60',
-                            });
-                        }
-                    } catch (pricingError) {
-                        console.error('Error fetching pricing data:', pricingError);
-                        setPricingData({
-                            isDevelopment: false,
-                            currencySymbol: '$',
-                            starterPlan: '30',
-                            teamPlan: '60',
-                        });
-                    }
-                }
+                const fullCountryDetails = countries.find(
+                    (country) => country?.country?.toLowerCase() === countryResponse?.toLowerCase()
+                );
+                setUserCountry(fullCountryDetails);
+                setSelectedCountry(fullCountryDetails);
             } catch (error) {
                 console.error('Error initializing country data:', error);
             } finally {
@@ -74,15 +47,14 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
         fetchInitialData();
     }, []);
-
     const handleCountrySelect = async (val, item) => {
         setSelectedCountry(item);
         setInputValue(val);
         setIsLoading(true);
 
-        if (item?.cca2) {
+        if (item?.codes) {
             try {
-                const countryPricingData = await getPricingData(item.cca2);
+                const countryPricingData = await getPricingData(item.codes);
 
                 if (countryPricingData && typeof countryPricingData === 'object') {
                     setPricingData({
@@ -124,7 +96,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
     const filterCountries = (query) => {
         if (!query) return countries;
-        return countries.filter((country) => country?.name?.common?.toLowerCase().includes(query.toLowerCase()));
+        return countries.filter((country) => country?.country?.toLowerCase().includes(query.toLowerCase()));
     };
 
     const planDetails = [
@@ -163,21 +135,19 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            {selectedCountry?.name?.common && (
-                <>
-                    <div className="w-full p-2 text-center bg-black">
-                        <p className="text-lg text-white">
-                            <img
-                                src={selectedCountry?.flags?.svg}
-                                alt={selectedCountry?.flags?.alt || 'Country flag'}
-                                className="inline-block w-5 h-5 mr-2"
-                            />
-                            {pricingData.isDevelopment
-                                ? `Hello, it looks like you are from ${selectedCountry?.name?.common}. As a resident of a developing nation, we're pleased to offer you an exclusive 90% discount.`
-                                : `Hello, it looks like you are from the ${selectedCountry?.name?.common}. We are pleased to offer you an enhanced automation experience with our AI-powered automation solution.`}
-                        </p>
-                    </div>
-                </>
+            {userCountry && (
+                <div className="w-full p-2 text-center bg-black">
+                    <p className="text-sm text-white">
+                        <img
+                            src={userCountry?.img}
+                            alt={`${userCountry?.country} flag`}
+                            className="inline-block w-5 h-5 mr-2"
+                        />
+                        {userCountry?.isdeveloping
+                            ? `Hello, it looks like you are from ${userCountry?.country}. As a resident of a developing nation, we're pleased to offer you an exclusive 90% discount.`
+                            : `Hello, it looks like you are from the ${userCountry?.country}. We are pleased to offer you an enhanced automation experience with our AI-powered automation solution.`}
+                    </p>
+                </div>
             )}
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/pricing'} />
@@ -206,7 +176,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                         onChange={(e) => setInputValue(e.target.value)}
                                         onSelect={handleCountrySelect}
                                         placeholder="Select Country"
-                                        defaultCountry={apiCountry || selectedCountry}
+                                        defaultCountry={userCountry || selectedCountry}
                                     />
 
                                     <label className="border border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">

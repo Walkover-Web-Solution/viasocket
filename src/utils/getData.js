@@ -15,6 +15,7 @@ import {
     TRUSTEDBY,
     EMBED,
     USECASES,
+    COUNTRIES,
 } from '@/const/tables';
 import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
@@ -129,5 +130,10 @@ export async function getEmbedData(fields, filter) {
 
 export async function getUsecasesData(fields, filter) {
     const data = await getDataFromTable(USECASES, handleFieldsFilter(fields, filter));
+    return handleData(data);
+}
+
+export async function getCountriesData(fields, filter) {
+    const data = await getDataFromTable(COUNTRIES, handleFieldsFilter(fields, filter));
     return handleData(data);
 }
