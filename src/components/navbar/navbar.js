@@ -1,4 +1,4 @@
-import { MdMenu, MdLogin, MdPersonAdd } from 'react-icons/md';
+import { MdMenu, MdLogin, MdPersonAdd, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
@@ -12,19 +12,6 @@ export default function Navbar({ navData, utm }) {
             return parseInt(a.priority) - parseInt(b.priority);
         });
     }
-    const darkPageArray = [
-        '/index',
-        '/pricing',
-        '/integrations',
-        '/support',
-        '/experts',
-        '/free-access-programs',
-        '/privacy',
-        '/terms',
-        '/integrations',
-        '/404',
-        '/data-deletion-policy',
-    ];
 
     let mode = 'light';
 
@@ -93,30 +80,63 @@ export default function Navbar({ navData, utm }) {
 
                 <div className="flex">
                     {shorterData &&
-                        shorterData?.map((option, index) => {
-                            return (
-                                <Link
-                                    key={index}
-                                    target={option.link?.startsWith('http') ? '_blank' : '_self'}
-                                    href={option.link || '#'}
-                                >
-                                    <div
-                                        className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10]`}
-                                    >
-                                        {option.name}
+                        shorterData.map((option, index) => (
+                            <div key={index} className="relative">
+                                {option.is_parent ? (
+                                    <div className="dropdown dropdown-hover">
+                                        <button
+                                            tabIndex={0}
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                        >
+                                            <span>{option.name}</span>
+                                            <MdOutlineKeyboardArrowDown size={20} />
+                                        </button>
+                                        <ul
+                                            tabIndex={0}
+                                            className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
+                                        >
+                                            {shorterData.map(
+                                                (childOption, childIndex) =>
+                                                    childOption.is_child &&
+                                                    childOption.group_name === option.name && (
+                                                        <li key={childIndex}>
+                                                            <Link
+                                                                href={childOption.link || '#'}
+                                                                className="text-black hover:bg-gray-100 px-4 py-2 block"
+                                                            >
+                                                                {childOption.name}
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                            )}
+                                        </ul>
                                     </div>
-                                </Link>
-                            );
-                        })}
+                                ) : (
+                                    !option.is_child && (
+                                        <Link
+                                            key={index}
+                                            target={option.link?.startsWith('http') ? '_blank' : '_self'}
+                                            href={option.link || '#'}
+                                        >
+                                            <div
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                            >
+                                                {option.name}
+                                            </div>
+                                        </Link>
+                                    )
+                                )}
+                            </div>
+                        ))}
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10]`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?${utmSource}`}
                         rel="nofollow"
                     >
                         Login
                     </Link>
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent`}
+                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent items-center justify-center`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial
