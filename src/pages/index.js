@@ -233,7 +233,6 @@ const Index = ({
                 <Navbar navData={navData} utm={'/index'} />
             </div>
 
-            
             <div
                 className="w-full  hero_gradint cont md:gap-36 sm:gap-24 gap-12"
                 // style={{ background: 'url(/assets/img/gradientHero.svg) center/cover' }}
@@ -314,7 +313,7 @@ const Index = ({
                                             key={app.appslugname}
                                         >
                                             <Image
-                                                src={app?.iconurl}
+                                                src={app?.iconurl || 'https://placehold.co/40x40'}
                                                 width={20}
                                                 height={20}
                                                 className="h-[24px] w-fit"
@@ -562,7 +561,7 @@ const TestimonialsSection = ({ testimonials }) => (
                     <div className="flex flex-col  gap-2 ">
                         <Image
                             className="border border-black"
-                            src={testimonial?.client_img[0]}
+                            src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
                             width={50}
                             height={50}
                             alt={testimonial?.given_by}
@@ -609,7 +608,7 @@ const CaseStudyLink = ({ caseStudy }) => {
                 <div className=" casestudy_img overflow-hidden w-full h-full ">
                     <Image
                         className="h-full w-full"
-                        src={caseStudy?.image[0]}
+                        src={caseStudy?.image[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}
                         alt={caseStudy?.title}

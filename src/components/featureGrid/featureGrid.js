@@ -43,7 +43,7 @@ export function FeaturesGrid({ features, page }) {
                                         <div className={`${styles.r2c2_img_cont} flex h-full justify-center items-end`}>
                                             {feature?.image ? (
                                                 <Image
-                                                    src={feature.image[0]}
+                                                    src={feature.image[0] || 'https://placehold.co/40x40'}
                                                     alt="feature 1"
                                                     className={`${styles.r2c2_img} p-2 md:p-6 lg:p-12`}
                                                     height={1080}

@@ -39,7 +39,7 @@ const AgencyList = ({ agencies, type }) => {
                                                                     ? agency.background_color
                                                                     : '',
                                                         }}
-                                                        src={agency?.logo[0]}
+                                                        src={agency?.logo[0] || 'https://placehold.co/40x40'}
                                                         width={1080}
                                                         height={1080}
                                                         alt="img"

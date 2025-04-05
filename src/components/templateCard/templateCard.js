@@ -45,7 +45,10 @@ const TemplateCard = ({ template }) => {
                             <div className="px-2 py-1 flex items-center gap-2">
                                 {template?.published_json_script?.trigger?.iconUrl ? (
                                     <Image
-                                        src={template?.published_json_script?.trigger?.iconUrl}
+                                        src={
+                                            template?.published_json_script?.trigger?.iconUrl ||
+                                            'https://placehold.co/40x40'
+                                        }
                                         width={20}
                                         height={20}
                                     />
@@ -125,7 +128,12 @@ const TemplateCard = ({ template }) => {
                                             <div key={actionIndex} className="px-2 flex gap-4 items-center mb-2">
                                                 <HiArrowRight color="black" size={16} />
                                                 {block?.iconUrl ? (
-                                                    <Image src={block?.iconUrl} alt={action} width={20} height={20} />
+                                                    <Image
+                                                        src={block?.iconUrl || 'https://placehold.co/40x40'}
+                                                        alt={action}
+                                                        width={20}
+                                                        height={20}
+                                                    />
                                                 ) : (
                                                     <DiJsBadge color="black" size={16} />
                                                 )}
@@ -162,7 +170,11 @@ const TemplateCard = ({ template }) => {
                                 uniqueIcons.add(triggerIconUrl);
                                 iconsToRender.push(
                                     <div key="trigger" className="border border-black p-1">
-                                        <Image src={triggerIconUrl} width={24} height={24} />
+                                        <Image
+                                            src={triggerIconUrl || 'https://placehold.co/40x40'}
+                                            width={24}
+                                            height={24}
+                                        />
                                     </div>
                                 );
                             } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
@@ -186,7 +198,11 @@ const TemplateCard = ({ template }) => {
                                     uniqueIcons.add(iconUrl);
                                     iconsToRender.push(
                                         <div key={iconUrl} className="border border-black p-1">
-                                            <Image src={iconUrl} width={24} height={24} />
+                                            <Image
+                                                src={iconUrl || 'https://placehold.co/40x40'}
+                                                width={24}
+                                                height={24}
+                                            />
                                         </div>
                                     );
                                 } else if (!iconUrl && !uniqueIcons.has('default-js')) {

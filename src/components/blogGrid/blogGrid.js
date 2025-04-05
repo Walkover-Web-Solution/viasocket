@@ -39,7 +39,7 @@ const CardComponent = ({ card }) => {
             <div className="flex flex-col gap-4 h-full">
                 <div className="w-full h-[400px] relative flex-shrink-0">
                     <Image
-                        src={card?.image}
+                        src={card?.image || 'https://placehold.co/40x40'}
                         alt={card?.title}
                         width={300}
                         height={200}

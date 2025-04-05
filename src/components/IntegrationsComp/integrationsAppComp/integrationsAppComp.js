@@ -178,7 +178,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                                     <Image
-                                                        src={app?.iconurl}
+                                                        src={app?.iconurl || 'https://placehold.co/40x40'}
                                                         width={36}
                                                         height={36}
                                                         alt={app?.name}
