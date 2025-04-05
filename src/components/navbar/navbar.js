@@ -80,56 +80,85 @@ export default function Navbar({ navData, utm }) {
 
                 <div className="flex">
                     {shorterData &&
-                        shorterData.map((option, index) => (
-                            <div key={index} className="relative">
-                                {option.is_parent ? (
-                                    <div className="dropdown dropdown-hover">
-                                        <button
-                                            tabIndex={0}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                                        >
-                                            <span>{option.name}</span>
-                                            <MdOutlineKeyboardArrowDown size={20} />
-                                        </button>
-                                        <ul
-                                            tabIndex={0}
-                                            className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
-                                        >
-                                            {shorterData.map(
-                                                (childOption, childIndex) =>
-                                                    childOption.is_child &&
-                                                    childOption.group_name === option.name && (
-                                                        <li key={childIndex}>
-                                                            <Link
-                                                                href={childOption.link || '#'}
-                                                                className="text-black hover:bg-gray-100 px-4 py-2 block"
-                                                            >
-                                                                {childOption.name}
-                                                            </Link>
-                                                        </li>
-                                                    )
+                        shorterData.map((option, index) => {
+                            if (!option) return null;
+
+                            return (
+                                <div key={index} className="relative">
+                                    {option.is_parent ? (
+                                        <div className="dropdown dropdown-hover">
+                                            {option.link ? (
+                                                <Link
+                                                    href={option.link}
+                                                    target={option.open_in_new_tab ? '_blank' : '_self'}
+                                                >
+                                                    <button
+                                                        tabIndex={0}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                    >
+                                                        <span>{option.name}</span>
+                                                        <MdOutlineKeyboardArrowDown size={20} />
+                                                    </button>
+                                                </Link>
+                                            ) : (
+                                                <button
+                                                    tabIndex={0}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                >
+                                                    <span>{option.name}</span>
+                                                    <MdOutlineKeyboardArrowDown size={20} />
+                                                </button>
                                             )}
-                                        </ul>
-                                    </div>
-                                ) : (
-                                    !option.is_child && (
-                                        <Link
-                                            key={index}
-                                            target={option.link?.startsWith('http') ? '_blank' : '_self'}
-                                            href={option.link || '#'}
-                                        >
-                                            <div
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                            <ul
+                                                tabIndex={0}
+                                                className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
                                             >
-                                                {option.name}
-                                            </div>
-                                        </Link>
-                                    )
-                                )}
-                            </div>
-                        ))}
+                                                {shorterData.map(
+                                                    (childOption, childIndex) =>
+                                                        childOption &&
+                                                        childOption.is_child &&
+                                                        childOption.group_name === option.name && (
+                                                            <li key={childIndex}>
+                                                                <Link
+                                                                    href={childOption.link || '#'}
+                                                                    target={
+                                                                        childOption.open_in_new_tab ? '_blank' : '_self'
+                                                                    }
+                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block"
+                                                                >
+                                                                    {childOption.name}
+                                                                </Link>
+                                                            </li>
+                                                        )
+                                                )}
+                                            </ul>
+                                        </div>
+                                    ) : (
+                                        !option.is_child && (
+                                            <Link
+                                                key={index}
+                                                target={
+                                                    option.open_in_new_tab
+                                                        ? '_blank'
+                                                        : option.link?.startsWith('http')
+                                                          ? '_blank'
+                                                          : '_self'
+                                                }
+                                                href={option.link || '#'}
+                                            >
+                                                <div
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                >
+                                                    {option.name}
+                                                </div>
+                                            </Link>
+                                        )
+                                    )}
+                                </div>
+                            );
+                        })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
                         href={`https://flow.viasocket.com?${utmSource}`}
                         rel="nofollow"
                     >
@@ -217,19 +246,72 @@ export default function Navbar({ navData, utm }) {
                         </button>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content menu  shadow bg-white border border-gray-300 w-48 "
+                            className="dropdown-content menu  shadow bg-white border border-gray-300 w-56 "
                         >
                             {shorterData &&
-                                shorterData.map((option, index) => (
-                                    <li key={index}>
-                                        <Link
-                                            href={option.link || '#'}
-                                            className="text-black text-sm hover:bg-gray-100 block px-2 "
-                                        >
-                                            {option.name}
-                                        </Link>
-                                    </li>
-                                ))}
+                                shorterData.map((option, index) => {
+                                    if (!option) return null;
+                                    return (
+                                        <div key={index} className="collapse collapse-arrow ">
+                                            {option.is_parent ? (
+                                                <>
+                                                    <input type="checkbox" />
+                                                    <div className="collapse-title text-sm font-medium">
+                                                        {option.name}
+                                                    </div>
+                                                    <div className="collapse-content">
+                                                        {option.link && (
+                                                            <Link
+                                                                href={option.link}
+                                                                className="text-black hover:underline"
+                                                                target={option.open_in_new_tab ? '_blank' : '_self'}
+                                                                rel="noreferrer"
+                                                            >
+                                                                {option.name}
+                                                            </Link>
+                                                        )}
+                                                        {shorterData.map((childOption, childIndex) => {
+                                                            if (
+                                                                childOption &&
+                                                                childOption.is_child &&
+                                                                childOption.group_name === option.name
+                                                            ) {
+                                                                return (
+                                                                    <div key={childIndex}>
+                                                                        <Link
+                                                                            href={childOption.link || '#'}
+                                                                            className="text-sm text-gray-600 hover:bg-gray-100 block px-2 py-1 border-l ml-2"
+                                                                            target={
+                                                                                childOption.open_in_new_tab
+                                                                                    ? '_blank'
+                                                                                    : '_self'
+                                                                            }
+                                                                            rel="noreferrer"
+                                                                        >
+                                                                            {childOption.name}
+                                                                        </Link>
+                                                                    </div>
+                                                                );
+                                                            }
+                                                            return null;
+                                                        })}
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                !option.is_child && (
+                                                    <Link
+                                                        href={option.link || '#'}
+                                                        className="text-sm text-black hover:bg-gray-100 block px-2 py-1 ml-2"
+                                                        target={option.open_in_new_tab ? '_blank' : '_self'}
+                                                        rel="noreferrer"
+                                                    >
+                                                        {option.name}
+                                                    </Link>
+                                                )
+                                            )}
+                                        </div>
+                                    );
+                                })}
                         </ul>
                     </div>
                 </div>
