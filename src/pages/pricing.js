@@ -212,21 +212,23 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                               >
                                                   <div className="flex flex-col gap-12 p-8">
                                                       <h2 className="h2 capitalize ">{plan?.name}</h2>
-                                                      <div className="flex flex-col gap-2">
-                                                          <h3 className="h1">
-                                                              {pricingData.currencySymbol}
-                                                              {getPlanPrice(
-                                                                  plan.name,
-                                                                  isToggled,
-                                                                  pricingData.isDevelopment
-                                                              )}
+                                                      <div className="flex flex-col gap-2 ">
+                                                          <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
+                                                              <h3 className="h1 break-all">
+                                                                  {pricingData.currencySymbol}
+                                                                  {getPlanPrice(
+                                                                      plan.name,
+                                                                      isToggled,
+                                                                      pricingData.isDevelopment
+                                                                  )}
+                                                              </h3>
                                                               {pricingData.isDevelopment && (
                                                                   <span className="font-base text-2xl text-grey line-through ml-2">
                                                                       {pricingData.currencySymbol}
                                                                       {getPlanPrice(plan.name, isToggled)}
                                                                   </span>
                                                               )}
-                                                          </h3>
+                                                          </div>
                                                           <span className="text-sm tracking-wider">
                                                               {isToggled ? 'YEAR' : 'MONTH'}/WORKSPACE
                                                           </span>
