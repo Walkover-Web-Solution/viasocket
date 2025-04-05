@@ -50,14 +50,14 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                 >
                                     <Image
                                         className="icon__dark"
-                                        src={feature?.iconimages[0]}
+                                        src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}
                                     />
                                     <Image
                                         className="icon__light"
-                                        src={feature?.iconimages[1]}
+                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}

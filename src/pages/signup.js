@@ -79,7 +79,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                         <div className="flex gap-3">
                             <Image
                                 className="rounded-full h-11 w-fit"
-                                src={testimonials[0]?.client_img[0]}
+                                src={testimonials[0]?.client_img[0] || 'https://placehold.co/40x40'}
                                 width={36}
                                 height={36}
                                 alt=""

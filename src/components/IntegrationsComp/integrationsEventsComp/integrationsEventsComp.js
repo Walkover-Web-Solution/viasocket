@@ -70,7 +70,9 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                 className="p-4 border border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                                             >
                                                 <Image
-                                                    src={getIcons(event?.pluginslugname)}
+                                                    src={
+                                                        getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'
+                                                    }
                                                     width={36}
                                                     height={36}
                                                     alt={appOneDetails?.name}
@@ -103,7 +105,9 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                 className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                                             >
                                                 <Image
-                                                    src={getIcons(event?.pluginslugname)}
+                                                    src={
+                                                        getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'
+                                                    }
                                                     width={36}
                                                     height={36}
                                                     alt={appOneDetails?.name}
@@ -143,7 +147,10 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         {selectedTrigger && (
                                             <>
                                                 <Image
-                                                    src={getIcons(selectedTrigger?.pluginslugname)}
+                                                    src={
+                                                        getIcons(selectedTrigger?.pluginslugname) ||
+                                                        'https://placehold.co/40x40'
+                                                    }
                                                     width={36}
                                                     height={36}
                                                     alt={'Selected Trigger'}
@@ -166,7 +173,10 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         {selectedAction && (
                                             <>
                                                 <Image
-                                                    src={getIcons(selectedAction?.pluginslugname)}
+                                                    src={
+                                                        getIcons(selectedAction?.pluginslugname) ||
+                                                        'https://placehold.co/40x40'
+                                                    }
                                                     width={36}
                                                     height={36}
                                                     alt={'Selected Action'}
@@ -228,7 +238,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start"
                                         >
                                             <Image
-                                                src={getIcons(event?.pluginslugname)}
+                                                src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
                                                 width={36}
                                                 height={36}
                                                 alt={appOneDetails?.name}
@@ -259,7 +269,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start"
                                         >
                                             <Image
-                                                src={getIcons(event?.pluginslugname)}
+                                                src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
                                                 width={36}
                                                 height={36}
                                                 alt={appOneDetails?.name}

@@ -12,7 +12,7 @@ export default function CombinationCardComp({ trigger, action, description, link
             <div className="combocard_div px-4 py-6 flex sm:flex-row flex-col sm:items-center gap-2 border-b bg-white sm:justify-center">
                 <span className="opacity-70">when</span>
                 <Image
-                    src={trigger?.iconurl}
+                    src={trigger?.iconurl || 'https://placehold.co/40x40'}
                     width={36}
                     height={36}
                     className="w-fit h-8 sm:block hidden"
@@ -24,7 +24,13 @@ export default function CombinationCardComp({ trigger, action, description, link
                 <div className="flex sm:items-center flex-col sm:flex-row gap-2 ">
                     <MdArrowForward className="text-2xl opacity-80" />
                     <div className="sm:flex hidden items-center justify-center bg-white border h-6 w-6">
-                        <Image src={action?.iconurl} width={36} height={36} className="w-fit h-4" alt={action?.name} />
+                        <Image
+                            src={action?.iconurl || 'https://placehold.co/40x40'}
+                            width={36}
+                            height={36}
+                            className="w-fit h-4"
+                            alt={action?.name}
+                        />
                     </div>
                     <span>{action?.name}</span>
                 </div>
