@@ -18,3 +18,4 @@ export const DISCONNECTED = 'tbleptzd5';
 export const EMBED = 'tblkelgtd';
 export const USECASES = 'tblvu0f6w';
 export const COUNTRIES = 'tblxvza45';
+export const TEMPLATES = 'tblz2bm2n';

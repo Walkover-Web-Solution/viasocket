@@ -16,9 +16,11 @@ import {
     EMBED,
     USECASES,
     COUNTRIES,
+    TEMPLATES,
 } from '@/const/tables';
 import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
+import Template from '@/pages/templates';
 
 const handleData = (data) => {
     return data?.data?.rows;
@@ -135,5 +137,10 @@ export async function getUsecasesData(fields, filter) {
 
 export async function getCountriesData(fields, filter) {
     const data = await getDataFromTable(COUNTRIES, handleFieldsFilter(fields, filter));
+    return handleData(data);
+}
+
+export async function getValidTemplatesData(fields, filter) {
+    const data = await getDataFromTable(TEMPLATES, handleFieldsFilter(fields, filter));
     return handleData(data);
 }

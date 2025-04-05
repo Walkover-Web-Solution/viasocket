@@ -2,41 +2,23 @@ import React, { useState, useEffect } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
-import { getFooterData, getNavData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVIGATION_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
+import { getFooterData, getNavData, getValidTemplatesData } from '@/utils/getData';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import getTemplates from '@/utils/getTemplates';
 
 export const runtime = 'experimental-edge';
 
-const validTemplates = [
-    'scriegTyJDVP',
-    'scriCigs4Nec',
-    'scriLkXFCiT8',
-    'scrigT3BMudV',
-    'scri18TO2dzy',
-    'scriY9PYKUJA',
-    'scri1jQYWdCH',
-    'scriHyYJTU6Q',
-    'scriklTHv7Ww',
-    'scripJJTv2PZ',
-    'scrirRkcLV9Z',
-    'scrixtgO9oc0',
-    'scriegTyJDVP',
-    'scriO3u6AJug',
-    'scrimBQIOdxN',
-];
-
-const Template = ({ navData, footerData, templateData }) => {
+const Template = ({ navData, footerData, templateData, validTemplates }) => {
     const [visibleCount, setVisibleCount] = useState(6);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
 
     useEffect(() => {
-        const filtered = templateData.filter((template) => validTemplates.includes(template.id));
+        const validTemplateNames = validTemplates.map((t) => t.name);
+        const filtered = templateData.filter((template) => validTemplateNames.includes(template.id));
         setFilteredTemplates(filtered);
-    }, [templateData]);
+    }, [templateData, validTemplates]);
 
-    console.log(filteredTemplates);
     const handleLoadMore = () => {
         setVisibleCount((prev) => prev + 6);
     };
@@ -88,13 +70,14 @@ export default Template;
 export async function getServerSideProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
-    let templateData = await getTemplates();
-
+    const templateData = await getTemplates();
+    const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS);
     return {
         props: {
             navData: navData || [],
             footerData: footerData || [],
             templateData: templateData || [],
+            validTemplates: validTemplates || [],
         },
     };
 }
