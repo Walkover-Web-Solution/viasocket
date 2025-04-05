@@ -1,0 +1,14 @@
+export const getCountryName = async () => {
+    try {
+        const response = await fetch('https://ipapi.co/json/', {
+            headers: { 'Accept': 'application/json' },
+        });
+
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+        const data = await response.json();
+        return data?.country_name || null;
+    } catch (error) {
+        console.error('Error fetching country from IP:', error);
+    }
+};
