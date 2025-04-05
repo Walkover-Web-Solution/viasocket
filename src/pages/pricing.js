@@ -47,49 +47,37 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
         fetchInitialData();
     }, []);
+
     const handleCountrySelect = async (val, item) => {
         setSelectedCountry(item);
         setInputValue(val);
         setIsLoading(true);
 
-        if (item?.codes) {
-            try {
-                const countryPricingData = await getPricingData(item.codes);
+        const defaultPricing = {
+            isDevelopment: false,
+            currencySymbol: '$',
+            starterPlan: '30',
+            teamPlan: '60',
+        };
 
-                if (countryPricingData && typeof countryPricingData === 'object') {
-                    setPricingData({
-                        isDevelopment: countryPricingData.isDevelopment || false,
-                        currencySymbol: countryPricingData.currencySymbol || '$',
-                        starterPlan: countryPricingData.starterPlan || '30',
-                        teamPlan: countryPricingData.teamPlan || '60',
-                    });
-                } else {
-                    console.warn('Invalid pricing data received for selected country, using defaults');
-                    setPricingData({
-                        isDevelopment: false,
-                        currencySymbol: '$',
-                        starterPlan: '30',
-                        teamPlan: '60',
-                    });
-                }
-            } catch (error) {
-                console.error('Error fetching pricing data for selected country:', error);
-                setPricingData({
-                    isDevelopment: false,
-                    currencySymbol: '$',
-                    starterPlan: '30',
-                    teamPlan: '60',
-                });
-            } finally {
-                setIsLoading(false);
-            }
-        } else {
+        if (!item?.codes) {
+            setPricingData(defaultPricing);
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            const countryPricingData = await getPricingData(item.codes);
             setPricingData({
-                isDevelopment: false,
-                currencySymbol: '$',
-                starterPlan: '30',
-                teamPlan: '60',
+                isDevelopment: countryPricingData?.isDevelopment ?? defaultPricing.isDevelopment,
+                currencySymbol: countryPricingData?.currencySymbol ?? defaultPricing.currencySymbol,
+                starterPlan: countryPricingData?.starterPlan ?? defaultPricing.starterPlan,
+                teamPlan: countryPricingData?.teamPlan ?? defaultPricing.teamPlan,
             });
+        } catch (error) {
+            console.error('Error fetching pricing data for selected country:', error);
+            setPricingData(defaultPricing);
+        } finally {
             setIsLoading(false);
         }
     };
