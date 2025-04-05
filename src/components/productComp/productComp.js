@@ -43,7 +43,7 @@ export default function ProductComp(props) {
                     {pageData?.hero_img[0] && (
                         <Image
                             className="w-full h-auto"
-                            src={pageData?.hero_img[0]}
+                            src={pageData?.hero_img[0] || 'https://placehold.co/40x40'}
                             width={1300}
                             height={800}
                             alt="Flow"

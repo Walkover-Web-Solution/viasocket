@@ -40,7 +40,7 @@ export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
                             <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center">
                                 <Image
                                     className="max-w-[2000px] border border-black w-full"
-                                    src={featureData?.image[0]}
+                                    src={featureData?.image[0] || 'https://placehold.co/40x40'}
                                     alt={featureData?.name}
                                     width={1080}
                                     height={1080}
