@@ -3,9 +3,9 @@ import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
 import { useEffect, useState } from 'react';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function Navbar({ navData, utm }) {
-    const [utmSource, setUtmSource] = useState('');
     let shorterData;
     if (navData?.length > 0) {
         shorterData = navData?.sort((a, b) => {
@@ -32,24 +32,27 @@ export default function Navbar({ navData, utm }) {
         backgroundClass = textClass + ' hover:bg-black hover:text-white ';
     }
 
+    const [defaultUtmSource, setDefaultUtmSource] = useState('');
     useEffect(() => {
-        const storedUtm = sessionStorage.getItem('utmData');
+        const utmData = setUtmSource();
 
-        if (storedUtm) {
-            try {
-                const parsedUtm = JSON.parse(storedUtm);
+        if (!utmData) {
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
+            return;
+        }
 
-                if (parsedUtm && typeof parsedUtm === 'object') {
-                    const queryString = new URLSearchParams(parsedUtm).toString();
-                    setUtmSource(queryString);
-                }
-            } catch (error) {
-                console.error('Error parsing UTM data:', error);
+        try {
+            const parsedUtm = JSON.parse(utmData);
+            if (parsedUtm && typeof parsedUtm === 'object') {
+                const queryString = new URLSearchParams(parsedUtm).toString();
+                setDefaultUtmSource(queryString);
             }
-        } else {
-            setUtmSource(`utm_source=${utm}`);
+        } catch (error) {
+            console.error('Error parsing UTM data:', error);
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
         }
     }, []);
+
     return (
         <>
             <div className="py-4 justify-between lg:flex hidden bg-white">
@@ -159,7 +162,7 @@ export default function Navbar({ navData, utm }) {
                         })}
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
-                        href={`https://flow.viasocket.com?${utmSource}`}
+                        href={`https://flow.viasocket.com?${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
@@ -222,7 +225,7 @@ export default function Navbar({ navData, utm }) {
                 <div className=" flex">
                     <Link
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
-                        href={`https://flow.viasocket.com?${utmSource}`}
+                        href={`https://flow.viasocket.com?${defaultUtmSource}`}
                         aria-label="Login"
                         rel="nofollow"
                     >
