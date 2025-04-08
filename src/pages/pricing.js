@@ -4,18 +4,25 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getNavData } from '@/utils/getData';
+import { getFaqData, getFooterData, getMetaData, getNavData, getPricingBetterChoice } from '@/utils/getData';
 import getPricingData from '@/utils/getPricingData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import {
+    FAQS_FIELDS,
+    FOOTER_FIELDS,
+    METADATA_FIELDS,
+    NAVIGATION_FIELDS,
+    PRICINGBETTERCHOICE_FIELDS,
+} from '@/const/fields';
 import getCountries from '@/utils/getCountries';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
 import { getCountryName } from '@/utils/getCountryName';
+import Link from 'next/link';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ navData, footerData, faqData, metaData, countries, blogData }) {
+export default function pricing({ navData, footerData, faqData, metaData, countries, blogData, betterChoiceData }) {
     const [isToggled, setIsToggled] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
@@ -27,6 +34,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
         starterPlan: '30',
         teamPlan: '60',
     });
+    const [selectedIndex, setSelectedIndex] = useState('0');
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -84,7 +92,21 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
     const filterCountries = (query) => {
         if (!query) return countries;
-        return countries.filter((country) => country?.country?.toLowerCase().includes(query.toLowerCase()));
+
+        const lowerQuery = query.toLowerCase();
+
+        return countries
+            .filter((country) => country?.country?.toLowerCase().includes(lowerQuery))
+            .sort((a, b) => {
+                const aStarts = a?.country?.toLowerCase().startsWith(lowerQuery);
+                const bStarts = b?.country?.toLowerCase().startsWith(lowerQuery);
+
+                if (aStarts === bStarts) {
+                    return a?.country?.localeCompare(b?.country);
+                }
+
+                return aStarts ? -1 : 1;
+            });
     };
 
     const planDetails = [
@@ -269,6 +291,91 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         </div>
                     </div>
                 </div>
+
+                <div className="border border-black p-6 md:p-12 flex flex-col gap-6">
+                    <h2 className="h1 lg:w-1/2">Explore Hundreds of Features, Available on Every Plan</h2>
+                    <p className="sub-h1">Get unrestricted access to all features, no matter your choice of plan.</p>
+                    <div className="flex justify-start">
+                        <Link href={'/features'}>
+                            <button className="btn btn-accent">See All Features</button>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className=" flex flex-col justify-center">
+                    <h2 className="h1 p-6 md:p-12 ">
+                        What makes <br /> <span className="text-red-700 italic">viaSocket</span> a better choice ?
+                    </h2>
+
+                    <div className="flex flex-col lg:flex-row border border-black">
+                        <div className="flex flex-col w-full lg:w-1/2 py-12 md:py-24 px-6 md:px-12 text-base md:text-xl gap-4">
+                            {betterChoiceData.length > 0 &&
+                                betterChoiceData.map((choice, index) => (
+                                    <div
+                                        key={index}
+                                        className={`border-b md:border-b py-3 cursor-pointer ${index === selectedIndex ? 'border-red-300' : ''}`}
+                                        onClick={() => setSelectedIndex(index)}
+                                    >
+                                        <div>{choice.name}</div>
+
+                                        {selectedIndex === index && (
+                                            <div
+                                                className="lg:hidden mt-2 text-base md:text-lg text-gray-700"
+                                                style={{
+                                                    backgroundImage: `url('/assets/img/pricing.png')`,
+                                                    backgroundSize: 'cover',
+                                                    backgroundPosition: 'center',
+                                                }}
+                                            >
+                                                <div className=" md:p-8 mx-4 md:mx-24">
+                                                    <p className="text-base md:text-lg text-white  p-4">
+                                                        {choice.description}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                        </div>
+
+                        <div
+                            className="lg:flex hidden w-full lg:w-1/2 md:py-12 px-6 md:px-12 bg-opacity-200 "
+                            style={{
+                                backgroundImage: `url('/assets/img/pricing.png')`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                            }}
+                        >
+                            <div className="p-12 h-full flex items-center justify-center">
+                                <p className="text-base md:text-lg text-white">
+                                    {betterChoiceData[selectedIndex]?.description}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className=" flex flex-col justify-center py-48">
+                    <div className=" border border-t-0 border-black">
+                        <div className="flex items-center justify-center sm:-mt-5 md:-mt-5 lg:-mt-8">
+                            <div className="border-t border-black flex-grow" />
+                            <h2 className="h1 px-4">Free Services for Impactful Organizations</h2>
+                            <div className="border-t border-black flex-grow" />
+                        </div>
+
+                        <div className="flex flex-col gap-4 md:gap-8 items-center text-center py-8 border-black">
+                            <div className="sub__h2 text-center">
+                                We support organizations driving change with free access to our automation solutions
+                            </div>
+                            <div className="flex justify-center">
+                                <a href="/free-access-programs" target="_blank" className="btn btn-accent">
+                                    Get Free Access
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
                     <BlogGrid posts={blogData} />
                     <div>
@@ -288,10 +395,10 @@ export async function getServerSideProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`);
-
     const countries = await getCountries();
     const blogTags = 'pricing';
     const blogData = await getBlogData(blogTags);
+    const betterChoiceData = await getPricingBetterChoice(PRICINGBETTERCHOICE_FIELDS);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
@@ -301,6 +408,7 @@ export async function getServerSideProps() {
             countries: countries || [],
             blogTags: blogTags || [],
             blogData: blogData || [],
+            betterChoiceData: betterChoiceData || [],
         },
     };
 }
