@@ -33,23 +33,25 @@ export default function IntegrationsAppOneComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const utm = pageInfo?.url;
-    const [utmSource, setUtmSource] = useState('');
+
+    const [defaultUtmSource, setDefaultUtmSource] = useState('');
     useEffect(() => {
-        const storedUtm = sessionStorage.getItem('utmData');
+        const utmData = setUtmSource(appOneDetails.appslugname);
 
-        if (storedUtm) {
-            try {
-                const parsedUtm = JSON.parse(storedUtm);
+        if (!utmData) {
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
+            return;
+        }
 
-                if (parsedUtm && typeof parsedUtm === 'object') {
-                    const queryString = new URLSearchParams(parsedUtm).toString();
-                    setUtmSource(queryString);
-                }
-            } catch (error) {
-                console.error('Error parsing UTM data:', error);
+        try {
+            const parsedUtm = JSON.parse(utmData);
+            if (parsedUtm && typeof parsedUtm === 'object') {
+                const queryString = new URLSearchParams(parsedUtm).toString();
+                setDefaultUtmSource(queryString);
             }
-        } else {
-            setUtmSource(`utm_source=${appOneDetails.appslugname}`);
+        } catch (error) {
+            console.error('Error parsing UTM data:', error);
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
         }
     }, []);
 
@@ -79,7 +81,7 @@ export default function IntegrationsAppOneComp({
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
-                            <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`} rel="nofollow">
+                            <Link href={`https://flow.viasocket.com?${defaultUtmSource}`} rel="nofollow">
                                 <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>

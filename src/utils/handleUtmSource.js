@@ -1,5 +1,18 @@
+const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+};
+
+const setCookie = (name, value, days) => {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    const expires = `expires=${date.toUTCString()}`;
+    document.cookie = `${name}=${value};${expires};path=/`;
+};
+
 export const getUtmSource = () => {
-    if (!sessionStorage.getItem('utmData')) {
+    if (!getCookie('utmData')) {
         const queryParams = new URLSearchParams(window.location.search);
         const queryObject = {};
 
@@ -9,15 +22,14 @@ export const getUtmSource = () => {
             }
         });
 
-        // Store only for the session
         if (Object.keys(queryObject).length > 0) {
-            sessionStorage.setItem('utmData', JSON.stringify(queryObject));
+            setCookie('utmData', JSON.stringify(queryObject), 1);
         }
     }
 };
 
-export const setUtmSource = () => {
-    let utmData = sessionStorage.getItem('utmData');
+export const setUtmSource = (source = 'website') => {
+    let utmData = getCookie('utmData');
 
     if (!utmData) {
         const queryParams = new URLSearchParams(window.location.search);
@@ -31,9 +43,9 @@ export const setUtmSource = () => {
 
         if (Object.keys(queryObject).length > 0) {
             utmData = JSON.stringify(queryObject);
-            sessionStorage.setItem('utmData', utmData);
+            setCookie('utmData', utmData, 1);
         }
     }
 
-    return utmData ? utmData : JSON.stringify({ utm_source: 'website' });
+    return utmData ? utmData : JSON.stringify({ utm_source: source });
 };
