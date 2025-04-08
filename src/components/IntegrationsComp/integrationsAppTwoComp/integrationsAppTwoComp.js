@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/md';
+import { MdChevronRight, MdOpenInNew } from 'react-icons/md';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
-import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
+import { LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import { useEffect, useState } from 'react';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
@@ -12,7 +12,7 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import UseCaseList from '@/components/useCaseList/UseCaseList';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import GetStarted from '@/components/getStarted/getStarted';
 
 export default function IntegrationsAppTwoComp({
@@ -26,30 +26,29 @@ export default function IntegrationsAppTwoComp({
     metaData,
     getStartedData,
 }) {
-    const [utmSource, setUtmSource] = useState('');
-    const utm = pageInfo?.url;
-    const integrations = 'undefined';
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
-
+    const [defaultUtmSource, setDefaultUtmSource] = useState('');
     useEffect(() => {
-        const storedUtm = sessionStorage.getItem('utmData');
+        const utmData = setUtmSource(`${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
 
-        if (storedUtm) {
-            try {
-                const parsedUtm = JSON.parse(storedUtm);
+        if (!utmData) {
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
+            return;
+        }
 
-                if (parsedUtm && typeof parsedUtm === 'object') {
-                    const queryString = new URLSearchParams(parsedUtm).toString();
-                    setUtmSource(queryString);
-                }
-            } catch (error) {
-                console.error('Error parsing UTM data:', error);
+        try {
+            const parsedUtm = JSON.parse(utmData);
+            if (parsedUtm && typeof parsedUtm === 'object') {
+                const queryString = new URLSearchParams(parsedUtm).toString();
+                setDefaultUtmSource(queryString);
             }
-        } else {
-            setUtmSource(`utm_source=integrations/${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
+        } catch (error) {
+            console.error('Error parsing UTM data:', error);
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
         }
     }, []);
+
     return (
         <>
             <IntegrationsHeadComp
@@ -62,7 +61,7 @@ export default function IntegrationsAppTwoComp({
             <div style={{ background: appOneDetails?.brandcolor }} className="">
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        <Link target="_blank" href={`https://flow.viasocket.com?${utmSource}`} rel="nofollow">
+                        <Link href={`https://flow.viasocket.com?${defaultUtmSource}`} rel="nofollow">
                             <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
@@ -178,7 +177,7 @@ export default function IntegrationsAppTwoComp({
                                                     'https://placehold.co/40x40',
                                             }}
                                             description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&utm_source=${utm}`}
+                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&${defaultUtmSource}`}
                                         />
                                     );
                                 })}
