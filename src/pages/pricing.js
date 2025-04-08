@@ -355,7 +355,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </div>
                 </div>
 
-                <div className=" flex flex-col justify-center py-48">
+                <div className=" flex flex-col justify-center py-20">
                     <div className=" border border-t-0 border-black">
                         <div className="flex items-center justify-center sm:-mt-5 md:-mt-5 lg:-mt-8">
                             <div className="border-t border-black flex-grow" />
