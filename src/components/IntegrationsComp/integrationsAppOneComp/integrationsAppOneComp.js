@@ -15,6 +15,7 @@ import CombinationCardComp from '@/components/combinationCardComp/combinationCar
 import { setUtmSource } from '@/utils/handleUtmSource';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
