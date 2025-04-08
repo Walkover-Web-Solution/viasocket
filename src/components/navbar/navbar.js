@@ -6,11 +6,14 @@ import { useEffect, useState } from 'react';
 import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function Navbar({ navData, utm }) {
-    let shorterData;
+    let shorterData = [];
     if (navData?.length > 0) {
-        shorterData = navData?.sort((a, b) => {
+        const prioritizedItems = navData.filter((item) => item.priority);
+        shorterData = prioritizedItems.sort((a, b) => {
             return parseInt(a.priority) - parseInt(b.priority);
         });
+        const nonPrioritizedItems = navData.filter((item) => !item.priority);
+        shorterData = shorterData.concat(nonPrioritizedItems);
     }
 
     let mode = 'light';
@@ -97,7 +100,7 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                     >
                                                         <span>{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
@@ -106,7 +109,7 @@ export default function Navbar({ navData, utm }) {
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     <span>{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
@@ -150,7 +153,7 @@ export default function Navbar({ navData, utm }) {
                                                 href={option.link || '#'}
                                             >
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     {option.name}
                                                 </div>
@@ -161,7 +164,7 @@ export default function Navbar({ navData, utm }) {
                             );
                         })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-1`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?${defaultUtmSource}`}
                         rel="nofollow"
                     >
