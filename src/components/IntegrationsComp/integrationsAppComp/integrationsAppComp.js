@@ -27,38 +27,47 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     }, [searchTerm]);
 
     useEffect(() => {
-        if (debounceValue) {
+        const search = async () => {
+            if (!debounceValue) {
+                setSearchedApps([]);
+                setSearchedCategoies();
+                return;
+            }
+
+            const searchTerm = debounceValue.toLowerCase();
+
             const filteredCategories = categories?.categories?.filter((category) =>
-                category?.toLowerCase()?.includes(debounceValue?.toLowerCase())
+                category?.toLowerCase()?.includes(searchTerm)
             );
             setSearchedCategoies(filteredCategories);
 
-            const loadApps = async () => {
-                const fetchedApps = await searchApps(debounceValue);
+            const fetchedApps = await searchApps(debounceValue);
+            if (!fetchedApps) {
+                setSearchedApps([]);
+                return;
+            }
 
-                if (fetchedApps) {
-                    const sortedApps = fetchedApps.sort((a, b) => {
-                        const aNameMatch = a?.name?.toLowerCase()?.includes(debounceValue.toLowerCase());
-                        const bNameMatch = b?.name?.toLowerCase()?.includes(debounceValue.toLowerCase());
+            const sortedApps = fetchedApps.sort((a, b) => {
+                const aName = a?.name?.toLowerCase() || '';
+                const bName = b?.name?.toLowerCase() || '';
 
-                        if (bNameMatch - aNameMatch !== 0) {
-                            return bNameMatch - aNameMatch;
-                        }
+                const aStarts = aName.startsWith(searchTerm);
+                const bStarts = bName.startsWith(searchTerm);
 
-                        return a?.name?.localeCompare(b?.name);
-                    });
+                if (aStarts !== bStarts) return aStarts ? -1 : 1;
 
-                    setSearchedApps(sortedApps);
-                } else {
-                    setSearchedApps([]);
-                }
-            };
+                const aContains = aName.includes(searchTerm);
+                const bContains = bName.includes(searchTerm);
 
-            loadApps();
-        } else {
-            setSearchedApps([]);
-            setSearchedCategoies();
-        }
+                if (aContains !== bContains) return aContains ? -1 : 1;
+
+                return aName.localeCompare(bName);
+            });
+
+            setSearchedApps(sortedApps);
+        };
+
+        search();
     }, [debounceValue]);
 
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
