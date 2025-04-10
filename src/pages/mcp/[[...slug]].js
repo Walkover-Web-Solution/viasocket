@@ -6,7 +6,6 @@ import {
     getGetStartedData,
     getMetaData,
     getNavData,
-    getUsecasesData,
 } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
@@ -21,7 +20,6 @@ import {
     INTECATEGORYlIST_FILED,
     METADATA_FIELDS,
     NAVIGATION_FIELDS,
-    USECASES_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
@@ -104,7 +102,7 @@ export async function getServerSideProps(context) {
         const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/AppOne'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
-        const apps = await getApps({ page: mcpInfo?.page, categoryData });
+        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 });
         const combosData = await getCombos(mcpInfo);
         const appOneDetails = getAppDetails(combosData, mcpInfo?.appone);
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
@@ -141,7 +139,7 @@ export async function getServerSideProps(context) {
         const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/AppOne'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
-        const apps = await getApps({ page: mcpInfo?.page, categoryData });
+        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 });
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
         const blogTags = 'mcp';
         const blogData = await getBlogData(blogTags);

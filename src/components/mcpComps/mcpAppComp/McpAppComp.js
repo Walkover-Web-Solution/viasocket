@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdChevronRight, MdOpenInNew } from 'react-icons/md';
+import { MdChevronLeft, MdChevronRight, MdOpenInNew, MdSearch } from 'react-icons/md';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import BlogGrid from '@/components/blogGrid/blogGrid';
@@ -8,10 +8,12 @@ import IntegrationsHeadComp from '@/components/IntegrationsComp/integrationsHead
 import { LinkText } from '@/components/uiComponents/buttons';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
-import GetStarted from '@/components/getStarted/getStarted';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import searchApps from '@/utils/searchApps'; // Added import
+
+const APPERPAGE = 16;
 
 export default function McpAppComp({
     appOneDetails,
@@ -22,10 +24,14 @@ export default function McpAppComp({
     footerData,
     blogsData,
     metaData,
+    apps,
 }) {
     const utm = pageInfo?.url;
-
+    const [searchTerm, setSearchTerm] = useState('');
+    const [debounceValue, setDebounceValue] = useState('');
+    const [searchedApps, setSearchedApps] = useState([]);
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
+
     useEffect(() => {
         const utmData = setUtmSource(appOneDetails.appslugname);
 
@@ -45,6 +51,72 @@ export default function McpAppComp({
             setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
         }
     }, []);
+
+    useEffect(() => {
+        const search = async () => {
+            if (!debounceValue) {
+                setSearchedApps([]);
+                return;
+            }
+
+            const searchTerm = debounceValue.toLowerCase();
+
+            const fetchedApps = await searchApps(debounceValue);
+            if (!fetchedApps) {
+                setSearchedApps([]);
+                return;
+            }
+
+            const sortedApps = fetchedApps.sort((a, b) => {
+                const aName = a?.name?.toLowerCase() || '';
+                const bName = b?.name?.toLowerCase() || '';
+
+                const aStarts = aName.startsWith(searchTerm);
+                const bStarts = bName.startsWith(searchTerm);
+
+                if (aStarts !== bStarts) return aStarts ? -1 : 1;
+
+                const aContains = aName.includes(searchTerm);
+                const bContains = bName.includes(searchTerm);
+
+                if (aContains !== bContains) return aContains ? -1 : 1;
+
+                return aName.localeCompare(bName);
+            });
+
+            setSearchedApps(sortedApps);
+        };
+
+        search();
+    }, [debounceValue]);
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setDebounceValue(searchTerm);
+        }, 500);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [searchTerm]);
+
+    // Search effect
+
+    const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
+
+    const goToNext = () => {
+        const url = `/mcp/${integrationsInfo?.category ? 'category/' + integrationsInfo?.category : ''}/page/${Number(integrationsInfo?.page) + 1}`;
+        return url;
+    };
+
+    const goToPrev = () => {
+        if (integrationsInfo?.category && !integrationsInfo?.page) {
+            const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            return url;
+        } else {
+            const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            return url;
+        }
+    };
 
     return (
         <>
@@ -130,6 +202,110 @@ export default function McpAppComp({
                     <McpEventComp appOneDetails={appOneDetails} />
                 </div>
             )}
+
+            <div className="container cont gap-4 mt-12">
+                <div className="flex items-baseline gap-2 mb-6">
+                    <h2 className="h1">All Compatible Apps</h2>
+                </div>
+
+                <div className="flex items-center max-w-[800px] w-full ">
+                    <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none">
+                        <MdSearch fontSize={20} />
+                        <input
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                            }}
+                            type="text"
+                            className="grow py-2 px-3"
+                            placeholder="Search compatible apps"
+                        />
+                    </label>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
+                    {debounceValue ? (
+                        searchedApps?.length > 0 ? (
+                            searchedApps?.map((app, index) => (
+                                <Link
+                                    key={index}
+                                    href={createURL(`/mcp/${app?.appslugname}`)}
+                                    className="group border border-black p-4 hover:bg-black transition-colors"
+                                >
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                            <Image
+                                                src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                width={36}
+                                                height={36}
+                                                alt={app?.name}
+                                                className="h-5 w-fit"
+                                            />
+                                        </div>
+                                        <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
+                                    </div>
+                                    <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
+                                        {app?.description}
+                                    </p>
+                                </Link>
+                            ))
+                        ) : (
+                            <span className="p-8 text-xl col-span-4 border border-black text-center">
+                                No apps found for searched term
+                            </span>
+                        )
+                    ) : (
+                        apps?.map((app, index) => (
+                            <Link
+                                key={index}
+                                href={createURL(`/mcp/${app?.appslugname}`)}
+                                className="group border border-black p-4 hover:bg-black transition-colors"
+                            >
+                                <div className="flex items-center gap-2 mb-2">
+                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                        <Image
+                                            src={app?.iconurl || 'https://placehold.co/36x36'}
+                                            width={36}
+                                            height={36}
+                                            alt={app?.name}
+                                            className="h-5 w-fit"
+                                        />
+                                    </div>
+                                    <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
+                                </div>
+                                <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
+                                    {app?.description}
+                                </p>
+                            </Link>
+                        ))
+                    )}
+                </div>
+
+                {!debounceValue && apps?.length > 0 && (
+                    <div className="flex justify-end items-center w-full py-4">
+                        <div className="flex gap-4">
+                            {integrationsInfo?.page > 0 && (
+                                <Link
+                                    className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                    href={createURL(goToPrev())}
+                                >
+                                    <MdChevronLeft size={18} />
+                                    Prev
+                                </Link>
+                            )}
+                            {showNext && (
+                                <Link
+                                    className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                    href={createURL(goToNext())}
+                                >
+                                    Next
+                                    <MdChevronRight size={18} />
+                                </Link>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </div>
 
             {blogsData?.length > 0 && (
                 <div className="container ">
