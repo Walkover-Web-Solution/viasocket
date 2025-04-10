@@ -1,21 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/md';
-import IntegrationsAppComp from '@/components/IntegrationsComp/integrationsAppComp/integrationsAppComp';
+import { MdChevronRight, MdOpenInNew } from 'react-icons/md';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import IntegrationsBetaComp from '@/components/IntegrationsComp/IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '@/components/IntegrationsComp/integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
-import IntegrationsEventsComp from '@/components/IntegrationsComp/integrationsEventsComp/integrationsEventsComp';
-import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
+import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 
 export default function McpAppComp({
     appOneDetails,
@@ -26,7 +22,6 @@ export default function McpAppComp({
     footerData,
     blogsData,
     metaData,
-    getStartedData,
 }) {
     const utm = pageInfo?.url;
 
@@ -113,20 +108,30 @@ export default function McpAppComp({
                 </div>
             </div>
 
+            <div className="container cont cont__py border border-black justify-center items-center text-center gap-12 ">
+                <div className="flex flex-col justify-center items-center">
+                    <h2 className="h1  max-w-[1200px]">Connect {appOneDetails?.name} MCP with any AI assistant</h2>
+                    <p className="sub__h1 max-w-[1000px]">
+                        viaSocket HubSpot MCP connects HubSpot actions with AI tools like ChatGPT, Claude, and Cursor,
+                        without the need for complex integrations or coding.
+                    </p>
+                </div>
+                <Link href={`/signup?utm_source=mcp/${appOneDetails?.appslugname}`}>
+                    <button className="btn btn-accent">Get Started</button>
+                </Link>
+            </div>
+
             {combosData?.combinations?.length > 0 ? (
                 <div className="container cont gap-4">
-                    <h2 className="h1">Actions</h2>
+                    <div className="flex items-baseline  gap-2">
+                        <h2 className="h1">Actions</h2>
+                        <IoMdCheckmarkCircleOutline fontSize={36} />
+                    </div>
                     <McpEventComp appOneDetails={appOneDetails} />
                 </div>
             ) : (
                 <div className="container">
                     <h2 className="h1">No Actions Available!</h2>
-                </div>
-            )}
-
-            {getStartedData && (
-                <div className="container border border-black p-20">
-                    <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
 

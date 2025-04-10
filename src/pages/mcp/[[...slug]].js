@@ -45,6 +45,7 @@ export default function Mcp({
     useCaseData,
     getStartedData,
     combosData,
+    mcpSteps,
 }) {
     if (noData) {
         return (
@@ -85,6 +86,7 @@ export default function Mcp({
                     blogsData={blogData}
                     categoryData={categoryData}
                     categories={categories}
+                    mcpSteps={mcpSteps}
                 />
             </div>
         );
@@ -110,10 +112,6 @@ export async function getServerSideProps(context) {
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
             const blogData = await getBlogData(blogTags);
-            const useCaseData = await getUsecasesData(
-                USECASES_FIELDS,
-                `filter=slugname='${appOneDetails?.appslugname}'`
-            );
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -126,7 +124,6 @@ export async function getServerSideProps(context) {
                     appOneDetails: appOneDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
-                    useCaseData: useCaseData || [],
                     getStartedData: getStarted || [],
                     combosData: combosData || [],
                 },
@@ -148,6 +145,24 @@ export async function getServerSideProps(context) {
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
         const blogTags = 'mcp';
         const blogData = await getBlogData(blogTags);
+        const mcpSteps = [
+            {
+                title: 'Get Your MCP Endpoint',
+                description:
+                    'Instantly get a unique, secure URL that connects your AI assistant to viaSocket’s network of integrations.',
+            },
+            {
+                title: 'Choose Your Actions',
+                description:
+                    'Easily select and define the actions your AI can perform, like sending emails or sending Slack messages, giving you full control.',
+            },
+            {
+                title: 'Integrate Your AI Assistant',
+                description:
+                    'Connect your AI Assistant easily with the MCP endpoint for instant, secure task execution.',
+            },
+        ];
+
         return {
             props: {
                 pageInfo: pageInfo || {},
@@ -161,6 +176,7 @@ export async function getServerSideProps(context) {
                 categoryData: (categoryData?.length > 0 && categoryData[0]) || {},
                 categories: categories || [],
                 blogData: blogData || [],
+                mcpSteps: mcpSteps || [],
             },
         };
     }

@@ -21,6 +21,7 @@ export default function McpIndexComp({
     blogsData,
     categoryData,
     categories,
+    mcpSteps,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -87,6 +88,18 @@ export default function McpIndexComp({
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
+            </div>
+            <div className="w-full flex justify-center container">
+                <div className="cont gap-4 text-center max-w-[1200px]">
+                    <h3 className="text-accent text-2xl">MCP is now on viaSocket</h3>
+                    <div className="cont text-center">
+                        <h1 className="h1">Integrate Your AI with 1,000+ Apps Using viaSocket MCP</h1>
+                        <h2 className="sub__h1">
+                            With viaSocket MCP, turn your AI into a functional tool—send messages, manage data, schedule
+                            events, update records, and more, all without complex API integration.
+                        </h2>
+                    </div>
+                </div>
             </div>
             <div className="container cont">
                 <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
@@ -243,24 +256,37 @@ export default function McpIndexComp({
                     </div>
                 )}
             </div>
-            <div className="container my-6">
-                <div className="border border-black p-20 cont cont__gap">
-                    <div className="cont gap-1">
-                        <h2 className="h1 max-w-[700px]">
-                            Couldn't Find Your App? Don’t Worry, We’ll Build It For You
-                        </h2>
-                        <p className="text-xl">
-                            If your app isn’t available on viaSocket, simply request an integration, and our team will
-                            build it for you, ensuring seamless connection and effortless automation of your workflows.
-                        </p>
-                    </div>
-                    <button
-                        onClick={() => document.getElementById('plugin_request_form').showModal()}
-                        className="btn btn-accent "
-                    >
-                        Request your plugin now
-                    </button>
+
+            <div className="container cont cont__py gap-20 px-24  h-fit border  bg-[#F5FBFF]">
+                <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
+                    <h2 className="h1">Ready, Set, MCP in 3 Simple Steps</h2>
                 </div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
+                    {mcpSteps.map((step, index) => (
+                        <div
+                            key={index}
+                            className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
+                        >
+                            <h3 className="h2 font-bold">{step.title}</h3>
+                            <p className="sub__h2">{step.description}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+                <div className="flex flex-col justify-center items-center">
+                    <h2 className="h1  max-w-[1200px]">
+                        Take the first step-Connect Your AI Assistant with viaSocket MCP
+                    </h2>
+                    <p className="sub__h1 max-w-[1000px]">
+                        Break free from isolation-connect your AI to real-world data for smarter, more impactful
+                        results.
+                    </p>
+                </div>
+                <Link href="/signup?utm_source=mcp">
+                    <button className="btn btn-accent">Get Started</button>
+                </Link>
             </div>
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
