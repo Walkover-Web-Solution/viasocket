@@ -76,7 +76,7 @@ export default function Mcp({
         );
     } else {
         return (
-            <div className="cont md:gap-36 sm:gap-24 gap-12">
+            <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpIndexComp
                     pageInfo={pageInfo}
                     integrationsInfo={mcpInfo}
