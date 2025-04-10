@@ -91,7 +91,7 @@ export default function McpIndexComp({
             </div>
             <div className="w-full flex justify-center container">
                 <div className="cont gap-4 text-center max-w-[1200px]">
-                    <h3 className="text-accent text-2xl">MCP is now on viaSocket</h3>
+                    <h3 className="text-accent text-4xl font-bold">MCP is now on viaSocket</h3>
                     <div className="cont text-center">
                         <h1 className="h1">Integrate Your AI with 1,000+ Apps Using viaSocket MCP</h1>
                         <h2 className="sub__h1">

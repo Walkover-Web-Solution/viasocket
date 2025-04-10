@@ -108,12 +108,12 @@ export default function McpAppComp({
                 </div>
             </div>
 
-            <div className="container cont cont__py border border-black justify-center items-center text-center gap-12 ">
+            <div className="container cont cont__py justify-center items-center text-center gap-12 ">
                 <div className="flex flex-col justify-center items-center">
                     <h2 className="h1  max-w-[1200px]">Connect {appOneDetails?.name} MCP with any AI assistant</h2>
                     <p className="sub__h1 max-w-[1000px]">
-                        viaSocket HubSpot MCP connects HubSpot actions with AI tools like ChatGPT, Claude, and Cursor,
-                        without the need for complex integrations or coding.
+                        viaSocket {appOneDetails?.name} MCP connects {appOneDetails?.name} actions with AI tools like
+                        ChatGPT, Claude, and Cursor, without the need for complex integrations or coding.
                     </p>
                 </div>
                 <Link href={`/signup?utm_source=mcp/${appOneDetails?.appslugname}`}>
@@ -121,17 +121,13 @@ export default function McpAppComp({
                 </Link>
             </div>
 
-            {combosData?.combinations?.length > 0 ? (
+            {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
                     <div className="flex items-baseline  gap-2">
                         <h2 className="h1">Actions</h2>
                         <IoMdCheckmarkCircleOutline fontSize={36} />
                     </div>
                     <McpEventComp appOneDetails={appOneDetails} />
-                </div>
-            ) : (
-                <div className="container">
-                    <h2 className="h1">No Actions Available!</h2>
                 </div>
             )}
 

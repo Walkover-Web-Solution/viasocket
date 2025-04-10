@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 
 export default function McpEventComp({ appOneDetails }) {
     const [visibleEvents, setVisibleEvents] = useState(6);
