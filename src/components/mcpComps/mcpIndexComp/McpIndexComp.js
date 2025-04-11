@@ -10,8 +10,9 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '@/components/IntegrationsComp/integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
+import FAQSection from '@/components/faqSection/faqSection';
 
-const APPERPAGE = 16;
+const APPERPAGE = 9;
 
 export default function McpIndexComp({
     pageInfo,
@@ -23,6 +24,7 @@ export default function McpIndexComp({
     categoryData,
     categories,
     mcpSteps,
+    faqData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -143,7 +145,7 @@ export default function McpIndexComp({
                         </>
                     ) : (
                         <>
-                            <h1 className="h1 text-accent italic">
+                            <h1 className="text-4xl text-accent italic">
                                 {' '}
                                 1000+
                                 <span className="text-black not-italic"> Apps Ready to Connect with viaSocket MCP</span>
@@ -195,16 +197,48 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
                     {debounceValue ? (
                         searchedApps?.length > 0 ? (
-                            searchedApps?.map((app, index) => (
+                            searchedApps?.map((app, index) => {
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={36}
+                                                    height={36}
+                                                    alt={app?.name}
+                                                    className="h-5 w-fit"
+                                                />
+                                            </div>
+                                            <h2 className="font-bold">{app?.name}</h2>
+                                        </div>
+                                        <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                            {app?.description}
+                                        </p>
+                                    </Link>
+                                );
+                            })
+                        ) : (
+                            <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0">
+                                No Apps found for Searched name{' '}
+                            </span>
+                        )
+                    ) : (
+                        apps?.map((app, index) => {
+                            return (
                                 <Link
                                     key={index}
-                                    href={createURL(`/mcp/${app?.appslugname}`)}
-                                    className="group border border-black p-4 hover:bg-black transition-colors"
+                                    href={createURL(`/integrations/${app?.appslugname}`)}
+                                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
                                 >
-                                    <div className="flex items-center gap-2 mb-2">
+                                    <div className="flex items-center gap-2">
                                         <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                             <Image
                                                 src={app?.iconurl || 'https://placehold.co/36x36'}
@@ -214,42 +248,14 @@ export default function McpIndexComp({
                                                 className="h-5 w-fit"
                                             />
                                         </div>
-                                        <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
+                                        <h2 className="font-bold">{app?.name}</h2>
                                     </div>
-                                    <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
+                                    <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
                                         {app?.description}
                                     </p>
                                 </Link>
-                            ))
-                        ) : (
-                            <span className="p-8 text-xl col-span-4 border border-black text-center">
-                                No Apps found for searched term
-                            </span>
-                        )
-                    ) : (
-                        apps?.map((app, index) => (
-                            <Link
-                                key={index}
-                                href={createURL(`/mcp/${app?.appslugname}`)}
-                                className="group border border-black p-4 hover:bg-black transition-colors"
-                            >
-                                <div className="flex items-center gap-2 mb-2">
-                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                        <Image
-                                            src={app?.iconurl || 'https://placehold.co/36x36'}
-                                            width={36}
-                                            height={36}
-                                            alt={app?.name}
-                                            className="h-5 w-fit"
-                                        />
-                                    </div>
-                                    <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
-                                </div>
-                                <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
-                                    {app?.description}
-                                </p>
-                            </Link>
-                        ))
+                            );
+                        })
                     )}
                 </div>
 
@@ -310,11 +316,19 @@ export default function McpIndexComp({
                     <button className="btn btn-accent">Get Started</button>
                 </Link>
             </div>
-            <div className="container my-6">
+            <div className="container">
                 <BlogGrid posts={blogsData} />
             </div>
-            <div className="container my-6">
-                <Footer footerData={footerData} />
+
+            <div className="pb-4">
+                {faqData?.length > 0 && (
+                    <div className="container border border-black p-20 border-b-0">
+                        <FAQSection faqData={faqData} faqName={'/index'} />
+                    </div>
+                )}
+                <div className="container">
+                    <Footer footerData={footerData} />
+                </div>
             </div>
         </>
     );

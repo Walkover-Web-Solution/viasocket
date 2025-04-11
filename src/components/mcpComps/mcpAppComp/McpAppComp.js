@@ -13,7 +13,7 @@ import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import searchApps from '@/utils/searchApps'; // Added import
 
-const APPERPAGE = 16;
+const APPERPAGE = 9;
 
 export default function McpAppComp({
     appOneDetails,
@@ -223,16 +223,48 @@ export default function McpAppComp({
                     </label>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-4">
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
                     {debounceValue ? (
                         searchedApps?.length > 0 ? (
-                            searchedApps?.map((app, index) => (
+                            searchedApps?.map((app, index) => {
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={36}
+                                                    height={36}
+                                                    alt={app?.name}
+                                                    className="h-5 w-fit"
+                                                />
+                                            </div>
+                                            <h2 className="font-bold">{app?.name}</h2>
+                                        </div>
+                                        <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                            {app?.description}
+                                        </p>
+                                    </Link>
+                                );
+                            })
+                        ) : (
+                            <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0">
+                                No Apps found for Searched name{' '}
+                            </span>
+                        )
+                    ) : (
+                        apps?.map((app, index) => {
+                            return (
                                 <Link
                                     key={index}
-                                    href={createURL(`/mcp/${app?.appslugname}`)}
-                                    className="group border border-black p-4 hover:bg-black transition-colors"
+                                    href={createURL(`/integrations/${app?.appslugname}`)}
+                                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
                                 >
-                                    <div className="flex items-center gap-2 mb-2">
+                                    <div className="flex items-center gap-2">
                                         <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                             <Image
                                                 src={app?.iconurl || 'https://placehold.co/36x36'}
@@ -242,42 +274,14 @@ export default function McpAppComp({
                                                 className="h-5 w-fit"
                                             />
                                         </div>
-                                        <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
+                                        <h2 className="font-bold">{app?.name}</h2>
                                     </div>
-                                    <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
+                                    <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
                                         {app?.description}
                                     </p>
                                 </Link>
-                            ))
-                        ) : (
-                            <span className="p-8 text-xl col-span-4 border border-black text-center">
-                                No apps found for searched term
-                            </span>
-                        )
-                    ) : (
-                        apps?.map((app, index) => (
-                            <Link
-                                key={index}
-                                href={createURL(`/mcp/${app?.appslugname}`)}
-                                className="group border border-black p-4 hover:bg-black transition-colors"
-                            >
-                                <div className="flex items-center gap-2 mb-2">
-                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                        <Image
-                                            src={app?.iconurl || 'https://placehold.co/36x36'}
-                                            width={36}
-                                            height={36}
-                                            alt={app?.name}
-                                            className="h-5 w-fit"
-                                        />
-                                    </div>
-                                    <h2 className="font-bold group-hover:text-white">{app?.name}</h2>
-                                </div>
-                                <p className="text-sm text-gray-700 line-clamp-3 group-hover:text-white">
-                                    {app?.description}
-                                </p>
-                            </Link>
-                        ))
+                            );
+                        })
                     )}
                 </div>
 
