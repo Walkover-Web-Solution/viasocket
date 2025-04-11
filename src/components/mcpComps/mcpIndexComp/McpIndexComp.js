@@ -33,7 +33,7 @@ export default function McpIndexComp({
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
-    const [searchedCategoies, setSearchedCategoies] = useState();
+    const [isLoading, setIsLoading] = useState(false);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -57,16 +57,10 @@ export default function McpIndexComp({
         const search = async () => {
             if (!debounceValue) {
                 setSearchedApps([]);
-                setSearchedCategoies();
                 return;
             }
 
             const searchTerm = debounceValue.toLowerCase();
-
-            const filteredCategories = categories?.categories?.filter((category) =>
-                category?.toLowerCase()?.includes(searchTerm)
-            );
-            setSearchedCategoies(filteredCategories);
 
             const fetchedApps = await searchApps(debounceValue);
             if (!fetchedApps) {
@@ -122,42 +116,63 @@ export default function McpIndexComp({
             </div>
             <div className="w-full flex justify-center container">
                 <div className="cont gap-4 text-center max-w-[1200px]">
-                    <h3 className="text-accent text-4xl font-bold">MCP is now on viaSocket</h3>
-                    <div className="cont text-center">
-                        <h1 className="h1">Integrate Your AI with 1,000+ Apps Using viaSocket MCP</h1>
-                        <h2 className="sub__h1">
-                            With viaSocket MCP, turn your AI into a functional tool—send messages, manage data, schedule
-                            events, update records, and more, all without complex API integration.
-                        </h2>
-                    </div>
+                    {/* <h3 className="text-accent text-4xl font-bold">MCP is now on viaSocket</h3>
+                    <div className="cont text-center"> */}
+                    <h1 className="h1 ">
+                        Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs
+                    </h1>
+                    <h2 className="sub__h1">
+                        Easily connect your AI to apps with just a URL-no coding needed. Model Context Protocol (MCP)
+                        lets your AI pull data and take action in thousands of apps instantly.
+                    </h2>
+                    {/* </div> */}
                 </div>
             </div>
+
             <div className="container cont">
-                <div className="py-4 md:py-8 cont justify-center items-center text-center gap-2">
-                    {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
-                        <>
-                            <h1 className="h1 text-accent">
-                                <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
-                                {integrationsInfo?.category === 'all' ? 'Apps' : decodeURIComponent(categoryData?.name)}{' '}
-                                <span className="text-black not-italic">Apps Ready to Connect with viaSocket MCP</span>
-                            </h1>
-                            <p>{categoryData?.subheading}</p>
-                        </>
-                    ) : (
-                        <>
-                            <h1 className="text-4xl text-accent italic">
-                                {' '}
-                                1000+
-                                <span className="text-black not-italic"> Apps Ready to Connect with viaSocket MCP</span>
-                            </h1>
-                            <p>
-                                Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
-                                E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for streamlined
-                                business success.
-                            </p>
-                        </>
-                    )}
-                </div>
+                {isLoading ? (
+                    <div className="py-4 md:py-8 cont justify-center items-center text-center gap-2">
+                        <div className="h-8 w-1/2 max-w-[800px] bg-gray-200 relative overflow-hidden mx-auto">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                        <div className="h-6 w-3/4 max-w-[1200px] bg-gray-200 relative overflow-hidden mx-auto mt-4">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="py-4 md:py-8 cont justify-center items-center text-center gap-2">
+                        {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
+                            <>
+                                <h1 className="text-3xl text-accent">
+                                    <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
+                                    {integrationsInfo?.category === 'all'
+                                        ? 'Apps'
+                                        : decodeURIComponent(categoryData?.name)}{' '}
+                                    <span className="text-black not-italic">
+                                        Apps Ready to Connect with viaSocket MCP
+                                    </span>
+                                </h1>
+                                <p>{categoryData?.subheading}</p>
+                            </>
+                        ) : (
+                            <>
+                                <h1 className="text-3xl text-accent italic">
+                                    {' '}
+                                    1000+
+                                    <span className="text-black not-italic">
+                                        {' '}
+                                        Apps Ready to Connect with viaSocket MCP
+                                    </span>
+                                </h1>
+                                <p>
+                                    Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
+                                    E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for streamlined
+                                    business success.
+                                </p>
+                            </>
+                        )}
+                    </div>
+                )}
                 <div className="flex items-center gap-4 max-w-[800px] w-full mb-6">
                     <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
@@ -175,6 +190,7 @@ export default function McpIndexComp({
                         <select
                             className="border border-black py-2 px-4 appearance-none bg-white cursor-pointer pr-10"
                             onChange={(e) => {
+                                setIsLoading(true);
                                 window.location.href = createURL(`/mcp/category/${e.target.value}`);
                             }}
                             value={integrationsInfo?.category || 'all'}
@@ -196,15 +212,48 @@ export default function McpIndexComp({
                         </div>
                     </div>
                 </div>
-
-                <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
-                    {debounceValue ? (
-                        searchedApps?.length > 0 ? (
-                            searchedApps?.map((app, index) => {
+                {isLoading ? (
+                    <AppGridSkeleton />
+                ) : (
+                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
+                        {debounceValue ? (
+                            searchedApps?.length > 0 ? (
+                                searchedApps?.map((app, index) => {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={createURL(`/mcp/${app?.appslugname}`)}
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <Image
+                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                        width={36}
+                                                        height={36}
+                                                        alt={app?.name}
+                                                        className="h-5 w-fit"
+                                                    />
+                                                </div>
+                                                <h2 className="font-bold">{app?.name}</h2>
+                                            </div>
+                                            <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                                {app?.description}
+                                            </p>
+                                        </Link>
+                                    );
+                                })
+                            ) : (
+                                <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0">
+                                    No Apps found for Searched name{' '}
+                                </span>
+                            )
+                        ) : (
+                            apps?.map((app, index) => {
                                 return (
                                     <Link
                                         key={index}
-                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        href={createURL(`/mcp/${app?.appslugname}`)}
                                         className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
                                     >
                                         <div className="flex items-center gap-2">
@@ -225,40 +274,9 @@ export default function McpIndexComp({
                                     </Link>
                                 );
                             })
-                        ) : (
-                            <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0">
-                                No Apps found for Searched name{' '}
-                            </span>
-                        )
-                    ) : (
-                        apps?.map((app, index) => {
-                            return (
-                                <Link
-                                    key={index}
-                                    href={createURL(`/integrations/${app?.appslugname}`)}
-                                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                width={36}
-                                                height={36}
-                                                alt={app?.name}
-                                                className="h-5 w-fit"
-                                            />
-                                        </div>
-                                        <h2 className="font-bold">{app?.name}</h2>
-                                    </div>
-                                    <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                        {app?.description}
-                                    </p>
-                                </Link>
-                            );
-                        })
-                    )}
-                </div>
-
+                        )}
+                    </div>
+                )}
                 {!debounceValue && (
                     <div className="flex justify-end items-center w-full py-4">
                         <div className="flex gap-4">
@@ -333,3 +351,44 @@ export default function McpIndexComp({
         </>
     );
 }
+
+const AppGridSkeleton = () => {
+    const skeletonCards = Array(9).fill(null);
+
+    return (
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0">
+            {skeletonCards.map((_, index) => (
+                <div
+                    key={index}
+                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
+                >
+                    <div className="flex items-center gap-2">
+                        {/* Better icon placeholder with a subtle icon-like shape */}
+                        <div className="border flex items-center justify-center w-9 h-9 bg-white overflow-hidden">
+                            <div className="relative w-5 h-5 bg-gray-200">
+                                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                            </div>
+                        </div>
+                        {/* App name placeholder */}
+                        <div className="h-5 w-24 bg-gray-200 relative overflow-hidden">
+                            {/* Custom ripple effect */}
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                    </div>
+                    {/* Description placeholder with multiple lines */}
+                    <div className="flex flex-col gap-1.5">
+                        <div className="h-3 w-full bg-gray-200 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                        <div className="h-3 w-full bg-gray-200 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                        <div className="h-3 w-2/3 bg-gray-200 relative overflow-hidden">
+                            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    );
+};

@@ -155,28 +155,32 @@ export default function McpAppComp({
                         </div>
                     </div>
                 </div>
-                <Link
-                    target="_blank"
-                    href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?utm_source=${utm}`}
-                    className="flex items-center gap-2 container hover:text-blue-600"
-                    rel="nofollow"
-                >
-                    Connect to {appOneDetails?.name} <MdOpenInNew />
-                </Link>
-            </div>
+                <div className="w-full flex justify-start items-start text-start">
+                    <div className="container">
+                        <Link
+                            target="_blank"
+                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?utm_source=${utm}`}
+                            className="flex items-center gap-2 hover:text-blue-600 w-fit"
+                            rel="nofollow"
+                        >
+                            Connect to {appOneDetails?.name} <MdOpenInNew />
+                        </Link>
+                    </div>
+                </div>
 
-            <div className="container cont cont__gap  ">
-                <div className="flex items-center gap-2 text-lg">
-                    <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
-                        MCP{' '}
-                    </Link>
-                    <MdChevronRight fontSize={22} />
-                    <Link
-                        href={createURL(`/mcp/${appOneDetails?.appslugname}`)}
-                        className="flex items-center gap-0 underline"
-                    >
-                        {appOneDetails?.name}
-                    </Link>
+                <div className="container cont cont__gap  ">
+                    <div className="flex items-center gap-2 text-lg">
+                        <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
+                            MCP{' '}
+                        </Link>
+                        <MdChevronRight fontSize={22} />
+                        <Link
+                            href={createURL(`/mcp/${appOneDetails?.appslugname}`)}
+                            className="flex items-center gap-0 underline"
+                        >
+                            {appOneDetails?.name}
+                        </Link>
+                    </div>
                 </div>
             </div>
 
