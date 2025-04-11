@@ -3,21 +3,40 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
-import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, GETSTARTED_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import {
+    EMBED_FIELDS,
+    FAQS_FIELDS,
+    FOOTER_FIELDS,
+    GETSTARTED_FIELDS,
+    METADATA_FIELDS,
+    NAVIGATION_FIELDS,
+} from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getNavData } from '@/utils/getData';
+import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getMetaData, getNavData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
+import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ navData, blogData, footerData, faqData, getStartedData, embedData, tableData, howItWorksData }) => {
+const Embed = ({
+    navData,
+    blogData,
+    footerData,
+    faqData,
+    getStartedData,
+    embedData,
+    tableData,
+    howItWorksData,
+    metaData,
+}) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
         <>
+            <MetaHeadComp metaData={metaData} page={'/embed'} />
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
@@ -245,6 +264,7 @@ const Table = ({ data }) => {
 export default Embed;
 
 export async function getServerSideProps() {
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`);
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`);
@@ -287,6 +307,7 @@ export async function getServerSideProps() {
             embedData: embedData || [],
             tableData: tableData,
             howItWorksData: howItWorksData,
+            metaData: metaData || [],
         },
     };
 }
