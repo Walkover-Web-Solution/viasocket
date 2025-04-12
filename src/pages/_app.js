@@ -6,6 +6,7 @@ import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
+import Link from 'next/link';
 
 export const runtime = 'experimental-edge';
 
@@ -117,6 +118,8 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         }
     }
 
+    const showMCPBanner = !router.pathname.includes('/pricing');
+
     return (
         <>
             <HeadComp canonicalUrl={canonicalUrl} />
@@ -125,7 +128,18 @@ export default function MyApp({ Component, pageProps, pagesData }) {
             {showSkeleton ? (
                 <Skeleton />
             ) : (
-                <Component {...pageProps} pathArray={pathArray} rawpathArray={rawpathArray} />
+                <>
+                    {showMCPBanner && (
+                        <Link href="/mcp">
+                            <div className="w-full p-2 text-center bg-black">
+                                <p className="text-lg text-white hover:underline">
+                                    MCP, the future of AI, is now on viaSocket—use it today and connect to everything.{' '}
+                                </p>
+                            </div>
+                        </Link>
+                    )}
+                    <Component {...pageProps} pathArray={pathArray} rawpathArray={rawpathArray} />
+                </>
             )}
         </>
     );
@@ -195,6 +209,7 @@ export function Skeleton() {
                             {/* Hidden on small screens */}
                             <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
+                            <div className="h-极6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
