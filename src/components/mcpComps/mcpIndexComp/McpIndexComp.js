@@ -129,7 +129,7 @@ export default function McpIndexComp({
                             Easily connect your AI to thousands of apps with just a URL . No complex API integrations
                             required.
                         </h2>
-                        <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call/">
+                        <Link href="/signup">
                             <button className="btn btn-accent">Get Your MCP URL</button>
                         </Link>
                     </div>
