@@ -26,7 +26,6 @@ import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import getCombos from '@/utils/getCombos';
 export const runtime = 'experimental-edge';
-import { FaNetworkWired, FaBalanceScale, FaShieldAlt, FaLayerGroup } from 'react-icons/fa';
 
 export default function Mcp({
     pageInfo,
@@ -47,6 +46,7 @@ export default function Mcp({
     mcpSteps,
     tableData,
     featuresData,
+    keyPointData,
 }) {
     if (noData) {
         return (
@@ -91,6 +91,7 @@ export default function Mcp({
                     faqData={faqData}
                     tableData={tableData}
                     featuresData={featuresData}
+                    keyPointData={keyPointData}
                 />
             </div>
         );
@@ -152,71 +153,79 @@ export async function getServerSideProps(context) {
             {
                 title: 'Get Your MCP Endpoint',
                 description:
-                    'Instantly get a unique, secure URL that connects your AI assistant to viaSocket’s network of integrations.',
+                    'Instantly get a unique, secure URL that connects your AI assistant to viaSocket’s network of integrations',
             },
             {
                 title: 'Choose Your Actions',
                 description:
-                    'Easily select and define the actions your AI can perform, like sending emails or sending Slack messages, giving you full control.',
+                    'Easily select and define the actions your AI can perform, like sending emails or sending Slack messages, giving you full control',
             },
             {
                 title: 'Integrate Your AI Assistant',
                 description:
-                    'Connect your AI Assistant easily with the MCP endpoint for instant, secure task execution.',
+                    'Connect your AI Assistant easily with the MCP endpoint for instant, secure task execution',
             },
         ];
 
         const tableData = [
-            { aspects: 'Integration Speed', api: 'Takes weeks', mcp: 'Done in minutes.' },
+            { aspects: 'Integration Speed', api: 'Takes weeks', mcp: 'Done in minutes' },
             {
                 aspects: 'Learning Curve',
-                api: 'Lots to read.',
-                mcp: 'Just type what you need.',
+                api: 'Lots to read',
+                mcp: 'Just type what you need',
             },
             {
                 aspects: 'Authentication',
-                api: 'Lots to read.',
-                mcp: 'Simple and secure.',
+                api: 'Lots to read',
+                mcp: 'Simple and secure',
             },
-            { aspects: 'Scalability', api: 'Hard to manage.', mcp: 'Scales with ease.' },
+            { aspects: 'Scalability', api: 'Hard to manage', mcp: 'Scales with ease' },
         ];
 
         const featuresData = [
             {
                 heading: 'Broad connectivity',
                 content:
-                    'Connect your AI to thousands of apps through a single protocol without building individual app integrations.',
+                    'Connect your AI to thousands of apps through a single protocol without building individual app integrations',
                 iconName: 'network',
             },
             {
                 heading: 'Massive Scalability',
-                content: 'Run tens of thousands of actions reliably and in real-time without delays or complications.',
+                content: 'Run tens of thousands of actions reliably and in real-time without delays or complications',
                 iconName: 'scale',
             },
             {
-                heading: 'Built-in security',
+                heading: 'Built-in Auth and Security',
                 content:
-                    'viaSocket MCP endpoints come with robust authentication and encryption, so your data stays safe and secure from misuse.',
+                    'viaSocket MCP endpoints come with robust authentication and encryption, so your data stays safe and secure from misuse',
                 iconName: 'shield',
             },
             {
                 heading: 'Interface flexibility',
                 content:
-                    'Access viaSocket MCP in the platform you prefer to build in, like Cursor, ChatGPT, or Claude Desktop.',
+                    'Access viaSocket MCP in the platform you prefer to build in, like Cursor, ChatGPT, or Claude Desktop',
                 iconName: 'layers',
             },
-            {
-                heading: 'AI-to-App Integrations',
-                content:
-                    'Take your AI beyond simple text generation. viaSocket MCP easily connects your AI assistant with over 1,000 apps, enabling real-world actions.',
-                iconName: 'plug',
-            },
+
             {
                 heading: 'Customizable AI Actions',
                 content:
-                    'Customize your AI actions to set limits on what it can do, ensuring it stays within your preferred scope and meets your needs.',
+                    'Customize your AI actions to set limits on what it can do, ensuring it stays within your preferred scope and meets your needs',
                 iconName: 'tools',
             },
+            {
+                heading: 'Skip the Setup',
+                content:
+                    'Forget building MCP servers from scratch—just use the viaSocket MCP server and let your AI connect to a world of apps in no time',
+                iconName: 'plug',
+            },
+        ];
+
+        const keyPointData = [
+            'Access to Fully Managed MCP Servers',
+            'Secure Connection with Built-In Auth',
+            'No Setup Needed',
+            'Seamless Scalability',
         ];
 
         return {
@@ -235,6 +244,7 @@ export async function getServerSideProps(context) {
                 mcpSteps: mcpSteps || [],
                 tableData: tableData || [],
                 featuresData: featuresData || [],
+                keyPointData: keyPointData || [],
             },
         };
     }

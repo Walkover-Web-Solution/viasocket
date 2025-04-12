@@ -29,11 +29,12 @@ export default function McpIndexComp({
     faqData,
     tableData,
     featuresData,
+    keyPointData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
     }
-
+    console.log(keyPointData);
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -118,24 +119,40 @@ export default function McpIndexComp({
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="w-full flex justify-center container py-20 gap-4">
-                <div className="cont gap-4 justify-center w-2/5">
-                    <h1 className="h1 ">
-                        Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs
-                    </h1>
-                    <h2 className="sub__h1">
-                        Easily connect your AI to apps with just a URL-no coding needed. Model Context Protocol (MCP)
-                        lets your AI pull data and take action in thousands of apps instantly.
-                    </h2>
-                    <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call/">
-                        <button className="btn btn-accent">Read More</button>
-                    </Link>
+            <div className="cont">
+                <div className="w-full flex justify-center container pb-20 gap-4">
+                    <div className="cont gap-4 justify-center w-2/5">
+                        <h1 className="h1 ">
+                            Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs
+                        </h1>
+                        <h2 className="sub__h1">
+                            Easily connect your AI to thousands of apps with just a URL . No complex API integrations
+                            required.
+                        </h2>
+                        <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call/">
+                            <button className="btn btn-accent">Get Your MCP URL</button>
+                        </Link>
+                    </div>
+                    <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[600px] mx-auto">
+                        <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
+                    </div>
                 </div>
-                <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[600px] mx-auto">
-                    <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
+
+                <div className="container flex justify-around items-center border-black">
+                    {keyPointData.map((point, index) => (
+                        <div
+                            key={index}
+                            className={`font-semibold py-4 px-1 border border-black ${index === 0 ? '' : 'border-l-0'} w-1/4 text-center flex items-center justify-center transition-transform transform hover:bg-black hover:text-white`}
+                        >
+                            <div className="flex gap-1 text-lg">
+                                <p className="text-accent">✔ </p> {point}
+                            </div>
+                        </div>
+                    ))}
                 </div>
             </div>
 
+            <div className=""></div>
             <FeaturesGrid featuresData={featuresData} />
 
             <div className="container border border-black">
@@ -179,7 +196,7 @@ export default function McpIndexComp({
                             placeholder="Search your favorite tools"
                         />
                     </label>
-                    <div className="relative h-[42px]">
+                    {/* <div className="relative h-[42px]">
                         <select
                             className="border border-black py-2 px-4 appearance-none bg-white cursor-pointer pr-10 h-full"
                             onChange={(e) => {
@@ -203,7 +220,7 @@ export default function McpIndexComp({
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
                             <MdKeyboardArrowDown size={20} />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
                 {isLoading ? (
                     <AppGridSkeleton />
@@ -296,18 +313,68 @@ export default function McpIndexComp({
                 )}
             </div>
 
-            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+            <div className="container cont gap-20 bg-black text-white py-20 px-12">
                 <div className="flex flex-col justify-center items-center">
-                    <h2 className="h1  max-w-[1200px]">Start getting work done with viaSocket MCP today</h2>
+                    <h2 className="h1  max-w-[900px] text-center">Start getting work done with viaSocket MCP today</h2>
                     <p className="sub__h1 max-w-[1000px]">
                         Break free from isolation-connect your AI to real-world data for smarter, more impactful
                         results.
                     </p>
                 </div>
-                <Link href="/signup?utm_source=mcp">
-                    <button className="btn btn-accent">Get Started</button>
-                </Link>
+                <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 text-white">
+                    <div className=" py-20 px-8  flex flex-col justify-between gap-6 border border-white">
+                        <div className="cont gap-4">
+                            <h2 className="text-4xl font-bold">Free for Lifetime</h2>
+                            <h3 className="text-xl">
+                                viaSocket MCP is free to use for lifetime under a{' '}
+                                <span className="underline font-semibold">
+                                    <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                        {' '}
+                                        fair usage policy
+                                    </Link>{' '}
+                                </span>{' '}
+                                without rate limits
+                            </h3>
+                        </div>
+                        <Link href="/signup">
+                            <button className="btn bg-accent text-lg text-white hover:bg-white hover:text-black border-none">
+                                Get Your MCP URL for Free
+                            </button>
+                        </Link>
+                    </div>
+                    <div className=" py-20 px-8 cont justify-between gap-6 border border-white">
+                        <div className="cont gap-4">
+                            <h2 className="text-4xl font-bold">For Enterprises</h2>
+                            <h3 className="text-xl">
+                                viaSocket MCP for Enterprises empowers AI models to securely connect to thousands of
+                                apps in minutes
+                            </h3>
+                        </div>
+                        <div className="flex gap-4">
+                            <Link href="/signup">
+                                <button className="btn bg-accent  text-lg text-white hover:bg-white hover:text-black border-none group h-fit">
+                                    <span className="block group-hover:hidden">Cloud MCP</span>
+                                    <span className="hidden group-hover:block">signup</span>
+                                </button>
+                            </Link>
+                            <Link href="/support">
+                                <button className="btn bg-accent text-lg text-white hover:bg-white hover:text-black border-none group h-fit">
+                                    <span className="block group-hover:hidden">Self-Hosted MCP</span>
+                                    <span className="hidden group-hover:block">Contact Sales</span>
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            {/* <div className="container cont py-20 px-8 bg-black text-white">
+                <div>
+                    <h1 className="h1">See Your LLMs in Action with viaSocket MCP Servers</h1>
+                    <h2 className="sub__h1">With just instant connections, your LLM can take real-world actions.</h2>
+                </div>
+            </div> */}
+
             <div className="container">
                 <BlogGrid posts={blogsData} />
             </div>
