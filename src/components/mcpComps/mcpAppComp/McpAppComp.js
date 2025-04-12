@@ -209,7 +209,7 @@ export default function McpAppComp({
 
             <div className="container cont gap-4 mt-12">
                 <div className="flex items-baseline gap-2 mb-6">
-                    <h2 className="h1">All Compatible Apps</h2>
+                    <h2 className="h1">Explore other apps that work with viaSocket MCP</h2>
                 </div>
 
                 <div className="flex items-center max-w-[800px] w-full ">

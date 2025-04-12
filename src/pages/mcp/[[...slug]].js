@@ -26,6 +26,7 @@ import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import getCombos from '@/utils/getCombos';
 export const runtime = 'experimental-edge';
+import { FaNetworkWired, FaBalanceScale, FaShieldAlt, FaLayerGroup } from 'react-icons/fa';
 
 export default function Mcp({
     pageInfo,
@@ -44,6 +45,8 @@ export default function Mcp({
     getStartedData,
     combosData,
     mcpSteps,
+    tableData,
+    featuresData,
 }) {
     if (noData) {
         return (
@@ -86,6 +89,8 @@ export default function Mcp({
                     categories={categories}
                     mcpSteps={mcpSteps}
                     faqData={faqData}
+                    tableData={tableData}
+                    featuresData={featuresData}
                 />
             </div>
         );
@@ -161,6 +166,59 @@ export async function getServerSideProps(context) {
             },
         ];
 
+        const tableData = [
+            { aspects: 'Integration Speed', api: 'Takes weeks', mcp: 'Done in minutes.' },
+            {
+                aspects: 'Learning Curve',
+                api: 'Lots to read.',
+                mcp: 'Just type what you need.',
+            },
+            {
+                aspects: 'Authentication',
+                api: 'Lots to read.',
+                mcp: 'Simple and secure.',
+            },
+            { aspects: 'Scalability', api: 'Hard to manage.', mcp: 'Scales with ease.' },
+        ];
+
+        const featuresData = [
+            {
+                heading: 'Broad connectivity',
+                content:
+                    'Connect your AI to thousands of apps through a single protocol without building individual app integrations.',
+                iconName: 'network',
+            },
+            {
+                heading: 'Massive Scalability',
+                content: 'Run tens of thousands of actions reliably and in real-time without delays or complications.',
+                iconName: 'scale',
+            },
+            {
+                heading: 'Built-in security',
+                content:
+                    'viaSocket MCP endpoints come with robust authentication and encryption, so your data stays safe and secure from misuse.',
+                iconName: 'shield',
+            },
+            {
+                heading: 'Interface flexibility',
+                content:
+                    'Access viaSocket MCP in the platform you prefer to build in, like Cursor, ChatGPT, or Claude Desktop.',
+                iconName: 'layers',
+            },
+            {
+                heading: 'AI-to-App Integrations',
+                content:
+                    'Take your AI beyond simple text generation. viaSocket MCP easily connects your AI assistant with over 1,000 apps, enabling real-world actions.',
+                iconName: 'plug',
+            },
+            {
+                heading: 'Customizable AI Actions',
+                content:
+                    'Customize your AI actions to set limits on what it can do, ensuring it stays within your preferred scope and meets your needs.',
+                iconName: 'tools',
+            },
+        ];
+
         return {
             props: {
                 pageInfo: pageInfo || {},
@@ -175,6 +233,8 @@ export async function getServerSideProps(context) {
                 categories: categories || [],
                 blogData: blogData || [],
                 mcpSteps: mcpSteps || [],
+                tableData: tableData || [],
+                featuresData: featuresData || [],
             },
         };
     }
