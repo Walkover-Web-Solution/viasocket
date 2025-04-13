@@ -36,7 +36,6 @@ import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
 import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import getBlogsData from '@/utils/getBlogData';
 import Navbar from '@/components/navbar/navbar';
 
 export const runtime = 'experimental-edge';
