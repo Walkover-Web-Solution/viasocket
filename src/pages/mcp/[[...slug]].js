@@ -223,8 +223,8 @@ export async function getServerSideProps(context) {
 
         const keyPointData = [
             'Access to Fully Managed MCP Servers',
-            'Secure Connection with Built-In Auth',
             'No Setup Needed',
+            'Secure Connection with Built-In Auth',
             'Seamless Scalability',
         ];
 
