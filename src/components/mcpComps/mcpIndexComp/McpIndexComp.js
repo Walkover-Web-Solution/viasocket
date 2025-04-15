@@ -119,9 +119,9 @@ export default function McpIndexComp({
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="cont">
-                <div className="w-full flex justify-center container pb-20 gap-4">
-                    <div className="cont gap-4 justify-center w-2/5">
+            <div className="container cont">
+                <div className="w-full flex flex-col md:flex-row justify-center pb-20 gap-4">
+                    <div className="cont gap-4 justify-center w-full md:w-2/5">
                         <h1 className="h1 ">
                             Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs
                         </h1>
@@ -133,19 +133,20 @@ export default function McpIndexComp({
                             <button className="btn btn-accent">Get Your MCP URL</button>
                         </Link>
                     </div>
-                    <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[600px] mx-auto">
+                    <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
                         <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
                     </div>
                 </div>
 
-                <div className="container flex justify-around items-center border-black">
+                <div className="flex flex-wrap justify-center">
                     {keyPointData.map((point, index) => (
                         <div
                             key={index}
-                            className={`font-semibold py-4 px-1 border border-black ${index === 0 ? '' : 'border-l-0'} w-1/4 text-center flex items-center justify-center transition-transform transform hover:bg-black hover:text-white`}
+                            className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center transition-transform transform hover:bg-black hover:text-white min-h-[80px]`}
                         >
                             <div className="flex gap-1 text-lg">
-                                <p className="text-accent">✔ </p> {point}
+                                <p className="text-accent">✔ </p>
+                                {point}
                             </div>
                         </div>
                     ))}
@@ -321,8 +322,8 @@ export default function McpIndexComp({
                         results.
                     </p>
                 </div>
-                <div className="container grid grid-cols-1 md:grid-cols-2 gap-8 text-white">
-                    <div className=" py-20 px-8  flex flex-col justify-between gap-6 border border-white">
+                <div className="flex flex-col md:flex-row gap-8 text-white">
+                    <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-white">
                         <div className="cont gap-4">
                             <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                             <h3 className="text-xl">
@@ -337,12 +338,12 @@ export default function McpIndexComp({
                             </h3>
                         </div>
                         <Link href="/signup">
-                            <button className="btn bg-accent text-lg text-white hover:bg-white hover:text-black border-none">
+                            <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group active:scale-95 transition-transform duration-75">
                                 Get Your MCP URL for Free
                             </button>
                         </Link>
                     </div>
-                    <div className=" py-20 px-8 cont justify-between gap-6 border border-white">
+                    <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-white">
                         <div className="cont gap-4">
                             <h2 className="text-4xl font-bold">For Enterprises</h2>
                             <h3 className="text-xl">
@@ -350,15 +351,15 @@ export default function McpIndexComp({
                                 apps in minutes
                             </h3>
                         </div>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                             <Link href="/signup">
-                                <button className="btn bg-accent  text-lg text-white hover:bg-white hover:text-black border-none group h-fit">
+                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
                                     <span className="block group-hover:hidden">Cloud MCP</span>
                                     <span className="hidden group-hover:block">signup</span>
                                 </button>
                             </Link>
                             <Link href="/support">
-                                <button className="btn bg-accent text-lg text-white hover:bg-white hover:text-black border-none group h-fit">
+                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
                                     <span className="block group-hover:hidden">Self-Hosted MCP</span>
                                     <span className="hidden group-hover:block">Contact Sales</span>
                                 </button>
@@ -427,11 +428,11 @@ const FeaturesGrid = ({ featuresData }) => {
             </div>
 
             {/* <div className="flex justify-center items-center"> */}
-            <div className="grid grid-cols-3 gap-y-20 gap-x-12">
+            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
                 {featuresData.map((feature, index) => (
                     <div
                         key={index}
-                        className="border border-white cont max-w-[500px] lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
+                        className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
                     >
                         <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
                         <h2 className="h2 font-bold mb-3">{feature.heading}</h2>
