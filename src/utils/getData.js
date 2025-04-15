@@ -17,6 +17,7 @@ import {
     USECASES,
     COUNTRIES,
     TEMPLATES,
+    MCP,
 } from '@/const/tables';
 import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
@@ -142,5 +143,10 @@ export async function getCountriesData(fields, filter) {
 
 export async function getValidTemplatesData(fields, filter) {
     const data = await getDataFromTable(TEMPLATES, handleFieldsFilter(fields, filter));
+    return handleData(data);
+}
+
+export async function getMCPPromptData(fields, filter) {
+    const data = await getDataFromTable(MCP, handleFieldsFilter(fields, filter));
     return handleData(data);
 }

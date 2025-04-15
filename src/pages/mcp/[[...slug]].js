@@ -4,6 +4,7 @@ import {
     getFaqData,
     getFooterData,
     getGetStartedData,
+    getMCPPromptData,
     getMetaData,
     getNavData,
 } from '@/utils/getData';
@@ -18,6 +19,7 @@ import {
     GETSTARTED_FIELDS,
     INTECATEGORY_FIELDS,
     INTECATEGORYlIST_FILED,
+    MCP_FIELDS,
     METADATA_FIELDS,
     NAVIGATION_FIELDS,
 } from '@/const/fields';
@@ -47,6 +49,9 @@ export default function Mcp({
     tableData,
     featuresData,
     keyPointData,
+    mcpAppSteps,
+    mcpPromptData,
+    mcpAIIntegrationData,
 }) {
     if (noData) {
         return (
@@ -72,6 +77,9 @@ export default function Mcp({
                     useCaseData={useCaseData}
                     getStartedData={getStartedData}
                     combosData={combosData}
+                    mcpAppSteps={mcpAppSteps}
+                    mcpPromptData={mcpPromptData}
+                    mcpAIIntegrationData={mcpAIIntegrationData}
                 />
             </div>
         );
@@ -112,6 +120,31 @@ export async function getServerSideProps(context) {
         const combosData = await getCombos(mcpInfo);
         const appOneDetails = getAppDetails(combosData, mcpInfo?.appone);
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
+        const mcpAppSteps = [
+            {
+                title: 'Get Your MCP Endpoint',
+                description:
+                    'Instantly get a unique, secure URL that connects your AI assistant to viaSocket’s network of integrations',
+            },
+            {
+                title: 'Choose Your Actions',
+                description: `Choose and configure the actions your AI assistant can perform in ${appOneDetails?.name}`,
+            },
+            {
+                title: 'Connect Your AI Assistant',
+                description:
+                    'Connect your AI Assistant easily with the MCP endpoint for instant, secure task execution',
+            },
+        ];
+
+        const mcpPromptData = await getMCPPromptData(MCP_FIELDS, `filter=slug=${appOneDetails?.appslugname}`);
+
+        const mcpAIIntegrationData = [
+            'Skip the hassle of building or hosting your own APIs.We’ve already done the hard work',
+            'Set it up once and instantly tap into 1,000+ apps in simple and seamless fashion',
+            'Enjoy secure, scoped access right out of the box . Your data is in good hands',
+            'Compatible with all your go-to  tools. Just plug and play',
+        ];
 
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
@@ -130,6 +163,9 @@ export async function getServerSideProps(context) {
                     blogData: blogData || [],
                     getStartedData: getStarted || [],
                     combosData: combosData || [],
+                    mcpAppSteps: mcpAppSteps || [],
+                    mcpPromptData: mcpPromptData || [],
+                    mcpAIIntegrationData: mcpAIIntegrationData || [],
                 },
             };
         } else {
@@ -161,7 +197,7 @@ export async function getServerSideProps(context) {
                     'Easily select and define the actions your AI can perform, like sending emails or sending Slack messages, giving you full control',
             },
             {
-                title: 'Integrate Your AI Assistant',
+                title: 'Connect Your AI Assistant',
                 description:
                     'Connect your AI Assistant easily with the MCP endpoint for instant, secure task execution',
             },
@@ -176,7 +212,7 @@ export async function getServerSideProps(context) {
             },
             {
                 aspects: 'Authentication',
-                api: 'Lots to read',
+                api: 'Manual setup, often complex',
                 mcp: 'Simple and secure',
             },
             { aspects: 'Scalability', api: 'Hard to manage', mcp: 'Scales with ease' },

@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { LinkText } from '../uiComponents/buttons';
 import Image from 'next/image';
-const BlogGrid = ({ posts }) => {
+const BlogGrid = ({ posts, isBlack = false }) => {
     if (posts?.length > 0) {
         return (
             <div className="flex flex-col gap-9">
@@ -13,13 +13,17 @@ const BlogGrid = ({ posts }) => {
                 <div className="w-full cont">
                     <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid">
                         {posts?.map((post, index) => (
-                            <CardComponent key={index} card={post} />
+                            <CardComponent key={index} card={post} isBlack={isBlack} />
                         ))}
                     </div>
-                    <Link href="/blog" target="_blank" className=" w-fit">
+                    <Link href="/blog" target="_blank" className="w-fit">
                         <LinkText
                             children="Read more blogs"
-                            customClasses="btn btn-primary btn-outline btn-md w-fit border-t-0"
+                            customClasses={
+                                isBlack
+                                    ? 'btn border-white border-t-0'
+                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0'
+                            }
                         />
                     </Link>
                 </div>
@@ -27,13 +31,13 @@ const BlogGrid = ({ posts }) => {
         );
     }
 };
-const CardComponent = ({ card }) => {
+const CardComponent = ({ card, isBlack = false }) => {
     return (
         <Link
             href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
-            className="block_border card rounded-none LinkButtonCard"
+            className={`${isBlack ? 'border border-white' : 'block_border'} card rounded-none LinkButtonCard`}
         >
             {' '}
             <div className="flex flex-col gap-4 h-full">
