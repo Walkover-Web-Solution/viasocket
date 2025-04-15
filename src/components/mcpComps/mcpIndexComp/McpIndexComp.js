@@ -144,9 +144,9 @@ export default function McpIndexComp({
                             key={index}
                             className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center transition-transform transform hover:bg-black hover:text-white min-h-[80px]`}
                         >
-                            <div className="flex gap-1 text-lg">
+                            <div className="flex gap-1 text-lg items-center">
                                 <p className="text-accent">✔ </p>
-                                {point}
+                                <p>{point}</p>
                             </div>
                         </div>
                     ))}
@@ -355,7 +355,7 @@ export default function McpIndexComp({
                             <Link href="/signup">
                                 <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
                                     <span className="block group-hover:hidden">Cloud MCP</span>
-                                    <span className="hidden group-hover:block">signup</span>
+                                    <span className="hidden group-hover:block">Sign Up</span>
                                 </button>
                             </Link>
                             <Link href="/support">
