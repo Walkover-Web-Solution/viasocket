@@ -13,6 +13,7 @@ import ErrorComp from '@/components/404/404Comp';
 import FAQSection from '@/components/faqSection/faqSection';
 import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTools } from 'react-icons/fa';
 import { BsStars } from 'react-icons/bs';
+import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 
 const APPERPAGE = 9;
 
@@ -30,11 +31,11 @@ export default function McpIndexComp({
     tableData,
     featuresData,
     keyPointData,
+    metaData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
     }
-    console.log(keyPointData);
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -115,7 +116,7 @@ export default function McpIndexComp({
 
     return (
         <>
-            <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
+            <MetaHeadComp metaData={metaData} page={'/mcp'} />
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
