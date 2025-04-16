@@ -217,7 +217,10 @@ export default function McpAppComp({
                             </div>
                             <div className="cont justify-between gap-2">
                                 <h2 className="text-2xl font-semibold">You</h2>
-                                <h3 className="text-xl text-gray-500">Perform this action</h3>
+                                <h3 className="text-xl text-gray-500">
+                                    {mcpPromptData[0]?.prompt ||
+                                        `I want to perform an action in ${appOneDetails?.name}`}
+                                </h3>
                             </div>
                         </div>
                         <div className="flex gap-4">
@@ -228,9 +231,14 @@ export default function McpAppComp({
                                 <h2 className="text-2xl font-semibold">viaSocket Agent</h2>
                                 <div className="cont gap-1">
                                     <h3 className="text-xl">MCP Tool Calling...</h3>
-                                    <div className="border border-black bg-gray-200 px-4 py-2 shadow-md">
-                                        <h2 className="text-xl text-gray-500">Action in Progress...</h2>
-                                        <p className="text-xl">action</p>
+                                    <div className="border border-black bg-gray-200 px-4 py-2 shadow-md cont gap-2">
+                                        <div className="flex gap-4 items-center">
+                                            <Image src={appOneDetails.iconurl} width={40} height={40} />
+                                            <h2 className="text-xl text-gray-500">Action in Progress...</h2>
+                                        </div>
+                                        {mcpPromptData[0]?.action && (
+                                            <p className="text-xl">{mcpPromptData[0]?.action}</p>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -255,11 +263,13 @@ export default function McpAppComp({
 
             <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
                 <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                    <h2 className="h1 text-center">Connect HubSpot to Any AI Assistant in 3 Easy Steps</h2>
+                    <h2 className="h1 text-center">
+                        Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps
+                    </h2>
                     <h3 className="sub__h1 text-center">
-                        viaSocket MCP Server lets you easily connect [HubSpot] actions with AI tools like ChatGPT,
-                        Claude, and Cursor, all with built-in authentication. No need to manage integrations or deal
-                        with a bulky setup.
+                        viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools like
+                        ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage integrations or
+                        deal with a bulky setup.
                     </h3>
                 </div>
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
@@ -331,24 +341,30 @@ export default function McpAppComp({
                 </div>
             </div>
 
-            {/* <div className="container cont gap-12">
+            <div className="container cont gap-12">
                 <div>
                     <h1 className="h1">AI-to-App Integration Made Easy with viaSocket MCP</h1>
                 </div>
-                <div className="w-full flex flex-col md:flex-row justify-center pb-20 gap-4">
+                <div className="w-full flex flex-col md:flex-row justify-center items-center pb-20 gap-4">
                     <div className="flex justify-center items-center relative w-full md:w-1/2 h-full min-h-[300px] mx-auto ">
-                        <Image src="/assets/brand/mcpAiIntegration.svg" layout="fill" alt="Selected Embed Image" />
+                        <Image
+                            src="/assets/brand/mcpAiIntegration.svg"
+                            alt="Selected Embed Image"
+                            // width={600}
+                            // height={600}
+                            layout="fill"
+                        />
                     </div>
                     <div className="cont gap-4 justify-center w-full md:w-1/2">
                         {mcpAIIntegrationData.map((steps, index) => (
                             <div key={index} className="flex items-start gap-2">
-                                <span className="text-2xl">•</span>
+                                <span className="text-2xl text-green-600">✔ </span>
                                 <p className="text-2xl">{steps}</p>
                             </div>
                         ))}
                     </div>
                 </div>
-            </div> */}
+            </div>
 
             <div className="container cont cont__py border border-white bg-black text-white  justify-center items-center text-center gap-12">
                 <div className="flex flex-col justify-center items-center">
