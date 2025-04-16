@@ -309,7 +309,7 @@ export default function McpAppComp({
                                 without rate limits
                             </h3>
                         </div>
-                        <Link href="/signup">
+                        <Link href="/signup?utm_source=mcp">
                             <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group active:scale-95 transition-transform duration-75">
                                 Get Your MCP URL for Free
                             </button>
@@ -324,7 +324,7 @@ export default function McpAppComp({
                             </h3>
                         </div>
                         <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
-                            <Link href="/signup">
+                            <Link href="/signup?utm_source=mcp">
                                 <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
                                     <span className="block group-hover:hidden">Cloud MCP</span>
                                     <span className="hidden group-hover:block">Sign Up</span>
@@ -345,17 +345,16 @@ export default function McpAppComp({
                 <div>
                     <h1 className="h1">AI-to-App Integration Made Easy with viaSocket MCP</h1>
                 </div>
-                <div className="w-full flex flex-col md:flex-row justify-center items-center pb-20 gap-4">
-                    <div className="flex justify-center items-center relative w-full md:w-1/2 h-full min-h-[300px] mx-auto ">
-                        <Image
-                            src="/assets/brand/mcpAiIntegration.svg"
-                            alt="Selected Embed Image"
-                            // width={600}
-                            // height={600}
-                            layout="fill"
-                        />
-                    </div>
-                    <div className="cont gap-4 justify-center w-full md:w-1/2">
+                <div className="w-full flex flex-col lg:flex-row justify-center items-center pb-20 gap-4">
+                    <Image
+                        src="/assets/brand/mcpAiIntegration.svg"
+                        alt="Selected Embed Image"
+                        width={600}
+                        height={600}
+                        className="border border-white"
+                    />
+                    {/* </div> */}
+                    <div className="cont gap-4 justify-center w-full lg:w-1/2">
                         {mcpAIIntegrationData.map((steps, index) => (
                             <div key={index} className="flex items-start gap-2">
                                 <span className="text-2xl text-green-600">✔ </span>
@@ -522,7 +521,7 @@ export default function McpAppComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-white text-black">
+                                        <span className="px-3 text-sm py-2 hover:bg-white hover:text-black bg-accent text-white">
                                             {cat}
                                         </span>
                                     </Link>
@@ -541,24 +540,22 @@ export default function McpAppComp({
                                 <h3 className="h2 font-bold pt-5">About viaSocket</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-whte h-full font-medium">
-                                viasocket is an innovative and versatile workflow automation platform designed to
-                                streamline and simplify the integration of your favorite applications and to
+                                viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps through
+                                viaSocket's platform, enabling seamless communication, data exchange, and enhanced
+                                automation.
                             </p>
                             <div className="flex flex-wrap gap-3">
-                                <Link href="/" className="mb-2">
-                                    <span className="px-3 py-2 text-sm hover:bg-black hover:text-white bg-white text-black">
-                                        Workflow Automation
+                                <Link href="/mcp" className="mb-2">
+                                    <span className="px-3 py-2 text-sm hover:bg-white hover:text-black bg-accent text-white">
+                                        viaSocket MCP
                                     </span>
                                 </Link>
                                 <Link href="/integrations" className="mb-2">
-                                    <span className="px-3 py-2 text-sm hover:bg-black hover:text-white bg-white text-black">
+                                    <span className="px-3 py-2 text-sm hover:bg-white hover:text-black bg-accent text-white">
                                         Integration
                                     </span>
                                 </Link>
                             </div>
-                            <Link href={'/'}>
-                                <LinkText children={'Learn More'} />
-                            </Link>
                         </div>
                     </div>
                     <Footer footerData={footerData} isBlack={true} />
