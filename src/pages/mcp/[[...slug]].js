@@ -137,7 +137,7 @@ export async function getServerSideProps(context) {
             },
         ];
 
-        const mcpPromptData = await getMCPPromptData(MCP_FIELDS, `filter=slug=${appOneDetails?.appslugname}`);
+        const mcpPromptData = await getMCPPromptData(MCP_FIELDS, `filter=slug_names='${appOneDetails?.appslugname}'`);
 
         const mcpAIIntegrationData = [
             'Skip the hassle of building or hosting your own APIs.We’ve already done the hard work',
