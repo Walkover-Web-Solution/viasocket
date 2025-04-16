@@ -147,7 +147,7 @@ export async function getServerSideProps(context) {
         ];
 
         if (appOneDetails) {
-            const blogTags = appOneDetails.appslugname;
+            const blogTags = 'mcp';
             const blogData = await getBlogData(blogTags);
             return {
                 props: {
