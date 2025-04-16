@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import ReCaptchaProvider from './reCaptchaProvider';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function RequestPluginFormComp({ appOneDetails }) {
     const { executeRecaptcha } = useGoogleReCaptcha();
@@ -150,6 +151,9 @@ export default function RequestPluginFormComp({ appOneDetails }) {
                             ></textarea>
                         </label>
                     </div>
+                    <Link href="https://cal.id/team/viasocket/superheros" target="_blank">
+                        <p className="text-lg text-accent hover:underline">Schedule a meeting</p>
+                    </Link>
                     <div className="flex gap-3">
                         <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
                             {isLoading ? 'Submiting...' : 'Submit'}
