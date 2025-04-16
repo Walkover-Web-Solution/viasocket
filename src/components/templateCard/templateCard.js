@@ -61,7 +61,10 @@ const TemplateCard = ({ template }) => {
                                         )}
                                     </>
                                 )}
-                                <p>{template?.published_json_script?.trigger?.triggerType}</p>
+                                <p>
+                                    {template?.published_json_script?.trigger?.actionName ||
+                                        template?.published_json_script?.trigger?.triggerType}
+                                </p>
                             </div>
                         </div>
                     </div>
