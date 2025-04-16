@@ -107,8 +107,10 @@ export default function McpAppComp({
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
 
     const goToNext = () => {
-        const url = `/mcp/${integrationsInfo?.category ? 'category/' + integrationsInfo?.category : ''}/page/${Number(integrationsInfo?.page) + 1}`;
-        return url;
+        if (integrationsInfo?.appone) {
+            const url = `/mcp/${integrationsInfo?.appone}/page/${Number(integrationsInfo?.page) + 1}`;
+            return url;
+        }
     };
 
     const goToPrev = () => {
@@ -345,7 +347,7 @@ export default function McpAppComp({
                 <div>
                     <h1 className="h1">AI-to-App Integration Made Easy with viaSocket MCP</h1>
                 </div>
-                <div className="w-full flex flex-col lg:flex-row justify-center items-center pb-20 gap-4">
+                <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-center pb-20 ">
                     <Image
                         src="/assets/brand/mcpAiIntegration.svg"
                         alt="Selected Embed Image"
@@ -373,7 +375,7 @@ export default function McpAppComp({
                         with viaSocket MCP.
                     </p>
                 </div>
-                <Link href="https://viasocket.com/blog/how-viasocket-works-a-complete-guide">
+                <Link href="https://viasocket.com/faq/viaSocket-MCP">
                     <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                         Explore The Documentation
                     </button>
@@ -434,31 +436,33 @@ export default function McpAppComp({
                             </span>
                         )
                     ) : (
-                        apps?.map((app, index) => {
-                            return (
-                                <Link
-                                    key={index}
-                                    href={createURL(`/integrations/${app?.appslugname}`)}
-                                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-white border border-l-0 border-t-0 gap-2 bg-black hover:text-black hover:bg-white"
-                                >
-                                    <div className="flex items-center gap-2">
-                                        <div className="border flex items-center justify-center w-9 h-9 bg-black">
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                width={36}
-                                                height={36}
-                                                alt={app?.name}
-                                                className="h-5 w-fit"
-                                            />
+                        apps
+                            ?.filter((app) => app.appslugname !== appOneDetails.appslugname)
+                            ?.map((app, index) => {
+                                return (
+                                    <Link
+                                        key={index}
+                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-white border border-l-0 border-t-0 gap-2 bg-black hover:text-black hover:bg-white"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div className="border flex items-center justify-center w-9 h-9 bg-black">
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={36}
+                                                    height={36}
+                                                    alt={app?.name}
+                                                    className="h-5 w-fit"
+                                                />
+                                            </div>
+                                            <h2 className="font-bold">{app?.name}</h2>
                                         </div>
-                                        <h2 className="font-bold">{app?.name}</h2>
-                                    </div>
-                                    <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                        {app?.description}
-                                    </p>
-                                </Link>
-                            );
-                        })
+                                        <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                            {app?.description}
+                                        </p>
+                                    </Link>
+                                );
+                            })
                     )}
                 </div>
 
@@ -531,13 +535,13 @@ export default function McpAppComp({
                         <div className="w-full cont gap-4 p-12 border-x md:border-l-0 border-white">
                             <div>
                                 <Image
-                                    className="h-10 w-fit"
-                                    src={'/assets/brand/fav_ico.svg'}
-                                    width={36}
-                                    height={36}
+                                    className="border border-white"
+                                    src="/assets/brand/smiley_white.svg"
+                                    width={46}
+                                    height={46}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About viaSocket</h3>
+                                <h3 className="h2 font-bold pt-5">About viaSocket MCP server</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-whte h-full font-medium">
                                 viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps through
