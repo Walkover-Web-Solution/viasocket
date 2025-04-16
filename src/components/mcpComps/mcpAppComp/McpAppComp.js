@@ -409,7 +409,7 @@ export default function McpAppComp({
                                 return (
                                     <Link
                                         key={index}
-                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        href={createURL(`/mcp/${app?.appslugname}`)}
                                         className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-white border border-l-0 border-t-0 gap-2 bg-black hover:text-black hover:bg-whte"
                                     >
                                         <div className="flex items-center gap-2">
@@ -442,7 +442,7 @@ export default function McpAppComp({
                                 return (
                                     <Link
                                         key={index}
-                                        href={createURL(`/integrations/${app?.appslugname}`)}
+                                        href={createURL(`/mcp/${app?.appslugname}`)}
                                         className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-white border border-l-0 border-t-0 gap-2 bg-black hover:text-black hover:bg-white"
                                     >
                                         <div className="flex items-center gap-2">
@@ -520,9 +520,7 @@ export default function McpAppComp({
                                 {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
                                     <Link
                                         key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
+                                        href={createURL(`/mcp/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                         className="mb-2"
                                     >
                                         <span className="px-3 text-sm py-2 hover:bg-white hover:text-black bg-accent text-white">
