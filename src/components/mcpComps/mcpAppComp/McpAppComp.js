@@ -4,8 +4,6 @@ import { MdChevronLeft, MdChevronRight, MdOpenInNew, MdSearch } from 'react-icon
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import IntegrationsHeadComp from '@/components/IntegrationsComp/integrationsHeadComp/integrationsHeadComp';
-import { LinkText } from '@/components/uiComponents/buttons';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import { setUtmSource } from '@/utils/handleUtmSource';
@@ -14,6 +12,7 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
 import { IoPersonOutline } from 'react-icons/io5';
 import { VscSend } from 'react-icons/vsc';
+import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 
 const APPERPAGE = 9;
 
@@ -125,14 +124,7 @@ export default function McpAppComp({
 
     return (
         <div className="bg-black text-white cont md:gap-24 sm:gap-16 gap-12">
-            <IntegrationsHeadComp
-                metaData={metaData}
-                page={'/integrations/AppOne'}
-                plugins={[appOneDetails]}
-                type={'appOne'}
-                pageInfo={pageInfo}
-                integrationsInfo={integrationsInfo}
-            />
+            <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
             <div className="flex flex-col gap-8">
                 <div style={{ background: appOneDetails?.brandcolor }}>
                     <div className="container cont py-8 gap-4 flex items-center justify-between">
