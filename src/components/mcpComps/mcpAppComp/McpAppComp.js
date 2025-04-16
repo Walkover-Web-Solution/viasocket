@@ -198,9 +198,9 @@ export default function McpAppComp({
                             the viaSocket MCP Server.
                         </p>
                     </div>
-                    <Link href={`/signup?utm_source=mcp/${appOneDetails?.appslugname}`}>
+                    <Link href={`https://flow.viasocket.com/mcp?utm_source=mcp/${appOneDetails?.appslugname}`}>
                         <button className="btn border-0 bg-accent text-white hover:bg-white hover:text-black">
-                            Get the URL
+                            Get Your MCP URL
                         </button>
                     </Link>
                 </div>
