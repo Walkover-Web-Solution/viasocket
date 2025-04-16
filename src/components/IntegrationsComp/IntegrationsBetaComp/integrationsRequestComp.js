@@ -156,7 +156,7 @@ export function RequestPlugin() {
                             ></textarea>
                         </label>
                     </div>
-                    <Link href="https://cal.id/team/viasocket/superheros">
+                    <Link href="https://cal.id/team/viasocket/superheros" target="_blank">
                         <p className="text-lg text-accent hover:underline">Schedule a meeting</p>
                     </Link>
                     <div className="flex gap-3">
