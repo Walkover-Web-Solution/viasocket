@@ -375,7 +375,7 @@ export default function McpAppComp({
                         with viaSocket MCP.
                     </p>
                 </div>
-                <Link href="https://viasocket.com/blog/how-viasocket-works-a-complete-guide">
+                <Link href="https://viasocket.com/faq/viaSocket-MCP">
                     <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                         Explore The Documentation
                     </button>
