@@ -351,7 +351,7 @@ export async function getServerSideProps() {
             footerData: footerData || [],
             templateData: templateData || [],
             validTemplates: validTemplates || [],
-            metaData: metaData || [],
+            metaData: (metaData?.length > 0 && metaData[0]) || {},
             faqData: faqData || [],
             blogData: blogData || [],
         },

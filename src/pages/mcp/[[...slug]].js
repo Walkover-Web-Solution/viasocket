@@ -32,7 +32,7 @@ export const runtime = 'experimental-edge';
 export default function Mcp({
     pageInfo,
     mcpInfo,
-    metadata,
+    metaData,
     apps,
     faqData,
     footerData,
@@ -67,8 +67,8 @@ export default function Mcp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpAppComp
                     pageInfo={pageInfo}
-                    integrationsInfo={mcpInfo} // Reusing with different prop name
-                    metadata={metadata}
+                    integrationsInfo={mcpInfo}
+                    metaData={metaData}
                     apps={apps}
                     blogsData={blogData}
                     appOneDetails={appOneDetails}
@@ -100,6 +100,7 @@ export default function Mcp({
                     tableData={tableData}
                     featuresData={featuresData}
                     keyPointData={keyPointData}
+                    metaData={metaData}
                 />
             </div>
         );
@@ -113,7 +114,7 @@ export async function getServerSideProps(context) {
     const navData = await getNavData(NAVIGATION_FIELDS);
 
     if (mcpInfo?.appone) {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/AppOne'`);
+        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
         const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 9 });
@@ -155,7 +156,7 @@ export async function getServerSideProps(context) {
                     navData: navData || {},
                     footerData: footerData || {},
                     apps: apps || [],
-                    metadata: metadata || {},
+                    metaData: (metaData?.length > 0 && metaData[0]) || {},
                     faqData: faqData || [],
                     mcpInfo: mcpInfo || {},
                     appOneDetails: appOneDetails || {},
@@ -178,7 +179,7 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
+        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
         const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 9 });
@@ -270,7 +271,7 @@ export async function getServerSideProps(context) {
                 navData: navData || {},
                 footerData: footerData || {},
                 apps: apps || [],
-                metadata: metadata || {},
+                metaData: (metaData?.length > 0 && metaData[0]) || {},
                 faqData: faqData || [],
                 mcpInfo: mcpInfo || {},
                 appOneDetails: {},

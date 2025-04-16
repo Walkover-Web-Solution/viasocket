@@ -307,7 +307,7 @@ export async function getServerSideProps() {
             embedData: embedData || [],
             tableData: tableData,
             howItWorksData: howItWorksData,
-            metaData: metaData || [],
+            metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
     };
 }
