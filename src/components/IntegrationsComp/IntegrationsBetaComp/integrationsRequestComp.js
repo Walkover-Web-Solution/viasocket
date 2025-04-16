@@ -2,6 +2,7 @@ import { useState } from 'react';
 import ReCaptchaProvider from './reCaptchaProvider';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export function RequestPlugin() {
     const { executeRecaptcha } = useGoogleReCaptcha();
@@ -155,6 +156,9 @@ export function RequestPlugin() {
                             ></textarea>
                         </label>
                     </div>
+                    <Link href="https://cal.id/team/viasocket/superheros">
+                        <p className="text-lg text-accent hover:underline">Schedule a meeting</p>
+                    </Link>
                     <div className="flex gap-3">
                         <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
                             {isLoading ? 'Submiting...' : 'Submit'}
