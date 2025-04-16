@@ -54,12 +54,22 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                 >
                     <div className="flex flex-col gap-2 mb-12 sm:mb-6 py-4">
                         <Link href="/" aria-label="socket fav icon">
-                            <Image
-                                src="/assets/brand/socket_fav_dark.svg"
-                                width={46}
-                                height={46}
-                                alt="socket fav icon"
-                            />
+                            {isBlack ? (
+                                <Image
+                                    src="/assets/brand/smiley_white.svg"
+                                    width={50}
+                                    height={50}
+                                    alt="socket fav icon"
+                                    className="border border-white"
+                                />
+                            ) : (
+                                <Image
+                                    src="/assets/brand/socket_fav_dark.svg"
+                                    width={46}
+                                    height={46}
+                                    alt="socket fav icon"
+                                />
+                            )}
                         </Link>
                         <p>© {new Date().getFullYear()} viaSocket</p>
                         <p>All rights reserved.</p>
