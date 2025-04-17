@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import { setUtmSource } from '@/utils/handleUtmSource';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
