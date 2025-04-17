@@ -14,7 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -36,23 +36,8 @@ export default function IntegrationsAppOneComp({
 
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     useEffect(() => {
-        const utmData = setUtmSource(appOneDetails.appslugname);
-
-        if (!utmData) {
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-            return;
-        }
-
-        try {
-            const parsedUtm = JSON.parse(utmData);
-            if (parsedUtm && typeof parsedUtm === 'object') {
-                const queryString = new URLSearchParams(parsedUtm).toString();
-                setDefaultUtmSource(queryString);
-            }
-        } catch (error) {
-            console.error('Error parsing UTM data:', error);
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-        }
+        const utmData = setUtmSource({ source: `integrations/${appOneDetails.appslugname}` });
+        setDefaultUtmSource(utmData);
     }, []);
 
     return (
@@ -81,7 +66,7 @@ export default function IntegrationsAppOneComp({
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
-                            <Link href={`https://flow.viasocket.com?${defaultUtmSource}`} rel="nofollow">
+                            <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
                                 <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
@@ -106,7 +91,8 @@ export default function IntegrationsAppOneComp({
                 </div>
                 <Link
                     target="_blank"
-                    href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?utm_source=${utm}`}
+                    href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?state=${defaultUtmSource}`}
+                    onClick={() => setUtmInCookies({ source: `integrations/${appOneDetails?.appslugname}` })}
                     className="flex items-center gap-2 container hover:text-blue-600"
                     rel="nofollow"
                 >
@@ -163,7 +149,12 @@ export default function IntegrationsAppOneComp({
                                                     'https://placehold.co/40x40',
                                             }}
                                             description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&utm_source=${utm}`}
+                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
+                                            onClick={() =>
+                                                setUtmInCookies({
+                                                    source: `integrations/${appOneDetails?.appslugname}`,
+                                                })
+                                            }
                                         />
                                     );
                                 })}
