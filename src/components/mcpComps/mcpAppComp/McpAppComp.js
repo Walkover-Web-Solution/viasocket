@@ -6,7 +6,7 @@ import Footer from '@/components/footer/footer';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
@@ -37,23 +37,8 @@ export default function McpAppComp({
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
 
     useEffect(() => {
-        const utmData = setUtmSource(appOneDetails.appslugname);
-
-        if (!utmData) {
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-            return;
-        }
-
-        try {
-            const parsedUtm = JSON.parse(utmData);
-            if (parsedUtm && typeof parsedUtm === 'object') {
-                const queryString = new URLSearchParams(parsedUtm).toString();
-                setDefaultUtmSource(queryString);
-            }
-        } catch (error) {
-            console.error('Error parsing UTM data:', error);
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-        }
+        const utmData = setUtmSource({ source: `mcp/${appOneDetails.appslugname}` });
+        setDefaultUtmSource(utmData);
     }, []);
 
     useEffect(() => {
@@ -129,7 +114,7 @@ export default function McpAppComp({
                 <div style={{ background: appOneDetails?.brandcolor }}>
                     <div className="container cont py-8 gap-4 flex items-center justify-between">
                         <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                            <Link href={`https://flow.viasocket.com?${defaultUtmSource}`} rel="nofollow">
+                            <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
                                 <button className="bg-black flex border border-white items-center gap-2 px-5 py-3 hover:bg-white hover:text-black transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
@@ -156,7 +141,8 @@ export default function McpAppComp({
                     <div className="container">
                         <Link
                             target="_blank"
-                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?utm_source=${utm}`}
+                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?state=${defaultUtmSource}`}
+                            onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
                             className="flex items-center gap-2 hover:text-blue-600 w-fit"
                             rel="nofollow"
                         >
@@ -190,7 +176,10 @@ export default function McpAppComp({
                             the viaSocket MCP Server.
                         </p>
                     </div>
-                    <Link href={`https://flow.viasocket.com/mcp?utm_source=mcp/${appOneDetails?.appslugname}`}>
+                    <Link
+                        href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
+                        onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
+                    >
                         <button className="btn border-0 bg-accent text-white hover:bg-white hover:text-black">
                             Get Your MCP URL
                         </button>
