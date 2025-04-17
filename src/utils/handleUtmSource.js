@@ -28,7 +28,7 @@ export const getUtmSource = () => {
     }
 };
 
-export const setUtmSource = ({ source = 'website' } = {}) => {
+export const setUtmSource = (source = 'website') => {
     let utmData = getCookie('utmData');
 
     if (!utmData) {
@@ -47,15 +47,5 @@ export const setUtmSource = ({ source = 'website' } = {}) => {
         }
     }
 
-    const defaultUtmData = JSON.stringify({ utm_source: source });
-    return utmData ? JSON.stringify(utmData) : JSON.stringify(defaultUtmData);
-};
-
-export const setUtmInCookies = ({ source = 'website' } = {}) => {
-    let utmData = getCookie('utmData');
-
-    if (!utmData) {
-        utmData = JSON.stringify({ utm_source: source });
-        setCookie('utmData', utmData, 1);
-    }
+    return utmData ? utmData : JSON.stringify({ utm_source: source });
 };

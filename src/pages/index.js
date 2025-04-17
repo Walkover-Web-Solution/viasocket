@@ -37,7 +37,6 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 export const runtime = 'experimental-edge';
 
@@ -225,13 +224,7 @@ const Index = ({
         }
     };
 
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `/makeflow/trigger/combos` });
-        setDefaultUtmSource(utmData);
-    }, []);
-
+    const utm = '/index';
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
@@ -502,8 +495,7 @@ const Index = ({
                                                       'https://placehold.co/40x40',
                                               }}
                                               description={combo?.description}
-                                              link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions.map((action) => action.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                              onClick={() => setUtmInCookies({ source: `makeflow/trigger/combos` })}
+                                              link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions.map((action) => action.id).join(',')}&integrations=${integrations}&action&utm_source=${utm}`}
                                           />
                                       );
                                   })

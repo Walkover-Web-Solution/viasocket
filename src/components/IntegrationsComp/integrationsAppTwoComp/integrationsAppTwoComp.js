@@ -12,7 +12,7 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import GetStarted from '@/components/getStarted/getStarted';
 
 export default function IntegrationsAppTwoComp({
@@ -30,10 +30,23 @@ export default function IntegrationsAppTwoComp({
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     useEffect(() => {
-        const utmData = setUtmSource({
-            source: `integrations/${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`,
-        });
-        setDefaultUtmSource(utmData);
+        const utmData = setUtmSource(`${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
+
+        if (!utmData) {
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
+            return;
+        }
+
+        try {
+            const parsedUtm = JSON.parse(utmData);
+            if (parsedUtm && typeof parsedUtm === 'object') {
+                const queryString = new URLSearchParams(parsedUtm).toString();
+                setDefaultUtmSource(queryString);
+            }
+        } catch (error) {
+            console.error('Error parsing UTM data:', error);
+            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}-${appTwoDetails.appslugname}`);
+        }
     }, []);
 
     return (
@@ -48,7 +61,7 @@ export default function IntegrationsAppTwoComp({
             <div style={{ background: appOneDetails?.brandcolor }} className="">
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
+                        <Link href={`https://flow.viasocket.com?${defaultUtmSource}`} rel="nofollow">
                             <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
@@ -164,12 +177,7 @@ export default function IntegrationsAppTwoComp({
                                                     'https://placehold.co/40x40',
                                             }}
                                             description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                            onClick={() =>
-                                                setUtmInCookies({
-                                                    source: `integrations/${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`,
-                                                })
-                                            }
+                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&${defaultUtmSource}`}
                                         />
                                     );
                                 })}

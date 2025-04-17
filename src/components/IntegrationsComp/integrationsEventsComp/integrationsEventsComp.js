@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { MdAdd, MdAdsClick, MdCheck, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 export default function IntegrationsEventsComp({ combosData, appOneDetails, appTwoDetails }) {
     const [visibleEvents, setVisibleEvents] = useState(6);
@@ -52,14 +51,6 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
             return {};
         }
     }
-
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `integrations/makeflow/trigger/combos` });
-        setDefaultUtmSource(utmData);
-    }, []);
-
     return (
         <>
             {combosData ? (
@@ -208,10 +199,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     <Link
                                         target="_blank"
                                         className={`btn btn-primary ${selectedAction && selectedTrigger ? '' : 'btn-disabled'}`}
-                                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger?.rowid}/action?events=${selectedAction?.rowid}?state=${defaultUtmSource}`}
-                                        onClick={() =>
-                                            setUtmInCookies({ source: `integrations/makeflow/trigger/combos` })
-                                        }
+                                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger?.rowid}/action?events=${selectedAction?.rowid}`}
                                         rel="nofollow"
                                     >
                                         Try It
