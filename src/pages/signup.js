@@ -1,11 +1,11 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useLayoutEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import CustomLogin from '@/components/customLogin/CustomLogin';
@@ -32,13 +32,6 @@ export async function getServerSideProps(context) {
 }
 
 const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footerData }) => {
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `signup` });
-        setDefaultUtmSource(utmData);
-    }, []);
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/signup'} pathArray={pathArray} />
@@ -59,8 +52,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                                     Already have an account?{' '}
                                     <Link
                                         className="active-link text-link"
-                                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}?state=${defaultUtmSource}`}
-                                        onClick={() => setUtmInCookies({ source: `signup` })}
+                                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}?utm_source=${'website'}`}
                                         rel="nofollow"
                                     >
                                         Login

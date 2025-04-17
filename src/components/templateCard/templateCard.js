@@ -6,8 +6,7 @@ import { MdOutlineWebhook } from 'react-icons/md';
 import { DiJsBadge } from 'react-icons/di';
 import { IoGitNetworkSharp } from 'react-icons/io5';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { useState } from 'react';
 
 const TemplateCard = ({ template }) => {
     const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
@@ -33,13 +32,6 @@ const TemplateCard = ({ template }) => {
     if (currentGroup.length > 0) {
         actionGroups.push([...currentGroup]);
     }
-
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `template/${template?.id}` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     return (
         <div className="border rounded-lg hover:shadow-xl w-full max-w-[1200px] ">
@@ -231,10 +223,7 @@ const TemplateCard = ({ template }) => {
                     </div>
 
                     <div className="flex justify-end">
-                        <Link
-                            href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
-                            onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
-                        >
+                        <Link href={`https://flow.viasocket.com/template/${template?.id}`}>
                             <button className="btn btn-accent ">Use This Template</button>
                         </Link>
                     </div>
