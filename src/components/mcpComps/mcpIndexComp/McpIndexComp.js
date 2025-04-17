@@ -14,6 +14,7 @@ import FAQSection from '@/components/faqSection/faqSection';
 import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTools } from 'react-icons/fa';
 import { BsStars } from 'react-icons/bs';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
+import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 const APPERPAGE = 9;
 
@@ -40,6 +41,12 @@ export default function McpIndexComp({
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [defaultUtmSource, setDefaultUtmSource] = useState('');
+
+    useEffect(() => {
+        const utmData = setUtmSource({ source: `mcp` });
+        setDefaultUtmSource(utmData);
+    }, []);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -130,7 +137,10 @@ export default function McpIndexComp({
                             Easily connect your AI to thousands of apps with just a URL . No complex API integrations
                             required.
                         </h2>
-                        <Link href="https://flow.viasocket.com/mcp?utm_source=mcp">
+                        <Link
+                            href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
+                            onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
+                        >
                             <button className="btn btn-accent">Get Your MCP URL</button>
                         </Link>
                     </div>
