@@ -265,8 +265,8 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                                               Limit: {plan.execution_time} Seconds
                                                           </li>
                                                           <li>
-                                                              <span className="text-green-600">✔</span> Min. Polling
-                                                              time: {plan?.min_polling_time} Min
+                                                              <span className="text-green-600">✔</span>Designated
+                                                              Technical Support
                                                           </li>
                                                           <li>
                                                               <span className="text-green-600">✔</span>{' '}
