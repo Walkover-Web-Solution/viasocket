@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdAdd, MdAdsClick, MdCheck, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
