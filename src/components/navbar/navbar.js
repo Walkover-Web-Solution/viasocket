@@ -34,26 +34,12 @@ export default function Navbar({ navData, utm }) {
     } else {
         backgroundClass = textClass + ' hover:bg-black hover:text-white ';
     }
-
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
+    const source = typeof window !== 'undefined' ? window.location.pathname : '';
+
     useEffect(() => {
-        const utmData = setUtmSource();
-
-        if (!utmData) {
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-            return;
-        }
-
-        try {
-            const parsedUtm = JSON.parse(utmData);
-            if (parsedUtm && typeof parsedUtm === 'object') {
-                const queryString = new URLSearchParams(parsedUtm).toString();
-                setDefaultUtmSource(queryString);
-            }
-        } catch (error) {
-            console.error('Error parsing UTM data:', error);
-            setDefaultUtmSource(`utm_source=${appOneDetails.appslugname}`);
-        }
+        const utmData = setUtmSource({ source: source });
+        setDefaultUtmSource(utmData);
     }, []);
 
     return (
@@ -165,7 +151,7 @@ export default function Navbar({ navData, utm }) {
                         })}
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                        href={`https://flow.viasocket.com?${defaultUtmSource}`}
+                        href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
@@ -228,7 +214,7 @@ export default function Navbar({ navData, utm }) {
                 <div className=" flex">
                     <Link
                         className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
-                        href={`https://flow.viasocket.com?${defaultUtmSource}`}
+                        href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         aria-label="Login"
                         rel="nofollow"
                     >
