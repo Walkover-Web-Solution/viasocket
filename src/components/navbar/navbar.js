@@ -44,7 +44,7 @@ export default function Navbar({ navData, utm }) {
 
     return (
         <>
-            <div className="py-4 justify-between lg:flex hidden bg-white">
+            <div className="p-4 justify-between lg:flex hidden bg-white">
                 <Link
                     href="/"
                     aria-label="logo"
@@ -76,7 +76,7 @@ export default function Navbar({ navData, utm }) {
                             if (!option) return null;
 
                             return (
-                                <div key={index} className="relative">
+                                <div key={index} className="relative text-black">
                                     {option.is_parent ? (
                                         <div className="dropdown dropdown-hover">
                                             {option.link ? (
@@ -150,7 +150,7 @@ export default function Navbar({ navData, utm }) {
                             );
                         })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border text-black border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
