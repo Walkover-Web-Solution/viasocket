@@ -199,4 +199,9 @@
       transform: translateX(var(--translate-value));
     }
   }
+
+  .bg-selected {
+    background-color: black;  /* Set the background color to black */
+    color: white;             /* Set the text color to white */
+  }
   

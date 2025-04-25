@@ -170,7 +170,7 @@ export default function McpAppComp({
             <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12 text-black">
                 <div className="cont cont__py justify-center gap-12 w-full lg:w-1/2">
                     <div className="flex flex-col justify-center">
-                        <h2 className="h1 text-white">Connect {appOneDetails?.name} MCP with any AI assistant</h2>
+                        <h2 className="h1 text-white">{appOneDetails?.name} MCP  Server</h2>
                         <p className="sub__h1 text-white">
                             Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and Cursor using
                             the viaSocket MCP Server.
@@ -234,15 +234,33 @@ export default function McpAppComp({
                 </div>
             </div>
 
-            {combosData?.combinations?.length > 0 && (
+            {/* {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
                     <div className="flex items-baseline  gap-2">
                         <h2 className="h1">Supported Actions</h2>
+                       
+                        <IoMdCheckmarkCircleOutline fontSize={36} />
+                       
+                    </div>
+                    <McpEventComp appOneDetails={appOneDetails} />
+                   
+                </div>
+            )} */}
+
+            {combosData?.combinations?.length > 0 && (
+                <div className="container cont gap-4">
+                    <div className="flex items-baseline gap-2">
+                        <h2 className="h1">Supported Actions</h2>
                         <IoMdCheckmarkCircleOutline fontSize={36} />
                     </div>
+                    <h3 className="sub__h1">
+                        Add all actions as tools to your MCP client for seamless integration.
+                    </h3>
                     <McpEventComp appOneDetails={appOneDetails} />
                 </div>
             )}
+
+
 
             <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
                 <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
@@ -365,7 +383,7 @@ export default function McpAppComp({
 
             <div className="container cont gap-4 mt-12">
                 <div className="flex items-baseline gap-2 mb-6">
-                    <h2 className="h1">Explore other apps that work with viaSocket MCP</h2>
+                    <h2 className="h1">Explore other MCP Servers</h2>
                 </div>
 
                 <div className="flex items-center max-w-[800px] w-full ">

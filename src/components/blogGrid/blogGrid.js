@@ -1,14 +1,20 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 import Link from 'next/link';
 import { LinkText } from '../uiComponents/buttons';
 import Image from 'next/image';
+
 const BlogGrid = ({ posts, isBlack = false }) => {
+    const router = useRouter();
+    const heading = router.pathname.startsWith('/mcp') 
+    ? 'Know More About MCP' 
+    : 'Know More About Viasocket Integrations';
+
     if (posts?.length > 0) {
         return (
             <div className="flex flex-col gap-9">
                 <h2 className="h1">
-                    Know More About <br />
-                    Viasocket Integrations
+                {heading}
                 </h2>
                 <div className="w-full cont">
                     <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid">
