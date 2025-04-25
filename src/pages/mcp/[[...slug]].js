@@ -80,6 +80,7 @@ export default function Mcp({
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
+                    navData={navData}
                 />
             </div>
         );
