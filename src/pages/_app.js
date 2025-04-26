@@ -131,9 +131,9 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <>
                     {showMCPBanner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center bg-black">
-                                <p className="text-lg text-white hover:underline">
-                                    MCP, the future of AI, is now on viaSocket—use it today and connect to everything.{' '}
+                            <div className="w-full p-2 text-center border-black gradient-background">
+                                <p className="text-lg text-black hover:underline">
+                                1,000+ MCP Servers — Use them on viaSocket now.{' '}
                                 </p>
                             </div>
                         </Link>
