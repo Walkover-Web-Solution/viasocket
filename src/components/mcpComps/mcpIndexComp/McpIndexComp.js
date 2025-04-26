@@ -3,11 +3,9 @@ import Image from 'next/image';
 import { MdChevronLeft, MdChevronRight, MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
-// import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
 import searchApps from '@/utils/searchApps';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import IntegrationsHeadComp from '@/components/IntegrationsComp/integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -15,13 +13,10 @@ import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTo
 import { BsStars } from 'react-icons/bs';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
-import IntegrationsAppComp from '@/components/IntegrationsComp/integrationsAppComp/integrationsAppComp';
-import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 import { useRouter } from 'next/router';
+import style from './McpIndexComp.module.scss';
+import { APPERPAGE } from '@/const/integrations';
 
-
-
-const APPERPAGE = 9;
 
 export default function McpIndexComp({
     pageInfo,
@@ -46,8 +41,8 @@ export default function McpIndexComp({
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
+    const [searchedCategoies, setSearchedCategoies] = useState([]);
 
     useEffect(() => {
         const utmData = setUtmSource({ source: `mcp` });
@@ -142,24 +137,24 @@ export default function McpIndexComp({
 
                 <div className="container cont">
                     <div className="w-full flex justify-center items-center">
-                        <div className="flex flex-row text-center max-w-4xl">
+                        <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
                             <Link href="/mcp">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp')  ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp') ? 'bg-black text-white' : ''}`}
                                 >
                                     Users
                                 </button>
                             </Link>
                             <Link href="/mcp/developers">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers')  ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
                                 >
                                     Developers
                                 </button>
                             </Link>
                             <Link href="/mcp/saas">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
                                 >
                                     SaaS
                                 </button>
@@ -169,14 +164,13 @@ export default function McpIndexComp({
                 </div>
 
                 <div className="container cont">
-                    <div className="w-full flex flex-col md:flex-row justify-center items-center pb-20 gap-4">
+                    <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
                             <h1 className="h1 ">
-                                {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
-                                Easily integrate your AI with thousands of <b>fully managed Model Context Protocol (MCP) servers</b> through a unique, dynamic MCP server URL.
+                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP) servers through a unique, dynamic MCP server URL.
                             </h2>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
@@ -206,65 +200,125 @@ export default function McpIndexComp({
                 </div> */}
                 </div>
 
-                <div className="container cont ">
-                    {/* <div className="w-full py-4">
-                    <h1 className="h1">
-                        Let your<span className="text-accent"> AI</span> tap into thousands of Apps 
-                        Let your AI connect to thousands of MCP Servers <span className="text-accent">MCP Servers</span>
-
-                    </h1>
-                </div> */}
-                    <div className="flex items-center gap-4 max-w-[800px] w-full mb-6">
-                        <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
-                            <MdSearch fontSize={20} />
-                            <input
-                                value={searchTerm}
-                                onChange={(e) => {
-                                    setSearchTerm(e.target.value);
-                                }}
-                                type="text"
-                                className="grow py-2 px-3 h-full"
-                                placeholder="Search your favorite MCP Servers"
-                            />
-                        </label>
-                        {/* <div className="relative h-[42px]">
-                        <select
-                            className="border border-black py-2 px-4 appearance-none bg-white cursor-pointer pr-10 h-full"
+                <div className="container cont">
+                    <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
+                        <MdSearch fontSize={20} />
+                        <input
+                            value={searchTerm}
                             onChange={(e) => {
-                                setIsLoading(true);
-                                window.location.href = createURL(`/mcp/category/${e.target.value}`);
+                                setSearchTerm(e.target.value);
                             }}
-                            value={integrationsInfo?.category || 'all'}
-                        >
-                            <option value="all">All Categories</option>
-                            {filterPriorityCategories(categories)?.map((category, index) => {
-                                if (!category?.hidden && category?.slug && category?.slug !== 'all') {
-                                    return (
-                                        <option key={index} value={category?.slug}>
-                                            {category?.name}
-                                        </option>
-                                    );
-                                }
-                                return null;
-                            })}
-                        </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2">
-                            <MdKeyboardArrowDown size={20} />
+                            type="text"
+                            className={`${style.input} grow`}
+                            placeholder="Search your favorite MCP Servers"
+                        />
+                    </label>
+                    <div className="flex">
+                        <div className=" border border-black border-t-0 lg:block hidden">
+                            <div className="cont max-w-[252px] min-w-[252px] ">
+                                {debounceValue ? (
+                                    searchedCategoies ? (
+                                        searchedCategoies.map((category, index) => {
+                                            if (!category?.hidden && category?.slug) {
+                                                return (
+                                                    <a
+                                                        key={index}
+                                                        className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                        href={createURL(`/mcp/category/${category?.slug}`)}
+                                                    >
+                                                        {category?.name}
+                                                    </a>
+                                                );
+                                            }
+                                        })
+                                    ) : (
+                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                            No category found for Searched name{' '}
+                                        </span>
+                                    )
+                                ) : (
+                                    filterPriorityCategories(categories)?.map((category, index) => {
+                                        if (!category?.hidden && category?.slug) {
+                                            return (
+                                                <a
+                                                    key={index}
+                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    href={createURL(`/mcp/category/${category?.slug}`)}
+                                                >
+                                                    {category?.name}
+                                                </a>
+                                            );
+                                        }
+                                    })
+                                )}
+                            </div>
                         </div>
-                    </div> */}
-                    </div>
-                    {isLoading ? (
-                        <AppGridSkeleton />
-                    ) : (
-                        <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
-                            {debounceValue ? (
-                                searchedApps?.length > 0 ? (
-                                    searchedApps?.map((app, index) => {
+                        <div>
+                            <div className="p-4 md:p-8 cont gap-2">
+                                {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
+                                    <>
+                                        <h1 className="h1 text-accent">
+                                            <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
+                                            {integrationsInfo?.category === 'all'
+                                                ? 'Apps'
+                                                : decodeURIComponent(categoryData?.name)}
+                                        </h1>
+                                        <p>{categoryData?.subheading}</p>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h1 className="h1  text-accent italic">
+                                            {' '}
+                                            1000+
+                                            <span className="text-black not-italic"> Apps</span>
+                                        </h1>
+                                        <p>
+                                            Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
+                                            E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for
+                                            streamlined business success.
+                                        </p>
+                                    </>
+                                )}
+                            </div>
+
+                            <div className={style.appsgrid}>
+                                {debounceValue ? (
+                                    searchedApps?.length > 0 ? (
+                                        searchedApps?.map((app, index) => {
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    href={createURL(`/mcp/${app?.appslugname}`)}
+                                                    className={style.app}
+                                                >
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                            <Image
+                                                                src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                                width={36}
+                                                                height={36}
+                                                                alt={app?.name}
+                                                                className="h-5 w-fit"
+                                                            />
+                                                        </div>
+                                                        <h2 className="font-bold">{app?.name}</h2>
+                                                    </div>
+                                                    <p className={style?.app__des}>{app?.description}</p>
+                                                </Link>
+                                            );
+                                        })
+                                    ) : (
+                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                            No Apps found for Searched name{' '}
+                                        </span>
+                                    )
+                                ) : (
+                                    apps?.map((app, index) => {
                                         return (
                                             <Link
                                                 key={index}
                                                 href={createURL(`/mcp/${app?.appslugname}`)}
-                                                className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
+                                                className={style.app}
                                             >
                                                 <div className="flex items-center gap-2">
                                                     <div className="border flex items-center justify-center w-9 h-9 bg-white">
@@ -278,73 +332,29 @@ export default function McpIndexComp({
                                                     </div>
                                                     <h2 className="font-bold">{app?.name}</h2>
                                                 </div>
-                                                <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                    {app?.description}
-                                                </p>
+                                                <p className={style?.app__des}>{app?.description}</p>
                                             </Link>
                                         );
                                     })
-                                ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0">
-                                        No Apps found for Searched name{' '}
-                                    </span>
-                                )
-                            ) : (
-                                apps?.map((app, index) => {
-                                    return (
-                                        <Link
-                                            key={index}
-                                            href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA] hover:text-white hover:bg-black"
-                                        >
-                                            <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                    <Image
-                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                        width={36}
-                                                        height={36}
-                                                        alt={app?.name}
-                                                        className="h-5 w-fit"
-                                                    />
-                                                </div>
-                                                <h2 className="font-bold">{app?.name}</h2>
-                                            </div>
-                                            <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                {app?.description}
-                                            </p>
-                                        </Link>
-                                    );
-                                })
-                            )}
-                        </div>
-                    )}
-                    {!debounceValue && (
-                        <div className="flex justify-end items-center w-full py-4">
-                            <div className="flex gap-4">
-                                {integrationsInfo?.page > 0 && (
-                                    <Link
-                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
-                                        href={createURL(goToPrev())}
-                                    >
-                                        <MdChevronLeft size={18} />
-                                        Prev
-                                    </Link>
-                                )}
-                                {showNext && (
-                                    <Link
-                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
-                                        href={createURL(goToNext())}
-                                    >
-                                        Next
-                                        <MdChevronRight size={18} />
-                                    </Link>
                                 )}
                             </div>
                         </div>
+                    </div>
+                    {!debounceValue && (
+                        <div className="flex justify-end items-end w-full">
+                            {integrationsInfo?.page > 0 && (
+                                <Link className="btn btn-ghost" href={createURL(goToPrev())}>
+                                    Prev
+                                </Link>
+                            )}
+                            {showNext && (
+                                <Link className="btn btn-ghost" href={createURL(goToNext())}>
+                                    Next
+                                </Link>
+                            )}
+                        </div>
                     )}
                 </div>
-
-
                 <div className=""></div>
                 <FeaturesGrid featuresData={featuresData} />
 

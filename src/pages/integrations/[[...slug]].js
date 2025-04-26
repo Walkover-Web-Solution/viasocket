@@ -117,7 +117,7 @@ export default function Integrations({
         }
     } else {
         return (
-            <div className="cont md:gap-36 sm:gap-24 gap-12 raginii">
+            <div className="cont md:gap-36 sm:gap-24 gap-12">
                 <IntegrationsIndexComp
                     pageInfo={pageInfo}
                     integrationsInfo={integrationsInfo}

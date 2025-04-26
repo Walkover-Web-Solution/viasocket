@@ -69,29 +69,29 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
-            <div className="container cont pb-4 lg:gap-24 gap-6">
+            <div className="container cont pb-4 lg:gap-8 gap-6">
 
 
             <div className="container cont py-8">
                     <div className="w-full flex justify-center items-center">
-                        <div className="flex flex-row text-center max-w-4xl">
+                        <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
                             <Link href="/mcp">
                                 <button
-                                    className={`btn btn-accent ${currentRoute === '/mcp'  ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${currentRoute === '/mcp'  ? 'bg-black text-white' : ''}`}
                                 >
                                     Users
                                 </button>
                             </Link>
                             <Link href="/mcp/developers">
                                 <button
-                                    className={`btn btn-accent ${currentRoute === '/mcp/developers'  ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${currentRoute === '/mcp/developers'  ? 'bg-black text-white' : ''}`}
                                 >
                                     Developers
                                 </button>
                             </Link>
                             <Link href="/mcp/saas">
                                 <button
-                                    className={`btn btn-accent ${currentRoute === 'mcp/saas' ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${currentRoute === 'mcp/saas' ? 'bg-black text-white' : ''}`}
                                 >
                                     SaaS
                                 </button>
