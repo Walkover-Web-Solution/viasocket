@@ -200,8 +200,10 @@
     }
   }
 
-  .bg-selected {
-    background-color: black;  /* Set the background color to black */
-    color: white;             /* Set the text color to white */
-  }
+/** Using the McpAppComp ,developers ,saas Component */
+@media screen and (width <= 576px) {
+    .category-btn {
+        gap: 10px
+    }
+}
   

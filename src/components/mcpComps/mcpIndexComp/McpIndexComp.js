@@ -137,24 +137,24 @@ export default function McpIndexComp({
 
                 <div className="container cont">
                     <div className="w-full flex justify-center items-center">
-                        <div className="flex flex-row text-center max-w-4xl">
+                        <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
                             <Link href="/mcp">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp') ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp') ? 'bg-black text-white' : ''}`}
                                 >
                                     Users
                                 </button>
                             </Link>
                             <Link href="/mcp/developers">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
                                 >
                                     Developers
                                 </button>
                             </Link>
                             <Link href="/mcp/saas">
                                 <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-selected' : ''}`}
+                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
                                 >
                                     SaaS
                                 </button>
@@ -167,11 +167,10 @@ export default function McpIndexComp({
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
                             <h1 className="h1 ">
-                                {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
-                                Easily integrate your AI with thousands of <b>fully managed Model Context Protocol (MCP) servers</b> through a unique, dynamic MCP server URL.
+                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP) servers through a unique, dynamic MCP server URL.
                             </h2>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
@@ -211,7 +210,7 @@ export default function McpIndexComp({
                             }}
                             type="text"
                             className={`${style.input} grow`}
-                            placeholder="Search your favorite tools "
+                            placeholder="Search your favorite MCP Servers"
                         />
                     </label>
                     <div className="flex">

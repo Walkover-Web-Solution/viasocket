@@ -13,6 +13,7 @@ import searchApps from '@/utils/searchApps';
 import { IoPersonOutline } from 'react-icons/io5';
 import { VscSend } from 'react-icons/vsc';
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
+import Navbar from '@/components/navbar/navbar';
 
 const APPERPAGE = 9;
 
@@ -29,6 +30,7 @@ export default function McpAppComp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
+    navData
 }) {
     const utm = pageInfo?.url;
     const [searchTerm, setSearchTerm] = useState('');
@@ -108,50 +110,13 @@ export default function McpAppComp({
     };
 
     return (
-        <div className="bg-black text-white cont md:gap-24 sm:gap-16 gap-12">
+        <div className="bg-black text-white cont md:gap-6 sm:gap-16 gap-12">
             <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
+            <div className="sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/index'} />
+            </div>
             <div className="flex flex-col gap-8">
-                <div style={{ background: appOneDetails?.brandcolor }}>
-                    <div className="container cont py-8 gap-4 flex items-center justify-between">
-                        <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                            <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                                <button className="bg-black flex border border-white items-center gap-2 px-5 py-3 hover:bg-white hover:text-black transition-all">
-                                    Login to viaSocket <MdOpenInNew />{' '}
-                                </button>
-                            </Link>
-                        </div>
-                        <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-black w-full max-w-[400px] border border-black">
-                                <Image
-                                    className="h-8 md:h-10 w-fit"
-                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt="Slack"
-                                />
-                                <div>
-                                    <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
-                                    <div className="flex flex-wrap gap-2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div className="w-full flex justify-start items-start text-start">
-                    <div className="container">
-                        <Link
-                            target="_blank"
-                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?state=${defaultUtmSource}`}
-                            onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
-                            className="flex items-center gap-2 hover:text-blue-600 w-fit"
-                            rel="nofollow"
-                        >
-                            Connect to {appOneDetails?.name} <MdOpenInNew />
-                        </Link>
-                    </div>
-                </div>
-
-                <div className="container cont cont__gap  ">
+                <div className="container cont cont__gap">
                     <div className="flex items-center gap-2 text-lg">
                         <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
                             MCP{' '}
