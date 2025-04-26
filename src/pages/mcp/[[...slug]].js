@@ -52,6 +52,14 @@ export default function Mcp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
+    searchTerm,
+    setSearchTerm,
+    debounceValue,
+    setDebounceValue,
+    searchedApps,
+    setSearchedApps,
+    searchedCategoies,
+    setSearchedCategoies,
 }) {
     if (noData) {
         return (
@@ -81,6 +89,14 @@ export default function Mcp({
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
                     navData={navData}
+                    searchTerm={searchTerm} 
+                    setSearchTerm={setSearchTerm}
+                    debounceValue={debounceValue}
+                    setDebounceValue={setDebounceValue}
+                    searchedApps={searchedApps}
+                    setSearchedApps={setSearchedApps}
+                    searchedCategoies={searchedCategoies}
+                    setSearchedCategoies={setSearchedCategoies}
                 />
             </div>
         );
@@ -118,7 +134,7 @@ export async function getServerSideProps(context) {
         const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
-        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 9 });
+        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 });
         const combosData = await getCombos(mcpInfo);
         const appOneDetails = getAppDetails(combosData, mcpInfo?.appone);
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
@@ -183,7 +199,7 @@ export async function getServerSideProps(context) {
         const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`);
         const categoryData = await getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${mcpInfo?.category || 'all'}'`);
-        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 9 });
+        const apps = await getApps({ page: mcpInfo?.page, categoryData });
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
         const blogTags = 'mcp';
         const blogData = await getBlogData(blogTags);
