@@ -133,8 +133,8 @@ export default function Navbar({ navData, utm }) {
                                                     option.open_in_new_tab
                                                         ? '_blank'
                                                         : option.link?.startsWith('http')
-                                                          ? '_blank'
-                                                          : '_self'
+                                                            ? '_blank'
+                                                            : '_self'
                                                 }
                                                 href={option.link || '#'}
                                             >

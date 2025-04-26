@@ -110,13 +110,12 @@ export default function McpAppComp({
     };
 
     return (
-        <div className="bg-black text-white cont md:gap-24 sm:gap-16 gap-12">
+        <div className="bg-black text-white cont md:gap-6 sm:gap-16 gap-12">
             <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
+            <div className="sticky top-0 z-[100]">
+                <Navbar navData={navData} utm={'/index'} />
+            </div>
             <div className="flex flex-col gap-8">
-                <div className="sticky top-0 z-[100]">
-                    <Navbar navData={navData} utm={'/mcp'} />
-                </div>
-
                 <div className="container cont cont__gap">
                     <div className="flex items-center gap-2 text-lg">
                         <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
