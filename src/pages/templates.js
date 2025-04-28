@@ -185,8 +185,8 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     </div>
                 </div>
 
-                <div className="container max-w-[1200px]">
-                    <div className="flex flex-col md:flex-row gap-4 w-full">
+                <div className="container">
+                    <div className="flex flex-col md:flex-row gap-4 w-full px-12">
                         <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
                             <MdSearch size={20} />
                             <input
@@ -287,14 +287,16 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     )}
                 </div>
 
-                <div className="cont gap-8 items-center">
+                <div className="cont">
                     {filteredTemplates.length > 0 ? (
                         <>
-                            {filteredTemplates.slice(0, visibleCount).map((template) => (
-                                <TemplateCard key={template.id} template={template} />
-                            ))}
+                            <div className="container grid grid-cols-1 lg:grid-cols-2 gap-y-12">
+                                {filteredTemplates.slice(0, visibleCount).map((template) => (
+                                    <TemplateCard key={template.id} template={template} />
+                                ))}
+                            </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex max-w-[1200px] w-full justify-end">
+                                <div className="flex justify-center w-full mt-8 container px-12">
                                     <button
                                         onClick={handleLoadMore}
                                         className="btn btn-outline border-2 border-gray-400 w-full"

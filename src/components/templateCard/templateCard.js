@@ -42,9 +42,9 @@ const TemplateCard = ({ template }) => {
     }, []);
 
     return (
-        <div className="border rounded-lg hover:shadow-xl w-full max-w-[1200px] ">
-            <div className="h-[550px] flex gap-4 ">
-                <div className="w-full h-full border-black px-8 cont justify-center items-center bg-[#F6EFFC]">
+        <div className="border hover:shadow-xl mx-12">
+            <div className="cont gap-4 pb-4">
+                <div className="w-full h-[500px] border-black px-8 cont justify-center items-center bg-[#F6EFFC]">
                     <div className="bg-white w-3/4 border shadow-md rounded-md">
                         <div>
                             <div className="bg-[#E1F4FF] px-2 py-1 border-b">
@@ -163,79 +163,78 @@ const TemplateCard = ({ template }) => {
                     </div>
                 </div>
 
-                <div className="w-full h-full flex flex-col gap-8 justify-center px-4">
+                <div className="min-h-[200px] h-fit cont justify-between gap-2 px-8">
                     <div className="flex flex-col gap-1">
-                        <h1 className="h1">{template?.title}</h1>
-                        <h2 className="sub__h1">{template?.metadata?.description}</h2>
+                        <h1 className="text-3xl">{template?.title}</h1>
+                        <h2 className="text-lg">{template?.metadata?.description}</h2>
                     </div>
-                    <div className="flex flex-wrap gap-2 items-center">
-                        {(() => {
-                            const uniqueIcons = new Set();
-                            const iconsToRender = [];
+                    <div className="flex flex-wrap gap-2 items-center justify-between">
+                        <div className="flex flex-wrap gap-2 items-center">
+                            {(() => {
+                                const uniqueIcons = new Set();
+                                const iconsToRender = [];
 
-                            // Add the trigger icon to the set
-                            const trigger = template?.published_json_script?.trigger;
-                            const triggerIconUrl = trigger?.iconUrl;
+                                // Add the trigger icon to the set
+                                const trigger = template?.published_json_script?.trigger;
+                                const triggerIconUrl = trigger?.iconUrl;
 
-                            if (triggerIconUrl && !uniqueIcons.has(triggerIconUrl)) {
-                                uniqueIcons.add(triggerIconUrl);
-                                iconsToRender.push(
-                                    <div key="trigger" className="border border-black p-1">
-                                        <Image
-                                            src={triggerIconUrl || 'https://placehold.co/40x40'}
-                                            width={24}
-                                            height={24}
-                                        />
-                                    </div>
-                                );
-                            } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
-                                uniqueIcons.add('trigger-default');
-                                iconsToRender.push(
-                                    <div key="trigger-default" className="border border-black p-1">
-                                        {trigger?.triggerType === 'cron' ? (
-                                            <IoMdStopwatch size={24} />
-                                        ) : (
-                                            <MdOutlineWebhook size={24} />
-                                        )}
-                                    </div>
-                                );
-                            }
-
-                            rootActions.forEach((action) => {
-                                const block = blocks[action];
-                                const iconUrl = block?.iconUrl;
-
-                                if (iconUrl && !uniqueIcons.has(iconUrl)) {
-                                    uniqueIcons.add(iconUrl);
+                                if (triggerIconUrl && !uniqueIcons.has(triggerIconUrl)) {
+                                    uniqueIcons.add(triggerIconUrl);
                                     iconsToRender.push(
-                                        <div key={iconUrl} className="border border-black p-1">
+                                        <div key="trigger" className="border border-black p-1">
                                             <Image
-                                                src={iconUrl || 'https://placehold.co/40x40'}
+                                                src={triggerIconUrl || 'https://placehold.co/40x40'}
                                                 width={24}
                                                 height={24}
                                             />
                                         </div>
                                     );
-                                } else if (!iconUrl && !uniqueIcons.has('default-js')) {
-                                    uniqueIcons.add('default-js');
+                                } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
+                                    uniqueIcons.add('trigger-default');
                                     iconsToRender.push(
-                                        <div key={action} className="border border-black p-1">
-                                            <DiJsBadge size={24} />
+                                        <div key="trigger-default" className="border border-black p-1">
+                                            {trigger?.triggerType === 'cron' ? (
+                                                <IoMdStopwatch size={24} />
+                                            ) : (
+                                                <MdOutlineWebhook size={24} />
+                                            )}
                                         </div>
                                     );
                                 }
-                            });
 
-                            return iconsToRender;
-                        })()}
-                    </div>
+                                rootActions.forEach((action) => {
+                                    const block = blocks[action];
+                                    const iconUrl = block?.iconUrl;
 
-                    <div className="flex justify-end">
+                                    if (iconUrl && !uniqueIcons.has(iconUrl)) {
+                                        uniqueIcons.add(iconUrl);
+                                        iconsToRender.push(
+                                            <div key={iconUrl} className="border border-black p-1">
+                                                <Image
+                                                    src={iconUrl || 'https://placehold.co/40x40'}
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            </div>
+                                        );
+                                    } else if (!iconUrl && !uniqueIcons.has('default-js')) {
+                                        uniqueIcons.add('default-js');
+                                        iconsToRender.push(
+                                            <div key={action} className="border border-black p-1">
+                                                <DiJsBadge size={24} />
+                                            </div>
+                                        );
+                                    }
+                                });
+
+                                return iconsToRender;
+                            })()}
+                        </div>
                         <Link
                             href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
                             onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
                         >
-                            <button className="btn btn-accent ">Use This Template</button>
+                            <button className="btn btn-accent">Use This Template</button>
                         </Link>
                     </div>
                 </div>
