@@ -32,7 +32,7 @@ const McpSwitchComp = () => {
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >
-                            Developers
+                            LLM Builders
                         </div>
                     </Link>
 
@@ -44,7 +44,7 @@ const McpSwitchComp = () => {
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >
-                            SaaS
+                            SaaS Players
                         </div>
                     </Link>
                 </div>
