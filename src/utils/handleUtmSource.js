@@ -48,7 +48,7 @@ export const setUtmSource = ({ source = 'website' } = {}) => {
     }
 
     const defaultUtmData = JSON.stringify({ utm_source: source });
-    return utmData ? JSON.stringify(utmData) : JSON.stringify(defaultUtmData);
+    return utmData ? utmData : defaultUtmData;
 };
 
 export const setUtmInCookies = ({ source = 'website' } = {}) => {
