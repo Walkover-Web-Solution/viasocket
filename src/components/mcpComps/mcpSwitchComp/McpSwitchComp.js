@@ -32,7 +32,7 @@ const McpSwitchComp = () => {
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >
-                            LLM Builders
+                            AI Agents
                         </div>
                     </Link>
 
