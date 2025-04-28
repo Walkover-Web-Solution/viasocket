@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdChevronLeft, MdChevronRight, MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
+import { MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { useEffect, useState } from 'react';
@@ -13,10 +13,9 @@ import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTo
 import { BsStars } from 'react-icons/bs';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
-import { useRouter } from 'next/router';
 import style from './McpIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
-
+import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
 
 export default function McpIndexComp({
     pageInfo,
@@ -33,7 +32,7 @@ export default function McpIndexComp({
     featuresData,
     keyPointData,
     metaData,
-    appOneDetails
+    appOneDetails,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -123,54 +122,24 @@ export default function McpIndexComp({
     };
 
     {
-        const router = useRouter(); // Get current route
-        const currentRoute = router.pathname;
-
-        console.log('Current route:', currentRoute);
-
         return (
             <>
                 <MetaHeadComp metaData={metaData} page={'/mcp'} />
-                <div className="sticky top-0 z-[100]">
+                <div className="container sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
-                <div className="container cont">
-                    <div className="w-full flex justify-center items-center">
-                        <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
-                            <Link href="/mcp">
-                                <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp') ? 'bg-black text-white' : ''}`}
-                                >
-                                    Users
-                                </button>
-                            </Link>
-                            <Link href="/mcp/developers">
-                                <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
-                                >
-                                    Developers
-                                </button>
-                            </Link>
-                            <Link href="/mcp/saas">
-                                <button
-                                    className={`btn btn-accent ${router.pathname.startsWith('/mcp/developers') ? 'bg-black text-white' : ''}`}
-                                >
-                                    SaaS
-                                </button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                <McpSwitchComp />
 
-                <div className="container cont">
+                <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
                             <h1 className="h1 ">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
-                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP) servers through a unique, dynamic MCP server URL.
+                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP)
+                                servers through a unique, dynamic MCP server URL.
                             </h2>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
@@ -180,24 +149,23 @@ export default function McpIndexComp({
                             </Link>
                         </div>
                         {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
-        <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
-    </div> */}
+                            <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
+                        </div> */}
                     </div>
 
-
-                    {/* <div className="flex flex-wrap justify-center">
-                    {keyPointData.map((point, index) => (
-                        <div
-                            key={index}
-                            className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center transition-transform transform hover:bg-black hover:text-white min-h-[80px]`}
-                        >
-                            <div className="flex gap-1 text-lg items-center">
-                                <p className="text-accent">✔ </p>
-                                <p>{point}</p>
+                    <div className="flex flex-wrap justify-center">
+                        {keyPointData.map((point, index) => (
+                            <div
+                                key={index}
+                                className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
+                            >
+                                <div className="flex gap-1 text-lg items-center">
+                                    <p className="text-accent">✔ </p>
+                                    <p>{point}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div> */}
+                        ))}
+                    </div>
                 </div>
 
                 <div className="container cont">
@@ -270,12 +238,12 @@ export default function McpIndexComp({
                                         <h1 className="h1  text-accent italic">
                                             {' '}
                                             1000+
-                                            <span className="text-black not-italic"> Apps</span>
+                                            <span className="text-black not-italic"> MCP Servers</span>
                                         </h1>
                                         <p>
-                                            Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
-                                            E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for
-                                            streamlined business success.
+                                            Viasocket is your all-in-one solution, seamlessly integrating CRM,
+                                            Marketing, E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and
+                                            more for streamlined business success.
                                         </p>
                                     </>
                                 )}
@@ -380,11 +348,11 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-
-
                 <div className="container cont gap-20 text-black py-20 px-12 border border-black">
                     <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[900px] text-center">Start getting work done with viaSocket MCP today</h2>
+                        <h2 className="h1  max-w-[900px] text-center">
+                            Start getting work done with viaSocket MCP today
+                        </h2>
                         <p className="sub__h1 max-w-[1000px]">
                             Break free from isolation-connect your AI to real-world data for smarter, more impactful
                             results.
@@ -428,8 +396,7 @@ export default function McpIndexComp({
                             </Link> */}
                                 <Link href="/support">
                                     <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-black hover:text-white border-none group w-48 active:scale-95 transition-transform duration-75">
-                                        <span className="block group-hover:hidden">Self-Hosted MCP</span>
-                                        <span className="hidden group-hover:block">Contact Sales</span>
+                                        Self-Hosted MCP
                                     </button>
                                 </Link>
                             </div>

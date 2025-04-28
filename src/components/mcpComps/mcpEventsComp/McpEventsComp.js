@@ -33,7 +33,7 @@ export default function McpEventComp({ appOneDetails }) {
                     {pair.map((event, index) => (
                         <div
                             key={index}
-                            className="p-4 border border-white flex gap-3 flex-col sm:flex-row items-start hover:bg-white hover:text-black cursor-pointer"
+                            className="p-4 border border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                         >
                             <Image
                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
@@ -56,6 +56,9 @@ export default function McpEventComp({ appOneDetails }) {
 
     return (
         <div className="cont items-start w-full gap-2">
+            <h3 className="text-xl">
+                Add {actions.length} actions as tools to your MCP client for seamless integration
+            </h3>
             <div className="flex lg:flex-row flex-col w-full gap-2">
                 {actions.length > 0 ? (
                     <div className="cont gap-4 w-full">{renderActionGrid(actions.slice(0, visibleEvents))}</div>
@@ -69,7 +72,7 @@ export default function McpEventComp({ appOneDetails }) {
                         onClick={() => {
                             setVisibleEvents(visibleEvents + 6);
                         }}
-                        className="btn border border-white hover:bg-white hover:text-black"
+                        className="btn border border-blacl hover:bg-black hover:text-white"
                     >
                         Load More <MdKeyboardArrowDown fontSize={20} />
                     </button>
