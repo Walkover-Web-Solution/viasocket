@@ -250,7 +250,10 @@ const Index = ({
             <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
                 <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
 
-                <HorizontalCardScroller items={streamlineData} />
+                <div className="cont text-center gap-2">
+                    <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
+                    <HorizontalCardScroller items={streamlineData} />
+                </div>
                 {/* 
                 <div className="container flex flex-col gap-4 ">
                     <div className="cont  max-w-[1100px]">
