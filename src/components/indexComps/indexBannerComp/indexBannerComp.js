@@ -58,13 +58,12 @@ export default function IndexBannerComp({ redirect_to }) {
                         <div className="flex flex-col gap-1">
                             <ChatBoxComp />
                             <h1 className="h1 text-black text-start">
-                                Supercharge your <br />
-                                workflows <strong className="text-accent">with AI </strong>
+                                Automate Your Business <br />
+                                with <strong className="text-accent">AI-Powered Workflows </strong>
                             </h1>
                             <h2 className="sub__h1 text-black text-start">
-                                With AI-powered automation, connect your favorite apps and automate repetitive tasks—no
-                                coding needed. Create workflows to move data, streamline processes, and save time, so
-                                you can focus on more important work.
+                                Connect your apps, automate your work, and watch your productivity soar—all with the
+                                help of AI.
                             </h2>
                         </div>
                         <div className="w-full flex lg:flex-row md:flex-col sm:flex-row flex-col gap-8  lg:items-center md:items-start sm:items-center items-start">

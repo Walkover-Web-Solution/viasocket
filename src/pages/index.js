@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import { MdClose, MdSearch, MdArrowForward, MdOutlineAutoAwesome, MdArrowOutward, MdArrowUpward } from 'react-icons/md';
+import { MdClose, MdSearch, MdArrowForward, MdOutlineAutoAwesome } from 'react-icons/md';
 import GetStarted from '@/components/getStarted/getStarted';
-import { FeaturesGrid } from '@/components/featureGrid/featureGrid';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
@@ -16,8 +15,6 @@ import {
     getCaseStudyData,
     getFaqData,
     getFooterData,
-    getGetStartedData,
-    getIndexFeatures,
     getMetaData,
     getNavData,
     getTestimonialData,
@@ -26,8 +23,6 @@ import {
     CASESTUDY_FIELDS,
     FAQS_FIELDS,
     FOOTER_FIELDS,
-    GETSTARTED_FIELDS,
-    INDEXFEATURES_FIELDS,
     METADATA_FIELDS,
     NAVIGATION_FIELDS,
     TESTIMONIALS_FIELDS,
@@ -38,6 +33,8 @@ import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBanner
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import FeatureGrid from '@/components/featureGrid/featureGrid';
+import Link from 'next/link';
 
 export const runtime = 'experimental-edge';
 
@@ -55,8 +52,6 @@ const useDebounce = (value, delay) => {
 const Index = ({
     testimonials,
     caseStudies,
-    getStartedData,
-    features,
     metaData,
     faqData,
     navData,
@@ -65,6 +60,9 @@ const Index = ({
     redirect_to,
     utm_source,
     blogData,
+    featuresData,
+    indexSteps,
+    streamlineData,
 }) => {
     const formattedIndustries = useMemo(() => Industries.industries.map((name, id) => ({ name, id: id + 1 })), []);
     const formattedDepartments = useMemo(() => Industries.departments.map((name, id) => ({ name, id: id + 1 })), []);
@@ -238,12 +236,9 @@ const Index = ({
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-
-            <div
-                className="w-full  hero_gradint cont md:gap-36 sm:gap-24 gap-12"
-                // style={{ background: 'url(/assets/img/gradientHero.svg) center/cover' }}
-            >
+            <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
                 <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} />
+
                 <div className="container flex flex-col gap-4 ">
                     <div className="cont  max-w-[1100px]">
                         <h2 className="h1">Ready-Made Workflows for Every Need</h2>
@@ -519,7 +514,28 @@ const Index = ({
                     </div>
                 </div>
 
-                {features && <FeaturesGrid features={features} />}
+                <FeatureGrid featuresData={featuresData} />
+
+                <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
+                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
+                        <h2 className="h1">Ready, Set, MCP in 3 Simple Steps</h2>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
+                        {indexSteps.map((step, index) => (
+                            <div
+                                key={index}
+                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-black flex flex-col gap-2 transition-transform transform hover:scale-110"
+                            >
+                                <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
+                                <h3 className="h2 font-bold">{step.title}</h3>
+                                <p className="sub__h2">{step.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <HorizontalCardScroller items={streamlineData} />
+
                 <div className="container">
                     <TestimonialsSection testimonials={testimonials} />
                 </div>
@@ -528,6 +544,20 @@ const Index = ({
                 </div>
                 <div className="container">
                     <CaseStudiesSection caseStudies={caseStudies} />
+                </div>
+
+                <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
+                    <div className="cont gap-2 text-center items-center">
+                        <h1 className="h1">Be First in Line: Mobile App Early Access</h1>
+                        <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
+                        <h3 className="sub__h1 max-w-[900px]">
+                            Create and modify automation workflows from your smartphone with AI assistance. Build new
+                            workflows, make quick edits, and stay in control of your business no matter where you are.
+                        </h3>
+                    </div>
+                    <Link href="https://walkover.typeform.com/to/U33OiMgy" target="_blank" rel="noopener noreferrer">
+                        <button className="btn btn-accent">Apply For Early Access</button>
+                    </Link>
                 </div>
 
                 <div className="container">
@@ -540,11 +570,6 @@ const Index = ({
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
-                    {getStartedData && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <GetStarted data={getStartedData} isHero={'false'} />
-                        </div>
-                    )}
                     <div className="container border border-black p-20 border-b-0">
                         <AlphabeticalComponent step={0} />
                     </div>
@@ -554,6 +579,78 @@ const Index = ({
                 </div>
             </div>
         </>
+    );
+};
+
+const HorizontalCardScroller = ({ items }) => {
+    const containerRef = useRef(null);
+    const [displayedItems, setDisplayedItems] = useState([...items, ...items]);
+    const [isScrolling, setIsScrolling] = useState(false);
+
+    const handleInfiniteScroll = () => {
+        const container = containerRef.current;
+        const { scrollWidth, scrollLeft, offsetWidth } = container;
+        const scrollRight = scrollWidth - (scrollLeft + offsetWidth);
+
+        if (scrollRight < 100) {
+            setDisplayedItems((prev) => [...prev, ...items]);
+        }
+    };
+
+    const scroll = (direction) => {
+        if (isScrolling) return;
+        setIsScrolling(true);
+
+        const container = containerRef.current;
+        const scrollAmount = 300;
+        const newPosition =
+            direction === 'left' ? container.scrollLeft - scrollAmount : container.scrollLeft + scrollAmount;
+
+        container.scrollTo({
+            left: newPosition,
+            behavior: 'smooth',
+        });
+
+        setTimeout(() => {
+            handleInfiniteScroll();
+            setIsScrolling(false);
+        }, 300);
+    };
+
+    return (
+        <div className="container relative w-full overflow-hidden group">
+            <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white via-white/90 to-transparent z-20 pointer-events-none" />
+            <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white via-white/90 to-transparent z-20 pointer-events-none" />
+
+            <button
+                onClick={() => scroll('left')}
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all backdrop-blur-sm border border-gray-200"
+            >
+                ◀
+            </button>
+            <button
+                onClick={() => scroll('right')}
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all backdrop-blur-sm border border-gray-200"
+            >
+                ▶
+            </button>
+
+            <div
+                ref={containerRef}
+                onScroll={handleInfiniteScroll}
+                style={{ overflowX: 'hidden' }}
+                className="flex overflow-x-auto gap-6 py-6 scroll-smooth"
+            >
+                {displayedItems.map((item, index) => (
+                    <div key={`${index}-${item.title}`} className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2">
+                        <div className="flex flex-col gap-4">
+                            <h3 className="font-bold text-2xl">{item.title}</h3>
+                            <p className="text-base text-gray-600 leading-relaxed">{item.description}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 };
 
@@ -644,21 +741,96 @@ export async function getServerSideProps(context) {
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
     const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
-    const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
-    const features = await getIndexFeatures(INDEXFEATURES_FIELDS, `filter=product='Overall'`);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`);
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const blogTags = 'index';
-
     const blogData = await getBlogData(blogTags);
+    const featuresData = [
+        {
+            heading: 'Save Hours Every Day',
+            content: 'Let AI handle your repetitive tasks while you focus on growth',
+            iconName: 'clock',
+        },
+        {
+            heading: 'No Technical Skills Needed',
+            content: 'Run tens of thousands of actions reliably and in real-time without delays or complications',
+            iconName: 'mouse',
+        },
+        {
+            heading: 'Built-in Auth and Security',
+            content: 'If you can click a mouse, you can build powerful workflows',
+            iconName: 'shield',
+        },
+        {
+            heading: 'Error-Free Operations',
+            content: 'Eliminate costly mistakes with consistent, reliable processes',
+            iconName: 'check',
+        },
+        {
+            heading: 'Start Small, Scale When Ready',
+            content: 'Begin with one process and expand at your own pace',
+            iconName: 'scale',
+        },
+        {
+            heading: 'Connect All Your Business Tools',
+            content: 'Finally get your softwares talking to each other',
+            iconName: 'plug',
+        },
+    ];
+
+    const indexSteps = [
+        {
+            title: 'Describe Your Needs',
+            description: 'Tell our AI what you want to automate in simple language',
+        },
+        {
+            title: 'Review Your Workflow ',
+            description: 'See a visualization of your automation and make adjustments',
+        },
+        {
+            title: 'Activate and Relax',
+            description: 'Let viaSocket handle the tedious tasks while you focus on growth',
+        },
+    ];
+
+    const streamlineData = [
+        {
+            title: 'Sales',
+            description:
+                'Automatically qualify leads, schedule follow-ups, and update your CRM. Convert prospects to customers while your team focuses on relationship building instead of data entry.',
+        },
+        {
+            title: 'Marketing',
+            description:
+                'Synchronize campaign data, trigger personalized messaging based on customer actions, and maintain consistent cross-channel communication without manual intervention.',
+        },
+        {
+            title: 'Finance',
+            description:
+                'Automate invoice generation, payment reminders, expense approvals, and financial reporting. Ensure accuracy while reducing the time spent on routine financial processes.',
+        },
+        {
+            title: 'HR',
+            description:
+                'Streamline employee onboarding, automate time-off requests, collect feedback, and manage document approvals. Create a seamless experience for your team.',
+        },
+        {
+            title: 'IT',
+            description:
+                'Automate ticket routing, system monitoring alerts, access management, and recurring maintenance tasks. Reduce resolution time and prevent system issues.',
+        },
+        {
+            title: 'Operations',
+            description:
+                'Coordinate inventory updates, manage supply chain communications, automate order processing, and streamline project handoffs across departments.',
+        },
+    ];
 
     return {
         props: {
             testimonials: testimonials || [],
             caseStudies: caseStudies || [],
-            getStartedData: getStarted || [],
-            features: features || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             faqData: faqData || [],
             navData: navData || [],
@@ -668,6 +840,9 @@ export async function getServerSideProps(context) {
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
             blogTags: blogTags,
+            featuresData: featuresData,
+            indexSteps: indexSteps,
+            streamlineData: streamlineData,
         },
     };
 }
