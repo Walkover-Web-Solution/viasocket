@@ -1,11 +1,9 @@
-import ChatBoxComp from '@/components/chatBoxComp/chatBoxComp';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import Image from 'next/image';
 import { useLayoutEffect } from 'react';
-import { MdCheck } from 'react-icons/md';
 
-export default function IndexBannerComp({ redirect_to }) {
+export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
@@ -49,14 +47,12 @@ export default function IndexBannerComp({ redirect_to }) {
         }
     }, []);
 
-    const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 5000+ apps'];
     return (
-        <div className="container h-full md:h-dvh min-h-fit flex flex-col">
+        <div className="container  min-h-fit flex flex-col">
             <div className=" flex flex-col h-full cont__gap">
-                <div className="md:flex-row h-full flex-col gap-4 text-center md:text-start items-center flex justify-between ">
-                    <div className="mt-auto max-w-[800px] w-full flex flex-col items-center md:items-start gap-12 py-20">
+                <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
+                    <div className="max-w-[800px] w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
-                            <ChatBoxComp />
                             <h1 className="h1 text-black text-start">
                                 Automate Your Business <br />
                                 with <strong className="text-accent">AI-Powered Workflows </strong>
@@ -66,17 +62,23 @@ export default function IndexBannerComp({ redirect_to }) {
                                 help of AI.
                             </h2>
                         </div>
-                        <div className="w-full flex lg:flex-row md:flex-col sm:flex-row flex-col gap-8  lg:items-center md:items-start sm:items-center items-start">
-                            <CustomLogin redirect_to={redirect_to} />
-                            <ul className="flex flex-col gap-4">
-                                {signupFeatures.map((feature, index) => {
-                                    return (
-                                        <li key={index} className="flex items-center gap-2 text-gray-500">
-                                            <MdCheck className="text-2xl text-gray-400" /> {feature}
-                                        </li>
-                                    );
-                                })}
-                            </ul>
+                        <div className="flex w-full">
+                            <div className="w-full flex lg:flex-row md:flex-col sm:flex-row flex-col gap-8  lg:items-center md:items-start sm:items-center items-start">
+                                <CustomLogin redirect_to={redirect_to} />
+                            </div>
+                            <div className="cont w-full">
+                                {signupFeatures.map((point, index) => (
+                                    <div
+                                        key={index}
+                                        className={`font-semibold py-4 px-1 border-black w-full text-center flex items-start justify-start`}
+                                    >
+                                        <div className="flex gap-1 text-lg items-center">
+                                            <p className="text-accent">✔ </p>
+                                            <p>{point}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
                     </div>
                     <Image

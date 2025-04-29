@@ -89,6 +89,17 @@ export default function IntegrationsIndexComp({
             <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
+            <div className="container flex justify-center items-center">
+                <div className="cont max-w[1200px] text-center">
+                    <h1 className="h1">
+                        Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
+                    </h1>
+                    <h2 className="sub__h1 max-w-[800px]">
+                        Browse our extensive library of integrations to easily connect and automate workflows across
+                        your most-used apps.
+                    </h2>
+                </div>
+            </div>
             <div className="container cont">
                 <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
@@ -158,7 +169,7 @@ export default function IntegrationsIndexComp({
                                 <>
                                     <h1 className="h1  text-accent italic">
                                         {' '}
-                                        5000+
+                                        1000+
                                         <span className="text-black not-italic"> Apps</span>
                                     </h1>
                                     <p>

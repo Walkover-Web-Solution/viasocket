@@ -1,12 +1,19 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import { MdClose, MdSearch, MdArrowForward, MdOutlineAutoAwesome } from 'react-icons/md';
+import {
+    MdClose,
+    MdSearch,
+    MdArrowForward,
+    MdOutlineAutoAwesome,
+    MdKeyboardArrowLeft,
+    MdKeyboardArrowRight,
+} from 'react-icons/md';
 import GetStarted from '@/components/getStarted/getStarted';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import Industries from '@/assets/data/categories.json';
-import { LinkButton } from '@/components/uiComponents/buttons';
+import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import Autocomplete from 'react-autocomplete';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
@@ -35,6 +42,9 @@ import Navbar from '@/components/navbar/navbar';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
+import { FaBullhorn, FaChartLine, FaCoins, FaRegClock, FaServer } from 'react-icons/fa6';
+import { FaCogs, FaUserFriends } from 'react-icons/fa';
+import StepDisplay from '@/components/stepDisplay/StepDisplay';
 
 export const runtime = 'experimental-edge';
 
@@ -63,6 +73,7 @@ const Index = ({
     featuresData,
     indexSteps,
     streamlineData,
+    signupFeatures,
 }) => {
     const formattedIndustries = useMemo(() => Industries.industries.map((name, id) => ({ name, id: id + 1 })), []);
     const formattedDepartments = useMemo(() => Industries.departments.map((name, id) => ({ name, id: id + 1 })), []);
@@ -237,8 +248,10 @@ const Index = ({
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
-                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} />
+                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
 
+                <HorizontalCardScroller items={streamlineData} />
+                {/* 
                 <div className="container flex flex-col gap-4 ">
                     <div className="cont  max-w-[1100px]">
                         <h2 className="h1">Ready-Made Workflows for Every Need</h2>
@@ -512,38 +525,39 @@ const Index = ({
                                   ))}
                         </div>
                     </div>
-                </div>
+                </div> */}
 
                 <FeatureGrid featuresData={featuresData} />
 
                 <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h1">Ready, Set, MCP in 3 Simple Steps</h2>
+                    <div className="flex flex-col justify-center items-center w-full text-center">
+                        <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
-                        {indexSteps.map((step, index) => (
-                            <div
-                                key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-black flex flex-col gap-2 transition-transform transform hover:scale-110"
-                            >
-                                <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h2 font-bold">{step.title}</h3>
-                                <p className="sub__h2">{step.description}</p>
-                            </div>
-                        ))}
-                    </div>
+                    <StepDisplay steps={indexSteps} />
                 </div>
 
-                <HorizontalCardScroller items={streamlineData} />
+                {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
 
                 <div className="container">
                     <TestimonialsSection testimonials={testimonials} />
                 </div>
+
                 <div className="container">
                     <IntegrateAppsComp />
                 </div>
-                <div className="container">
+
+                <div className="container cont">
                     <CaseStudiesSection caseStudies={caseStudies} />
+                    <div className="flex justify-end">
+                        <Link
+                            href="https://viasocket.com/blog/tag/client-story"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="border border-black border-t-0 px-4 py-2 "
+                        >
+                            <LinkText>Read More</LinkText>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
@@ -616,6 +630,24 @@ const HorizontalCardScroller = ({ items }) => {
             setIsScrolling(false);
         }, 300);
     };
+    const getIconComponent = (iconName) => {
+        switch (iconName) {
+            case 'chart-line':
+                return <FaChartLine size={28} />;
+            case 'bullhorn':
+                return <FaBullhorn size={28} />;
+            case 'coins':
+                return <FaCoins size={28} />;
+            case 'user-friends':
+                return <FaUserFriends size={28} />;
+            case 'server':
+                return <FaServer size={28} />;
+            case 'cogs':
+                return <FaCogs size={28} />;
+            default:
+                return <FaRegClock size={28} />;
+        }
+    };
 
     return (
         <div className="container relative w-full overflow-hidden group">
@@ -624,13 +656,13 @@ const HorizontalCardScroller = ({ items }) => {
 
             <button
                 onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
             >
                 ◀
             </button>
             <button
                 onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-gray-100 transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
             >
                 ▶
             </button>
@@ -642,13 +674,62 @@ const HorizontalCardScroller = ({ items }) => {
                 className="flex overflow-x-auto gap-6 py-6 scroll-smooth"
             >
                 {displayedItems.map((item, index) => (
-                    <div key={`${index}-${item.title}`} className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2">
+                    <div
+                        key={`${index}-${item.title}`}
+                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover:bg-black hover:text-white group"
+                    >
                         <div className="flex flex-col gap-4">
-                            <h3 className="font-bold text-2xl">{item.title}</h3>
-                            <p className="text-base text-gray-600 leading-relaxed">{item.description}</p>
+                            <div className="flex gap-4">
+                                <h3 className="font-bold text-2xl">{item.title}</h3>
+                                <div className="text-accent">{getIconComponent(item.iconName)}</div>
+                            </div>
+                            <p className="text-base leading-relaxed">{item.description}</p>
                         </div>
                     </div>
                 ))}
+            </div>
+        </div>
+    );
+};
+
+const WorkflowStepsSection = ({ indexSteps }) => (
+    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
+        <div className="flex flex-col justify-center items-center w-full text-center">
+            <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+        </div>
+
+        <div className="cont w-full gap-4">
+            {indexSteps.map((step, index) => (
+                <WorkflowStep key={index} step={step} stepNumber={index + 1} isEven={index % 2 !== 0} />
+            ))}
+        </div>
+    </div>
+);
+
+const WorkflowStep = ({ step, stepNumber, isEven }) => {
+    return (
+        <div className="w-full">
+            <div className="md:hidden cont">
+                <div className="p-8 cont gap-2">
+                    <p className="text-accent font font-semibold">Step {stepNumber}</p>
+                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <p className="sub__h2">{step.description}</p>
+                </div>
+            </div>
+
+            <div className={`hidden md:flex ${isEven ? 'flex-row' : 'flex-row-reverse'} justify-center`}>
+                <div className={`w-1/3 p-4 flex flex-col gap-4 justify-center ${isEven ? 'text-end' : 'text-start'}`}>
+                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <p className="sub__h2">{step.description}</p>
+                </div>
+
+                <div className="w-1/3 flex items-center justify-center">
+                    <div
+                        className={`flex items-center ${isEven ? 'justify-start' : 'justify-end'} text-6xl font-bold text-accent p-4 h-full w-full`}
+                    >
+                        Step {stepNumber}
+                    </div>
+                </div>
             </div>
         </div>
     );
@@ -685,46 +766,49 @@ const TestimonialsSection = ({ testimonials }) => (
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
         <h2 className="h1">Trusted by hundreds of businesses like yours</h2>
-        <div className="grid grid-rows-6 grid-cols-6 border-black border lg:max-h-[550px] md:max-h-[700px] max-h-[1200px] ">
+        <div className="flex flex-col gap-8 w-full border border-black p-8">
             {caseStudies.map((caseStudy, index) => (
-                <CaseStudyLink key={index} caseStudy={caseStudy} />
+                <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}
         </div>
     </div>
 );
 
-const CaseStudyLink = ({ caseStudy }) => {
-    const isPriority = caseStudy?.priority === '1';
-    const isSecond = !isPriority && caseStudy?.priority === '2';
-    const isThird = !isPriority && caseStudy?.priority === '3';
+const CaseStudyItem = ({ caseStudy, isEven }) => {
     return (
-        <div
-            aria-label="casestudy"
-            className={` bg-neutral flex  overflow-hidden col-span-6 row-span-2    ${
-                isPriority
-                    ? 'lg:col-span-3 lg:row-span-6 lg:flex-col flex-col md:flex-row col-span-6 row-span-2'
-                    : 'lg:col-span-3 lg:row-span-3 md:flex-row flex-col border-black ' +
-                      (isSecond ? 'border-t lg:border-0' : '') +
-                      (isThird ? 'border-t' : '')
-            }`}
-        >
-            <>
-                <div className=" casestudy_img overflow-hidden w-full h-full ">
+        <div className="flex flex-col md:flex-row">
+            <div className="md:hidden w-full">
+                <div className="casestudy_img overflow-hidden w-full px-4">
                     <Image
-                        className="h-full w-full"
-                        src={caseStudy?.image[0] || 'https://placehold.co/40x40'}
+                        className="h-full w-full object-cover"
+                        src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}
                         alt={caseStudy?.title}
                     />
                 </div>
-                <div className="w-full p-3 bg-neutral flex flex-col gap-3 justify-center">
-                    <p>{caseStudy?.title}</p>
-                    {/* <LinkButton href={caseStudy?.link} title={'Read More'} />
-                     */}
+                <div className="w-full p-6 flex flex-col gap-3 px-4">
+                    <h3 className="text-xl font-semibold">{caseStudy?.title}</h3>
                     <LinkButton href={caseStudy?.link} content={'Know More'} />
                 </div>
-            </>
+            </div>
+
+            <div className={`hidden md:flex w-full ${isEven ? 'flex-row-reverse' : 'flex-row'}`}>
+                <div className="w-1/2 casestudy_img overflow-hidden px-8">
+                    <Image
+                        className="h-full w-full object-cover border border-black"
+                        src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
+                        width={1080}
+                        height={1080}
+                        alt={caseStudy?.title}
+                    />
+                </div>
+
+                <div className="w-1/2 p-6 flex flex-col gap-3 justify-center">
+                    <h3 className="text-xl font-semibold">{caseStudy?.title}</h3>
+                    <LinkButton href={caseStudy?.link} content={'Know More'} />
+                </div>
+            </div>
         </div>
     );
 };
@@ -783,49 +867,60 @@ export async function getServerSideProps(context) {
         {
             title: 'Describe Your Needs',
             description: 'Tell our AI what you want to automate in simple language',
+            image: '/assets/brand/workflowSteps1.svg',
         },
         {
             title: 'Review Your Workflow ',
             description: 'See a visualization of your automation and make adjustments',
+            image: '/assets/brand/workflowSteps1.svg',
         },
         {
             title: 'Activate and Relax',
             description: 'Let viaSocket handle the tedious tasks while you focus on growth',
+            image: '/assets/brand/workflowSteps1.svg',
         },
     ];
 
     const streamlineData = [
         {
             title: 'Sales',
+            iconName: 'chart-line',
             description:
                 'Automatically qualify leads, schedule follow-ups, and update your CRM. Convert prospects to customers while your team focuses on relationship building instead of data entry.',
         },
         {
             title: 'Marketing',
+            iconName: 'bullhorn',
             description:
                 'Synchronize campaign data, trigger personalized messaging based on customer actions, and maintain consistent cross-channel communication without manual intervention.',
         },
         {
             title: 'Finance',
+            iconName: 'coins',
             description:
                 'Automate invoice generation, payment reminders, expense approvals, and financial reporting. Ensure accuracy while reducing the time spent on routine financial processes.',
         },
         {
             title: 'HR',
+            iconName: 'user-friends',
             description:
                 'Streamline employee onboarding, automate time-off requests, collect feedback, and manage document approvals. Create a seamless experience for your team.',
         },
         {
             title: 'IT',
+            iconName: 'server',
             description:
                 'Automate ticket routing, system monitoring alerts, access management, and recurring maintenance tasks. Reduce resolution time and prevent system issues.',
         },
         {
             title: 'Operations',
+            iconName: 'cogs',
             description:
                 'Coordinate inventory updates, manage supply chain communications, automate order processing, and streamline project handoffs across departments.',
         },
     ];
+
+    const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 5000+ apps'];
 
     return {
         props: {
@@ -843,6 +938,7 @@ export async function getServerSideProps(context) {
             featuresData: featuresData,
             indexSteps: indexSteps,
             streamlineData: streamlineData,
+            signupFeatures: signupFeatures,
         },
     };
 }
