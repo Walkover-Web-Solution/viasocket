@@ -21,76 +21,41 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             </div>
             <McpSwitchComp />
             <div className="container cont">
-                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
+                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 ">Empower Your AI Agents with viaSocket MCP</h1>
+                        <h1 className="h1 ">Bring 1,000+ MCP Servers into Your AI Agents</h1>
                         <h2 className="sub__h1">
-                            Connect your AI tools to thousands of apps — instantly, securely, and at scale.
+                            Quickly connect your agents to 1,000+ tools by embedding viaSocket MCP servers. viaSocket
+                            manages the authentication and integrations, allowing you to focus on development.
                         </h2>
                     </div>
                 </div>
 
-                <div className="container py-16">
-                    <h2 className="text-3xl font-bold mb-6">Who is this for?</h2>
-                    <ul className="space-y-4 text-xl list-disc pl-6">
-                        <li>
-                            <strong>LLM Builders:</strong> Add plug-and-play app connectivity to your language models.
-                        </li>
-                        <li>
-                            <strong>AI Agent Developers:</strong> Let users trigger workflows, fetch data, or act in
-                            real-world apps.
-                        </li>
-                        <li>
-                            <strong>AI Tool Creators:</strong> Provide seamless integrations to your end-users, with
-                            zero extra development.
-                        </li>
+                <div className="container py-8">
+                    <h2 className="text-3xl font-bold mb-6">Why choose Embed over MCP?</h2>
+                    <ul className="space-y-4 text-xl list-disc  pl-6">
+                        <li>Run your own MCP server for over 1,000 tools</li>
+                        <li>Manage Servers for your users in your Agents</li>
+                        <li>Secure Connection with Built-In Auth</li>
+                        <li>No more context switching</li>
+                        <li>Setup in Minutes without any complexity</li>
                     </ul>
                 </div>
 
                 <div className="container py-8">
-                    <h2 className="text-3xl font-bold mb-6">What is viaSocket MCP?</h2>
-                    <p className="text-lg">
-                        viaSocket MCP is an open standard that allows your AI models or platforms to interact with 1000+
-                        apps using a single secure endpoint. All you need to do is embed the URL.
-                    </p>
-                </div>
-
-                <div className="container py-8">
-                    <h2 className="text-3xl font-bold mb-6">How it Works</h2>
+                    <h2 className="text-3xl font-bold mb-6">Getting Started</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         <li>
-                            <strong>Create Your Agent:</strong> Build your AI agent or LLM-powered assistant like you
-                            normally would.
+                            <strong>Creating an MCP Client:</strong> Within your AI agent, you need to create a
+                            component that acts as an MCP client
                         </li>
                         <li>
-                            <strong>Embed viaSocket MCP URL:</strong> Provide your users with a unique viaSocket MCP
-                            link directly inside your platform.
-                        </li>
-                        <li>
-                            <strong>Let Users Connect Apps:</strong> They click the link and instantly connect your AI
-                            to CRMs, email tools, databases, calendars, and more
+                            <strong>Embed MCP:</strong>In just a few lines of script, you can bring 1,000+ MCP servers
+                            into your AI Agent platform
                         </li>
                         <li>
                             <strong>Your AI Starts Acting in the Real World:</strong> Read emails, schedule meetings,
-                            update tickets, and automate business tasks—all via your agent.
-                        </li>
-                    </ul>
-                </div>
-
-                <div className="container py-8">
-                    <h2 className="text-3xl font-bold mb-6">Example Use Cases</h2>
-                    <ul className="space-y-4 text-xl list-disc  pl-6">
-                        <li>
-                            <strong>AI Customer Assistant:</strong> Reads support tickets and replies using Gmail +
-                            updates status in Zendesk
-                        </li>
-                        <li>
-                            <strong>AI Meeting Coordinator:</strong> Checks Google Calendar, books slots, and sends
-                            reminders via Slack.
-                        </li>
-                        <li>
-                            <strong>AI Sales Bot:</strong> Fetches lead data from CRM, updates spreadsheets, and sends
-                            follow-ups via WhatsApp.
+                            update tickets, and automate business tasks—all via your agent
                         </li>
                     </ul>
                 </div>
@@ -100,7 +65,6 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     <ul className="space-y-4 text-xl">
                         <li>✅ One link, thousands of integrations</li>
                         <li>✅ Zero custom backend development</li>
-                        <li>✅ Works with OpenAI, Claude, or any custom agent</li>
                         <li>✅ Secure, scalable, and easy to embed</li>
                         <li>✅ Supports built-in authentication flows</li>
                     </ul>
