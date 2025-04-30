@@ -875,12 +875,12 @@ export async function getServerSideProps(context) {
         {
             title: 'Review Your Workflow ',
             description: 'See a visualization of your automation and make adjustments',
-            image: '/assets/brand/workflowSteps1.svg',
+            image: '/assets/brand/workflowSteps2.svg',
         },
         {
             title: 'Activate and Relax',
             description: 'Let viaSocket handle the tedious tasks while you focus on growth',
-            image: '/assets/brand/workflowSteps1.svg',
+            image: '/assets/brand/workflowSteps3.svg',
         },
     ];
 
