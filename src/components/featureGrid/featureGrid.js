@@ -1,86 +1,47 @@
-import { HiOutlineComputerDesktop } from 'react-icons/hi2';
-import styles from './featureGrid.module.scss';
-import Link from 'next/link';
-import Image from 'next/image';
-import GetMdIcons from '@/utils/getMdIcons';
+import { FaBalanceScale, FaCheckCircle, FaMousePointer, FaShieldAlt } from 'react-icons/fa';
+import { FaPlug, FaRegClock } from 'react-icons/fa6';
+import { BsStars } from 'react-icons/bs';
 
-export function FeaturesGrid({ features, page }) {
+const FeatureGrid = ({ featuresData }) => {
+    const getIconComponent = (iconName) => {
+        switch (iconName) {
+            case 'clock':
+                return <FaRegClock size={36} />;
+            case 'mouse':
+                return <FaMousePointer size={36} />;
+            case 'shield':
+                return <FaShieldAlt size={36} />;
+            case 'check':
+                return <FaCheckCircle size={36} />; // New icon for error-free
+            case 'scale':
+                return <FaBalanceScale size={36} />;
+            case 'plug':
+                return <FaPlug size={36} />;
+            default:
+                return <FaRegClock size={36} />;
+        }
+    };
     return (
-        <>
-            <div className="grid gap-12 container">
-                <div className="cont max-w-[1100px]">
-                    <h2 className="h1">Advanced Features for Effortless Automation</h2>
-                    <h3 className="sub__h1">
-                        Empower your team—big or small—with intuitive automation tools. Build workflows that save time
-                        and eliminate repetitive tasks, all without needing any coding expertise.
-                    </h3>
-                </div>
-                <div
-                    className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border border-black  overflow-hidden index_feature_grid`}
-                >
-                    {features
-                        .sort((a, b) => a.priority - b.priority)
-                        .map((feature, index) => {
-                            const MdIcon = GetMdIcons(feature?.iconname || 'MdCropOriginal');
-
-                            if (feature.block_type === 'R2C2') {
-                                return (
-                                    <Link
-                                        key={index}
-                                        href={feature?.link ? feature?.link : '#'}
-                                        target="_blank"
-                                        className={`block_border col-span-2 row-span-2 justify-between gap-4 w-full h-full flex flex-col md:aspect-square overflow-hidde hover:bg-[#f8f8f8]  `}
-                                        aria-label="feature"
-                                    >
-                                        <div className="flex flex-col gap-2 p-6 sm:p-12 md:p-12 lg:p-6 xl:p-12">
-                                            <div className="text-6xl  flex flex-col gap-3">{MdIcon && <MdIcon />}</div>
-                                            <div className="flex flex-col gap-2 justify-end">
-                                                <h3 className="uppercase tracking-wider font-bold">{feature.name}</h3>
-                                                <p>{feature?.description}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className={`${styles.r2c2_img_cont} flex h-full justify-center items-end`}>
-                                            {feature?.image ? (
-                                                <Image
-                                                    src={feature.image[0] || 'https://placehold.co/40x40'}
-                                                    alt="feature 1"
-                                                    className={`${styles.r2c2_img} p-2 md:p-6 lg:p-12`}
-                                                    height={1080}
-                                                    width={1080}
-                                                />
-                                            ) : (
-                                                <Image
-                                                    src="https://placehold.co/1600x1400"
-                                                    alt="Placeholder"
-                                                    className={`${styles.r2c2_img} `}
-                                                    height={1080}
-                                                    width={1080}
-                                                />
-                                            )}
-                                        </div>
-                                    </Link>
-                                );
-                            } else {
-                                return (
-                                    <Link
-                                        href={feature?.link ? feature?.link : '#'}
-                                        key={index}
-                                        target="_blank"
-                                        aria-label="feature"
-                                        className={`col-span-2 block_border md:col-span-1 hover:text-white hover:bg-[#252525] transition-all duration-150 row-span-1 min-h-[200px] p-6 sm:p-12 md:p-12 lg:p-6 xl:p-12   justify-between gap-2  flex flex-col  md:aspect-square w-full h-full hover:shadow-lg`}
-                                    >
-                                        <div className="text-6xl flex flex-col gap-3">{MdIcon && <MdIcon />}</div>
-                                        <div className="flex flex-col gap-2 justify-end  ">
-                                            <h3 className="uppercase tracking-wider font-bold">{feature.name}</h3>
-                                            <p>{feature?.description}</p>
-                                        </div>
-                                    </Link>
-                                );
-                            }
-                        })}
-                </div>
+        <div className="container p-12 py-20 bg-black text-white">
+            <div className="mb-20 flex gap-4">
+                <h1 className="h1 mb-4">Automation That Actually Works For Your Business</h1>
+                <BsStars size={42} />
             </div>
-        </>
+
+            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
+                {featuresData.map((feature, index) => (
+                    <div
+                        key={index}
+                        className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
+                    >
+                        <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
+                        <h2 className="h2 font-bold mb-3">{feature.heading}</h2>
+                        <p className="sub__h2 text-gray-200">{feature.content}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
     );
-}
+};
+
+export default FeatureGrid;
