@@ -563,6 +563,16 @@ const Index = ({
                     </div>
                 </div>
 
+                <div className="container border border-black py-20 px-12 ">
+                    <div className="cont gap-2 text-center items-center">
+                        <h1 className="h1">AI Agents That Work For You</h1>
+                        <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
+                        <h3 className="sub__h1 max-w-[900px]">
+                            Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
+                        </h3>
+                    </div>
+                </div>
+                
                 <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
                     <div className="cont gap-2 text-center items-center">
                         <h1 className="h1">Be First in Line: Mobile App Early Access</h1>

@@ -94,7 +94,7 @@ export default function IntegrationsIndexComp({
                     <h1 className="h1">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
-                    <h2 className="sub__h1 max-w-[800px]">
+                    <h2 className="sub__h1 max-w-[800px] mx-auto">
                         Browse our extensive library of integrations to easily connect and automate workflows across
                         your most-used apps.
                     </h2>
