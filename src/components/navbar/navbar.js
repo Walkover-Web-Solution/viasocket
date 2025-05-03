@@ -97,7 +97,7 @@ export default function Navbar({ navData, utm }) {
                                                     tabIndex={0}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] !border !border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
-                                                    <span className="!text-xs ragini !capitalize">{option.name}</span>
+                                                    <span className="!text-xs !capitalize">{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
                                                 </button>
                                             )}
