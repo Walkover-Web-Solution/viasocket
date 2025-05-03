@@ -86,12 +86,12 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="container flex justify-center items-center">
                 <div className="cont max-w[1200px] text-center">
-                    <h1 className="h1">
+                    <h1 className="h1 uppercase !font-medium">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
                     <h2 className="sub__h1 max-w-[800px] mx-auto">
@@ -101,7 +101,7 @@ export default function IntegrationsIndexComp({
                 </div>
             </div>
             <div className="container cont">
-                <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
+                <label className="input border max-w-[400px] flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -114,7 +114,7 @@ export default function IntegrationsIndexComp({
                     />
                 </label>
                 <div className="flex">
-                    <div className=" border border-black border-t-0 lg:block hidden">
+                    <div className=" border !border-gray-300 border-t-0 lg:block hidden">
                         <div className="cont max-w-[252px] min-w-[252px] ">
                             {debounceValue ? (
                                 searchedCategoies ? (
@@ -123,7 +123,7 @@ export default function IntegrationsIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:!border-gray-300'}`}
                                                     href={createURL(`/integrations/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -132,7 +132,7 @@ export default function IntegrationsIndexComp({
                                         }
                                     })
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                    <span className="p-8 text-3xl w-full col-span-3 border !border-gray-300 border-l-0 border-t-0 ">
                                         No category found for Searched name{' '}
                                     </span>
                                 )
@@ -142,7 +142,7 @@ export default function IntegrationsIndexComp({
                                         return (
                                             <a
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:!border-gray-300'}`}
                                                 href={createURL(`/integrations/category/${category?.slug}`)}
                                             >
                                                 {category?.name}
@@ -189,10 +189,10 @@ export default function IntegrationsIndexComp({
                                             <Link
                                                 key={index}
                                                 href={createURL(`/integrations/${app?.appslugname}`)}
-                                                className={style.app}
+                                                className={`border ${style.app}`}
                                             >
                                                 <div className="flex items-center gap-2">
-                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <div className="border !border-gray-300 flex items-center justify-center w-9 h-9 bg-white">
                                                         <Image
                                                             src={app?.iconurl || 'https://placehold.co/36x36'}
                                                             width={36}
@@ -208,7 +208,7 @@ export default function IntegrationsIndexComp({
                                         );
                                     })
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                    <span className="p-8 text-3xl w-full col-span-3 border !border-gray-300 border-l-0 border-t-0 ">
                                         No Apps found for Searched name{' '}
                                     </span>
                                 )
@@ -218,10 +218,10 @@ export default function IntegrationsIndexComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/integrations/${app?.appslugname}`)}
-                                            className={style.app}
+                                            className={`border !border-gray-300 ${style.app}`}
                                         >
                                             <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                <div className="border !border-gray-300 flex items-center justify-center w-9 h-9 bg-white">
                                                     <Image
                                                         src={app?.iconurl || 'https://placehold.co/36x36'}
                                                         width={36}
@@ -256,7 +256,7 @@ export default function IntegrationsIndexComp({
                 )}
             </div>
             <div className="container my-6">
-                <div className="border border-black p-20 cont cont__gap">
+                <div className="border !border-gray-300 p-20 cont cont__gap">
                     <div className="cont gap-1">
                         <h2 className="h1 max-w-[700px]">
                             Couldn't Find Your App? Don’t Worry, We’ll Build It For You

@@ -6,7 +6,7 @@ export default function CombinationCardComp({ trigger, action, description, link
     return (
         <Link
             href={link}
-            className="combo_card border-2 border-t-0 border-l-0 cont  border-gray-400  hover:bg-black hover:text-white  "
+            className="combo_card border-2 border-t-0 border-l-0 cont !border-gray-300 hover:bg-black hover:text-white  "
             rel="nofollow"
         >
             <div className="combocard_div px-4 py-6 flex sm:flex-row flex-col sm:items-center gap-2 border-b bg-white sm:justify-center">

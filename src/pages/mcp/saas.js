@@ -16,7 +16,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <div className="container py-8">
@@ -24,7 +24,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
 
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16">
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 ">
+                        <h1 className="h1 uppercase !font-medium">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
                             Launch Your Own MCP Server within Your SaaS
                         </h1>
@@ -91,7 +91,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+            <div className="container cont cont__py border !border-gray-300  justify-center items-center text-center gap-12 ">
                 <div className="flex flex-col justify-center items-center">
                     <h2 className="h1  max-w-[1200px]">Join the Ecosystem</h2>
                     <p className="sub__h1 max-w-[1000px]">
@@ -111,7 +111,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <BlogGrid posts={blogData} />
             <div>
                 {faqData?.length > 0 && (
-                    <div className="container border border-black p-20 border-b-0">
+                    <div className="container border !border-gray-300 p-20 border-b-0">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
