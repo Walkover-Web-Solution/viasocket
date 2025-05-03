@@ -134,7 +134,7 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="sticky top-0 z-[100]">
+              <div className="sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
