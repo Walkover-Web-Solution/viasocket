@@ -30,9 +30,9 @@ export default function Navbar({ navData, utm }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = 'text-black hover:bg-black hover:text-white ';
+        backgroundClass = 'text-black hover:bg-black hover:text-white !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover:bg-black hover:text-white ';
+        backgroundClass = textClass + ' hover:bg-black hover:text-white !text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -86,24 +86,24 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] !border !border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                     >
-                                                        <span>{option.name}</span>
+                                                        <span className="!text-xs raginii !capitalize">{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
                                                     </button>
                                                 </Link>
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] !border !border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
-                                                    <span>{option.name}</span>
+                                                    <span className="!text-xs ragini !capitalize">{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
                                                 </button>
                                             )}
                                             <ul
                                                 tabIndex={0}
-                                                className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
+                                                className="dropdown-content menu shadow bg-white !border !border-gray-300 w-40"
                                             >
                                                 {shorterData.map(
                                                     (childOption, childIndex) =>
@@ -116,7 +116,7 @@ export default function Navbar({ navData, utm }) {
                                                                     target={
                                                                         childOption.open_in_new_tab ? '_blank' : '_self'
                                                                     }
-                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block"
+                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block !text-xs"
                                                                 >
                                                                     {childOption.name}
                                                                 </Link>
@@ -139,7 +139,7 @@ export default function Navbar({ navData, utm }) {
                                                 href={option.link || '#'}
                                             >
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] !border !border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     {option.name}
                                                 </div>
@@ -150,14 +150,14 @@ export default function Navbar({ navData, utm }) {
                             );
                         })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border text-black border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] !text-xs !border text-black !border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] !text-xs !border !capitalize bg-accent items-center justify-center`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial
@@ -213,7 +213,7 @@ export default function Navbar({ navData, utm }) {
                 </Link>
                 <div className=" flex">
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
+                        className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] !border !border-r-0 bg-[#FFFFFF10] `}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         aria-label="Login"
                         rel="nofollow"
@@ -221,7 +221,7 @@ export default function Navbar({ navData, utm }) {
                         <MdLogin size={24} />
                     </Link>
                     <Link
-                        className={` ${style.nav_btn} ${borderClass} flex w-[56px]  text-white  border border-r-0 bg-accent`}
+                        className={` ${style.nav_btn} ${borderClass} flex w-[56px]  text-white  !border !border-r-0 bg-accent`}
                         href={`/signup?utm_source=${utm}`}
                         aria-label="Sign Up"
                     >
@@ -231,14 +231,14 @@ export default function Navbar({ navData, utm }) {
                     <div className="dropdown dropdown-end  ">
                         <button
                             tabIndex={0}
-                            className={` ${style.nav_btn} ${borderClass}  ${backgroundClass} bg-[#FFFFFF10] flex w-[56px] border`}
+                            className={` ${style.nav_btn} ${borderClass}  ${backgroundClass} bg-[#FFFFFF10] flex w-[56px] !border`}
                             aria-label="Menu"
                         >
                             <MdMenu size={24} />
                         </button>
                         <ul
                             tabIndex={0}
-                            className="dropdown-content menu  shadow bg-white border border-gray-300 w-56 "
+                            className="dropdown-content menu  shadow bg-white !border border-gray-300 w-56 "
                         >
                             {shorterData &&
                                 shorterData.map((option, index) => {

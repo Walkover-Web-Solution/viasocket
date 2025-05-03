@@ -9,14 +9,14 @@ const McpSwitchComp = () => {
     return (
         <div className="container cont">
             <div className="w-full flex justify-center items-center">
-                <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center gap-4 category-btn">
+                <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
                     <Link href="/mcp" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border border-right-0 transition-all duration-200 ${
                                 currentRoute.startsWith('/mcp') &&
                                 !currentRoute.startsWith('/mcp/developers') &&
                                 !currentRoute.startsWith('/mcp/saas')
-                                    ? 'bg-black text-white border-black'
+                                    ? 'bg-black text-white !border-gray-300'
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >
@@ -26,9 +26,9 @@ const McpSwitchComp = () => {
 
                     <Link href="/mcp/developers" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border border-right-0 transition-all duration-200 ${
                                 currentRoute.startsWith('/mcp/developers')
-                                    ? 'bg-black text-white border-black'
+                                    ? 'bg-black text-white !border-gray-300'
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >
@@ -38,9 +38,9 @@ const McpSwitchComp = () => {
 
                     <Link href="/mcp/saas" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border transition-all duration-200 ${
                                 currentRoute.startsWith('/mcp/saas')
-                                    ? 'bg-black text-white border-black'
+                                    ? 'bg-black text-white !border-gray-300'
                                     : 'bg-white text-black border-gray-300 hover:bg-gray-100'
                             }`}
                         >

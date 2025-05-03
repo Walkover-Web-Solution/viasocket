@@ -307,7 +307,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                             </div>
                         </div>
 
-                        <div className="w-full lg:w-1/2 h-full bg-gray-100 border-gray-400 border ">
+                        <div className="w-full lg:w-1/2 h-full bg-gray-100 !border-gray-300 border ">
                             <div className="flex flex-col w-full h-svh overflow-y-scroll scrollbar-thin">
                                 {combinationLoading ? (
                                     <>
@@ -385,12 +385,12 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
 
                 <div className="pb-6">
                     {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border !border-gray-300 p-20 border-b-0">
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
                     {getStartedData && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border !border-gray-300 p-20 border-b-0">
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}

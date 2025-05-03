@@ -113,11 +113,11 @@ export const CustomAutocomplete = ({
                     onFocus={() => setIsOpen(true)}
                     onKeyDown={handleKeyDown}
                     placeholder={placeholder}
-                    className="w-full h-full p-2 pl-8 bg-transparent border border-black"
+                    className="w-full h-full p-2 pl-8 bg-transparent border !border-gray-300"
                 />
             </div>
             {isOpen && items.length > 0 && (
-                <div className="absolute z-10 w-full mt-1 bg-white border border-black rounded shadow-lg max-h-60 overflow-auto">
+                <div className="absolute z-10 w-full mt-1 bg-white border !border-gray-300 rounded shadow-lg max-h-60 overflow-auto">
                     {items.map((item, index) => (
                         <div
                             key={index}
