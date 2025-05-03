@@ -244,7 +244,7 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
@@ -254,292 +254,15 @@ const Index = ({
                     <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
                     <HorizontalCardScroller items={streamlineData} />
                 </div>
-                {/* 
-                <div className="container flex flex-col gap-4 ">
-                    <div className="cont  max-w-[1100px]">
-                        <h2 className="h1">Ready-Made Workflows for Every Need</h2>
-                        <h3 className="sub__h1">
-                            Discover templates built to simplify workflows for every industry and task. Get started
-                            quickly and save valuable time.
-                        </h3>
-                    </div>
-
-                    <div className="gap-6 flex flex-col">
-                        <div className="flex flex-wrap gap-2 items-center text-lg  ">
-                            <h3 className="">How</h3>
-                            <div className="dropdown">
-                            
-                                <h3
-                                    onClick={() => {
-                                        setShowIndusDropdown(true);
-                                        setTimeout(() => {
-                                            document.getElementById('indusAutoComplete').focus();
-                                        }, 0);
-                                    }}
-                                    tabIndex={0}
-                                    role="button"
-                                    className=" cursor-pointer dropdown underline text-accent"
-                                >
-                                    {selectedIndus || 'All'}
-                                </h3>
-                                {showIndusDropdown && (
-                                    <div
-                                        tabIndex={0}
-                                        className="dropdown-content menu bg-base-100  z-[1] w-52 p-2 shadow industry-autocomplete"
-                                    >
-                                        <Autocomplete
-                                            getItemValue={(item) => item.label}
-                                            items={filterIndustries(indusSearchTerm).map((industry) => ({
-                                                label: industry.name,
-                                            }))}
-                                            renderItem={(item) => (
-                                                <div className="px-2 py-1 cursor-pointer hover:bg-secondary">
-                                                    {item.label}
-                                                </div>
-                                            )}
-                                            value={indusSearchTerm}
-                                            onChange={(e) => setIndusSearchTerm(e.target.value)}
-                                            onSelect={(val) => handleSelectIndus(val)}
-                                            menuStyle={{
-                                                position: 'flex',
-                                                overflow: 'auto',
-                                                maxHeight: '400px',
-                                            }}
-                                            inputProps={{ placeholder: 'Select Industry', id: 'indusAutoComplete' }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-
-                            <h3 className="">industry {selectedIndus === 'All' ? 'are' : 'is'} automating with</h3>
-                            {appLoading ? (
-                                <>
-                                    {' '}
-                                    {[...Array(3)].map((_, index) => (
-                                        <div className="bg-white   items-center flex w-[120px] gap-1 p-2 " key={index}>
-                                            <div className="skeleton max-h-[17px] max-w-[17px] min-h-[17px] min-w-[16px] bg-gray-200 "></div>
-                                            <div className="skeleton h-[12px] w-full bg-gray-200"></div>
-                                        </div>
-                                    ))}
-                                </>
-                            ) : (
-                                <>
-                                    {selectedApps.map((app, index) => (
-                                        <div
-                                            className="flex items-center gap-2 bg-[#FAFAFA] w-fit px-2 h-[42px] border border-black  "
-                                            key={app.appslugname}
-                                        >
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                width={20}
-                                                height={20}
-                                                className="h-[24px] w-fit"
-                                                alt="ico"
-                                            />
-                                            <span className="text-[16px]">{app?.name}</span>
-                                            <MdClose
-                                                className="text-gray-300 hover:text-gray-950 cursor-pointer"
-                                                onClick={() => removeAppFromArray(index)}
-                                            />
-                                        </div>
-                                    ))}
-                                </>
-                            )}
-                            <div className="w-[300px] transition-all duration-300 relative bg-white dropdown">
-                                <label
-                                    className="input flex items-center h-[42px] gap-2 border border-black "
-                                    tabIndex={0}
-                                    role="button"
-                                >
-                                    <MdSearch color="#CCCCCC" fontSize={20} />
-                                    <input
-                                        type="text"
-                                        className="grow"
-                                        placeholder="Add your favorite App"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        ref={inputRef}
-                                        onKeyDown={handleKeyDown}
-                                    />
-                                    <span
-                                        className=""
-                                        onClick={() => {
-                                            setSearchTerm('');
-                                            setShowInput(false);
-                                        }}
-                                    >
-                                        <MdClose color="black" fontSize={24} />
-                                    </span>
-                                </label>
-                                <ul
-                                    tabIndex={0}
-                                    className="dropdown-content menu flex-nowrap bg-base-100 shadow-xl mt-2 z-[1]  max-h-[290px] w-[300px] overflow-scroll p-0"
-                                >
-                                    {searchLoading ? (
-                                        [...Array(12)].map((_, index) => (
-                                            <div className="rounded-none bg-white px-3 py-2 flex w-full" key={index}>
-                                                <div className="w-[280px] skeleton bg-slate-100 rounded-none"></div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <>
-                                            {searchData && searchData?.length > 0 ? (
-                                                searchData.map((app, index) => {
-                                                    return (
-                                                        <>
-                                                            <div
-                                                                key={index}
-                                                                className={`flex items-center gap-2 px-3 py-2 cursor-pointer w-full ${
-                                                                    index === highlightedIndex
-                                                                        ? 'bg-gray-200'
-                                                                        : 'bg-white'
-                                                                } hover:bg-gray-100`}
-                                                                onClick={() => handleSelectApp(app?.appslugname)}
-                                                                onMouseEnter={() => setHighlightedIndex(index)}
-                                                            >
-                                                                <Image
-                                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                                    width={16}
-                                                                    height={16}
-                                                                    alt="ico"
-                                                                />
-                                                                <span>{app?.name}</span>
-                                                            </div>
-                                                        </>
-                                                    );
-                                                })
-                                            ) : (
-                                                <p className="flex items-center gap-2 bg-white px-3 py-2 w-full">
-                                                    No app found.
-                                                </p>
-                                            )}
-                                        </>
-                                    )}
-                                </ul>
-                            </div>
-
-                            <h2 className="">in</h2>
-
-                            <div className="dropdown">
-                                <h3
-                                    onClick={() => {
-                                        setShowDeptDropdown(true);
-                                        setTimeout(() => {
-                                            document.getElementById('deptAutoComplete').focus();
-                                        }, 0);
-                                    }}
-                                    tabIndex={0}
-                                    role="button"
-                                    className=" dropdown underline text-accent"
-                                >
-                                    {selectedDept || 'all their'}
-                                </h3>
-                                {showDeptDropdown && (
-                                    <div
-                                        tabIndex={0}
-                                        className="dropdown-content menu bg-base-100  z-[1] w-52 p-2 shadow industry-autocomplete"
-                                    >
-                                        <Autocomplete
-                                            getItemValue={(item) => item.label}
-                                            items={filterDepts(deptSearchTerm).map((dept) => ({
-                                                label: dept.name,
-                                            }))}
-                                            renderItem={(item) => (
-                                                <div className="px-2 py-1 cursor-pointer hover:bg-secondary">
-                                                    {item.label}
-                                                </div>
-                                            )}
-                                            value={deptSearchTerm}
-                                            onChange={(e) => setDeptSearchTerm(e.target.value)}
-                                            onSelect={(val) => handleSelectDept(val)}
-                                            inputProps={{
-                                                placeholder: 'Select Department',
-                                                id: 'deptAutoComplete',
-                                            }}
-                                            menuStyle={{
-                                                position: 'flex',
-                                                overflow: 'auto',
-                                                maxHeight: '400px',
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                            <h3 className="" id="dept">
-                                department
-                            </h3>
-                            <div
-                                className={
-                                    selectedApps.length < 2 ? 'tooltip tooltip-error tooltip-top text-white' : ''
-                                }
-                                data-tip="Select at least 2 apps to search automations"
-                            >
-                                <button
-                                    disabled={selectedApps.length < 2}
-                                    onClick={() => {
-                                        handleGenerate();
-                                    }}
-                                    className="h-[32px] w-[32px] flex items-center justify-center bg-accent text-white"
-                                >
-                                    <MdArrowForward />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 border-gray-400  md:grid-cols-2 border-b-0 border-r-0 border-2">
-                            {!combinationLoading
-                                ? renderCombos?.combinations?.map((combo) => {
-                                      const triggerName = renderCombos?.plugins[combo?.trigger?.name]?.events?.find(
-                                          (event) => event?.rowid === combo?.trigger?.id
-                                      )?.name;
-                                      const actionName = renderCombos?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                          (event) => event?.rowid === combo?.actions[0]?.id
-                                      )?.name;
-
-                                      const integrations =
-                                          renderCombos?.plugins[combo?.trigger?.name]?.rowid +
-                                          ',' +
-                                          renderCombos?.plugins[combo?.actions[0]?.name]?.rowid;
-                                      return (
-                                          <CombinationCardComp
-                                              trigger={{
-                                                  name: triggerName,
-                                                  iconurl:
-                                                      renderCombos?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                      'https://placehold.co/40x40',
-                                              }}
-                                              action={{
-                                                  name: actionName,
-                                                  iconurl:
-                                                      renderCombos?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                      'https://placehold.co/40x40',
-                                              }}
-                                              description={combo?.description}
-                                              link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions.map((action) => action.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                              onClick={() => setUtmInCookies({ source: `makeflow/trigger/combos` })}
-                                          />
-                                      );
-                                  })
-                                : combinationLoading &&
-                                  Array.from({ length: 12 }).map((_, index) => (
-                                      <div
-                                          key={index}
-                                          className="border h-[200px] border-black border-t-0 border-l-0 skeleton bg-gray-100 rounded-none"
-                                      ></div>
-                                  ))}
-                        </div>
-                    </div>
-                </div> */}
 
                 <FeatureGrid featuresData={featuresData} />
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
+                <div className="container cont cont__py gap-20 px-24  h-fit border !border-gray-300">
                     <div className="flex flex-col justify-center items-center w-full text-center">
                         <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
                     </div>
                     <StepDisplay steps={indexSteps} />
                 </div>
-
-                {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
 
                 <div className="container">
                     <TestimonialsSection testimonials={testimonials} />
@@ -556,14 +279,14 @@ const Index = ({
                             href="https://viasocket.com/blog/tag/client-story"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="border border-black border-t-0 px-4 py-2 "
+                            className="border !border-gray-300 border-t-0 px-4 py-2 "
                         >
                             <LinkText>Read More</LinkText>
                         </Link>
                     </div>
                 </div>
 
-                <div className="container border border-black py-20 px-12 ">
+                <div className="container border !border-gray-300 py-20 px-12 ">
                     <div className="cont gap-2 text-center items-center">
                         <h1 className="h1">AI Agents That Work For You</h1>
                         <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
@@ -573,7 +296,7 @@ const Index = ({
                     </div>
                 </div>
                 
-                <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
+                <div className="container cont border !border-gray-300 gap-12 py-20 px-12 justify-center text-center items-center">
                     <div className="cont gap-2 text-center items-center">
                         <h1 className="h1">Be First in Line: Mobile App Early Access</h1>
                         <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
@@ -593,11 +316,11 @@ const Index = ({
 
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border !border-gray-300 p-20 border-b-0">
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
-                    <div className="container border border-black p-20 border-b-0">
+                    <div className="container border !border-gray-300 p-20 border-b-0">
                         <AlphabeticalComponent step={0} />
                     </div>
                     <div className="container">
@@ -669,13 +392,13 @@ const HorizontalCardScroller = ({ items }) => {
 
             <button
                 onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border !border-gray-300"
             >
                 ◀
             </button>
             <button
                 onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border !border-gray-300"
             >
                 ▶
             </button>
@@ -706,7 +429,7 @@ const HorizontalCardScroller = ({ items }) => {
 };
 
 const WorkflowStepsSection = ({ indexSteps }) => (
-    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
+    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border !border-gray-300">
         <div className="flex flex-col justify-center items-center w-full text-center">
             <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
         </div>
@@ -753,12 +476,12 @@ const TestimonialsSection = ({ testimonials }) => (
         <h2 className="h1 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
-        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full  ">
+        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full !border !border-gray-300">
             {testimonials.map((testimonial, index) => (
-                <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
+                <div className="flex flex-col sm:p-12 p-6 gap-4 !border !border-gray-300 !border-right-0" key={index}>
                     <div className="flex flex-col  gap-2 ">
                         <Image
-                            className="border border-black"
+                            className="!border !border-gray-300"
                             src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
                             width={50}
                             height={50}
@@ -779,7 +502,7 @@ const TestimonialsSection = ({ testimonials }) => (
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
         <h2 className="h1">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border border-black p-8">
+        <div className="flex flex-col gap-8 w-full border !border-gray-300 p-8">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}
@@ -809,7 +532,7 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
             <div className={`hidden md:flex w-full ${isEven ? 'flex-row-reverse' : 'flex-row'}`}>
                 <div className="w-1/2 casestudy_img overflow-hidden px-8">
                     <Image
-                        className="h-full w-full object-cover border border-black"
+                        className="h-full w-full object-cover border !border-gray-300"
                         src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}

@@ -44,7 +44,7 @@ const TemplateCard = ({ template }) => {
     return (
         <div className="border hover:shadow-xl mx-12">
             <div className="cont gap-4 pb-4">
-                <div className="w-full h-[500px] border-black px-8 cont justify-center items-center bg-[#F6EFFC]">
+                <div className="w-full h-[500px] !border-gray-300 px-8 cont justify-center items-center bg-[#F6EFFC]">
                     <div className="bg-white w-3/4 border shadow-md rounded-md">
                         <div>
                             <div className="bg-[#E1F4FF] px-2 py-1 border-b">
@@ -77,7 +77,7 @@ const TemplateCard = ({ template }) => {
                         </div>
                     </div>
 
-                    <div className="border border-black h-4 opacity-75"></div>
+                    <div className="border !border-gray-300 h-4 opacity-75"></div>
 
                     {actionGroups.map((group, groupIndex) => (
                         <>
@@ -154,11 +154,11 @@ const TemplateCard = ({ template }) => {
                                     );
                                 })}
                             </div>
-                            <div className="border border-black h-4 opacity-75"></div>
+                            <div className="border !border-gray-300 h-4 opacity-75"></div>
                         </>
                     ))}
 
-                    <div className="border border-black p-1 rounded-sm opacity-75">
+                    <div className="border !border-gray-300 p-1 rounded-sm opacity-75">
                         <FiPlus size={16} />
                     </div>
                 </div>
@@ -181,7 +181,7 @@ const TemplateCard = ({ template }) => {
                                 if (triggerIconUrl && !uniqueIcons.has(triggerIconUrl)) {
                                     uniqueIcons.add(triggerIconUrl);
                                     iconsToRender.push(
-                                        <div key="trigger" className="border border-black p-1">
+                                        <div key="trigger" className="border !border-gray-300 p-1">
                                             <Image
                                                 src={triggerIconUrl || 'https://placehold.co/40x40'}
                                                 width={24}
@@ -192,7 +192,7 @@ const TemplateCard = ({ template }) => {
                                 } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
                                     uniqueIcons.add('trigger-default');
                                     iconsToRender.push(
-                                        <div key="trigger-default" className="border border-black p-1">
+                                        <div key="trigger-default" className="border !border-gray-300 p-1">
                                             {trigger?.triggerType === 'cron' ? (
                                                 <IoMdStopwatch size={24} />
                                             ) : (
@@ -209,7 +209,7 @@ const TemplateCard = ({ template }) => {
                                     if (iconUrl && !uniqueIcons.has(iconUrl)) {
                                         uniqueIcons.add(iconUrl);
                                         iconsToRender.push(
-                                            <div key={iconUrl} className="border border-black p-1">
+                                            <div key={iconUrl} className="border !border-gray-300 p-1">
                                                 <Image
                                                     src={iconUrl || 'https://placehold.co/40x40'}
                                                     width={24}
@@ -220,7 +220,7 @@ const TemplateCard = ({ template }) => {
                                     } else if (!iconUrl && !uniqueIcons.has('default-js')) {
                                         uniqueIcons.add('default-js');
                                         iconsToRender.push(
-                                            <div key={action} className="border border-black p-1">
+                                            <div key={action} className="border !border-gray-300 p-1">
                                                 <DiJsBadge size={24} />
                                             </div>
                                         );

@@ -39,7 +39,7 @@ export default function NotificationBar() {
                         aria-label="update"
                     >
                         <span
-                            className="  text-xs  px-2 h-fit"
+                            className="!text-xs  px-2 h-fit"
                             style={{
                                 backgroundColor: data[3]?.details,
                                 color: data[4]?.details,
@@ -48,7 +48,7 @@ export default function NotificationBar() {
                             {data[2]?.details}
                         </span>
                         {data[0]?.details}{' '}
-                        {data[7]?.details && <div className="underline text-xs">{data[7]?.details}</div>}
+                        {data[7]?.details && <div className="underline !text-xs">{data[7]?.details}</div>}
                     </Link>
                 </div>
             ) : (

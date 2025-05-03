@@ -76,7 +76,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedTrigger(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
+                                                className="p-4 border !border-gray-300 flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                                             >
                                                 <Image
                                                     src={
@@ -111,7 +111,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedAction(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
+                                                className="p-4 border max-w-[800px] !border-gray-300 flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                                             >
                                                 <Image
                                                     src={
@@ -149,10 +149,10 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                         )}
                     </div>
                     {(selectedTrigger || selectedAction) && (
-                        <div className="fixed bottom-0 left-0 w-full z-[99999] bg-white border border-black p-4 ">
+                        <div className="fixed bottom-0 left-0 w-full z-[99999] bg-white border !border-gray-300 p-4 ">
                             <div className="container flex flex-col lg:flex-row items-center gap-3 justify-between">
                                 <div className="flex items-center gap-4 w-full flex-col md:flex-row ">
-                                    <div className="flex items-center gap-2 max-w-[800px] border border-black p-2 w-full min-h-12 min-w-[220px]">
+                                    <div className="flex items-center gap-2 max-w-[800px] border !border-gray-300 p-2 w-full min-h-12 min-w-[220px]">
                                         {selectedTrigger && (
                                             <>
                                                 <Image
@@ -178,7 +178,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         )}
                                     </div>
                                     <MdAdd fontSize={30} />
-                                    <div className="flex items-center max-w-[800px] gap-2 border border-black p-2 w-full min-h-12 min-w-[220px]">
+                                    <div className="flex items-center max-w-[800px] gap-2 border !border-gray-300 p-2 w-full min-h-12 min-w-[220px]">
                                         {selectedAction && (
                                             <>
                                                 <Image
@@ -247,7 +247,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     return (
                                         <div
                                             key={index}
-                                            className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start"
+                                            className="p-4 border max-w-[800px] !border-gray-300 flex gap-3 flex-col sm:flex-row items-start"
                                         >
                                             <Image
                                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
@@ -278,7 +278,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     return (
                                         <div
                                             key={index}
-                                            className="p-4 border max-w-[800px] border-black flex gap-3 flex-col sm:flex-row items-start"
+                                            className="p-4 border max-w-[800px] !border-gray-300 flex gap-3 flex-col sm:flex-row items-start"
                                         >
                                             <Image
                                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}

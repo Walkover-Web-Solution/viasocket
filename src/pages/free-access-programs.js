@@ -9,17 +9,16 @@ export default function Programs({ footerData, navData, metaData, programs }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/free-access-programs'} />
             </div>
             <div className="container cont cont__py cont__gap ">
                 <div className="cont gap-2">
-                    <h1 className="h1 w-1/2 ">Free services for impactful organisations</h1>
+                    <h1 className="h1 w-1/2 uppercase">Free services for impactful organisations</h1>
                     <h2 className="sub__h1">
                         So, you can focus on meaningful work, driving innovation and creating lasting impact.
                     </h2>
                 </div>
-                {/* <button className="btn btn-rg btn-primary">Click here</button> */}
             </div>
             <div className="container">
                 <div

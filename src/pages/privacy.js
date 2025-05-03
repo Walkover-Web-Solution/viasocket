@@ -24,7 +24,7 @@ const Privacy = ({ navData, footerData, metaData }) => {
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
 
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/privacy'} />
             </div>
             <div className="container mb-4 mt-28">
