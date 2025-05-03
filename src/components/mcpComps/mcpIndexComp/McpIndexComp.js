@@ -16,6 +16,7 @@ import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import style from './McpIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
+import Script from 'next/script';
 
 export default function McpIndexComp({
     pageInfo,
@@ -125,6 +126,14 @@ export default function McpIndexComp({
         return (
             <>
                 <MetaHeadComp metaData={metaData} page={'/mcp'} />
+                <Script id="twitter-conversion-tracking" strategy="afterInteractive">
+                    {`
+                        twq('event', 'tw-pnuam-pnugc', {
+                            email_address: null,
+                            phone_number: null
+                        });
+                    `}
+                </Script>
                 <div className="container sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
