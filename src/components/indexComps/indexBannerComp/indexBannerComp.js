@@ -53,7 +53,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                 <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
                     <div className="max-w-[800px] w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
-                            <h1 className="h1 text-black text-start uppercase !font-medium">
+                            <h1 className="h1 text-black text-start">
                                 Automate Your Business <br />
                                 with <strong className="text-accent">AI-Powered Workflows </strong>
                             </h1>
@@ -70,7 +70,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                 {signupFeatures.map((point, index) => (
                                     <div
                                         key={index}
-                                        className={`font-semibold py-4 px-1 !border-gray-300 w-full text-center flex items-start justify-start`}
+                                        className={`font-semibold py-4 px-1 border-black w-full text-center flex items-start justify-start`}
                                     >
                                         <div className="flex gap-1 text-lg items-center">
                                             <p className="text-accent">✔ </p>

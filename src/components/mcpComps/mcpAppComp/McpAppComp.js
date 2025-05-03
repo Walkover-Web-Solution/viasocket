@@ -113,7 +113,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <div className=" sticky top-0 z-[100]">
+                    <div className="container sticky top-0 z-[100]">
                         <Navbar navData={navData} utm={'/index'} />
                     </div>
                     <div className="flex flex-col gap-8">
@@ -136,7 +136,7 @@ export default function McpAppComp({
                     <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12">
                         <div className="cont cont__py  gap-16 w-full lg:w-1/2">
                             <div className="flex gap-4">
-                                <div className="border !border-gray-300 p-4 bg-gray-200">
+                                <div className="border border-black p-4 bg-gray-200">
                                     <Image src={appOneDetails?.iconurl} width={50} height={50} />
                                 </div>
                                 <div className="cont gap-4">
@@ -194,7 +194,7 @@ export default function McpAppComp({
                                         <h2 className="text-2xl font-semibold">viaSocket Agent</h2>
                                         <div className="cont gap-1">
                                             <h3 className="text-xl">MCP Tool Calling...</h3>
-                                            <div className="border !border-gray-300 bg-gray-200 px-4 py-2 shadow-md cont gap-2">
+                                            <div className="border border-black bg-gray-200 px-4 py-2 shadow-md cont gap-2">
                                                 <div className="flex gap-4 items-center">
                                                     <Image src={appOneDetails.iconurl} width={40} height={40} />
                                                     <h2 className="text-xl text-gray-500">Action in Progress...</h2>
@@ -206,7 +206,7 @@ export default function McpAppComp({
                                         </div>
                                     </div>
                                 </div>
-                                <div className="border !border-gray-300 px-8 py-4 flex justify-between">
+                                <div className="border border-black px-8 py-4 flex justify-between">
                                     <p className="text-gray-300 text-xl">Message your agent</p>
                                     <VscSend size={30} />
                                 </div>
@@ -240,7 +240,7 @@ export default function McpAppComp({
                         {mcpAppSteps.map((step, index) => (
                             <div
                                 key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 !border-gray-300 flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
                                 <h3 className="h2 font-bold">{step.title}</h3>
@@ -256,7 +256,7 @@ export default function McpAppComp({
                     </div>
 
                     <div className="flex items-center max-w-[800px] w-full ">
-                        <label className="input border flex-grow !border-gray-300 flex items-center gap-2 focus-within:outline-none">
+                        <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none">
                             <MdSearch fontSize={20} color="black" />
                             <input
                                 value={searchTerm}
@@ -270,7 +270,7 @@ export default function McpAppComp({
                         </label>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 !border-gray-300 border border-r-0 border-b-0 ">
+                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
                         {debounceValue ? (
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
@@ -278,7 +278,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 !border-gray-300 border border-l-0 border-t-0 gap-2  hover:text-white hover:bg-black"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2  hover:text-white hover:bg-black"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9 ">
@@ -311,7 +311,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 !border-gray-300 border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9">
@@ -339,7 +339,7 @@ export default function McpAppComp({
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
                                     <Link
-                                        className="border !border-gray-300 px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
                                         href={createURL(goToPrev())}
                                     >
                                         <MdChevronLeft size={18} />
@@ -348,7 +348,7 @@ export default function McpAppComp({
                                 )}
                                 {showNext && (
                                     <Link
-                                        className="border !border-gray-300 px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
                                         href={createURL(goToNext())}
                                     >
                                         Next
@@ -456,11 +456,11 @@ export default function McpAppComp({
                 )}
                 <div className="container pb-4">
                     <div className="cont">
-                        <div className="p-12 border !border-gray-300 border-b-0">
+                        <div className="p-12 border border-black border-b-0">
                             {faqData && <FAQSection faqData={faqData} />}
                         </div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 !border-gray-300">
-                            <div className="cont gap-4 p-12 border-x !border-gray-300 w-full md:border-b-0 border-b">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
+                            <div className="cont gap-4 p-12 border-x border-black w-full md:border-b-0 border-b">
                                 <div>
                                     <Image
                                         className="h-10 w-fit"
@@ -486,7 +486,7 @@ export default function McpAppComp({
                                     ))}
                                 </div>
                             </div>
-                            <div className="w-full cont gap-4 p-12 border-x md:border-l-0 !border-gray-300">
+                            <div className="w-full cont gap-4 p-12 border-x md:border-l-0 border-black">
                                 <div>
                                     <Image
                                         className="border border-white"

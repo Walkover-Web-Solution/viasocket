@@ -159,21 +159,21 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </p>
                 </div>
             )}
-            <div className="sticky top-0 z-[100]">
+            <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-24 gap-6">
                 <div className="flex flex-col justify-center gap-6 relative">
-                    <div className="border !border-gray-300 gradient-background">
+                    <div className="border border-black gradient-background">
                         <div className="h-20"></div>
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">
                                 <h1 className="h1">Simple Pricing for Powerful Automation</h1>
                                 <div className="flex flex-row text-xl gap-4">
                                     <p>Enjoy a 30-Day Free Trial</p>
-                                    <p className="border-l !border-gray-300 pl-4">No credit card required</p>
+                                    <p className="border-l border-black pl-4">No credit card required</p>
                                 </div>
-                                <div className="border !border-gray-300 p-2 w-fit">
+                                <div className="border border-black p-2 w-fit">
                                     <p className="text-sm flex flex-wrap items-center gap-2">
                                         <span className="text-3xl text-accent font-bold">Special Offer: 90% off</span>
                                         <span className="inline-block align-middle">for developing countries</span>
@@ -189,7 +189,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                         defaultCountry={userCountry || selectedCountry}
                                     />
 
-                                    <label className="border !border-gray-300 flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
+                                    <label className="border border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
                                         <span className="text-sm uppercase tracking-wider">Billed Yearly</span>
                                         <input
                                             type="checkbox"
@@ -205,7 +205,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                     ? [1, 2].map((i) => (
                                           <div
                                               key={i}
-                                              className={`flex flex-col justify-between border !border-gray-300 border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
+                                              className={`flex flex-col justify-between border border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
                                           >
                                               <div className="flex flex-col gap-12 p-8">
                                                   <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
@@ -230,7 +230,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                           return (
                                               <div
                                                   key={i}
-                                                  className={`flex flex-col justify-between border !border-gray-300 border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
+                                                  className={`flex flex-col justify-between border border-black border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
                                               >
                                                   <div className="flex flex-col gap-12 p-8">
                                                       <h2 className="h2 capitalize ">{plan?.name}</h2>
@@ -292,7 +292,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </div>
                 </div>
 
-                <div className="border !border-gray-300 p-6 md:p-12 flex flex-col gap-6">
+                <div className="border border-black p-6 md:p-12 flex flex-col gap-6">
                     <h2 className="h1 lg:w-1/2">Explore Hundreds of Features, Available on Every Plan</h2>
                     <p className="sub-h1">Get unrestricted access to all features, no matter your choice of plan.</p>
                     <div className="flex justify-start">
@@ -307,7 +307,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         What makes <br /> <span className="text-red-700 italic">viaSocket</span> a better choice ?
                     </h2>
 
-                    <div className="flex flex-col lg:flex-row border !border-gray-300">
+                    <div className="flex flex-col lg:flex-row border border-black">
                         <div className="flex flex-col w-full lg:w-1/2 py-12 md:py-24 px-6 md:px-12 text-base md:text-xl gap-4">
                             {betterChoiceData.length > 0 &&
                                 betterChoiceData.map((choice, index) => (
@@ -356,14 +356,14 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 </div>
 
                 <div className=" flex flex-col justify-center py-20">
-                    <div className=" border border-t-0 !border-gray-300">
+                    <div className=" border border-t-0 border-black">
                         <div className="flex items-center justify-center sm:-mt-5 md:-mt-5 lg:-mt-8">
-                            <div className="border-t !border-gray-300 flex-grow" />
+                            <div className="border-t border-black flex-grow" />
                             <h2 className="h1 px-4">Free Services for Impactful Organizations</h2>
-                            <div className="border-t !border-gray-300 flex-grow" />
+                            <div className="border-t border-black flex-grow" />
                         </div>
 
-                        <div className="flex flex-col gap-4 md:gap-8 items-center text-center py-8 !border-gray-300">
+                        <div className="flex flex-col gap-4 md:gap-8 items-center text-center py-8 border-black">
                             <div className="sub__h2 text-center">
                                 We support organizations driving change with free access to our automation solutions
                             </div>
@@ -379,7 +379,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
                     <BlogGrid posts={blogData} />
                     <div>
-                        <div className="flex flex-col !border-gray-300 border border-b-0 p-6 md:p-12">
+                        <div className="flex flex-col border-black border border-b-0 p-6 md:p-12">
                             {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                         </div>
                         <Footer footerData={footerData} />

@@ -134,7 +134,7 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="sticky top-0 z-[100]">
+                <div className="container sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
@@ -143,7 +143,7 @@ export default function McpIndexComp({
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 uppercase !font-medium">
+                            <h1 className="h1 ">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
@@ -157,13 +157,16 @@ export default function McpIndexComp({
                                 <button className="btn btn-accent">Get Your MCP URL</button>
                             </Link>
                         </div>
+                        {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
+                            <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
+                        </div> */}
                     </div>
 
                     <div className="flex flex-wrap justify-center">
                         {keyPointData.map((point, index) => (
                             <div
                                 key={index}
-                                className={`font-semibold py-4 px-1 !border-gray-300 w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
+                                className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
                             >
                                 <div className="flex gap-1 text-lg items-center">
                                     <p className="text-accent">✔ </p>
@@ -175,7 +178,7 @@ export default function McpIndexComp({
                 </div>
 
                 <div className="container cont">
-                    <label className="input border max-w-[400px] !border-gray-300 flex items-center gap-2 focus-within:outline-none">
+                    <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
                         <input
                             value={searchTerm}
@@ -188,7 +191,7 @@ export default function McpIndexComp({
                         />
                     </label>
                     <div className="flex">
-                        <div className=" border !border-gray-300 border-t-0 lg:block hidden">
+                        <div className=" border border-black border-t-0 lg:block hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (
                                     searchedCategoies ? (
@@ -197,7 +200,7 @@ export default function McpIndexComp({
                                                 return (
                                                     <a
                                                         key={index}
-                                                        className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:!border-gray-300'}`}
+                                                        className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                         href={createURL(`/mcp/category/${category?.slug}`)}
                                                     >
                                                         {category?.name}
@@ -206,7 +209,7 @@ export default function McpIndexComp({
                                             }
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border !border-gray-300 border-l-0 border-t-0 ">
+                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
                                             No category found for Searched name{' '}
                                         </span>
                                     )
@@ -216,7 +219,7 @@ export default function McpIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:!border-gray-300'}`}
+                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                     href={createURL(`/mcp/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -266,7 +269,7 @@ export default function McpIndexComp({
                                                     className={style.app}
                                                 >
                                                     <div className="flex items-center gap-2">
-                                                        <div className="border !border-gray-300 flex items-center justify-center w-9 h-9 bg-white">
+                                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                                             <Image
                                                                 src={app?.iconurl || 'https://placehold.co/36x36'}
                                                                 width={36}
@@ -282,7 +285,7 @@ export default function McpIndexComp({
                                             );
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border !border-gray-300 border-l-0 border-t-0 ">
+                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
                                             No Apps found for Searched name{' '}
                                         </span>
                                     )
@@ -292,10 +295,10 @@ export default function McpIndexComp({
                                             <Link
                                                 key={index}
                                                 href={createURL(`/mcp/${app?.appslugname}`)}
-                                                className={`border !border-gray-300 ${style.app}`}
+                                                className={style.app}
                                             >
                                                 <div className="flex items-center gap-2">
-                                                    <div className="border !border-gray-300 flex items-center justify-center w-9 h-9 bg-white">
+                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                                         <Image
                                                             src={app?.iconurl || 'https://placehold.co/36x36'}
                                                             width={36}
@@ -332,7 +335,7 @@ export default function McpIndexComp({
                 <div className=""></div>
                 <FeaturesGrid featuresData={featuresData} />
 
-                <div className="container border !border-gray-300">
+                <div className="container border border-black">
                     <Table data={tableData} />
                 </div>
 
@@ -344,7 +347,7 @@ export default function McpIndexComp({
                         {mcpSteps.map((step, index) => (
                             <div
                                 key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 !border-gray-300 flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
                                 <h3 className="h2 font-bold">{step.title}</h3>
@@ -354,7 +357,7 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-20 text-black py-20 px-12 border !border-gray-300">
+                <div className="container cont gap-20 text-black py-20 px-12 border border-black">
                     <div className="flex flex-col justify-center items-center">
                         <h2 className="h1  max-w-[900px] text-center">
                             Start getting work done with viaSocket MCP today
@@ -365,7 +368,7 @@ export default function McpIndexComp({
                         </p>
                     </div>
                     <div className="flex flex-col md:flex-row gap-8 text-black">
-                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border !border-gray-300">
+                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-black">
                             <div className="cont gap-4">
                                 <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                                 <h3 className="text-xl">
@@ -385,7 +388,7 @@ export default function McpIndexComp({
                                 </button>
                             </Link>
                         </div>
-                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border !border-gray-300">
+                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-black">
                             <div className="cont gap-4">
                                 <h2 className="text-4xl font-bold">For Enterprises</h2>
                                 <h3 className="text-xl">
@@ -394,6 +397,12 @@ export default function McpIndexComp({
                                 </h3>
                             </div>
                             <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
+                                {/* <Link href="/signup?utm_source=mcp">
+                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
+                                     <span className="block group-hover:hidden">Cloud MCP</span>
+                                    <span className="hidden group-hover:block">Sign Up</span> 
+                                </button>
+                            </Link> */}
                                 <Link href="/support">
                                     <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-black hover:text-white border-none group w-48 active:scale-95 transition-transform duration-75">
                                         Self-Hosted MCP
@@ -404,13 +413,20 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
+                {/* <div className="container cont py-20 px-8 bg-black text-white">
+                <div>
+                    <h1 className="h1">See Your LLMs in Action with viaSocket MCP Servers</h1>
+                    <h2 className="sub__h1">With just instant connections, your LLM can take real-world actions.</h2>
+                </div>
+            </div> */}
+
                 <div className="container">
                     <BlogGrid posts={blogsData} />
                 </div>
 
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border !border-gray-300 p-20 border-b-0">
+                        <div className="container border border-black p-20 border-b-0">
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
@@ -482,7 +498,7 @@ const Table = ({ data }) => {
                 <h1 className="h1">The Paradigm Shift</h1>
             </div>
             <div className="overflow-x-auto">
-                <table className="w-full border !border-gray-300">
+                <table className="w-full border border-black">
                     <thead className="p-4 bg-accent text-white">
                         <tr>
                             <th className="p-4 text-left text-xl w-1/3">Aspects</th>
@@ -509,15 +525,15 @@ const AppGridSkeleton = () => {
     const skeletonCards = Array(9).fill(null);
 
     return (
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 !border-gray-300 border border-r-0 border-b-0">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0">
             {skeletonCards.map((_, index) => (
                 <div
                     key={index}
-                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 !border-gray-300 border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
+                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
                 >
                     <div className="flex items-center gap-2">
                         {/* Better icon placeholder with a subtle icon-like shape */}
-                        <div className="border !border-gray-300 flex items-center justify-center w-9 h-9 bg-white overflow-hidden">
+                        <div className="border flex items-center justify-center w-9 h-9 bg-white overflow-hidden">
                             <div className="relative w-5 h-5 bg-gray-200">
                                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent animate-shimmer"></div>
                             </div>

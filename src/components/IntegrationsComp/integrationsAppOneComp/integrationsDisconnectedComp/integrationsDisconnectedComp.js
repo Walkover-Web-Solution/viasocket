@@ -36,7 +36,14 @@ export default function IntegrationsDisconnectedComp({
                 <div style={{ background: appOneDetails?.brandcolor }}>
                     <div className="container cont py-8 gap-4 flex items-center justify-between">
                         <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        
+                            {/* <Link
+                            target="_blank"
+                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}`}
+                        >
+                            <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                Connect {appOneDetails?.name} <MdOpenInNew />{' '}
+                            </button>
+                        </Link> */}
                             <Link
                                 target="_blank"
                                 href={
@@ -45,13 +52,13 @@ export default function IntegrationsDisconnectedComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border !border-gray-300 items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                         </div>
                         <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border !border-gray-300">
+                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border border-black">
                                 <Image
                                     className="h-8 md:h-10 w-fit"
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -125,10 +132,10 @@ export default function IntegrationsDisconnectedComp({
                     </div>
                 )}
                 <div className="container ">
-                    <div className="cont  border !border-gray-300">
+                    <div className="cont  border border-black">
                         <div className="p-12">{faqData && <FAQSection faqData={faqData} />}</div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 !border-gray-300">
-                            <div className="cont gap-4 p-12 border-r !border-gray-300 w-full ">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
+                            <div className="cont gap-4 p-12 border-r border-black w-full ">
                                 <div>
                                     <Image
                                         className="h-10 w-fit"
