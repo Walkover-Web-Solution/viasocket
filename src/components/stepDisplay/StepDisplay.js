@@ -118,7 +118,7 @@ export default function StepDisplay({ steps }) {
                         <Image
                             src={step.image}
                             alt={`Step ${index + 1}`}
-                            className="object-cover border !border-gray-300"
+                            className="object-cover border border-black"
                             width={600}
                             height={600}
                         />

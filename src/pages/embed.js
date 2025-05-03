@@ -37,11 +37,11 @@ const Embed = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="container sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
-                <div className="w-full min-h-fit lg:h-dvh  border-b !border-gray-300">
+                <div className="w-full min-h-fit lg:h-dvh  border-b border-black">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
@@ -78,6 +78,7 @@ const Embed = ({
                             <div className="flex justify-center items-center h-full w-full overflow-hidden">
                                 <Image
                                     src={selectedImage || 'https://placehold.co/40x40'}
+                                    // layout="fill"
                                     width={1080}
                                     height={1080}
                                     alt="Connector Image"
@@ -110,7 +111,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container border !border-gray-300">
+                <div className="container border border-black">
                     <Table data={tableData} />
                 </div>
 
@@ -125,7 +126,7 @@ const Embed = ({
                         {howItWorksData.map((step, index) => (
                             <div
                                 key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 !border-gray-300 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <h3 className="h2 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
@@ -134,7 +135,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py border !border-gray-300  justify-center items-center text-center gap-12 ">
+                <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
                     <div className="flex flex-col justify-center items-center">
                         <h2 className="h1  max-w-[1200px]">Upgrade your Product Today with viaSocket</h2>
                         <p className="sub__h1 max-w-[1000px]">
@@ -168,7 +169,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py border !border-gray-300 justify-center items-center text-center gap-8">
+                <div className="container cont cont__py border border-black justify-center items-center text-center gap-8">
                     <div className="flex flex-col gap-8">
                         <h2 className="h1">Embed Pricing</h2>
                         <p className="h2">Start from : $500/month + $0.0005/invocation</p>
@@ -211,12 +212,12 @@ const Embed = ({
                 )}
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border !border-gray-300 p-20 border-b-0">
+                        <div className="container border border-black p-20 border-b-0">
                             <FAQSection faqData={faqData} faqName={'/embed'} />
                         </div>
                     )}
                     {getStartedData && (
-                        <div className="container border !border-gray-300 p-20 border-b-0">
+                        <div className="container border border-black p-20 border-b-0">
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}
@@ -237,7 +238,7 @@ const Table = ({ data }) => {
                 <h1 className="h1">A Quick Overview</h1>
             </div>
             <div className="overflow-x-auto">
-                <table className="w-full border !border-gray-300">
+                <table className="w-full border border-gray-200">
                     <thead className="p-4">
                         <tr>
                             <th className="p-4 text-left text-xl w-1/3">Feature</th>
@@ -247,7 +248,7 @@ const Table = ({ data }) => {
                     </thead>
                     <tbody>
                         {data.map((user, index) => (
-                            <tr key={index} className="border !border-gray-300 hover:bg-gray-100">
+                            <tr key={index} className="border border-gray-200 hover:bg-gray-100">
                                 <td className="p-4 text-lg border-l">{user.Feature}</td>
                                 <td className="p-4 text-lg font-semibold border-l">{user.embed}</td>
                                 <td className="p-4 text-lg border-l">{user.development}</td>

@@ -131,8 +131,8 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <>
                     {showMCPBanner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center !border-gray-300 gradient-background">
-                                <p className="!text-xs text-black hover:underline">
+                            <div className="w-full p-2 text-center border-black gradient-background">
+                                <p className="text-lg text-black hover:underline">
                                 1,000+ MCP Servers — Use them on viaSocket now.{' '}
                                 </p>
                             </div>

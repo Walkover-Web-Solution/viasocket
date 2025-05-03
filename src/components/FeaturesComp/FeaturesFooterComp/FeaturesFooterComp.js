@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function FeaturesFooterComp({ footerData, featureData, pageInfo }) {
     return (
         <div className="container py-4">
-            <div className="cont py-32 items-center justify-center text-center border !border-gray-300 border-b-0 ">
+            <div className="cont py-32 items-center justify-center text-center border border-black border-b-0 ">
                 <div className="cont cont__w gap-6 items-center justify-center text-center ">
                     <h2 className="h1">{featureData || 'See All These Features in Action'}</h2>
                     <Link href={`/signup?utm_source=${pageInfo?.url}`}>

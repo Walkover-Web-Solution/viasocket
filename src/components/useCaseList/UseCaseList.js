@@ -51,7 +51,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                         </div>
                     ))}
                 </div>
-                <div className="w-full flex justify-center items-center border !border-gray-300 p-8 sm:p-16">
+                <div className="w-full flex justify-center items-center border border-black p-8 sm:p-16">
                     <ul className="list-disc">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
