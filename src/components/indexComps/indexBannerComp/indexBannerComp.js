@@ -53,7 +53,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                 <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
                     <div className="max-w-[800px] w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
-                            <h1 className="h1 text-black text-start uppercase">
+                            <h1 className="h1 text-black text-start ">
                                 Automate Your Business <br />
                                 with <span className="text-accent">AI-Powered Workflows </span>
                             </h1>

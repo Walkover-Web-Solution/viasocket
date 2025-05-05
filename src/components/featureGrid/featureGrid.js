@@ -24,7 +24,7 @@ const FeatureGrid = ({ featuresData }) => {
     return (
         <div className="container p-12 py-20 bg-black text-white">
             <div className="mb-20 flex gap-4">
-                <h1 className="h1 mb-4  uppercase">Automation That Actually Works For Your Business</h1>
+                <h1 className="h1 mb-4  ">Automation That Actually Works For Your Business</h1>
                 <BsStars size={42} />
             </div>
 

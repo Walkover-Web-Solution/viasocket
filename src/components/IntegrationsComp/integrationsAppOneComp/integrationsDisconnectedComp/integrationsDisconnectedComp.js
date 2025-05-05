@@ -91,7 +91,7 @@ export default function IntegrationsDisconnectedComp({
                     </div>
                     <div className="cont cont__w gap-4">
                         <div className="cont">
-                            <h1 className="h1  uppercase">{`Your ${appOneDetails?.name} Access is Disconnected`}</h1>
+                            <h1 className="h1  ">{`Your ${appOneDetails?.name} Access is Disconnected`}</h1>
                             <div
                                 dangerouslySetInnerHTML={{
                                     __html:
