@@ -168,7 +168,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         <div className="h-20"></div>
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">
-                                <h1 className="h1">Simple Pricing for Powerful Automation</h1>
+                                <h1 className="h1 !font-medium uppercase">Simple Pricing for Powerful Automation</h1>
                                 <div className="flex flex-row text-xl gap-4">
                                     <p>Enjoy a 30-Day Free Trial</p>
                                     <p className="border-l border-black pl-4">No credit card required</p>
