@@ -170,14 +170,14 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center pt-20 pb-10">
                     <div className="flex flex-col items-center justify-center text-center gap-2 max-w-[1200px]">
-                        <h1 className="h1">Ready-Made Workflow Automation Templates</h1>
-                        <h2 className="h1 text-accent !font-bold">Click. Build. Succeed.</h2>
+                        <h1 className="h1  uppercase">Ready-Made Workflow Automation Templates</h1>
+                        <h2 className="h1 text-accent !font-bold !uppercase">Click. Build. Succeed.</h2>
                         <h2 className="sub__h1  max-w-[900px]">
                             Take a look at our awesome collection of Workflow Automation Templates that automate your
                             daily tasks and help you grow.

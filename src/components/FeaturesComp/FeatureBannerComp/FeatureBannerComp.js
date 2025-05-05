@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
     return (
         <>
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={pageInfo?.url} />
             </div>
             <div className="container">
@@ -22,7 +22,7 @@ export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
                     <div className="py-32 cont gap-16 h-full flex justify-center ">
                         <div className="cont gap-6">
                             <div className="cont gap-2 cont__w text-white">
-                                <h1 className="h1">
+                                <h1 className="h1  uppercase">
                                     {featureData?.name || 'Explore Hundreds of Features, Available on Every Plan'}
                                 </h1>
                                 <p className="sub__h1">

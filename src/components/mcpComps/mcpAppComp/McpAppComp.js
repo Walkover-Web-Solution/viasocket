@@ -113,7 +113,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <div className="container sticky top-0 z-[100]">
+                    <div className="sticky top-0 z-[100]">
                         <Navbar navData={navData} utm={'/index'} />
                     </div>
                     <div className="flex flex-col gap-8">
@@ -412,7 +412,7 @@ export default function McpAppComp({
 
                 <div className="container cont gap-12">
                     <div>
-                        <h1 className="h1">AI-to-App Integration Made Easy with viaSocket MCP</h1>
+                        <h1 className="h1  uppercase">AI-to-App Integration Made Easy with viaSocket MCP</h1>
                     </div>
                     <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-center pb-20 ">
                         <Image

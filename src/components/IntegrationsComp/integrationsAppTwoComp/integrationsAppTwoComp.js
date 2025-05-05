@@ -129,7 +129,9 @@ export default function IntegrationsAppTwoComp({
                 {combosData?.combinations?.length > 0 && (
                     <>
                         <div className="cont ">
-                            <h1 className="h1">{`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}</h1>
+                            <h1 className="h1  uppercase">
+                                {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                            </h1>
                             {/* <p className="sub__h1">
                                 Create effective Slack automations in minutes by using pre-made templates that are
                                 customized for your needs
@@ -201,7 +203,7 @@ export default function IntegrationsAppTwoComp({
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
                     <div className="cont gap-4">
                         <div className="cont cont__w gap-2">
-                            <h1 className="h1">
+                            <h1 className="h1  uppercase">
                                 {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
                             </h1>
                             <p className="sub__h1">

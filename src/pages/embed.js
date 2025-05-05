@@ -37,7 +37,7 @@ const Embed = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
@@ -46,7 +46,7 @@ const Embed = ({
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
-                                    <h1 className="h1">
+                                    <h1 className="h1  uppercase">
                                         <span className="text-accent">Embed </span>
                                         third party apps with your SaaS/AI product
                                     </h1>
@@ -177,7 +177,7 @@ const Embed = ({
                     <div>
                         <h3 className="text-2xl md:text-3xl text-nowrap font-medium text-accent">Pay as You Grow!</h3>
                         <p className="sub__h1 max-w-[700px]">
-                            Starts after 2 year or once your customer count exceeds 1,000, whichever comes later
+                            Starts after 2 year or once your customer count exceeds 1,000,whichever comes later
                         </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-8">
@@ -234,8 +234,8 @@ const Table = ({ data }) => {
     return (
         <div className="w-full h-full cont gap-12 p-2 sm:p-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1 ">viaSocket Embed vs Custom Development:</h1>
-                <h1 className="h1">A Quick Overview</h1>
+                <h1 className="h1  uppercase">viaSocket Embed vs Custom Development:</h1>
+                <h1 className="h1  uppercase">A Quick Overview</h1>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-gray-200">

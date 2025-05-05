@@ -1,7 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 //tailwind imports
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    h1 {
+      @apply font-inter-tight;
+    }
+  }
 
 //check import file for imports
 @import 'import';
@@ -180,25 +188,25 @@
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
-  }
-  
-  /* For screens smaller than 640px (sm), use translateY */
-  @media (max-width: 639px) {
+}
+
+/* For screens smaller than 640px (sm), use translateY */
+@media (max-width: 639px) {
     .custom-translate {
-      transform: translateY(var(--translate-value));
-      -webkit-transform: translateY(var(--translate-value));
-      -moz-transform: translateY(var(--translate-value));
-      -ms-transform: translateY(var(--translate-value));
-      -o-transform: translateY(var(--translate-value));
+        transform: translateY(var(--translate-value));
+        -webkit-transform: translateY(var(--translate-value));
+        -moz-transform: translateY(var(--translate-value));
+        -ms-transform: translateY(var(--translate-value));
+        -o-transform: translateY(var(--translate-value));
     }
-  }
-  
-  /* For larger screens, use translateX */
-  @media (min-width: 640px) {
+}
+
+/* For larger screens, use translateX */
+@media (min-width: 640px) {
     .custom-translate {
-      transform: translateX(var(--translate-value));
+        transform: translateX(var(--translate-value));
     }
-  }
+}
 
 /** Using the McpAppComp ,developers ,saas Component */
 @media screen and (width <= 576px) {

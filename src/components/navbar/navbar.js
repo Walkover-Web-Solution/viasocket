@@ -30,9 +30,9 @@ export default function Navbar({ navData, utm }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = 'text-black hover:bg-black hover:text-white ';
+        backgroundClass = 'text-black hover:bg-black hover:text-white !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover:bg-black hover:text-white ';
+        backgroundClass = textClass + ' hover:bg-black hover:text-white !text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -44,7 +44,7 @@ export default function Navbar({ navData, utm }) {
 
     return (
         <>
-            <div className="py-4 justify-between lg:flex hidden bg-white">
+            <div className="p-4 justify-between lg:flex hidden bg-white">
                 <Link
                     href="/"
                     aria-label="logo"
@@ -88,7 +88,7 @@ export default function Navbar({ navData, utm }) {
                                                         tabIndex={0}
                                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                     >
-                                                        <span>{option.name}</span>
+                                                        <span className='!text-xs'>{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
                                                     </button>
                                                 </Link>
@@ -97,7 +97,7 @@ export default function Navbar({ navData, utm }) {
                                                     tabIndex={0}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
-                                                    <span>{option.name}</span>
+                                                    <span className='!text-xs'>{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
                                                 </button>
                                             )}
@@ -116,7 +116,7 @@ export default function Navbar({ navData, utm }) {
                                                                     target={
                                                                         childOption.open_in_new_tab ? '_blank' : '_self'
                                                                     }
-                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block"
+                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block !text-xs" 
                                                                 >
                                                                     {childOption.name}
                                                                 </Link>
@@ -157,7 +157,7 @@ export default function Navbar({ navData, utm }) {
                         Login
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent items-center justify-center !text-xs`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial

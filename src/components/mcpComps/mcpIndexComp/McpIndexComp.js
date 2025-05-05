@@ -134,7 +134,7 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="container sticky top-0 z-[100]">
+                <div className="sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
@@ -143,7 +143,7 @@ export default function McpIndexComp({
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 ">
+                            <h1 className="h1 !uppercase">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
@@ -234,7 +234,7 @@ export default function McpIndexComp({
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
-                                        <h1 className="h1 text-accent">
+                                        <h1 className="h1 text-accent  uppercase">
                                             <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                             {integrationsInfo?.category === 'all'
                                                 ? 'Apps'
@@ -244,7 +244,7 @@ export default function McpIndexComp({
                                     </>
                                 ) : (
                                     <>
-                                        <h1 className="h1  text-accent italic">
+                                        <h1 className="h1  uppercase text-accent italic">
                                             {' '}
                                             1000+
                                             <span className="text-black not-italic"> MCP Servers</span>
@@ -462,7 +462,7 @@ const FeaturesGrid = ({ featuresData }) => {
         <div className="container p-12 py-20 bg-black text-white">
             <div className="mb-20">
                 <div className="flex gap-4">
-                    <h1 className="h1 mb-4">Don't just chat, Put your AI to work</h1>
+                    <h1 className="h1 mb-4  uppercase">Don't just chat, Put your AI to work</h1>
                     <BsStars size={42} />
                 </div>
                 <h2 className="sub__h1 text-gray-300 max-w-[800px]">
@@ -494,8 +494,8 @@ const Table = ({ data }) => {
     return (
         <div className=" w-full h-full cont gap-12  bg-white py-8 px-0 lg:px-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1 ">MCP vs Traditional APIs :</h1>
-                <h1 className="h1">The Paradigm Shift</h1>
+                <h1 className="h1  uppercase">MCP vs Traditional APIs :</h1>
+                <h1 className="h1  uppercase">The Paradigm Shift</h1>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-black">
