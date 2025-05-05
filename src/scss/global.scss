@@ -211,7 +211,39 @@
 /** Using the McpAppComp ,developers ,saas Component */
 @media screen and (width <= 576px) {
     .category-btn {
-        gap: 10px
+        gap: 10px;
+    }
+}
+
+.support-slider {
+    position: fixed;
+    right: -100%;
+    top: 0;
+    width: 500px;
+    height: 100%;
+    background: #fff;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    &.open {
+        right: 0;
+    }
+
+    .support-header {
+        padding: 1rem;
+        border-bottom: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .support-body {
+        padding: 1rem;
+        overflow-y: auto;
+        flex: 1;
     }
 }
 
@@ -222,7 +254,7 @@
 
 body {
     background: radial-gradient(circle, #d4d4d4 20%, transparent 20%) center/10px 10px;
-}   
+}
 
 .border-black {
     border-color: #0000004d !important;
