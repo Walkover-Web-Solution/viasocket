@@ -16,14 +16,14 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <McpSwitchComp />
             <div className="container cont">
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 ">Bring 1,000+ MCP Servers into Your AI Agents</h1>
+                        <h1 className="h1 !uppercase !font-medium">Bring 1,000+ MCP Servers into Your AI Agents</h1>
                         <h2 className="sub__h1">
                             Quickly connect your agents to 1,000+ tools by embedding viaSocket MCP servers. viaSocket
                             manages the authentication and integrations, allowing you to focus on development.
