@@ -176,7 +176,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center pt-20 pb-10">
                     <div className="flex flex-col items-center justify-center text-center gap-2 max-w-[1200px]">
-                        <h1 className="h1 !font-medium uppercase">Ready-Made Workflow Automation Templates</h1>
+                        <h1 className="h1  uppercase">Ready-Made Workflow Automation Templates</h1>
                         <h2 className="h1 text-accent !font-bold !uppercase">Click. Build. Succeed.</h2>
                         <h2 className="sub__h1  max-w-[900px]">
                             Take a look at our awesome collection of Workflow Automation Templates that automate your

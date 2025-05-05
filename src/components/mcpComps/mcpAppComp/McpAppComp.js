@@ -412,7 +412,7 @@ export default function McpAppComp({
 
                 <div className="container cont gap-12">
                     <div>
-                        <h1 className="h1 !font-medium uppercase">AI-to-App Integration Made Easy with viaSocket MCP</h1>
+                        <h1 className="h1  uppercase">AI-to-App Integration Made Easy with viaSocket MCP</h1>
                     </div>
                     <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-center pb-20 ">
                         <Image

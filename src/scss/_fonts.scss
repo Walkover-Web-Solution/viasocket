@@ -27,10 +27,12 @@ body {
 }
 
 .h1 {
-    @apply md:text-6xl text-4xl ;
-    font-family: 'Times Now';
+    @apply md:text-6xl text-4xl;
+    font-family: 'Inter Tight';
     line-height: 1.1em;
-    font-weight: 400;
+    font-weight: 400 !important;
+    // text-transform: uppercase !important;
+
     &__b {
         font-weight: 400;
     }

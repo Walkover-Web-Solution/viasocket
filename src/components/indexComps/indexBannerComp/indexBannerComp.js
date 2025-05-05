@@ -53,9 +53,9 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                 <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
                     <div className="max-w-[800px] w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
-                            <h1 className="h1 text-black text-start uppercase !font-medium">
+                            <h1 className="h1 text-black text-start uppercase">
                                 Automate Your Business <br />
-                                with <strong className="text-accent">AI-Powered Workflows </strong>
+                                with <span className="text-accent">AI-Powered Workflows </span>
                             </h1>
                             <h2 className="sub__h1 text-black text-start">
                                 Connect your apps, automate your work, and watch your productivity soar—all with the

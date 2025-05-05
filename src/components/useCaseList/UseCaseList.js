@@ -15,7 +15,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
     return (
         <div className="container cont gap-8">
             <div>
-                <h1 className="h1 !font-medium uppercase">{`Real-World Use Cases of ${appname} Integrations`}</h1>
+                <h1 className="h1  uppercase">{`Real-World Use Cases of ${appname} Integrations`}</h1>
                 <h2 className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</h2>
             </div>
             <div className="flex flex-col md:flex-row gap-4 ">

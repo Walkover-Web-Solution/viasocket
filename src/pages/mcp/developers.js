@@ -23,7 +23,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <div className="container cont">
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 !uppercase !font-medium">Bring 1,000+ MCP Servers into Your <span className='text-accent'>AI Agents</span>
+                        <h1 className="h1 !uppercase">Bring 1,000+ MCP Servers into Your <span className='text-accent'>AI Agents</span>
                         </h1>
                         <h2 className="sub__h1">
                             Quickly connect your agents to 1,000+ tools by embedding viaSocket MCP servers. viaSocket
