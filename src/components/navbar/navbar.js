@@ -44,7 +44,7 @@ export default function Navbar({ navData, utm }) {
 
     return (
         <>
-            <div className="py-4 justify-between lg:flex hidden bg-white">
+            <div className="p-4 justify-between lg:flex hidden bg-white">
                 <Link
                     href="/"
                     aria-label="logo"

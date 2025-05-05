@@ -14,7 +14,7 @@ export const runtime = 'experimental-edge';
 
 export default function pricing({ navData, footerData, faqData, metaData, blogData }) {
     return (
-        <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12">
+        <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
             <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/mcp'} />
