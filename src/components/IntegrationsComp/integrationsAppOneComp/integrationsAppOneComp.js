@@ -116,7 +116,7 @@ export default function IntegrationsAppOneComp({
                 {combosData?.combinations?.length > 0 && (
                     <>
                         <div className="cont cont__w ">
-                            <h1 className="h1 !font-medium uppercase">
+                            <h1 className="h1  uppercase">
                                 {`Create integrations between ${appOneDetails?.name} and your favorite App`}
                             </h1>
                             <p className="sub__h1">
@@ -184,7 +184,7 @@ export default function IntegrationsAppOneComp({
                 {!combosData?.combinations?.length > 0 && appOneDetails?.events.length > 0 && (
                     <div className="cont gap-4">
                         <div className="cont cont__w gap-2">
-                            <h1 className="h1 !font-medium uppercase">
+                            <h1 className="h1  uppercase">
                                 {`Create integrations between ${appOneDetails?.name} and your favorite App`}
                             </h1>
                             <p className="sub__h1">
