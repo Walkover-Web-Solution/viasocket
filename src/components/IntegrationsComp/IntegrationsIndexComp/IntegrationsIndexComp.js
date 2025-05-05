@@ -157,7 +157,7 @@ export default function IntegrationsIndexComp({
                         <div className="p-4 md:p-8 cont gap-2">
                             {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                 <>
-                                    <h1 className="h1 text-accent">
+                                    <h1 className="h1 text-accent !font-medium uppercase">
                                         <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                         {integrationsInfo?.category === 'all'
                                             ? 'Apps'
@@ -167,7 +167,7 @@ export default function IntegrationsIndexComp({
                                 </>
                             ) : (
                                 <>
-                                    <h1 className="h1  text-accent italic">
+                                    <h1 className="h1 text-accent italic !font-medium uppercase">
                                         {' '}
                                         1000+
                                         <span className="text-black not-italic"> Apps</span>

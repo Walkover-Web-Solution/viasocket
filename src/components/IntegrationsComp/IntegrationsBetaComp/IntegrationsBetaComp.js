@@ -50,7 +50,9 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
     return (
         <>
             <div className="cont cont__w gap-4 ">
-                <h1 className="h1">{`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name || 'your favorite App'}`}</h1>
+                <h1 className="h1 !font-medium uppercase">
+                    {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name || 'your favorite App'}`}
+                </h1>
                 {appTwoDetails ? (
                     <>
                         <h2 className="h2">

@@ -26,7 +26,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
                         <h1 className="h1 !uppercase !font-medium">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
-                            Launch Your Own MCP Server within Your SaaS
+                            Launch Your Own MCP Server within Your <span className="text-accent">SaaS</span>
                         </h1>
                         <h2 className="sub__h1">
                             No need to build your own MCP server—just embed viaSocket MCP and let your users perform
