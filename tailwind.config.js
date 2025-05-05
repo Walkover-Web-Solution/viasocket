@@ -10,6 +10,9 @@ module.exports = {
     ],
     theme: {
         extend: {
+            fontFamily: {
+                'inter-tight': ['Inter Tight', 'sans-serif'],
+            },
             screens: {
                 'xl2': '1500px', // Add custom screen size for 1500px
             },

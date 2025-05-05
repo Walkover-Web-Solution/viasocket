@@ -24,7 +24,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
 
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16">
                     <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 !uppercase !font-medium">
+                        <h1 className="h1 !uppercase">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
                             Launch Your Own MCP Server within Your <span className="text-accent">SaaS</span>
                         </h1>
