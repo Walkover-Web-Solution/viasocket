@@ -143,7 +143,7 @@ export default function McpIndexComp({
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 !uppercase">
+                            <h1 className="h1 !">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
@@ -200,7 +200,7 @@ export default function McpIndexComp({
                                                 return (
                                                     <a
                                                         key={index}
-                                                        className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                        className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                         href={createURL(`/mcp/category/${category?.slug}`)}
                                                     >
                                                         {category?.name}
@@ -219,7 +219,7 @@ export default function McpIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                     href={createURL(`/mcp/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -234,7 +234,7 @@ export default function McpIndexComp({
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
-                                        <h1 className="h1 text-accent  uppercase">
+                                        <h1 className="h1 text-accent  ">
                                             <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                             {integrationsInfo?.category === 'all'
                                                 ? 'Apps'
@@ -244,7 +244,7 @@ export default function McpIndexComp({
                                     </>
                                 ) : (
                                     <>
-                                        <h1 className="h1  uppercase text-accent italic">
+                                        <h1 className="h1   text-accent italic">
                                             {' '}
                                             1000+
                                             <span className="text-black not-italic"> MCP Servers</span>
@@ -462,7 +462,7 @@ const FeaturesGrid = ({ featuresData }) => {
         <div className="container p-12 py-20 bg-black text-white">
             <div className="mb-20">
                 <div className="flex gap-4">
-                    <h1 className="h1 mb-4  uppercase">Don't just chat, Put your AI to work</h1>
+                    <h1 className="h1 mb-4  ">Don't just chat, Put your AI to work</h1>
                     <BsStars size={42} />
                 </div>
                 <h2 className="sub__h1 text-gray-300 max-w-[800px]">
@@ -494,8 +494,8 @@ const Table = ({ data }) => {
     return (
         <div className=" w-full h-full cont gap-12  bg-white py-8 px-0 lg:px-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1  uppercase">MCP vs Traditional APIs :</h1>
-                <h1 className="h1  uppercase">The Paradigm Shift</h1>
+                <h1 className="h1  ">MCP vs Traditional APIs :</h1>
+                <h1 className="h1  ">The Paradigm Shift</h1>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-black">

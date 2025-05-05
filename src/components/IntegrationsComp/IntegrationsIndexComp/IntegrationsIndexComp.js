@@ -91,7 +91,7 @@ export default function IntegrationsIndexComp({
             </div>
             <div className="container flex justify-center items-center">
                 <div className="cont max-w[1200px] text-center">
-                    <h1 className="h1 !uppercase">
+                    <h1 className="h1 !">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
                     <h2 className="sub__h1 max-w-[800px] mx-auto">
@@ -123,7 +123,7 @@ export default function IntegrationsIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                     href={createURL(`/integrations/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -142,7 +142,7 @@ export default function IntegrationsIndexComp({
                                         return (
                                             <a
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
                                                 href={createURL(`/integrations/category/${category?.slug}`)}
                                             >
                                                 {category?.name}
@@ -157,7 +157,7 @@ export default function IntegrationsIndexComp({
                         <div className="p-4 md:p-8 cont gap-2">
                             {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                 <>
-                                    <h1 className="h1 text-accent uppercase">
+                                    <h1 className="h1 text-accent ">
                                         <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                         {integrationsInfo?.category === 'all'
                                             ? 'Apps'
@@ -167,7 +167,7 @@ export default function IntegrationsIndexComp({
                                 </>
                             ) : (
                                 <>
-                                    <h1 className="h1 text-accent italic uppercase">
+                                    <h1 className="h1 text-accent italic ">
                                         {' '}
                                         1000+
                                         <span className="text-black not-italic"> Apps</span>

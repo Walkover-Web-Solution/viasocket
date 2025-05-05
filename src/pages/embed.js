@@ -46,7 +46,7 @@ const Embed = ({
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
-                                    <h1 className="h1  uppercase">
+                                    <h1 className="h1  ">
                                         <span className="text-accent">Embed </span>
                                         third party apps with your SaaS/AI product
                                     </h1>
@@ -234,8 +234,8 @@ const Table = ({ data }) => {
     return (
         <div className="w-full h-full cont gap-12 p-2 sm:p-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1  uppercase">viaSocket Embed vs Custom Development:</h1>
-                <h1 className="h1  uppercase">A Quick Overview</h1>
+                <h1 className="h1  ">viaSocket Embed vs Custom Development:</h1>
+                <h1 className="h1  ">A Quick Overview</h1>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-gray-200">
