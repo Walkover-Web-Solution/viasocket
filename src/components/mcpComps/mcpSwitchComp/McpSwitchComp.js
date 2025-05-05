@@ -9,15 +9,15 @@ const McpSwitchComp = () => {
     return (
         <div className="container cont">
             <div className="w-full flex justify-center items-center">
-                <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center gap-4 category-btn">
+                <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
                     <Link href="/mcp" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border !border-black transition-all duration-200 text-sm border-r-0 ${
                                 currentRoute.startsWith('/mcp') &&
                                 !currentRoute.startsWith('/mcp/developers') &&
                                 !currentRoute.startsWith('/mcp/saas')
                                     ? 'bg-black text-white border-black'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100'
+                                    : 'bg-white text-black hover:bg-gray-100'
                             }`}
                         >
                             Users
@@ -26,10 +26,10 @@ const McpSwitchComp = () => {
 
                     <Link href="/mcp/developers" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border !border-black transition-all duration-200 text-sm border-r-0 ${
                                 currentRoute.startsWith('/mcp/developers')
                                     ? 'bg-black text-white border-black'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100'
+                                    : 'bg-white text-black hover:bg-gray-100'
                             }`}
                         >
                             AI Agents
@@ -38,10 +38,10 @@ const McpSwitchComp = () => {
 
                     <Link href="/mcp/saas" className="no-underline">
                         <div
-                            className={`cursor-pointer px-6 py-3  border-2 transition-all duration-200 ${
+                            className={`cursor-pointer px-6 py-3 border !border-black transition-all duration-200 text-sm ${
                                 currentRoute.startsWith('/mcp/saas')
                                     ? 'bg-black text-white border-black'
-                                    : 'bg-white text-black border-gray-300 hover:bg-gray-100'
+                                    : 'bg-white text-black hover:bg-gray-100'
                             }`}
                         >
                             SaaS Players

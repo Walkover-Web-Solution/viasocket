@@ -159,7 +159,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </p>
                 </div>
             )}
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-24 gap-6">

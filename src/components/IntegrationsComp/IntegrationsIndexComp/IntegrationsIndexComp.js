@@ -86,12 +86,12 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="container flex justify-center items-center">
                 <div className="cont max-w[1200px] text-center">
-                    <h1 className="h1">
+                    <h1 className="h1 !uppercase !font-medium">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
                     <h2 className="sub__h1 max-w-[800px] mx-auto">

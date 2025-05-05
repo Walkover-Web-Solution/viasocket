@@ -244,7 +244,7 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="container sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100]">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
@@ -565,7 +565,7 @@ const Index = ({
 
                 <div className="container border border-black py-20 px-12 ">
                     <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1">AI Agents That Work For You</h1>
+                        <h1 className="h1 !font-medium uppercase">AI Agents That Work For You</h1>
                         <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
                         <h3 className="sub__h1 max-w-[900px]">
                             Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
@@ -575,7 +575,7 @@ const Index = ({
                 
                 <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
                     <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1">Be First in Line: Mobile App Early Access</h1>
+                        <h1 className="h1 !font-medium uppercase">Be First in Line: Mobile App Early Access</h1>
                         <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
                         <h3 className="sub__h1 max-w-[900px]">
                             Create and modify automation workflows from your smartphone with AI assistance. Build new

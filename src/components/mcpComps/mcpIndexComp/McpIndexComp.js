@@ -134,7 +134,7 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="container sticky top-0 z-[100]">
+                <div className="sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
@@ -143,7 +143,7 @@ export default function McpIndexComp({
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 ">
+                            <h1 className="h1 !uppercase !font-medium">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
