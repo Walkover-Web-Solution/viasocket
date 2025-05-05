@@ -70,7 +70,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                 </div>
                 <div className="bg-gray-100 w-full px-12 py-40 cont justify-between">
                     <div className="max-w-[520px] w-full">
-                        <h1 className="h1  uppercase">Welcome to viaSocket</h1>
+                        <h1 className="h1  ">Welcome to viaSocket</h1>
                         <p className="sub__h1">Connect your favorite apps and start automating your work in no time.</p>
                     </div>
                     <div className="cont gap-8">

@@ -118,7 +118,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             return (
                                                 <Link
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
                                                     href={`/integrations/category/${category}`}
                                                 >
                                                     {category}
@@ -135,7 +135,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         return (
                                             <Link
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8 uppercase text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
                                                 href={`/integrations/category/${category}`}
                                             >
                                                 {category}
@@ -150,12 +150,12 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                         {!integrationsInfo?.appone && (
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'All' ? (
-                                    <h1 className="h1 text-accent  uppercase">
+                                    <h1 className="h1 text-accent  ">
                                         <span className="text-black italic">300+</span>{' '}
                                         {decodeURIComponent(integrationsInfo?.category)}
                                     </h1>
                                 ) : (
-                                    <h1 className="h1  uppercase text-accent italic">
+                                    <h1 className="h1   text-accent italic">
                                         {' '}
                                         5000+
                                         <span className="text-black not-italic"> viaSocket Integrations</span>

@@ -564,7 +564,7 @@ const Index = ({
 
                 <div className="container border border-black py-20 px-12 ">
                     <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  uppercase">AI Agents That Work For You</h1>
+                        <h1 className="h1  ">AI Agents That Work For You</h1>
                         <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
                         <h3 className="sub__h1 max-w-[900px]">
                             Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
@@ -574,7 +574,7 @@ const Index = ({
                 
                 <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
                     <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  uppercase">Be First in Line: Mobile App Early Access</h1>
+                        <h1 className="h1  ">Be First in Line: Mobile App Early Access</h1>
                         <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
                         <h3 className="sub__h1 max-w-[900px]">
                             Create and modify automation workflows from your smartphone with AI assistance. Build new
@@ -764,7 +764,7 @@ const TestimonialsSection = ({ testimonials }) => (
                             alt={testimonial?.given_by}
                         />
                         <div className="flex flex-col">
-                            <p className="text-sm tracking-wider uppercase font-bold ">{testimonial?.given_by}</p>
+                            <p className="text-sm tracking-wider  font-bold ">{testimonial?.given_by}</p>
                             <p className="text-sm  text-grey">{testimonial?.giver_title}</p>
                         </div>
                     </div>
