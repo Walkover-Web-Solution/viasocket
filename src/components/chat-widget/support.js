@@ -89,8 +89,8 @@ export default function Support({ open, onClose }) {
         }
         setLoading((prev) => ({ ...prev, [category.toLowerCase()]: true }));
         const payload = {
-            name,
-            email,
+            name : 'unknownUser',
+            email : 'unknownUser@gmail.com',
             comment: integration,
             category,
         };
@@ -105,15 +105,12 @@ export default function Support({ open, onClose }) {
             });
 
             if (response.ok) {
-                successToast('Your feedback has been submitted successfully!');
                 setIntegration('');
             } else {
                 console.error('Failed to hit webhook');
-                errorToast('Failed to submit feedback. Please try again later.');
             }
         } catch (error) {
             console.error('Error hitting webhook:', error);
-            errorToast('An error occurred. Please try again later.');
         } finally {
             setLoading((prev) => ({ ...prev, [category.toLowerCase()]: false }));
         }
