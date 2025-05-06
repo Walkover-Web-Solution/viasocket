@@ -16,7 +16,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <div className="container py-8">

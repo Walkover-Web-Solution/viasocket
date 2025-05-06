@@ -5,8 +5,8 @@ const AlphabeticalComponent = ({ alphabet, appDetails, step }) => {
 
     return (
         <div className=" flex flex-col gap-6  w-full ">
-            {step === 0 && <h2 className="text-2xl font-semibold text-center">Browse Apps by Name</h2>}
-            {step === 2 && <h2 className="text-2xl font-semibold text-center">Select an app to integrate with</h2>}
+            {step === 0 && <h3 className="h3 font-semibold text-center">Browse Apps by Name</h3>}
+            {step === 2 && <h3 className="h3 font-semibold text-center">Select an app to integrate with</h3>}
 
             <div className="flex flex-row flex-wrap justify-center gap-2">
                 {/* <Link
@@ -19,7 +19,7 @@ const AlphabeticalComponent = ({ alphabet, appDetails, step }) => {
                 </Link> */}
                 {alphabets.map((letter) => (
                     <Link
-                        className={`text-lg py-1 px-2 hover:bg-black hover:text-white transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
+                        className={`text-sm py-1 px-2 hover:bg-black hover:text-white transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
                         key={letter}
                         href={
                             step === 2 || step === 3

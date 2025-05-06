@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
     return (
         <>
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={pageInfo?.url} />
             </div>
             <div className="container">

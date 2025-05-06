@@ -37,7 +37,7 @@ const Embed = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
