@@ -13,7 +13,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
     if (posts?.length > 0) {
         return (
             <div className="flex flex-col gap-9 container">
-                <h2 className="h1">
+                <h2 className="h2">
                 {heading}
                 </h2>
                 <div className="w-full cont">

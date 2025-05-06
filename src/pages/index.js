@@ -244,16 +244,16 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
-                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
+        <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12 container">
+                    <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
 
-                <div className="cont text-center gap-2">
-                    <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
-                    <HorizontalCardScroller items={streamlineData} />
-                </div>
+                    <div className="cont text-center gap-2">
+                        <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
+                        <HorizontalCardScroller items={streamlineData} />
+                    </div>
                 {/* 
                 <div className="container flex flex-col gap-4 ">
                     <div className="cont  max-w-[1100px]">
@@ -529,78 +529,78 @@ const Index = ({
                     </div>
                 </div> */}
 
-                <FeatureGrid featuresData={featuresData} />
+                    <FeatureGrid featuresData={featuresData} />
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
-                    <div className="flex flex-col justify-center items-center w-full text-center">
-                        <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+                    <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
+                        <div className="flex flex-col justify-center items-center w-full text-center">
+                            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
+                        </div>
+                        <StepDisplay steps={indexSteps} />
                     </div>
-                    <StepDisplay steps={indexSteps} />
-                </div>
 
-                {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
+                    {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
 
-                <div className="container">
-                    <TestimonialsSection testimonials={testimonials} />
-                </div>
+                    <div className="container">
+                        <TestimonialsSection testimonials={testimonials} />
+                    </div>
 
-                <div className="container">
-                    <IntegrateAppsComp />
-                </div>
+                    <div className="container">
+                        <IntegrateAppsComp />
+                    </div>
 
-                <div className="container cont">
-                    <CaseStudiesSection caseStudies={caseStudies} />
-                    <div className="flex justify-end">
-                        <Link
-                            href="https://viasocket.com/blog/tag/client-story"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="border border-black border-t-0 px-4 py-2 "
-                        >
-                            <LinkText>Read More</LinkText>
+                    <div className="container cont">
+                        <CaseStudiesSection caseStudies={caseStudies} />
+                        <div className="flex justify-end">
+                            <Link
+                                href="https://viasocket.com/blog/tag/client-story"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="border border-black border-t-0 px-4 py-2 "
+                            >
+                                <LinkText>Read More</LinkText>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="container border border-black py-20 px-12 ">
+                        <div className="cont gap-2 text-center items-center">
+                            <h2 className="h2 mb-4">AI Agents That Work For You</h2>
+                            <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
+                            <h3 className="sub__h1 max-w-[900px]">
+                                Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
+                        <div className="cont gap-2 text-center items-center">
+                            <h2 className="h2 mb-4">Be First in Line: Mobile App Early Access</h2>
+                            <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
+                            <h3 className="sub__h1 max-w-[900px]">
+                                Create and modify automation workflows from your smartphone with AI assistance. Build new
+                                workflows, make quick edits, and stay in control of your business no matter where you are.
+                            </h3>
+                        </div>
+                        <Link href="https://walkover.typeform.com/to/U33OiMgy" target="_blank" rel="noopener noreferrer">
+                            <button className="btn btn-accent">Apply For Early Access</button>
                         </Link>
                     </div>
-                </div>
 
-                <div className="container border border-black py-20 px-12 ">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">AI Agents That Work For You</h1>
-                        <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
-                        <h3 className="sub__h1 max-w-[900px]">
-                            Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
-                        </h3>
-                    </div>
-                </div>
-                
-                <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">Be First in Line: Mobile App Early Access</h1>
-                        <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
-                        <h3 className="sub__h1 max-w-[900px]">
-                            Create and modify automation workflows from your smartphone with AI assistance. Build new
-                            workflows, make quick edits, and stay in control of your business no matter where you are.
-                        </h3>
-                    </div>
-                    <Link href="https://walkover.typeform.com/to/U33OiMgy" target="_blank" rel="noopener noreferrer">
-                        <button className="btn btn-accent">Apply For Early Access</button>
-                    </Link>
-                </div>
-
-                <div className="container">
-                    <BlogGrid posts={blogData} />
-                </div>
-
-                <div className="pb-4">
-                    {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <FAQSection faqData={faqData} faqName={'/index'} />
-                        </div>
-                    )}
-                    <div className="container border border-black p-20 border-b-0">
-                        <AlphabeticalComponent step={0} />
-                    </div>
                     <div className="container">
-                        <Footer footerData={footerData} />
+                        <BlogGrid posts={blogData} />
+                    </div>
+
+                    <div className="pb-4">
+                        {faqData?.length > 0 && (
+                            <div className="container border border-black p-20 border-b-0">
+                                <FAQSection faqData={faqData} faqName={'/index'} />
+                            </div>
+                        )}
+                        <div className="container border border-black p-20 border-b-0">
+                            <AlphabeticalComponent step={0} />
+                        </div>
+                        <div className="container">
+                            <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>
@@ -707,7 +707,7 @@ const HorizontalCardScroller = ({ items }) => {
 const WorkflowStepsSection = ({ indexSteps }) => (
     <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
         <div className="flex flex-col justify-center items-center w-full text-center">
-            <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
         </div>
 
         <div className="cont w-full gap-4">
@@ -724,14 +724,14 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
             <div className="md:hidden cont">
                 <div className="p-8 cont gap-2">
                     <p className="text-accent font font-semibold">Step {stepNumber}</p>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
             </div>
 
             <div className={`hidden md:flex ${isEven ? 'flex-row' : 'flex-row-reverse'} justify-center`}>
                 <div className={`w-1/3 p-4 flex flex-col gap-4 justify-center ${isEven ? 'text-end' : 'text-start'}`}>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
 
@@ -749,7 +749,7 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
 
 const TestimonialsSection = ({ testimonials }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1 flex gap-2 flex-wrap">
+        <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
         <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full  ">
@@ -777,7 +777,7 @@ const TestimonialsSection = ({ testimonials }) => (
 
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1">Trusted by hundreds of businesses like yours</h2>
+        <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
         <div className="flex flex-col gap-8 w-full border border-black p-8">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
