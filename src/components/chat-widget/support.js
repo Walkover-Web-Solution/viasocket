@@ -15,14 +15,8 @@ export default function Support({ open, onClose }) {
         document.getElementById('callback_modal').showModal();
     };
 
-    const [launcher, setLauncher] = useState(false);
     const toggleChatWidget = () => {
-        if (launcher) {
-            window.chatWidget.close();
-        } else {
-            window.chatWidget.open();
-        }
-        setLauncher(!launcher);
+        window.chatWidget.open();
     };
     const ContactListArray = [
         {
@@ -54,7 +48,7 @@ export default function Support({ open, onClose }) {
         {
             ytLink: {
                 link: 'https://www.youtube.com/embed/eXDESTon83Y?autoplay=1&mute=1&modestbranding=1&rel=0&controls=0&cc_load_policy=0&start=0&end=20&loop=1&playlist=eXDESTon83Y',
-                onClickLink: 'https://www.youtube.com/watch?v=eXDESTon83Y&list=PLFC2nhlwaR8wQqKIdNpFUJHRBqUrxH7A9'
+                onClickLink: 'https://www.youtube.com/watch?v=eXDESTon83Y&list=PLFC2nhlwaR8wQqKIdNpFUJHRBqUrxH7A9',
             },
             heading: 'Video Gallery',
             subHeading: 'Watch tutorials and see usecases in action.',
@@ -89,8 +83,8 @@ export default function Support({ open, onClose }) {
         }
         setLoading((prev) => ({ ...prev, [category.toLowerCase()]: true }));
         const payload = {
-            name : 'unknownUser',
-            email : 'unknownUser@gmail.com',
+            name: 'unknownUser',
+            email: 'unknownUser@gmail.com',
             comment: integration,
             category,
         };

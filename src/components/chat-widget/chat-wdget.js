@@ -13,14 +13,14 @@ export default function ChatWidget() {
     //     }
     //     setLauncher(!launcher);
     // };
-    const [anchorEl, setAnchorEl] = useState(null)
-    const open = Boolean(anchorEl)
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
     return (
         <>
             <button
