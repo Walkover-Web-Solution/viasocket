@@ -69,7 +69,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                             Plugin Builder
                         </li>
                         <li>
-                            <strong>You Embed the MC:</strong>Offer your users a prebuilt URL to generate their own
+                            <strong>You Embed the MCP:</strong>Offer your users a prebuilt URL to generate their own
                             viaSocket MCP endpoint inside your product UI
                         </li>
                         <li>
