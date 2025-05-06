@@ -8,7 +8,7 @@ export default function GetStarted({ data, isHero }) {
             <div className="grid gap-10 ">
                 <div className="flex justify-between flex-col md:flex-row">
                     <div className="flex flex-col w-fit h-full">
-                        <h2 className="h1">
+                        <h2 className="h2">
                             We'll help you get
                             <br /> started
                         </h2>

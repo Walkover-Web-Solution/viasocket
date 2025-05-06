@@ -224,7 +224,7 @@ export default function IntegrationsAppTwoComp({
                 appOneDetails?.events?.length > 0 &&
                 appTwoDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h1">Actions and Triggers</h2>
+                        <h2 className="h2">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
@@ -257,7 +257,7 @@ export default function IntegrationsAppTwoComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full f">{appOneDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">
@@ -294,7 +294,7 @@ export default function IntegrationsAppTwoComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appTwoDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full ">{appTwoDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">

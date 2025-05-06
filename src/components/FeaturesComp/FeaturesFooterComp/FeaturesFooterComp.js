@@ -6,7 +6,7 @@ export default function FeaturesFooterComp({ footerData, featureData, pageInfo }
         <div className="container py-4">
             <div className="cont py-32 items-center justify-center text-center border border-black border-b-0 ">
                 <div className="cont cont__w gap-6 items-center justify-center text-center ">
-                    <h2 className="h1">{featureData || 'See All These Features in Action'}</h2>
+                    <h2 className="h2">{featureData || 'See All These Features in Action'}</h2>
                     <Link href={`/signup?utm_source=${pageInfo?.url}`}>
                         <button className="btn btn-accent btn-lg">Start Exploring Now</button>
                     </Link>

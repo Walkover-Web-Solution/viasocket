@@ -91,7 +91,7 @@ export default function IntegrationsIndexComp({
             </div>
             <div className="container flex justify-center items-center">
                 <div className="cont max-w[1200px] text-center">
-                    <h1 className="h1 !">
+                    <h1 className="h1">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
                     <h2 className="sub__h1 max-w-[800px] mx-auto">

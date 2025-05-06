@@ -117,7 +117,7 @@ const Embed = ({
 
                 <div className="container cont cont__py gap-20 px-24  h-fit border  bg-[#F5FBFF]">
                     <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h1">How it works</h2>
+                        <h2 className="h2">How it works</h2>
                         <p className="sub__h1 text-center">
                             Follow these steps, and your product will be seamlessly integrated with the viaSocket embed
                         </p>
@@ -128,7 +128,7 @@ const Embed = ({
                                 key={index}
                                 className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
-                                <h3 className="h2 font-bold">{step.title}</h3>
+                                <h3 className="h3 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
                             </div>
                         ))}
@@ -171,7 +171,7 @@ const Embed = ({
 
                 <div className="container cont cont__py border border-black justify-center items-center text-center gap-8">
                     <div className="flex flex-col gap-8">
-                        <h2 className="h1">Embed Pricing</h2>
+                        <h2 className="h2">Embed Pricing</h2>
                         <p className="h2">Start from : $500/month + $0.0005/invocation</p>
                     </div>
                     <div>

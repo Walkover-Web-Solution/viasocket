@@ -244,10 +244,10 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
+            <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12 container">
                 <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
 
                 <div className="cont text-center gap-2">
@@ -259,7 +259,7 @@ const Index = ({
 
                 <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
                     <div className="flex flex-col justify-center items-center w-full text-center">
-                        <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+                        <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
                     </div>
                     <StepDisplay steps={indexSteps} />
                 </div>
@@ -437,7 +437,7 @@ const HorizontalCardScroller = ({ items }) => {
 const WorkflowStepsSection = ({ indexSteps }) => (
     <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
         <div className="flex flex-col justify-center items-center w-full text-center">
-            <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
         </div>
 
         <div className="cont w-full gap-4">
@@ -454,14 +454,14 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
             <div className="md:hidden cont">
                 <div className="p-8 cont gap-2">
                     <p className="text-accent font font-semibold">Step {stepNumber}</p>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
             </div>
 
             <div className={`hidden md:flex ${isEven ? 'flex-row' : 'flex-row-reverse'} justify-center`}>
                 <div className={`w-1/3 p-4 flex flex-col gap-4 justify-center ${isEven ? 'text-end' : 'text-start'}`}>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
 
@@ -479,7 +479,7 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
 
 const TestimonialsSection = ({ testimonials }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1 flex gap-2 flex-wrap">
+        <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
         <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full  ">
@@ -507,7 +507,7 @@ const TestimonialsSection = ({ testimonials }) => (
 
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1">Trusted by hundreds of businesses like yours</h2>
+        <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
         <div className="flex flex-col gap-8 w-full border border-black p-8">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />

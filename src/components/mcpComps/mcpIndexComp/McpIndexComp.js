@@ -137,13 +137,13 @@ export default function McpIndexComp({
                 <div className="sticky top-0 z-[100]">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
-
+                
                 <McpSwitchComp />
 
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
-                        <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 !">
+                        <div className="cont gap-4 justify-center w-full text-center">
+                            <h1 className="h1">
                                 Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
                             </h1>
                             <h2 className="sub__h1">
@@ -244,11 +244,11 @@ export default function McpIndexComp({
                                     </>
                                 ) : (
                                     <>
-                                        <h1 className="h1   text-accent italic">
+                                        <h2 className="h2 text-accent italic">
                                             {' '}
                                             1000+
                                             <span className="text-black not-italic"> MCP Servers</span>
-                                        </h1>
+                                        </h2>
                                         <p>
                                             Viasocket is your all-in-one solution, seamlessly integrating CRM,
                                             Marketing, E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and
@@ -341,7 +341,7 @@ export default function McpIndexComp({
 
                 <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
                     <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h1">Ready, Set, MCP in 3 Simple Steps</h2>
+                        <h2 className="h2">Ready, Set, MCP in 3 Simple Steps</h2>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
                         {mcpSteps.map((step, index) => (
@@ -350,7 +350,7 @@ export default function McpIndexComp({
                                 className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h2 font-bold">{step.title}</h3>
+                                <h3 className="h3 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
                             </div>
                         ))}
@@ -359,7 +359,7 @@ export default function McpIndexComp({
 
                 <div className="container cont gap-20 text-black py-20 px-12 border border-black">
                     <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[900px] text-center">
+                        <h2 className="h2 max-w-[900px] text-center">
                             Start getting work done with viaSocket MCP today
                         </h2>
                         <p className="sub__h1 max-w-[1000px]">
@@ -462,7 +462,7 @@ const FeaturesGrid = ({ featuresData }) => {
         <div className="container p-12 py-20 bg-black text-white">
             <div className="mb-20">
                 <div className="flex gap-4">
-                    <h1 className="h1 mb-4  ">Don't just chat, Put your AI to work</h1>
+                    <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
                     <BsStars size={42} />
                 </div>
                 <h2 className="sub__h1 text-gray-300 max-w-[800px]">
@@ -480,7 +480,7 @@ const FeaturesGrid = ({ featuresData }) => {
                         className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
                     >
                         <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                        <h2 className="h2 font-bold mb-3">{feature.heading}</h2>
+                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
                         <p className="sub__h2 text-gray-300">{feature.content}</p>
                     </div>
                 ))}
@@ -494,8 +494,8 @@ const Table = ({ data }) => {
     return (
         <div className=" w-full h-full cont gap-12  bg-white py-8 px-0 lg:px-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1  ">MCP vs Traditional APIs :</h1>
-                <h1 className="h1  ">The Paradigm Shift</h1>
+                <h2 className="h2 mb-5">MCP vs Traditional APIs :</h2>
+                <h2 className="h2 mt-2">The Paradigm Shift</h2>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-black">

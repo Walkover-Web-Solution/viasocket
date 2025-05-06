@@ -7,9 +7,9 @@
 
 @layer base {
     h1 {
-      @apply font-inter-tight;
+        @apply font-inter-tight;
     }
-  }
+}
 
 //check import file for imports
 @import 'import';
@@ -214,4 +214,3 @@
         gap: 10px
     }
 }
-  

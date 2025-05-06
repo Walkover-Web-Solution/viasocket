@@ -48,7 +48,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                     <div className=" w-full h-full flex items-center justify-center">
                         <div className="bg-gray-100 h-fit cont w-full items-center lg:gap-16 gap-10 lg:m-14 m-8 lg:p-12 p-6">
                             <div className="cont gap-2">
-                                <h2 className="h1 text-center">Sign Up</h2>
+                                <h2 className="h2 text-center">Sign Up</h2>
                                 <p className="text-center">Start your FREE 30-day trial. No credit card needed.</p>
                             </div>
                             <div className="cont gap-8">
