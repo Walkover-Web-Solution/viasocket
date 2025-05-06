@@ -115,8 +115,8 @@ export default function IntegrationsAppOneComp({
                 </div>
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <div className="cont cont__w ">
-                            <h1 className="h1  ">
+                        <div className="cont gap-2">
+                            <h1 className="h1 ">
                                 {`Create integrations between ${appOneDetails?.name} and your favorite App`}
                             </h1>
                             <p className="sub__h1">
@@ -183,7 +183,7 @@ export default function IntegrationsAppOneComp({
                 )}
                 {!combosData?.combinations?.length > 0 && appOneDetails?.events.length > 0 && (
                     <div className="cont gap-4">
-                        <div className="cont cont__w gap-2">
+                        <div className="cont gap-2">
                             <h1 className="h1  ">
                                 {`Create integrations between ${appOneDetails?.name} and your favorite App`}
                             </h1>
@@ -196,6 +196,7 @@ export default function IntegrationsAppOneComp({
                     </div>
                 )}
             </div>
+
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap ">
                     <div className="container cont gap-6">
@@ -223,7 +224,7 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                    <h2 className="h2">Actions and Triggers</h2>
+                    <h2 className="h2 mb-4">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}

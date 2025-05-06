@@ -23,7 +23,7 @@ export default function IntegrateAppsComp() {
         return (
             <>
                 <div className="cont cont__gap border border-black p-12 ">
-                    <h2 className="h2 text-center">
+                    <h2 className="h2">
                         Integrate <span className="text-accent italic">5000+</span> Apps
                     </h2>
                     <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-3 ">

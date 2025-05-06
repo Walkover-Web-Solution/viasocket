@@ -133,7 +133,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                         <Link href="/mcp">
                             <div className="w-full p-2 text-center border-black gradient-background">
                                 <p className="!text-xs text-black hover:underline">
-                                1,000+ MCP Servers — Use them on viaSocket now.{' '}
+                                    Give your AI agent the power to act—generate your MCP URL today
                                 </p>
                             </div>
                         </Link>

@@ -1,21 +1,12 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import {
-    MdClose,
-    MdSearch,
-    MdArrowForward,
-    MdOutlineAutoAwesome,
-    MdKeyboardArrowLeft,
-    MdKeyboardArrowRight,
-} from 'react-icons/md';
-import GetStarted from '@/components/getStarted/getStarted';
+import { MdOutlineAutoAwesome } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import Industries from '@/assets/data/categories.json';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
-import Autocomplete from 'react-autocomplete';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import searchApps from '@/utils/searchApps';
 import {
@@ -39,7 +30,7 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
 import { FaBullhorn, FaChartLine, FaCoins, FaRegClock, FaServer } from 'react-icons/fa6';
@@ -251,16 +242,14 @@ const Index = ({
                 <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
 
                 <div className="cont text-center gap-2">
-                    <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
+                    <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
                     <HorizontalCardScroller items={streamlineData} />
                 </div>
 
                 <FeatureGrid featuresData={featuresData} />
 
                 <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
-                    <div className="flex flex-col justify-center items-center w-full text-center">
-                        <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-                    </div>
+                    <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
                     <StepDisplay steps={indexSteps} />
                 </div>
 
@@ -288,13 +277,13 @@ const Index = ({
                     </div>
                 </div>
 
-                <div className="container border border-black py-20 px-12 ">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">AI Agents That Work For You</h1>
-                        <p className="text-2xl font-semibold text-accent">
+                <div className="container border border-black py-20 px-12">
+                    <div className="cont gap-2 items-start">
+                        <h2 className="h2 text-left">AI Agents That Work For You</h2>
+                        <p className="text-2xl font-semibold text-accent text-left">
                             Build, deploy, and automate with intelligent agents
                         </p>
-                        <h3 className="sub__h1 max-w-[900px]">
+                        <h3 className="sub__h1 text-left">
                             Create intelligent workflows that handle your business processes automatically without
                             coding. Simply describe what you need in plain language, and our platform builds custom AI
                             agents that connect your apps, make smart decisions, and improve over time.
@@ -302,18 +291,26 @@ const Index = ({
                     </div>
                 </div>
 
-                <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">Be First in Line: Mobile App Early Access</h1>
-                        <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
-                        <h3 className="sub__h1 max-w-[900px]">
+                <div className="container border border-black gap-12 py-20 px-12">
+                    <div className="cont gap-2 items-start">
+                        <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
+                        <p className="text-2xl font-semibold text-accent text-left">
+                            Edit workflows with AI, anywhere, anytime
+                        </p>
+                        <h3 className="sub__h1 max-w-[900px] text-left">
                             Create and modify automation workflows from your smartphone with AI assistance. Build new
                             workflows, make quick edits, and stay in control of your business no matter where you are.
                         </h3>
                     </div>
-                    <Link href="https://walkover.typeform.com/to/U33OiMgy" target="_blank" rel="noopener noreferrer">
-                        <button className="btn btn-accent">Apply For Early Access</button>
-                    </Link>
+                    <div className="flex justify-start mt-4">
+                        <Link
+                            href="https://walkover.typeform.com/to/U33OiMgy"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            <button className="btn btn-accent">Apply For Early Access</button>
+                        </Link>
+                    </div>
                 </div>
 
                 <div className="container">

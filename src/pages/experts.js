@@ -61,26 +61,26 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
             </div>
             <div className="">
                 <div className=" py-container container">
-                    <div className="flex flex-col gap-9 md:w-2/3 w-full">
-                        {pageData?.h3 && <h3 className="text-2xl">{pageData?.h3}</h3>}
-                        {pageData?.h1 && <h1 className="md:text-6xl text-4xl font-medium ">{pageData?.h1}</h1>}
-                        {pageData?.h2 && <h3 className="text-2xl">{pageData?.h2}</h3>}
+                    <div className="flex flex-col gap-10">
+                        {pageData?.h3 && <h3 className="h2">{pageData?.h3}</h3>}
+                        {pageData?.h1 && <h1 className="h1">{pageData?.h1}</h1>}
+                        {pageData?.h2 && <h3 className="sub__h1">{pageData?.h2}</h3>}
                     </div>
                 </div>
 
                 <div className="flex flex-col gap-9 py-container container">
-                    <h2 className="text-3xl font-semibold ">Verified automation agencies by viaSocket</h2>
+                    <h2 className="h2 ">Verified automation agencies by viaSocket</h2>
                     {verifiedArr.length > 0 && <AgencyList agencies={verifiedArr} type={'verified'} />}
                 </div>
                 <div className="flex flex-col gap-9 py-container container">
-                    <h2 className="text-3xl font-semibold ">Non-verified automation agencies</h2>
+                    <h2 className="h2">Non-verified automation agencies</h2>
                     {nonVerifiedArr.length > 0 && <AgencyList agencies={nonVerifiedArr} type={'nonverified'} />}
                 </div>
                 <div className="py-container  bg-white">
                     <div className="container flex flex-col gap-9 ">
                         <div className="grid md:grid-cols-2 grid-cols-1 gap-12 justify-between items-center">
                             <div className="flex flex-col gap-9  h-full justify-center">
-                                <h2 className="text-3xl font-semibold ">
+                                <h2 className="h2">
                                     Register your agency as our verified <br />
                                     Experts for automations.
                                 </h2>
@@ -116,7 +116,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                     </div>
                 </div>
                 <div className="flex flex-col gap-9 py-container container">
-                    <h2 className="text-3xl font-semibold">How experts can help?</h2>
+                    <h2 className="h2">How experts can help?</h2>
                     <div className="mt-6 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center md:justify-start gap-6">
                         {expertsHelp &&
                             expertsHelp.map((expertsHelpBlog, index) => {

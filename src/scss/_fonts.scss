@@ -1,7 +1,6 @@
 @font-face {
     font-family: 'Times Now';
-    src:
-        url('../../public/fonts/times-now/TimesNow-Light.woff') format('woff');
+    src: url('../../public/fonts/times-now/TimesNow-Light.woff') format('woff');
     font-style: normal;
     font-weight: 400; /* Light */
 }
@@ -50,7 +49,7 @@ body {
 .h3 {
     @apply md:text-2xl text-xl;
     font-family: 'Inter Tight';
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(14px, -3.0704225352px + 9.014084507vw, 20px);
 }
 
