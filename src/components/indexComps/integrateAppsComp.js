@@ -22,7 +22,7 @@ export default function IntegrateAppsComp() {
     if (apps?.length > 0) {
         return (
             <>
-                <div className="cont cont__gap border border-black p-12 ">
+                <div className="cont cont__gap border border-black p-12 bg-white">
                     <h2 className="h2 text-center">
                         Integrate <span className="text-accent italic">5000+</span> Apps
                     </h2>

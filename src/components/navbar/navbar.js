@@ -44,7 +44,7 @@ export default function Navbar({ navData, utm }) {
 
     return (
         <>
-            <div className="p-4 justify-between lg:flex hidden bg-white">
+            <div className="justify-between lg:flex hidden bg-white pr-4">
                 <Link
                     href="/"
                     aria-label="logo"
@@ -54,7 +54,7 @@ export default function Navbar({ navData, utm }) {
                     {mode === 'dark' ? (
                         <Image
                             src="/assets/brand/socketWhitesvg.png"
-                            className="h-[40px] w-auto "
+                            className="h-[28px] w-auto "
                             width={60}
                             height={60}
                             alt="viasocket"
@@ -62,7 +62,7 @@ export default function Navbar({ navData, utm }) {
                     ) : (
                         <Image
                             src="/assets/brand/logo.svg"
-                            className="h-[40px] w-auto "
+                            className="h-[28px] w-auto "
                             width={60}
                             height={60}
                             alt="viasocket"
@@ -86,7 +86,7 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                     >
                                                         <span className='!text-xs'>{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
@@ -95,7 +95,7 @@ export default function Navbar({ navData, utm }) {
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     <span className='!text-xs'>{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
@@ -116,7 +116,7 @@ export default function Navbar({ navData, utm }) {
                                                                     target={
                                                                         childOption.open_in_new_tab ? '_blank' : '_self'
                                                                     }
-                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block !text-xs" 
+                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block !text-xs"
                                                                 >
                                                                     {childOption.name}
                                                                 </Link>
@@ -139,7 +139,7 @@ export default function Navbar({ navData, utm }) {
                                                 href={option.link || '#'}
                                             >
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     {option.name}
                                                 </div>
@@ -150,14 +150,14 @@ export default function Navbar({ navData, utm }) {
                             );
                         })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border bg-accent items-center justify-center !text-xs`}
+                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border border-black border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial
@@ -173,7 +173,7 @@ export default function Navbar({ navData, utm }) {
                     {mode === 'dark' ? (
                         <Image
                             src="/assets/brand/socketWhitesvg.png"
-                            className="h-[40px] w-auto "
+                            className="h-[28px] w-auto "
                             width={60}
                             height={60}
                             alt="viasocket"
@@ -181,7 +181,7 @@ export default function Navbar({ navData, utm }) {
                     ) : (
                         <Image
                             src="/assets/brand/logo.svg"
-                            className="h-[40px] w-auto "
+                            className="h-[28px] w-auto "
                             width={60}
                             height={60}
                             alt="viasocket"
