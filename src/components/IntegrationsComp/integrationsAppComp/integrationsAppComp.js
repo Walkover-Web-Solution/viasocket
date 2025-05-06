@@ -155,11 +155,11 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         {decodeURIComponent(integrationsInfo?.category)}
                                     </h1>
                                 ) : (
-                                    <h1 className="h1   text-accent italic">
+                                    <h2 className="h2 text-accent italic">
                                         {' '}
                                         5000+
                                         <span className="text-black not-italic"> viaSocket Integrations</span>
-                                    </h1>
+                                    </h2>
                                 )}
 
                                 <p>

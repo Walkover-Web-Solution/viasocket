@@ -199,7 +199,7 @@ export default function IntegrationsAppOneComp({
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap ">
                     <div className="container cont gap-6">
-                        <h2 className="h1">{`Connect Any App with ${appOneDetails?.name}`}</h2>
+                        <h2 className="h2">{`Connect Any App with ${appOneDetails?.name}`}</h2>
                         <div className="flex items-center gap-4 ">
                             <Image
                                 className="h-10 w-fit"
@@ -223,7 +223,7 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                    <h2 className="h1">Actions and Triggers</h2>
+                    <h2 className="h2">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
@@ -257,7 +257,7 @@ export default function IntegrationsAppOneComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">
@@ -295,7 +295,7 @@ export default function IntegrationsAppOneComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About viaSocket</h3>
+                                <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full font-medium">
                                 viasocket is an innovative and versatile workflow automation platform designed to

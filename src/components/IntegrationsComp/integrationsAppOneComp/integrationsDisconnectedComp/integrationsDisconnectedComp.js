@@ -121,7 +121,7 @@ export default function IntegrationsDisconnectedComp({
                 </div>
                 {appOneDetails?.events && appOneDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h1">Actions and Triggers</h2>
+                        <h2 className="h2">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} />
                     </div>
                 )}

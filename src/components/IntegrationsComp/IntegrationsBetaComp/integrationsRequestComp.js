@@ -88,7 +88,7 @@ export function RequestPlugin() {
                         className="h-[36px] w-fit"
                     />
                     <div>
-                        <h3 className="h2 font-bold">Request a New Plugin</h3>
+                        <h3 className="h3 font-bold">Request a New Plugin</h3>
                         <p className="">
                             Submit your plugin request to integrate new tools or services seamlessly into your workflow.
                         </p>

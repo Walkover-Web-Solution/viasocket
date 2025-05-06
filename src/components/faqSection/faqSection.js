@@ -5,7 +5,7 @@ export default function FAQSection({ faqData, faqName, isBlack = false }) {
             {' '}
             {faqData?.length > 0 && (
                 <div className={`flex flex-col gap-9 ${isBlack ? 'text-white' : ''}`}>
-                    <h2 className="h1">Frequently Asked Questions</h2>
+                    <h2 className="h2">Frequently Asked Questions</h2>
 
                     <div className="flex flex-col">
                         {faqData.map((faq, index) => {
