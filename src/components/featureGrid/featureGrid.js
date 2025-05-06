@@ -23,8 +23,8 @@ const FeatureGrid = ({ featuresData }) => {
     };
     return (
         <div className="container p-12 py-20 bg-black text-white">
-            <div className="mb-20 flex gap-4">
-                <h2 className="h2 mb-4">Automation That Actually Works For Your Business</h2>
+            <div className="flex gap-4">
+                <h2 className="h2 mb-12">Automation That Actually Works For Your Business</h2>
                 <BsStars size={42} />
             </div>
 

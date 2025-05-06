@@ -170,7 +170,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">

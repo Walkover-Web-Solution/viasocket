@@ -235,74 +235,80 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100] border-b">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12 container">
-                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
+            <div className="add-background-color">
+                <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12">
+                    <IndexBannerComp
+                        redirect_to={redirect_to}
+                        utm_source={utm_source}
+                        signupFeatures={signupFeatures}
+                    />
 
-                <div className="cont text-center gap-2">
-                    <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
-                    <HorizontalCardScroller items={streamlineData} />
-                </div>
-
-                <FeatureGrid featuresData={featuresData} />
-
-                <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
-                    <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-                    <StepDisplay steps={indexSteps} />
-                </div>
-
-                {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
-
-                <div className="container">
-                    <TestimonialsSection testimonials={testimonials} />
-                </div>
-
-                <div className="container">
-                    <IntegrateAppsComp />
-                </div>
-
-                <div className="container cont">
-                    <CaseStudiesSection caseStudies={caseStudies} />
-                    <div className="flex justify-end">
-                        <Link
-                            href="https://viasocket.com/blog/tag/client-story"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="border border-black border-t-0 px-4 py-2 "
-                        >
-                            <LinkText>Read More</LinkText>
-                        </Link>
+                    <div className="cont text-center gap-2 container bg-white py-5">
+                        <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
+                        <HorizontalCardScroller items={streamlineData} />
                     </div>
-                </div>
 
-                <div className="container border border-black py-20 px-12">
-                    <div className="cont gap-2 items-start">
-                        <h2 className="h2 text-left">AI Agents That Work For You</h2>
-                        <p className="text-2xl font-semibold text-accent text-left">
-                            Build, deploy, and automate with intelligent agents
-                        </p>
-                        <h3 className="sub__h1 text-left">
-                            Create intelligent workflows that handle your business processes automatically without
-                            coding. Simply describe what you need in plain language, and our platform builds custom AI
-                            agents that connect your apps, make smart decisions, and improve over time.
-                        </h3>
-                    </div>
-                </div>
+                    <FeatureGrid featuresData={featuresData} />
 
-                <div className="container border border-black gap-12 py-20 px-12">
-                    <div className="cont gap-2 items-start">
-                        <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
-                        <p className="text-2xl font-semibold text-accent text-left">
-                            Edit workflows with AI, anywhere, anytime
-                        </p>
-                        <h3 className="sub__h1 max-w-[900px] text-left">
-                            Create and modify automation workflows from your smartphone with AI assistance. Build new
-                            workflows, make quick edits, and stay in control of your business no matter where you are.
-                        </h3>
+                    <div className="container cont cont__py gap-20 px-24  h-fit border border-black bg-white">
+                        <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
+                        <StepDisplay steps={indexSteps} />
                     </div>
-                    <div className="flex justify-start mt-4">
+
+                    {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
+
+                    <div className="container">
+                        <TestimonialsSection testimonials={testimonials} />
+                    </div>
+
+                    <div className="container">
+                        <IntegrateAppsComp />
+                    </div>
+
+                    <div className="container cont">
+                        <CaseStudiesSection caseStudies={caseStudies} />
+                        <div className="flex justify-end">
+                            <Link
+                                href="https://viasocket.com/blog/tag/client-story"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="border border-black border-t-0 px-4 py-2 "
+                            >
+                                <LinkText>Read More</LinkText>
+                            </Link>
+                        </div>
+                    </div>
+
+                    <div className="container border border-black py-20 px-12 bg-white ">
+                        <div className="cont gap-2">
+                            <h2 className="h2 text-left">AI Agents That Work For You</h2>
+                            <p className="text-2xl font-semibold text-accent">
+                                Build, deploy, and automate with intelligent agents
+                            </p>
+                            <h3 className="sub__h1 ">
+                                Create intelligent workflows that handle your business processes automatically without
+                                coding. Simply describe what you need in plain language, and our platform builds custom
+                                AI agents that connect your apps, make smart decisions, and improve over time.
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div className="container cont border border-black gap-12 py-20 px-12 bg-white ">
+                        <div className="cont gap-2">
+                            <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
+                            <p className="text-2xl font-semibold text-accent ">
+                                Edit workflows with AI, anywhere, anytime
+                            </p>
+                            <h3 className="sub__h1">
+                                Create and modify automation workflows from your smartphone with AI assistance. Build
+                                new workflows, make quick edits, and stay in control of your business no matter where
+                                you are.
+                            </h3>
+                        </div>
+
                         <Link
                             href="https://walkover.typeform.com/to/U33OiMgy"
                             target="_blank"
@@ -311,23 +317,23 @@ const Index = ({
                             <button className="btn btn-accent">Apply For Early Access</button>
                         </Link>
                     </div>
-                </div>
 
-                <div className="container">
-                    <BlogGrid posts={blogData} />
-                </div>
-
-                <div className="pb-4">
-                    {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <FAQSection faqData={faqData} faqName={'/index'} />
-                        </div>
-                    )}
-                    <div className="container border border-black p-20 border-b-0">
-                        <AlphabeticalComponent step={0} />
-                    </div>
                     <div className="container">
-                        <Footer footerData={footerData} />
+                        <BlogGrid posts={blogData} />
+                    </div>
+
+                    <div className="pb-4">
+                        {faqData?.length > 0 && (
+                            <div className="container border border-black p-20 border-b-0 bg-white">
+                                <FAQSection faqData={faqData} faqName={'/index'} />
+                            </div>
+                        )}
+                        <div className="container border border-black p-20 border-b-0 bg-white">
+                            <AlphabeticalComponent step={0} />
+                        </div>
+                        <div className="container">
+                            <Footer footerData={footerData} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -479,7 +485,7 @@ const TestimonialsSection = ({ testimonials }) => (
         <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
-        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full  ">
+        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full bg-white">
             {testimonials.map((testimonial, index) => (
                 <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
                     <div className="flex flex-col  gap-2 ">
@@ -505,7 +511,7 @@ const TestimonialsSection = ({ testimonials }) => (
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
         <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border border-black p-8">
+        <div className="flex flex-col gap-8 w-full border border-black p-8 bg-white">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}

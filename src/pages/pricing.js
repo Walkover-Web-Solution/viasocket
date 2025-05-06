@@ -159,12 +159,12 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </p>
                 </div>
             )}
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b border-black">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-24 gap-6">
                 <div className="flex flex-col justify-center gap-6 relative">
-                    <div className="border border-black gradient-background">
+                    <div className="border border-t-0 border-black gradient-background">
                         <div className="h-20"></div>
                         <div className="grid grid-cols-1 lg:grid-cols-2">
                             <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">

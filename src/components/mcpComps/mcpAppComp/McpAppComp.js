@@ -113,7 +113,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <div className="sticky top-0 z-[100]">
+                    <div className="sticky top-0 z-[100] border-b border-black">
                         <Navbar navData={navData} utm={'/index'} />
                     </div>
                     <div className="flex flex-col gap-8">

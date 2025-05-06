@@ -50,7 +50,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
         <div className="container  min-h-fit flex flex-col">
             <div className=" flex flex-col h-full cont__gap">
-                <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
+                <div className="md:flex-row h-full flex-col gap-4 md:text-start flex border border-black border-t-0 px-5 pt-20 bg-white">
                     <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
                             <h1 className="h1 text-black text-start ">
@@ -82,7 +82,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                     </div>
                     <Image
                         src={'/assets/img/website-flow.svg'}
-                        className="max-w-[600px] h-fit md:w-2/5 w-full"
+                        className="max-w-[600px] h-fit md:w-1/2 w-full"
                         width={1080}
                         height={1080}
                         alt="Website flow"

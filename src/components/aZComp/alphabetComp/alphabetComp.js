@@ -5,8 +5,8 @@ export default function AlphabetComp({ alphabet, appDetails, step }) {
 
     return (
         <div className=" flex flex-col gap-6  w-full p-12">
-            {step === 0 && <h2 className="text-2xl font-semibold text-center">Browse Apps by Name</h2>}
-            {step === 2 && <h2 className="text-2xl font-semibold text-center">Select an app to integrate with</h2>}
+            {step === 0 && <h3 className="h3 font-semibold text-center">Browse Apps by Name</h3>}
+            {step === 2 && <h3 className="h3 font-semibold text-center">Select an app to integrate with</h3>}
 
             <div className="flex flex-row flex-wrap justify-center gap-2">
                 {/* <Link

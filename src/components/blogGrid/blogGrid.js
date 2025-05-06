@@ -15,7 +15,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
             <div className="flex flex-col gap-9">
                 <h2 className="h2">{heading}</h2>
                 <div className="w-full cont">
-                    <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid">
+                    <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid bg-white">
                         {posts?.map((post, index) => (
                             <CardComponent key={index} card={post} isBlack={isBlack} />
                         ))}
@@ -26,7 +26,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
                             customClasses={
                                 isBlack
                                     ? 'btn border-white border-t-0'
-                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0'
+                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white'
                             }
                         />
                     </Link>

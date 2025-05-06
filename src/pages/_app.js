@@ -131,7 +131,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <>
                     {showMCPBanner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center border-black gradient-background">
+                            <div className="w-full p-2 text-center border-black gradient-background border-b border-b-black">
                                 <p className="!text-xs text-black hover:underline">
                                     Give your AI agent the power to act—generate your MCP URL today
                                 </p>
