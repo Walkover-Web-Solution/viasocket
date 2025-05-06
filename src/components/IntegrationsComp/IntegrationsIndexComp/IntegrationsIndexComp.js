@@ -157,21 +157,21 @@ export default function IntegrationsIndexComp({
                         <div className="p-4 md:p-8 cont gap-2">
                             {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                 <>
-                                    <h1 className="h1 text-accent ">
+                                    <h2 className="h2 text-accent ">
                                         <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                         {integrationsInfo?.category === 'all'
                                             ? 'Apps'
                                             : decodeURIComponent(categoryData?.name)}
-                                    </h1>
+                                    </h2>
                                     <p>{categoryData?.subheading}</p>
                                 </>
                             ) : (
                                 <>
-                                    <h1 className="h1 text-accent italic ">
+                                    <h2 className="h2 !text-accent italic ">
                                         {' '}
                                         1000+
                                         <span className="text-black not-italic"> Apps</span>
-                                    </h1>
+                                    </h2>
                                     <p>
                                         Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
                                         E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for
@@ -257,10 +257,8 @@ export default function IntegrationsIndexComp({
             </div>
             <div className="container my-6">
                 <div className="border border-black p-20 cont cont__gap">
-                    <div className="cont gap-1">
-                        <h2 className="h1 max-w-[700px]">
-                            Couldn't Find Your App? Don’t Worry, We’ll Build It For You
-                        </h2>
+                    <div className="cont gap-2">
+                        <h2 className="h2">Couldn't Find Your App? Don’t Worry, We’ll Build It For You</h2>
                         <p className="text-xl">
                             If your app isn’t available on viaSocket, simply request an integration, and our team will
                             build it for you, ensuring seamless connection and effortless automation of your workflows.

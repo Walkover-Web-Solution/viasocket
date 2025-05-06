@@ -293,7 +293,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 </div>
 
                 <div className="border border-black p-6 md:p-12 flex flex-col gap-6">
-                    <h2 className="h1 lg:w-1/2">Explore Hundreds of Features, Available on Every Plan</h2>
+                    <h2 className="h2">Explore Hundreds of Features, Available on Every Plan</h2>
                     <p className="sub-h1">Get unrestricted access to all features, no matter your choice of plan.</p>
                     <div className="flex justify-start">
                         <Link href={'/features'}>
@@ -303,7 +303,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 </div>
 
                 <div className=" flex flex-col justify-center">
-                    <h2 className="h1 p-6 md:p-12 ">
+                    <h2 className="h2 p-6">
                         What makes <br /> <span className="text-red-700 italic">viaSocket</span> a better choice ?
                     </h2>
 
@@ -357,9 +357,9 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
                 <div className=" flex flex-col justify-center py-20">
                     <div className=" border border-t-0 border-black">
-                        <div className="flex items-center justify-center sm:-mt-5 md:-mt-5 lg:-mt-8">
+                        <div className="flex items-center justify-center sm:-mt-5 md:-mt-4 lg:-mt-5">
                             <div className="border-t border-black flex-grow" />
-                            <h2 className="h1 px-4">Free Services for Impactful Organizations</h2>
+                            <h2 className="h2 ">Free Services for Impactful Organizations</h2>
                             <div className="border-t border-black flex-grow" />
                         </div>
 

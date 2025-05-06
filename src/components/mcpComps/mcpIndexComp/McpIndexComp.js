@@ -137,18 +137,18 @@ export default function McpIndexComp({
                 <div className="sticky top-0 z-[100] border-b border-black">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
-                
+
                 <McpSwitchComp />
 
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 justify-center w-full text-center">
                             <h1 className="h1">
-                                Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
+                                Give your <span className="text-accent">AI agent </span> the power to act
                             </h1>
                             <h2 className="sub__h1">
-                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP)
-                                servers through a unique, dynamic MCP server URL.
+                                any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
+                                build your own, power users!
                             </h2>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
@@ -234,12 +234,12 @@ export default function McpIndexComp({
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
-                                        <h1 className="h1 text-accent  ">
+                                        <h2 className="h1 text-accent  ">
                                             <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                             {integrationsInfo?.category === 'all'
                                                 ? 'Apps'
                                                 : decodeURIComponent(categoryData?.name)}
-                                        </h1>
+                                        </h2>
                                         <p>{categoryData?.subheading}</p>
                                     </>
                                 ) : (
@@ -339,8 +339,8 @@ export default function McpIndexComp({
                     <Table data={tableData} />
                 </div>
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
+                <div className="container cont cont__py gap-12 px-24  h-fit border  bg-black text-white">
+                    <div className="flex flex-col justify-center w-full">
                         <h2 className="h2">Ready, Set, MCP in 3 Simple Steps</h2>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
@@ -357,12 +357,10 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-20 text-black py-20 px-12 border border-black">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h2 max-w-[900px] text-center">
-                            Start getting work done with viaSocket MCP today
-                        </h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont gap-12 text-black py-20 px-12 border border-black">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                        <p className="sub__h1">
                             Break free from isolation-connect your AI to real-world data for smarter, more impactful
                             results.
                         </p>
@@ -412,13 +410,6 @@ export default function McpIndexComp({
                         </div>
                     </div>
                 </div>
-
-                {/* <div className="container cont py-20 px-8 bg-black text-white">
-                <div>
-                    <h1 className="h1">See Your LLMs in Action with viaSocket MCP Servers</h1>
-                    <h2 className="sub__h1">With just instant connections, your LLM can take real-world actions.</h2>
-                </div>
-            </div> */}
 
                 <div className="container">
                     <BlogGrid posts={blogsData} />

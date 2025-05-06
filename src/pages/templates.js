@@ -175,9 +175,9 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center pt-20 pb-10">
-                    <div className="flex flex-col items-center justify-center text-center gap-2 max-w-[1200px]">
-                        <h1 className="h1  ">Ready-Made Workflow Automation Templates</h1>
-                        <h2 className="h1 text-accent !font-bold !">Click. Build. Succeed.</h2>
+                    <div className="flex flex-col items-center justify-center text-center gap-2">
+                        <h1 className="h1">Ready-Made Workflow Automation Templates</h1>
+                        <h2 className="h2 text-accent">Click. Build. Succeed.</h2>
                         <h2 className="sub__h1  max-w-[900px]">
                             Take a look at our awesome collection of Workflow Automation Templates that automate your
                             daily tasks and help you grow.
@@ -238,43 +238,6 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                     </div>
                                 )}
                             </div>
-
-                            {/* <div className="relative" ref={filterRef}>
-                                <button
-                                    className={`flex items-center gap-2 px-4 h-[42px] border border-black ${
-                                        selectedApps.length > 0 ? 'bg-accent text-white' : ''
-                                    }`}
-                                    onClick={() => setShowAppFilter(!showAppFilter)}
-                                >
-                                    <FiFilter />
-                                    Filter by App {selectedApps.length > 0 && `(${selectedApps.length})`}
-                                </button>
-
-                                {showAppFilter && (
-                                    <div className="absolute right-0 mt-2 p-4 bg-white shadow-lg rounded-md z-10 w-64">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <h3 className="font-medium">Filter by App</h3>
-                                            <button className="text-sm text-accent" onClick={() => setSelectedApps([])}>
-                                                Clear
-                                            </button>
-                                        </div>
-                                        <div className="max-h-60 overflow-y-auto">
-                                            {availableApps.map((app) => (
-                                                <div key={app} className="flex items-center mb-2">
-                                                    <input
-                                                        type="checkbox"
-                                                        id={`app-${app}`}
-                                                        checked={selectedApps.includes(app)}
-                                                        onChange={() => handleAppToggle(app)}
-                                                        className="mr-2"
-                                                    />
-                                                    <label htmlFor={`app-${app}`}>{app}</label>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                )}
-                            </div> */}
                         </div>
                     </div>
 

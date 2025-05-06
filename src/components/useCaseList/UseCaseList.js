@@ -14,9 +14,9 @@ const UseCaseList = ({ useCaseData, appname }) => {
 
     return (
         <div className="container cont gap-8">
-            <div>
-                <h1 className="h1  ">{`Real-World Use Cases of ${appname} Integrations`}</h1>
-                <h2 className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</h2>
+            <div className="cont gap-2">
+                <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
+                <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>
             </div>
             <div className="flex flex-col md:flex-row gap-4 ">
                 {/* Sidebar with hover and active effect */}

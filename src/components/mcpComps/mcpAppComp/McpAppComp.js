@@ -140,7 +140,7 @@ export default function McpAppComp({
                                     <Image src={appOneDetails?.iconurl} width={50} height={50} />
                                 </div>
                                 <div className="cont gap-4">
-                                    <h1 className="text-2xl"> {appOneDetails?.name} MCP</h1>
+                                    <h2 className="text-2xl"> {appOneDetails?.name} MCP</h2>
                                     <h2 className="text-2xl text-gray-500">{appOneDetails?.category[0]}</h2>
                                 </div>
                             </div>
@@ -225,12 +225,10 @@ export default function McpAppComp({
                     </div>
                 )}
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h2 text-center">
-                            Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps
-                        </h2>
-                        <h3 className="sub__h1 text-center">
+                <div className="container cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
+                    <div className="flex flex-col gap-2 justify-center w-full">
+                        <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
+                        <h3 className="sub__h1">
                             viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
                             like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
                             integrations or deal with a bulky setup.
@@ -360,12 +358,10 @@ export default function McpAppComp({
                     )}
                 </div>
 
-                <div className="container cont gap-20 py-20 px-12 bg-black text-white">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h2 max-w-[900px] text-center">
-                            Start getting work done with viaSocket MCP today
-                        </h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont gap-12 py-20 px-12 bg-black text-white">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                        <p className="sub__h1">
                             Break free from isolation-connect your AI to real-world data for smarter, more impactful
                             results.
                         </p>
@@ -412,7 +408,7 @@ export default function McpAppComp({
 
                 <div className="container cont gap-12">
                     <div>
-                        <h1 className="h1  ">AI-to-App Integration Made Easy with viaSocket MCP</h1>
+                        <h2 className="h2">AI-to-App Integration Made Easy with viaSocket MCP</h2>
                     </div>
                     <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-center pb-20 ">
                         <Image
@@ -433,10 +429,10 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont cont__py  bg-black text-white  justify-center items-center text-center gap-12">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[1200px]">Discover More About viaSocket MCP</h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont cont__py  bg-black text-white  justify-center gap-12 px-12">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2 text-white">Discover More About viaSocket MCP</h2>
+                        <p className="sub__h1">
                             Check out our easy-to-follow documentation and start exploring all the cool things you can
                             do with viaSocket MCP.
                         </p>

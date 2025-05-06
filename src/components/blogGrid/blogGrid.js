@@ -6,16 +6,14 @@ import Image from 'next/image';
 
 const BlogGrid = ({ posts, isBlack = false }) => {
     const router = useRouter();
-    const heading = router.pathname.startsWith('/mcp') 
-    ? 'Know More About MCP' 
-    : 'Know More About Viasocket Integrations';
+    const heading = router.pathname.startsWith('/mcp')
+        ? 'Know More About MCP'
+        : 'Know More About Viasocket Integrations';
 
     if (posts?.length > 0) {
         return (
-            <div className="flex flex-col gap-9 container">
-                <h2 className="h2">
-                {heading}
-                </h2>
+            <div className="flex flex-col gap-9">
+                <h2 className="h2">{heading}</h2>
                 <div className="w-full cont">
                     <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid bg-white">
                         {posts?.map((post, index) => (

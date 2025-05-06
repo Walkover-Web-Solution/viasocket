@@ -44,7 +44,7 @@ const Embed = ({
                 <div className="w-full min-h-fit lg:h-dvh  border-b border-black">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full">
-                            <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
+                            <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
                                     <h1 className="h1  ">
                                         <span className="text-accent">Embed </span>
@@ -65,7 +65,7 @@ const Embed = ({
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex justify-center items-center relative w-full md:w-1/2 h-full min-h-[400px] mx-auto">
+                            <div className="flex justify-center items-center relative w-full md:w-1/3 h-full min-h-[400px] mx-auto">
                                 <Image src="/assets/img/embedheroimage.svg" layout="fill" alt="Selected Embed Image" />
                             </div>
                         </div>
@@ -115,10 +115,10 @@ const Embed = ({
                     <Table data={tableData} />
                 </div>
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border  bg-[#F5FBFF]">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
+                <div className="container cont cont__py gap-12 px-24  h-fit border bg-[#F5FBFF]">
+                    <div className="flex flex-col gap-2 w-full">
                         <h2 className="h2">How it works</h2>
-                        <p className="sub__h1 text-center">
+                        <p className="sub__h1">
                             Follow these steps, and your product will be seamlessly integrated with the viaSocket embed
                         </p>
                     </div>
@@ -129,31 +129,33 @@ const Embed = ({
                                 className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 bg-white flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <h3 className="h3 font-bold">{step.title}</h3>
-                                <p className="sub__h2">{step.description}</p>
+                                <p className="sub__h1">{step.description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[1200px]">Upgrade your Product Today with viaSocket</h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont cont__py border border-black gap-12 px-12">
+                    <div className="flex flex-col justify-start">
+                        <h2 className="h2 text-left">Upgrade your Product Today with viaSocket</h2>
+                        <p className="sub__h1 text-left">
                             Start using viaSocket embed and bring seamless automation within your product, so your
                             customers can stick to your product while automating their day-to-day repetitive tasks.
                         </p>
                     </div>
-                    <Link href="login?utm_source=/embed">
-                        <button className="btn btn-accent">Get Started</button>
-                    </Link>
+                    <div className="flex justify-start">
+                        <Link href="login?utm_source=/embed">
+                            <button className="btn btn-accent">Get Started</button>
+                        </Link>
+                    </div>
                 </div>
 
-                <div className="container h-dvh min-h-fit">
-                    <div className="flex flex-col lg:flex-row h-full gap-12">
-                        <div className="h-full w-full lg:w-3/5 flex flex-col justify-center gap-8 px-4 lg:px-0 ">
+                <div className="container min-h-fit">
+                    <div className="flex flex-col lg:flex-row h-full gap-12 items-center">
+                        <div className="h-full w-full lg:w-3/5 flex flex-col gap-8 px-4 lg:px-0 justify-center">
                             <div>
-                                <h2 className="h1 font-semibold">Give Your Chatbot the Power of 5,000+ Integrations</h2>
-                                <p className="text-2xl">
+                                <h2 className="h2">Give Your Chatbot the Power of 5,000+ Integrations</h2>
+                                <p className="sub__h1">
                                     You can connect your chatbot to over 5000 apps on viaSocket. Automate tasks,
                                     streamline workflows and enhance your chatbot's capabilities—all in just a few
                                     clicks. Explore the possibilities and watch your chatbot evolve.
@@ -163,7 +165,7 @@ const Embed = ({
                                 <button className="btn btn-accent">Read More</button>
                             </Link>
                         </div>
-                        <div className="flex justify-center items-center relative w-full md:w-1/2 h-full min-h-[400px] mx-auto">
+                        <div className="flex justify-center items-center relative w-full md:w-1/2 h-[600px]">
                             <Image src="/assets/img/readmore.svg" layout="fill" alt="Selected Embed Image" />
                         </div>
                     </div>
@@ -190,10 +192,10 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py  bg-black text-white  justify-center items-center text-center gap-12">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[1200px]">Start Showing Automation Use Cases on Your Platform</h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont cont__py bg-black text-white text-left gap-12 px-12">
+                    <div className="flex flex-col gap-2">
+                        <h2 className="h2 text-white">Start Showing Automation Use Cases on Your Platform</h2>
+                        <p className="sub__h1">
                             Simply add the provided embed code to your blog or website, and instantly display real-world
                             automation examples that highlight how your app connects with others.
                         </p>
@@ -234,8 +236,8 @@ const Table = ({ data }) => {
     return (
         <div className="w-full h-full cont gap-12 p-2 sm:p-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1  ">viaSocket Embed vs Custom Development:</h1>
-                <h1 className="h1  ">A Quick Overview</h1>
+                <h2 className="h2">viaSocket Embed vs Custom Development:</h2>
+                <h2 className="h2">A Quick Overview</h2>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border border-gray-200">

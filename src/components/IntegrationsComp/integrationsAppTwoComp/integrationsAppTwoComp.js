@@ -53,30 +53,6 @@ export default function IntegrationsAppTwoComp({
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
                         </Link>
-                        {/* <Link
-                            target="_blank"
-                            href={
-                                appOneDetails?.domain?.startsWith('http')
-                                    ? appOneDetails?.domain
-                                    : 'http://' + appOneDetails?.domain
-                            }
-                        >
-                            <button className="bg-white  border border-black flex items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all w-full max-w-[400px]">
-                                Login to {appOneDetails?.name} <MdOpenInNew />{' '}
-                            </button>
-                        </Link>
-                        <Link
-                            target="_blank"
-                            href={
-                                appTwoDetails?.domain?.startsWith('http')
-                                    ? appTwoDetails?.domain
-                                    : 'http://' + appTwoDetails?.domain
-                            }
-                        >
-                            <button className="bg-white  border border-black flex items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all w-full max-w-[400px] ">
-                                Login to {appTwoDetails?.name} <MdOpenInNew />{' '}
-                            </button>
-                        </Link> */}
                     </div>
                     <div className="flex w-full  gap-2 md:gap-4 flex-col md:flex-row ">
                         <div className="flex md:h-28 items-center gap-4 px-5 py-3  border border-black bg-white w-full max-w-[400px]">
@@ -128,14 +104,10 @@ export default function IntegrationsAppTwoComp({
                 </div>
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <div className="cont ">
-                            <h1 className="h1  ">
+                        <div className="cont">
+                            <h1 className="h1 ">
                                 {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
                             </h1>
-                            {/* <p className="sub__h1">
-                                Create effective Slack automations in minutes by using pre-made templates that are
-                                customized for your needs
-                            </p> */}
                         </div>
 
                         <div>
@@ -203,9 +175,9 @@ export default function IntegrationsAppTwoComp({
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
                     <div className="cont gap-4">
                         <div className="cont cont__w gap-2">
-                            <h1 className="h1  ">
+                            <h2 className="h2  ">
                                 {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                            </h1>
+                            </h2>
                             <p className="sub__h1">
                                 {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
                             </p>
@@ -224,7 +196,7 @@ export default function IntegrationsAppTwoComp({
                 appOneDetails?.events?.length > 0 &&
                 appTwoDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h2">Actions and Triggers</h2>
+                        <h2 className="h2 mb-4">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}

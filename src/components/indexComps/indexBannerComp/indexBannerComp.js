@@ -54,12 +54,11 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                     <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
                             <h1 className="h1 text-black text-start ">
-                                Automate Your Business <br />
-                                with <span className="text-accent">AI-Powered Workflows </span>
+                                Build <span className="text-accent">Intelligent Automations </span>
                             </h1>
                             <h2 className="sub__h1 text-black text-start">
-                                Connect your apps, automate your work, and watch your productivity soar—all with the
-                                help of AI.
+                                Orchestrate logic with human and AI steps, delays, custom code, APIs, and 5000+ apps—no
+                                limits, just seamless flow.
                             </h2>
                         </div>
                         <div className="flex w-full">
