@@ -210,7 +210,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         className={`btn btn-primary ${selectedAction && selectedTrigger ? '' : 'btn-disabled'}`}
                                         href={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger?.rowid}/action?events=${selectedAction?.rowid}?state=${defaultUtmSource}`}
                                         onClick={() =>
-                                            setUtmInCookies({ source: `integrations/makeflow/trigger/combos` })
+                                            setUtmInCookies({ source: `integrations/${appOneDetails?.appslugname}` })
                                         }
                                         rel="nofollow"
                                     >

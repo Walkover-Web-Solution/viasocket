@@ -28,12 +28,12 @@ export const getUtmSource = () => {
     }
 };
 
-export const setUtmSource = ({ source = 'website' } = {}) => {
+export const setUtmSource = ({ source = 'index' } = {}) => {
     let utmData = getCookie('utmData');
+    let queryObject = {};
 
     if (!utmData) {
         const queryParams = new URLSearchParams(window.location.search);
-        const queryObject = {};
 
         queryParams.forEach((value, key) => {
             if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
@@ -47,11 +47,21 @@ export const setUtmSource = ({ source = 'website' } = {}) => {
         }
     }
 
-    const defaultUtmData = JSON.stringify({ utm_source: source });
-    return utmData ? utmData : defaultUtmData;
+    if (!utmData) {
+        queryObject = { utm_source: source };
+        utmData = JSON.stringify(queryObject);
+    } else {
+        queryObject = JSON.parse(utmData);
+    }
+
+    const queryString = Object.entries(queryObject)
+        .map(([key, val]) => `${key}=${val}`)
+        .join('&');
+
+    return `${utmData}&${queryString}`;
 };
 
-export const setUtmInCookies = ({ source = 'website' } = {}) => {
+export const setUtmInCookies = ({ source = 'index' } = {}) => {
     let utmData = getCookie('utmData');
 
     if (!utmData) {
