@@ -4,6 +4,7 @@ import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
 import { MdCheckCircle, MdChevronRight } from 'react-icons/md';
 import Script from 'next/script';
+import RequestMeetingComp from '../requestMeetingComp/RequestMeetingComp';
 
 const AgencyList = ({ agencies, type }) => {
     const itemsPerPage = 12;
@@ -62,14 +63,15 @@ const AgencyList = ({ agencies, type }) => {
                                                 {agency?.location ? agency?.location : '-'}
                                             </p>
                                             <button
-                                                onClick={() => {
-                                                    window.iframeController();
-                                                }}
+                                                onClick={() =>
+                                                    document.getElementById('meeting_request_form').showModal()
+                                                }
                                                 className="col-link text-blue-500 text-sm text-start flex items-center gap-1"
                                             >
                                                 Schedule a meet
                                                 <MdChevronRight fontSize={16} />
                                             </button>
+                                            <RequestMeetingComp agencyName={agency?.name} />
                                         </div>
                                     </div>
                                 </div>
@@ -77,6 +79,7 @@ const AgencyList = ({ agencies, type }) => {
                         }
                     })}
             </div>
+
             <ReactPaginate
                 pageCount={Math.ceil(agencies.length / itemsPerPage)}
                 onPageChange={handlePageChange}
