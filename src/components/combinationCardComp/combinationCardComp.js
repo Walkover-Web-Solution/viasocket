@@ -6,7 +6,7 @@ export default function CombinationCardComp({ trigger, action, description, link
     return (
         <Link
             href={link}
-            className="border border-black px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover:bg-black hover:text-white hover:border-white group"
+            className="border border-black border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover:bg-black hover:text-white hover:border-white group"
         >
             <div className="cont w-full">
                 <div className="flex gap-8"></div>
@@ -24,7 +24,7 @@ export default function CombinationCardComp({ trigger, action, description, link
                 <p className="h3">{description}</p>
             </div>
 
-            <div className="text-accent font-semibold flex gap-1 justify-end items-center group-hover:text-white">
+            <div className="text-white font-semibold flex gap-1 justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity">
                 Try it <FiArrowUpRight size={20} />
             </div>
         </Link>
