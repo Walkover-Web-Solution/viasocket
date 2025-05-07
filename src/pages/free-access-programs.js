@@ -14,7 +14,9 @@ export default function Programs({ footerData, navData, metaData, programs }) {
             </div>
             <div className="container cont cont__py cont__gap bg-white">
                 <div className="cont gap-2">
-                    <h1 className="h1 ">Free services for impactful organisations</h1>
+                    <h1 className="h1 ">
+                        <span className="text-accent"> Free services </span> for impactful organisations
+                    </h1>
                     <h2 className="sub__h1">
                         So, you can focus on meaningful work, driving innovation and creating lasting impact.
                     </h2>

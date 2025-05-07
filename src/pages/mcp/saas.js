@@ -23,10 +23,10 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 <McpSwitchComp />
 
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16 bg-white">
-                    <div className="cont gap-4 justify-center w-full text-center">
+                    <div className="cont gap-4 w-full text-left">
                         <h1 className="h1">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
-                            Your App. Your MCP Server. Zero Overhead
+                            Your App. <span className="text-accent"> Your MCP Server.</span> Zero Overhead
                         </h1>
                         <h2 className="sub__h1">
                             Get a dedicated MCP server URL inside your SaaS—fully managed, seamlessly integrated, with

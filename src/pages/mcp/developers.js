@@ -22,8 +22,10 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <McpSwitchComp />
             <div className="container cont bg-white">
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
-                    <div className="cont gap-4 justify-center w-full text-center">
-                        <h1 className="h1">Ditch MCP, Embed Actions</h1>
+                    <div className="cont gap-4 w-full text-left">
+                        <h1 className="h1">
+                            <span className="text-accent"> Ditch MCP,</span> Embed Actions
+                        </h1>
                         <h2 className="sub__h1">
                             Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical baggage
                         </h2>

@@ -174,20 +174,22 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                 <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
-                <div className="container flex justify-center items-center pt-20 pb-10">
-                    <div className="flex flex-col items-center justify-center text-center gap-2 bg-white">
-                        <h1 className="h1">Ready-Made Workflow Automation Templates</h1>
-                        <h2 className="h2 text-accent">Click. Build. Succeed.</h2>
-                        <h2 className="sub__h1  max-w-[900px]">
+                <div className="container pt-20 pb-10">
+                    <div className="flex flex-col text-left gap-2">
+                        <h2 className="h6 text-accent">Click. Build. Succeed.</h2>
+                        <h1 className="h1">
+                            Workflow Automation <span className="text-accent">Templates</span>
+                        </h1>
+                        <p className="sub__h1 ">
                             Take a look at our awesome collection of Workflow Automation Templates that automate your
                             daily tasks and help you grow.
-                        </h2>
+                        </p>
                     </div>
                 </div>
 
-                <div className="container">
-                    <div className="flex flex-col md:flex-row gap-4 w-full px-12">
-                        <label className="input border flex-grow transparent-border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
+                <div className="cont container">
+                    <div className="max-w-[400px] w-full">
+                        <label className="input border-2 border-b-0 transparent-border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
                             <MdSearch size={20} />
                             <input
                                 type="text"
@@ -197,72 +199,20 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 className="grow py-2 px-3"
                             />
                         </label>
-                        <div className="flex gap-4">
-                            <div className="relative" ref={sortRef}>
-                                <button
-                                    className="flex items-center gap-2 px-4 h-[42px] border transparent-border-black bg-white"
-                                    onClick={() => setShowSortOptions(!showSortOptions)}
-                                >
-                                    <BiSortAlt2 />
-                                    Sort: {getSortLabel()}
-                                </button>
-
-                                {showSortOptions && (
-                                    <div className="absolute right-0 mt-2 p-4 bg-white shadow-lg rounded-md z-10 w-48">
-                                        <div className="flex flex-col">
-                                            <button
-                                                className={`text-left py-2 px-3 hover:bg-gray-100 ${
-                                                    sortOption === 'popular' ? 'font-medium text-accent' : ''
-                                                }`}
-                                                onClick={() => handleSortChange('popular')}
-                                            >
-                                                Popular
-                                            </button>
-                                            <button
-                                                className={`text-left py-2 px-3 hover:bg-gray-100 ${
-                                                    sortOption === 'latest' ? 'font-medium text-accent' : ''
-                                                }`}
-                                                onClick={() => handleSortChange('latest')}
-                                            >
-                                                Latest
-                                            </button>
-                                            <button
-                                                className={`text-left py-2 px-3 hover:bg-gray-100 ${
-                                                    sortOption === 'oldest' ? 'font-medium text-accent' : ''
-                                                }`}
-                                                onClick={() => handleSortChange('oldest')}
-                                            >
-                                                Oldest
-                                            </button>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        </div>
                     </div>
 
-                    {(sortOption !== 'popular' || selectedApps.length > 0 || searchTerm) && (
-                        <div className="flex justify-end mt-4">
-                            <button onClick={clearFilters} className="text-accent text-sm">
-                                Clear all filters
-                            </button>
-                        </div>
-                    )}
-                </div>
-
-                <div className="cont">
                     {filteredTemplates.length > 0 ? (
                         <>
-                            <div className="container grid grid-cols-1 lg:grid-cols-2 gap-y-12">
+                            <div className="container grid grid-cols-1 lg:grid-cols-3 border-2 transparent-border-black border-b-0 border-r-0">
                                 {filteredTemplates.slice(0, visibleCount).map((template) => (
                                     <TemplateCard key={template.id} template={template} />
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-center w-full mt-8 container px-12">
+                                <div className="flex justify-end w-full container">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border-2 border-gray-400 w-full bg-white"
+                                        className="btn btn-outline border-2 border-t-0 transparent-border-black bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>

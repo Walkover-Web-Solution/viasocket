@@ -105,13 +105,14 @@ export default function IntegrationsAppTwoComp({
                 {combosData?.combinations?.length > 0 && (
                     <>
                         <div className="cont">
-                            <h1 className="h1 ">
-                                {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                            <h1 className="h1  ">
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and <span className="text-accent">{appTwoDetails?.name}</span>
                             </h1>
                         </div>
 
                         <div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-l border-t border-black">
+                            <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -176,7 +177,9 @@ export default function IntegrationsAppTwoComp({
                     <div className="cont gap-4">
                         <div className="cont cont__w gap-2">
                             <h2 className="h2  ">
-                                {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                Enable Integrations or automations with these events of{' '}
+                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                <span className="text-accent">{appTwoDetails?.name}</span>
                             </h2>
                             <p className="sub__h1">
                                 {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
