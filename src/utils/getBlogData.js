@@ -23,19 +23,34 @@ export async function getBlogs(tag) {
     }
 }
 
-export async function getBlogData(tag) {
-    let blogs = [];
-    const getBlogsRecursive = async (tag) => {
-        const data = await getBlogs(tag);
-        if (data?.length < 3) {
-            const remainingBlogs = 3 - data.length;
-            const additionalBlogs = await getBlogs('index');
-            blogs = [...blogs, ...data, ...additionalBlogs?.slice(0, remainingBlogs)];
-        } else {
-            blogs = data;
-        }
-    };
+export async function getBlogData({ tag1, tag2 }) {
+    const MIN_BLOGS = 3;
+    const MAX_BLOGS = 6;
+    const DEFAULT_TAG = 'index';
 
-    await getBlogsRecursive(tag);
-    return blogs?.slice(0, 6);
+    async function ensureMinimumBlogs(currentBlogs, minCount) {
+        if (currentBlogs.length >= minCount) {
+            return currentBlogs;
+        }
+
+        const remainingCount = minCount - currentBlogs.length;
+        const additionalBlogs = await getBlogs(DEFAULT_TAG);
+        return [...currentBlogs, ...additionalBlogs.slice(0, remainingCount)];
+    }
+
+    const tag1Blogs = await getBlogs(tag1);
+    let blogs = [];
+
+    if (!tag2) {
+        blogs = tag1Blogs;
+    } else {
+        const tag2Blogs = await getBlogs(tag2);
+        const tag1BlogIds = new Set(tag1Blogs.map((blog) => blog.rowid));
+        const uniqueTag2Blogs = tag2Blogs.filter((blog) => !tag1BlogIds.has(blog.rowid));
+
+        blogs = [...tag1Blogs, ...uniqueTag2Blogs];
+    }
+
+    blogs = await ensureMinimumBlogs(blogs, MIN_BLOGS);
+    return blogs.slice(0, MAX_BLOGS);
 }

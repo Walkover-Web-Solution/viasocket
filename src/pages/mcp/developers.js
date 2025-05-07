@@ -107,7 +107,7 @@ export async function getServerSideProps() {
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
     const blogTags = 'mcp';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

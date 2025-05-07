@@ -273,7 +273,7 @@ export async function getServerSideProps() {
     const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
     const embedData = await getEmbedData(EMBED_FIELDS);
     const blogTags = 'embed';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     const tableData = [
         { Feature: 'Time to Implement', embed: 'Minutes', development: 'Weeks/Months' },
         { Feature: 'Developer Resources', embed: 'No Requirements', development: 'Required Development Team' },

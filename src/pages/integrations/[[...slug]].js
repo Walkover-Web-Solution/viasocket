@@ -144,8 +144,9 @@ export async function getServerSideProps(context) {
         const combosData = await getCombos(integrationsInfo);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
-        const blogTags = `${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`;
-        const blogData = await getBlogData(blogTags);
+        const blogTags1 = appOneDetails?.appslugname;
+        const blogTags2 = appTwoDetails?.appslugname;
+        const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 });
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
         if (appOneDetails && appTwoDetails) {
             return {
@@ -194,7 +195,7 @@ export async function getServerSideProps(context) {
 
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
-            const blogData = await getBlogData(blogTags);
+            const blogData = await getBlogData({ tag1: blogTags });
             const useCaseData = await getUsecasesData(
                 USECASES_FIELDS,
                 `filter=slugname='${appOneDetails?.appslugname}'`
@@ -239,7 +240,7 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: integrationsInfo?.page, categoryData });
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
         const blogTags = 'integration';
-        const blogData = await getBlogData(blogTags);
+        const blogData = await getBlogData({ tag1: blogTags });
         return {
             props: {
                 pageInfo: pageInfo || {},
