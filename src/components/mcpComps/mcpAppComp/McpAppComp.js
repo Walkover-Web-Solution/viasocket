@@ -113,7 +113,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <div className="sticky top-0 z-[100]">
+                    <div className="sticky top-0 z-[100] border-b transparent-border-black">
                         <Navbar navData={navData} utm={'/index'} />
                     </div>
                     <div className="flex flex-col gap-8">
@@ -136,16 +136,16 @@ export default function McpAppComp({
                     <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12">
                         <div className="cont cont__py  gap-16 w-full lg:w-1/2">
                             <div className="flex gap-4">
-                                <div className="border border-black p-4 bg-gray-200">
+                                <div className="border transparent-border-black p-4 bg-gray-200">
                                     <Image src={appOneDetails?.iconurl} width={50} height={50} />
                                 </div>
                                 <div className="cont gap-4">
-                                    <h1 className="text-2xl"> {appOneDetails?.name} MCP</h1>
+                                    <h2 className="text-2xl"> {appOneDetails?.name} MCP</h2>
                                     <h2 className="text-2xl text-gray-500">{appOneDetails?.category[0]}</h2>
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center gap-1">
-                                <h2 className="h1">Connect {appOneDetails?.name} Server with any AI assistant</h2>
+                                <h2 className="h2">Connect {appOneDetails?.name} Server with any AI assistant</h2>
                                 <p className="sub__h1">
                                     Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and Cursor
                                     using the viaSocket MCP Server.
@@ -194,7 +194,7 @@ export default function McpAppComp({
                                         <h2 className="text-2xl font-semibold">viaSocket Agent</h2>
                                         <div className="cont gap-1">
                                             <h3 className="text-xl">MCP Tool Calling...</h3>
-                                            <div className="border border-black bg-gray-200 px-4 py-2 shadow-md cont gap-2">
+                                            <div className="border transparent-border-black bg-gray-200 px-4 py-2 shadow-md cont gap-2">
                                                 <div className="flex gap-4 items-center">
                                                     <Image src={appOneDetails.iconurl} width={40} height={40} />
                                                     <h2 className="text-xl text-gray-500">Action in Progress...</h2>
@@ -206,7 +206,7 @@ export default function McpAppComp({
                                         </div>
                                     </div>
                                 </div>
-                                <div className="border border-black px-8 py-4 flex justify-between">
+                                <div className="border transparent-border-black px-8 py-4 flex justify-between">
                                     <p className="text-gray-300 text-xl">Message your agent</p>
                                     <VscSend size={30} />
                                 </div>
@@ -218,19 +218,17 @@ export default function McpAppComp({
                 {combosData?.combinations?.length > 0 && (
                     <div className="container cont gap-4">
                         <div className="flex items-baseline gap-2">
-                            <h2 className="h1">Supported Actions</h2>
+                            <h2 className="h2">Supported Actions</h2>
                             <IoMdCheckmarkCircleOutline fontSize={36} />
                         </div>
                         <McpEventComp appOneDetails={appOneDetails} />
                     </div>
                 )}
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h1 text-center">
-                            Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps
-                        </h2>
-                        <h3 className="sub__h1 text-center">
+                <div className="container cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
+                    <div className="flex flex-col gap-2 justify-center w-full">
+                        <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
+                        <h3 className="sub__h1">
                             viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
                             like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
                             integrations or deal with a bulky setup.
@@ -243,20 +241,20 @@ export default function McpAppComp({
                                 className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h2 font-bold">{step.title}</h3>
+                                <h3 className="h3 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="container cont gap-4 mt-12">
+                <div className="container cont gap-4 mt-12 bg-white">
                     <div className="flex items-baseline gap-2 mb-6">
-                        <h2 className="h1">Explore other MCP Servers</h2>
+                        <h2 className="h2">Explore other MCP Servers</h2>
                     </div>
 
                     <div className="flex items-center max-w-[800px] w-full ">
-                        <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none">
+                        <label className="input border flex-grow transparent-border-black flex items-center gap-2 focus-within:outline-none">
                             <MdSearch fontSize={20} color="black" />
                             <input
                                 value={searchTerm}
@@ -270,7 +268,7 @@ export default function McpAppComp({
                         </label>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0 ">
+                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 transparent-border-black border border-r-0 border-b-0 ">
                         {debounceValue ? (
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
@@ -278,7 +276,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2  hover:text-white hover:bg-black"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2  hover:text-white hover:bg-black"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9 ">
@@ -311,7 +309,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9">
@@ -339,7 +337,7 @@ export default function McpAppComp({
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
                                     <Link
-                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
                                         href={createURL(goToPrev())}
                                     >
                                         <MdChevronLeft size={18} />
@@ -348,7 +346,7 @@ export default function McpAppComp({
                                 )}
                                 {showNext && (
                                     <Link
-                                        className="border border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
                                         href={createURL(goToNext())}
                                     >
                                         Next
@@ -360,12 +358,10 @@ export default function McpAppComp({
                     )}
                 </div>
 
-                <div className="container cont gap-20 py-20 px-12 bg-black text-white">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[900px] text-center">
-                            Start getting work done with viaSocket MCP today
-                        </h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont gap-12 py-20 px-12 bg-black text-white">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                        <p className="sub__h1">
                             Break free from isolation-connect your AI to real-world data for smarter, more impactful
                             results.
                         </p>
@@ -412,7 +408,7 @@ export default function McpAppComp({
 
                 <div className="container cont gap-12">
                     <div>
-                        <h1 className="h1  ">AI-to-App Integration Made Easy with viaSocket MCP</h1>
+                        <h2 className="h2">AI-to-App Integration Made Easy with viaSocket MCP</h2>
                     </div>
                     <div className="w-full flex flex-col lg:flex-row gap-8 justify-center items-center pb-20 ">
                         <Image
@@ -433,10 +429,10 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont cont__py  bg-black text-white  justify-center items-center text-center gap-12">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[1200px]">Discover More About viaSocket MCP</h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont cont__py  bg-black text-white  justify-center gap-12 px-12">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2 text-white">Discover More About viaSocket MCP</h2>
+                        <p className="sub__h1">
                             Check out our easy-to-follow documentation and start exploring all the cool things you can
                             do with viaSocket MCP.
                         </p>
@@ -456,11 +452,11 @@ export default function McpAppComp({
                 )}
                 <div className="container pb-4">
                     <div className="cont">
-                        <div className="p-12 border border-black border-b-0">
+                        <div className="p-12 border transparent-border-black border-b-0 bg-white">
                             {faqData && <FAQSection faqData={faqData} />}
                         </div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
-                            <div className="cont gap-4 p-12 border-x border-black w-full md:border-b-0 border-b">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
+                            <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
                                 <div>
                                     <Image
                                         className="h-10 w-fit"
@@ -469,7 +465,7 @@ export default function McpAppComp({
                                         height={36}
                                         alt="Slack"
                                     />
-                                    <h3 className="h2 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                    <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                                 </div>
                                 <p className="text-sm sm:text-lg h-full">{appOneDetails?.description}</p>
                                 <div className="flex flex-wrap gap-2">
@@ -486,7 +482,7 @@ export default function McpAppComp({
                                     ))}
                                 </div>
                             </div>
-                            <div className="w-full cont gap-4 p-12 border-x md:border-l-0 border-black">
+                            <div className="w-full cont gap-4 p-12 border-x md:border-l-0 transparent-border-black">
                                 <div>
                                     <Image
                                         className="border border-white"
@@ -495,7 +491,7 @@ export default function McpAppComp({
                                         height={46}
                                         alt="Slack"
                                     />
-                                    <h3 className="h2 font-bold pt-5">About viaSocket MCP server</h3>
+                                    <h3 className="h3 font-bold pt-5">About viaSocket MCP server</h3>
                                 </div>
                                 <p className="text-sm sm:text-lg h-full font-medium">
                                     viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps

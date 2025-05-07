@@ -16,21 +16,21 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <div className="container py-8">
                 <McpSwitchComp />
 
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16">
-                    <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 !">
+                    <div className="cont gap-4 w-full text-left">
+                        <h1 className="h1">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
-                            Launch Your Own MCP Server within Your <span className="text-accent">SaaS</span>
+                            Your App. <span className="text-accent"> Your MCP Server.</span> Zero Overhead
                         </h1>
                         <h2 className="sub__h1">
-                            No need to build your own MCP server—just embed viaSocket MCP and let your users perform
-                            actions within your product through AI
+                            Get a dedicated MCP server URL inside your SaaS—fully managed, seamlessly integrated, with
+                            built-in analytics and ready to scale
                         </h2>
                     </div>
                 </div>
@@ -91,7 +91,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+            <div className="container cont cont__py border transparent-border-black  justify-center items-center text-center gap-12 bg-white">
                 <div className="flex flex-col justify-center items-center">
                     <h2 className="h1  max-w-[1200px]">Join the Ecosystem</h2>
                     <p className="sub__h1 max-w-[1000px]">
@@ -111,7 +111,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <BlogGrid posts={blogData} />
             <div>
                 {faqData?.length > 0 && (
-                    <div className="container border border-black p-20 border-b-0">
+                    <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
@@ -127,7 +127,7 @@ export async function getServerSideProps() {
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
     const blogTags = 'mcp';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

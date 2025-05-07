@@ -50,16 +50,15 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
         <div className="container  min-h-fit flex flex-col">
             <div className=" flex flex-col h-full cont__gap">
-                <div className="md:flex-row h-full flex-col gap-4 md:text-start flex justify-between pt-20">
-                    <div className="max-w-[800px] w-full flex flex-col items-center justify-center md:items-start gap-12">
+                <div className="md:flex-row h-full flex-col gap-4 md:text-start flex border transparent-border-black border-t-0 px-5 pt-20 bg-white">
+                    <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                         <div className="flex flex-col gap-1">
                             <h1 className="h1 text-black text-start ">
-                                Automate Your Business <br />
-                                with <span className="text-accent">AI-Powered Workflows </span>
+                                Build <span className="text-accent">Intelligent Automations </span>
                             </h1>
                             <h2 className="sub__h1 text-black text-start">
-                                Connect your apps, automate your work, and watch your productivity soar—all with the
-                                help of AI.
+                                Orchestrate logic with human and AI steps, delays, custom code, APIs, and 5000+ apps—no
+                                limits, just seamless flow.
                             </h2>
                         </div>
                         <div className="flex w-full">
@@ -70,7 +69,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                 {signupFeatures.map((point, index) => (
                                     <div
                                         key={index}
-                                        className={`font-semibold py-4 px-1 border-black w-full text-center flex items-start justify-start`}
+                                        className={`font-semibold py-4 px-1 transparent-border-black w-full text-center flex items-start justify-start`}
                                     >
                                         <div className="flex gap-1 text-lg items-center">
                                             <p className="text-accent">✔ </p>

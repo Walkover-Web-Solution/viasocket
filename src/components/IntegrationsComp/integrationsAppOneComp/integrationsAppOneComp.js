@@ -62,18 +62,18 @@ export default function IntegrationsAppOneComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                             <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                                <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                         </div>
                         <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border border-black">
+                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border transparent-border-black">
                                 <Image
                                     className="h-8 md:h-10 w-fit"
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -100,7 +100,7 @@ export default function IntegrationsAppOneComp({
                 </Link>
             </div>
 
-            <div className="container cont cont__gap  ">
+            <div className="container cont cont__gap">
                 <div className="flex items-center gap-2 text-lg">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
@@ -115,16 +115,17 @@ export default function IntegrationsAppOneComp({
                 </div>
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <div className="cont cont__w ">
+                        <div className="cont gap-2">
                             <h1 className="h1  ">
-                                {`Create integrations between ${appOneDetails?.name} and your favorite App`}
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and your favorite App
                             </h1>
                             <p className="sub__h1">
                                 {`  Create effective ${appOneDetails?.name} automations in minutes by using pre-made templates that are customized for your needs`}
                             </p>
                         </div>
                         <div>
-                            <div className="grid grid-cols-1 border-gray-400  md:grid-cols-2 border-b-0 border-r-0 border-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -169,7 +170,7 @@ export default function IntegrationsAppOneComp({
                                             setShowMore(false);
                                         }
                                     }}
-                                    className="btn btn-outline border-t-0 border-2 border-gray-400 "
+                                    className="btn btn-outline border-t-0"
                                 >
                                     Load More
                                 </button>
@@ -183,9 +184,10 @@ export default function IntegrationsAppOneComp({
                 )}
                 {!combosData?.combinations?.length > 0 && appOneDetails?.events.length > 0 && (
                     <div className="cont gap-4">
-                        <div className="cont cont__w gap-2">
+                        <div className="cont gap-2">
                             <h1 className="h1  ">
-                                {`Create integrations between ${appOneDetails?.name} and your favorite App`}
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and your favorite App
                             </h1>
                             <p className="sub__h1">
                                 {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
@@ -196,10 +198,11 @@ export default function IntegrationsAppOneComp({
                     </div>
                 )}
             </div>
+
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap ">
                     <div className="container cont gap-6">
-                        <h2 className="h1">{`Connect Any App with ${appOneDetails?.name}`}</h2>
+                        <h2 className="h2">{`Connect Any App with ${appOneDetails?.name}`}</h2>
                         <div className="flex items-center gap-4 ">
                             <Image
                                 className="h-10 w-fit"
@@ -223,7 +226,7 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                    <h2 className="h1">Actions and Triggers</h2>
+                    <h2 className="h2 mb-4">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
@@ -231,7 +234,7 @@ export default function IntegrationsAppOneComp({
             {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
 
             {getStartedData && (
-                <div className="container border border-black p-20">
+                <div className="container border transparent-border-black p-20 bg-white">
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
@@ -244,11 +247,11 @@ export default function IntegrationsAppOneComp({
             )}
             <div className="container cont__py">
                 <div className="cont">
-                    <div className="p-12 border border-black border-b-0">
+                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
                         {faqData && <FAQSection faqData={faqData} />}
                     </div>
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
-                        <div className="cont gap-4 p-12 border-x border-black w-full md:border-b-0 border-b">
+                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
+                        <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
                             <div>
                                 <Image
                                     className="h-10 w-fit"
@@ -257,7 +260,7 @@ export default function IntegrationsAppOneComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">
@@ -286,7 +289,7 @@ export default function IntegrationsAppOneComp({
                                 <LinkText children={'Learn More'} />
                             </Link>
                         </div>
-                        <div className="w-full cont gap-4 p-12 border-x md:border-l-0 border-black">
+                        <div className="w-full cont gap-4 p-12 border-x md:border-l-0 transparent-border-black">
                             <div>
                                 <Image
                                     className="h-10 w-fit"
@@ -295,7 +298,7 @@ export default function IntegrationsAppOneComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About viaSocket</h3>
+                                <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full font-medium">
                                 viasocket is an innovative and versatile workflow automation platform designed to

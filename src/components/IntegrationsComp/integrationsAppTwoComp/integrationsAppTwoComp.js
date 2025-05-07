@@ -49,37 +49,13 @@ export default function IntegrationsAppTwoComp({
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
                         <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                            <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                            <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
                         </Link>
-                        {/* <Link
-                            target="_blank"
-                            href={
-                                appOneDetails?.domain?.startsWith('http')
-                                    ? appOneDetails?.domain
-                                    : 'http://' + appOneDetails?.domain
-                            }
-                        >
-                            <button className="bg-white  border border-black flex items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all w-full max-w-[400px]">
-                                Login to {appOneDetails?.name} <MdOpenInNew />{' '}
-                            </button>
-                        </Link>
-                        <Link
-                            target="_blank"
-                            href={
-                                appTwoDetails?.domain?.startsWith('http')
-                                    ? appTwoDetails?.domain
-                                    : 'http://' + appTwoDetails?.domain
-                            }
-                        >
-                            <button className="bg-white  border border-black flex items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all w-full max-w-[400px] ">
-                                Login to {appTwoDetails?.name} <MdOpenInNew />{' '}
-                            </button>
-                        </Link> */}
                     </div>
                     <div className="flex w-full  gap-2 md:gap-4 flex-col md:flex-row ">
-                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border border-black bg-white w-full max-w-[400px]">
+                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border transparent-border-black bg-white w-full max-w-[400px]">
                             <Image
                                 className="h-8 md:h-10 w-fit"
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -91,7 +67,7 @@ export default function IntegrationsAppTwoComp({
                                 <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
                             </div>
                         </div>
-                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border border-black bg-white w-full max-w-[400px]">
+                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border transparent-border-black bg-white w-full max-w-[400px]">
                             <Image
                                 className="h-8 md:h-10 w-fit"
                                 src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
@@ -106,7 +82,7 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 </div>
             </div>
-            <div className="container cont cont__gap ">
+            <div className="container cont cont__gap">
                 <div className="flex flex-wrap items-center md:gap-2 gap-0 md:text-lg text-sm">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
@@ -128,18 +104,15 @@ export default function IntegrationsAppTwoComp({
                 </div>
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <div className="cont ">
+                        <div className="cont">
                             <h1 className="h1  ">
-                                {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and <span className="text-accent">{appTwoDetails?.name}</span>
                             </h1>
-                            {/* <p className="sub__h1">
-                                Create effective Slack automations in minutes by using pre-made templates that are
-                                customized for your needs
-                            </p> */}
                         </div>
 
                         <div>
-                            <div className="grid grid-cols-1 border-gray-400  md:grid-cols-2 border-b-0 border-r-0 border-2">
+                            <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -203,9 +176,11 @@ export default function IntegrationsAppTwoComp({
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
                     <div className="cont gap-4">
                         <div className="cont cont__w gap-2">
-                            <h1 className="h1  ">
-                                {`Create integrations between ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                            </h1>
+                            <h2 className="h2  ">
+                                Enable Integrations or automations with these events of{' '}
+                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                <span className="text-accent">{appTwoDetails?.name}</span>
+                            </h2>
                             <p className="sub__h1">
                                 {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
                             </p>
@@ -224,13 +199,13 @@ export default function IntegrationsAppTwoComp({
                 appOneDetails?.events?.length > 0 &&
                 appTwoDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h1">Actions and Triggers</h2>
+                        <h2 className="h2 mb-4">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
 
             {getStartedData && (
-                <div className="container border border-black p-20">
+                <div className="container border transparent-border-black p-20 bg-white">
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
@@ -244,11 +219,11 @@ export default function IntegrationsAppTwoComp({
 
             <div className="container cont__py">
                 <div className="cont  ">
-                    <div className="p-12 border border-black border-b-0">
+                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
                         {faqData && <FAQSection faqData={faqData} />}
                     </div>
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
-                        <div className="cont gap-4 w-full p-12 border border-t-0 md:border-b-0  border-black">
+                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
+                        <div className="cont gap-4 w-full p-12 border border-t-0 md:border-b-0  transparent-border-black">
                             <div className="cont gap-2 ">
                                 <Image
                                     className="h-10 w-fit"
@@ -257,7 +232,7 @@ export default function IntegrationsAppTwoComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full f">{appOneDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">
@@ -285,7 +260,7 @@ export default function IntegrationsAppTwoComp({
                                 <LinkText children={'Learn More'} />
                             </Link>
                         </div>
-                        <div className="cont w-full gap-4 p-12 border-x md:border-l-0 border-black">
+                        <div className="cont w-full gap-4 p-12 border-x md:border-l-0 transparent-border-black">
                             <div className="cont gap-2">
                                 <Image
                                     className="h-10 w-fit"
@@ -294,7 +269,7 @@ export default function IntegrationsAppTwoComp({
                                     height={36}
                                     alt="Slack"
                                 />
-                                <h3 className="h2 font-bold pt-5">About {appTwoDetails?.name}</h3>
+                                <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
                             </div>
                             <p className="text-sm sm:text-lg text-black h-full ">{appTwoDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">

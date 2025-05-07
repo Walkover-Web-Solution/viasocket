@@ -134,7 +134,7 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="sticky top-0 z-[100]">
+                <div className="sticky top-0 z-[100] border-b transparent-border-black">
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
@@ -142,14 +142,16 @@ export default function McpIndexComp({
 
                 <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
-                        <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                            <h1 className="h1 !">
-                                Instantly Connect Your AI to <span className="text-accent">1,000+ MCP Servers</span>
-                            </h1>
-                            <h2 className="sub__h1">
-                                Easily integrate your AI with thousands of fully managed Model Context Protocol (MCP)
-                                servers through a unique, dynamic MCP server URL.
-                            </h2>
+                        <div className="cont gap-4 w-full text-left">
+                            <div className="cont gap-1">
+                                <h1 className="h1">
+                                    Give your <span className="text-accent">AI agent </span> the power to act
+                                </h1>
+                                <h2 className="sub__h1">
+                                    any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
+                                    build your own, power users!
+                                </h2>
+                            </div>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
                                 onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
@@ -166,7 +168,7 @@ export default function McpIndexComp({
                         {keyPointData.map((point, index) => (
                             <div
                                 key={index}
-                                className={`font-semibold py-4 px-1 border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
+                                className={`font-semibold py-4 px-1 transparent-border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
                             >
                                 <div className="flex gap-1 text-lg items-center">
                                     <p className="text-accent">✔ </p>
@@ -178,7 +180,7 @@ export default function McpIndexComp({
                 </div>
 
                 <div className="container cont">
-                    <label className="input border max-w-[400px] border-black flex items-center gap-2 focus-within:outline-none">
+                    <label className="input border max-w-[400px] transparent-border-black flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
                         <input
                             value={searchTerm}
@@ -191,7 +193,7 @@ export default function McpIndexComp({
                         />
                     </label>
                     <div className="flex">
-                        <div className=" border border-black border-t-0 lg:block hidden">
+                        <div className=" border transparent-border-black border-t-0 lg:block hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (
                                     searchedCategoies ? (
@@ -200,7 +202,7 @@ export default function McpIndexComp({
                                                 return (
                                                     <a
                                                         key={index}
-                                                        className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                        className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                         href={createURL(`/mcp/category/${category?.slug}`)}
                                                     >
                                                         {category?.name}
@@ -209,7 +211,7 @@ export default function McpIndexComp({
                                             }
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                        <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
                                             No category found for Searched name{' '}
                                         </span>
                                     )
@@ -219,7 +221,7 @@ export default function McpIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                     href={createURL(`/mcp/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -234,21 +236,21 @@ export default function McpIndexComp({
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
-                                        <h1 className="h1 text-accent  ">
+                                        <h2 className="h1 text-accent  ">
                                             <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                             {integrationsInfo?.category === 'all'
                                                 ? 'Apps'
                                                 : decodeURIComponent(categoryData?.name)}
-                                        </h1>
+                                        </h2>
                                         <p>{categoryData?.subheading}</p>
                                     </>
                                 ) : (
                                     <>
-                                        <h1 className="h1   text-accent italic">
+                                        <h2 className="h2 text-accent italic">
                                             {' '}
                                             1000+
                                             <span className="text-black not-italic"> MCP Servers</span>
-                                        </h1>
+                                        </h2>
                                         <p>
                                             Viasocket is your all-in-one solution, seamlessly integrating CRM,
                                             Marketing, E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and
@@ -285,7 +287,7 @@ export default function McpIndexComp({
                                             );
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                        <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
                                             No Apps found for Searched name{' '}
                                         </span>
                                     )
@@ -335,13 +337,13 @@ export default function McpIndexComp({
                 <div className=""></div>
                 <FeaturesGrid featuresData={featuresData} />
 
-                <div className="container border border-black">
+                <div className="container border transparent-border-black">
                     <Table data={tableData} />
                 </div>
 
-                <div className="container cont cont__py gap-20 px-24  h-fit border  bg-black text-white">
-                    <div className="flex flex-col justify-center items-center w-full max-w-[1000px] mx-auto">
-                        <h2 className="h1">Ready, Set, MCP in 3 Simple Steps</h2>
+                <div className="container cont cont__py gap-12 px-24  h-fit border  bg-black text-white">
+                    <div className="flex flex-col justify-center w-full">
+                        <h2 className="h2">Ready, Set, MCP in 3 Simple Steps</h2>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
                         {mcpSteps.map((step, index) => (
@@ -350,25 +352,23 @@ export default function McpIndexComp({
                                 className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
                             >
                                 <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h2 font-bold">{step.title}</h3>
+                                <h3 className="h3 font-bold">{step.title}</h3>
                                 <p className="sub__h2">{step.description}</p>
                             </div>
                         ))}
                     </div>
                 </div>
 
-                <div className="container cont gap-20 text-black py-20 px-12 border border-black">
-                    <div className="flex flex-col justify-center items-center">
-                        <h2 className="h1  max-w-[900px] text-center">
-                            Start getting work done with viaSocket MCP today
-                        </h2>
-                        <p className="sub__h1 max-w-[1000px]">
+                <div className="container cont gap-12 text-black py-20 px-12 border transparent-border-black bg-white">
+                    <div className="flex flex-col gap-2 justify-center">
+                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                        <p className="sub__h1">
                             Break free from isolation-connect your AI to real-world data for smarter, more impactful
                             results.
                         </p>
                     </div>
                     <div className="flex flex-col md:flex-row gap-8 text-black">
-                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-black">
+                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border transparent-border-black">
                             <div className="cont gap-4">
                                 <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                                 <h3 className="text-xl">
@@ -388,7 +388,7 @@ export default function McpIndexComp({
                                 </button>
                             </Link>
                         </div>
-                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-black">
+                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border transparent-border-black">
                             <div className="cont gap-4">
                                 <h2 className="text-4xl font-bold">For Enterprises</h2>
                                 <h3 className="text-xl">
@@ -413,20 +413,13 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                {/* <div className="container cont py-20 px-8 bg-black text-white">
-                <div>
-                    <h1 className="h1">See Your LLMs in Action with viaSocket MCP Servers</h1>
-                    <h2 className="sub__h1">With just instant connections, your LLM can take real-world actions.</h2>
-                </div>
-            </div> */}
-
                 <div className="container">
                     <BlogGrid posts={blogsData} />
                 </div>
 
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
@@ -462,7 +455,7 @@ const FeaturesGrid = ({ featuresData }) => {
         <div className="container p-12 py-20 bg-black text-white">
             <div className="mb-20">
                 <div className="flex gap-4">
-                    <h1 className="h1 mb-4  ">Don't just chat, Put your AI to work</h1>
+                    <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
                     <BsStars size={42} />
                 </div>
                 <h2 className="sub__h1 text-gray-300 max-w-[800px]">
@@ -480,7 +473,7 @@ const FeaturesGrid = ({ featuresData }) => {
                         className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
                     >
                         <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                        <h2 className="h2 font-bold mb-3">{feature.heading}</h2>
+                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
                         <p className="sub__h2 text-gray-300">{feature.content}</p>
                     </div>
                 ))}
@@ -494,11 +487,11 @@ const Table = ({ data }) => {
     return (
         <div className=" w-full h-full cont gap-12  bg-white py-8 px-0 lg:px-20">
             <div className="flex flex-col gap-0">
-                <h1 className="h1  ">MCP vs Traditional APIs :</h1>
-                <h1 className="h1  ">The Paradigm Shift</h1>
+                <h2 className="h2 mb-5">MCP vs Traditional APIs :</h2>
+                <h2 className="h2 mt-2">The Paradigm Shift</h2>
             </div>
             <div className="overflow-x-auto">
-                <table className="w-full border border-black">
+                <table className="w-full border transparent-border-black">
                     <thead className="p-4 bg-accent text-white">
                         <tr>
                             <th className="p-4 text-left text-xl w-1/3">Aspects</th>
@@ -525,11 +518,11 @@ const AppGridSkeleton = () => {
     const skeletonCards = Array(9).fill(null);
 
     return (
-        <div className="grid sm:grid-cols-2 xl:grid-cols-3 border-black border border-r-0 border-b-0">
+        <div className="grid sm:grid-cols-2 xl:grid-cols-3 transparent-border-black border border-r-0 border-b-0">
             {skeletonCards.map((_, index) => (
                 <div
                     key={index}
-                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
+                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
                 >
                     <div className="flex items-center gap-2">
                         {/* Better icon placeholder with a subtle icon-like shape */}

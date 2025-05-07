@@ -1,9 +1,9 @@
 @font-face {
     font-family: 'Times Now';
-    src:
-        url('../../public/fonts/times-now/TimesNow-Light.woff') format('woff');
+    src: url('../../public/fonts/times-now/TimesNow-Light.woff') format('woff');
     font-style: normal;
-    font-weight: 400; /* Light */
+    font-weight: 400;
+    /* Light */
 }
 
 // @font-face {
@@ -22,25 +22,39 @@
 // @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 body {
-    font-family: 'Inter', serif;
+    font-family: 'Inter Tight', serif;
     color: #252525;
+    background: radial-gradient(circle, #d4d4d4 20%, transparent 20%) center/10px 10px;
 }
 
 .h1 {
     @apply md:text-6xl text-4xl;
     font-family: 'Inter Tight';
     line-height: 1.1em;
-    font-weight: 400 !important;
-    text-transform: uppercase !important;
+    font-weight: 500;
+    text-transform: uppercase;
+    color: #222222;
+    font-size: clamp(36px, -3.0704225352px + 9.014084507vw, 108px);
 
     &__b {
         font-weight: 400;
     }
 }
+
 .h2 {
     @apply md:text-3xl text-2xl;
-    font-family: 'Times Now';
+    font-family: 'Inter Tight';
+    font-weight: 400;
+    font-size: clamp(24px, -3.0704225352px + 9.014084507vw, 38px);
 }
+
+.h3 {
+    @apply md:text-2xl text-xl;
+    font-family: 'Inter Tight';
+    font-weight: 500;
+    font-size: clamp(14px, -3.0704225352px + 9.014084507vw, 20px);
+}
+
 .sub {
     &__h1 {
         @apply text-xl;
@@ -52,10 +66,17 @@ body {
     }
 }
 .font-base {
-    font-family: 'Inter', serif;
+    font-family: 'Inter Tight', serif;
 }
 
 //Text Color
 .text-grey {
     color: #8f9396;
+}
+
+.h6 {
+    @apply text-base;
+    font-family: 'Inter Tight';
+    font-weight: 400;
+    font-size: clamp(14px, -3.0704225352px + 9.014084507vw, 20px);
 }

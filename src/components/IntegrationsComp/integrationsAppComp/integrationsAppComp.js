@@ -96,7 +96,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     return (
         <>
             <div className="container cont">
-                <label className="input border max-w-[400px] border-black border-b-0 flex items-center gap-2 focus-within:outline-none">
+                <label className="input border max-w-[400px] transparent-border-black border-b-0 flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -110,7 +110,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                 </label>
                 <div className="flex">
                     {!integrationsInfo?.appone && (
-                        <div className=" border border-black border-t-0 lg:block hidden">
+                        <div className=" border transparent-border-black border-t-0 lg:block hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (
                                     searchedCategoies ? (
@@ -118,7 +118,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             return (
                                                 <Link
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                     href={`/integrations/category/${category}`}
                                                 >
                                                     {category}
@@ -126,7 +126,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             );
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                        <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
                                             No Apps found for Searched name{' '}
                                         </span>
                                     )
@@ -135,7 +135,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         return (
                                             <Link
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                 href={`/integrations/category/${category}`}
                                             >
                                                 {category}
@@ -155,11 +155,11 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         {decodeURIComponent(integrationsInfo?.category)}
                                     </h1>
                                 ) : (
-                                    <h1 className="h1   text-accent italic">
+                                    <h2 className="h2 text-accent italic">
                                         {' '}
                                         5000+
                                         <span className="text-black not-italic"> viaSocket Integrations</span>
-                                    </h1>
+                                    </h2>
                                 )}
 
                                 <p>
@@ -197,7 +197,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         </Link>
                                     ))
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border border-black border-l-0 border-t-0 ">
+                                    <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
                                         No Apps found for Searched name{' '}
                                     </span>
                                 )

@@ -40,7 +40,7 @@ export default function IntegrationsDisconnectedComp({
                             target="_blank"
                             href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}`}
                         >
-                            <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                            <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                 Connect {appOneDetails?.name} <MdOpenInNew />{' '}
                             </button>
                         </Link> */}
@@ -52,13 +52,13 @@ export default function IntegrationsDisconnectedComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                         </div>
                         <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border border-black">
+                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border transparent-border-black">
                                 <Image
                                     className="h-8 md:h-10 w-fit"
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -121,7 +121,7 @@ export default function IntegrationsDisconnectedComp({
                 </div>
                 {appOneDetails?.events && appOneDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h1">Actions and Triggers</h2>
+                        <h2 className="h2">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} />
                     </div>
                 )}
@@ -132,10 +132,10 @@ export default function IntegrationsDisconnectedComp({
                     </div>
                 )}
                 <div className="container ">
-                    <div className="cont  border border-black">
+                    <div className="cont  border transparent-border-black">
                         <div className="p-12">{faqData && <FAQSection faqData={faqData} />}</div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 border-black">
-                            <div className="cont gap-4 p-12 border-r border-black w-full ">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
+                            <div className="cont gap-4 p-12 border-r transparent-border-black w-full ">
                                 <div>
                                     <Image
                                         className="h-10 w-fit"

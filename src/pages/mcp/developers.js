@@ -16,18 +16,18 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <McpSwitchComp />
             <div className="container cont">
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
-                    <div className="cont gap-4 justify-center w-full text-center max-w-4xl">
-                        <h1 className="h1 !">Bring 1,000+ MCP Servers into Your <span className='text-accent'>AI Agents</span>
+                    <div className="cont gap-4 w-full text-left">
+                        <h1 className="h1">
+                            <span className="text-accent"> Ditch MCP,</span> Embed Actions
                         </h1>
                         <h2 className="sub__h1">
-                            Quickly connect your agents to 1,000+ tools by embedding viaSocket MCP servers. viaSocket
-                            manages the authentication and integrations, allowing you to focus on development.
+                            Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical baggage
                         </h2>
                     </div>
                 </div>
@@ -72,7 +72,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+            <div className="container cont cont__py border transparent-border-black  justify-center items-center text-center gap-12 bg-white">
                 <div className="flex flex-col justify-center items-center">
                     <h2 className="h1  max-w-[1200px]">Ready to Embed?</h2>
                     <p className="sub__h1 max-w-[1000px]">
@@ -93,7 +93,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <BlogGrid posts={blogData} />
             <div>
                 {faqData?.length > 0 && (
-                    <div className="container border border-black p-20 border-b-0">
+                    <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
@@ -109,7 +109,7 @@ export async function getServerSideProps() {
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
     const blogTags = 'mcp';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

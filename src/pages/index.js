@@ -1,21 +1,12 @@
 import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
-import {
-    MdClose,
-    MdSearch,
-    MdArrowForward,
-    MdOutlineAutoAwesome,
-    MdKeyboardArrowLeft,
-    MdKeyboardArrowRight,
-} from 'react-icons/md';
-import GetStarted from '@/components/getStarted/getStarted';
+import { MdOutlineAutoAwesome } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import Industries from '@/assets/data/categories.json';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
-import Autocomplete from 'react-autocomplete';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import searchApps from '@/utils/searchApps';
 import {
@@ -39,7 +30,7 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
 import { FaBullhorn, FaChartLine, FaCoins, FaRegClock, FaServer } from 'react-icons/fa6';
@@ -244,363 +235,105 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="w-full  hero_gradint cont md:gap-20 sm:gap-16 gap-12">
-                <IndexBannerComp redirect_to={redirect_to} utm_source={utm_source} signupFeatures={signupFeatures} />
+            <div className="add-background-color">
+                <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12">
+                    <IndexBannerComp
+                        redirect_to={redirect_to}
+                        utm_source={utm_source}
+                        signupFeatures={signupFeatures}
+                    />
 
-                <div className="cont text-center gap-2">
-                    <h1 className="text-2xl">Streamline Every Department with AI Workflow Automation</h1>
-                    <HorizontalCardScroller items={streamlineData} />
-                </div>
-                {/* 
-                <div className="container flex flex-col gap-4 ">
-                    <div className="cont  max-w-[1100px]">
-                        <h2 className="h1">Ready-Made Workflows for Every Need</h2>
-                        <h3 className="sub__h1">
-                            Discover templates built to simplify workflows for every industry and task. Get started
-                            quickly and save valuable time.
-                        </h3>
+                    <div className="cont text-center gap-2 container bg-white py-5">
+                        <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
+                        <HorizontalCardScroller items={streamlineData} />
                     </div>
 
-                    <div className="gap-6 flex flex-col">
-                        <div className="flex flex-wrap gap-2 items-center text-lg  ">
-                            <h3 className="">How</h3>
-                            <div className="dropdown">
-                                <h3
-                                    onClick={() => {
-                                        setShowIndusDropdown(true);
-                                        setTimeout(() => {
-                                            document.getElementById('indusAutoComplete').focus();
-                                        }, 0);
-                                    }}
-                                    tabIndex={0}
-                                    role="button"
-                                    className=" cursor-pointer dropdown underline text-accent"
-                                >
-                                    {selectedIndus || 'All'}
-                                </h3>
-                                {showIndusDropdown && (
-                                    <div
-                                        tabIndex={0}
-                                        className="dropdown-content menu bg-base-100  z-[1] w-52 p-2 shadow industry-autocomplete"
-                                    >
-                                        <Autocomplete
-                                            getItemValue={(item) => item.label}
-                                            items={filterIndustries(indusSearchTerm).map((industry) => ({
-                                                label: industry.name,
-                                            }))}
-                                            renderItem={(item) => (
-                                                <div className="px-2 py-1 cursor-pointer hover:bg-secondary">
-                                                    {item.label}
-                                                </div>
-                                            )}
-                                            value={indusSearchTerm}
-                                            onChange={(e) => setIndusSearchTerm(e.target.value)}
-                                            onSelect={(val) => handleSelectIndus(val)}
-                                            menuStyle={{
-                                                position: 'flex',
-                                                overflow: 'auto',
-                                                maxHeight: '400px',
-                                            }}
-                                            inputProps={{ placeholder: 'Select Industry', id: 'indusAutoComplete' }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+                    <FeatureGrid featuresData={featuresData} />
 
-                            <h3 className="">industry {selectedIndus === 'All' ? 'are' : 'is'} automating with</h3>
-                            {appLoading ? (
-                                <>
-                                    {' '}
-                                    {[...Array(3)].map((_, index) => (
-                                        <div className="bg-white   items-center flex w-[120px] gap-1 p-2 " key={index}>
-                                            <div className="skeleton max-h-[17px] max-w-[17px] min-h-[17px] min-w-[16px] bg-gray-200 "></div>
-                                            <div className="skeleton h-[12px] w-full bg-gray-200"></div>
-                                        </div>
-                                    ))}
-                                </>
-                            ) : (
-                                <>
-                                    {selectedApps.map((app, index) => (
-                                        <div
-                                            className="flex items-center gap-2 bg-[#FAFAFA] w-fit px-2 h-[42px] border border-black  "
-                                            key={app.appslugname}
-                                        >
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                width={20}
-                                                height={20}
-                                                className="h-[24px] w-fit"
-                                                alt="ico"
-                                            />
-                                            <span className="text-[16px]">{app?.name}</span>
-                                            <MdClose
-                                                className="text-gray-300 hover:text-gray-950 cursor-pointer"
-                                                onClick={() => removeAppFromArray(index)}
-                                            />
-                                        </div>
-                                    ))}
-                                </>
-                            )}
-                            <div className="w-[300px] transition-all duration-300 relative bg-white dropdown">
-                                <label
-                                    className="input flex items-center h-[42px] gap-2 border border-black "
-                                    tabIndex={0}
-                                    role="button"
-                                >
-                                    <MdSearch color="#CCCCCC" fontSize={20} />
-                                    <input
-                                        type="text"
-                                        className="grow"
-                                        placeholder="Add your favorite App"
-                                        value={searchTerm}
-                                        onChange={(e) => setSearchTerm(e.target.value)}
-                                        ref={inputRef}
-                                        onKeyDown={handleKeyDown}
-                                    />
-                                    <span
-                                        className=""
-                                        onClick={() => {
-                                            setSearchTerm('');
-                                            setShowInput(false);
-                                        }}
-                                    >
-                                        <MdClose color="black" fontSize={24} />
-                                    </span>
-                                </label>
-                                <ul
-                                    tabIndex={0}
-                                    className="dropdown-content menu flex-nowrap bg-base-100 shadow-xl mt-2 z-[1]  max-h-[290px] w-[300px] overflow-scroll p-0"
-                                >
-                                    {searchLoading ? (
-                                        [...Array(12)].map((_, index) => (
-                                            <div className="rounded-none bg-white px-3 py-2 flex w-full" key={index}>
-                                                <div className="w-[280px] skeleton bg-slate-100 rounded-none"></div>
-                                            </div>
-                                        ))
-                                    ) : (
-                                        <>
-                                            {searchData && searchData?.length > 0 ? (
-                                                searchData.map((app, index) => {
-                                                    return (
-                                                        <>
-                                                            <div
-                                                                key={index}
-                                                                className={`flex items-center gap-2 px-3 py-2 cursor-pointer w-full ${
-                                                                    index === highlightedIndex
-                                                                        ? 'bg-gray-200'
-                                                                        : 'bg-white'
-                                                                } hover:bg-gray-100`}
-                                                                onClick={() => handleSelectApp(app?.appslugname)}
-                                                                onMouseEnter={() => setHighlightedIndex(index)}
-                                                            >
-                                                                <Image
-                                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                                    width={16}
-                                                                    height={16}
-                                                                    alt="ico"
-                                                                />
-                                                                <span>{app?.name}</span>
-                                                            </div>
-                                                        </>
-                                                    );
-                                                })
-                                            ) : (
-                                                <p className="flex items-center gap-2 bg-white px-3 py-2 w-full">
-                                                    No app found.
-                                                </p>
-                                            )}
-                                        </>
-                                    )}
-                                </ul>
-                            </div>
+                    <div className="container cont cont__py gap-20 px-24  h-fit border transparent-border-black bg-white">
+                        <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
+                        <StepDisplay steps={indexSteps} />
+                    </div>
 
-                            <h2 className="">in</h2>
+                    {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
 
-                            <div className="dropdown">
-                                <h3
-                                    onClick={() => {
-                                        setShowDeptDropdown(true);
-                                        setTimeout(() => {
-                                            document.getElementById('deptAutoComplete').focus();
-                                        }, 0);
-                                    }}
-                                    tabIndex={0}
-                                    role="button"
-                                    className=" dropdown underline text-accent"
-                                >
-                                    {selectedDept || 'all their'}
-                                </h3>
-                                {showDeptDropdown && (
-                                    <div
-                                        tabIndex={0}
-                                        className="dropdown-content menu bg-base-100  z-[1] w-52 p-2 shadow industry-autocomplete"
-                                    >
-                                        <Autocomplete
-                                            getItemValue={(item) => item.label}
-                                            items={filterDepts(deptSearchTerm).map((dept) => ({
-                                                label: dept.name,
-                                            }))}
-                                            renderItem={(item) => (
-                                                <div className="px-2 py-1 cursor-pointer hover:bg-secondary">
-                                                    {item.label}
-                                                </div>
-                                            )}
-                                            value={deptSearchTerm}
-                                            onChange={(e) => setDeptSearchTerm(e.target.value)}
-                                            onSelect={(val) => handleSelectDept(val)}
-                                            inputProps={{
-                                                placeholder: 'Select Department',
-                                                id: 'deptAutoComplete',
-                                            }}
-                                            menuStyle={{
-                                                position: 'flex',
-                                                overflow: 'auto',
-                                                maxHeight: '400px',
-                                            }}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-                            <h3 className="" id="dept">
-                                department
-                            </h3>
-                            <div
-                                className={
-                                    selectedApps.length < 2 ? 'tooltip tooltip-error tooltip-top text-white' : ''
-                                }
-                                data-tip="Select at least 2 apps to search automations"
+                    <div className="container">
+                        <TestimonialsSection testimonials={testimonials} />
+                    </div>
+
+                    <div className="container">
+                        <IntegrateAppsComp />
+                    </div>
+
+                    <div className="container cont">
+                        <CaseStudiesSection caseStudies={caseStudies} />
+                        <div className="flex justify-end">
+                            <Link
+                                href="https://viasocket.com/blog/tag/client-story"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="border transparent-border-black border-t-0 px-4 py-2 "
                             >
-                                <button
-                                    disabled={selectedApps.length < 2}
-                                    onClick={() => {
-                                        handleGenerate();
-                                    }}
-                                    className="h-[32px] w-[32px] flex items-center justify-center bg-accent text-white"
-                                >
-                                    <MdArrowForward />
-                                </button>
-                            </div>
-                        </div>
-                        <div className="grid grid-cols-1 border-gray-400  md:grid-cols-2 border-b-0 border-r-0 border-2">
-                            {!combinationLoading
-                                ? renderCombos?.combinations?.map((combo) => {
-                                      const triggerName = renderCombos?.plugins[combo?.trigger?.name]?.events?.find(
-                                          (event) => event?.rowid === combo?.trigger?.id
-                                      )?.name;
-                                      const actionName = renderCombos?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                          (event) => event?.rowid === combo?.actions[0]?.id
-                                      )?.name;
-
-                                      const integrations =
-                                          renderCombos?.plugins[combo?.trigger?.name]?.rowid +
-                                          ',' +
-                                          renderCombos?.plugins[combo?.actions[0]?.name]?.rowid;
-                                      return (
-                                          <CombinationCardComp
-                                              trigger={{
-                                                  name: triggerName,
-                                                  iconurl:
-                                                      renderCombos?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                      'https://placehold.co/40x40',
-                                              }}
-                                              action={{
-                                                  name: actionName,
-                                                  iconurl:
-                                                      renderCombos?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                      'https://placehold.co/40x40',
-                                              }}
-                                              description={combo?.description}
-                                              link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions.map((action) => action.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                              onClick={() => setUtmInCookies({ source: `makeflow/trigger/combos` })}
-                                          />
-                                      );
-                                  })
-                                : combinationLoading &&
-                                  Array.from({ length: 12 }).map((_, index) => (
-                                      <div
-                                          key={index}
-                                          className="border h-[200px] border-black border-t-0 border-l-0 skeleton bg-gray-100 rounded-none"
-                                      ></div>
-                                  ))}
+                                <LinkText>Read More</LinkText>
+                            </Link>
                         </div>
                     </div>
-                </div> */}
 
-                <FeatureGrid featuresData={featuresData} />
-
-                <div className="container cont cont__py gap-20 px-24  h-fit border border-black">
-                    <div className="flex flex-col justify-center items-center w-full text-center">
-                        <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+                    <div className="container border transparent-border-black py-20 px-12 bg-white ">
+                        <div className="cont gap-2">
+                            <h2 className="h2 text-left">AI Agents That Work For You</h2>
+                            <p className="text-2xl font-semibold text-accent">
+                                Build, deploy, and automate with intelligent agents
+                            </p>
+                            <h3 className="sub__h1 ">
+                                Create intelligent workflows that handle your business processes automatically without
+                                coding. Simply describe what you need in plain language, and our platform builds custom
+                                AI agents that connect your apps, make smart decisions, and improve over time.
+                            </h3>
+                        </div>
                     </div>
-                    <StepDisplay steps={indexSteps} />
-                </div>
 
-                {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
+                    <div className="container cont border transparent-border-black gap-12 py-20 px-12 bg-white ">
+                        <div className="cont gap-2">
+                            <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
+                            <p className="text-2xl font-semibold text-accent ">
+                                Edit workflows with AI, anywhere, anytime
+                            </p>
+                            <h3 className="sub__h1">
+                                Create and modify automation workflows from your smartphone with AI assistance. Build
+                                new workflows, make quick edits, and stay in control of your business no matter where
+                                you are.
+                            </h3>
+                        </div>
 
-                <div className="container">
-                    <TestimonialsSection testimonials={testimonials} />
-                </div>
-
-                <div className="container">
-                    <IntegrateAppsComp />
-                </div>
-
-                <div className="container cont">
-                    <CaseStudiesSection caseStudies={caseStudies} />
-                    <div className="flex justify-end">
                         <Link
-                            href="https://viasocket.com/blog/tag/client-story"
+                            href="https://walkover.typeform.com/to/U33OiMgy"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="border border-black border-t-0 px-4 py-2 "
                         >
-                            <LinkText>Read More</LinkText>
+                            <button className="btn btn-accent">Apply For Early Access</button>
                         </Link>
                     </div>
-                </div>
 
-                <div className="container border border-black py-20 px-12 ">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">AI Agents That Work For You</h1>
-                        <p className="text-2xl font-semibold text-accent">Build, deploy, and automate with intelligent agents</p>
-                        <h3 className="sub__h1 max-w-[900px]">
-                            Create intelligent workflows that handle your business processes automatically without coding. Simply describe what you need in plain language, and our platform builds custom AI agents that connect your apps, make smart decisions, and improve over time.
-                        </h3>
-                    </div>
-                </div>
-                
-                <div className="container cont border border-black gap-12 py-20 px-12 justify-center text-center items-center">
-                    <div className="cont gap-2 text-center items-center">
-                        <h1 className="h1  ">Be First in Line: Mobile App Early Access</h1>
-                        <p className="text-2xl font-semibold text-accent">Edit workflows with AI, anywhere, anytime</p>
-                        <h3 className="sub__h1 max-w-[900px]">
-                            Create and modify automation workflows from your smartphone with AI assistance. Build new
-                            workflows, make quick edits, and stay in control of your business no matter where you are.
-                        </h3>
-                    </div>
-                    <Link href="https://walkover.typeform.com/to/U33OiMgy" target="_blank" rel="noopener noreferrer">
-                        <button className="btn btn-accent">Apply For Early Access</button>
-                    </Link>
-                </div>
-
-                <div className="container">
-                    <BlogGrid posts={blogData} />
-                </div>
-
-                <div className="pb-4">
-                    {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <FAQSection faqData={faqData} faqName={'/index'} />
-                        </div>
-                    )}
-                    <div className="container border border-black p-20 border-b-0">
-                        <AlphabeticalComponent step={0} />
-                    </div>
                     <div className="container">
-                        <Footer footerData={footerData} />
+                        <BlogGrid posts={blogData} />
+                    </div>
+
+                    <div className="pb-4">
+                        {faqData?.length > 0 && (
+                            <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                                <FAQSection faqData={faqData} faqName={'/index'} />
+                            </div>
+                        )}
+                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                            <AlphabeticalComponent step={0} />
+                        </div>
+                        <div className="container">
+                            <Footer footerData={footerData} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -705,9 +438,9 @@ const HorizontalCardScroller = ({ items }) => {
 };
 
 const WorkflowStepsSection = ({ indexSteps }) => (
-    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
+    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border transparent-border-black">
         <div className="flex flex-col justify-center items-center w-full text-center">
-            <h2 className="h1">Create Powerful Workflows in Three Simple Steps</h2>
+            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
         </div>
 
         <div className="cont w-full gap-4">
@@ -724,14 +457,14 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
             <div className="md:hidden cont">
                 <div className="p-8 cont gap-2">
                     <p className="text-accent font font-semibold">Step {stepNumber}</p>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
             </div>
 
             <div className={`hidden md:flex ${isEven ? 'flex-row' : 'flex-row-reverse'} justify-center`}>
                 <div className={`w-1/3 p-4 flex flex-col gap-4 justify-center ${isEven ? 'text-end' : 'text-start'}`}>
-                    <h3 className="h2 font-bold">{step.title}</h3>
+                    <h3 className="h3 font-bold">{step.title}</h3>
                     <p className="sub__h2">{step.description}</p>
                 </div>
 
@@ -749,15 +482,15 @@ const WorkflowStep = ({ step, stepNumber, isEven }) => {
 
 const TestimonialsSection = ({ testimonials }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1 flex gap-2 flex-wrap">
+        <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
-        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full  ">
+        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full bg-white">
             {testimonials.map((testimonial, index) => (
                 <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
                     <div className="flex flex-col  gap-2 ">
                         <Image
-                            className="border border-black"
+                            className="border transparent-border-black"
                             src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
                             width={50}
                             height={50}
@@ -777,8 +510,8 @@ const TestimonialsSection = ({ testimonials }) => (
 
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
-        <h2 className="h1">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border border-black p-8">
+        <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
+        <div className="flex flex-col gap-8 w-full border transparent-border-black p-8 bg-white">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}
@@ -808,7 +541,7 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
             <div className={`hidden md:flex w-full ${isEven ? 'flex-row-reverse' : 'flex-row'}`}>
                 <div className="w-1/2 casestudy_img overflow-hidden px-8">
                     <Image
-                        className="h-full w-full object-cover border border-black"
+                        className="h-full w-full object-cover border transparent-border-black"
                         src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}
@@ -841,7 +574,7 @@ export async function getServerSideProps(context) {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const blogTags = 'index';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     const featuresData = [
         {
             heading: 'Save Hours Every Day',

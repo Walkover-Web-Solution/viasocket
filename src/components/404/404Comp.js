@@ -10,7 +10,7 @@ export default function ErrorComp({ navData, footerData, utm }) {
 
     return (
         <>
-            <div className="sticky top-0 z-[100]">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/404'} />
             </div>
             <div className="container">

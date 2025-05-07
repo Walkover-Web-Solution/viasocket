@@ -86,12 +86,12 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     useEffect(() => {
         const helloConfig = {
             widgetToken: 'a13cc',
-            show_close_button: false,
+            show_close_button: true,
             hide_launcher: true,
         };
 
         const script = document.createElement('script');
-        script.src = 'https://blacksea.msg91.com/chat-widget.js';
+        script.src = 'https://shubhendraagrawal.msg91.com/chat-widget-prodtesing.js';
         script.onload = () => initChatWidget(helloConfig, 50);
 
         document.head.appendChild(script);
@@ -107,6 +107,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
 
     const pathSegments = router.asPath.split('/');
     const isPaginated = pathSegments.includes('page');
+    const isSignupPage = router.pathname === '/signup';
 
     // Determine the base path (first page)
     let canonicalUrl = `https://viasocket.com${router.asPath}`;
@@ -129,11 +130,11 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <Skeleton />
             ) : (
                 <>
-                    {showMCPBanner && (
+                    {!isSignupPage && showMCPBanner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center border-black gradient-background">
+                            <div className="w-full p-2 text-center transparent-border-black gradient-background border-b border-b-black">
                                 <p className="!text-xs text-black hover:underline">
-                                1,000+ MCP Servers — Use them on viaSocket now.{' '}
+                                    Give your AI agent the power to act—generate your MCP URL today
                                 </p>
                             </div>
                         </Link>

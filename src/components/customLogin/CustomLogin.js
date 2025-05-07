@@ -16,37 +16,40 @@ const CustomLogin = ({ redirect_to }) => {
                 redirect_path: redirect_to,
             };
         }
+
         const utm_source = setUtmSource();
         configuration.state = utm_source;
 
+        const runVerification = () => {
+            if (!window.__init_verification_ran__) {
+                window.initVerification?.(configuration);
+                window.__init_verification_ran__ = true;
+            }
+        };
+
         if (typeof window.initVerification === 'function') {
-            window.initVerification(configuration);
-        } else {
+            runVerification();
+        } else if (!window.__custom_login_script_loaded__) {
             const script = document.createElement('script');
             script.type = 'text/javascript';
             script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
 
-            const handleLoad = () => {
-                if (typeof window.initVerification === 'function') {
-                    window.initVerification(configuration);
-                } else {
-                    console.error('initVerification function not found');
-                }
-            };
-
-            script.addEventListener('load', handleLoad);
+            script.addEventListener('load', runVerification);
 
             document.body.appendChild(script);
+            window.__custom_login_script_loaded__ = true;
 
             return () => {
-                document.body.removeChild(script);
-                script.removeEventListener('load', handleLoad);
+                script.removeEventListener('load', runVerification);
             };
+        } else {
+            runVerification();
         }
     }, []);
+
     return (
         <div className="min-h-[222px]">
-            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" />
+            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2" />
         </div>
     );
 };

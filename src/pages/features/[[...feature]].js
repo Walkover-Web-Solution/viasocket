@@ -67,7 +67,7 @@ export async function getServerSideProps(context) {
         featureData = await getFeatureData([], `filter=slug='${feature}'`);
     }
     const blogTags = 'feature';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
 
     return {
         props: {

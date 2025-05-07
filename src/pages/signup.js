@@ -1,13 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
-import Navbar from '@/components/navbar/navbar';
-import Footer from '@/components/footer/footer';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 
 export const runtime = 'experimental-edge';
@@ -41,46 +38,50 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
 
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/signup'} pathArray={pathArray} />
-                <Navbar navData={navData} utm={'/signup'} />
-            <div className="flex flex-col md:flex-row min-h-dvh">
-                <div className="w-full md:min-h-dvh flex">
-                    <div className=" w-full h-full flex items-center justify-center">
-                        <div className="bg-gray-100 h-fit cont w-full items-center lg:gap-16 gap-10 lg:m-14 m-8 lg:p-12 p-6">
+            <div className="flex items-center flex-col md:flex-row gap-10 min-h-screen">
+                <div className="bg-gray-100 h-screen w-full md:w-[40vw] pl-2.5 border-l-8 accent-border-color border-right-color flex flex-col">
+                    <Link href="/">
+                        <Image
+                            src="/assets/brand/logo.svg"
+                            className="h-[48px] w-auto p-3 cursor-pointer"
+                            width={60}
+                            height={60}
+                            alt="viasocket"
+                        />
+                    </Link>
+                    <div className="flex-1 flex items-center justify-center">
+                        <div className="flex flex-col gap-4 p-6">
                             <div className="cont gap-2">
-                                <h2 className="h1 text-center">Sign Up</h2>
-                                <p className="text-center">Start your FREE 30-day trial. No credit card needed.</p>
+                                <h2 className="h2">Sign up for viaSocket</h2>
+                                <p className="text-sm">create a free account or <Link
+                                    className="active-link text-link"
+                                    href={`${process.env.NEXT_PUBLIC_FLOW_URL}?state=${defaultUtmSource}`}
+                                    onClick={() => setUtmInCookies({ source: `signup` })}
+                                    rel="nofollow"
+                                >
+                                    Log in
+                                </Link></p>
                             </div>
                             <div className="cont gap-8">
                                 <CustomLogin redirect_to={redirect_to} />
-                                <p>
-                                    Already have an account?{' '}
-                                    <Link
-                                        className="active-link text-link"
-                                        href={`${process.env.NEXT_PUBLIC_FLOW_URL}?state=${defaultUtmSource}`}
-                                        onClick={() => setUtmInCookies({ source: `signup` })}
-                                        rel="nofollow"
-                                    >
-                                        Login
-                                    </Link>
-                                </p>
                             </div>
                         </div>
                     </div>
+                    <p className="text-sm pb-4 flex gap-2 items-center"><span>© 2025 viaSocket. All rights reserved.</span>
+                        <Link href="/privacy" className="active-link text-link">Privacy</Link>
+                        <span>and</span>
+                        <Link href="/terms" className="active-link text-link">Terms.</Link>
+                        </p>
                 </div>
-                <div className="bg-gray-100 w-full px-12 py-40 cont justify-between">
-                    <div className="max-w-[520px] w-full">
-                        <h1 className="h1  ">Welcome to viaSocket</h1>
-                        <p className="sub__h1">Connect your favorite apps and start automating your work in no time.</p>
-                    </div>
-                    <div className="cont gap-8">
-                        <div className="cont gap-5">
+                <div className="cont gap-4 bg-white p-6 border transparent-border-black m-auto md:w-[34vw]">
+                    <div className="flex flex-col gap-2">
+                        <div className="cont gap-2">
                             <div className="flex gap-1">
                                 {[...Array(5)].map((_, index) => (
                                     <MdStar key={index} fontSize={24} color="#FDE047" />
                                 ))}
                             </div>
-                            <p className="text-lg">{testimonials[0]?.testimonial}</p>
+                            <p className="text-md">{testimonials[0]?.testimonial}</p>
                         </div>
                         <div className="flex gap-3">
                             <Image
@@ -97,9 +98,6 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container pb-4 mt-12">
-                <Footer footerData={footerData} />
             </div>
         </>
     );

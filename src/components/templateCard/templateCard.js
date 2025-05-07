@@ -42,12 +42,17 @@ const TemplateCard = ({ template }) => {
     }, []);
 
     return (
-        <div className="border hover:shadow-xl mx-12">
+        <div className="border-2  transparent-border-black border-t-0 border-l-0 group">
             <div className="cont gap-4 pb-4">
-                <div className="w-full h-[500px] border-black px-8 cont justify-center items-center bg-[#F6EFFC]">
-                    <div className="bg-white w-3/4 border shadow-md rounded-md">
+                <div className="flex flex-col gap-1 px-8 h-20 mt-4">
+                    <h1 className="h3">{template?.title}</h1>
+                    <h2 className="sub__h2">{template?.metadata?.description}</h2>
+                </div>
+
+                <div className="w-full h-[400px] transparent-border-black px-8 cont justify-center items-center">
+                    <div className="bg-white w-full shadow-md">
                         <div>
-                            <div className="bg-[#E1F4FF] px-2 py-1 border-b">
+                            <div className="bg-[#F3E9F5] px-2 py-1 border-b">
                                 <p>Trigger: </p>
                             </div>
                             <div className="px-2 py-1 flex items-center gap-2">
@@ -77,13 +82,13 @@ const TemplateCard = ({ template }) => {
                         </div>
                     </div>
 
-                    <div className="border border-black h-4 opacity-75"></div>
+                    <div className="border transparent-border-black h-4 opacity-75"></div>
 
                     {actionGroups.map((group, groupIndex) => (
                         <>
                             <div
                                 key={groupIndex}
-                                className={`w-3/4 cont bg-[#E1F4FF] rounded-md shadow-md overflow-hidden ${
+                                className={`w-full cont bg-[#F3E9F5]  shadow-md overflow-hidden ${
                                     group.some((action) => blocks[action]?.type === 'ifGroup') ? '' : 'p-2'
                                 }`}
                             >
@@ -100,7 +105,7 @@ const TemplateCard = ({ template }) => {
                                                         <button
                                                             key={index}
                                                             className={`flex-grow px-4 py-2 border-gray-600 ${
-                                                                selectedIndex === index ? ' rounded-t-md bg-white' : ' '
+                                                                selectedIndex === index ? ' bg-white' : ' '
                                                             }`}
                                                             onClick={() => setSelectedIndex(index)}
                                                         >
@@ -108,7 +113,7 @@ const TemplateCard = ({ template }) => {
                                                         </button>
                                                     ))}
                                                 </div>
-                                                <div className="bg-white w-full px-2 py-1 rounded-b-md flex justify-start items-center gap-2">
+                                                <div className="bg-white w-full px-2 py-1  flex justify-start items-center gap-2">
                                                     <IoGitNetworkSharp />
                                                     {ifsList[selectedIndex]}
                                                 </div>
@@ -154,87 +159,24 @@ const TemplateCard = ({ template }) => {
                                     );
                                 })}
                             </div>
-                            <div className="border border-black h-4 opacity-75"></div>
+                            <div className="border transparent-border-black h-4 opacity-75"></div>
                         </>
                     ))}
 
-                    <div className="border border-black p-1 rounded-sm opacity-75">
+                    <div className="border transparent-border-black p-1 opacity-75">
                         <FiPlus size={16} />
                     </div>
                 </div>
 
-                <div className="min-h-[200px] h-fit cont justify-between gap-2 px-8">
-                    <div className="flex flex-col gap-1">
-                        <h1 className="text-3xl">{template?.title}</h1>
-                        <h2 className="text-lg">{template?.metadata?.description}</h2>
-                    </div>
-                    <div className="flex flex-wrap gap-2 items-center justify-between">
-                        <div className="flex flex-wrap gap-2 items-center">
-                            {(() => {
-                                const uniqueIcons = new Set();
-                                const iconsToRender = [];
-
-                                // Add the trigger icon to the set
-                                const trigger = template?.published_json_script?.trigger;
-                                const triggerIconUrl = trigger?.iconUrl;
-
-                                if (triggerIconUrl && !uniqueIcons.has(triggerIconUrl)) {
-                                    uniqueIcons.add(triggerIconUrl);
-                                    iconsToRender.push(
-                                        <div key="trigger" className="border border-black p-1">
-                                            <Image
-                                                src={triggerIconUrl || 'https://placehold.co/40x40'}
-                                                width={24}
-                                                height={24}
-                                            />
-                                        </div>
-                                    );
-                                } else if (!triggerIconUrl && !uniqueIcons.has('trigger-default')) {
-                                    uniqueIcons.add('trigger-default');
-                                    iconsToRender.push(
-                                        <div key="trigger-default" className="border border-black p-1">
-                                            {trigger?.triggerType === 'cron' ? (
-                                                <IoMdStopwatch size={24} />
-                                            ) : (
-                                                <MdOutlineWebhook size={24} />
-                                            )}
-                                        </div>
-                                    );
-                                }
-
-                                rootActions.forEach((action) => {
-                                    const block = blocks[action];
-                                    const iconUrl = block?.iconUrl;
-
-                                    if (iconUrl && !uniqueIcons.has(iconUrl)) {
-                                        uniqueIcons.add(iconUrl);
-                                        iconsToRender.push(
-                                            <div key={iconUrl} className="border border-black p-1">
-                                                <Image
-                                                    src={iconUrl || 'https://placehold.co/40x40'}
-                                                    width={24}
-                                                    height={24}
-                                                />
-                                            </div>
-                                        );
-                                    } else if (!iconUrl && !uniqueIcons.has('default-js')) {
-                                        uniqueIcons.add('default-js');
-                                        iconsToRender.push(
-                                            <div key={action} className="border border-black p-1">
-                                                <DiJsBadge size={24} />
-                                            </div>
-                                        );
-                                    }
-                                });
-
-                                return iconsToRender;
-                            })()}
-                        </div>
+                <div className="h-fit cont justify-between gap-2 px-8 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <div className="flex flex-wrap gap-2 items-center justify-end">
                         <Link
                             href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
                             onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
                         >
-                            <button className="btn btn-accent">Use This Template</button>
+                            <button className="btn bg-black border-0 text-white hover:bg-accent">
+                                Use This Template
+                            </button>
                         </Link>
                     </div>
                 </div>

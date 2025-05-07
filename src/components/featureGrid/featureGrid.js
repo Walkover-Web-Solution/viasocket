@@ -23,8 +23,8 @@ const FeatureGrid = ({ featuresData }) => {
     };
     return (
         <div className="container p-12 py-20 bg-black text-white">
-            <div className="mb-20 flex gap-4">
-                <h1 className="h1 mb-4  ">Automation That Actually Works For Your Business</h1>
+            <div className="flex gap-4">
+                <h2 className="h2 mb-12">Automation That Actually Works For Your Business</h2>
                 <BsStars size={42} />
             </div>
 
@@ -35,7 +35,7 @@ const FeatureGrid = ({ featuresData }) => {
                         className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
                     >
                         <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                        <h2 className="h2 font-bold mb-3">{feature.heading}</h2>
+                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
                         <p className="sub__h2 text-gray-200">{feature.content}</p>
                     </div>
                 ))}

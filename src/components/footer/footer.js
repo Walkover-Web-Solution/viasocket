@@ -16,16 +16,16 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
         return acc;
     }, {});
 
-    const borderTheme = isBlack ? 'white' : 'black';
+    const borderTheme = isBlack ? 'white' : 'transparent-border-black';
 
     const renderedGroups =
         groupedData &&
         Object?.entries(groupedData)?.map(([groupName, items]) => {
             if (items?.length > 0) {
                 return (
-                    <div className="flex flex-col gap-6 w-full" key={groupName}>
+                    <div className="flex flex-col gap-2 w-full" key={groupName}>
                         <h2 className="font-bold">{groupName}</h2>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1">
                             {items?.map(
                                 (item, index) =>
                                     !item?.hidden && (
@@ -47,10 +47,10 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
     return (
         <>
             <div
-                className={` grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border container border-${borderTheme} ${borderClass}`}
+                className={`container bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass}`}
             >
                 <div
-                    className={`row-span-1 col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 border-${borderTheme} flex flex-col `}
+                    className={`row-span-1 col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}
                 >
                     <div className="flex flex-col gap-2 mb-12 sm:mb-6 py-4">
                         <Link href="/" aria-label="socket fav icon">
@@ -83,18 +83,18 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                 </div>
                 <div className=" row-span-1 col-span-4 lg:col-span-3 grid sm:grid-cols-3 grid-cols-1">
                     <div
-                        className={`flex flex-col gap-28 md:p-10 p-4 lg:border-b-0  border-b sm:border-r border-${borderTheme}`}
+                        className={`flex flex-col gap-28 md:p-10 p-4 lg:border-b-0  border-b sm:border-r ${borderTheme}`}
                     >
                         {renderedGroups?.slice(0, 2)}
                     </div>
 
                     <div
-                        className={`flex flex-col gap-28 md:p-10 p-4 sm:border-r lg:border-b-0  border-b border-${borderTheme}`}
+                        className={`flex flex-col gap-28 md:p-10 p-4 sm:border-r lg:border-b-0  border-b ${borderTheme}`}
                     >
                         {renderedGroups?.slice(2, 4)}
                     </div>
 
-                    <div className={`flex flex-col lg:border-b-0 border-b border-${borderTheme} gap-28 md:p-10 p-4 `}>
+                    <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-28 md:p-10 p-4 `}>
                         {renderedGroups?.slice(4, 7)}
                         <div className="flex gap-2 md:gap-4 mt-auto">
                             <Link

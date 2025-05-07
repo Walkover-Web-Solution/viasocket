@@ -1,18 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import style from './getStarted.module.scss';
-import { MdOutlineArrowForward } from 'react-icons/md';
+
 export default function GetStarted({ data, isHero }) {
     return (
         <>
-            <div className="grid gap-10 ">
+            <div className="grid gap-10">
                 <div className="flex justify-between flex-col md:flex-row">
-                    <div className="flex flex-col w-fit h-full">
-                        <h2 className="h1">
-                            We'll help you get
-                            <br /> started
-                        </h2>
-                        <p>Our team is all set to help you!</p>
+                    <div className="flex flex-col gap-2 w-fit h-full">
+                        <h2 className="h2">We'll help you get started</h2>
+                        <p className="sub__h1">Our team is all set to help you!</p>
                     </div>
                     <Link href={'/support'} className={style?.message_cont}>
                         <Image

@@ -89,7 +89,7 @@ export default function Mcp({
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
                     navData={navData}
-                    searchTerm={searchTerm} 
+                    searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                     debounceValue={debounceValue}
                     setDebounceValue={setDebounceValue}
@@ -166,7 +166,7 @@ export async function getServerSideProps(context) {
 
         if (appOneDetails) {
             const blogTags = 'mcp';
-            const blogData = await getBlogData(blogTags);
+            const blogData = await getBlogData({ tag1: blogTags });
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -202,7 +202,7 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: mcpInfo?.page, categoryData });
         const categories = await getCategoryData(INTECATEGORYlIST_FILED);
         const blogTags = 'mcp';
-        const blogData = await getBlogData(blogTags);
+        const blogData = await getBlogData({ tag1: blogTags });
         const mcpSteps = [
             {
                 title: 'Get Your MCP Endpoint',
