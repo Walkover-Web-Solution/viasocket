@@ -14,7 +14,7 @@ export default function ErrorComp({ navData, footerData, utm }) {
                 <Navbar navData={navData} utm={'/404'} />
             </div>
             <div className="container">
-                <div className="flex flex-col items-center justify-center py-6 w-400px px-2 bg-white">
+                <div className="flex flex-col items-center justify-center py-6 w-400px px-2">
                     <Image
                         src="/assets/img/404.svg"
                         width={1080}

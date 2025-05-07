@@ -20,7 +20,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <McpSwitchComp />
-            <div className="container cont bg-white">
+            <div className="container cont">
                 <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                     <div className="cont gap-4 w-full text-left">
                         <h1 className="h1">

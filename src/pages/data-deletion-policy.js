@@ -27,7 +27,7 @@ export default function DataDeletionPolicy({ navData, footerData, metaData }) {
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/data-deletion-policy'} />
             </div>
-            <div className="container mb-4 mt-28">
+            <div className="container mb-4 mt-28 bg-white p-12">
                 <div data-custom-class="body" className="cont gap-6">
                     <div>
                         <strong>

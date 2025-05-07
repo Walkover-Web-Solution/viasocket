@@ -12,7 +12,7 @@ export default function Programs({ footerData, navData, metaData, programs }) {
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/free-access-programs'} />
             </div>
-            <div className="container cont cont__py cont__gap bg-white">
+            <div className="container cont cont__py cont__gap">
                 <div className="cont gap-2">
                     <h1 className="h1 ">
                         <span className="text-accent"> Free services </span> for impactful organisations
