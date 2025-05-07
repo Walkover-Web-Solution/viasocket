@@ -42,12 +42,17 @@ const TemplateCard = ({ template }) => {
     }, []);
 
     return (
-        <div className="border hover:shadow-xl mx-12">
+        <div className="border hover:shadow-xl mx-12 bg-[#DFE4F1]">
             <div className="cont gap-4 pb-4">
-                <div className="w-full h-[500px] border-black px-8 cont justify-center items-center bg-[#F6EFFC]">
-                    <div className="bg-white w-3/4 border shadow-md rounded-md">
+                <div className="flex flex-col gap-1 px-8 h-[100px] mt-8">
+                    <h1 className="h2">{template?.title}</h1>
+                    <h2 className="text-lg">{template?.metadata?.description}</h2>
+                </div>
+
+                <div className="w-full h-[400px] border-black px-8 cont justify-center items-center">
+                    <div className="bg-white w-3/4 shadow-md">
                         <div>
-                            <div className="bg-[#E1F4FF] px-2 py-1 border-b">
+                            <div className="bg-[#F3E9F5] px-2 py-1 border-b">
                                 <p>Trigger: </p>
                             </div>
                             <div className="px-2 py-1 flex items-center gap-2">
@@ -83,7 +88,7 @@ const TemplateCard = ({ template }) => {
                         <>
                             <div
                                 key={groupIndex}
-                                className={`w-3/4 cont bg-[#E1F4FF] rounded-md shadow-md overflow-hidden ${
+                                className={`w-3/4 cont bg-[#F3E9F5]  shadow-md overflow-hidden ${
                                     group.some((action) => blocks[action]?.type === 'ifGroup') ? '' : 'p-2'
                                 }`}
                             >
@@ -100,7 +105,7 @@ const TemplateCard = ({ template }) => {
                                                         <button
                                                             key={index}
                                                             className={`flex-grow px-4 py-2 border-gray-600 ${
-                                                                selectedIndex === index ? ' rounded-t-md bg-white' : ' '
+                                                                selectedIndex === index ? ' bg-white' : ' '
                                                             }`}
                                                             onClick={() => setSelectedIndex(index)}
                                                         >
@@ -108,7 +113,7 @@ const TemplateCard = ({ template }) => {
                                                         </button>
                                                     ))}
                                                 </div>
-                                                <div className="bg-white w-full px-2 py-1 rounded-b-md flex justify-start items-center gap-2">
+                                                <div className="bg-white w-full px-2 py-1  flex justify-start items-center gap-2">
                                                     <IoGitNetworkSharp />
                                                     {ifsList[selectedIndex]}
                                                 </div>
@@ -158,18 +163,14 @@ const TemplateCard = ({ template }) => {
                         </>
                     ))}
 
-                    <div className="border border-black p-1 rounded-sm opacity-75">
+                    <div className="border border-black p-1 opacity-75">
                         <FiPlus size={16} />
                     </div>
                 </div>
 
-                <div className="min-h-[200px] h-fit cont justify-between gap-2 px-8">
-                    <div className="flex flex-col gap-1">
-                        <h1 className="text-3xl">{template?.title}</h1>
-                        <h2 className="text-lg">{template?.metadata?.description}</h2>
-                    </div>
-                    <div className="flex flex-wrap gap-2 items-center justify-between">
-                        <div className="flex flex-wrap gap-2 items-center">
+                <div className="h-fit cont justify-between gap-2 px-8">
+                    <div className="flex flex-wrap gap-2 items-center justify-end">
+                        {/* <div className="flex flex-wrap gap-2 items-center">
                             {(() => {
                                 const uniqueIcons = new Set();
                                 const iconsToRender = [];
@@ -229,12 +230,12 @@ const TemplateCard = ({ template }) => {
 
                                 return iconsToRender;
                             })()}
-                        </div>
+                        </div> */}
                         <Link
                             href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
                             onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
                         >
-                            <button className="btn btn-accent">Use This Template</button>
+                            <button className="btn bg-black text-white hover:bg-accent">Use This Template</button>
                         </Link>
                     </div>
                 </div>
