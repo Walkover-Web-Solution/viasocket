@@ -9,10 +9,10 @@ export default function Programs({ footerData, navData, metaData, programs }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/free-access-programs'} />
             </div>
-            <div className="container cont cont__py cont__gap ">
+            <div className="container cont cont__py cont__gap bg-white">
                 <div className="cont gap-2">
                     <h1 className="h1 ">Free services for impactful organisations</h1>
                     <h2 className="sub__h1">

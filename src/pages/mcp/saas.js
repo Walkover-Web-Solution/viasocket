@@ -16,13 +16,13 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
-            <div className="container py-8">
+            <div className="container py-8 bg-white">
                 <McpSwitchComp />
 
-                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16">
+                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16 bg-white">
                     <div className="cont gap-4 justify-center w-full text-center">
                         <h1 className="h1">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
@@ -91,7 +91,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border border-black  justify-center items-center text-center gap-12 ">
+            <div className="container cont cont__py border transparent-border-black  justify-center items-center text-center gap-12 bg-white">
                 <div className="flex flex-col justify-center items-center">
                     <h2 className="h1  max-w-[1200px]">Join the Ecosystem</h2>
                     <p className="sub__h1 max-w-[1000px]">
@@ -111,7 +111,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <BlogGrid posts={blogData} />
             <div>
                 {faqData?.length > 0 && (
-                    <div className="container border border-black p-20 border-b-0">
+                    <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}

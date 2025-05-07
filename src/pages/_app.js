@@ -107,6 +107,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
 
     const pathSegments = router.asPath.split('/');
     const isPaginated = pathSegments.includes('page');
+    const isSignupPage = router.pathname === '/signup';
 
     // Determine the base path (first page)
     let canonicalUrl = `https://viasocket.com${router.asPath}`;
@@ -129,9 +130,9 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <Skeleton />
             ) : (
                 <>
-                    {showMCPBanner && (
+                    {!isSignupPage && showMCPBanner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center border-black gradient-background border-b border-b-black">
+                            <div className="w-full p-2 text-center transparent-border-black gradient-background border-b border-b-black">
                                 <p className="!text-xs text-black hover:underline">
                                     Give your AI agent the power to act—generate your MCP URL today
                                 </p>

@@ -86,7 +86,7 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                     >
                                                         <span className='!text-xs'>{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
@@ -95,7 +95,7 @@ export default function Navbar({ navData, utm }) {
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     <span className='!text-xs'>{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
@@ -139,7 +139,7 @@ export default function Navbar({ navData, utm }) {
                                                 href={option.link || '#'}
                                             >
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
                                                 >
                                                     {option.name}
                                                 </div>
@@ -150,14 +150,14 @@ export default function Navbar({ navData, utm }) {
                             );
                         })}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border border-black border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
+                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial

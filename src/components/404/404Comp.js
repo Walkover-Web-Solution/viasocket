@@ -10,11 +10,11 @@ export default function ErrorComp({ navData, footerData, utm }) {
 
     return (
         <>
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/404'} />
             </div>
             <div className="container">
-                <div className="flex flex-col items-center justify-center py-6 w-400px px-2">
+                <div className="flex flex-col items-center justify-center py-6 w-400px px-2 bg-white">
                     <Image
                         src="/assets/img/404.svg"
                         width={1080}
