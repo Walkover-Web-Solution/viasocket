@@ -170,12 +170,12 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container flex justify-center items-center pt-20 pb-10">
-                    <div className="flex flex-col items-center justify-center text-center gap-2">
+                    <div className="flex flex-col items-center justify-center text-center gap-2 bg-white">
                         <h1 className="h1">Ready-Made Workflow Automation Templates</h1>
                         <h2 className="h2 text-accent">Click. Build. Succeed.</h2>
                         <h2 className="sub__h1  max-w-[900px]">
@@ -187,7 +187,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
 
                 <div className="container">
                     <div className="flex flex-col md:flex-row gap-4 w-full px-12">
-                        <label className="input border flex-grow border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
+                        <label className="input border flex-grow transparent-border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
                             <MdSearch size={20} />
                             <input
                                 type="text"
@@ -200,7 +200,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                         <div className="flex gap-4">
                             <div className="relative" ref={sortRef}>
                                 <button
-                                    className="flex items-center gap-2 px-4 h-[42px] border border-black"
+                                    className="flex items-center gap-2 px-4 h-[42px] border transparent-border-black bg-white"
                                     onClick={() => setShowSortOptions(!showSortOptions)}
                                 >
                                     <BiSortAlt2 />
@@ -262,7 +262,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 <div className="flex justify-center w-full mt-8 container px-12">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border-2 border-gray-400 w-full"
+                                        className="btn btn-outline border-2 border-gray-400 w-full bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>
@@ -285,7 +285,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     </div>
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container border border-black p-20 border-b-0">
+                            <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                                 <FAQSection faqData={faqData} faqName={'/templates'} />
                             </div>
                         )}

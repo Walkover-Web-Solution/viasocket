@@ -1,0 +1,6 @@
+/** We need custom colors, custom sizes, etc. So, create a class and use this class in all components */
+
+/** Border Colors */
+.transparent-border-black {
+    border-color: var(--transparent-border-black) !important;
+}

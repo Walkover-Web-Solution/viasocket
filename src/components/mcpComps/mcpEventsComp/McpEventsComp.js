@@ -33,7 +33,7 @@ export default function McpEventComp({ appOneDetails }) {
                     {pair.map((event, index) => (
                         <div
                             key={index}
-                            className="p-4 border border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
+                            className="p-4 border transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover:bg-black hover:text-white cursor-pointer"
                         >
                             <Image
                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}

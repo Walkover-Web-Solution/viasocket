@@ -235,7 +235,7 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="add-background-color">
@@ -253,7 +253,7 @@ const Index = ({
 
                     <FeatureGrid featuresData={featuresData} />
 
-                    <div className="container cont cont__py gap-20 px-24  h-fit border border-black bg-white">
+                    <div className="container cont cont__py gap-20 px-24  h-fit border transparent-border-black bg-white">
                         <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
                         <StepDisplay steps={indexSteps} />
                     </div>
@@ -275,14 +275,14 @@ const Index = ({
                                 href="https://viasocket.com/blog/tag/client-story"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border border-black border-t-0 px-4 py-2 "
+                                className="border transparent-border-black border-t-0 px-4 py-2 "
                             >
                                 <LinkText>Read More</LinkText>
                             </Link>
                         </div>
                     </div>
 
-                    <div className="container border border-black py-20 px-12 bg-white ">
+                    <div className="container border transparent-border-black py-20 px-12 bg-white ">
                         <div className="cont gap-2">
                             <h2 className="h2 text-left">AI Agents That Work For You</h2>
                             <p className="text-2xl font-semibold text-accent">
@@ -296,7 +296,7 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container cont border border-black gap-12 py-20 px-12 bg-white ">
+                    <div className="container cont border transparent-border-black gap-12 py-20 px-12 bg-white ">
                         <div className="cont gap-2">
                             <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
                             <p className="text-2xl font-semibold text-accent ">
@@ -324,11 +324,11 @@ const Index = ({
 
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container border border-black p-20 border-b-0 bg-white">
+                            <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                                 <FAQSection faqData={faqData} faqName={'/index'} />
                             </div>
                         )}
-                        <div className="container border border-black p-20 border-b-0 bg-white">
+                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                             <AlphabeticalComponent step={0} />
                         </div>
                         <div className="container">
@@ -438,7 +438,7 @@ const HorizontalCardScroller = ({ items }) => {
 };
 
 const WorkflowStepsSection = ({ indexSteps }) => (
-    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border border-black">
+    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border transparent-border-black">
         <div className="flex flex-col justify-center items-center w-full text-center">
             <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
         </div>
@@ -490,7 +490,7 @@ const TestimonialsSection = ({ testimonials }) => (
                 <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
                     <div className="flex flex-col  gap-2 ">
                         <Image
-                            className="border border-black"
+                            className="border transparent-border-black"
                             src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
                             width={50}
                             height={50}
@@ -511,7 +511,7 @@ const TestimonialsSection = ({ testimonials }) => (
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
         <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border border-black p-8 bg-white">
+        <div className="flex flex-col gap-8 w-full border transparent-border-black p-8 bg-white">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}
@@ -541,7 +541,7 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
             <div className={`hidden md:flex w-full ${isEven ? 'flex-row-reverse' : 'flex-row'}`}>
                 <div className="w-1/2 casestudy_img overflow-hidden px-8">
                     <Image
-                        className="h-full w-full object-cover border border-black"
+                        className="h-full w-full object-cover border transparent-border-black"
                         src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}

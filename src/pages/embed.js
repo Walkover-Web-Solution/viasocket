@@ -37,12 +37,12 @@ const Embed = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <div className="sticky top-0 z-[100] border-b border-black">
+            <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
-                <div className="w-full min-h-fit lg:h-dvh  border-b border-black">
-                    <div className="container h-full flex flex-col">
+                <div className="w-full min-h-fit lg:h-dvh  border-b transparent-border-black">
+                    <div className="container h-full flex flex-col bg-white">
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
@@ -72,7 +72,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container w-full min-h-fit lg:h-dvh flex justify-center items-center gap-12 ">
+                <div className="container w-full min-h-fit lg:h-dvh flex justify-center items-center gap-12 bg-white">
                     <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-center items-center gap-6 lg:gap-24">
                         <div className="block w-full h-full  max-h-[600px] aspect-square min-h-[400px] bg-[#FFF5F5] md:p-6 p-2 border">
                             <div className="flex justify-center items-center h-full w-full overflow-hidden">
@@ -111,7 +111,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container border border-black">
+                <div className="container border transparent-border-black bg-white">
                     <Table data={tableData} />
                 </div>
 
@@ -135,7 +135,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py border border-black gap-12 px-12">
+                <div className="container cont cont__py border transparent-border-black gap-12 px-12 bg-white">
                     <div className="flex flex-col justify-start">
                         <h2 className="h2 text-left">Upgrade your Product Today with viaSocket</h2>
                         <p className="sub__h1 text-left">
@@ -150,7 +150,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container min-h-fit">
+                <div className="container min-h-fit bg-white border transparent-border-black px-12">
                     <div className="flex flex-col lg:flex-row h-full gap-12 items-center">
                         <div className="h-full w-full lg:w-3/5 flex flex-col gap-8 px-4 lg:px-0 justify-center">
                             <div>
@@ -171,7 +171,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py border border-black justify-center items-center text-center gap-8">
+                <div className="container cont cont__py border transparent-border-black justify-center items-center text-center gap-8 bg-white">
                     <div className="flex flex-col gap-8">
                         <h2 className="h2">Embed Pricing</h2>
                         <p className="h2">Start from : $500/month + $0.0005/invocation</p>
@@ -214,12 +214,12 @@ const Embed = ({
                 )}
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                             <FAQSection faqData={faqData} faqName={'/embed'} />
                         </div>
                     )}
                     {getStartedData && (
-                        <div className="container border border-black p-20 border-b-0">
+                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}
