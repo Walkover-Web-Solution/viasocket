@@ -113,67 +113,16 @@ export default function Support({ open, onClose }) {
     return (
         <div className={`support-slider pb-24 ${open ? 'open' : ''}`}>
             <div className="flex justify-between items-center mb-2 p-4 border-b">
-                <h2 className="text-2xl font-bold">Support & Feedback</h2>
+                <h2 className="h3">Support & Feedback</h2>
                 <button onClick={onClose} aria-label="Close">
                     <MdClose className="h-6 w-6 text-gray-600" />
                 </button>
             </div>
 
-            {/* Quick Help Section */}
             <div className="px-4 space-y-4">
-                <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xl font-semibold">Ask Our Bot</h3>
-                    <MdAutoAwesome className="h-5 w-5 text-indigo-500" />
-                </div>
-
-                {/* Search Input */}
-                <div className="relative">
-                    <span className="absolute left-3 top-1/2  -translate-y-1/2">
-                        <MdAutoAwesome className="h-5 w-5 text-indigo-500" />
-                    </span>
-                    <input
-                        type="text"
-                        placeholder="Search for assistance..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full border p-2 px-10"
-                    />
-
-                    {searchQuery && (
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2">
-                            <IoSendSharp className="h-5 w-5" />
-                        </span>
-                    )}
-                </div>
-
-                {/* Quick Questions */}
-                <div className="flex flex-wrap gap-2 w-full mb-4">
-                    {[
-                        'How do I use delay?',
-                        'How to apply promocode?',
-                        'How can I check my billing details?',
-                        'Can you guide me on setting up Embed?',
-                    ].map((text) => (
-                        <div
-                            key={text}
-                            onClick={() => {
-                                setSearchQuery(text);
-                                openChatBotCustom(text);
-                                setSearchQuery('');
-                            }}
-                            className="p-2 bg-white border border-gray-200 hover:bg-gray-100 cursor-pointer text-sm"
-                        >
-                            {text}
-                        </div>
-                    ))}
-                </div>
-
-                {/* Divider */}
-                <div className="my-4 border-t border-gray-200" />
-
                 {/* Contact Section */}
                 <div className="mt-2 mb-4 space-y-4">
-                    <h2 className="text-lg font-semibold">We'd Love to Hear From You! Reach out via:</h2>
+                    <h2 className="h3">We'd Love to Hear From You! Reach out via:</h2>
                     <ul className="space-y-2">
                         {ContactListArray.map((item, index) => (
                             <li key={index}>
@@ -184,7 +133,7 @@ export default function Support({ open, onClose }) {
                                         className="flex items-center gap-2 p-2 hover:bg-gray-100 transition cursor-pointer"
                                     >
                                         {item.icon}
-                                        <span>{item.text}</span>
+                                        <span className="text-lg">{item.text}</span>
                                     </a>
                                 ) : (
                                     <button
@@ -202,8 +151,9 @@ export default function Support({ open, onClose }) {
 
                 {/* Divider */}
                 <div className="my-4 border-t border-gray-200" />
+
                 <div className="space-y-2">
-                    <h5 className="mb-2 mt-2 text-xl font-semibold">Discover More</h5>
+                    <h5 className="my-2 h3">Discover More</h5>
                     <div className="relative w-full mt-2 mb-4">
                         <div className="flex overflow-x-scroll gap-2">
                             {GalleryMediaArray.map((gallaryItem, index) => (
@@ -231,16 +181,18 @@ export default function Support({ open, onClose }) {
                                             />
                                         )}
                                         <div className="p-2">
-                                            <h6 className="text-md font-medium">{gallaryItem.heading}</h6>
+                                            <h6 className="text-lg font-medium">{gallaryItem.heading}</h6>
                                             <p className="text-sm text-gray-500">{gallaryItem.subHeading}</p>
                                         </div>
                                     </a>
                                 </div>
                             ))}
                         </div>
+
+                        <div className="my-4 border-t border-gray-200" />
                         <div className="mt-2 space-y-2">
-                            <h5 className="mb-2 text-xl font-semibold">We Value Your Feedback!</h5>
-                            <p className="mb-2 text-sm text-gray-600">Suggest a feature or report an issue.</p>
+                            <h5 className="mb-2 h3">We Value Your Feedback!</h5>
+                            <p className="mb-2 text-lg text-gray-600">Suggest a feature or report an issue.</p>
 
                             {/* Feedback Textarea */}
                             <textarea

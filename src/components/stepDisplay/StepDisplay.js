@@ -37,14 +37,6 @@ export default function StepDisplay({ steps }) {
     };
 
     useEffect(() => {
-        return () => {
-            if (intervalRef.current) {
-                clearInterval(intervalRef.current);
-            }
-        };
-    }, []);
-
-    useEffect(() => {
         if (intervalRef.current) {
             clearInterval(intervalRef.current);
         }
