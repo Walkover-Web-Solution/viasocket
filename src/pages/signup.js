@@ -39,7 +39,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
     return (
         <>
             <div className="flex items-center flex-col md:flex-row gap-10 min-h-screen">
-                <div className="bg-gray-100 h-screen w-full md:w-[40vw] pl-2.5 border-l-8 accent-border-color border-right-color flex flex-col">
+                <div className="bg-gray-100 h-screen w-full md:w-[40vw] border-right-color flex flex-col">
                     <Link href="/">
                         <Image
                             src="/assets/brand/logo.svg"
@@ -67,7 +67,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                             </div>
                         </div>
                     </div>
-                    <p className="text-sm pb-4 flex gap-2 items-center"><span>© 2025 viaSocket. All rights reserved.</span>
+                    <p className="text-sm pl-2 pb-4 flex gap-2 items-center"><span>© 2025 viaSocket. All rights reserved.</span>
                         <Link href="/privacy" className="active-link text-link">Privacy</Link>
                         <span>and</span>
                         <Link href="/terms" className="active-link text-link">Terms.</Link>
