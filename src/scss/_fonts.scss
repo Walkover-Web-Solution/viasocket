@@ -73,3 +73,10 @@ body {
 .text-grey {
     color: #8f9396;
 }
+
+.h6 {
+    @apply text-base;
+    font-family: 'Inter Tight';
+    font-weight: 400;
+    font-size: clamp(14px, -3.0704225352px + 9.014084507vw, 20px);
+}

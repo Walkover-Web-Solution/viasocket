@@ -90,11 +90,11 @@ export default function IntegrationsIndexComp({
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="container flex justify-center items-center bg-white">
-                <div className="cont max-w[1200px] text-center">
+                <div className="cont text-left">
                     <h1 className="h1">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
                     </h1>
-                    <h2 className="sub__h1 max-w-[800px] mx-auto">
+                    <h2 className="sub__h1">
                         Browse our extensive library of integrations to easily connect and automate workflows across
                         your most-used apps.
                     </h2>

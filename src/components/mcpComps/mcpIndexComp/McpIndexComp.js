@@ -142,14 +142,16 @@ export default function McpIndexComp({
 
                 <div className="container cont gap-12 bg-white">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
-                        <div className="cont gap-4 justify-center w-full text-center">
-                            <h1 className="h1">
-                                Give your <span className="text-accent">AI agent </span> the power to act
-                            </h1>
-                            <h2 className="sub__h1">
-                                any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
-                                build your own, power users!
-                            </h2>
+                        <div className="cont gap-4 w-full text-left">
+                            <div className="cont gap-1">
+                                <h1 className="h1">
+                                    Give your <span className="text-accent">AI agent </span> the power to act
+                                </h1>
+                                <h2 className="sub__h1">
+                                    any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
+                                    build your own, power users!
+                                </h2>
+                            </div>
                             <Link
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
                                 onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}

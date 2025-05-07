@@ -116,15 +116,16 @@ export default function IntegrationsAppOneComp({
                 {combosData?.combinations?.length > 0 && (
                     <>
                         <div className="cont gap-2">
-                            <h1 className="h1 ">
-                                {`Create integrations between ${appOneDetails?.name} and your favorite App`}
+                            <h1 className="h1  ">
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and your favorite App
                             </h1>
                             <p className="sub__h1">
                                 {`  Create effective ${appOneDetails?.name} automations in minutes by using pre-made templates that are customized for your needs`}
                             </p>
                         </div>
                         <div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 border-l border-t border-black">
+                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -185,7 +186,8 @@ export default function IntegrationsAppOneComp({
                     <div className="cont gap-4">
                         <div className="cont gap-2">
                             <h1 className="h1  ">
-                                {`Create integrations between ${appOneDetails?.name} and your favorite App`}
+                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
+                                and your favorite App
                             </h1>
                             <p className="sub__h1">
                                 {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}

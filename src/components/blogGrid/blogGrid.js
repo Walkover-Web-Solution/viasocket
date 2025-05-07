@@ -8,7 +8,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
     const router = useRouter();
     const heading = router.pathname.startsWith('/mcp')
         ? 'Know More About MCP'
-        : 'Know More About Viasocket Integrations';
+        : 'Know More About viaSocket Integrations';
 
     if (posts?.length > 0) {
         return (

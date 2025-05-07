@@ -62,7 +62,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
             <div className="">
                 <div className=" py-container container">
                     <div className="flex flex-col gap-10">
-                        {pageData?.h3 && <h3 className="h2">{pageData?.h3}</h3>}
+                        {pageData?.h3 && <h3 className="h6 text-accent">{pageData?.h3}</h3>}
                         {pageData?.h1 && <h1 className="h1">{pageData?.h1}</h1>}
                         {pageData?.h2 && <h3 className="sub__h1">{pageData?.h2}</h3>}
                     </div>
