@@ -89,7 +89,7 @@ export default function IntegrationsIndexComp({
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
-            <div className="container flex justify-center items-center bg-white">
+            <div className="container flex justify-center items-center">
                 <div className="cont text-left">
                     <h1 className="h1">
                         Explore<span className="text-accent"> 1,000+ </span> Pre-Built App Integrations
@@ -100,7 +100,7 @@ export default function IntegrationsIndexComp({
                     </h2>
                 </div>
             </div>
-            <div className="container cont bg-white">
+            <div className="container cont">
                 <label className="input border max-w-[400px] transparent-border-black flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input

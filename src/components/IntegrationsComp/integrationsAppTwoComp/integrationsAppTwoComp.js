@@ -82,7 +82,7 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 </div>
             </div>
-            <div className="container cont cont__gap bg-white">
+            <div className="container cont cont__gap">
                 <div className="flex flex-wrap items-center md:gap-2 gap-0 md:text-lg text-sm">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
@@ -198,7 +198,7 @@ export default function IntegrationsAppTwoComp({
             {combosData?.combinations?.length > 0 &&
                 appOneDetails?.events?.length > 0 &&
                 appTwoDetails?.events?.length > 0 && (
-                    <div className="container cont gap-4 bg-white">
+                    <div className="container cont gap-4">
                         <h2 className="h2 mb-4">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>

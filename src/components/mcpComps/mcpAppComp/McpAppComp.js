@@ -133,7 +133,7 @@ export default function McpAppComp({
                         </div>
                     </div>
 
-                    <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12 bg-white">
+                    <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12">
                         <div className="cont cont__py  gap-16 w-full lg:w-1/2">
                             <div className="flex gap-4">
                                 <div className="border transparent-border-black p-4 bg-gray-200">
@@ -216,7 +216,7 @@ export default function McpAppComp({
                 </div>
 
                 {combosData?.combinations?.length > 0 && (
-                    <div className="container cont gap-4 bg-white">
+                    <div className="container cont gap-4">
                         <div className="flex items-baseline gap-2">
                             <h2 className="h2">Supported Actions</h2>
                             <IoMdCheckmarkCircleOutline fontSize={36} />
@@ -406,7 +406,7 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-12 bg-white">
+                <div className="container cont gap-12">
                     <div>
                         <h2 className="h2">AI-to-App Integration Made Easy with viaSocket MCP</h2>
                     </div>

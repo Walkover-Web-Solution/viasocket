@@ -100,7 +100,7 @@ export default function IntegrationsAppOneComp({
                 </Link>
             </div>
 
-            <div className="container cont cont__gap bg-white">
+            <div className="container cont cont__gap">
                 <div className="flex items-center gap-2 text-lg">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
@@ -225,7 +225,7 @@ export default function IntegrationsAppOneComp({
             )}
 
             {combosData?.combinations?.length > 0 && (
-                <div className="container cont gap-4 bg-white">
+                <div className="container cont gap-4">
                     <h2 className="h2 mb-4">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>

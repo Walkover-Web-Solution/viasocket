@@ -49,7 +49,7 @@ const CustomLogin = ({ redirect_to }) => {
 
     return (
         <div className="min-h-[222px]">
-            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google" />
+            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2" />
         </div>
     );
 };

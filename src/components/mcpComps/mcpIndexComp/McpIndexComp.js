@@ -140,7 +140,7 @@ export default function McpIndexComp({
 
                 <McpSwitchComp />
 
-                <div className="container cont gap-12 bg-white">
+                <div className="container cont gap-12">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                         <div className="cont gap-4 w-full text-left">
                             <div className="cont gap-1">
@@ -192,7 +192,7 @@ export default function McpIndexComp({
                             placeholder="Search your favorite MCP Servers"
                         />
                     </label>
-                    <div className="flex bg-white">
+                    <div className="flex">
                         <div className=" border transparent-border-black border-t-0 lg:block hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (

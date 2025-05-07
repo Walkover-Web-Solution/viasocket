@@ -246,3 +246,10 @@
         flex: 1;
     }
 }
+
+/** Custom Login Button */
+.loginBtn_google{
+    button {
+        margin: 0px !important;
+    }
+}

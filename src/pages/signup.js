@@ -1,13 +1,10 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
-import Navbar from '@/components/navbar/navbar';
-import Footer from '@/components/footer/footer';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 
 export const runtime = 'experimental-edge';
@@ -41,8 +38,8 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
 
     return (
         <>
-            <div className="flex items-center flex-col md:flex-row gap-10 md:min-h-dvh">
-                <div className="bg-gray-100 w-full">
+            <div className="flex items-center flex-col md:flex-row gap-10 min-h-screen">
+                <div className="bg-gray-100 h-screen w-full md:w-[40vw] pl-2.5 border-l-8 accent-border-color border-right-color flex flex-col">
                     <Link href="/">
                         <Image
                             src="/assets/brand/logo.svg"
@@ -52,7 +49,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                             alt="viasocket"
                         />
                     </Link>
-                    <div className="flex items-center justify-center md:min-h-dvh">
+                    <div className="flex-1 flex items-center justify-center">
                         <div className="flex flex-col gap-4 p-6">
                             <div className="cont gap-2">
                                 <h2 className="h2">Sign up for viaSocket</h2>
@@ -70,9 +67,14 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                             </div>
                         </div>
                     </div>
+                    <p className="text-sm pb-4 flex gap-2 items-center"><span>© 2025 viaSocket. All rights reserved.</span>
+                        <Link href="/privacy" className="active-link text-link">Privacy</Link>
+                        <span>and</span>
+                        <Link href="/terms" className="active-link text-link">Terms.</Link>
+                        </p>
                 </div>
-                <div className="cont gap-4 bg-white p-6 mr-4 sm:mr-8 md:mr-12 lg:mr-[30px]">
-                    <div className="w-[40vw] flex flex-col gap-2">
+                <div className="cont gap-4 bg-white p-6 border transparent-border-black m-auto md:w-[34vw]">
+                    <div className="flex flex-col gap-2">
                         <div className="cont gap-2">
                             <div className="flex gap-1">
                                 {[...Array(5)].map((_, index) => (
