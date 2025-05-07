@@ -23,9 +23,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
         Object?.entries(groupedData)?.map(([groupName, items]) => {
             if (items?.length > 0) {
                 return (
-                    <div className="flex flex-col gap-6 w-full" key={groupName}>
+                    <div className="flex flex-col gap-2 w-full" key={groupName}>
                         <h2 className="font-bold">{groupName}</h2>
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-1">
                             {items?.map(
                                 (item, index) =>
                                     !item?.hidden && (
