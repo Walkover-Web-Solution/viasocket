@@ -133,7 +133,7 @@ export default function McpAppComp({
                         </div>
                     </div>
 
-                    <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12">
+                    <div className="container flex flex-col lg:flex-row gap-8 lg:gap-12 bg-white">
                         <div className="cont cont__py  gap-16 w-full lg:w-1/2">
                             <div className="flex gap-4">
                                 <div className="border transparent-border-black p-4 bg-gray-200">
@@ -216,7 +216,7 @@ export default function McpAppComp({
                 </div>
 
                 {combosData?.combinations?.length > 0 && (
-                    <div className="container cont gap-4">
+                    <div className="container cont gap-4 bg-white">
                         <div className="flex items-baseline gap-2">
                             <h2 className="h2">Supported Actions</h2>
                             <IoMdCheckmarkCircleOutline fontSize={36} />
@@ -248,7 +248,7 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-4 mt-12">
+                <div className="container cont gap-4 mt-12 bg-white">
                     <div className="flex items-baseline gap-2 mb-6">
                         <h2 className="h2">Explore other MCP Servers</h2>
                     </div>
@@ -406,7 +406,7 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-12">
+                <div className="container cont gap-12 bg-white">
                     <div>
                         <h2 className="h2">AI-to-App Integration Made Easy with viaSocket MCP</h2>
                     </div>
@@ -452,10 +452,10 @@ export default function McpAppComp({
                 )}
                 <div className="container pb-4">
                     <div className="cont">
-                        <div className="p-12 border transparent-border-black border-b-0">
+                        <div className="p-12 border transparent-border-black border-b-0 bg-white">
                             {faqData && <FAQSection faqData={faqData} />}
                         </div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                             <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
                                 <div>
                                     <Image

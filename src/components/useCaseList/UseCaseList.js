@@ -13,7 +13,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
     }, [useCaseData]);
 
     return (
-        <div className="container cont gap-8">
+        <div className="container cont gap-8 bg-white">
             <div className="cont gap-2">
                 <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
                 <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>

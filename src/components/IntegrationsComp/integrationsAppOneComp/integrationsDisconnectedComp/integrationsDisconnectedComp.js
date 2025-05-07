@@ -134,7 +134,7 @@ export default function IntegrationsDisconnectedComp({
                 <div className="container ">
                     <div className="cont  border transparent-border-black">
                         <div className="p-12">{faqData && <FAQSection faqData={faqData} />}</div>
-                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black">
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                             <div className="cont gap-4 p-12 border-r transparent-border-black w-full ">
                                 <div>
                                     <Image

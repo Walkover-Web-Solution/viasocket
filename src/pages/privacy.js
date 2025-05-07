@@ -27,7 +27,7 @@ const Privacy = ({ navData, footerData, metaData }) => {
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/privacy'} />
             </div>
-            <div className="container mb-4 mt-28">
+            <div className="container mb-4 mt-28 bg-white p-12">
                 <style
                     dangerouslySetInnerHTML={{
                         __html: "\n  [data-custom-class='body'], [data-custom-class='body'] * {\n          background: transparent !important;\n        }\n[data-custom-class='title'], [data-custom-class='title'] * {\n          font-family: Arial !important;\nfont-size: 26px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\n          font-family: Arial !important;\ncolor: #fffff!important;\nfont-size: 14px !important;\n        }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\n          font-family: Arial !important;\nfont-size: 19px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\n          font-family: Arial !important;\nfont-size: 17px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\n          color: #fffff!important;\nfont-size: 14px !important;\nfont-family: Arial !important;\n        }\n[data-custom-class='link'], [data-custom-class='link'] * {\n          color: #0000ff !important;\nfont-size: 14px !important;\nfont-family: Arial !important;\nword-break: break-word !important;\n        }\n",

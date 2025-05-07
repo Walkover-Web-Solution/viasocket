@@ -100,7 +100,7 @@ export default function IntegrationsAppOneComp({
                 </Link>
             </div>
 
-            <div className="container cont cont__gap  ">
+            <div className="container cont cont__gap bg-white">
                 <div className="flex items-center gap-2 text-lg">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
@@ -225,7 +225,7 @@ export default function IntegrationsAppOneComp({
             )}
 
             {combosData?.combinations?.length > 0 && (
-                <div className="container cont gap-4">
+                <div className="container cont gap-4 bg-white">
                     <h2 className="h2 mb-4">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
@@ -234,7 +234,7 @@ export default function IntegrationsAppOneComp({
             {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
 
             {getStartedData && (
-                <div className="container border transparent-border-black p-20">
+                <div className="container border transparent-border-black p-20 bg-white">
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
@@ -247,10 +247,10 @@ export default function IntegrationsAppOneComp({
             )}
             <div className="container cont__py">
                 <div className="cont">
-                    <div className="p-12 border transparent-border-black border-b-0">
+                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
                         {faqData && <FAQSection faqData={faqData} />}
                     </div>
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black">
+                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                         <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
                             <div>
                                 <Image
