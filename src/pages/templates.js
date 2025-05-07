@@ -309,7 +309,7 @@ export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/templates'`);
     const blogTags = 'templates';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     return {
         props: {
             navData: navData || [],

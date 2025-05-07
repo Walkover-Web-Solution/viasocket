@@ -397,7 +397,7 @@ export async function getServerSideProps() {
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`);
     const countries = await getCountries();
     const blogTags = 'pricing';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     const betterChoiceData = await getPricingBetterChoice(PRICINGBETTERCHOICE_FIELDS);
     return {
         props: {

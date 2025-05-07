@@ -574,7 +574,7 @@ export async function getServerSideProps(context) {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const blogTags = 'index';
-    const blogData = await getBlogData(blogTags);
+    const blogData = await getBlogData({ tag1: blogTags });
     const featuresData = [
         {
             heading: 'Save Hours Every Day',
