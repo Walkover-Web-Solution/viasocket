@@ -114,8 +114,9 @@ const Terms = ({ navData, footerData, metaData }) => {
                         </div>
                         <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
                             <bdt className="question">
-                                Viasocket is a powerful SaaS tool that offers a serverless, no-code/low-code platform
-                                for building APIs and workflow automation.
+                                viaSocket is a powerful workflow automation platform designed to streamline and automate
+                                repetitive tasks, enabling users to save time, reduce manual effort, and improve
+                                operational efficiency
                             </bdt>
                         </div>
                         <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
