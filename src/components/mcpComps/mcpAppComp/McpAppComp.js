@@ -248,7 +248,7 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont gap-4 mt-12 bg-white">
+                <div className="container cont gap-4 mt-12">
                     <div className="flex items-baseline gap-2 mb-6">
                         <h2 className="h2">Explore other MCP Servers</h2>
                     </div>
@@ -309,7 +309,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black bg-white"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9">

@@ -170,7 +170,7 @@ export default function IntegrationsAppOneComp({
                                             setShowMore(false);
                                         }
                                     }}
-                                    className="btn btn-outline border-t-0"
+                                    className="btn btn-outline border-t-0 bg-white"
                                 >
                                     Load More
                                 </button>

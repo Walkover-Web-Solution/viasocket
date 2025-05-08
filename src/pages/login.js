@@ -89,19 +89,21 @@ const Login = ({ features, metaData, pathArray, redirect_to, navData, footerData
                     </div>
                 </div>
 
-                <div className="md:w-2/5 w-full bg-white py-6 px-3 md:p-10 flex flex-col gap-4 md:mt-10">
-                    <Link href="/" className="md:hidden block" aria-label="logo">
-                        <Image src="/assets/brand/logo.svg" width={158.6} height={40} alt="viasocket" />
-                    </Link>
-
-                    <div className="text-2xl font-bold">Login</div>
-                    <div id="googleLogin" className="loginBtn_google" />
-                    <CustomLogin redirect_to={redirect_to} />
-                    <div className="flex">
-                        <span className="text-sm">Create a new Account,</span>
-                        <Link href="/signup" className="ms-1 text-sm text-sky-700">
-                            Sign Up
+                <div className="md:w-2/5 py-6 px-3 md:p-10 flex flex-col gap-4 md:mt-10">
+                    <div className="border bg-white transprent-border-black m-auto p-12">
+                        <Link href="/" className="md:hidden block" aria-label="logo">
+                            <Image src="/assets/brand/logo.svg" width={158.6} height={40} alt="viasocket" />
                         </Link>
+
+                        <div className="text-2xl font-bold">Login</div>
+                        <div id="googleLogin" className="loginBtn_google" />
+                        <CustomLogin redirect_to={redirect_to} />
+                        <div className="flex">
+                            <span className="text-sm">Create a new Account,</span>
+                            <Link href="/signup" className="ms-1 text-sm text-sky-700">
+                                Sign Up
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

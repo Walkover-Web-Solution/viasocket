@@ -114,7 +114,7 @@ export default function IntegrationsIndexComp({
                     />
                 </label>
                 <div className="flex">
-                    <div className=" border transparent-border-black border-t-0 lg:block hidden">
+                    <div className=" border transparent-border-black border-t-0 lg:block hidden bg-white">
                         <div className="cont max-w-[252px] min-w-[252px] ">
                             {debounceValue ? (
                                 searchedCategoies ? (
