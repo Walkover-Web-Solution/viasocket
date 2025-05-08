@@ -8,8 +8,8 @@ const McpSwitchComp = () => {
 
     return (
         <div className="container cont">
-            <div className="w-full flex justify-center items-center">
-                <div className="flex flex-row text-center max-w-4xl flex-wrap items-center justify-center category-btn">
+            <div className="w-full flex items-center">
+                <div className="flex flex-row text-left max-w-4xl flex-wrap items-center justify-center category-btn">
                     <Link href="/mcp" className="no-underline">
                         <div
                             className={`cursor-pointer px-6 py-3 border transparent-border-black transition-all duration-200 text-sm border-r-0 ${

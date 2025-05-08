@@ -208,13 +208,32 @@
     }
 }
 
-/** Using the McpAppComp ,developers ,saas Component */
-@media screen and (width <= 576px) {
-    .category-btn {
-        gap: 10px;
+/** Customized the container padding */
+@media screen and (width <=576px) {
+    body {
+        background: white;
+
+        .home-page-container {
+            padding: 0 !important;
+        }
     }
 }
 
+@media screen and (576px <= width <= 992px) {
+    body {
+        .home-page-container {
+            padding: 0 !important;
+        }
+    }
+}
+
+@media screen and (992px <= width <= 1200px) {
+    body {
+        .home-page-container {
+            padding: 1rem !important;
+        }
+    }
+}
 .support-slider {
     position: fixed;
     right: -100%;
