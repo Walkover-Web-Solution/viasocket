@@ -25,7 +25,6 @@ body {
     font-family: 'Inter Tight', serif;
     color: #252525;
     background: radial-gradient(circle, rgba(204, 204, 204, 0.5) 20%, transparent 20%) center/10px 10px;
-    background-color: #f9f8f8;
 }
 
 .h1 {
@@ -53,7 +52,7 @@ body {
     @apply md:text-2xl text-xl;
     font-family: 'Inter Tight';
     font-weight: 500;
-    font-size: clamp(14px, -3.0704225352px + 9.014084507vw, 20px);
+    // font-size: clamp(16px, -3.0704225352px + 9.014084507vw, 20px) !important;
 }
 
 .sub {
