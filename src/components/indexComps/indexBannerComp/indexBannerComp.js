@@ -82,7 +82,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                     </div>
                     <Image
                         src={'/assets/img/website-flow.svg'}
-                        className="max-w-[600px] h-fit md:w-2/5 w-full md:w-3/10"
+                        className="max-w-[600px] h-fit md:w-2/5 w-full"
                         width={1080}
                         height={1080}
                         alt="Website flow"
