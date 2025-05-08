@@ -170,7 +170,7 @@ export default function IntegrationsAppOneComp({
                                             setShowMore(false);
                                         }
                                     }}
-                                    className="btn btn-outline border-t-0"
+                                    className="btn btn-outline border-t-0 bg-white"
                                 >
                                     Load More
                                 </button>
@@ -245,7 +245,7 @@ export default function IntegrationsAppOneComp({
                     <BlogGrid posts={blogsData} />
                 </div>
             )}
-            <div className="container cont__py">
+            <div className="container pb-4">
                 <div className="cont">
                     <div className="p-12 border transparent-border-black border-b-0 bg-white">
                         {faqData && <FAQSection faqData={faqData} />}

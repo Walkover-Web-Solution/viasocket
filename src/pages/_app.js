@@ -120,6 +120,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     }
 
     const showMCPBanner = !router.pathname.includes('/pricing');
+    const show404Banner = router.pathname === '/404';
 
     return (
         <>
@@ -130,7 +131,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <Skeleton />
             ) : (
                 <>
-                    {!isSignupPage && showMCPBanner && (
+                    {!isSignupPage && showMCPBanner && !show404Banner && (
                         <Link href="/mcp">
                             <div className="w-full p-2 text-center transparent-border-black gradient-background border-b border-b-black">
                                 <p className="!text-xs text-black hover:underline">

@@ -148,7 +148,7 @@ export default function McpIndexComp({
                                     Give your <span className="text-accent">AI agent </span> the power to act
                                 </h1>
                                 <h2 className="sub__h1">
-                                    any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
+                                    Any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
                                     build your own, power users!
                                 </h2>
                             </div>
@@ -193,7 +193,7 @@ export default function McpIndexComp({
                         />
                     </label>
                     <div className="flex">
-                        <div className=" border transparent-border-black border-t-0 lg:block hidden">
+                        <div className=" border transparent-border-black border-t-0 lg:block hidden bg-white">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {debounceValue ? (
                                     searchedCategoies ? (

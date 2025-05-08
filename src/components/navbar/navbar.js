@@ -44,11 +44,11 @@ export default function Navbar({ navData, utm }) {
 
     return (
         <>
-            <div className="justify-between lg:flex hidden bg-white pr-4">
+            <div className="justify-between flex bg-white px-4">
                 <Link
                     href="/"
                     aria-label="logo"
-                    className={` ${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass}  flex bg-[#FFFFFF10]`}
+                    className={`${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass} flex !justify-start bg-[#FFFFFF10]`}
                     style={{ backgroundColor: '#FFFFFF10' }}
                 >
                     {mode === 'dark' ? (
@@ -76,7 +76,7 @@ export default function Navbar({ navData, utm }) {
                             if (!option) return null;
 
                             return (
-                                <div key={index} className="relative">
+                                <div key={index} className="relative xl:flex hidden">
                                     {option.is_parent ? (
                                         <div className="dropdown dropdown-hover">
                                             {option.link ? (
@@ -86,7 +86,7 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                     >
                                                         <span className='!text-xs'>{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
@@ -95,7 +95,7 @@ export default function Navbar({ navData, utm }) {
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                 >
                                                     <span className='!text-xs'>{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
@@ -116,7 +116,7 @@ export default function Navbar({ navData, utm }) {
                                                                     target={
                                                                         childOption.open_in_new_tab ? '_blank' : '_self'
                                                                     }
-                                                                    className="text-black hover:bg-gray-100 px-4 py-2 block !text-xs"
+                                                                    className="text-black hover:bg-gray-100 py-2 block !text-xs"
                                                                 >
                                                                     {childOption.name}
                                                                 </Link>
@@ -139,7 +139,7 @@ export default function Navbar({ navData, utm }) {
                                                 href={option.link || '#'}
                                             >
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-2`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                 >
                                                     {option.name}
                                                 </div>
@@ -149,89 +149,31 @@ export default function Navbar({ navData, utm }) {
                                 </div>
                             );
                         })}
+
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        href={`/pricing?utm_source=${utm}`}
+                        rel="nofollow"
+                    >
+                        Pricing
+                    </Link>
+                    <Link
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >
                         Login
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} text-white flex w-[160px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
+                        className={`${style.nav_btn} ${borderClass} hidden md:flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
                         href={`/signup?utm_source=${utm}`}
                     >
                         Start Free Trial
                     </Link>
-                </div>
-            </div>
-            <div className=" justify-between bg-white py-4  flex lg:hidden">
-                <Link
-                    href="/"
-                    aria-label="logo"
-                    className={` ${style.nav_btn} ${borderClass} sm:flex hidden  w-[192px]`}
-                >
-                    {mode === 'dark' ? (
-                        <Image
-                            src="/assets/brand/socketWhitesvg.png"
-                            className="h-[28px] w-auto "
-                            width={60}
-                            height={60}
-                            alt="viasocket"
-                        />
-                    ) : (
-                        <Image
-                            src="/assets/brand/logo.svg"
-                            className="h-[28px] w-auto "
-                            width={60}
-                            height={60}
-                            alt="viasocket"
-                        />
-                    )}
-                </Link>
-                <Link
-                    href="/"
-                    aria-label="logo"
-                    className={` ${style.nav_btn} ${borderClass} ${backgroundClass} bg-[#FFFFFF10] flex sm:hidden w-[56px]`}
-                >
-                    {mode === 'dark' ? (
-                        <Image
-                            src="/assets/brand/favicon_light.svg"
-                            className="h-[32px] w-auto "
-                            width={48}
-                            height={48}
-                            alt="viasocket"
-                        />
-                    ) : (
-                        <Image
-                            src="/assets/brand/favicon_dark.svg"
-                            className="h-[32px] w-auto "
-                            width={48}
-                            height={48}
-                            alt="viasocket"
-                        />
-                    )}
-                </Link>
-                <div className=" flex">
-                    <Link
-                        className={` ${style.nav_btn} ${borderClass} ${backgroundClass} flex w-[56px] border border-r-0 bg-[#FFFFFF10] `}
-                        href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
-                        aria-label="Login"
-                        rel="nofollow"
-                    >
-                        <MdLogin size={24} />
-                    </Link>
-                    <Link
-                        className={` ${style.nav_btn} ${borderClass} flex w-[56px]  text-white  border border-r-0 bg-accent`}
-                        href={`/signup?utm_source=${utm}`}
-                        aria-label="Sign Up"
-                    >
-                        <MdPersonAdd size={24} />
-                    </Link>
-
-                    <div className="dropdown dropdown-end  ">
+                    <div className="dropdown dropdown-end xl:hidden flex">
                         <button
                             tabIndex={0}
-                            className={` ${style.nav_btn} ${borderClass}  ${backgroundClass} bg-[#FFFFFF10] flex w-[56px] border`}
+                            className={`${style.nav_btn} ${borderClass}  ${backgroundClass} bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
                             aria-label="Menu"
                         >
                             <MdMenu size={24} />

@@ -246,7 +246,7 @@ const Index = ({
                         signupFeatures={signupFeatures}
                     />
 
-                    <div className="cont text-center gap-2 container bg-white py-5">
+                    <div className="cont text-center gap-2 container py-5">
                         <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
                         <HorizontalCardScroller items={streamlineData} />
                     </div>
@@ -421,7 +421,7 @@ const HorizontalCardScroller = ({ items }) => {
                 {displayedItems.map((item, index) => (
                     <div
                         key={`${index}-${item.title}`}
-                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover:bg-black hover:text-white group"
+                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover:bg-black hover:text-white group bg-white"
                     >
                         <div className="flex flex-col gap-4">
                             <div className="flex gap-4">

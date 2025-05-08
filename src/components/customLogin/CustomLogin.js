@@ -1,7 +1,9 @@
 import { setUtmSource } from '@/utils/handleUtmSource';
+import { usePathname } from 'next/navigation';
 import React, { useLayoutEffect } from 'react';
 
 const CustomLogin = ({ redirect_to }) => {
+    const pathname = usePathname();
     useLayoutEffect(() => {
         const configuration = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
@@ -21,6 +23,9 @@ const CustomLogin = ({ redirect_to }) => {
         configuration.state = utm_source;
 
         const runVerification = () => {
+            if (pathname === '/signup') {
+                window.__init_verification_ran__ = false;
+            }
             if (!window.__init_verification_ran__) {
                 window.initVerification?.(configuration);
                 window.__init_verification_ran__ = true;
