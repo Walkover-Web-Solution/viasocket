@@ -9,7 +9,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
-const TemplateCard = ({ template }) => {
+const TemplateCard = ({ template, backgroundColor }) => {
+    console.log(template, 'template');
     const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
     const rootActions = template?.published_json_script?.order?.root || [];
     const blocks = template?.published_json_script?.blocks || {};
@@ -42,19 +43,17 @@ const TemplateCard = ({ template }) => {
     }, []);
 
     return (
-        <div className="border-2  transparent-border-black border-t-0 border-l-0 group">
-            <div className="cont gap-4 pb-4">
-                <div className="flex flex-col gap-1 px-8 h-20 mt-4">
-                    <h1 className="h3">{template?.title}</h1>
-                    <h2 className="sub__h2">{template?.metadata?.description}</h2>
-                </div>
+        <div className="group cont gap-4 pb-4 relative" style={backgroundColor}>
+            <div className="flex flex-col gap-1 px-8 mt-4">
+                <h1 className="h3 text-white">{template?.title}</h1>
+                <h2 className="sub__h2 text-white">{template?.metadata?.description}</h2>
+            </div>
 
-                <div className="w-full h-[400px] transparent-border-black px-8 cont justify-center items-center">
-                    <div className="bg-white w-full shadow-md">
-                        <div>
-                            <div className="bg-[#F3E9F5] px-2 py-1 border-b">
-                                <p>Trigger: </p>
-                            </div>
+            <div className="w-full h-[350px] transparent-border-black px-8 cont items-center mt-8">
+                <div className="bg-white w-full shadow-md">
+                    <div>
+                        <div className="bg-white px-2 py-1 border-b flex gap-1 items-center justify-start border border-black shadow-xl">
+                            <p className="text-base font-semibold">Trigger: </p>
                             <div className="px-2 py-1 flex items-center gap-2">
                                 {template?.published_json_script?.trigger?.iconUrl ? (
                                     <Image
@@ -74,53 +73,53 @@ const TemplateCard = ({ template }) => {
                                         )}
                                     </>
                                 )}
-                                <p>
+                                <p className="text-base font-semibold">
                                     {template?.published_json_script?.trigger?.actionName ||
                                         template?.published_json_script?.trigger?.triggerType}
                                 </p>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div className="border transparent-border-black h-4 opacity-75"></div>
+                <div className="border border-black h-4 opacity-75 shadow-xl"></div>
 
-                    {actionGroups.map((group, groupIndex) => (
-                        <>
-                            <div
-                                key={groupIndex}
-                                className={`w-full cont bg-[#F3E9F5]  shadow-md overflow-hidden ${
-                                    group.some((action) => blocks[action]?.type === 'ifGroup') ? '' : 'p-2'
-                                }`}
-                            >
-                                {group.map((action, actionIndex) => {
-                                    const block = blocks[action];
-                                    if (block?.type === 'ifGroup') {
-                                        const block_id = block?.identifier;
-                                        const ifsList = template?.published_json_script?.order?.[block_id] || [];
-                                        const [selectedIndex, setSelectedIndex] = useState(0);
-                                        return (
-                                            <div key={actionIndex}>
-                                                <div className="flex w-full">
-                                                    {ifsList.map((ifPath, index) => (
-                                                        <button
-                                                            key={index}
-                                                            className={`flex-grow px-4 py-2 border-gray-600 ${
-                                                                selectedIndex === index ? ' bg-white' : ' '
-                                                            }`}
-                                                            onClick={() => setSelectedIndex(index)}
-                                                        >
-                                                            Path {String.fromCharCode(65 + index)}
-                                                        </button>
-                                                    ))}
-                                                </div>
-                                                <div className="bg-white w-full px-2 py-1  flex justify-start items-center gap-2">
-                                                    <IoGitNetworkSharp />
-                                                    {ifsList[selectedIndex]}
-                                                </div>
-                                                <div className="p-4">
-                                                    {template?.published_json_script?.order?.[
-                                                        ifsList[selectedIndex]
-                                                    ]?.map((steps, stepIndex) => {
+                {actionGroups.map((group, groupIndex) => (
+                    <>
+                        <div
+                            key={groupIndex}
+                            className={`w-full cont bg-white border border-black shadow-xl overflow-hidden ${
+                                group.some((action) => blocks[action]?.type === 'ifGroup') ? '' : 'p-2 pb-0'
+                            }`}
+                        >
+                            {group.map((action, actionIndex) => {
+                                const block = blocks[action];
+                                if (block?.type === 'ifGroup') {
+                                    const block_id = block?.identifier;
+                                    const ifsList = template?.published_json_script?.order?.[block_id] || [];
+                                    const [selectedIndex, setSelectedIndex] = useState(0);
+                                    return (
+                                        <div key={actionIndex}>
+                                            <div className="flex w-full bg-gray-500">
+                                                {ifsList.map((ifPath, index) => (
+                                                    <button
+                                                        key={index}
+                                                        className={`flex-grow px-4 py-2 text-black text-base font-semibold ${
+                                                            selectedIndex === index && 'bg-white'
+                                                        }`}
+                                                        onClick={() => setSelectedIndex(index)}
+                                                    >
+                                                        Path {String.fromCharCode(65 + index)}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                            <div className="bg-white w-full px-2 py-1  flex justify-start items-center gap-2">
+                                                <IoGitNetworkSharp />
+                                                <p className="text-base font-semibold">{ifsList[selectedIndex]}</p>
+                                            </div>
+                                            <div className="p-4 pb-0">
+                                                {template?.published_json_script?.order?.[ifsList[selectedIndex]]?.map(
+                                                    (steps, stepIndex) => {
                                                         const stepBlock = blocks[steps];
                                                         if (stepBlock?.type === 'comment') return null;
 
@@ -131,54 +130,63 @@ const TemplateCard = ({ template }) => {
                                                             >
                                                                 <HiArrowRight color="black" size={16} />
                                                                 <DiJsBadge color="black" size={16} />
-                                                                <p>{steps}</p>
+                                                                <p className="text-base font-semibold">{steps}</p>
                                                             </div>
                                                         );
-                                                    })}
-                                                </div>
-                                            </div>
-                                        );
-                                    }
-                                    return (
-                                        block?.type !== 'comment' && (
-                                            <div key={actionIndex} className="px-2 flex gap-4 items-center mb-2">
-                                                <HiArrowRight color="black" size={16} />
-                                                {block?.iconUrl ? (
-                                                    <Image
-                                                        src={block?.iconUrl || 'https://placehold.co/40x40'}
-                                                        alt={action}
-                                                        width={20}
-                                                        height={20}
-                                                    />
-                                                ) : (
-                                                    <DiJsBadge color="black" size={16} />
+                                                    }
                                                 )}
-                                                <p>{action}</p>
                                             </div>
-                                        )
+                                        </div>
                                     );
-                                })}
-                            </div>
-                            <div className="border transparent-border-black h-4 opacity-75"></div>
-                        </>
-                    ))}
+                                }
+                                return (
+                                    block?.type !== 'comment' && (
+                                        <div key={actionIndex} className="px-2 flex gap-4 items-center mb-2">
+                                            <HiArrowRight color="black" size={16} />
+                                            {block?.iconUrl ? (
+                                                <Image
+                                                    src={block?.iconUrl || 'https://placehold.co/40x40'}
+                                                    alt={action}
+                                                    width={20}
+                                                    height={20}
+                                                />
+                                            ) : (
+                                                <DiJsBadge color="black" size={16} />
+                                            )}
+                                            <p className="text-base font-semibold">{action}</p>
+                                        </div>
+                                    )
+                                );
+                            })}
+                        </div>
+                        <div className="border border-black h-4 shadow-xl"></div>
+                    </>
+                ))}
 
-                    <div className="border transparent-border-black p-1 opacity-75">
-                        <FiPlus size={16} />
-                    </div>
+                <div className="border border-black p-1 shadow-xl">
+                    <FiPlus size={16} color="black" />
                 </div>
+            </div>
 
-                <div className="h-fit cont justify-between gap-2 px-8 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="flex flex-wrap gap-2 items-center justify-end">
-                        <Link
-                            href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
-                            onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
-                        >
-                            <button className="btn bg-black border-0 text-white hover:bg-accent">
-                                Use This Template
-                            </button>
-                        </Link>
-                    </div>
+            {/* Use This Template button - now absolutely positioned and on top */}
+            <div
+                className="cont justify-between gap-2 px-8 transition-opacity opacity-0 group-hover:opacity-100"
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    bottom: '1.5rem',
+                    zIndex: 20,
+                    pointerEvents: 'none', // Prevent accidental hover/click when not visible
+                }}
+            >
+                <div className="flex flex-wrap gap-2 items-center justify-end" style={{ pointerEvents: 'auto' }}>
+                    <Link
+                        href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
+                        onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails?.appslugname}` })}
+                    >
+                        <button className="btn bg-black border-0 text-white hover:bg-accent">Use This Template</button>
+                    </Link>
                 </div>
             </div>
         </div>

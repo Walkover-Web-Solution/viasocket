@@ -28,29 +28,21 @@ export async function getBlogData({ tag1, tag2 }) {
     const MAX_BLOGS = 6;
     const DEFAULT_TAG = 'index';
 
-    async function ensureMinimumBlogs(currentBlogs, minCount) {
-        if (currentBlogs.length >= minCount) {
-            return currentBlogs;
-        }
-
-        const remainingCount = minCount - currentBlogs.length;
-        const additionalBlogs = await getBlogs(DEFAULT_TAG);
-        return [...currentBlogs, ...additionalBlogs.slice(0, remainingCount)];
-    }
-
     const tag1Blogs = await getBlogs(tag1);
-    let blogs = [];
+    let blogs = [...tag1Blogs];
 
-    if (!tag2) {
-        blogs = tag1Blogs;
-    } else {
+    if (tag2) {
         const tag2Blogs = await getBlogs(tag2);
-        const tag1BlogIds = new Set(tag1Blogs.map((blog) => blog.rowid));
-        const uniqueTag2Blogs = tag2Blogs.filter((blog) => !tag1BlogIds.has(blog.rowid));
-
-        blogs = [...tag1Blogs, ...uniqueTag2Blogs];
+        const tag1Ids = new Set(tag1Blogs.map((blog) => blog.rowid));
+        const nonDuplicateTag2Blogs = tag2Blogs.filter((blog) => !tag1Ids.has(blog.rowid));
+        blogs = blogs.concat(nonDuplicateTag2Blogs);
     }
 
-    blogs = await ensureMinimumBlogs(blogs, MIN_BLOGS);
+    if (blogs.length < MIN_BLOGS) {
+        const additionalBlogs = await getBlogs(DEFAULT_TAG);
+        const needed = MIN_BLOGS - blogs.length;
+        blogs = blogs.concat(additionalBlogs.slice(0, needed));
+    }
+
     return blogs.slice(0, MAX_BLOGS);
 }

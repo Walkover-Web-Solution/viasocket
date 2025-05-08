@@ -22,7 +22,7 @@ export default function ChatWidget() {
                 className={`${style.chat_widget} btn btn-lg btn-primary `}
                 aria-label="Talk to an expert"
             >
-                <MdCircle color="#dc3545" fontSize={12} /> Live Chat
+                <MdCircle color="#dc3545" fontSize={12} /> Support
             </button>
             {/* <Support open={open} onClose={handleClose} /> */}
         </>

@@ -27,6 +27,16 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
     const filterRef = useRef(null);
     const sortRef = useRef(null);
 
+    const backgroundColors = [
+        { background: 'linear-gradient(105deg, #2F3C4F 2.92%, #4B5E73 100%)' }, // Deep steel blue
+        { background: 'linear-gradient(104deg, #4C3B4D 2.92%, #705775 100%)' }, // Faded royal purple
+        { background: 'linear-gradient(105deg, #5A5148 2.92%, #837263 100%)' }, // Muted cocoa
+        { background: 'linear-gradient(105deg, #1F232A 2.92%, #3B4048 100%)' }, // Subtle graphite
+        { background: 'linear-gradient(105deg, #3C4F57 2.92%, #627D87 100%)' }, // Foggy cyan-gray
+        { background: 'linear-gradient(104deg, #4A646C 2.92%, #5F7C84 100%)' }, // Stormy teal
+        { background: 'linear-gradient(105deg, #593A56 2.92%, #8C6285 100%)' }, // Mauve dusk
+    ];
+
     useEffect(() => {
         const validTemplateNames = validTemplates.map((t) => t.name);
         const filtered = templateData.filter((template) => validTemplateNames.includes(template.id));
@@ -188,8 +198,8 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                 </div>
 
                 <div className="cont container">
-                    <div className="max-w-[400px] w-full">
-                        <label className="input border-2 border-b-0 transparent-border-black flex items-center gap-2 focus-within:outline-none h-[42px]">
+                    <div className="max-w-[400px] w-full mb-8">
+                        <label className="input border-2 transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px]">
                             <MdSearch size={20} />
                             <input
                                 type="text"
@@ -203,16 +213,20 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
 
                     {filteredTemplates.length > 0 ? (
                         <>
-                            <div className="container grid grid-cols-1 lg:grid-cols-3 border-2 transparent-border-black border-b-0 border-r-0">
-                                {filteredTemplates.slice(0, visibleCount).map((template) => (
-                                    <TemplateCard key={template.id} template={template} />
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {filteredTemplates.slice(0, visibleCount).map((template, index) => (
+                                    <TemplateCard
+                                        key={template.id}
+                                        template={template}
+                                        backgroundColor={backgroundColors[index % backgroundColors.length]}
+                                    />
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-end w-full container">
+                                <div className="flex justify-end w-full container mt-4">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border-2 border-t-0 transparent-border-black bg-white"
+                                        className="btn btn-outline border-2 transparent-border-black bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>

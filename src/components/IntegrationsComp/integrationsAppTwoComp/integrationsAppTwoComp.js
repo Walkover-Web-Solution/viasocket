@@ -217,8 +217,8 @@ export default function IntegrationsAppTwoComp({
                 </div>
             )}
 
-            <div className="container cont__py">
-                <div className="cont  ">
+            <div className="container pb-4">
+                <div className="cont ">
                     <div className="p-12 border transparent-border-black border-b-0 bg-white">
                         {faqData && <FAQSection faqData={faqData} />}
                     </div>
