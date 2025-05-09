@@ -33,8 +33,19 @@ import Navbar from '@/components/navbar/navbar';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
-import { FaBullhorn, FaChartLine, FaCoins, FaRegClock, FaServer } from 'react-icons/fa6';
-import { FaCogs, FaUserFriends } from 'react-icons/fa';
+import {
+    FaBug,
+    FaBullhorn,
+    FaCertificate,
+    FaChartLine,
+    FaClock,
+    FaCoins,
+    FaEye,
+    FaRegClock,
+    FaServer,
+    FaUserShield,
+} from 'react-icons/fa6';
+import { FaCogs, FaShieldAlt, FaUserFriends } from 'react-icons/fa';
 import StepDisplay from '@/components/stepDisplay/StepDisplay';
 
 export const runtime = 'experimental-edge';
@@ -561,26 +572,45 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
 };
 
 const SecuritySection = ({ securityGridData }) => {
+    const getIconComponent = (iconName) => {
+        switch (iconName) {
+            case 'shield-alt':
+                return <FaShieldAlt size={28} />;
+            case 'user-shield':
+                return <FaUserShield size={28} />;
+            case 'eye':
+                return <FaEye size={28} />;
+            case 'clock':
+                return <FaClock size={28} />;
+            case 'bug':
+                return <FaBug size={28} />;
+            case 'certificate':
+                return <FaCertificate size={28} />;
+            default:
+                return <FaRegClock size={28} />;
+        }
+    };
     return (
-        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
-            <div className="flex justify-between">
+        <div className="container border transparent-border-black p-20 border-b-0 bg-white cont gap-8">
+            <div className="flex justify-between gap-20">
                 <div className="cont gap-1">
-                    <h2> viaSocket is secure automation that sticks</h2>
-                    <h3>
+                    <h2 className="h2"> viaSocket is secure automation that sticks</h2>
+                    <h3 className="sub__h1">
                         Our customers run millions of workflows a day—securely, reliably, and at scale. Here’s why
                         founders, CIOs, and their IT teams trust us with their data.
                     </h3>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex gap-4 mr-12">
                     <Image src="assets/img/aicpa-soc-badge.webp" width={100} height={100} />
                     <Image src="assets/img/iso-certified.webp" width={100} height={100} />
                 </div>
             </div>
             <div className="grid grid-cols-3 border transparent-border-black border-t-0 border-r-0">
                 {securityGridData.map((item, index) => (
-                    <div key={index} className="p-6 border-b border-r border-transparent-border-black">
-                        <h4 className="font-semibold mb-2">{item.title}</h4>
-                        <p className="text-sm text-gray-700">{item.description}</p>
+                    <div key={index} className="cont gap-1 p-6 border transparent-border-black border-b-0 border-l-0 ">
+                        {getIconComponent(item.iconName)}
+                        <h4 className="h3">{item.title}</h4>
+                        <p className="sub__h2 text-gray-700">{item.description}</p>
                     </div>
                 ))}
             </div>
@@ -701,19 +731,34 @@ export async function getServerSideProps(context) {
         {
             title: 'SOC 2 (Type II)',
             description: 'Your workflows meet the highest industry standards for security and compliance.',
+            iconName: 'shield-alt',
         },
-        { title: 'GDPR & CCPA Compliance', description: 'Your data stays private and under your control. Always.' },
-        { title: 'End-to-End Observability', description: 'Error Handling & Recovery' },
+        {
+            title: 'GDPR & CCPA Compliance',
+            description: 'Your data stays private and under your control. Always.',
+            iconName: 'user-shield',
+        },
+        {
+            title: 'End-to-End Observability',
+            description: 'Error Handling & Recovery',
+            iconName: 'eye',
+        },
         {
             title: '99.99% Uptime & Enterprise SLA',
             description: 'Your mission-critical workflows stay online, with industry-leading reliability.',
+            iconName: 'clock',
         },
         {
             title: 'Error Handling & Recovery',
             description:
                 "viaSocket catches issues before they're issues. Keep everything on-track with intelligent alerts and AI-powered troubleshooting.",
+            iconName: 'bug',
         },
-        { title: 'ISO Certified', description: '' },
+        {
+            title: 'ISO Certified',
+            description: '',
+            iconName: 'certificate',
+        },
     ];
 
     return {
