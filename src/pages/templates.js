@@ -253,9 +253,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 <FAQSection faqData={faqData} faqName={'/templates'} />
                             </div>
                         )}
-                        <div className="container">
-                            <Footer footerData={footerData} />
-                        </div>
+                        <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>
