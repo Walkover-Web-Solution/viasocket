@@ -155,7 +155,7 @@ export default function Support({ open, onClose }) {
                         </button>
                     ))}
                 </div>
-                <button onClick={onClose} aria-label="Close">
+                <button onClick={onClose} aria-label="Close" className='!mx-4'>
                     <MdClose className="h-6 w-6 text-gray-600" />
                 </button>
             </div>
