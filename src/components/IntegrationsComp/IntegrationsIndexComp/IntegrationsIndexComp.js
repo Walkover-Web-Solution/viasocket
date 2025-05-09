@@ -123,7 +123,7 @@ export default function IntegrationsIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-white-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                     href={createURL(`/integrations/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -142,7 +142,7 @@ export default function IntegrationsIndexComp({
                                         return (
                                             <a
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-white-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                 href={createURL(`/integrations/category/${category?.slug}`)}
                                             >
                                                 {category?.name}
@@ -181,7 +181,7 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
 
-                        <div className={style.appsgrid}>
+                        <div className={`${style.appsgrid} transparent-border-black`}>
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
                                     searchedApps?.map((app, index) => {
@@ -218,7 +218,7 @@ export default function IntegrationsIndexComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/integrations/${app?.appslugname}`)}
-                                            className={style.app}
+                                            className={`${style.app} hover-bg-white-text-black transparent-border-black`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9 bg-white">
@@ -272,7 +272,7 @@ export default function IntegrationsIndexComp({
                     </button>
                 </div>
             </div>
-            <div className="container my-6 bg-white">
+            <div className="container my-6">
                 <BlogGrid posts={blogsData} />
             </div>
             <div className="container my-6 bg-white">

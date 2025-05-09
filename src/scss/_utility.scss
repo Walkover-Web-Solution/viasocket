@@ -5,10 +5,18 @@
     border-color: var(--transparent-border-black) !important;
 }
 
-.accent-border-color {
-    border-color: #A8200D !important;
-}
-
 .border-right-color {
     border-right: 1px solid var(--transparent-border-black) !important;
+}
+
+/**Hover classes */
+
+.hover-bg-white-text-black {
+    background-color: var(--background-color-white) !important;
+    color: var(--text-color-black) !important;
+}
+
+.hover-bg-black-text-white {
+    background-color: var(--background-color-black) !important;
+    color: var(--text-color-white) !important;
 }

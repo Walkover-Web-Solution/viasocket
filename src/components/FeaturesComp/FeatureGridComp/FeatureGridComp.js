@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            'lg:p-10 p-4 border transparent-border-black border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover:bg-black hover:text-white featurecard ' +
+            'lg:p-10 p-4 border transparent-border-black border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-white-text-black featurecard ' +
             gridClass +
             ' ' +
             'feature_block'

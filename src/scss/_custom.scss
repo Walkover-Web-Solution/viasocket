@@ -18,7 +18,7 @@
     }
 
     &.btn-accent {
-        @apply text-white border-black;
+        @apply text-white transparent-border-black;
         &:hover {
             @apply bg-black;
         }

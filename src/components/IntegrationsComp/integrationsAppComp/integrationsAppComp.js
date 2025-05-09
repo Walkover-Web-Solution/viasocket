@@ -118,7 +118,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             return (
                                                 <Link
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-white-text-black ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                     href={`/integrations/category/${category}`}
                                                 >
                                                     {category}
@@ -135,7 +135,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         return (
                                             <Link
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-white-text-black ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                 href={`/integrations/category/${category}`}
                                             >
                                                 {category}
@@ -170,7 +170,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                             </div>
                         )}
 
-                        <div className={style.appsgrid}>
+                        <div className={`$ style.appsgrid} transparent-border-black`}>
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
                                     searchedApps?.map((app, index) => (
@@ -212,7 +212,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={style.app}
+                                                    className={`${style.app} hover-bg-white-text-black transparent-border-black`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <div className="border flex items-center justify-center w-9 h-9 bg-white">

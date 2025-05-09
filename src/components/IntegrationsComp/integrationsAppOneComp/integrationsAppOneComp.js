@@ -62,12 +62,12 @@ export default function IntegrationsAppOneComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-white-text-black transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                             <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-white-text-black transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
                             </Link>
@@ -125,7 +125,7 @@ export default function IntegrationsAppOneComp({
                             </p>
                         </div>
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t border-black">
+                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t transparent-border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +

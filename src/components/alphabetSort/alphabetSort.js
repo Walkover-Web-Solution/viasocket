@@ -4,14 +4,14 @@ const AlphabeticalComponent = ({ alphabet, appDetails, step }) => {
     const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     return (
-        <div className=" flex flex-col gap-6  w-full ">
+        <div className=" flex flex-col gap-2 w-full ">
             {step === 0 && <h3 className="h3 font-semibold text-center">Browse Apps by Name</h3>}
             {step === 2 && <h3 className="h3 font-semibold text-center">Select an app to integrate with</h3>}
 
             <div className="flex flex-row flex-wrap justify-center gap-2">
                 {/* <Link
                     key={9}
-                    className="text-lg py-1 px-2 hover:bg-black hover:text-white transition-all duration-150 "
+                    className="text-lg py-1 px-2 hover-bg-white-text-black transition-all duration-150 "
                     href={`/find-apps/0-9`}
                     aria-label="alphabet"
                 >
@@ -19,7 +19,7 @@ const AlphabeticalComponent = ({ alphabet, appDetails, step }) => {
                 </Link> */}
                 {alphabets.map((letter) => (
                     <Link
-                        className={`text-sm py-1 px-2 hover:bg-black hover:text-white transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
+                        className={`text-sm py-1 px-2 hover-bg-white-text-black transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
                         key={letter}
                         href={
                             step === 2 || step === 3

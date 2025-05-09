@@ -30,9 +30,9 @@ export default function Navbar({ navData, utm }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = 'text-black hover:bg-black hover:text-white !text-xs !capitalize';
+        backgroundClass = 'text-black hover-bg-white-text-black !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover:bg-black hover:text-white !text-xs !capitalize';
+        backgroundClass = textClass + ' hover-bg-white-text-black !text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';

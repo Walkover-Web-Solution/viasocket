@@ -52,7 +52,7 @@ const TemplateCard = ({ template, backgroundColor }) => {
             <div className="w-full h-[350px] transparent-border-black px-8 cont items-center mt-8">
                 <div className="bg-white w-full shadow-md">
                     <div>
-                        <div className="bg-white px-2 py-1 border-b flex gap-1 items-center justify-start border border-black shadow-xl">
+                        <div className="bg-white px-2 py-1 border-b flex gap-1 items-center justify-start border transparent-border-black shadow-xl">
                             <p className="text-base font-semibold">Trigger: </p>
                             <div className="px-2 py-1 flex items-center gap-2">
                                 {template?.published_json_script?.trigger?.iconUrl ? (
@@ -82,13 +82,13 @@ const TemplateCard = ({ template, backgroundColor }) => {
                     </div>
                 </div>
 
-                <div className="border border-black h-4 opacity-75 shadow-xl"></div>
+                <div className="border transparent-border-black h-4 opacity-75 shadow-xl"></div>
 
                 {actionGroups.map((group, groupIndex) => (
                     <>
                         <div
                             key={groupIndex}
-                            className={`w-full cont bg-white border border-black shadow-xl overflow-hidden ${
+                            className={`w-full cont bg-white border transparent-border-black shadow-xl overflow-hidden ${
                                 group.some((action) => blocks[action]?.type === 'ifGroup') ? '' : 'p-2 pb-0'
                             }`}
                         >
@@ -159,11 +159,11 @@ const TemplateCard = ({ template, backgroundColor }) => {
                                 );
                             })}
                         </div>
-                        <div className="border border-black h-4 shadow-xl"></div>
+                        <div className="border transparent-border-black h-4 shadow-xl"></div>
                     </>
                 ))}
 
-                <div className="border border-black p-1 shadow-xl">
+                <div className="border transparent-border-black p-1 shadow-xl">
                     <FiPlus size={16} color="black" />
                 </div>
             </div>
