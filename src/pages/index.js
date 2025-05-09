@@ -65,6 +65,7 @@ const Index = ({
     indexSteps,
     streamlineData,
     signupFeatures,
+    securityGridData,
 }) => {
     const formattedIndustries = useMemo(() => Industries.industries.map((name, id) => ({ name, id: id + 1 })), []);
     const formattedDepartments = useMemo(() => Industries.departments.map((name, id) => ({ name, id: id + 1 })), []);
@@ -331,6 +332,7 @@ const Index = ({
                         <div className="container border transparent-border-black p-20 border-b-0 bg-white">
                             <AlphabeticalComponent step={0} />
                         </div>
+                        <SecuritySection securityGridData={securityGridData} />
                         <div className="container">
                             <Footer footerData={footerData} />
                         </div>
@@ -558,6 +560,34 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
     );
 };
 
+const SecuritySection = ({ securityGridData }) => {
+    return (
+        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+            <div className="flex justify-between">
+                <div className="cont gap-1">
+                    <h2> viaSocket is secure automation that sticks</h2>
+                    <h3>
+                        Our customers run millions of workflows a day—securely, reliably, and at scale. Here’s why
+                        founders, CIOs, and their IT teams trust us with their data.
+                    </h3>
+                </div>
+                <div className="flex gap-4">
+                    <Image src="assets/img/aicpa-soc-badge.webp" width={100} height={100} />
+                    <Image src="assets/img/iso-certified.webp" width={100} height={100} />
+                </div>
+            </div>
+            <div className="grid grid-cols-3 border transparent-border-black border-t-0 border-r-0">
+                {securityGridData.map((item, index) => (
+                    <div key={index} className="p-6 border-b border-r border-transparent-border-black">
+                        <h4 className="font-semibold mb-2">{item.title}</h4>
+                        <p className="text-sm text-gray-700">{item.description}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 export default Index;
 
 export async function getServerSideProps(context) {
@@ -667,6 +697,25 @@ export async function getServerSideProps(context) {
 
     const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 5000+ apps'];
 
+    const securityGridData = [
+        {
+            title: 'SOC 2 (Type II)',
+            description: 'Your workflows meet the highest industry standards for security and compliance.',
+        },
+        { title: 'GDPR & CCPA Compliance', description: 'Your data stays private and under your control. Always.' },
+        { title: 'End-to-End Observability', description: 'Error Handling & Recovery' },
+        {
+            title: '99.99% Uptime & Enterprise SLA',
+            description: 'Your mission-critical workflows stay online, with industry-leading reliability.',
+        },
+        {
+            title: 'Error Handling & Recovery',
+            description:
+                "viaSocket catches issues before they're issues. Keep everything on-track with intelligent alerts and AI-powered troubleshooting.",
+        },
+        { title: 'ISO Certified', description: '' },
+    ];
+
     return {
         props: {
             testimonials: testimonials || [],
@@ -684,6 +733,7 @@ export async function getServerSideProps(context) {
             indexSteps: indexSteps,
             streamlineData: streamlineData,
             signupFeatures: signupFeatures,
+            securityGridData: securityGridData,
         },
     };
 }

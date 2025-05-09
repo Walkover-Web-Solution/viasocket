@@ -74,12 +74,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         <p>© {new Date().getFullYear()} viaSocket</p>
                         <p>All rights reserved.</p>
                     </div>
-                    {/* <div className="flex items-end gap-2 w-full flex-wrap mt-auto">
-                        <span>A product of</span>
-                        <Link href="https://walkover.in/" target="_blank" aria-label="walkover">
-                            <Image src="/assets/brand/walkover.svg" alt="walkover" width={100} height={20} />
-                        </Link>
-                    </div> */}
                 </div>
                 <div className=" row-span-1 col-span-4 lg:col-span-3 grid sm:grid-cols-3 grid-cols-1">
                     <div
