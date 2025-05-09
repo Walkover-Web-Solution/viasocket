@@ -25,7 +25,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                         <div
                             key={index}
                             className={`px-4 py-6 w-full cursor-pointer transition-all  group ${
-                                activeIndex === index ? 'bg-black text-white' : 'hover:bg-black hover:text-white'
+                                activeIndex === index ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'
                             }`}
                             onMouseEnter={() => {
                                 setActiveUseCases(uc?.content);

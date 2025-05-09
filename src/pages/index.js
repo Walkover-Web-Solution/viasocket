@@ -401,13 +401,13 @@ const HorizontalCardScroller = ({ items }) => {
 
             <button
                 onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover-bg-grey-100-text-black transition-all backdrop-blur-sm border border-gray-200"
             >
                 ◀
             </button>
             <button
                 onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover:bg-black hover:text-white transition-all backdrop-blur-sm border border-gray-200"
+                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover-bg-grey-100-text-black transition-all backdrop-blur-sm border border-gray-200"
             >
                 ▶
             </button>
@@ -421,7 +421,7 @@ const HorizontalCardScroller = ({ items }) => {
                 {displayedItems.map((item, index) => (
                     <div
                         key={`${index}-${item.title}`}
-                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover:bg-black hover:text-white group bg-white"
+                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover-bg-grey-100-text-black group bg-white"
                     >
                         <div className="flex flex-col gap-4">
                             <div className="flex gap-4">

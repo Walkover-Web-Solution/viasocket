@@ -30,9 +30,9 @@ export default function Navbar({ navData, utm }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = 'text-black hover:bg-black hover:text-white !text-xs !capitalize';
+        backgroundClass = 'text-black !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover:bg-black hover:text-white !text-xs !capitalize';
+        backgroundClass = textClass + ' hover-bg-grey-100-text-black !text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -86,7 +86,7 @@ export default function Navbar({ navData, utm }) {
                                                 >
                                                     <button
                                                         tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
+                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                     >
                                                         <span className="!text-xs">{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
@@ -95,7 +95,7 @@ export default function Navbar({ navData, utm }) {
                                             ) : (
                                                 <button
                                                     tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                 >
                                                     <span className="!text-xs">{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
@@ -151,14 +151,14 @@ export default function Navbar({ navData, utm }) {
                         })}
 
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`/pricing`}
                         rel="nofollow"
                     >
                         Pricing
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
                         rel="nofollow"
                     >

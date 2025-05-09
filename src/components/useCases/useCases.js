@@ -12,7 +12,7 @@ export default function UseCase({ usecases }) {
                 <h2 className="text-3xl font-bold">Use Cases</h2>
                 <ul className="list-disc">
                     {usecases?.map((usecase, index) => (
-                        <div key={index} className="border-b-2 border-black-400 border-opacity-100 border-color:black;">
+                        <div key={index} className="border-b-2 transparent-border-black-400 border-opacity-100 border-color:black;">
                             <li
                                 className={`cursor-pointer text-lg flex justify-between items-center p-6  hover:bg-white ${selectedUsecase === index ? 'bg-white font-semibold' : ''}`}
                                 onMouseEnter={() => handleUsecaseClick(index)}

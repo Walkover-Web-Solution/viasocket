@@ -45,8 +45,8 @@ export default function GetStarted({ data, isHero }) {
                                 >
                                     <button
                                         className={`flex text-start justify-start gap-1 btn  ${
-                                            index == 0 && 'btn-accent outline outline-primary outline-1'
-                                        } ${index == 1 && 'btn-primary btn-outline '} ${
+                                            index == 0 && 'btn-accent transparent-border-black'
+                                        } ${index == 1 && 'btn-primary btn-outline transparent-border-black '} ${
                                             index !== 1 && index !== 0 && 'btn-ghost'
                                         }`}
                                         aria-label="get started"

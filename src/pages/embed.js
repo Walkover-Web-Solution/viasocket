@@ -90,7 +90,7 @@ const Embed = ({
                             {embedData.map((item, index) => (
                                 <div
                                     key={index}
-                                    className={`px-4 py-8 group w-full ${selectedImage === item?.image[0] ? 'bg-black text-white' : 'hover:bg-black hover:text-white'}`}
+                                    className={`px-4 py-8 group w-full ${selectedImage === item?.image[0] ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'}`}
                                     onMouseEnter={() => setSelectedImage(item?.image[0])}
                                 >
                                     <div
