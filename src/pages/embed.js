@@ -214,12 +214,12 @@ const Embed = ({
                 )}
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container border transparent-border-black p-12 border-b-0 bg-white">
                             <FAQSection faqData={faqData} faqName={'/embed'} />
                         </div>
                     )}
                     {getStartedData && (
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container border transparent-border-black p-12 border-b-0 bg-white">
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}
