@@ -62,12 +62,12 @@ export default function IntegrationsAppOneComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-white-text-black transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
                             <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-white-text-black transition-all">
+                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
                                     Login to viaSocket <MdOpenInNew />{' '}
                                 </button>
                             </Link>

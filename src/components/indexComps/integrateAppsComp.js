@@ -33,7 +33,7 @@ export default function IntegrateAppsComp() {
                                     <Link
                                         key={index}
                                         href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
-                                        className="flex flex-row md:flex-col gap-1 md:py-6 py-2 px-2 items-center hover-bg-white-text-black"
+                                        className="flex flex-row md:flex-col gap-1 md:py-6 py-2 px-2 items-center hover-bg-grey-100-text-black"
                                     >
                                         <div className="bg-white p-1">
                                             <Image

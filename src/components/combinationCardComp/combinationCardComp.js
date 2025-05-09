@@ -6,7 +6,7 @@ export default function CombinationCardComp({ trigger, action, description, link
     return (
         <Link
             href={link}
-            className="border transparent-border-black border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-white-text-black hover:border-white group"
+            className="border transparent-border-black border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group"
         >
             <div className="cont w-full">
                 <div className="flex gap-8"></div>

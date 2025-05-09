@@ -11,7 +11,7 @@ export default function AlphabetComp({ alphabet, appDetails, step }) {
             <div className="flex flex-row flex-wrap justify-center gap-2">
                 {/* <Link
                     key={9}
-                    className="text-lg py-1 px-2 hover-bg-white-text-black transition-all duration-150 "
+                    className="text-lg py-1 px-2 hover-bg-grey-100-text-black transition-all duration-150 "
                     href={`/find-apps/0-9`}
                     aria-label="alphabet"
                 >
@@ -19,7 +19,7 @@ export default function AlphabetComp({ alphabet, appDetails, step }) {
                 </Link> */}
                 {alphabets.map((letter) => (
                     <Link
-                        className={`text-lg py-1 px-2 hover-bg-white-text-black transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
+                        className={`text-lg py-1 px-2 hover-bg-grey-100-text-black transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}
                         key={letter}
                         href={
                             step === 2 || step === 3

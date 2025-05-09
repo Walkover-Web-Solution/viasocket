@@ -76,7 +76,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedTrigger(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-white-text-black cursor-pointer bg-white"
+                                                className="p-4 border transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer bg-white"
                                             >
                                                 <Image
                                                     src={
@@ -111,7 +111,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedAction(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border max-w-[800px] transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-white-text-black cursor-pointer"
+                                                className="p-4 border max-w-[800px] transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer"
                                             >
                                                 <Image
                                                     src={

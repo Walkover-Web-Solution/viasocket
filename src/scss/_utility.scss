@@ -9,14 +9,18 @@
     border-right: 1px solid var(--transparent-border-black) !important;
 }
 
-/**Hover classes */
+/** Hover classes */
 
-.hover-bg-white-text-black {
-    background-color: var(--background-color-white) !important;
-    color: var(--text-color-black) !important;
+.hover-bg-grey-100-text-black {
+    &:hover {
+        background-color: var(--background-color-grey-100) !important;
+        color: var(--text-color-black) !important;
+    }
 }
 
 .hover-bg-black-text-white {
-    background-color: var(--background-color-black) !important;
-    color: var(--text-color-white) !important;
+    &:hover {
+        background-color: var(--background-color-black) !important;
+        color: var(--text-color-white) !important;
+    }
 }
