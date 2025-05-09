@@ -253,9 +253,11 @@ const Index = ({
 
                     <FeatureGrid featuresData={featuresData} />
 
-                    <div className="container cont cont__py gap-20 px-24  h-fit border transparent-border-black bg-white">
-                        <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-                        <StepDisplay steps={indexSteps} />
+                    <div className="container cont">
+                        <div className='cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border transparent-border-black bg-white'>
+                            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
+                            <StepDisplay steps={indexSteps} />
+                        </div>
                     </div>
 
                     {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
@@ -282,8 +284,8 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container border transparent-border-black py-20 px-12 bg-white ">
-                        <div className="cont gap-2">
+                    <div className="container cont">
+                        <div className="gap-2 border transparent-border-black py-20 px-12 bg-white">
                             <h2 className="h2 text-left">AI Agents That Work For You</h2>
                             <p className="text-2xl font-semibold text-accent">
                                 Build, deploy, and automate with intelligent agents
@@ -296,8 +298,8 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container cont border transparent-border-black gap-12 py-20 px-12 bg-white ">
-                        <div className="cont gap-2">
+                    <div className="container cont">
+                        <div className="gap-2 border transparent-border-black gap-12 py-20 px-12 bg-white">
                             <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
                             <p className="text-2xl font-semibold text-accent ">
                                 Edit workflows with AI, anywhere, anytime
@@ -324,14 +326,14 @@ const Index = ({
 
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                            <div className="container cont">
                                 <FAQSection faqData={faqData} faqName={'/index'} />
                             </div>
                         )}
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container cont">
                             <AlphabeticalComponent step={0} />
                         </div>
-                        <div className="container">
+                        <div className='container cont'>
                             <Footer footerData={footerData} />
                         </div>
                     </div>

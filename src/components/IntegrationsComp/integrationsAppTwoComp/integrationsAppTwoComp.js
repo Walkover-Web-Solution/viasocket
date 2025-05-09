@@ -205,7 +205,7 @@ export default function IntegrationsAppTwoComp({
                 )}
 
             {getStartedData && (
-                <div className="container border transparent-border-black p-20 bg-white">
+                <div className="container cont">
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
@@ -298,9 +298,9 @@ export default function IntegrationsAppTwoComp({
                             </Link>
                         </div>
                     </div>
-                    <div>
+                  
                         <Footer footerData={footerData} />
-                    </div>
+                    
                 </div>
             </div>
         </>
