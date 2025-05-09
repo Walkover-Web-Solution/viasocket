@@ -88,7 +88,7 @@ export default function Navbar({ navData, utm }) {
                                                         tabIndex={0}
                                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                     >
-                                                        <span className='!text-xs'>{option.name}</span>
+                                                        <span className="!text-xs">{option.name}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
                                                     </button>
                                                 </Link>
@@ -97,7 +97,7 @@ export default function Navbar({ navData, utm }) {
                                                     tabIndex={0}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                 >
-                                                    <span className='!text-xs'>{option.name}</span>
+                                                    <span className="!text-xs">{option.name}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
                                                 </button>
                                             )}
@@ -133,8 +133,8 @@ export default function Navbar({ navData, utm }) {
                                                     option.open_in_new_tab
                                                         ? '_blank'
                                                         : option.link?.startsWith('http')
-                                                            ? '_blank'
-                                                            : '_self'
+                                                          ? '_blank'
+                                                          : '_self'
                                                 }
                                                 href={option.link || '#'}
                                             >
@@ -152,7 +152,7 @@ export default function Navbar({ navData, utm }) {
 
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                        href={`/pricing?utm_source=${utm}`}
+                        href={`/pricing`}
                         rel="nofollow"
                     >
                         Pricing
@@ -166,7 +166,7 @@ export default function Navbar({ navData, utm }) {
                     </Link>
                     <Link
                         className={`${style.nav_btn} ${borderClass} hidden md:flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
-                        href={`/signup?utm_source=${utm}`}
+                        href={`/signup?state=${defaultUtmSource}`}
                     >
                         Start Free Trial
                     </Link>
