@@ -100,6 +100,9 @@
     background-size: 240% 240%;
     animation: gradient-animation 24s ease infinite;
 }
+.mcp-support-background{
+    background-color: #a64d79 !important;
+}
 
 @keyframes gradient-animation {
     0% {
@@ -238,12 +241,12 @@
     position: fixed;
     right: -100%;
     top: 0;
-    width: 500px;
+    width: 620px;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease-in-out;
-    z-index: 9999;
+    z-index: 9999 !important;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
