@@ -1,10 +1,10 @@
 .btn {
-    @apply w-fit px-10 uppercase tracking-wider;
+    @apply w-fit px-10 tracking-wider;
     &.w-full {
         width: 100% !important;
     }
     &.btn-outline {
-        @apply hover:bg-black hover:text-white;
+        @apply hover:bg-black hover:text-white transparent-border-black;
     }
     &.btn-white {
         @apply bg-white border-0 hover:bg-gray-300 transition-all duration-200;
@@ -223,7 +223,6 @@ $button-transition-timing: 100ms;
     }
 }
 
-
-.combo_card:hover > .combocard_div{
+.combo_card:hover > .combocard_div {
     @apply text-white bg-black transition-colors;
 }

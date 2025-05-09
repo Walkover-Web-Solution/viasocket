@@ -38,7 +38,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
 
     return (
         <>
-            <div className='min-h-screen'>
+            <div className="min-h-screen">
                 <div className="flex items-center flex-col md:flex-row gap-10 h-full">
                     <div className="bg-gray-100 w-full md:w-[40vw] border-right-color flex flex-col h-[calc(100vh-45px)]">
                         <Link href="/">
@@ -54,7 +54,8 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                             <div className="flex flex-col gap-4 p-6">
                                 <div className="cont gap-2">
                                     <h2 className="h2">Sign up for viaSocket</h2>
-                                    <p className="text-sm">create a free account or
+                                    <p className="text-sm">
+                                        create a free account or{' '}
                                         <Link
                                             className="active-link text-link"
                                             href={`${process.env.NEXT_PUBLIC_FLOW_URL}?state=${defaultUtmSource}`}
@@ -100,9 +101,13 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
 
                 <p className="bg-gray-100 md:w-[40vw] border-right-color text-sm p-3 flex gap-2 items-center">
                     <span>© 2025 viaSocket. All rights reserved.</span>
-                    <Link href="/privacy" className="active-link text-link">Privacy</Link>
+                    <Link href="/privacy" className="active-link text-link">
+                        Privacy
+                    </Link>
                     <span>and</span>
-                    <Link href="/terms" className="active-link text-link">Terms.</Link>
+                    <Link href="/terms" className="active-link text-link">
+                        Terms.
+                    </Link>
                 </p>
             </div>
         </>
