@@ -155,7 +155,7 @@ export default function McpAppComp({
                                 href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
                                 onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
                             >
-                                <button className="btn border-0 bg-accent text-white hover:bg-black hover:text-white">
+                                <button className="btn border-0 bg-accent text-white hover-bg-grey-100-text-black">
                                     Get Your MCP URL
                                 </button>
                             </Link>
@@ -309,7 +309,7 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black bg-white"
+                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 transparent-border-black border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black bg-white hover-bg-grey-100-text-black"
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9">
@@ -337,7 +337,7 @@ export default function McpAppComp({
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
                                     <Link
-                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium"
                                         href={createURL(goToPrev())}
                                     >
                                         <MdChevronLeft size={18} />
@@ -346,7 +346,7 @@ export default function McpAppComp({
                                 )}
                                 {showNext && (
                                     <Link
-                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover:bg-black hover:text-white transition-colors font-medium"
+                                        className="border transparent-border-black px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium"
                                         href={createURL(goToNext())}
                                     >
                                         Next
@@ -475,7 +475,7 @@ export default function McpAppComp({
                                             href={createURL(`/mcp/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                             className="mb-2"
                                         >
-                                            <span className="px-3 text-sm py-2 text-white hover:bg-black hover:text-white bg-accent ">
+                                            <span className="px-3 text-sm py-2 text-white hover-bg-grey-100-text-black bg-accent ">
                                                 {cat}
                                             </span>
                                         </Link>
@@ -500,12 +500,12 @@ export default function McpAppComp({
                                 </p>
                                 <div className="flex flex-wrap gap-3">
                                     <Link href="/mcp" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover:bg-black hover:text-white bg-accent">
+                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
                                             viaSocket MCP
                                         </span>
                                     </Link>
                                     <Link href="/integrations" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover:bg-black hover:text-white bg-accent">
+                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
                                             Integration
                                         </span>
                                     </Link>
