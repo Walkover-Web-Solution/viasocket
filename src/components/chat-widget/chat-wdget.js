@@ -1,7 +1,6 @@
 import style from './chat-widget.module.scss';
 import { MdCircle } from 'react-icons/md';
 
-
 export default function ChatWidget() {
     const openChatWidget = () => {
         window.chatWidget.open();

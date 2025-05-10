@@ -52,8 +52,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                 <div
                     className={`row-span-1 justify-center col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}
                 >
-                    <p className='rotate-viasocket font-extrabold w-full flex justify-center items-center text-[6vw]'>viaSocket</p>
-            
+                    <p className="rotate-viasocket font-extrabold w-full flex justify-center items-center text-[6vw]">
+                        viaSocket
+                    </p>
                 </div>
                 <div className=" row-span-1 col-span-4 lg:col-span-3 grid sm:grid-cols-3 grid-cols-1">
                     <div
@@ -66,7 +67,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         className={`flex flex-col gap-28 md:p-10 p-4 sm:border-r lg:border-b-0  border-b ${borderTheme}`}
                     >
                         {renderedGroups?.slice(2, 4)}
-
 
                         <div className="flex gap-2 md:gap-4 mt-auto">
                             <Link
@@ -91,24 +91,23 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <FiYoutube size={24} />
                             </Link>
                         </div>
-
                     </div>
 
                     <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-28 md:p-10 p-4 `}>
                         {renderedGroups?.slice(4, 7)}
-                        <p className='text-sm flex items-center gap-1 flex-wrap'>
-                            <span>
-                                © 2025 viaSocket. All rights reserved.
-                            </span>
+                        <p className="text-sm flex items-center gap-1 flex-wrap">
+                            <span>© 2025 viaSocket. All rights reserved.</span>
                             <Link href="/privacy" className="active-link text-link">
                                 Privacy
-                            </Link>,
-
+                            </Link>
+                            ,
                             <Link href="/terms" className="active-link text-link">
                                 Terms.
                             </Link>
                             <span>and</span>
-                            <Link href='/data-deletion-policy' className="active-link text-link">Data Deletion Policy</Link>
+                            <Link href="/data-deletion-policy" className="active-link text-link">
+                                Data Deletion Policy
+                            </Link>
                         </p>
                     </div>
                 </div>

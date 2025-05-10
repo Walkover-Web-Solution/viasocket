@@ -126,15 +126,15 @@ export async function getServerSideProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
-    const blogTags = 'mcp';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogTags1 = 'mcp';
+    const blogTags2 = 'saas';
+    const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 });
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
-            blogTags: blogTags || [],
             blogData: blogData || [],
         },
     };

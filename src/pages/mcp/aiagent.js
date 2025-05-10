@@ -12,7 +12,7 @@ import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ navData, footerData, faqData, metaData, blogData }) {
+export default function aiagent({ navData, footerData, faqData, metaData, blogData }) {
     return (
         <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
