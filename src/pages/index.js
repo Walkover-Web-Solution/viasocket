@@ -592,12 +592,12 @@ const SecuritySection = ({ securityGridData }) => {
     };
     return (
         <div className="container border transparent-border-black p-20 border-b-0 bg-white cont gap-8">
-            <div className="flex justify-between gap-20">
+            <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
                 <div className="cont gap-1">
-                    <h2 className="h2"> viaSocket is secure automation that sticks</h2>
+                    <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
                     <h3 className="sub__h1">
-                        Our customers run millions of workflows a day—securely, reliably, and at scale. Here’s why
-                        founders, CIOs, and their IT teams trust us with their data.
+                        Your data is safe with us—compliant, secure, and built with privacy in mind at every step, so
+                        you can run workflows with confidence.
                     </h3>
                 </div>
                 <div className="flex gap-4 mr-12">
@@ -605,9 +605,12 @@ const SecuritySection = ({ securityGridData }) => {
                     <Image src="assets/img/iso-certified.webp" width={100} height={100} />
                 </div>
             </div>
-            <div className="grid grid-cols-3 border transparent-border-black border-t-0 border-r-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border transparent-border-black border-t-0 border-r-0">
                 {securityGridData.map((item, index) => (
-                    <div key={index} className="cont gap-1 p-6 border transparent-border-black border-b-0 border-l-0 ">
+                    <div
+                        key={index}
+                        className="cont gap-1 py-12 px-8 border transparent-border-black border-b-0 border-l-0 "
+                    >
                         {getIconComponent(item.iconName)}
                         <h4 className="h3">{item.title}</h4>
                         <p className="sub__h2 text-gray-700">{item.description}</p>
@@ -730,34 +733,37 @@ export async function getServerSideProps(context) {
     const securityGridData = [
         {
             title: 'SOC 2 (Type II)',
-            description: 'Your workflows meet the highest industry standards for security and compliance.',
+            description:
+                "Your workflow's data is handled with the highest level of security, privacy, and confidentiality.",
             iconName: 'shield-alt',
         },
         {
+            title: 'ISO Certified',
+            description:
+                'We consistently meet international standards to deliver reliable and secure solutions for your business.',
+            iconName: 'certificate',
+        },
+        {
             title: 'GDPR & CCPA Compliance',
-            description: 'Your data stays private and under your control. Always.',
+            description: 'Your data remains private and entirely under your control, at all times.',
             iconName: 'user-shield',
         },
         {
             title: 'End-to-End Observability',
-            description: 'Error Handling & Recovery',
+            description:
+                "Gain full visibility into your data's journey with detailed audit logs, real-time analytics, and proactive alerts.",
             iconName: 'eye',
         },
         {
             title: '99.99% Uptime & Enterprise SLA',
-            description: 'Your mission-critical workflows stay online, with industry-leading reliability.',
+            description: 'Stay worry-free with 99.99% uptime and fast, reliable support when you need it most.',
             iconName: 'clock',
         },
         {
             title: 'Error Handling & Recovery',
             description:
-                "viaSocket catches issues before they're issues. Keep everything on-track with intelligent alerts and AI-powered troubleshooting.",
+                'Stay ahead of issues with smart alerts and AI-powered troubleshooting, keeping your workflows running smoothly.',
             iconName: 'bug',
-        },
-        {
-            title: 'ISO Certified',
-            description: '',
-            iconName: 'certificate',
         },
     ];
 
