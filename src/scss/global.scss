@@ -239,9 +239,10 @@
 }
 .support-slider {
     position: fixed;
-    right: -100%;
+    right: -200%;
     top: 0;
-    width: 620px;
+    max-width: 620px;
+    width: 100%;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
@@ -273,5 +274,20 @@
 .loginBtn_google{
     button {
         margin: 0px !important;
+    }
+}
+
+
+/**Using viasocket footer responsive container */
+@media screen and (width >=1050px) {
+    .rotate-viasocket {
+        transform: rotate(270deg);
+        font-size: 120px !important;
+    }
+}
+
+@media screen and (width <=1020px) {
+    .viasocket-footer-wrapper {
+        padding: 0 !important;
     }
 }

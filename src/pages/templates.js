@@ -249,13 +249,11 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     </div>
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                            <div className="container border transparent-border-black p-12 border-b-0 bg-white">
                                 <FAQSection faqData={faqData} faqName={'/templates'} />
                             </div>
                         )}
-                        <div className="container">
-                            <Footer footerData={footerData} />
-                        </div>
+                        <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>

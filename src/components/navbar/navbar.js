@@ -33,7 +33,7 @@ export default function Navbar({ navData, utm }) {
     if (utm && utm === '/index') {
         backgroundClass = 'text-black !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover-bg-grey-100-text-black !text-xs !capitalize';
+        backgroundClass = textClass + '!text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';

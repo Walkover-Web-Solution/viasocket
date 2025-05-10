@@ -14,7 +14,7 @@ const McpSwitchComp = () => {
                         <div
                             className={`cursor-pointer px-6 py-3 border transparent-border-black transition-all duration-200 text-sm border-r-0 ${
                                 currentRoute.startsWith('/mcp') &&
-                                !currentRoute.startsWith('/mcp/developers') &&
+                                !currentRoute.startsWith('/mcp/aiagent') &&
                                 !currentRoute.startsWith('/mcp/saas')
                                     ? 'bg-black text-white transparent-border-black'
                                     : 'bg-white text-black hover:bg-gray-100'
@@ -24,10 +24,10 @@ const McpSwitchComp = () => {
                         </div>
                     </Link>
 
-                    <Link href="/mcp/developers" className="no-underline">
+                    <Link href="/mcp/aiagent" className="no-underline">
                         <div
                             className={`cursor-pointer px-6 py-3 border transparent-border-black transition-all duration-200 text-sm border-r-0 ${
-                                currentRoute.startsWith('/mcp/developers')
+                                currentRoute.startsWith('/mcp/aiagent')
                                     ? 'bg-black text-white transparent-border-black'
                                     : 'bg-white text-black hover:bg-gray-100'
                             }`}

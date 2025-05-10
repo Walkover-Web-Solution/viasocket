@@ -295,7 +295,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
                     <BlogGrid posts={blogData} />
-                    <div className="flex flex-col transparent-border-black border p-6 md:p-12 bg-white">
+                    <div className="container">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                     </div>
                     <Footer footerData={footerData} />

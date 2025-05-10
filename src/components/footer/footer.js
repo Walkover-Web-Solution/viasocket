@@ -47,43 +47,18 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
     return (
         <>
             <div
-                className={`container bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass}`}
+                className={`viasocket-footer-wrapper container bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass}`}
             >
                 <div
-                    className={`row-span-1 col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}
+                    className={`row-span-1 justify-center col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}
                 >
-                    <div className="flex flex-col gap-2 mb-12 sm:mb-6 py-4">
-                        <Link href="/" aria-label="socket fav icon">
-                            {isBlack ? (
-                                <Image
-                                    src="/assets/brand/smiley_white.svg"
-                                    width={50}
-                                    height={50}
-                                    alt="socket fav icon"
-                                    className="border border-white"
-                                />
-                            ) : (
-                                <Image
-                                    src="/assets/brand/socket_fav_dark.svg"
-                                    width={46}
-                                    height={46}
-                                    alt="socket fav icon"
-                                />
-                            )}
-                        </Link>
-                        <p>© {new Date().getFullYear()} viaSocket</p>
-                        <p>All rights reserved.</p>
-                    </div>
-                    {/* <div className="flex items-end gap-2 w-full flex-wrap mt-auto">
-                        <span>A product of</span>
-                        <Link href="https://walkover.in/" target="_blank" aria-label="walkover">
-                            <Image src="/assets/brand/walkover.svg" alt="walkover" width={100} height={20} />
-                        </Link>
-                    </div> */}
+                    <p className="rotate-viasocket font-extrabold w-full flex justify-center items-center text-[6vw]">
+                        viaSocket
+                    </p>
                 </div>
                 <div className=" row-span-1 col-span-4 lg:col-span-3 grid sm:grid-cols-3 grid-cols-1">
                     <div
-                        className={`flex flex-col gap-28 md:p-10 p-4 lg:border-b-0  border-b sm:border-r ${borderTheme}`}
+                        className={`flex flex-col gap-28 md:p-10 p-4 lg:border-b-0 border-b sm:border-r ${borderTheme}`}
                     >
                         {renderedGroups?.slice(0, 2)}
                     </div>
@@ -92,10 +67,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         className={`flex flex-col gap-28 md:p-10 p-4 sm:border-r lg:border-b-0  border-b ${borderTheme}`}
                     >
                         {renderedGroups?.slice(2, 4)}
-                    </div>
 
-                    <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-28 md:p-10 p-4 `}>
-                        {renderedGroups?.slice(4, 7)}
                         <div className="flex gap-2 md:gap-4 mt-auto">
                             <Link
                                 href={`https://www.instagram.com/walkover.inc/?igsh=MWEyZnptZmw3Z3phOQ%3D%3D`}
@@ -119,6 +91,24 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <FiYoutube size={24} />
                             </Link>
                         </div>
+                    </div>
+
+                    <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-28 md:p-10 p-4 `}>
+                        {renderedGroups?.slice(4, 7)}
+                        <p className="text-sm flex items-center gap-1 flex-wrap">
+                            <span>© 2025 viaSocket. All rights reserved.</span>
+                            <Link href="/privacy" className="active-link text-link">
+                                Privacy
+                            </Link>
+                            ,
+                            <Link href="/terms" className="active-link text-link">
+                                Terms.
+                            </Link>
+                            <span>and</span>
+                            <Link href="/data-deletion-policy" className="active-link text-link">
+                                Data Deletion Policy
+                            </Link>
+                        </p>
                     </div>
                 </div>
             </div>
