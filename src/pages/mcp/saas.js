@@ -50,7 +50,6 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                                 {' '}
                                 {/* Added sublist with bullet points */}
                                 <li>Generate an MCP endpoint for their account</li>
-                                <li>Connect your app to thousands of others</li>
                                 <li>Trigger workflows from OpenAI, Claude, or any LLM</li>
                             </ul>
                         </li>
