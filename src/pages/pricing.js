@@ -143,6 +143,12 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
         return Math.floor(finalPrice).toString();
     };
 
+    const LaunchpadPlan = {
+        name: 'Launchpad',
+        fetureHeading: 'All power of Growth ,plus',
+        feature: ['Free for 6 months', 'No Credit Card Required', 'Cancel Anytime'],
+    };
+
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
@@ -164,31 +170,41 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="cont gap-4 py-20">
+                <div className="flex items-center gap-4 pt-36">
                     <div className="cont gap-1">
                         <h1 className="h1 !text-accent">Launchpad Offer</h1>
-                        <p className="sub__h1">
-                            All the power of our $50/mo Growth Plan - absolutely free for 6 months
-                        </p>
+                        <h2 className="sub__h1">
+                            Loved Launchpad? Stay on Growth at $49/mo. Or switch to Starter for just $29.
+                        </h2>
                     </div>
-                    <button className="btn btn-accent mt-2">Start free for 6 months</button>
-                    <div className="flex gap-4">
-                        {' '}
-                        <p className="h6">
-                            <span className="text-accent">✔</span> No Credit Card Required
-                        </p>
-                        <p>.</p>
-                        <p className="h6">
-                            <span className="text-accent">✔</span> Cancel Anytime{' '}
-                        </p>
+                    <div className="relative w-full max-w-xl flex flex-col items-center">
+                        {/* The absolute badge, now visually cutting off the border */}
+                        <div className="absolute left-1/2 -top-5 -translate-x-1/2 z-10">
+                            <span className="bg-black text-white px-6 py-2 h6 border-2 border-white rounded shadow-lg">
+                                FREE for First 6 Months
+                            </span>
+                        </div>
+                        <div className="border-2 border-accent bg-white cont gap-8 w-full p-6 flex flex-col pt-12">
+                            <div className="cont gap-4 w-full">
+                                <div className="cont gap-1">
+                                    <h2 className="h2">{LaunchpadPlan.name}</h2>
+                                    <p className="text-base text-accent">
+                                        All the power of our $50/mo Growth Plan — absolutely free for 6 months.
+                                    </p>
+                                </div>
+                                <p className="h6 !font-semibold">{LaunchpadPlan.fetureHeading} :</p>
+                                <ul className="flex flex-col gap-2">
+                                    {LaunchpadPlan.feature.map((feature, i) => (
+                                        <li key={i} className="flex gap-1">
+                                            <span className="text-accent text-base">✔</span>
+                                            <span className="text-base">{feature}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <button className="btn btn-accent ">Get Started Free</button>
+                        </div>
                     </div>
-                </div>
-
-                <div>
-                    <h2 className="h2">
-                        <span className="text-accent">Loved Launchpad? </span>
-                        Stay on Growth at $49/mo. Or switch to Starter for just $19.
-                    </h2>
                 </div>
 
                 <PricingTabs />

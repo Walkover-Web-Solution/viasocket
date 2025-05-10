@@ -101,6 +101,7 @@ const PricingTabs = () => {
                                 </div>
                                 <div className="text-base text-gray-700">{plan.invocations}</div>
                             </div>
+
                             <div className="cont gap-2">
                                 <p className="h6 !font-semibold">{plan.featureHeading} :</p>
                                 <ul className="">
