@@ -170,21 +170,23 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="flex items-center gap-4 pt-36">
-                    <div className="cont gap-1">
+                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-4 pt-24 md:pt-36 w-full">
+                    <div className="cont gap-1 w-full md:w-2/3">
                         <h1 className="h1 !text-accent">Launchpad Offer</h1>
                         <h2 className="sub__h1">
                             Loved Launchpad? Stay on Growth at $49/mo. Or switch to Starter for just $29.
                         </h2>
                     </div>
-                    <div className="relative w-full max-w-xl flex flex-col items-center">
-                        {/* The absolute badge, now visually cutting off the border */}
-                        <div className="absolute left-1/2 -top-5 -translate-x-1/2 z-10">
-                            <span className="bg-black text-white px-6 py-2 h6 border-2 border-white rounded shadow-lg">
-                                FREE for First 6 Months
-                            </span>
+                    <div className="relative w-full md:w-1/3 max-w-xl flex flex-col items-center mt-8 md:mt-0">
+                        {/* Responsive absolute badge */}
+                        <div className="flex justify-center w-full">
+                            <div className="absolute left-1/2 -top-5 -translate-x-1/2 z-10 ">
+                                <span className="bg-black text-white px-6 py-2 h6 border-2 border-white rounded shadow-lg text-nowrap">
+                                    FREE for First 6 Months
+                                </span>
+                            </div>
                         </div>
-                        <div className="border-2 border-accent bg-white cont gap-8 w-full p-6 flex flex-col pt-12">
+                        <div className="border-2 border-accent bg-white cont gap-8 w-full p-6 flex flex-col pt-8 sm:pt-12">
                             <div className="cont gap-4 w-full">
                                 <div className="cont gap-1">
                                     <h2 className="h2">{LaunchpadPlan.name}</h2>
@@ -202,7 +204,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                     ))}
                                 </ul>
                             </div>
-                            <button className="btn btn-accent ">Get Started Free</button>
+                            <button className="btn btn-accent">Get Started Free</button>
                         </div>
                     </div>
                 </div>
