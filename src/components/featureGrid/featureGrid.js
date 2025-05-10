@@ -22,23 +22,25 @@ const FeatureGrid = ({ featuresData }) => {
         }
     };
     return (
-        <div className="container p-12 py-20 bg-black text-white">
-            <div className="flex gap-4">
-                <h2 className="h2 mb-12">Automation That Actually Works For Your Business</h2>
-                <BsStars size={42} />
-            </div>
+        <div className='container cont'>
+            <div className="p-12 py-20 bg-black text-white s">
+                <div className="flex gap-4">
+                    <h2 className="h2 mb-12">Automation That Actually Works For Your Business</h2>
+                    <BsStars size={42} />
+                </div>
 
-            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
-                {featuresData.map((feature, index) => (
-                    <div
-                        key={index}
-                        className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
-                    >
-                        <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
-                        <p className="sub__h2 text-gray-200">{feature.content}</p>
-                    </div>
-                ))}
+                <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
+                    {featuresData.map((feature, index) => (
+                        <div
+                            key={index}
+                            className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
+                        >
+                            <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
+                            <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
+                            <p className="sub__h2 text-gray-200">{feature.content}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     );

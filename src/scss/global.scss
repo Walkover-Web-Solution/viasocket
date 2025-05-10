@@ -100,6 +100,9 @@
     background-size: 240% 240%;
     animation: gradient-animation 24s ease infinite;
 }
+.mcp-support-background{
+    background-color: #a64d79 !important;
+}
 
 @keyframes gradient-animation {
     0% {
@@ -236,14 +239,15 @@
 }
 .support-slider {
     position: fixed;
-    right: -100%;
+    right: -200%;
     top: 0;
-    width: 500px;
+    max-width: 620px;
+    width: 100%;
     height: 100%;
     background: #fff;
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
     transition: right 0.3s ease-in-out;
-    z-index: 9999;
+    z-index: 9999 !important;
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -270,5 +274,20 @@
 .loginBtn_google{
     button {
         margin: 0px !important;
+    }
+}
+
+
+/**Using viasocket footer responsive container */
+@media screen and (width >=1050px) {
+    .rotate-viasocket {
+        transform: rotate(270deg);
+        font-size: 120px !important;
+    }
+}
+
+@media screen and (width <=1020px) {
+    .viasocket-footer-wrapper {
+        padding: 0 !important;
     }
 }

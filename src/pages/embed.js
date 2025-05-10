@@ -42,7 +42,7 @@ const Embed = ({
             </div>
             <div className="cont lg:gap-36 md:gap-24 gap-12">
                 <div className="w-full min-h-fit lg:h-dvh  border-b transparent-border-black">
-                    <div className="container h-full flex flex-col bg-white">
+                    <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
@@ -57,11 +57,11 @@ const Embed = ({
                                 </div>
                                 <div className="flex flex-row  flex-wrap gap-4 items-center">
                                     <Link href="https://viasocket.com/faq/viasocket-embed">
-                                        <button className="btn btn-accent ">How To Start</button>
+                                        <button className="btn btn-accent transparent-border-black">How To Start</button>
                                     </Link>
                                     <p className="text-gray-500 text-center">Or</p>
                                     <Link href="login?utm_source=/embed">
-                                        <button className="btn btn-outline">Self Embed</button>
+                                        <button className="btn btn-outline transparent-border-black">Self Embed</button>
                                     </Link>
                                 </div>
                             </div>
@@ -72,7 +72,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container w-full min-h-fit lg:h-dvh flex justify-center items-center gap-12 bg-white">
+                <div className="container w-full min-h-fit lg:h-dvh flex justify-center items-center gap-12">
                     <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-center items-center gap-6 lg:gap-24">
                         <div className="block w-full h-full  max-h-[600px] aspect-square min-h-[400px] bg-[#FFF5F5] md:p-6 p-2 border">
                             <div className="flex justify-center items-center h-full w-full overflow-hidden">
@@ -86,7 +86,7 @@ const Embed = ({
                                 />
                             </div>
                         </div>
-                        <div className="w-full h-fit flex flex-col justify-center items-center ">
+                        <div className="w-full h-fit flex flex-col justify-center items-center">
                             {embedData.map((item, index) => (
                                 <div
                                     key={index}
@@ -171,7 +171,7 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container cont cont__py border transparent-border-black justify-center items-center text-center gap-8 bg-white">
+                <div className="container cont cont__py border transparent-border-black p-12 gap-8 bg-white">
                     <div className="flex flex-col gap-8">
                         <h2 className="h2">Embed Pricing</h2>
                         <p className="h2">Start from : $500/month + $0.0005/invocation</p>
@@ -214,18 +214,18 @@ const Embed = ({
                 )}
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container border transparent-border-black p-12 border-b-0 bg-white">
                             <FAQSection faqData={faqData} faqName={'/embed'} />
                         </div>
                     )}
                     {getStartedData && (
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container border transparent-border-black p-12 border-b-0 bg-white">
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}
-                    <div className="container">
+            
                         <Footer footerData={footerData} />
-                    </div>
+                
                 </div>
             </div>
         </>

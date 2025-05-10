@@ -4,6 +4,7 @@ import Image from 'next/image';
 import style from './navbar.module.scss';
 import { useEffect, useState } from 'react';
 import { setUtmSource } from '@/utils/handleUtmSource';
+import Support from '../chat-widget/support';
 
 export default function Navbar({ navData, utm }) {
     let shorterData = [];
@@ -32,7 +33,7 @@ export default function Navbar({ navData, utm }) {
     if (utm && utm === '/index') {
         backgroundClass = 'text-black !text-xs !capitalize';
     } else {
-        backgroundClass = textClass + ' hover-bg-grey-100-text-black !text-xs !capitalize';
+        backgroundClass = textClass + '!text-xs !capitalize';
     }
     const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const source = typeof window !== 'undefined' ? window.location.pathname : '';
@@ -41,6 +42,15 @@ export default function Navbar({ navData, utm }) {
         const utmData = setUtmSource({ source: source });
         setDefaultUtmSource(utmData);
     }, []);
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
     return (
         <>
@@ -170,86 +180,16 @@ export default function Navbar({ navData, utm }) {
                     >
                         Start Free Trial
                     </Link>
-                    <div className="dropdown dropdown-end xl:hidden flex">
-                        <button
-                            tabIndex={0}
-                            className={`${style.nav_btn} ${borderClass}  ${backgroundClass} bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
-                            aria-label="Menu"
-                        >
-                            <MdMenu size={24} />
-                        </button>
-                        <ul
-                            tabIndex={0}
-                            className="dropdown-content menu  shadow bg-white border border-gray-300 w-56 "
-                        >
-                            {shorterData &&
-                                shorterData.map((option, index) => {
-                                    if (!option) return null;
-                                    return (
-                                        <div key={index} className="collapse collapse-arrow ">
-                                            {option.is_parent ? (
-                                                <>
-                                                    <input type="checkbox" />
-                                                    <div className="collapse-title text-sm font-medium">
-                                                        {option.name}
-                                                    </div>
-                                                    <div className="collapse-content">
-                                                        {option.link && (
-                                                            <Link
-                                                                href={option.link}
-                                                                className="text-black hover:underline"
-                                                                target={option.open_in_new_tab ? '_blank' : '_self'}
-                                                                rel="noreferrer"
-                                                            >
-                                                                {option.name}
-                                                            </Link>
-                                                        )}
-                                                        {shorterData.map((childOption, childIndex) => {
-                                                            if (
-                                                                childOption &&
-                                                                childOption.is_child &&
-                                                                childOption.group_name === option.name
-                                                            ) {
-                                                                return (
-                                                                    <div key={childIndex}>
-                                                                        <Link
-                                                                            href={childOption.link || '#'}
-                                                                            className="text-sm text-gray-600 hover:bg-gray-100 block px-2 py-1 border-l ml-2"
-                                                                            target={
-                                                                                childOption.open_in_new_tab
-                                                                                    ? '_blank'
-                                                                                    : '_self'
-                                                                            }
-                                                                            rel="noreferrer"
-                                                                        >
-                                                                            {childOption.name}
-                                                                        </Link>
-                                                                    </div>
-                                                                );
-                                                            }
-                                                            return null;
-                                                        })}
-                                                    </div>
-                                                </>
-                                            ) : (
-                                                !option.is_child && (
-                                                    <Link
-                                                        href={option.link || '#'}
-                                                        className="text-sm text-black hover:bg-gray-100 block px-2 py-1 ml-2"
-                                                        target={option.open_in_new_tab ? '_blank' : '_self'}
-                                                        rel="noreferrer"
-                                                    >
-                                                        {option.name}
-                                                    </Link>
-                                                )
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                        </ul>
-                    </div>
+                    <button
+                        onClick={handleClick}
+                        className={`${borderClass} hover-bg-grey-100-text-black items-center bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
+                        aria-label="Menu"
+                    >
+                        <MdMenu size={24} />
+                    </button>
                 </div>
             </div>
+            <Support open={open} onClose={handleClose} />
         </>
     );
 }
