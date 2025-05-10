@@ -19,6 +19,7 @@ import { getBlogData } from '@/utils/getBlogData';
 import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
 import { getCountryName } from '@/utils/getCountryName';
 import Link from 'next/link';
+import PricingTabs from '@/components/pricingTab/PricingTabs';
 
 export const runtime = 'experimental-edge';
 
@@ -162,135 +163,35 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
-            <div className="container cont pb-4 lg:gap-24 gap-6">
-                <div className="flex flex-col justify-center gap-6 relative">
-                    <div className="border border-t-0 transparent-border-black gradient-background">
-                        <div className="h-20"></div>
-                        <div className="grid grid-cols-1 lg:grid-cols-2">
-                            <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">
-                                <h1 className="h1  ">Simple Pricing for Powerful Automation</h1>
-                                <div className="flex flex-row text-xl gap-4">
-                                    <p>Enjoy a 30-Day Free Trial</p>
-                                    <p className="border-l transparent-border-black pl-4">No credit card required</p>
-                                </div>
-                                <div className="border transparent-border-black p-2 w-fit">
-                                    <p className="text-sm flex flex-wrap items-center gap-2">
-                                        <span className="text-3xl text-accent font-bold">Special Offer: 90% off</span>
-                                        <span className="inline-block align-middle">for developing countries</span>
-                                    </p>
-                                </div>
-                                <div className="flex gap-2 xl:flex-row lg:flex-col md:flex-row flex-col">
-                                    <CustomAutocomplete
-                                        items={filterCountries(inputValue)}
-                                        value={inputValue}
-                                        onChange={(e) => setInputValue(e.target.value)}
-                                        onSelect={handleCountrySelect}
-                                        placeholder="Select Country"
-                                        defaultCountry={userCountry || selectedCountry}
-                                    />
-
-                                    <label className="border transparent-border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
-                                        <span className="text-sm  tracking-wider">Billed Yearly</span>
-                                        <input
-                                            type="checkbox"
-                                            className="toggle"
-                                            checked={isToggled}
-                                            onChange={() => setIsToggled(!isToggled)}
-                                        />
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 bg-white ">
-                                {isLoading
-                                    ? [1, 2].map((i) => (
-                                        <div
-                                            key={i}
-                                            className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
-                                        >
-                                            <div className="flex flex-col gap-12 p-8">
-                                                <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="h-12 bg-gray-200 rounded-md w-1/2 skeleton"></div>
-                                                    <div className="h-4 bg-gray-200 rounded-md w-1/4 skeleton"></div>
-                                                </div>
-                                                <ul className="flex flex-col gap-2">
-                                                    {[1, 2, 3, 4].map((i) => (
-                                                        <li
-                                                            key={i}
-                                                            className="h-4 bg-gray-200 rounded-md skeleton"
-                                                        ></li>
-                                                    ))}
-                                                </ul>
-                                                <div className="h-4 bg-gray-200 rounded-md w-full skeleton"></div>
-                                            </div>
-                                            <div className="h-12 bg-gray-200 rounded-none mt-auto skeleton"></div>
-                                        </div>
-                                    ))
-                                    : planDetails.map((plan, i) => {
-                                        return (
-                                            <div
-                                                key={i}
-                                                className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
-                                            >
-                                                <div className="flex flex-col gap-12 p-8">
-                                                    <h2 className="h2 capitalize ">{plan?.name}</h2>
-                                                    <div className="flex flex-col gap-2 ">
-                                                        <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
-                                                            <h3 className="h1 break-all">
-                                                                {pricingData.currencySymbol}
-                                                                {getPlanPrice(
-                                                                    plan.name,
-                                                                    isToggled,
-                                                                    pricingData.isDevelopment
-                                                                )}
-                                                            </h3>
-                                                            {pricingData.isDevelopment && (
-                                                                <span className="font-base text-2xl text-grey line-through ml-2">
-                                                                    {pricingData.currencySymbol}
-                                                                    {getPlanPrice(plan.name, isToggled)}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <span className="text-sm tracking-wider">
-                                                            {isToggled ? 'YEAR' : 'MONTH'}/WORKSPACE
-                                                        </span>
-                                                    </div>
-                                                    <ul className="flex flex-col gap-2">
-                                                        <li>
-                                                            <span className="text-green-600">✔</span> Invocations:{' '}
-                                                            {plan.invocations}/Month
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span> Execution Time
-                                                            Limit: {plan.execution_time} Seconds
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span>Designated
-                                                            Technical Support
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span>{' '}
-                                                            {plan?.active_workflows} Active Workflows
-                                                        </li>
-                                                    </ul>
-                                                    <h2 className="">{plan?.description}</h2>
-                                                </div>
-                                                <a
-                                                    href={`/signup?plan=${plan?.slug}&duration=${isToggled ? 'yearly' : 'monthly'}${selectedCountry?.cca2 ? '&country=' + selectedCountry?.cca2 : ''}&utm_source=/pricing`}
-                                                >
-                                                    <button
-                                                        className={`btn btn-primary w-full mt-auto ${i == 0 && 'btn-outline border-0 border-t'}`}
-                                                    >
-                                                        {'Start Free Trial'.toUpperCase()}
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        );
-                                    })}
-                            </div>
-                        </div>
+            <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
+                <div className="cont gap-4 py-20">
+                    <div className="cont gap-1">
+                        <h1 className="h1 !text-accent">Launchpad Offer</h1>
+                        <p className="sub__h1">
+                            All the power of our $50/mo Growth Plan - absolutely free for 6 months
+                        </p>
+                    </div>
+                    <button className="btn btn-accent mt-2">Start free for 6 months</button>
+                    <div className="flex gap-4">
+                        {' '}
+                        <p className="h6">
+                            <span className="text-accent">✔</span> No Credit Card Required
+                        </p>
+                        <p>.</p>
+                        <p className="h6">
+                            <span className="text-accent">✔</span> Cancel Anytime{' '}
+                        </p>
                     </div>
                 </div>
+
+                <div>
+                    <h2 className="h2">
+                        <span className="text-accent">Loved Launchpad? </span>
+                        Stay on Growth at $49/mo. Or switch to Starter for just $19.
+                    </h2>
+                </div>
+
+                <PricingTabs />
 
                 <div className="border transparent-border-black p-6 md:p-12 flex flex-col gap-6 bg-white">
                     <h2 className="h2">Explore Hundreds of Features, Available on Every Plan</h2>
