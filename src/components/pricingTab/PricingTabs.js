@@ -10,7 +10,7 @@ const PricingTabs = () => {
             invocations: '200 invocations/month',
             featureHeading: 'Free includes',
             features: [
-                '1000+ apps',
+                '1500+ apps',
                 'Schedule Workflows',
                 'Unlimited workflows',
                 '15-minute minimum interval between runs',

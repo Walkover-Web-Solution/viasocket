@@ -24,7 +24,7 @@ export default function IntegrateAppsComp() {
             <>
                 <div className="cont cont__gap border transparent-border-black p-12 bg-white">
                     <h2 className="h2">
-                        Integrate <span className="text-accent italic">5000+</span> Apps
+                        Integrate <span className="text-accent italic">1500+</span> Apps
                     </h2>
                     <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-3 ">
                         {apps?.slice(0, 40).map((app, index) => {

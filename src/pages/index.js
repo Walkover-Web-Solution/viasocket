@@ -729,7 +729,7 @@ export async function getServerSideProps(context) {
         },
     ];
 
-    const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 5000+ apps'];
+    const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 1500+ apps'];
 
     const securityGridData = [
         {
