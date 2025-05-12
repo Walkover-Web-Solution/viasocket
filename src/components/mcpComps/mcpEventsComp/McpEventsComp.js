@@ -72,7 +72,7 @@ export default function McpEventComp({ appOneDetails }) {
                         onClick={() => {
                             setVisibleEvents(visibleEvents + 6);
                         }}
-                        className="btn border border-blacl hover-bg-grey-100-text-black bg-white"
+                        className="btn border transparent-border-black hover-bg-grey-100-text-black bg-white"
                     >
                         Load More <MdKeyboardArrowDown fontSize={20} />
                     </button>

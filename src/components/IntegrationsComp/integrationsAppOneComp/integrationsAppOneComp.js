@@ -234,7 +234,7 @@ export default function IntegrationsAppOneComp({
             {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
 
             {getStartedData && (
-                <div className="container border transparent-border-black p-20 bg-white">
+                <div className="container">
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
@@ -245,83 +245,82 @@ export default function IntegrationsAppOneComp({
                     <BlogGrid posts={blogsData} />
                 </div>
             )}
-            <div className="container pb-4">
-                <div className="cont">
-                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
-                        {faqData && <FAQSection faqData={faqData} />}
-                    </div>
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
-                        <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
-                            <div>
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt="Slack"
-                                />
-                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
-                                    <Link
-                                        key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
-                                        className="mb-2"
-                                    >
-                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">
-                                            {cat}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                            <Link
-                                target="_blank"
-                                href={
-                                    appOneDetails?.domain.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain
-                                }
-                            >
-                                <LinkText children={'Learn More'} />
-                            </Link>
-                        </div>
-                        <div className="w-full cont gap-4 p-12 border-x md:border-l-0 transparent-border-black">
-                            <div>
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={'/assets/brand/fav_ico.svg'}
-                                    width={36}
-                                    height={36}
-                                    alt="Slack"
-                                />
-                                <h3 className="h3 font-bold pt-5">About viaSocket</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full font-medium">
-                                viasocket is an innovative and versatile workflow automation platform designed to
-                                streamline and simplify the integration of your favorite applications and to
-                            </p>
-                            <div className="flex flex-wrap gap-3">
-                                <Link href="/" className="mb-2">
-                                    <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
-                                        Workflow Automation
-                                    </span>
-                                </Link>
-                                <Link href="/integrations" className="mb-2">
-                                    <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
-                                        Integration
-                                    </span>
-                                </Link>
-                            </div>
-                            <Link href={'/'}>
-                                <LinkText children={'Learn More'} />
-                            </Link>
-                        </div>
-                    </div>
+            <div className="container pb-4 cont">
+                {faqData && <FAQSection faqData={faqData} />}
 
+                <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
+                    <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
+                        <div>
+                            <Image
+                                className="h-10 w-fit"
+                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                width={36}
+                                height={36}
+                                alt="Slack"
+                            />
+                            <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
+                        </div>
+                        <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                            {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
+                                <Link
+                                    key={index}
+                                    href={createURL(
+                                        `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
+                                    )}
+                                    className="mb-2"
+                                >
+                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">
+                                        {cat}
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                        <Link
+                            target="_blank"
+                            href={
+                                appOneDetails?.domain.startsWith('http')
+                                    ? appOneDetails?.domain
+                                    : 'http://' + appOneDetails?.domain
+                            }
+                        >
+                            <LinkText children={'Learn More'} />
+                        </Link>
+                    </div>
+                    <div className="w-full cont gap-4 p-12 border-x md:border-l-0 transparent-border-black">
+                        <div>
+                            <Image
+                                className="h-10 w-fit"
+                                src={'/assets/brand/fav_ico.svg'}
+                                width={36}
+                                height={36}
+                                alt="Slack"
+                            />
+                            <h3 className="h3 font-bold pt-5">About viaSocket</h3>
+                        </div>
+                        <p className="text-sm sm:text-lg text-black h-full font-medium">
+                            viasocket is an innovative and versatile workflow automation platform designed to
+                            streamline and simplify the integration of your favorite applications and to
+                        </p>
+                        <div className="flex flex-wrap gap-3">
+                            <Link href="/" className="mb-2">
+                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                    Workflow Automation
+                                </span>
+                            </Link>
+                            <Link href="/integrations" className="mb-2">
+                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                    Integration
+                                </span>
+                            </Link>
+                        </div>
+                        <Link href={'/'}>
+                            <LinkText children={'Learn More'} />
+                        </Link>
+                    </div>
+                </div>
+
+                <div className='container'>
                     <Footer footerData={footerData} />
                 </div>
             </div>

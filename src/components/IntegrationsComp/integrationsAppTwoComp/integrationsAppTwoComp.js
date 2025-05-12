@@ -174,25 +174,25 @@ export default function IntegrationsAppTwoComp({
 
                 {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
-                    <div className="cont gap-4">
-                        <div className="cont cont__w gap-2">
-                            <h2 className="h2  ">
-                                Enable Integrations or automations with these events of{' '}
-                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                <span className="text-accent">{appTwoDetails?.name}</span>
-                            </h2>
-                            <p className="sub__h1">
-                                {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                            </p>
-                        </div>
+                        <div className="cont gap-4">
+                            <div className="cont cont__w gap-2">
+                                <h2 className="h2  ">
+                                    Enable Integrations or automations with these events of{' '}
+                                    <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                    <span className="text-accent">{appTwoDetails?.name}</span>
+                                </h2>
+                                <p className="sub__h1">
+                                    {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                </p>
+                            </div>
 
-                        <IntegrationsEventsComp
-                            combosData={combosData}
-                            appOneDetails={appOneDetails}
-                            appTwoDetails={appTwoDetails}
-                        />
-                    </div>
-                )}
+                            <IntegrationsEventsComp
+                                combosData={combosData}
+                                appOneDetails={appOneDetails}
+                                appTwoDetails={appTwoDetails}
+                            />
+                        </div>
+                    )}
             </div>
 
             {combosData?.combinations?.length > 0 &&
@@ -298,9 +298,9 @@ export default function IntegrationsAppTwoComp({
                             </Link>
                         </div>
                     </div>
-                  
+                    <div className='container'>
                         <Footer footerData={footerData} />
-                    
+                    </div>
                 </div>
             </div>
         </>

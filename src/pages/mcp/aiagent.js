@@ -97,7 +97,9 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
-                <Footer footerData={footerData} />
+              <div className='container'>
+                        <Footer footerData={footerData} />
+                    </div>
             </div>
         </div>
     );

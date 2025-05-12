@@ -179,7 +179,9 @@ export default function IntegrationsDisconnectedComp({
                             </div>
                         </div>
 
-                        <Footer footerData={footerData} />
+                        <div className='container'>
+                            <Footer footerData={footerData} />
+                        </div>
 
                     </div>
                 </div>
