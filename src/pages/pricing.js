@@ -146,7 +146,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
     const LaunchpadPlan = {
         name: 'Launchpad',
         fetureHeading: 'All power of Growth ,plus',
-        feature: ['Free for 6 months', 'No Credit Card Required', 'Cancel Anytime'],
+        feature: ['5000 invocations/month', '30 users', 'Webhook and in-built tools', 'Unlimited workflows'],
     };
 
     return (
@@ -170,31 +170,28 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-4 pt-24 md:pt-36 w-full">
-                    <div className="cont gap-1 w-full md:w-2/3">
-                        <h1 className="h1 !text-accent">Launchpad Offer</h1>
-                        <h2 className="sub__h1">
-                            Loved Launchpad? Stay on Growth at $49/mo. Or switch to Starter for just $29.
-                        </h2>
+                <div className="flex flex-col lg:flex-row gap-12 items-center justify-between md:gap-20 pt-24 md:pt-24 w-full">
+                    <div className="cont gap-1">
+                        <h1 className="h1">Launchpad Offer</h1>
+                        <h3 className='text-base font-medium sm:text-lg md:text-xl  text-black text-start'>Your 6-month head start to Intelligent Automations</h3>
                     </div>
-                    <div className="relative w-full md:w-1/3 max-w-xl flex flex-col items-center mt-8 md:mt-0">
+                    <div className="relative xl:w-[22vw] md:w-1/3 flex flex-col items-center mt-8 md:mt-0">
                         {/* Responsive absolute badge */}
                         <div className="flex justify-center w-full">
-                            <div className="absolute left-1/2 -top-5 -translate-x-1/2 z-10 ">
-                                <span className="bg-black text-white px-6 py-2 h6 border-2 border-white rounded shadow-lg text-nowrap">
+                            <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
+                                <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white rounded shadow-lg text-nowrap">
                                     FREE for First 6 Months
                                 </span>
                             </div>
                         </div>
-                        <div className="border-2 border-accent bg-white cont gap-8 w-full p-6 flex flex-col pt-8 sm:pt-12">
+                        <div className="border transparent-border-black bg-white cont gap-8 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12">
                             <div className="cont gap-4 w-full">
                                 <div className="cont gap-1">
-                                    <h2 className="h2">{LaunchpadPlan.name}</h2>
+                                
                                     <p className="text-base text-accent">
-                                        All the power of our $50/mo Growth Plan — absolutely free for 6 months.
+                                        All the power of our $49/mo Growth Plan — absolutely free for 6 months.
                                     </p>
                                 </div>
-                                <p className="h6 !font-semibold">{LaunchpadPlan.fetureHeading} :</p>
                                 <ul className="flex flex-col gap-2">
                                     {LaunchpadPlan.feature.map((feature, i) => (
                                         <li key={i} className="flex gap-1">
@@ -274,12 +271,10 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     </div>
                 </div>
 
-                <div className=" flex flex-col justify-center py-20">
-                    <div className=" border border-t-0 transparent-border-black bg-white">
+                <div className="flex flex-col justify-center py-4">
+                    <div className="p-4 border transparent-border-black bg-white">
                         <div className="flex items-center justify-center sm:-mt-5 md:-mt-4 lg:-mt-5">
-                            <div className="border-t transparent-border-black flex-grow" />
-                            <h2 className="h2 ">Free Services for Impactful Organizations</h2>
-                            <div className="border-t transparent-border-black flex-grow" />
+                            <h2 className="h2 bg-white">Free Services for Impactful Organizations</h2>
                         </div>
 
                         <div className="flex flex-col gap-4 md:gap-8 items-center text-center py-8 transparent-border-black">
