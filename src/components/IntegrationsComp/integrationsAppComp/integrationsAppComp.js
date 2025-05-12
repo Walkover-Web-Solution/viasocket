@@ -157,7 +157,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                 ) : (
                                     <h2 className="h2 text-accent italic">
                                         {' '}
-                                        5000+
+                                        1500+
                                         <span className="text-black not-italic"> viaSocket Integrations</span>
                                     </h2>
                                 )}
