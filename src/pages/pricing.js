@@ -175,7 +175,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         <h1 className="h1">Launchpad Offer</h1>
                         <h3 className='text-base font-medium sm:text-lg md:text-xl  text-black text-start'>Your 6-month head start to Intelligent Automations</h3>
                     </div>
-                    <div className="relative xl:w-[22vw] md:w-1/3 flex flex-col items-center mt-8 md:mt-0">
+                    <div className="relative xl:w-[26vw] md:w-1/3 flex flex-col items-center mt-8 md:mt-0">
                         {/* Responsive absolute badge */}
                         <div className="flex justify-center w-full">
                             <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
@@ -184,10 +184,10 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                 </span>
                             </div>
                         </div>
-                        <div className="border transparent-border-black bg-white cont gap-8 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12">
+                        <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12">
                             <div className="cont gap-4 w-full">
-                                <div className="cont gap-1">
-                                
+                                <div className="cont gap-3">
+                                <h3 className='h3'>Launchpad offer</h3>
                                     <p className="text-base text-accent">
                                         All the power of our $49/mo Growth Plan — absolutely free for 6 months.
                                     </p>
@@ -270,11 +270,12 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         </div>
                     </div>
                 </div>
-
-                <div className="flex flex-col justify-center py-4">
-                    <div className="p-4 border transparent-border-black bg-white">
+                <div className=" flex flex-col justify-center py-20">
+                    <div className=" border border-t-0 transparent-border-black bg-white">
                         <div className="flex items-center justify-center sm:-mt-5 md:-mt-4 lg:-mt-5">
-                            <h2 className="h2 bg-white">Free Services for Impactful Organizations</h2>
+                            <div className="border-t transparent-border-black flex-grow" />
+                            <h2 className="h2">Free Services for Impactful Organizations</h2>
+                            <div className="border-t transparent-border-black flex-grow" />
                         </div>
 
                         <div className="flex flex-col gap-4 md:gap-8 items-center text-center py-8 transparent-border-black">
