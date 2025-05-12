@@ -300,7 +300,9 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     <div className="container">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                     </div>
-                    <Footer footerData={footerData} />
+                    <div className='container'>
+                        <Footer footerData={footerData} />
+                    </div>
                 </div>
             </div>
         </>

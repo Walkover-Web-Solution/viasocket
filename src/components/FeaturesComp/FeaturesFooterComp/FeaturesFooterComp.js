@@ -12,7 +12,9 @@ export default function FeaturesFooterComp({ footerData, featureData, pageInfo }
                     </Link>
                 </div>
             </div>
-            <Footer footerData={footerData} />
+            <div className='container'>
+                <Footer footerData={footerData} />
+            </div>
         </div>
     );
 }

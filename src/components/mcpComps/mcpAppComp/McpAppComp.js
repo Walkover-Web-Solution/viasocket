@@ -452,7 +452,7 @@ export default function McpAppComp({
                 )}
                 <div className="container pb-4">
                     <div className="cont">
-                        <div className="p-12 border transparent-border-black border-b-0 bg-white">
+                        <div className="container">
                             {faqData && <FAQSection faqData={faqData} />}
                         </div>
                         <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
@@ -512,7 +512,9 @@ export default function McpAppComp({
                                 </div>
                             </div>
                         </div>
+                        <div className='container'>
                         <Footer footerData={footerData} />
+                    </div>
                     </div>
                 </div>
             </div>
