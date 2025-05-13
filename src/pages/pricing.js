@@ -5,7 +5,6 @@ import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFaqData, getFooterData, getMetaData, getNavData, getPricingBetterChoice } from '@/utils/getData';
-import getPricingData from '@/utils/getPricingData';
 import {
     FAQS_FIELDS,
     FOOTER_FIELDS,
@@ -19,23 +18,30 @@ import { getBlogData } from '@/utils/getBlogData';
 import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
 import { getCountryName } from '@/utils/getCountryName';
 import Link from 'next/link';
-import PricingTabs from '@/components/pricingTab/PricingTabs';
+import { getPricingPlan } from '@/utils/getPricingPlan';
 
 export const runtime = 'experimental-edge';
 
 export default function pricing({ navData, footerData, faqData, metaData, countries, blogData, betterChoiceData }) {
-    const [isToggled, setIsToggled] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
     const [userCountry, setUserCountry] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    const [pricingData, setPricingData] = useState({
-        isDevelopment: false,
-        currencySymbol: '$',
-        starterPlan: '30',
-        teamPlan: '60',
-    });
     const [selectedIndex, setSelectedIndex] = useState('0');
+    const [isYearly, setIsYearly] = useState(true);
+    const [isDeveloping, setIsDeveloping] = useState(false);
+    const [pricingPlan, setPricingPlan] = useState([]);
+
+    const fetchPricingPlan = async (country_code) => {
+        try {
+            const pricingPlan = await getPricingPlan(country_code);
+            setPricingPlan(pricingPlan);
+            setIsDeveloping(pricingPlan[0].isDeveloping);
+            console.log(pricingPlan[0].isDeveloping);
+        } catch (error) {
+            console.error('Error fetching pricing plan:', error);
+        }
+    };
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -47,6 +53,9 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 );
                 setUserCountry(fullCountryDetails);
                 setSelectedCountry(fullCountryDetails);
+                if (fullCountryDetails?.codes) {
+                    await fetchPricingPlan(fullCountryDetails.codes);
+                }
             } catch (error) {
                 console.error('Error initializing country data:', error);
             } finally {
@@ -61,33 +70,8 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
         setSelectedCountry(item);
         setInputValue(val);
         setIsLoading(true);
-
-        const defaultPricing = {
-            isDevelopment: false,
-            currencySymbol: '$',
-            starterPlan: '30',
-            teamPlan: '60',
-        };
-
-        if (!item?.codes) {
-            setPricingData(defaultPricing);
-            setIsLoading(false);
-            return;
-        }
-
-        try {
-            const countryPricingData = await getPricingData(item.codes);
-            setPricingData({
-                isDevelopment: countryPricingData?.isDevelopment ?? defaultPricing.isDevelopment,
-                currencySymbol: countryPricingData?.currencySymbol ?? defaultPricing.currencySymbol,
-                starterPlan: countryPricingData?.starterPlan ?? defaultPricing.starterPlan,
-                teamPlan: countryPricingData?.teamPlan ?? defaultPricing.teamPlan,
-            });
-        } catch (error) {
-            console.error('Error fetching pricing data for selected country:', error);
-            setPricingData(defaultPricing);
-        } finally {
-            setIsLoading(false);
+        if (item?.codes) {
+            await fetchPricingPlan(item.codes);
         }
     };
 
@@ -110,43 +94,19 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             });
     };
 
-    const planDetails = [
-        {
-            name: 'starter',
-            slug: 'starter',
-            description: 'For Individuals who need higher limits.',
-            invocations: '10,000',
-            execution_time: 30,
-            min_polling_time: 1,
-            active_workflows: 'Unlimited',
-        },
-        {
-            name: 'team',
-            slug: 'team',
-            description: 'For Teams who want to collaborate on work.',
-            invocations: '10,000',
-            execution_time: 60,
-            min_polling_time: 1,
-            active_workflows: 'Unlimited',
-        },
-    ];
-
-    const getPlanPrice = (planType, isYearly, applyDiscount = false) => {
-        let basePrice = planType === 'starter' ? pricingData.starterPlan : pricingData.teamPlan;
-        let numericPrice = parseFloat(basePrice);
-
-        if (applyDiscount) {
-            numericPrice = numericPrice * 0.1;
+    const getDisplayedPrice = (plan) => {
+        if (!plan?.pricing) return null;
+        let basePrice = Number(plan?.pricing);
+        let priceToShow;
+        if (isYearly) {
+            priceToShow = basePrice * 0.8;
+        } else {
+            priceToShow = basePrice;
         }
-        const finalPrice = isYearly ? numericPrice * 10 : numericPrice;
-
-        return Math.floor(finalPrice).toString();
-    };
-
-    const LaunchpadPlan = {
-        name: 'Launchpad',
-        fetureHeading: 'All power of Growth ,plus',
-        feature: ['5000 invocations/month', '30 users', 'Webhook and in-built tools', 'Unlimited workflows'],
+        if (isDeveloping) {
+            priceToShow = priceToShow * 0.1;
+        }
+        return priceToShow % 1 === 0 ? priceToShow.toFixed(0) : priceToShow.toFixed(2);
     };
 
     return (
@@ -173,7 +133,9 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <div className="flex flex-col lg:flex-row gap-12 items-center justify-between md:gap-20 pt-24 md:pt-24 w-full">
                     <div className="cont gap-1">
                         <h1 className="h1">Launchpad Offer</h1>
-                        <h3 className='text-base font-medium sm:text-lg md:text-xl  text-black text-start'>Your 6-month head start to Intelligent Automations</h3>
+                        <h3 className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
+                            Your 6-month head start to Intelligent Automations
+                        </h3>
                     </div>
                     <div className="relative xl:w-[26vw] md:w-1/3 flex flex-col items-center mt-8 md:mt-0">
                         {/* Responsive absolute badge */}
@@ -187,13 +149,11 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12">
                             <div className="cont gap-4 w-full">
                                 <div className="cont gap-3">
-                                <h3 className='h3'>Launchpad offer</h3>
-                                    <p className="text-base text-accent">
-                                        All the power of our $49/mo Growth Plan — absolutely free for 6 months.
-                                    </p>
+                                    <h3 className="h3">{pricingPlan[0]?.name}</h3>
+                                    <p className="text-base text-accent">{pricingPlan[0]?.feature_headline}</p>
                                 </div>
                                 <ul className="flex flex-col gap-2">
-                                    {LaunchpadPlan.feature.map((feature, i) => (
+                                    {pricingPlan[0]?.features.map((feature, i) => (
                                         <li key={i} className="flex gap-1">
                                             <span className="text-accent text-base">✔</span>
                                             <span className="text-base">{feature}</span>
@@ -201,12 +161,93 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                     ))}
                                 </ul>
                             </div>
-                            <button className="btn btn-accent">Get Started Free</button>
+                            <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
                         </div>
                     </div>
                 </div>
 
-                <PricingTabs />
+                <CustomAutocomplete
+                    items={filterCountries(inputValue)}
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onSelect={handleCountrySelect}
+                    placeholder="Select Country"
+                    defaultCountry={userCountry || selectedCountry}
+                />
+
+                <h2 className="h2">
+                    <span className="text-accent">Loved Launchpad? </span>
+                    <p className="text-lg">Stay on Growth at $49/mo. Or switch to Starter for just $29.</p>
+                </h2>
+                <div>
+                    <div className="flex justify-start w-full">
+                        <div className="flex items-center">
+                            <button
+                                className={`px-4 py-2 border transparent-border-black border-b-0 border-r-0 ${!isYearly ? 'bg-accent text-white' : 'text-black'}`}
+                                onClick={() => setIsYearly(false)}
+                            >
+                                Monthly
+                            </button>
+                            <button
+                                className={`px-4 py-2 border transparent-border-black border-b-0 ${isYearly ? 'bg-accent text-white' : 'text-gray-600'}`}
+                                onClick={() => setIsYearly(true)}
+                            >
+                                Yearly (20% off)
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Pricing Table */}
+                    <div className="w-full bg-white overflow-x-auto">
+                        {/* Pricing Row */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5 pricing-grid-card">
+                            {pricingPlan.map(
+                                (plan, index) =>
+                                    index > 0 && (
+                                        <div
+                                            key={index}
+                                            className="p-6 flex flex-col gap-4 border transparent-border-black"
+                                        >
+                                            <h3 className="h3">{plan?.name}</h3>
+                                            <div className="cont gap-1">
+                                                <div className="h3 text-accent">
+                                                    {plan?.name !== 'Enterprise' ? (
+                                                        plan?.pricing ? (
+                                                            <>
+                                                                {plan?.currencySymbol}
+                                                                {getDisplayedPrice(plan)}
+                                                                <span className="text-sm text-gray-700">/month</span>
+                                                            </>
+                                                        ) : (
+                                                            <span>{plan?.pricing}</span>
+                                                        )
+                                                    ) : (
+                                                        <p className="h3">Talk to Sales</p>
+                                                    )}
+                                                </div>
+                                                <div className="text-base text-gray-700">{plan?.invocations}</div>
+                                            </div>
+
+                                            <div className="cont gap-2">
+                                                <p className="h6 !font-semibold">{plan?.feature_headline}</p>
+                                                <ul className="">
+                                                    {plan?.features.map((feature, i) => (
+                                                        <li key={i} className="flex items-start gap-2">
+                                                            <span className="text-accent">✔</span>
+                                                            <span className="text-base">{feature}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+                                            <div className="mt-auto pt-4">
+                                                <button className={`btn w-full btn-primary`}>{plan?.button_tag}</button>
+                                            </div>
+                                        </div>
+                                    )
+                            )}
+                        </div>
+                    </div>
+                </div>
 
                 <div className="border transparent-border-black p-6 md:p-12 flex flex-col gap-6 bg-white">
                     <h2 className="h2">Explore Hundreds of Features, Available on Every Plan</h2>
@@ -296,7 +337,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                     <div className="container">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                     </div>
-                    <div className='container'>
+                    <div className="container">
                         <Footer footerData={footerData} />
                     </div>
                 </div>
