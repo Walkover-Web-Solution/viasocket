@@ -101,44 +101,6 @@ export default function Support({ open, onClose }) {
         },
     ];
 
-    const navOptions = [
-        {
-            text: 'Explore Apps',
-            border: false,
-            onClick: () => {
-                window.location.href = '/discovery';
-            },
-        },
-        {
-            text: 'Features',
-            border: false,
-            onClick: () => {
-                window.location.href = '/features';
-            },
-        },
-        {
-            text: 'Pricing',
-            border: false,
-            onClick: () => {
-                window.location.href = '/pricing';
-            },
-        },
-        {
-            text: 'Login',
-            border: true,
-            onClick: () => {
-                window.location.href = `https://flow.viasocket.com?state=${defaultUtmSource}`;
-            },
-        },
-        {
-            text: 'Sign Up',
-            border: true,
-            onClick: () => {
-                window.location.href = `/signup?state=${defaultUtmSource}`;
-            },
-        },
-    ];
-
     return (
         <div className={`support-slider pb-24 ${open ? 'open' : ''}`}>
             <Link href="/mcp">
