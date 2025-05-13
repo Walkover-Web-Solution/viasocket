@@ -7,13 +7,6 @@ import { setUtmSource } from '@/utils/handleUtmSource';
 import Link from 'next/link';
 
 export default function Support({ open, onClose }) {
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-    const source = typeof window !== 'undefined' ? window.location.pathname : '';
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: source });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     const handleOpenModal = () => {
         document.getElementById('callback_modal').showModal();
@@ -103,15 +96,21 @@ export default function Support({ open, onClose }) {
 
     return (
         <div className={`support-slider pb-24 ${open ? 'open' : ''}`}>
+            <div className="flex justify-between items-center py-2 px-3 border-b bg-accent">
             <Link href="/mcp">
-                <div className="w-full flex items-center gap-1 py-2 px-3 transparent-border-black bg-accent border-b border-b-black">
+                <div className="flex items-center gap-2">
                     <p className="!text-base text-white hover:underline">Connect your AI agent with MCP</p>
                     <MdKeyboardArrowRight className="text-white h-5 w-5" />
                 </div>
             </Link>
+                <button onClick={onClose} aria-label="Close" className='!mx-4'>
+                    <MdClose className="text-white" />
+                </button>
+            </div>
+
 
             {/* Connection Section */}
-            <div className="flex flex-col gap-4 p-4 bg-gray-100">
+            <div className="flex flex-col gap-6 p-4">
                 <h3 className="h3">1,000+ Apps Ready to Connect</h3>
                 <button
                     onClick={() =>
