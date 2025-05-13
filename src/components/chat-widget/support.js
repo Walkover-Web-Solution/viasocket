@@ -141,39 +141,21 @@ export default function Support({ open, onClose }) {
 
     return (
         <div className={`support-slider pb-24 ${open ? 'open' : ''}`}>
-            <div className="flex justify-between items-center py-2 border-b">
-                <div className="flex gap-4">
-                    {navOptions.map((option, index) => (
-                        <button
-                            key={index}
-                            className={`${
-                                option.border ? 'btn btn-primary btn-outline !px-3' : 'px-2'
-                            } hover:bg-gray-100 transition`}
-                            onClick={option.onClick}
-                        >
-                            {option.text}
-                        </button>
-                    ))}
-                </div>
-                <button onClick={onClose} aria-label="Close" className='!mx-4'>
-                    <MdClose className="h-6 w-6 text-gray-600" />
-                </button>
-            </div>
             <Link href="/mcp">
-                <div className="w-full flex items-center gap-1 p-2 transparent-border-black mcp-support-background border-b border-b-black">
+                <div className="w-full flex items-center gap-1 py-2 px-3 transparent-border-black bg-accent border-b border-b-black">
                     <p className="!text-base text-white hover:underline">Connect your AI agent with MCP</p>
                     <MdKeyboardArrowRight className="text-white h-5 w-5" />
                 </div>
             </Link>
 
             {/* Connection Section */}
-            <div className="flex flex-col gap-2 p-4 bg-gray-100">
+            <div className="flex flex-col gap-4 p-4 bg-gray-100">
                 <h3 className="h3">1,000+ Apps Ready to Connect</h3>
                 <button
                     onClick={() =>
                         (window.location.href = 'https://cal.id/team/bring-your-app-on-viasocket-marketplace')
                     }
-                    className="btn btn-primary btn-outline !px-2"
+                    className="btn btn-primary btn-outline !px-4 min-w-[120px] xl:min-w-[130px]"
                 >
                     <span>Bring your app</span>
                 </button>
@@ -263,7 +245,7 @@ export default function Support({ open, onClose }) {
                                     <a
                                         href={item.href}
                                         target={item.target}
-                                        className="flex items-center gap-2 p-2 hover:bg-gray-100 transition cursor-pointer"
+                                        className="flex items-center gap-2 p-2 transition cursor-pointer"
                                     >
                                         {item.icon}
                                         <span>{item.text}</span>
@@ -271,7 +253,7 @@ export default function Support({ open, onClose }) {
                                 ) : (
                                     <button
                                         onClick={item.onClick}
-                                        className="flex items-center gap-2 p-2 w-full text-left hover:bg-gray-100 transition"
+                                        className="flex items-center gap-2 p-2 w-full text-left transition"
                                     >
                                         {item.icon}
                                         <span>{item.text}</span>
