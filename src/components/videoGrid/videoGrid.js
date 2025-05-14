@@ -11,7 +11,7 @@ const VideoGrid = ({ videoData }) => {
     };
     return (
         <div className="flex flex-col gap-8">
-            <h2 className="h2">Watch Integration</h2>
+            <h2 className="h2">Watch Integrations In Action</h2>
             <div className={`grid ${getGridClass()} gap-4`}>
                 {videoData.map((video, index) => (
                     <div key={index} className={`w-full ${videoData.length === 1 ? 'col-span-1' : ''}`}>

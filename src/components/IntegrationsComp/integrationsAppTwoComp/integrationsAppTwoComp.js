@@ -230,9 +230,7 @@ export default function IntegrationsAppTwoComp({
 
             <div className="container pb-4">
                 <div className="cont ">
-                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
-                        {faqData && <FAQSection faqData={faqData} />}
-                    </div>
+                    {faqData && <FAQSection faqData={faqData} />}
                     <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                         <div className="cont gap-4 w-full p-12 border border-t-0 md:border-b-0  transparent-border-black">
                             <div className="cont gap-2 ">
