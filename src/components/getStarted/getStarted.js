@@ -5,7 +5,7 @@ import style from './getStarted.module.scss';
 export default function GetStarted({ data, isHero }) {
     return (
         <>
-            <div className="grid gap-10">
+            <div className="grid gap-10 bg-white border transparent-border-black p-12 transparent-border-black">
                 <div className="flex justify-between flex-col md:flex-row">
                     <div className="flex flex-col gap-2 w-fit h-full">
                         <h2 className="h2">We'll help you get started</h2>
@@ -45,8 +45,8 @@ export default function GetStarted({ data, isHero }) {
                                 >
                                     <button
                                         className={`flex text-start justify-start gap-1 btn  ${
-                                            index == 0 && 'btn-accent outline outline-primary outline-1'
-                                        } ${index == 1 && 'btn-primary btn-outline '} ${
+                                            index == 0 && 'btn-accent transparent-border-black'
+                                        } ${index == 1 && 'btn-primary btn-outline transparent-border-black '} ${
                                             index !== 1 && index !== 0 && 'btn-ghost'
                                         }`}
                                         aria-label="get started"

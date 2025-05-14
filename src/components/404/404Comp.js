@@ -20,7 +20,7 @@ export default function ErrorComp({ navData, footerData, utm }) {
                         Back
                     </button>
                     <Link href="/">
-                        <button className="btn btn-md btn-primary btn-outline">Go to home</button>
+                        <button className="btn btn-md btn-primary btn-outline transparent-border-black">Go to home</button>
                     </Link>
                 </div>
             </div>

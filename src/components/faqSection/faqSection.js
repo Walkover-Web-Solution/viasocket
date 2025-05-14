@@ -4,10 +4,12 @@ export default function FAQSection({ faqData, faqName, isBlack = false }) {
         <>
             {' '}
             {faqData?.length > 0 && (
-                <div className={`flex flex-col gap-9 ${isBlack ? 'text-white' : ''}`}>
+                <div
+                    className={`flex flex-col border border-b-0 transparent-border-black p-12 gap-9 bg-white ${isBlack ? 'text-white' : ''}`}
+                >
                     <h2 className="h2">Frequently Asked Questions</h2>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-1">
                         {faqData.map((faq, index) => {
                             return (
                                 <div
@@ -16,11 +18,12 @@ export default function FAQSection({ faqData, faqName, isBlack = false }) {
                                 >
                                     <input
                                         type="radio"
-                                        name="my-accordion-3 border-none bg-white "
+                                        name="my-accordion-3 border-none bg-white"
+                                        className="min-h-[28px]"
                                         defaultChecked={index == 0}
                                     />
                                     <div
-                                        className={`collapse-title text-lg font-semibold ${isBlack ? '!text-white' : ''}`}
+                                        className={`collapse-title text-lg font-semibold pb-0 min-h-[28px] ${isBlack ? '!text-white' : ''}`}
                                     >
                                         {faq?.que}
                                     </div>

@@ -14,19 +14,6 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     const router = useRouter();
     var browserPath = router.asPath;
 
-    useEffect(() => {
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
-        script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
-
-        document.body.appendChild(script);
-
-        return () => {
-            document.body.removeChild(script);
-            script.removeEventListener('load', handleLoad);
-        };
-    }, []);
-
     const rawpathArray = browserPath.split(/[?#]/);
     const pathArray = rawpathArray[0].split('/');
     var showNavbar = false;

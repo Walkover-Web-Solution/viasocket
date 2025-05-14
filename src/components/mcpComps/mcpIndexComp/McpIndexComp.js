@@ -148,7 +148,7 @@ export default function McpIndexComp({
                                     Give your <span className="text-accent">AI agent </span> the power to act
                                 </h1>
                                 <h2 className="sub__h1">
-                                    Any action in<span className="text-accent"> 5000+</span> app - no complex setups. OR
+                                    Any action in<span className="text-accent"> 1500+</span> app - no complex setups. OR
                                     build your own, power users!
                                 </h2>
                             </div>
@@ -202,7 +202,7 @@ export default function McpIndexComp({
                                                 return (
                                                     <a
                                                         key={index}
-                                                        className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                        className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                         href={createURL(`/mcp/category/${category?.slug}`)}
                                                     >
                                                         {category?.name}
@@ -221,7 +221,7 @@ export default function McpIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover:bg-black hover:text-white ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
                                                     href={createURL(`/mcp/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -236,7 +236,7 @@ export default function McpIndexComp({
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
-                                        <h2 className="h1 text-accent  ">
+                                        <h2 className="h1 text-accent">
                                             <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
                                             {integrationsInfo?.category === 'all'
                                                 ? 'Apps'
@@ -248,7 +248,7 @@ export default function McpIndexComp({
                                     <>
                                         <h2 className="h2 text-accent italic">
                                             {' '}
-                                            1000+
+                                            1500+
                                             <span className="text-black not-italic"> MCP Servers</span>
                                         </h2>
                                         <p>
@@ -260,7 +260,7 @@ export default function McpIndexComp({
                                 )}
                             </div>
 
-                            <div className={style.appsgrid}>
+                            <div className={`${style.appsgrid} transparent-border-black`}>
                                 {debounceValue ? (
                                     searchedApps?.length > 0 ? (
                                         searchedApps?.map((app, index) => {
@@ -270,7 +270,7 @@ export default function McpIndexComp({
                                                     href={createURL(`/mcp/${app?.appslugname}`)}
                                                     className={style.app}
                                                 >
-                                                    <div className="flex items-center gap-2">
+                                                    <div className="flex items-center gap-2 ">
                                                         <div className="border flex items-center justify-center w-9 h-9 bg-white">
                                                             <Image
                                                                 src={app?.iconurl || 'https://placehold.co/36x36'}
@@ -297,7 +297,7 @@ export default function McpIndexComp({
                                             <Link
                                                 key={index}
                                                 href={createURL(`/mcp/${app?.appslugname}`)}
-                                                className={style.app}
+                                                className={`${style.app} hover-bg-grey-100-text-black transparent-border-black`}
                                             >
                                                 <div className="flex items-center gap-2">
                                                     <div className="border flex items-center justify-center w-9 h-9 bg-white">
@@ -337,77 +337,73 @@ export default function McpIndexComp({
                 <div className=""></div>
                 <FeaturesGrid featuresData={featuresData} />
 
-                <div className="container border transparent-border-black">
+                <div className="container cont">
                     <Table data={tableData} />
                 </div>
+                <div className='container cont'>
+                    <div className="cont__py p-12 h-fit border gap-12 flex flex-col  bg-black text-white">
+                        <h2 className="h2 py-2">Ready, Set, MCP in 3 Simple Steps</h2>
 
-                <div className="container cont cont__py gap-12 px-24  h-fit border  bg-black text-white">
-                    <div className="flex flex-col justify-center w-full">
-                        <h2 className="h2">Ready, Set, MCP in 3 Simple Steps</h2>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
-                        {mcpSteps.map((step, index) => (
-                            <div
-                                key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
-                            >
-                                <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h3 font-bold">{step.title}</h3>
-                                <p className="sub__h2">{step.description}</p>
-                            </div>
-                        ))}
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                            {mcpSteps.map((step, index) => (
+                                <div
+                                    key={index}
+                                    className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                >
+                                    <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
+                                    <h3 className="h3 font-bold">{step.title}</h3>
+                                    <p className="sub__h2">{step.description}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
-                <div className="container cont gap-12 text-black py-20 px-12 border transparent-border-black bg-white">
-                    <div className="flex flex-col gap-2 justify-center">
-                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
-                        <p className="sub__h1">
-                            Break free from isolation-connect your AI to real-world data for smarter, more impactful
-                            results.
-                        </p>
-                    </div>
-                    <div className="flex flex-col md:flex-row gap-8 text-black">
-                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border transparent-border-black">
-                            <div className="cont gap-4">
-                                <h2 className="text-4xl font-bold">Free for Lifetime</h2>
-                                <h3 className="text-xl">
-                                    viaSocket MCP is free to use for lifetime under a{' '}
-                                    <span className="underline font-semibold">
-                                        <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
-                                            {' '}
-                                            fair usage policy
-                                        </Link>{' '}
-                                    </span>{' '}
-                                    without rate limits
-                                </h3>
-                            </div>
-                            <Link href="/signup?utm_source=mcp">
-                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-black hover:text-white border-none group active:scale-95 transition-transform duration-75">
-                                    Get Your MCP URL for Free
-                                </button>
-                            </Link>
+                <div className='container cont'>
+                    <div className="flex gap-12 flex-col text-black p-12 border transparent-border-black bg-white">
+                        <div className="flex flex-col gap-2 justify-center">
+                            <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                            <p className="sub__h1">
+                                Break free from isolation-connect your AI to real-world data for smarter, more impactful
+                                results.
+                            </p>
                         </div>
-                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border transparent-border-black">
-                            <div className="cont gap-4">
-                                <h2 className="text-4xl font-bold">For Enterprises</h2>
-                                <h3 className="text-xl">
-                                    viaSocket MCP for Enterprises empowers AI models to securely connect to thousands of
-                                    apps in minutes
-                                </h3>
-                            </div>
-                            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
-                                {/* <Link href="/signup?utm_source=mcp">
-                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
-                                     <span className="block group-hover:hidden">Cloud MCP</span>
-                                    <span className="hidden group-hover:block">Sign Up</span> 
-                                </button>
-                            </Link> */}
-                                <Link href="/support">
-                                    <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-black hover:text-white border-none group w-48 active:scale-95 transition-transform duration-75">
-                                        Self-Hosted MCP
+                        <div className="flex flex-col md:flex-row gap-8 text-black">
+                            <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border transparent-border-black">
+                                <div className="cont gap-4">
+                                    <h2 className="text-4xl font-bold">Free for Lifetime</h2>
+                                    <h3 className="text-xl">
+                                        viaSocket MCP is free to use for lifetime under a{' '}
+                                        <span className="underline font-semibold">
+                                            <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                                {' '}
+                                                fair usage policy
+                                            </Link>{' '}
+                                        </span>{' '}
+                                        without rate limits
+                                    </h3>
+                                </div>
+                                <Link href="/signup?utm_source=mcp">
+                                    <button className="px-4 py-2 bg-accent text-lg text-white hover-bg-grey-100-text-black border-none group active:scale-95 transition-transform duration-75">
+                                        Get Your MCP URL for Free
                                     </button>
                                 </Link>
+                            </div>
+                            <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border transparent-border-black">
+                                <div className="cont gap-4">
+                                    <h2 className="text-4xl font-bold">For Enterprises</h2>
+                                    <h3 className="text-xl">
+                                        viaSocket MCP for Enterprises empowers AI models to securely connect to thousands of
+                                        apps in minutes
+                                    </h3>
+                                </div>
+                                <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
+                                    <Link href="/support">
+                                        <button className="px-4 py-2 bg-accent text-lg text-white hover-bg-grey-100-text-black border-none group w-48 active:scale-95 transition-transform duration-75">
+                                            Self-Hosted MCP
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -419,7 +415,7 @@ export default function McpIndexComp({
 
                 <div className="pb-4">
                     {faqData?.length > 0 && (
-                        <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                        <div className="container cont">
                             <FAQSection faqData={faqData} faqName={'/index'} />
                         </div>
                     )}
@@ -452,43 +448,44 @@ const FeaturesGrid = ({ featuresData }) => {
         }
     };
     return (
-        <div className="container p-12 py-20 bg-black text-white">
-            <div className="mb-20">
-                <div className="flex gap-4">
-                    <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
-                    <BsStars size={42} />
-                </div>
-                <h2 className="sub__h1 text-gray-300 max-w-[800px]">
-                    viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now send
-                    messages, manage data, schedule events, and update records, turning it from a chat tool into a real
-                    action taker.
-                </h2>
-            </div>
-
-            {/* <div className="flex justify-center items-center"> */}
-            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
-                {featuresData.map((feature, index) => (
-                    <div
-                        key={index}
-                        className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
-                    >
-                        <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
-                        <p className="sub__h2 text-gray-300">{feature.content}</p>
+        <div className='container cont'>
+            <div className="p-12 py-20 bg-black text-white">
+                <div className="mb-20">
+                    <div className="flex gap-4">
+                        <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
+                        <BsStars size={42} />
                     </div>
-                ))}
+                    <h2 className="sub__h1 text-gray-300 max-w-[800px]">
+                        viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now send
+                        messages, manage data, schedule events, and update records, turning it from a chat tool into a real
+                        action taker.
+                    </h2>
+                </div>
+
+                {/* <div className="flex justify-center items-center"> */}
+                <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
+                    {featuresData.map((feature, index) => (
+                        <div
+                            key={index}
+                            className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
+                        >
+                            <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
+                            <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
+                            <p className="sub__h2 text-gray-300">{feature.content}</p>
+                        </div>
+                    ))}
+                </div>
+                {/* </div> */}
             </div>
-            {/* </div> */}
         </div>
     );
 };
 
 const Table = ({ data }) => {
     return (
-        <div className=" w-full h-full cont gap-12  bg-white py-8 px-0 lg:px-20">
+        <div className="border transparent-border-black w-full h-full cont gap-8 bg-white py-8 px-0 lg:px-20">
             <div className="flex flex-col gap-0">
-                <h2 className="h2 mb-5">MCP vs Traditional APIs :</h2>
-                <h2 className="h2 mt-2">The Paradigm Shift</h2>
+                <h2 className="h2">MCP vs Traditional APIs : The Paradigm Shift</h2>
             </div>
             <div className="overflow-x-auto">
                 <table className="w-full border transparent-border-black">
@@ -501,10 +498,10 @@ const Table = ({ data }) => {
                     </thead>
                     <tbody>
                         {data.map((conntent, index) => (
-                            <tr key={index} className=" hover:bg-gray-200">
-                                <td className="p-4 text-lg font-semibold ">{conntent?.aspects}</td>
-                                <td className="p-4 text-lg ">{conntent?.api}</td>
-                                <td className="p-4 text-lg ">{conntent?.mcp}</td>
+                            <tr key={index} className="">
+                                <td className="p-4 text-lg font-semibold border transparent-border-black">{conntent?.aspects}</td>
+                                <td className="p-4 text-lg  border transparent-border-black">{conntent?.api}</td>
+                                <td className="p-4 text-lg  border transparent-border-black">{conntent?.mcp}</td>
                             </tr>
                         ))}
                     </tbody>

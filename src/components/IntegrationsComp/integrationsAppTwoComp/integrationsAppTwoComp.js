@@ -14,6 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import GetStarted from '@/components/getStarted/getStarted';
+import VideoGrid from '@/components/videoGrid/videoGrid';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -25,6 +26,7 @@ export default function IntegrationsAppTwoComp({
     blogsData,
     metaData,
     getStartedData,
+    videoData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -45,17 +47,20 @@ export default function IntegrationsAppTwoComp({
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
-            <div style={{ background: appOneDetails?.brandcolor }} className="">
+            <div
+                style={{ background: appOneDetails?.brandcolor }}
+                className="border transparent-border-black border-t-0 border-r-0 border-l-0"
+            >
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
                         <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                            <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover:bg-black hover:text-white transition-all">
+                            <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
                                 Login to viaSocket <MdOpenInNew />{' '}
                             </button>
                         </Link>
                     </div>
-                    <div className="flex w-full  gap-2 md:gap-4 flex-col md:flex-row ">
-                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border transparent-border-black bg-white w-full max-w-[400px]">
+                    <div className="flex w-full flex-col md:flex-row ">
+                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border border-r-0 transparent-border-black bg-white w-full max-w-[300px] min-w-fit">
                             <Image
                                 className="h-8 md:h-10 w-fit"
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -67,7 +72,7 @@ export default function IntegrationsAppTwoComp({
                                 <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
                             </div>
                         </div>
-                        <div className="flex md:h-28 items-center gap-4 px-5 py-3  border transparent-border-black bg-white w-full max-w-[400px]">
+                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border transparent-border-black bg-white w-full max-w-[300px] min-w-fit">
                             <Image
                                 className="h-8 md:h-10 w-fit"
                                 src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
@@ -112,7 +117,7 @@ export default function IntegrationsAppTwoComp({
                         </div>
 
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t border-black">
+                            <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t transparent-border-black">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -205,8 +210,14 @@ export default function IntegrationsAppTwoComp({
                 )}
 
             {getStartedData && (
-                <div className="container border transparent-border-black p-20 bg-white">
+                <div className="container cont">
                     <GetStarted data={getStartedData} isHero={'false'} />
+                </div>
+            )}
+
+            {videoData?.length > 0 && (
+                <div className="container">
+                    <VideoGrid videoData={videoData} />
                 </div>
             )}
 
@@ -219,9 +230,7 @@ export default function IntegrationsAppTwoComp({
 
             <div className="container pb-4">
                 <div className="cont ">
-                    <div className="p-12 border transparent-border-black border-b-0 bg-white">
-                        {faqData && <FAQSection faqData={faqData} />}
-                    </div>
+                    {faqData && <FAQSection faqData={faqData} />}
                     <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                         <div className="cont gap-4 w-full p-12 border border-t-0 md:border-b-0  transparent-border-black">
                             <div className="cont gap-2 ">
@@ -298,7 +307,7 @@ export default function IntegrationsAppTwoComp({
                             </Link>
                         </div>
                     </div>
-                    <div>
+                    <div className="container">
                         <Footer footerData={footerData} />
                     </div>
                 </div>

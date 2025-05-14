@@ -12,7 +12,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
 
     if (posts?.length > 0) {
         return (
-            <div className="flex flex-col gap-9 container">
+            <div className="flex flex-col gap-9">
                 <h2 className="h2">{heading}</h2>
                 <div className="w-full cont">
                     <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid bg-white">
@@ -26,7 +26,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
                             customClasses={
                                 isBlack
                                     ? 'btn border-white border-t-0'
-                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white'
+                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white transparent-border-black'
                             }
                         />
                     </Link>

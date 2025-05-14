@@ -24,7 +24,7 @@ export default function IntegrateAppsComp() {
             <>
                 <div className="cont cont__gap border transparent-border-black p-12 bg-white">
                     <h2 className="h2">
-                        Integrate <span className="text-accent italic">5000+</span> Apps
+                        Integrate <span className="text-accent italic">1500+</span> Apps
                     </h2>
                     <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-3 ">
                         {apps?.slice(0, 40).map((app, index) => {
@@ -33,7 +33,7 @@ export default function IntegrateAppsComp() {
                                     <Link
                                         key={index}
                                         href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
-                                        className="flex flex-row md:flex-col gap-1 md:py-6 py-2 px-2 items-center hover:bg-black hover:text-white"
+                                        className="flex flex-row md:flex-col gap-1 md:py-6 py-2 px-2 items-center hover-bg-grey-100-text-black"
                                     >
                                         <div className="bg-white p-1">
                                             <Image

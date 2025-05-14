@@ -50,7 +50,6 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                                 {' '}
                                 {/* Added sublist with bullet points */}
                                 <li>Generate an MCP endpoint for their account</li>
-                                <li>Connect your app to thousands of others</li>
                                 <li>Trigger workflows from OpenAI, Claude, or any LLM</li>
                             </ul>
                         </li>
@@ -111,11 +110,13 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <BlogGrid posts={blogData} />
             <div>
                 {faqData?.length > 0 && (
-                    <div className="container border transparent-border-black p-20 border-b-0 bg-white">
+                    <div className="container">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
-                <Footer footerData={footerData} />
+                <div className='container'>
+                    <Footer footerData={footerData} />
+                </div>
             </div>
         </div>
     );
@@ -126,15 +127,15 @@ export async function getServerSideProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
-    const blogTags = 'mcp';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogTags1 = 'mcp';
+    const blogTags2 = 'saas';
+    const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 });
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
-            blogTags: blogTags || [],
             blogData: blogData || [],
         },
     };
