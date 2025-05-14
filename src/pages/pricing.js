@@ -5,6 +5,7 @@ import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFaqData, getFooterData, getMetaData, getNavData, getPricingBetterChoice } from '@/utils/getData';
+// import { getPricingData } from '@/utils/getPricingData';
 import {
     FAQS_FIELDS,
     FOOTER_FIELDS,
@@ -18,30 +19,23 @@ import { getBlogData } from '@/utils/getBlogData';
 import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
 import { getCountryName } from '@/utils/getCountryName';
 import Link from 'next/link';
-import { getPricingPlan } from '@/utils/getPricingPlan';
+import getPricingData from '@/utils/getPricingData';
 
 export const runtime = 'experimental-edge';
 
 export default function pricing({ navData, footerData, faqData, metaData, countries, blogData, betterChoiceData }) {
+    const [isToggled, setIsToggled] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
     const [userCountry, setUserCountry] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [pricingData, setPricingData] = useState({
+        isDevelopment: false,
+        currencySymbol: '$',
+        starterPlan: '30',
+        teamPlan: '60',
+    });
     const [selectedIndex, setSelectedIndex] = useState('0');
-    const [isYearly, setIsYearly] = useState(true);
-    const [isDeveloping, setIsDeveloping] = useState(false);
-    const [pricingPlan, setPricingPlan] = useState([]);
-
-    const fetchPricingPlan = async (country_code) => {
-        try {
-            const pricingPlan = await getPricingPlan(country_code);
-            setPricingPlan(pricingPlan);
-            setIsDeveloping(pricingPlan[0].isDeveloping);
-            setIsLoading(false);
-        } catch (error) {
-            console.error('Error fetching pricing plan:', error);
-        }
-    };
 
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -53,9 +47,6 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 );
                 setUserCountry(fullCountryDetails);
                 setSelectedCountry(fullCountryDetails);
-                if (fullCountryDetails?.codes) {
-                    await fetchPricingPlan(fullCountryDetails.codes);
-                }
             } catch (error) {
                 console.error('Error initializing country data:', error);
             } finally {
@@ -70,8 +61,33 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
         setSelectedCountry(item);
         setInputValue(val);
         setIsLoading(true);
-        if (item?.codes) {
-            await fetchPricingPlan(item.codes);
+
+        const defaultPricing = {
+            isDevelopment: false,
+            currencySymbol: '$',
+            starterPlan: '30',
+            teamPlan: '60',
+        };
+
+        if (!item?.codes) {
+            setPricingData(defaultPricing);
+            setIsLoading(false);
+            return;
+        }
+
+        try {
+            const countryPricingData = await getPricingData(item.codes);
+            setPricingData({
+                isDevelopment: countryPricingData?.isDevelopment ?? defaultPricing.isDevelopment,
+                currencySymbol: countryPricingData?.currencySymbol ?? defaultPricing.currencySymbol,
+                starterPlan: countryPricingData?.starterPlan ?? defaultPricing.starterPlan,
+                teamPlan: countryPricingData?.teamPlan ?? defaultPricing.teamPlan,
+            });
+        } catch (error) {
+            console.error('Error fetching pricing data for selected country:', error);
+            setPricingData(defaultPricing);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -94,19 +110,37 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             });
     };
 
-    const getDisplayedPrice = (plan) => {
-        if (!plan?.pricing) return null;
-        let basePrice = Number(plan?.pricing);
-        let priceToShow;
-        if (isYearly) {
-            priceToShow = basePrice * 0.8;
-        } else {
-            priceToShow = basePrice;
+    const planDetails = [
+        {
+            name: 'starter',
+            slug: 'starter',
+            description: 'For Individuals who need higher limits.',
+            invocations: '10,000',
+            execution_time: 30,
+            min_polling_time: 1,
+            active_workflows: 'Unlimited',
+        },
+        {
+            name: 'team',
+            slug: 'team',
+            description: 'For Teams who want to collaborate on work.',
+            invocations: '10,000',
+            execution_time: 60,
+            min_polling_time: 1,
+            active_workflows: 'Unlimited',
+        },
+    ];
+
+    const getPlanPrice = (planType, isYearly, applyDiscount = false) => {
+        let basePrice = planType === 'starter' ? pricingData.starterPlan : pricingData.teamPlan;
+        let numericPrice = parseFloat(basePrice);
+
+        if (applyDiscount) {
+            numericPrice = numericPrice * 0.1;
         }
-        if (isDeveloping) {
-            priceToShow = priceToShow * 0.1;
-        }
-        return priceToShow % 1 === 0 ? priceToShow.toFixed(0) : priceToShow.toFixed(2);
+        const finalPrice = isYearly ? numericPrice * 10 : numericPrice;
+
+        return Math.floor(finalPrice).toString();
     };
 
     return (
@@ -129,231 +163,134 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
-            <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-4 lg:gap-16 pt-12 md:pt-24 w-full">
-                    <div className="cont gap-1">
-                        <h1 className="h1">
-                            <span className="text-accent">Launchpad</span> Offer
-                        </h1>
-                        <h3 className="text-base font-medium sm:text-lg md:text-xl">
-                            Your 6-month head start to Intelligent Automations
-                        </h3>
-                    </div>
-                    <div className="relative md:w-1/3 flex flex-col items-center">
-                        {/* Responsive absolute badge */}
-                        <div className="flex justify-center w-full">
-                            <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
-                                <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
-                                    FREE for First 6 Months
-                                </span>
-                            </div>
-                        </div>
-                        {isLoading ? (
-                            <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12 min-w-[400px]">
-                                <div className="cont gap-4 w-full">
-                                    <div className="cont gap-3">
-                                        <div className="h-8 bg-gray-200 rounded skeleton w-3/4"></div>
-                                        <div className="h-6 bg-gray-200 rounded skeleton w-full"></div>
-                                    </div>
-                                    <ul className="flex flex-col gap-2">
-                                        {[1, 2, 3, 4].map((_, i) => (
-                                            <li key={i} className="flex gap-1">
-                                                <div className="h-4 w-4 bg-gray-200 rounded skeleton"></div>
-                                                <div className="h-4 bg-gray-200 rounded skeleton w-3/4"></div>
-                                            </li>
-                                        ))}
-                                    </ul>
+            <div className="container cont pb-4 lg:gap-24 gap-6">
+                <div className="flex flex-col justify-center gap-6 relative">
+                    <div className="border border-t-0 transparent-border-black gradient-background">
+                        <div className="h-20"></div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2">
+                            <div className=" flex flex-col gap-6 md:p-12 p-6 justify-center ">
+                                <h1 className="h1  ">Simple Pricing for Powerful Automation</h1>
+                                <div className="flex flex-row text-xl gap-4">
+                                    <p>Enjoy a 30-Day Free Trial</p>
+                                    <p className="border-l transparent-border-black pl-4">No credit card required</p>
                                 </div>
-                                <div className="h-12 bg-gray-200 rounded skeleton w-full"></div>
-                            </div>
-                        ) : (
-                            <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center flex-col pt-8 sm:pt-12">
-                                <div className="cont gap-4 w-full">
-                                    <div className="cont gap-3">
-                                        <h3 className="h3">{pricingPlan[0]?.name}</h3>
-                                        <p className="text-base text-accent">{pricingPlan[0]?.feature_headline}</p>
-                                    </div>
-                                    <ul className="flex flex-col gap-2">
-                                        {pricingPlan[0]?.features.map((feature, i) => (
-                                            <li key={i} className="flex gap-1">
-                                                <span className="text-accent text-base">✔</span>
-                                                <span className="text-base">{feature}</span>
-                                            </li>
-                                        ))}
-                                    </ul>
+                                <div className="border transparent-border-black p-2 w-fit">
+                                    <p className="text-sm flex flex-wrap items-center gap-2">
+                                        <span className="text-3xl text-accent font-bold">Special Offer: 90% off</span>
+                                        <span className="inline-block align-middle">for developing countries</span>
+                                    </p>
                                 </div>
-                                <Link href={`/signup?utm_source=pricing/${pricingPlan[0]?.slug}`}>
-                                    <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
-                                </Link>
-                            </div>
-                        )}
-                    </div>
-                </div>
+                                <div className="flex gap-2 xl:flex-row lg:flex-col md:flex-row flex-col">
+                                    <CustomAutocomplete
+                                        items={filterCountries(inputValue)}
+                                        value={inputValue}
+                                        onChange={(e) => setInputValue(e.target.value)}
+                                        onSelect={handleCountrySelect}
+                                        placeholder="Select Country"
+                                        defaultCountry={userCountry || selectedCountry}
+                                    />
 
-                <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-12">
-                    <div className="flex flex-col lg:flex-row items-start lg:items-end gap-2 h-fit">
-                        <div className="flex h-full mb-auto">
-                            <h2 className="text-accent h2 text-nowrap">Loved Launchpad?</h2>
-                        </div>
-                        {isLoading ? (
-                            <div className="h-6 w-[400px] bg-gray-200 rounded skeleton" />
-                        ) : (
-                            <div className="flex items-end">
-                                <p className="text-lg text-gray-700">
-                                    Stay on Growth at{' '}
-                                    <span className="font-semibold">
-                                        {pricingPlan[0]?.currencySymbol}
-                                        {isDeveloping
-                                            ? (pricingPlan[3]?.pricing * 0.1 * 0.8).toFixed(2)
-                                            : (pricingPlan[3]?.pricing * 0.8).toFixed(2)}
-                                        /mo
-                                    </span>
-                                    . Or switch to Starter for just{' '}
-                                    <span className="font-semibold">
-                                        {pricingPlan[0]?.currencySymbol}
-                                        {isDeveloping
-                                            ? (pricingPlan[2]?.pricing * 0.1 * 0.8).toFixed(2)
-                                            : (pricingPlan[2]?.pricing * 0.8).toFixed(2)}
-                                        /mo
-                                    </span>
-                                    .
-                                </p>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="flex flex-col gap-4 w-full md:w-1/3 items-start md:items-end">
-                        <p className="h3 text-gray-700 ">
-                            <span className="text-accent font-bold">90% Off</span> for Developing Countries
-                        </p>
-                        <div className="w-[300px]">
-                            <CustomAutocomplete
-                                items={filterCountries(inputValue)}
-                                value={inputValue}
-                                onChange={(e) => setInputValue(e.target.value)}
-                                onSelect={handleCountrySelect}
-                                placeholder="Select Country"
-                                defaultCountry={userCountry || selectedCountry}
-                            />
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div className="flex justify-start w-full">
-                        <div className="flex items-center">
-                            <button
-                                className={`px-4 py-2 border transparent-border-black border-b-0 border-r-0 ${!isYearly ? 'bg-accent text-white' : 'text-black'}`}
-                                onClick={() => setIsYearly(false)}
-                            >
-                                Monthly
-                            </button>
-                            <button
-                                className={`px-4 py-2 border transparent-border-black border-b-0 ${isYearly ? 'bg-accent text-white' : 'text-gray-600'}`}
-                                onClick={() => setIsYearly(true)}
-                            >
-                                Yearly (20% off)
-                            </button>
-                        </div>
-                    </div>
-                    {isLoading ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
-                            {[1, 2, 3, 4, 5].map((_, index) => (
-                                <div
-                                    key={index}
-                                    className="relative p-6 flex flex-col gap-4 border transparent-border-black bg-white"
-                                >
-                                    <div className="h-8 bg-gray-200 rounded skeleton"></div>
-                                    <div className="space-y-2">
-                                        <div className="h-6 bg-gray-200 rounded skeleton"></div>
-                                        <div className="h-4 bg-gray-200 rounded skeleton"></div>
-                                    </div>
-                                    <div className="space-y-3">
-                                        <div className="h-6 bg-gray-200 rounded skeleton"></div>
-                                        {[1, 2, 3].map((_, i) => (
-                                            <div key={i} className="flex gap-2">
-                                                <div className="h-4 w-4 bg-gray-200 rounded skeleton"></div>
-                                                <div className="h-4 bg-gray-200 rounded skeleton flex-1"></div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                    <div className="h-10 bg-gray-200 rounded skeleton mt-4"></div>
+                                    <label className="border transparent-border-black flex items-center justify-between px-4 py-3 gap-2 w-full max-w-[280px]">
+                                        <span className="text-sm  tracking-wider">Billed Yearly</span>
+                                        <input
+                                            type="checkbox"
+                                            className="toggle"
+                                            checked={isToggled}
+                                            onChange={() => setIsToggled(!isToggled)}
+                                        />
+                                    </label>
                                 </div>
-                            ))}
-                        </div>
-                    ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
-                            {pricingPlan.map(
-                                (plan, index) =>
-                                    index > 0 && (
+                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 bg-white ">
+                                {isLoading
+                                    ? [1, 2].map((i) => (
                                         <div
-                                            key={index}
-                                            className={`bg-white relative p-6 flex flex-col gap-4 border ${plan?.is_highlighted ? 'border-accent' : 'transparent-border-black'}`}
+                                            key={i}
+                                            className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
                                         >
-                                            {plan?.is_highlighted && (
-                                                <div className="flex justify-center w-full">
-                                                    <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
-                                                        <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
-                                                            Recommended
-                                                        </span>
-                                                    </div>
+                                            <div className="flex flex-col gap-12 p-8">
+                                                <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
+                                                <div className="flex flex-col gap-2">
+                                                    <div className="h-12 bg-gray-200 rounded-md w-1/2 skeleton"></div>
+                                                    <div className="h-4 bg-gray-200 rounded-md w-1/4 skeleton"></div>
                                                 </div>
-                                            )}
-                                            <h3 className="h3">{plan?.name}</h3>
-                                            <div className="cont gap-1">
-                                                <div className="h3 text-accent">
-                                                    {plan?.name !== 'Enterprise' ? (
-                                                        plan?.pricing ? (
-                                                            <>
-                                                                {plan?.slug !== 'freeforever' && plan?.isDeveloping && (
-                                                                    <p className="text-sm line-through text-gray-700">
-                                                                        {plan?.currencySymbol}
-                                                                        {isYearly ? (
-                                                                            <span>
-                                                                                {(plan?.pricing * 0.8).toFixed(2)}
-                                                                            </span>
-                                                                        ) : (
-                                                                            <span>{plan?.pricing}</span>
-                                                                        )}
-                                                                    </p>
-                                                                )}
-                                                                {plan?.currencySymbol}
-                                                                {getDisplayedPrice(plan)}
-                                                                <span className="text-sm text-gray-700">/month</span>
-                                                            </>
-                                                        ) : (
-                                                            <span>{plan?.pricing}</span>
-                                                        )
-                                                    ) : (
-                                                        <p className="h3">Talk to Sales</p>
-                                                    )}
-                                                </div>
-                                                <div className="text-base text-gray-700">{plan?.invocations}</div>
-                                            </div>
-
-                                            <div className="cont gap-2">
-                                                <p className="h6 !font-semibold">{plan?.feature_headline}</p>
-                                                <ul className="">
-                                                    {plan?.features.map((feature, i) => (
-                                                        <li key={i} className="flex items-start gap-2">
-                                                            <span className="text-accent">✔</span>
-                                                            <span className="text-base">{feature}</span>
-                                                        </li>
+                                                <ul className="flex flex-col gap-2">
+                                                    {[1, 2, 3, 4].map((i) => (
+                                                        <li
+                                                            key={i}
+                                                            className="h-4 bg-gray-200 rounded-md skeleton"
+                                                        ></li>
                                                     ))}
                                                 </ul>
+                                                <div className="h-4 bg-gray-200 rounded-md w-full skeleton"></div>
                                             </div>
-                                            <div className="mt-auto pt-4">
-                                                <Link href={`/signup?utm_source=pricing/${plan?.slug}`}>
-                                                    <button className={`btn w-full btn-primary`}>
-                                                        {plan?.button_tag}
-                                                    </button>
-                                                </Link>
-                                            </div>
+                                            <div className="h-12 bg-gray-200 rounded-none mt-auto skeleton"></div>
                                         </div>
-                                    )
-                            )}
+                                    ))
+                                    : planDetails.map((plan, i) => {
+                                        return (
+                                            <div
+                                                key={i}
+                                                className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
+                                            >
+                                                <div className="flex flex-col gap-12 p-8">
+                                                    <h2 className="h2 capitalize ">{plan?.name}</h2>
+                                                    <div className="flex flex-col gap-2 ">
+                                                        <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
+                                                            <h3 className="h1 break-all">
+                                                                {pricingData.currencySymbol}
+                                                                {getPlanPrice(
+                                                                    plan.name,
+                                                                    isToggled,
+                                                                    pricingData.isDevelopment
+                                                                )}
+                                                            </h3>
+                                                            {pricingData.isDevelopment && (
+                                                                <span className="font-base text-2xl text-grey line-through ml-2">
+                                                                    {pricingData.currencySymbol}
+                                                                    {getPlanPrice(plan.name, isToggled)}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <span className="text-sm tracking-wider">
+                                                            {isToggled ? 'YEAR' : 'MONTH'}/WORKSPACE
+                                                        </span>
+                                                    </div>
+                                                    <ul className="flex flex-col gap-2">
+                                                        <li>
+                                                            <span className="text-green-600">✔</span> Invocations:{' '}
+                                                            {plan.invocations}/Month
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-green-600">✔</span> Execution Time
+                                                            Limit: {plan.execution_time} Seconds
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-green-600">✔</span>Designated
+                                                            Technical Support
+                                                        </li>
+                                                        <li>
+                                                            <span className="text-green-600">✔</span>{' '}
+                                                            {plan?.active_workflows} Active Workflows
+                                                        </li>
+                                                    </ul>
+                                                    <h2 className="">{plan?.description}</h2>
+                                                </div>
+                                                <a
+                                                    href={`/signup?plan=${plan?.slug}&duration=${isToggled ? 'yearly' : 'monthly'}${selectedCountry?.cca2 ? '&country=' + selectedCountry?.cca2 : ''}&utm_source=/pricing`}
+                                                >
+                                                    <button
+                                                        className={`btn btn-primary w-full mt-auto ${i == 0 && 'btn-outline border-0 border-t'}`}
+                                                    >
+                                                        {'Start Free Trial'.toUpperCase()}
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        );
+                                    })}
+                            </div>
                         </div>
-                    )}
+                    </div>
                 </div>
 
                 <div className="border transparent-border-black p-6 md:p-12 flex flex-col gap-6 bg-white">
@@ -418,11 +355,12 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         </div>
                     </div>
                 </div>
+
                 <div className=" flex flex-col justify-center py-20">
                     <div className=" border border-t-0 transparent-border-black bg-white">
                         <div className="flex items-center justify-center sm:-mt-5 md:-mt-4 lg:-mt-5">
                             <div className="border-t transparent-border-black flex-grow" />
-                            <h2 className="h2">Free Services for Impactful Organizations</h2>
+                            <h2 className="h2 ">Free Services for Impactful Organizations</h2>
                             <div className="border-t transparent-border-black flex-grow" />
                         </div>
 
@@ -441,12 +379,10 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
                     <BlogGrid posts={blogData} />
-                    <div className="container">
+                    <div className="flex flex-col transparent-border-black border p-6 md:p-12 bg-white">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                     </div>
-                    <div className="container">
-                        <Footer footerData={footerData} />
-                    </div>
+                    <Footer footerData={footerData} />
                 </div>
             </div>
         </>
