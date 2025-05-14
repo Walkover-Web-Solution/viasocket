@@ -191,30 +191,42 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 </div>
 
                 <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-12">
-                    <div className="flex flex-col lg:flex-row items-start lg:items-end gap-2">
-                        <h2 className="text-accent h2 text-nowrap">Loved Launchpad?</h2>
+                    <div className="flex flex-col lg:flex-row items-start lg:items-end gap-2 h-fit">
+                        <div className="flex h-full mb-auto">
+                            <h2 className="text-accent h2 text-nowrap">Loved Launchpad?</h2>
+                        </div>
                         {isLoading ? (
                             <div className="h-6 w-[400px] bg-gray-200 rounded skeleton" />
                         ) : (
-                            <p className="text-lg text-gray-700 text-start lg:text-end">
-                                Stay on Growth at{' '}
-                                <span className="font-semibold">
-                                    {pricingPlan[0]?.currencySymbol}
-                                    {isDeveloping ? Math.round(pricingPlan[2]?.pricing * 0.1) : pricingPlan[2]?.pricing}
-                                    /mo
-                                </span>
-                                . Or switch to Starter for just{' '}
-                                <span className="font-semibold">
-                                    {pricingPlan[0]?.currencySymbol}
-                                    {isDeveloping ? Math.round(pricingPlan[3]?.pricing * 0.1) : pricingPlan[3]?.pricing}
-                                </span>
-                                .
-                            </p>
+                            <div className="flex items-end">
+                                <p className="text-lg text-gray-700">
+                                    Stay on Growth at{' '}
+                                    <span className="font-semibold">
+                                        {pricingPlan[0]?.currencySymbol}
+                                        {isDeveloping
+                                            ? (pricingPlan[3]?.pricing * 0.1 * 0.8).toFixed(2)
+                                            : (pricingPlan[3]?.pricing * 0.8).toFixed(2)}
+                                        /mo
+                                    </span>
+                                    . Or switch to Starter for just{' '}
+                                    <span className="font-semibold">
+                                        {pricingPlan[0]?.currencySymbol}
+                                        {isDeveloping
+                                            ? (pricingPlan[2]?.pricing * 0.1 * 0.8).toFixed(2)
+                                            : (pricingPlan[2]?.pricing * 0.8).toFixed(2)}
+                                        /mo
+                                    </span>
+                                    .
+                                </p>
+                            </div>
                         )}
                     </div>
 
-                    <div className="flex flex-col gap-4 w-full md:w-1/3">
-                        <div className="w-full">
+                    <div className="flex flex-col gap-4 w-full md:w-1/3 items-start md:items-end">
+                        <p className="h3 text-gray-700 ">
+                            <span className="text-accent font-bold">90% Off</span> for Developing Countries
+                        </p>
+                        <div className="w-[300px]">
                             <CustomAutocomplete
                                 items={filterCountries(inputValue)}
                                 value={inputValue}
@@ -223,12 +235,6 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                 placeholder="Select Country"
                                 defaultCountry={userCountry || selectedCountry}
                             />
-                        </div>
-                        <div className="bg-white border transparent-border-black p-4 flex md:flex-col flex-row gap-2">
-                            <h3 className="h3 text-accent uppercase font-semibold">Special Offer:</h3>
-                            <p className="text-lg text-gray-700">
-                                <span className="text-accent font-bold">90% Off</span> for Developing Countries
-                            </p>
                         </div>
                     </div>
                 </div>
