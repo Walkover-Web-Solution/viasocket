@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
 export const CustomAutocomplete = ({
     items = [],
@@ -113,8 +114,11 @@ export const CustomAutocomplete = ({
                     onFocus={() => setIsOpen(true)}
                     onKeyDown={handleKeyDown}
                     placeholder={placeholder}
-                    className="w-full h-full p-2 pl-8 bg-transparent border transparent-border-black"
+                    className="w-full h-full p-2 pl-8 pr-8 bg-transparent border transparent-border-black"
                 />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">
+                    <MdKeyboardArrowDown size={16} />
+                </div>
             </div>
             {isOpen && items.length > 0 && (
                 <div className="absolute z-10 w-full mt-1 bg-white border transparent-border-black rounded shadow-lg max-h-60 overflow-auto">

@@ -130,7 +130,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-4 lg:gap-16 pt-12 md:pt-24 w-full">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-4 lg:gap-0 pt-12 md:pt-24 w-full">
                     <div className="cont gap-1">
                         <h1 className="h1">
                             <span className="text-accent">Launchpad</span> Offer
@@ -139,7 +139,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             Your 6-month head start to Intelligent Automations
                         </h3>
                     </div>
-                    <div className="relative md:w-1/3 flex flex-col items-center">
+                    <div className="relative w-full max-w-[400px] flex flex-col items-center">
                         {/* Responsive absolute badge */}
                         <div className="flex justify-center w-full">
                             <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
@@ -226,7 +226,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         <p className="h3 text-gray-700 ">
                             <span className="text-accent font-bold">90% Off</span> for Developing Countries
                         </p>
-                        <div className="w-[300px]">
+                        <div className="w-[250px]">
                             <CustomAutocomplete
                                 items={filterCountries(inputValue)}
                                 value={inputValue}
@@ -257,7 +257,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                         </div>
                     </div>
                     {isLoading ? (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
                             {[1, 2, 3, 4, 5].map((_, index) => (
                                 <div
                                     key={index}
@@ -282,76 +282,69 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             ))}
                         </div>
                     ) : (
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
-                            {pricingPlan.map(
-                                (plan, index) =>
-                                    index > 0 && (
-                                        <div
-                                            key={index}
-                                            className={`bg-white relative p-6 flex flex-col gap-4 border ${plan?.is_highlighted ? 'border-accent' : 'transparent-border-black'}`}
-                                        >
-                                            {plan?.is_highlighted && (
-                                                <div className="flex justify-center w-full">
-                                                    <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
-                                                        <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
-                                                            Recommended
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            )}
-                                            <h3 className="h3">{plan?.name}</h3>
-                                            <div className="cont gap-1">
-                                                <div className="h3 text-accent">
-                                                    {plan?.name !== 'Enterprise' ? (
-                                                        plan?.pricing ? (
-                                                            <>
-                                                                {plan?.slug !== 'freeforever' && plan?.isDeveloping && (
-                                                                    <p className="text-sm line-through text-gray-700">
-                                                                        {plan?.currencySymbol}
-                                                                        {isYearly ? (
-                                                                            <span>
-                                                                                {(plan?.pricing * 0.8).toFixed(2)}
-                                                                            </span>
-                                                                        ) : (
-                                                                            <span>{plan?.pricing}</span>
-                                                                        )}
-                                                                    </p>
-                                                                )}
-                                                                {plan?.currencySymbol}
-                                                                {getDisplayedPrice(plan)}
-                                                                <span className="text-sm text-gray-700">/month</span>
-                                                            </>
-                                                        ) : (
-                                                            <span>{plan?.pricing}</span>
-                                                        )
-                                                    ) : (
-                                                        <p className="h3">Talk to Sales</p>
-                                                    )}
-                                                </div>
-                                                <div className="text-base text-gray-700">{plan?.invocations}</div>
-                                            </div>
-
-                                            <div className="cont gap-2">
-                                                <p className="h6 !font-semibold">{plan?.feature_headline}</p>
-                                                <ul className="">
-                                                    {plan?.features.map((feature, i) => (
-                                                        <li key={i} className="flex items-start gap-2">
-                                                            <span className="text-accent">✔</span>
-                                                            <span className="text-base">{feature}</span>
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                            <div className="mt-auto pt-4">
-                                                <Link href={`/signup?utm_source=pricing/${plan?.slug}`}>
-                                                    <button className={`btn w-full btn-primary`}>
-                                                        {plan?.button_tag}
-                                                    </button>
-                                                </Link>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+                            {pricingPlan.slice(1).map((plan, index) => (
+                                <div
+                                    key={index}
+                                    className={`bg-white relative p-6 flex flex-col gap-4 border transparent-border-black ${index % 5 !== 4 ? 'border-r-0' : ''} `}
+                                >
+                                    {plan?.is_highlighted && (
+                                        <div className="flex justify-center w-full">
+                                            <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10">
+                                                <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
+                                                    Recommended
+                                                </span>
                                             </div>
                                         </div>
-                                    )
-                            )}
+                                    )}
+                                    <h3 className="h3">{plan?.name}</h3>
+                                    <div className="cont gap-1">
+                                        <div className="h3 text-accent">
+                                            {plan?.name !== 'Enterprise' ? (
+                                                plan?.pricing ? (
+                                                    <>
+                                                        {plan?.slug !== 'freeforever' && plan?.isDeveloping && (
+                                                            <p className="text-sm line-through text-gray-700">
+                                                                {plan?.currencySymbol}
+                                                                {isYearly ? (
+                                                                    <span>{(plan?.pricing * 0.8).toFixed(2)}</span>
+                                                                ) : (
+                                                                    <span>{plan?.pricing}</span>
+                                                                )}
+                                                            </p>
+                                                        )}
+                                                        {plan?.currencySymbol}
+                                                        {getDisplayedPrice(plan)}
+                                                        <span className="text-sm text-gray-700">/month</span>
+                                                    </>
+                                                ) : (
+                                                    <span>{plan?.pricing}</span>
+                                                )
+                                            ) : (
+                                                <p className="h3">Talk to Sales</p>
+                                            )}
+                                        </div>
+                                        <div className="text-base text-gray-700">{plan?.invocations}</div>
+                                    </div>
+
+                                    <div className="cont gap-2">
+                                        <p className="h6 !font-semibold">{plan?.feature_headline}</p>
+                                        <ul className="">
+                                            {plan?.features.map((feature, i) => (
+                                                <li key={i} className="flex items-start gap-2">
+                                                    <span className="text-accent">✔</span>
+                                                    <span className="text-base">{feature}</span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                    <div className="mt-auto pt-4">
+                                        <Link href={`/signup?utm_source=pricing/${plan?.slug}`}>
+                                            <button className={`btn w-full btn-primary`}>{plan?.button_tag}</button>
+                                        </Link>
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     )}
                 </div>
