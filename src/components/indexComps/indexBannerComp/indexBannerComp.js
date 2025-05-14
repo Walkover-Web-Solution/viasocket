@@ -9,7 +9,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                     <div className="w-full flex flex-col items-center justify-center md:items-start gap-4">
                         <div className="flex flex-col gap-1">
                             <h1 className="h1 text-black text-start ">
-                                Build Intelligent<span className="text-accent"> Automations</span>
+                                Build<span className="text-accent"> Intelligent</span> Automations
                             </h1>
                             <span className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
                                 Orchestrate logic with human and AI steps, delays, custom code, APIs, and 1500+ apps—no
