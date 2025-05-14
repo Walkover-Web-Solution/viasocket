@@ -5,7 +5,7 @@ import style from './getStarted.module.scss';
 export default function GetStarted({ data, isHero }) {
     return (
         <>
-            <div className="grid gap-10 bg-white border transparent-border-black p-12 border-b-0 transparent-border-black">
+            <div className="grid gap-10 bg-white border transparent-border-black p-12 transparent-border-black">
                 <div className="flex justify-between flex-col md:flex-row">
                     <div className="flex flex-col gap-2 w-fit h-full">
                         <h2 className="h2">We'll help you get started</h2>

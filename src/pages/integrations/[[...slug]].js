@@ -31,6 +31,7 @@ import {
     USECASES_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
+import { getVideoData } from '@/utils/getVideoData';
 export const runtime = 'experimental-edge';
 
 export default function Integrations({
@@ -51,6 +52,7 @@ export default function Integrations({
     blogData,
     useCaseData,
     getStartedData,
+    videoData,
 }) {
     if (noData) {
         return (
@@ -78,6 +80,7 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     getStartedData={getStartedData}
+                    videoData={videoData}
                 />
             </div>
         );
@@ -111,6 +114,7 @@ export default function Integrations({
                         footerData={footerData}
                         useCaseData={useCaseData}
                         getStartedData={getStartedData}
+                        videoData={videoData}
                     />
                 </div>
             );
@@ -148,6 +152,7 @@ export async function getServerSideProps(context) {
         const blogTags2 = appTwoDetails?.appslugname;
         const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 });
         const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
+        const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 });
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -164,6 +169,7 @@ export async function getServerSideProps(context) {
                     categoryData: {},
                     blogData: blogData || [],
                     getStartedData: getStarted || [],
+                    videoData: videoData || [],
                 },
             };
         } else {
@@ -200,6 +206,8 @@ export async function getServerSideProps(context) {
                 USECASES_FIELDS,
                 `filter=slugname='${appOneDetails?.appslugname}'`
             );
+
+            const videoData = await getVideoData({ tag1: blogTags });
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -217,6 +225,7 @@ export async function getServerSideProps(context) {
                     blogData: blogData || [],
                     useCaseData: useCaseData || [],
                     getStartedData: getStarted || [],
+                    videoData: videoData || [],
                 },
             };
         } else {

@@ -204,90 +204,90 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             <div className="grid grid-cols-1 md:grid-cols-2 bg-white ">
                                 {isLoading
                                     ? [1, 2].map((i) => (
-                                        <div
-                                            key={i}
-                                            className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
-                                        >
-                                            <div className="flex flex-col gap-12 p-8">
-                                                <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
-                                                <div className="flex flex-col gap-2">
-                                                    <div className="h-12 bg-gray-200 rounded-md w-1/2 skeleton"></div>
-                                                    <div className="h-4 bg-gray-200 rounded-md w-1/4 skeleton"></div>
-                                                </div>
-                                                <ul className="flex flex-col gap-2">
-                                                    {[1, 2, 3, 4].map((i) => (
-                                                        <li
-                                                            key={i}
-                                                            className="h-4 bg-gray-200 rounded-md skeleton"
-                                                        ></li>
-                                                    ))}
-                                                </ul>
-                                                <div className="h-4 bg-gray-200 rounded-md w-full skeleton"></div>
-                                            </div>
-                                            <div className="h-12 bg-gray-200 rounded-none mt-auto skeleton"></div>
-                                        </div>
-                                    ))
+                                          <div
+                                              key={i}
+                                              className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 1 && 'md:border-x'}`}
+                                          >
+                                              <div className="flex flex-col gap-12 p-8">
+                                                  <div className="h-8 bg-gray-200 rounded-md w-3/4 skeleton"></div>
+                                                  <div className="flex flex-col gap-2">
+                                                      <div className="h-12 bg-gray-200 rounded-md w-1/2 skeleton"></div>
+                                                      <div className="h-4 bg-gray-200 rounded-md w-1/4 skeleton"></div>
+                                                  </div>
+                                                  <ul className="flex flex-col gap-2">
+                                                      {[1, 2, 3, 4].map((i) => (
+                                                          <li
+                                                              key={i}
+                                                              className="h-4 bg-gray-200 rounded-md skeleton"
+                                                          ></li>
+                                                      ))}
+                                                  </ul>
+                                                  <div className="h-4 bg-gray-200 rounded-md w-full skeleton"></div>
+                                              </div>
+                                              <div className="h-12 bg-gray-200 rounded-none mt-auto skeleton"></div>
+                                          </div>
+                                      ))
                                     : planDetails.map((plan, i) => {
-                                        return (
-                                            <div
-                                                key={i}
-                                                className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
-                                            >
-                                                <div className="flex flex-col gap-12 p-8">
-                                                    <h2 className="h2 capitalize ">{plan?.name}</h2>
-                                                    <div className="flex flex-col gap-2 ">
-                                                        <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
-                                                            <h3 className="h1 break-all">
-                                                                {pricingData.currencySymbol}
-                                                                {getPlanPrice(
-                                                                    plan.name,
-                                                                    isToggled,
-                                                                    pricingData.isDevelopment
-                                                                )}
-                                                            </h3>
-                                                            {pricingData.isDevelopment && (
-                                                                <span className="font-base text-2xl text-grey line-through ml-2">
-                                                                    {pricingData.currencySymbol}
-                                                                    {getPlanPrice(plan.name, isToggled)}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <span className="text-sm tracking-wider">
-                                                            {isToggled ? 'YEAR' : 'MONTH'}/WORKSPACE
-                                                        </span>
-                                                    </div>
-                                                    <ul className="flex flex-col gap-2">
-                                                        <li>
-                                                            <span className="text-green-600">✔</span> Invocations:{' '}
-                                                            {plan.invocations}/Month
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span> Execution Time
-                                                            Limit: {plan.execution_time} Seconds
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span>Designated
-                                                            Technical Support
-                                                        </li>
-                                                        <li>
-                                                            <span className="text-green-600">✔</span>{' '}
-                                                            {plan?.active_workflows} Active Workflows
-                                                        </li>
-                                                    </ul>
-                                                    <h2 className="">{plan?.description}</h2>
-                                                </div>
-                                                <a
-                                                    href={`/signup?plan=${plan?.slug}&duration=${isToggled ? 'yearly' : 'monthly'}${selectedCountry?.cca2 ? '&country=' + selectedCountry?.cca2 : ''}&utm_source=/pricing`}
-                                                >
-                                                    <button
-                                                        className={`btn btn-primary w-full mt-auto ${i == 0 && 'btn-outline border-0 border-t'}`}
-                                                    >
-                                                        {'Start Free Trial'.toUpperCase()}
-                                                    </button>
-                                                </a>
-                                            </div>
-                                        );
-                                    })}
+                                          return (
+                                              <div
+                                                  key={i}
+                                                  className={`flex flex-col justify-between border transparent-border-black border-e-0  border-b-0 border-x-0 ${i == 0 && 'md:border-x'}`}
+                                              >
+                                                  <div className="flex flex-col gap-12 p-8">
+                                                      <h2 className="h2 capitalize ">{plan?.name}</h2>
+                                                      <div className="flex flex-col gap-2 ">
+                                                          <div className="flex flex-wrap items-baseline gap-x-2 min-w-0">
+                                                              <h3 className="h1 break-all">
+                                                                  {pricingData.currencySymbol}
+                                                                  {getPlanPrice(
+                                                                      plan.name,
+                                                                      isToggled,
+                                                                      pricingData.isDevelopment
+                                                                  )}
+                                                              </h3>
+                                                              {pricingData.isDevelopment && (
+                                                                  <span className="font-base text-2xl text-grey line-through ml-2">
+                                                                      {pricingData.currencySymbol}
+                                                                      {getPlanPrice(plan.name, isToggled)}
+                                                                  </span>
+                                                              )}
+                                                          </div>
+                                                          <span className="text-sm tracking-wider">
+                                                              {isToggled ? 'YEAR' : 'MONTH'}/WORKSPACE
+                                                          </span>
+                                                      </div>
+                                                      <ul className="flex flex-col gap-2">
+                                                          <li>
+                                                              <span className="text-green-600">✔</span> Invocations:{' '}
+                                                              {plan.invocations}/Month
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span> Execution Time
+                                                              Limit: {plan.execution_time} Seconds
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span>Designated
+                                                              Technical Support
+                                                          </li>
+                                                          <li>
+                                                              <span className="text-green-600">✔</span>{' '}
+                                                              {plan?.active_workflows} Active Workflows
+                                                          </li>
+                                                      </ul>
+                                                      <h2 className="">{plan?.description}</h2>
+                                                  </div>
+                                                  <a
+                                                      href={`/signup?plan=${plan?.slug}&duration=${isToggled ? 'yearly' : 'monthly'}${selectedCountry?.cca2 ? '&country=' + selectedCountry?.cca2 : ''}&utm_source=/pricing`}
+                                                  >
+                                                      <button
+                                                          className={`btn btn-primary w-full mt-auto ${i == 0 && 'btn-outline border-0 border-t'}`}
+                                                      >
+                                                          {'Start Free Trial'.toUpperCase()}
+                                                      </button>
+                                                  </a>
+                                              </div>
+                                          );
+                                      })}
                             </div>
                         </div>
                     </div>
@@ -379,10 +379,10 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
 
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
                     <BlogGrid posts={blogData} />
-                    <div className="flex flex-col transparent-border-black border p-6 md:p-12 bg-white">
+                    <div className="cont">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
+                        <Footer footerData={footerData} />
                     </div>
-                    <Footer footerData={footerData} />
                 </div>
             </div>
         </>
