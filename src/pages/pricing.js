@@ -26,7 +26,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
     const [selectedCountry, setSelectedCountry] = useState();
     const [inputValue, setInputValue] = useState('');
     const [userCountry, setUserCountry] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [selectedIndex, setSelectedIndex] = useState('0');
     const [isYearly, setIsYearly] = useState(true);
     const [isDeveloping, setIsDeveloping] = useState(false);
@@ -37,7 +37,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
             const pricingPlan = await getPricingPlan(country_code);
             setPricingPlan(pricingPlan);
             setIsDeveloping(pricingPlan[0].isDeveloping);
-            console.log(pricingPlan[0].isDeveloping);
+            setIsLoading(false);
         } catch (error) {
             console.error('Error fetching pricing plan:', error);
         }
@@ -130,55 +130,107 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 lg:gap-20 md:gap-12 gap-6">
-                <div className="flex flex-col lg:flex-row gap-12 items-center justify-between md:gap-20 pt-24 md:pt-24 w-full">
+                <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-12 md:gap-4 lg:gap-16 pt-12 md:pt-24 w-full">
                     <div className="cont gap-1">
-                        <h1 className="h1">Launchpad Offer</h1>
-                        <h3 className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
+                        <h1 className="h1">
+                            <span className="text-accent">Launchpad</span> Offer
+                        </h1>
+                        <h3 className="text-base font-medium sm:text-lg md:text-xl">
                             Your 6-month head start to Intelligent Automations
                         </h3>
                     </div>
-                    <div className="relative xl:w-[26vw] md:w-1/3 flex flex-col items-center mt-8 md:mt-0">
+                    <div className="relative md:w-1/3 flex flex-col items-center">
                         {/* Responsive absolute badge */}
                         <div className="flex justify-center w-full">
                             <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
-                                <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white rounded shadow-lg text-nowrap">
+                                <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
                                     FREE for First 6 Months
                                 </span>
                             </div>
                         </div>
-                        <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12">
-                            <div className="cont gap-4 w-full">
-                                <div className="cont gap-3">
-                                    <h3 className="h3">{pricingPlan[0]?.name}</h3>
-                                    <p className="text-base text-accent">{pricingPlan[0]?.feature_headline}</p>
+                        {isLoading ? (
+                            <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center items-center flex-col pt-8 sm:pt-12 min-w-[400px]">
+                                <div className="cont gap-4 w-full">
+                                    <div className="cont gap-3">
+                                        <div className="h-8 bg-gray-200 rounded skeleton w-3/4"></div>
+                                        <div className="h-6 bg-gray-200 rounded skeleton w-full"></div>
+                                    </div>
+                                    <ul className="flex flex-col gap-2">
+                                        {[1, 2, 3, 4].map((_, i) => (
+                                            <li key={i} className="flex gap-1">
+                                                <div className="h-4 w-4 bg-gray-200 rounded skeleton"></div>
+                                                <div className="h-4 bg-gray-200 rounded skeleton w-3/4"></div>
+                                            </li>
+                                        ))}
+                                    </ul>
                                 </div>
-                                <ul className="flex flex-col gap-2">
-                                    {pricingPlan[0]?.features.map((feature, i) => (
-                                        <li key={i} className="flex gap-1">
-                                            <span className="text-accent text-base">✔</span>
-                                            <span className="text-base">{feature}</span>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <div className="h-12 bg-gray-200 rounded skeleton w-full"></div>
                             </div>
-                            <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
+                        ) : (
+                            <div className="border transparent-border-black bg-white cont gap-12 w-full p-6 flex justify-center flex-col pt-8 sm:pt-12">
+                                <div className="cont gap-4 w-full">
+                                    <div className="cont gap-3">
+                                        <h3 className="h3">{pricingPlan[0]?.name}</h3>
+                                        <p className="text-base text-accent">{pricingPlan[0]?.feature_headline}</p>
+                                    </div>
+                                    <ul className="flex flex-col gap-2">
+                                        {pricingPlan[0]?.features.map((feature, i) => (
+                                            <li key={i} className="flex gap-1">
+                                                <span className="text-accent text-base">✔</span>
+                                                <span className="text-base">{feature}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-12">
+                    <div className="flex flex-col lg:flex-row items-start lg:items-end gap-2">
+                        <h2 className="text-accent h2 text-nowrap">Loved Launchpad?</h2>
+                        {isLoading ? (
+                            <div className="h-6 w-[400px] bg-gray-200 rounded skeleton" />
+                        ) : (
+                            <p className="text-lg text-gray-700 text-start lg:text-end">
+                                Stay on Growth at{' '}
+                                <span className="font-semibold">
+                                    {pricingPlan[0]?.currencySymbol}
+                                    {isDeveloping ? Math.round(pricingPlan[2]?.pricing * 0.1) : pricingPlan[2]?.pricing}
+                                    /mo
+                                </span>
+                                . Or switch to Starter for just{' '}
+                                <span className="font-semibold">
+                                    {pricingPlan[0]?.currencySymbol}
+                                    {isDeveloping ? Math.round(pricingPlan[3]?.pricing * 0.1) : pricingPlan[3]?.pricing}
+                                </span>
+                                .
+                            </p>
+                        )}
+                    </div>
+
+                    <div className="flex flex-col gap-4 w-full md:w-1/3">
+                        <div className="w-full">
+                            <CustomAutocomplete
+                                items={filterCountries(inputValue)}
+                                value={inputValue}
+                                onChange={(e) => setInputValue(e.target.value)}
+                                onSelect={handleCountrySelect}
+                                placeholder="Select Country"
+                                defaultCountry={userCountry || selectedCountry}
+                            />
+                        </div>
+                        <div className="bg-white border transparent-border-black p-4 flex md:flex-col flex-row gap-2">
+                            <h3 className="h3 text-accent uppercase font-semibold">Special Offer:</h3>
+                            <p className="text-lg text-gray-700">
+                                <span className="text-accent font-bold">90% Off</span> for Developing Countries
+                            </p>
                         </div>
                     </div>
                 </div>
 
-                <CustomAutocomplete
-                    items={filterCountries(inputValue)}
-                    value={inputValue}
-                    onChange={(e) => setInputValue(e.target.value)}
-                    onSelect={handleCountrySelect}
-                    placeholder="Select Country"
-                    defaultCountry={userCountry || selectedCountry}
-                />
-
-                <h2 className="h2">
-                    <span className="text-accent">Loved Launchpad? </span>
-                    <p className="text-lg">Stay on Growth at $49/mo. Or switch to Starter for just $29.</p>
-                </h2>
                 <div>
                     <div className="flex justify-start w-full">
                         <div className="flex items-center">
@@ -196,24 +248,67 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             </button>
                         </div>
                     </div>
-
-                    {/* Pricing Table */}
-                    <div className="w-full bg-white overflow-x-auto">
-                        {/* Pricing Row */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5 pricing-grid-card">
+                    {isLoading ? (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
+                            {[1, 2, 3, 4, 5].map((_, index) => (
+                                <div
+                                    key={index}
+                                    className="relative p-6 flex flex-col gap-4 border transparent-border-black bg-white"
+                                >
+                                    <div className="h-8 bg-gray-200 rounded skeleton"></div>
+                                    <div className="space-y-2">
+                                        <div className="h-6 bg-gray-200 rounded skeleton"></div>
+                                        <div className="h-4 bg-gray-200 rounded skeleton"></div>
+                                    </div>
+                                    <div className="space-y-3">
+                                        <div className="h-6 bg-gray-200 rounded skeleton"></div>
+                                        {[1, 2, 3].map((_, i) => (
+                                            <div key={i} className="flex gap-2">
+                                                <div className="h-4 w-4 bg-gray-200 rounded skeleton"></div>
+                                                <div className="h-4 bg-gray-200 rounded skeleton flex-1"></div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="h-10 bg-gray-200 rounded skeleton mt-4"></div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 xl:grid-cols-5">
                             {pricingPlan.map(
                                 (plan, index) =>
                                     index > 0 && (
                                         <div
                                             key={index}
-                                            className="p-6 flex flex-col gap-4 border transparent-border-black"
+                                            className={`bg-white relative p-6 flex flex-col gap-4 border ${plan?.is_highlighted ? 'border-accent' : 'transparent-border-black'}`}
                                         >
+                                            {plan?.is_highlighted && (
+                                                <div className="flex justify-center w-full">
+                                                    <div className="absolute left-1/2 top-[-12px] -translate-x-1/2 z-10 ">
+                                                        <span className="bg-black text-white px-6 py-2 border transparent-border-black border-white shadow-lg text-nowrap">
+                                                            Recommended
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            )}
                                             <h3 className="h3">{plan?.name}</h3>
                                             <div className="cont gap-1">
                                                 <div className="h3 text-accent">
                                                     {plan?.name !== 'Enterprise' ? (
                                                         plan?.pricing ? (
                                                             <>
+                                                                {plan?.slug !== 'freeforever' && plan?.isDeveloping && (
+                                                                    <p className="text-sm line-through text-gray-700">
+                                                                        {plan?.currencySymbol}
+                                                                        {isYearly ? (
+                                                                            <span>
+                                                                                {(plan?.pricing * 0.8).toFixed(2)}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <span>{plan?.pricing}</span>
+                                                                        )}
+                                                                    </p>
+                                                                )}
                                                                 {plan?.currencySymbol}
                                                                 {getDisplayedPrice(plan)}
                                                                 <span className="text-sm text-gray-700">/month</span>
@@ -246,7 +341,7 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                     )
                             )}
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="border transparent-border-black p-6 md:p-12 flex flex-col gap-6 bg-white">
