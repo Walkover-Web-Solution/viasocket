@@ -15,6 +15,7 @@ import CombinationCardComp from '@/components/combinationCardComp/combinationCar
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import VideoGrid from '@/components/videoGrid/videoGrid';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -238,6 +239,10 @@ export default function IntegrationsAppOneComp({
                     <GetStarted data={getStartedData} isHero={'false'} />
                 </div>
             )}
+
+            <div className="container cont gap-4">
+                <VideoGrid />
+            </div>
 
             {blogsData?.length > 0 && (
                 <div className="container ">
