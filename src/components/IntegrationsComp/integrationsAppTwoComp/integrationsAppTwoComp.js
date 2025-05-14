@@ -14,6 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import GetStarted from '@/components/getStarted/getStarted';
+import VideoGrid from '@/components/videoGrid/videoGrid';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -25,6 +26,7 @@ export default function IntegrationsAppTwoComp({
     blogsData,
     metaData,
     getStartedData,
+    videoData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -45,7 +47,10 @@ export default function IntegrationsAppTwoComp({
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
-            <div style={{ background: appOneDetails?.brandcolor }} className="border transparent-border-black border-t-0 border-r-0 border-l-0">
+            <div
+                style={{ background: appOneDetails?.brandcolor }}
+                className="border transparent-border-black border-t-0 border-r-0 border-l-0"
+            >
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
                         <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
@@ -174,25 +179,25 @@ export default function IntegrationsAppTwoComp({
 
                 {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
-                        <div className="cont gap-4">
-                            <div className="cont cont__w gap-2">
-                                <h2 className="h2  ">
-                                    Enable Integrations or automations with these events of{' '}
-                                    <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                    <span className="text-accent">{appTwoDetails?.name}</span>
-                                </h2>
-                                <p className="sub__h1">
-                                    {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                                </p>
-                            </div>
-
-                            <IntegrationsEventsComp
-                                combosData={combosData}
-                                appOneDetails={appOneDetails}
-                                appTwoDetails={appTwoDetails}
-                            />
+                    <div className="cont gap-4">
+                        <div className="cont cont__w gap-2">
+                            <h2 className="h2  ">
+                                Enable Integrations or automations with these events of{' '}
+                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                <span className="text-accent">{appTwoDetails?.name}</span>
+                            </h2>
+                            <p className="sub__h1">
+                                {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                            </p>
                         </div>
-                    )}
+
+                        <IntegrationsEventsComp
+                            combosData={combosData}
+                            appOneDetails={appOneDetails}
+                            appTwoDetails={appTwoDetails}
+                        />
+                    </div>
+                )}
             </div>
 
             {combosData?.combinations?.length > 0 &&
@@ -207,6 +212,12 @@ export default function IntegrationsAppTwoComp({
             {getStartedData && (
                 <div className="container cont">
                     <GetStarted data={getStartedData} isHero={'false'} />
+                </div>
+            )}
+
+            {videoData?.length > 0 && (
+                <div className="container">
+                    <VideoGrid videoData={videoData} />
                 </div>
             )}
 
@@ -298,7 +309,7 @@ export default function IntegrationsAppTwoComp({
                             </Link>
                         </div>
                     </div>
-                    <div className='container'>
+                    <div className="container">
                         <Footer footerData={footerData} />
                     </div>
                 </div>

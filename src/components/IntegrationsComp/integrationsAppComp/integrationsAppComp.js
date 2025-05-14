@@ -170,7 +170,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                             </div>
                         )}
 
-                        <div className={`$ style.appsgrid} transparent-border-black`}>
+                        <div className={`${style.appsgrid} transparent-border-black`}>
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
                                     searchedApps?.map((app, index) => (

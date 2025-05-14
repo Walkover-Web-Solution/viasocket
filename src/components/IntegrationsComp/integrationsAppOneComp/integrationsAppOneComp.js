@@ -15,6 +15,7 @@ import CombinationCardComp from '@/components/combinationCardComp/combinationCar
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import VideoGrid from '@/components/videoGrid/videoGrid';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -29,6 +30,7 @@ export default function IntegrationsAppOneComp({
     integrations,
     useCaseData,
     getStartedData,
+    videoData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -239,6 +241,12 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
+            {videoData?.length > 0 && (
+                <div className="container">
+                    <VideoGrid videoData={videoData} />
+                </div>
+            )}
+
             {blogsData?.length > 0 && (
                 <div className="container ">
                     {' '}
@@ -265,14 +273,10 @@ export default function IntegrationsAppOneComp({
                             {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
                                 <Link
                                     key={index}
-                                    href={createURL(
-                                        `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                    )}
+                                    href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">
-                                        {cat}
-                                    </span>
+                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">{cat}</span>
                                 </Link>
                             ))}
                         </div>
@@ -299,8 +303,8 @@ export default function IntegrationsAppOneComp({
                             <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                         </div>
                         <p className="text-sm sm:text-lg text-black h-full font-medium">
-                            viasocket is an innovative and versatile workflow automation platform designed to
-                            streamline and simplify the integration of your favorite applications and to
+                            viasocket is an innovative and versatile workflow automation platform designed to streamline
+                            and simplify the integration of your favorite applications and to
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link href="/" className="mb-2">
@@ -320,7 +324,7 @@ export default function IntegrationsAppOneComp({
                     </div>
                 </div>
 
-                <div className='container'>
+                <div className="container">
                     <Footer footerData={footerData} />
                 </div>
             </div>
