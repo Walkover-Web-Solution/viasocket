@@ -182,7 +182,9 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                         ))}
                                     </ul>
                                 </div>
-                                <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
+                                <Link href={`/signup?utm_source=pricing/${pricingPlan[0]?.slug}`}>
+                                    <button className="btn btn-accent">{pricingPlan[0]?.button_tag}</button>
+                                </Link>
                             </div>
                         )}
                     </div>
@@ -335,7 +337,11 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                                                 </ul>
                                             </div>
                                             <div className="mt-auto pt-4">
-                                                <button className={`btn w-full btn-primary`}>{plan?.button_tag}</button>
+                                                <Link href={`/signup?utm_source=pricing/${plan?.slug}`}>
+                                                    <button className={`btn w-full btn-primary`}>
+                                                        {plan?.button_tag}
+                                                    </button>
+                                                </Link>
                                             </div>
                                         </div>
                                     )
