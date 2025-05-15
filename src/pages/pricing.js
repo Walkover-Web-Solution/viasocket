@@ -28,6 +28,7 @@ import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutoco
 import { getCountryName } from '@/utils/getCountryName';
 import Link from 'next/link';
 import getPricingData from '@/utils/getPricingData';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export const runtime = 'experimental-edge';
 
@@ -161,6 +162,12 @@ export default function pricing({
     //     return Math.floor(finalPrice).toString();
     // };
 
+    const [defaultUtmSource, setDefaultUtmSource] = useState('');
+
+    useEffect(() => {
+        const utmData = setUtmSource({ source: `pricing` });
+        setDefaultUtmSource(utmData);
+    }, []);
     return (
         // <>
         //     <MetaHeadComp metaData={metaData} page={'/pricing'} />
@@ -423,7 +430,7 @@ export default function pricing({
                             completely free. No feature restrictions, no time limits, no hidden fees.
                         </p>
                     </div>
-                    <Link href="/signup">
+                    <Link href={`/signup?state=${defaultUtmSource}`} className="w-fit">
                         <button className="btn btn-accent">Start Free</button>
                     </Link>
                 </div>
@@ -445,37 +452,33 @@ export default function pricing({
                         ))}
                         <div className="flex items-start gap-1">
                             <p className="text-accent">+</p>
-                            <Link href="/features" className="text-lg text-accent hover:underline">
+                            <Link href="/features" className="text-lg text-accent hover:underline w-fit">
                                 See all features
                             </Link>
                         </div>
                     </div>
-
-                    <p className="h3">You can automate confidently - and grow without barriers.</p>
                 </div>
 
-                <div className="cont gap-8 shadow-lg  border transparent-border-black p-12 bg-black text-white">
-                    <div className="cont gap-8">
-                        <div className="cont gap-1">
-                            <h3 className="h2 text-accent font-semibold mb-2">$200 Credit Plan</h3>
-                            <h2 className="h3">Need help? We’ll build your workflows</h2>
-                            <p className="sub__h1">Let automation experts build your workflows for you</p>
-                        </div>
-                        <div className="cont gap-1">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                                {creditPlan.map((item, index) => (
-                                    <div key={index} className="flex items-start gap-1">
-                                        <p className="text-accent">✔</p>
-                                        <p className="text-lg leading-none">{item}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
+                <div className="bg-black text-white p-12 cont gap-8 ">
+                    <div className="cont gap-1">
+                        <h2 className="h2">
+                            viaSocket Pro Plan - <span className="text-accent font-bold">$200</span>
+                        </h2>
+                        {/* <h3 className="sub__h1">Get $200 worth of workflow automation built by our experts</h3> */}
+                        <p className="sub__h2 text-gray-400 max-w-[800px]">
+                            With the viaSocket Pro Plan, you pay $200 and receive an equal amount in credits to use
+                            toward having your workflows designed and built by our automation specialists.
+                        </p>
                     </div>
-
-                    <Link href="/signup">
-                        <button className="btn btn-accent ">Buy Credit Plan</button>
-                    </Link>
+                    <div className="cont gap-2">
+                        <p className="h3">What's Included:</p>
+                        <ul className="h6 mb-8 text-left list-disc list-inside text-gray-400">
+                            <li>$200 in credits to use for custom workflow development</li>
+                            <li>Direct access to viaSocket automation experts</li>
+                            <li>End-to-end implementation based on your business needs</li>
+                            <li>Ideal for teams that want to save time and get results without the technical lift</li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div className="cont px-12 py-20 bg-white gap-4  border transparent-border-black">
@@ -487,10 +490,10 @@ export default function pricing({
                         </p>
                     </div>
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <Link href="/singup">
+                        <Link href={`/signup?state=${defaultUtmSource}`} className="w-fit">
                             <button className="btn btn-accent">Start Free</button>
                         </Link>
-                        <Link href="/singup">
+                        <Link href={`/signup?state=${defaultUtmSource}`} className="w-fit">
                             <button className="btn btn-accent">Buy Credit Plan</button>
                         </Link>
                     </div>
