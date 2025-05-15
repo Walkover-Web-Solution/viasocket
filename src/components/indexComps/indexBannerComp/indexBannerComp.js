@@ -18,7 +18,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                         </div>
 
                         <div className="cont gap-2 w-full">
-                            <Link href="/signup">
+                            <Link href="/signup?utm_source=index">
                                 <button className="btn btn-accent">Sign Up</button>
                             </Link>
                             <div className="flex gap-4">
