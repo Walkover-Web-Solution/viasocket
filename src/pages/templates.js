@@ -1,12 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
 import { getFaqData, getFooterData, getMetaData, getNavData, getValidTemplatesData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
-import { FiFilter } from 'react-icons/fi';
-import { BiSortAlt2 } from 'react-icons/bi';
 import getTemplates from '@/utils/getTemplates';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -15,70 +13,22 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 
 export const runtime = 'experimental-edge';
 
+const TEMPLATES_PER_PAGE = 6;
+
+const backgroundColors = [
+    { background: 'linear-gradient(105deg, #2F3C4F 2.92%, #4B5E73 100%)' }, // Deep steel blue
+    { background: 'linear-gradient(104deg, #4C3B4D 2.92%, #705775 100%)' }, // Faded royal purple
+    { background: 'linear-gradient(105deg, #5A5148 2.92%, #837263 100%)' }, // Muted cocoa
+    { background: 'linear-gradient(105deg, #1F232A 2.92%, #3B4048 100%)' }, // Subtle graphite
+    { background: 'linear-gradient(105deg, #3C4F57 2.92%, #627D87 100%)' }, // Foggy cyan-gray
+    { background: 'linear-gradient(104deg, #4A646C 2.92%, #5F7C84 100%)' }, // Stormy teal
+    { background: 'linear-gradient(105deg, #593A56 2.92%, #8C6285 100%)' }, // Mauve dusk
+];
+
 const Template = ({ navData, footerData, templateData, validTemplates, metaData, faqData, blogData }) => {
-    const [visibleCount, setVisibleCount] = useState(6);
+    const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [selectedApps, setSelectedApps] = useState([]);
-    const [availableApps, setAvailableApps] = useState([]);
-    const [showAppFilter, setShowAppFilter] = useState(false);
-    const [showSortOptions, setShowSortOptions] = useState(false);
-    const [sortOption, setSortOption] = useState('popular');
-    const filterRef = useRef(null);
-    const sortRef = useRef(null);
-
-    const backgroundColors = [
-        { background: 'linear-gradient(105deg, #2F3C4F 2.92%, #4B5E73 100%)' }, // Deep steel blue
-        { background: 'linear-gradient(104deg, #4C3B4D 2.92%, #705775 100%)' }, // Faded royal purple
-        { background: 'linear-gradient(105deg, #5A5148 2.92%, #837263 100%)' }, // Muted cocoa
-        { background: 'linear-gradient(105deg, #1F232A 2.92%, #3B4048 100%)' }, // Subtle graphite
-        { background: 'linear-gradient(105deg, #3C4F57 2.92%, #627D87 100%)' }, // Foggy cyan-gray
-        { background: 'linear-gradient(104deg, #4A646C 2.92%, #5F7C84 100%)' }, // Stormy teal
-        { background: 'linear-gradient(105deg, #593A56 2.92%, #8C6285 100%)' }, // Mauve dusk
-    ];
-
-    useEffect(() => {
-        const validTemplateNames = validTemplates.map((t) => t.name);
-        const filtered = templateData.filter((template) => validTemplateNames.includes(template.id));
-        setFilteredTemplates(filtered);
-
-        const apps = new Set();
-        filtered.forEach((template) => {
-            const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
-            if (serviceNames.length > 0) {
-                serviceNames.forEach((app) => {
-                    if (app) apps.add(app);
-                });
-            }
-
-            const blocks = template?.published_json_script?.blocks || {};
-            Object.values(blocks).forEach((block) => {
-                if (block?.serviceName) {
-                    block.serviceName.split(' ').forEach((app) => {
-                        if (app) apps.add(app);
-                    });
-                }
-            });
-        });
-
-        setAvailableApps(Array.from(apps).sort());
-    }, [templateData, validTemplates]);
-
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (filterRef.current && !filterRef.current.contains(event.target)) {
-                setShowAppFilter(false);
-            }
-            if (sortRef.current && !sortRef.current.contains(event.target)) {
-                setShowSortOptions(false);
-            }
-        };
-
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, []);
 
     useEffect(() => {
         const validTemplateNames = validTemplates.map((t) => t.name);
@@ -92,89 +42,16 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
             );
         }
 
-        if (selectedApps.length > 0) {
-            filtered = filtered.filter((template) => {
-                const triggerService = template?.published_json_script?.trigger?.serviceName || '';
-                const triggerApps = triggerService.split(' ');
-
-                const blocks = template?.published_json_script?.blocks || {};
-                const blockApps = [];
-                Object.values(blocks).forEach((block) => {
-                    if (block?.serviceName) {
-                        block.serviceName.split(' ').forEach((app) => {
-                            if (app) blockApps.push(app);
-                        });
-                    }
-                });
-
-                return selectedApps.some((app) => triggerApps.includes(app) || blockApps.includes(app));
-            });
-        }
-
-        // Apply sorting based on the selected option
-        if (sortOption === 'latest') {
-            filtered.sort((a, b) => {
-                const aTimestamp = getLatestTimestamp(a);
-                const bTimestamp = getLatestTimestamp(b);
-                return new Date(bTimestamp) - new Date(aTimestamp); // newest first
-            });
-        } else if (sortOption === 'oldest') {
-            filtered.sort((a, b) => {
-                const aTimestamp = getLatestTimestamp(a);
-                const bTimestamp = getLatestTimestamp(b);
-                return new Date(aTimestamp) - new Date(bTimestamp); // oldest first
-            });
-        }
-        // 'popular' option maintains the default order
-
         setFilteredTemplates(filtered);
-    }, [searchTerm, selectedApps, templateData, validTemplates, sortOption]);
-
-    // Helper function to get the latest timestamp from a template's published versioning
-    const getLatestTimestamp = (template) => {
-        if (template?.metadata?.published?.versioning?.length > 0) {
-            const versioning = template.metadata.published.versioning;
-            return versioning[versioning.length - 1].timestamp;
-        }
-        return '1970-01-01T00:00:00.000Z'; // default date if no timestamp found
-    };
+    }, [searchTerm, templateData, validTemplates]);
 
     const handleLoadMore = () => {
-        setVisibleCount((prev) => prev + 6);
+        setVisibleCount((prev) => prev + TEMPLATES_PER_PAGE);
     };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-    };
-
-    const handleAppToggle = (app) => {
-        if (selectedApps.includes(app)) {
-            setSelectedApps(selectedApps.filter((a) => a !== app));
-        } else {
-            setSelectedApps([...selectedApps, app]);
-        }
-    };
-
-    const handleSortChange = (option) => {
-        setSortOption(option);
-        setShowSortOptions(false);
-    };
-
-    const clearFilters = () => {
-        setSearchTerm('');
-        setSelectedApps([]);
-        setSortOption('popular');
-    };
-
-    const getSortLabel = () => {
-        switch (sortOption) {
-            case 'latest':
-                return 'Latest';
-            case 'oldest':
-                return 'Oldest';
-            default:
-                return 'Popular';
-        }
+        setVisibleCount(TEMPLATES_PER_PAGE);
     };
 
     return (
@@ -253,9 +130,9 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 <FAQSection faqData={faqData} faqName={'/templates'} />
                             </div>
                         )}
-                      <div className='container'>
-                        <Footer footerData={footerData} />
-                    </div>
+                        <div className="container">
+                            <Footer footerData={footerData} />
+                        </div>
                     </div>
                 </div>
             </div>
