@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 const TemplateCard = ({ template, backgroundColor }) => {
-    console.log(template, 'template');
     const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
     const rootActions = template?.published_json_script?.order?.root || [];
     const blocks = template?.published_json_script?.blocks || {};

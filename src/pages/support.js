@@ -71,12 +71,12 @@ export default function Support({ navData, footerData, metaData }) {
                 setIsSubmit(true);
                 setIsSend(false);
             } else {
-                console.log('error');
+                console.error('error');
                 setIsSend(false);
             }
         } catch (error) {
             setIsSend(false);
-            console.log(error, 'error');
+            console.error(error, 'error');
         }
     };
     return (

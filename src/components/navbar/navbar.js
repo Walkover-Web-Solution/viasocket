@@ -84,10 +84,13 @@ export default function Navbar({ navData, utm }) {
                     {shorterData &&
                         shorterData.map((option, index) => {
                             if (!option) return null;
-
-                            return (
-                                <div key={index} className="relative xl:flex hidden">
-                                    {option.is_parent ? (
+                            if (option.is_parent) {
+                                const children = shorterData.filter(
+                                    (child) => child.is_child && child.name === option.names
+                                );
+                            
+                                return (
+                                    <div key={index} className="relative xl:flex hidden">
                                         <div className="dropdown dropdown-hover">
                                             {option.link ? (
                                                 <Link
@@ -98,7 +101,7 @@ export default function Navbar({ navData, utm }) {
                                                         tabIndex={0}
                                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                     >
-                                                        <span className="!text-xs">{option.name}</span>
+                                                        <span className="!text-xs">{option.names}</span>
                                                         <MdOutlineKeyboardArrowDown size={20} />
                                                     </button>
                                                 </Link>
@@ -107,58 +110,62 @@ export default function Navbar({ navData, utm }) {
                                                     tabIndex={0}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
                                                 >
-                                                    <span className="!text-xs">{option.name}</span>
+                                                    <span className="!text-xs">{option.names}</span>
                                                     <MdOutlineKeyboardArrowDown size={20} />
                                                 </button>
                                             )}
                                             <ul
                                                 tabIndex={0}
-                                                className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
+                                                className="dropdown-content menu shadow bg-white border border-gray-200 w-[18vw] gap-2"
                                             >
-                                                {shorterData.map(
-                                                    (childOption, childIndex) =>
-                                                        childOption &&
-                                                        childOption.is_child &&
-                                                        childOption.group_name === option.name && (
-                                                            <li key={childIndex}>
-                                                                <Link
-                                                                    href={childOption.link || '#'}
-                                                                    target={
-                                                                        childOption.open_in_new_tab ? '_blank' : '_self'
-                                                                    }
-                                                                    className="text-black hover:bg-gray-100 py-2 block !text-xs"
-                                                                >
-                                                                    {childOption.name}
-                                                                </Link>
-                                                            </li>
-                                                        )
+                                                {children.length > 0 ? (
+                                                    children.map((childOption, childIndex) => (
+                                                        <li key={childIndex} className='hover:bg-gray-100 py-2'>
+                                                            <Link
+                                                                href={childOption.link || '#'}
+                                                                target={childOption.open_in_new_tab ? '_blank' : '_self'}
+                                                                className="text-black py-1 block !text-xs"
+                                                            >
+                                                                {childOption.names}
+                                                                {/* {childOption.description} */}
+                                                            </Link>
+                                                            <span className='py-0 text-xs'>{childOption.description}</span>
+                                                        </li>
+                                                    ))
+                                                ) : (
+                                                    <li className="text-gray-400 py-2 block !text-xs">No items</li>
                                                 )}
                                             </ul>
                                         </div>
-                                    ) : (
-                                        !option.is_child && (
-                                            <Link
-                                                key={index}
-                                                target={
-                                                    option.open_in_new_tab
-                                                        ? '_blank'
-                                                        : option.link?.startsWith('http')
-                                                          ? '_blank'
-                                                          : '_self'
-                                                }
-                                                href={option.link || '#'}
-                                            >
-                                                <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
-                                                >
-                                                    {option.name}
-                                                </div>
-                                            </Link>
-                                        )
-                                    )}
-                                </div>
-                            );
+                                    </div>
+                                );
+                            }
+
+                            if (!option.is_child) {
+                                return (
+                                    <Link
+                                        key={index}
+                                        target={
+                                            option.open_in_new_tab
+                                                ? '_blank'
+                                                : option.link?.startsWith('http')
+                                                    ? '_blank'
+                                                    : '_self'
+                                        }
+                                        href={option.link || '#'}
+                                    >
+                                        <div
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
+                                        >
+                                            {option.names}
+                                        </div>
+                                    </Link>
+                                );
+                            }
+
+                            return null;
                         })}
+
 
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}

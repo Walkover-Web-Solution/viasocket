@@ -51,8 +51,8 @@ export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
     const pageInfo = GetPageInfo(context);
-    const navData = await getNavData(FOOTER_FIELDS);
-    const footerData = await getFooterData(NAVIGATION_FIELDS);
+    const navData = await getNavData(NAVIGATION_FIELDS);
+    const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`);
     let feature = null;
     let features = [];
