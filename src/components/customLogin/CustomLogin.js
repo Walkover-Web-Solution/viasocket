@@ -9,7 +9,7 @@ const CustomLogin = ({ redirect_to }) => {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
             success: (data) => {},
             failure: (error) => {
-                console.log('failure reason', error);
+                console.error('failure reason', error);
             },
         };
         if (redirect_to) {
