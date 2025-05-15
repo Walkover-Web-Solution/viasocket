@@ -1,4 +1,5 @@
-export const NAVIGATION = 'tbl7lj8ev';
+// export const NAVIGATION = 'tbl7lj8ev';
+export const NAVIGATION = 'tblbdin9l';
 export const FOOTER = 'tbl6u2cba';
 export const METADATA = 'tbl2bk656';
 export const ALLFEATURES = 'tbl5p2jus';
@@ -20,3 +21,4 @@ export const USECASES = 'tblvu0f6w';
 export const COUNTRIES = 'tblxvza45';
 export const TEMPLATES = 'tblz2bm2n';
 export const MCP = 'tblctk342';
+export const PRICINGFEATURE = 'tbl76iei5';
