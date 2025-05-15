@@ -258,12 +258,7 @@ const Index = ({
                         signupFeatures={signupFeatures}
                     />
 
-                    <div className="cont text-center gap-2 container py-5">
-                        <h2 className="text-2xl">Streamline Every Department with AI Workflow Automation</h2>
-                        <HorizontalCardScroller items={streamlineData} />
-                    </div>
-
-                    <FeatureGrid featuresData={featuresData} />
+                    <StreamlineDataGrid items={streamlineData} />
 
                     <div className="container cont">
                         <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border transparent-border-black bg-white">
@@ -272,7 +267,7 @@ const Index = ({
                         </div>
                     </div>
 
-                    {/* <WorkflowStepsSection indexSteps={indexSteps} /> */}
+                    <FeatureGrid featuresData={featuresData} />
 
                     <div className="container">
                         <TestimonialsSection testimonials={testimonials} />
@@ -296,22 +291,20 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container cont">
-                        <div className="gap-2 border transparent-border-black py-20 px-12 bg-white">
-                            <h2 className="h2 text-left">AI Agents That Work For You</h2>
-                            <p className="text-2xl font-semibold text-accent">
-                                Build, deploy, and automate with intelligent agents
-                            </p>
-                            <h3 className="sub__h1 ">
-                                Create intelligent workflows that handle your business processes automatically without
-                                coding. Simply describe what you need in plain language, and our platform builds custom
-                                AI agents that connect your apps, make smart decisions, and improve over time.
-                            </h3>
-                        </div>
+                    <div className="container cont gap-2 border transparent-border-black py-20 px-12 bg-white">
+                        <h2 className="h2 text-left">AI Agents That Work For You</h2>
+                        <p className="text-2xl font-semibold text-accent">
+                            Build, deploy, and automate with intelligent agents
+                        </p>
+                        <h3 className="sub__h1 ">
+                            Create intelligent workflows that handle your business processes automatically without
+                            coding. Simply describe what you need in plain language, and our platform builds custom AI
+                            agents that connect your apps, make smart decisions, and improve over time.
+                        </h3>
                     </div>
 
-                    <div className="container cont">
-                        <div className="gap-2 border transparent-border-black gap-12 py-20 px-12 bg-white">
+                    <div className="container cont border transparent-border-black gap-2 py-20 px-12 bg-white">
+                        <div className="cont gap-1">
                             <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
                             <p className="text-2xl font-semibold text-accent ">
                                 Edit workflows with AI, anywhere, anytime
@@ -322,7 +315,6 @@ const Index = ({
                                 you are.
                             </h3>
                         </div>
-
                         <Link
                             href="https://walkover.typeform.com/to/U33OiMgy"
                             target="_blank"
@@ -356,40 +348,7 @@ const Index = ({
     );
 };
 
-const HorizontalCardScroller = ({ items }) => {
-    const containerRef = useRef(null);
-    const [displayedItems, setDisplayedItems] = useState([...items, ...items]);
-    const [isScrolling, setIsScrolling] = useState(false);
-
-    const handleInfiniteScroll = () => {
-        const container = containerRef.current;
-        const { scrollWidth, scrollLeft, offsetWidth } = container;
-        const scrollRight = scrollWidth - (scrollLeft + offsetWidth);
-
-        if (scrollRight < 100) {
-            setDisplayedItems((prev) => [...prev, ...items]);
-        }
-    };
-
-    const scroll = (direction) => {
-        if (isScrolling) return;
-        setIsScrolling(true);
-
-        const container = containerRef.current;
-        const scrollAmount = 300;
-        const newPosition =
-            direction === 'left' ? container.scrollLeft - scrollAmount : container.scrollLeft + scrollAmount;
-
-        container.scrollTo({
-            left: newPosition,
-            behavior: 'smooth',
-        });
-
-        setTimeout(() => {
-            handleInfiniteScroll();
-            setIsScrolling(false);
-        }, 300);
-    };
+const StreamlineDataGrid = ({ items }) => {
     const getIconComponent = (iconName) => {
         switch (iconName) {
             case 'chart-line':
@@ -410,86 +369,20 @@ const HorizontalCardScroller = ({ items }) => {
     };
 
     return (
-        <div className="container relative w-full overflow-hidden group">
-            <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-white via-white/90 to-transparent z-20 pointer-events-none" />
-            <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-white via-white/90 to-transparent z-20 pointer-events-none" />
-
-            <button
-                onClick={() => scroll('left')}
-                className="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover-bg-grey-100-text-black transition-all backdrop-blur-sm border border-gray-200"
-            >
-                ◀
-            </button>
-            <button
-                onClick={() => scroll('right')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-white text-black p-3 rounded-full shadow-lg hover-bg-grey-100-text-black transition-all backdrop-blur-sm border border-gray-200"
-            >
-                ▶
-            </button>
-
-            <div
-                ref={containerRef}
-                onScroll={handleInfiniteScroll}
-                style={{ overflowX: 'hidden' }}
-                className="flex overflow-x-auto gap-6 py-6 scroll-smooth"
-            >
-                {displayedItems.map((item, index) => (
-                    <div
-                        key={`${index}-${item.title}`}
-                        className="w-[300px] shadow-lg p-6 flex-shrink-0 border mx-2 hover-bg-grey-100-text-black group bg-white"
+        <div className="container cont">
+            <h2 className="h2 mb-4">Streamline Every Department with AI Workflow Automation</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border transparent-border-black border-t-0 border-r-0 bg-white cursor-pointer">
+                {items.map((item, index) => (
+                    <Link
+                        href={item.link}
+                        key={index}
+                        className="cont gap-1 py-12 px-8 border transparent-border-black border-b-0 border-l-0 hover:bg-gray-100"
                     >
-                        <div className="flex flex-col gap-4">
-                            <div className="flex gap-4">
-                                <h3 className="font-bold text-2xl">{item.title}</h3>
-                                <div className="text-accent">{getIconComponent(item.iconName)}</div>
-                            </div>
-                            <p className="text-base leading-relaxed">{item.description}</p>
-                        </div>
-                    </div>
+                        {getIconComponent(item.iconName)}
+                        <h4 className="h3">{item.title}</h4>
+                        <p className="sub__h2 text-gray-700">{item.description}</p>
+                    </Link>
                 ))}
-            </div>
-        </div>
-    );
-};
-
-const WorkflowStepsSection = ({ indexSteps }) => (
-    <div className="container cont cont__py gap-12 px-4 md:px-8 lg:px-24 h-fit border transparent-border-black">
-        <div className="flex flex-col justify-center items-center w-full text-center">
-            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-        </div>
-
-        <div className="cont w-full gap-4">
-            {indexSteps.map((step, index) => (
-                <WorkflowStep key={index} step={step} stepNumber={index + 1} isEven={index % 2 !== 0} />
-            ))}
-        </div>
-    </div>
-);
-
-const WorkflowStep = ({ step, stepNumber, isEven }) => {
-    return (
-        <div className="w-full">
-            <div className="md:hidden cont">
-                <div className="p-8 cont gap-2">
-                    <p className="text-accent font font-semibold">Step {stepNumber}</p>
-                    <h3 className="h3 font-bold">{step.title}</h3>
-                    <p className="sub__h2">{step.description}</p>
-                </div>
-            </div>
-
-            <div className={`hidden md:flex ${isEven ? 'flex-row' : 'flex-row-reverse'} justify-center`}>
-                <div className={`w-1/3 p-4 flex flex-col gap-4 justify-center ${isEven ? 'text-end' : 'text-start'}`}>
-                    <h3 className="h3 font-bold">{step.title}</h3>
-                    <p className="sub__h2">{step.description}</p>
-                </div>
-
-                <div className="w-1/3 flex items-center justify-center">
-                    <div
-                        className={`flex items-center ${isEven ? 'justify-start' : 'justify-end'} text-6xl font-bold text-accent p-4 h-full w-full`}
-                    >
-                        Step {stepNumber}
-                    </div>
-                </div>
             </div>
         </div>
     );
@@ -593,14 +486,14 @@ const SecuritySection = ({ securityGridData }) => {
         }
     };
     return (
-        <div className='container'>
+        <div className="container">
             <div className="border transparent-border-black p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
                 <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
                         <h3 className="sub__h1">
-                            Your data is safe with us—compliant, secure, and built with privacy in mind at every step, so
-                            you can run workflows with confidence.
+                            Your data is safe with us—compliant, secure, and built with privacy in mind at every step,
+                            so you can run workflows with confidence.
                         </h3>
                     </div>
                     <div className="flex gap-4 mr-12">
@@ -696,36 +589,42 @@ export async function getServerSideProps(context) {
             iconName: 'chart-line',
             description:
                 'Automatically qualify leads, schedule follow-ups, and update your CRM. Convert prospects to customers while your team focuses on relationship building instead of data entry.',
+            link: 'https://viasocket.com/blog/easy-ways-to-automate-sales/',
         },
         {
             title: 'Marketing',
             iconName: 'bullhorn',
             description:
                 'Synchronize campaign data, trigger personalized messaging based on customer actions, and maintain consistent cross-channel communication without manual intervention.',
+            link: 'https://viasocket.com/blog/unlock-business-growth-through-marketing-automation/',
         },
         {
             title: 'Finance',
             iconName: 'coins',
             description:
                 'Automate invoice generation, payment reminders, expense approvals, and financial reporting. Ensure accuracy while reducing the time spent on routine financial processes.',
+            link: 'https://viasocket.com/blog/accounting-automation-guide/',
         },
         {
             title: 'HR',
             iconName: 'user-friends',
             description:
                 'Streamline employee onboarding, automate time-off requests, collect feedback, and manage document approvals. Create a seamless experience for your team.',
+            link: 'https://viasocket.com/blog/9-important-automations-for-hr-2025/',
         },
         {
             title: 'IT',
             iconName: 'server',
             description:
                 'Automate ticket routing, system monitoring alerts, access management, and recurring maintenance tasks. Reduce resolution time and prevent system issues.',
+            link: 'https://viasocket.com/blog/boost-team-productivity-and-simplify-it-with-powerful-automation/',
         },
         {
             title: 'Operations',
             iconName: 'cogs',
             description:
                 'Coordinate inventory updates, manage supply chain communications, automate order processing, and streamline project handoffs across departments.',
+            link: 'https://viasocket.com/blog/ways-to-automate-your-business/',
         },
     ];
 

@@ -78,7 +78,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         };
 
         const script = document.createElement('script');
-        script.src = 'https://shubhendraagrawal.msg91.com/chat-widget-prodtesing.js';
+        script.src = 'https://blacksea.msg91.com/chat-widget.js';
         script.onload = () => initChatWidget(helloConfig, 50);
 
         document.head.appendChild(script);

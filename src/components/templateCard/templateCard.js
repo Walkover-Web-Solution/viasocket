@@ -7,11 +7,8 @@ import { DiJsBadge } from 'react-icons/di';
 import { IoGitNetworkSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 
 const TemplateCard = ({ template, backgroundColor }) => {
-    console.log(template, 'template');
-    const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
     const rootActions = template?.published_json_script?.order?.root || [];
     const blocks = template?.published_json_script?.blocks || {};
 
@@ -34,13 +31,6 @@ const TemplateCard = ({ template, backgroundColor }) => {
     if (currentGroup.length > 0) {
         actionGroups.push([...currentGroup]);
     }
-
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `template/${template?.id}` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     return (
         <div className="group cont gap-4 pb-4 relative" style={backgroundColor}>
@@ -181,10 +171,7 @@ const TemplateCard = ({ template, backgroundColor }) => {
                 }}
             >
                 <div className="flex flex-wrap gap-2 items-center justify-end" style={{ pointerEvents: 'auto' }}>
-                    <Link
-                        href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
-                        onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails?.appslugname}` })}
-                    >
+                    <Link href={`/template/${template?.id}`}>
                         <button className="btn bg-black border-0 text-white hover:bg-accent">Use This Template</button>
                     </Link>
                 </div>
