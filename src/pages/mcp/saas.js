@@ -19,10 +19,9 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
-            <div className="container py-8">
-                <McpSwitchComp />
-
-                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 py-16">
+            <McpSwitchComp />
+            <div className="container ">
+                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                     <div className="cont gap-4 w-full text-left">
                         <h1 className="h1">
                             {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
@@ -114,7 +113,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
-                <div className='container'>
+                <div className="container">
                     <Footer footerData={footerData} />
                 </div>
             </div>

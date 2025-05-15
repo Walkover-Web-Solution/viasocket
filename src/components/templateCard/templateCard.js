@@ -7,10 +7,9 @@ import { DiJsBadge } from 'react-icons/di';
 import { IoGitNetworkSharp } from 'react-icons/io5';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 const TemplateCard = ({ template, backgroundColor }) => {
-    const serviceNames = template?.published_json_script?.trigger?.serviceName?.split(' ') || [];
     const rootActions = template?.published_json_script?.order?.root || [];
     const blocks = template?.published_json_script?.blocks || {};
 
@@ -180,10 +179,7 @@ const TemplateCard = ({ template, backgroundColor }) => {
                 }}
             >
                 <div className="flex flex-wrap gap-2 items-center justify-end" style={{ pointerEvents: 'auto' }}>
-                    <Link
-                        href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}
-                        onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails?.appslugname}` })}
-                    >
+                    <Link href={`https://flow.viasocket.com/template/${template?.id}?state=${defaultUtmSource}`}>
                         <button className="btn bg-black border-0 text-white hover:bg-accent">Use This Template</button>
                     </Link>
                 </div>
