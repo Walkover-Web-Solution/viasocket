@@ -66,7 +66,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
 
                 <div className="cont container">
                     <div className="max-w-[400px] w-full">
-                        <label className="input border border-b-0 transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px]">
+                        <label className="input border transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px] mb-4">
                             <MdSearch size={20} />
                             <input
                                 type="text"
@@ -86,10 +86,10 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-end w-full container">
+                                <div className="flex justify-end w-full container mt-4">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border border-t-0 transparent-border-black bg-white"
+                                        className="btn btn-outline border transparent-border-black bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>
