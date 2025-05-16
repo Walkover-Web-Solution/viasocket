@@ -21,7 +21,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                             <button className="btn btn-accent" onClick={(e) => handleRedirect(e, '/signup?')}>
                                 Sign Up
                             </button>
-                            <div className="flex gap-4">
+                            <div className="flex gap-4 flex-wrap">
                                 {signupFeatures.map((point, index) => (
                                     <div key={index} className="flex gap-0.5 h6 items-center">
                                         <p className="text-accent">✔ </p>

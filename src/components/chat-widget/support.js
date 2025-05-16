@@ -107,7 +107,7 @@ export default function Support({ open, onClose }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l transparent-border-black shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
                     }`}
                 role="dialog"
                 aria-modal="true"
@@ -133,6 +133,10 @@ export default function Support({ open, onClose }) {
                         <section className="border-b p-5">
                             <h3 className="text-xl font-semibold px-2 mb-2">Partners</h3>
                             <NavList items={partnersItems} />
+                        </section>
+
+                        <section className="border-b p-5">
+                            <h3 className="text-xl font-semibold px-2 mb-2"><a href="/pricing">Pricing</a></h3>
                         </section>
                     </div>
 
