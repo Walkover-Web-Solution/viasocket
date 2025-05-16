@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 
+export const runtime = 'experimental-edge';
+
 const TemplateDetailPage = ({ navData, footerData, templateData, metaData }) => {
     const router = useRouter();
     const { templateId } = router.query;
