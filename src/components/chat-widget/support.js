@@ -1,20 +1,57 @@
-import { useEffect, useState } from 'react';
-import { MdClose, MdCircle, MdEmail, MdKeyboardArrowRight } from 'react-icons/md';
+import { useEffect, useRef } from 'react';
+import { MdClose, MdCircle, MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoCall } from 'react-icons/io5';
 import CallBackModal from './callBackModal';
-import { setUtmSource } from '@/utils/handleUtmSource';
-import Link from 'next/link';
+
+function NavList({ items }) {
+    return (
+        <ul className="grid grid-cols-1 md:grid-cols-2">
+            {items.map(({ href, title, subtitle }, i) => (
+                <li key={i} className="hover:bg-gray-100 text-black p-2">
+                    <a href={href} className="flex flex-col">
+                        <span className="text-lg hover:text-accent hover:underline">{title}</span>
+                        <span className="text-sm text-gray-700 hover:underline">{subtitle}</span>
+                    </a>
+                </li>
+            ))}
+        </ul>
+    );
+}
 
 export default function Support({ open, onClose }) {
+    const panelRef = useRef();
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') onClose();
+        };
+
+        const handleClickOutside = (e) => {
+            if (panelRef.current && !panelRef.current.contains(e.target)) {
+                onClose();
+            }
+        };
+
+        if (open) {
+            document.addEventListener('keydown', handleKeyDown);
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [open, onClose]);
 
     const handleOpenModal = () => {
-        document.getElementById('callback_modal').showModal();
+        document.getElementById('callback_modal')?.showModal();
     };
 
     const toggleChatWidget = () => {
-        window.chatWidget.open();
+        window.chatWidget?.open();
     };
+
     const ContactListArray = [
         {
             text: 'Request a Callback Now',
@@ -27,205 +64,114 @@ export default function Support({ open, onClose }) {
             icon: <MdEmail className="h-5 w-5 text-blue-500" />,
         },
         {
-            text: 'Chat on whatsapp',
+            text: 'Chat on WhatsApp',
             href: 'https://wa.me/+13154442439',
             target: '_blank',
             icon: <FaWhatsapp className="h-5 w-5 text-green-600" />,
         },
         {
-            text: 'Live chat now',
+            text: 'Live Chat Now',
             onClick: () => {
                 toggleChatWidget();
                 onClose();
             },
-            icon: <MdCircle color="#16a24a" />,
+            icon: <MdCircle className="text-green-600 h-5 w-5" />,
         },
     ];
-    const GalleryMediaArray = [
-        {
-            ytLink: {
-                link: 'https://www.youtube.com/embed/jatLtH-EIhQ?autoplay=1&mute=1&rel=0&controls=0&cc_load_policy=0&start=0&end=20&loop=1&playlist=jatLtH-EIhQ',
-                onClickLink: 'https://www.youtube.com/playlist?list=PLFC2nhlwaR8wQqKIdNpFUJHRBqUrxH7A9',
-            },
-            heading: 'Video Gallery',
-            subHeading: 'Watch tutorials and see usecases in action.',
-        },
-        {
-            ytLink: {
-                onClickLink: 'https://viasocket.com/templates',
-            },
-            heading: 'Templates',
-            subHeading: 'Quick start with our curated templates.',
-            CardMedia: {
-                image: '/assets/img/template_image.png',
-                alt: 'Template Preview',
-            },
-        },
-        {
-            ytLink: {
-                onClickLink: 'https://viasocket.com/faq',
-            },
-            heading: 'Knowledge Base',
-            subHeading: 'Browse through our FAQs for quick help.',
-            CardMedia: {
-                image: '/assets/img/faq_image.png',
-                alt: 'FAQ Preview',
-            },
-        },
+
+    const aiAutomationItems = [
+        { href: '/integrations', title: 'Apps Integrations', subtitle: 'Explore 1,500+ app connections' },
+        { href: '/features', title: 'Features', subtitle: 'Features to optimize your experience' },
+        { href: 'https://cal.id/team/bring-your-app-on-viasocket-marketplace', title: 'List Your App', subtitle: 'Bring your app on viaSocket' },
+        { href: '/templates', title: 'Templates', subtitle: 'Library of Automation Workflows' },
+        { href: 'https://viasocket.com/discovery', title: 'Explore Apps', subtitle: 'Explore Top Apps by Category' },
+        { href: '/embed', title: 'Embed', subtitle: 'Embed viaSocket in your SaaS/AI' },
     ];
-    const MCPListArray = [
-        {
-            text: '1. For <link>MCP</link>',
-            onClick: () => {
-                window.location.href = '/mcp';
-            },
-        },
-        {
-            text: '2. Make it available as <link>plug</link> and play in flow',
-            onClick: () => {
-                window.location.href = '/embed';
-            },
-        },
-        {
-            text: '3. To be visible in our <link>explorer/discovery</link>',
-            onClick: () => {
-                window.location.href = '/discovery';
-            },
-        },
+
+    const mcpItems = [
+        { href: '/mcp', title: 'MCP Marketplace', subtitle: 'Connect Your AI to 1500+ Apps' },
+        { href: '/mcp/aiagent', title: 'MCP for AI Agent Builders', subtitle: 'Embed Actions for AI Agents' },
+        { href: '/mcp/saas', title: 'MCP for SaaS', subtitle: 'Launch Your MCP Server on Your SaaS' },
+    ];
+
+    const partnersItems = [
+        { href: '/experts', title: 'Find a Partner', subtitle: 'Find the perfect partner' },
+        { href: 'https://viasocket.com/faq/partners/automation-experts', title: 'Become a Partner', subtitle: 'Help your customers to automate anything' },
     ];
 
     return (
-        <div className={`support-slider pb-24 ${open ? 'open' : ''}`}>
-            <div className="flex justify-between items-center py-2 px-3 border-b bg-accent">
-            <Link href="/mcp">
-                <div className="flex items-center gap-2">
-                    <p className="!text-base text-white hover:underline">Connect your AI agent with MCP</p>
-                    <MdKeyboardArrowRight className="text-white h-5 w-5" />
+        <div className={`fixed inset-0 z-50 pointer-events-${open ? 'auto' : 'none'}`}>
+            <div
+                className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
+            />
+
+            <div
+                ref={panelRef}
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
+                    }`}
+                role="dialog"
+                aria-modal="true"
+            >
+                <div className="flex justify-end p-3">
+                    <button onClick={onClose} aria-label="Close" className="p-1">
+                        <MdClose size={22} />
+                    </button>
                 </div>
-            </Link>
-                <button onClick={onClose} aria-label="Close" className='!mx-4'>
-                    <MdClose className="text-white" />
-                </button>
-            </div>
 
+                <div className="flex flex-col justify-between h-[94%] overflow-y-auto">
+                    <div className="flex flex-col">
+                        <section className="border-b px-5 pb-5 pt-0">
+                            <h3 className="text-xl font-semibold px-2 mb-2">AI & Automation</h3>
+                            <NavList items={aiAutomationItems} />
+                        </section>
 
-            {/* Connection Section */}
-            <div className="flex flex-col gap-6 p-4">
-                <h3 className="h3">1,000+ Apps Ready to Connect</h3>
-                <button
-                    onClick={() =>
-                        (window.location.href = 'https://cal.id/team/bring-your-app-on-viasocket-marketplace')
-                    }
-                    className="btn btn-primary btn-outline !px-4 min-w-[120px] xl:min-w-[130px]"
-                >
-                    <span>Bring your app</span>
-                </button>
-                <ol className="list-ordered !mt-1">
-                    {MCPListArray.map((item, index) => (
-                        <li key={index} className="px-2 py-1 !mt-0">
-                            {item.text.split('<link>').map((part, partIndex) => {
-                                if (partIndex === 0) {
-                                    return <span key={partIndex}>{part}</span>;
-                                } else {
-                                    return (
-                                        <span key={partIndex}>
-                                            <a
-                                                onClick={item.onClick}
-                                                className="text-blue-500 underline cursor-pointer"
-                                            >
-                                                {part.split('</link>')[0]}
-                                            </a>
-                                            {part.split('</link>')[1]}
-                                        </span>
-                                    );
-                                }
-                            })}
-                        </li>
-                    ))}
-                </ol>
-            </div>
-            {/* Divider */}
-            <div className="mb-4 border-t border-gray-200" />
+                        <section className="border-b p-5">
+                            <h3 className="text-xl font-semibold px-2 mb-2">MCP</h3>
+                            <NavList items={mcpItems} />
+                        </section>
 
-            <div className="space-y-4">
-                <div className="space-y-2">
-                    <h5 className="px-4 my-2 h3">Discover More</h5>
-                    <div className="relative w-full mt-2 mb-4">
-                        <div className="px-4 flex overflow-x-scroll gap-2">
-                            {GalleryMediaArray.map((gallaryItem, index) => (
-                                <div
+                        <section className="border-b p-5">
+                            <h3 className="text-xl font-semibold px-2 mb-2">Partners</h3>
+                            <NavList items={partnersItems} />
+                        </section>
+                    </div>
+
+                    <div className="p-5 space-y-4 border-t">
+                        <h3 className="text-xl font-semibold px-2 mb-2">We'd Love to Hear From You!</h3>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                            {ContactListArray.map((item, index) => (
+                                <li
                                     key={index}
-                                    className="min-w-[180px] max-w-[200px] max-h-[300px] bg-white overflow-hidden"
+                                    className="border rounded hover:bg-gray-100 transition"
                                 >
-                                    <a
-                                        href={gallaryItem.ytLink?.onClickLink || '#'}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        {gallaryItem.ytLink?.link ? (
-                                            <div className="relative w-[200px] h-[140px]">
-                                                <iframe
-                                                    className="w-[200px] h-[140px] !pointer-events-none"
-                                                    src={gallaryItem.ytLink.link}
-                                                    title="YouTube video"
-                                                    allow="autoplay; encrypted-media"
-                                                />
-                                                <div
-                                                    onClick={() =>
-                                                        window.open(gallaryItem.ytLink.onClickLink, '_blank')
-                                                    }
-                                                    className="absolute top-0 left-0 w-full h-full cursor-pointer bg-transparent"
-                                                />
-                                            </div>
-                                        ) : (
-                                            <img
-                                                className="w-full h-[140px] object-cover"
-                                                src={gallaryItem.CardMedia?.image}
-                                                alt={gallaryItem.CardMedia?.alt}
-                                            />
-                                        )}
-                                        <div className="p-2">
-                                            <h6 className="text-lg font-medium">{gallaryItem.heading}</h6>
-                                            <p className="text-sm text-gray-500">{gallaryItem.subHeading}</p>
-                                        </div>
-                                    </a>
-                                </div>
+                                    {item.href ? (
+                                        <a
+                                            href={item.href}
+                                            target={item.target}
+                                            rel="noreferrer"
+                                            className="flex items-center gap-2 p-2"
+                                        >
+                                            {item.icon}
+                                            <span className="text-sm">{item.text}</span>
+                                        </a>
+                                    ) : (
+                                        <button
+                                            onClick={item.onClick}
+                                            className="flex items-center gap-2 p-2 w-full text-left"
+                                        >
+                                            {item.icon}
+                                            <span className="text-sm">{item.text}</span>
+                                        </button>
+                                    )}
+                                </li>
                             ))}
-                        </div>
-
-                        <div className="my-4 border-t border-gray-200" />
+                        </ul>
                     </div>
                 </div>
 
-                <div className="px-4 mt-2 mb-4 space-y-4">
-                    <h3 className="h3">We'd Love to Hear From You! Reach out via:</h3>
-                    <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        {ContactListArray.map((item, index) => (
-                            <li key={index} className="">
-                                {item.href ? (
-                                    <a
-                                        href={item.href}
-                                        target={item.target}
-                                        className="flex items-center gap-2 p-2 transition cursor-pointer"
-                                    >
-                                        {item.icon}
-                                        <span>{item.text}</span>
-                                    </a>
-                                ) : (
-                                    <button
-                                        onClick={item.onClick}
-                                        className="flex items-center gap-2 p-2 w-full text-left transition"
-                                    >
-                                        {item.icon}
-                                        <span>{item.text}</span>
-                                    </button>
-                                )}
-                            </li>
-                        ))}
-                    </ul>
-                </div>
+                <CallBackModal />
             </div>
-            <CallBackModal />
         </div>
     );
 }
+

@@ -30,7 +30,6 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
-import { setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
 import {
@@ -47,6 +46,7 @@ import {
 } from 'react-icons/fa6';
 import { FaCogs, FaShieldAlt, FaUserFriends } from 'react-icons/fa';
 import StepDisplay from '@/components/stepDisplay/StepDisplay';
+import { FiExternalLink } from 'react-icons/fi';
 
 export const runtime = 'experimental-edge';
 
@@ -237,13 +237,6 @@ const Index = ({
         }
     };
 
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `/makeflow/trigger/combos` });
-        setDefaultUtmSource(utmData);
-    }, []);
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
@@ -376,11 +369,12 @@ const StreamlineDataGrid = ({ items }) => {
                     <Link
                         href={item.link}
                         key={index}
-                        className="cont gap-1 py-12 px-8 border transparent-border-black border-b-0 border-l-0 hover:bg-gray-100"
+                        className="cont gap-1 py-12 px-8 border transparent-border-black border-b-0 border-l-0 hover:bg-gray-100 group relative"
                     >
                         {getIconComponent(item.iconName)}
                         <h4 className="h3">{item.title}</h4>
                         <p className="sub__h2 text-gray-700">{item.description}</p>
+                        <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />
                     </Link>
                 ))}
             </div>
