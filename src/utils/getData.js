@@ -22,7 +22,6 @@ import {
 } from '@/const/tables';
 import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
-import Template from '@/pages/templates';
 
 const handleData = (data) => {
     return data?.data?.rows;

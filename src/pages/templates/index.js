@@ -15,16 +15,6 @@ export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const backgroundColors = [
-    { background: 'linear-gradient(105deg, #2F3C4F 2.92%, #4B5E73 100%)' }, // Deep steel blue
-    { background: 'linear-gradient(104deg, #4C3B4D 2.92%, #705775 100%)' }, // Faded royal purple
-    { background: 'linear-gradient(105deg, #5A5148 2.92%, #837263 100%)' }, // Muted cocoa
-    { background: 'linear-gradient(105deg, #1F232A 2.92%, #3B4048 100%)' }, // Subtle graphite
-    { background: 'linear-gradient(105deg, #3C4F57 2.92%, #627D87 100%)' }, // Foggy cyan-gray
-    { background: 'linear-gradient(104deg, #4A646C 2.92%, #5F7C84 100%)' }, // Stormy teal
-    { background: 'linear-gradient(105deg, #593A56 2.92%, #8C6285 100%)' }, // Mauve dusk
-];
-
 const Template = ({ navData, footerData, templateData, validTemplates, metaData, faqData, blogData }) => {
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
@@ -75,15 +65,15 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                 </div>
 
                 <div className="cont container">
-                    <div className="max-w-[400px] w-full mb-8">
-                        <label className="input border-2 transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px]">
+                    <div className="max-w-[400px] w-full">
+                        <label className="input border transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px] mb-4">
                             <MdSearch size={20} />
                             <input
                                 type="text"
-                                placeholder="Search templates..."
+                                placeholder="Search templates"
                                 value={searchTerm}
                                 onChange={handleSearchChange}
-                                className="grow py-2 px-3"
+                                className="grow py-2 px-1"
                             />
                         </label>
                     </div>
@@ -91,19 +81,15 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     {filteredTemplates.length > 0 ? (
                         <>
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                {filteredTemplates.slice(0, visibleCount).map((template, index) => (
-                                    <TemplateCard
-                                        key={template.id}
-                                        template={template}
-                                        backgroundColor={backgroundColors[index % backgroundColors.length]}
-                                    />
+                                {filteredTemplates.slice(0, visibleCount).map((template) => (
+                                    <TemplateCard key={template.id} template={template} />
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
                                 <div className="flex justify-end w-full container mt-4">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border-2 transparent-border-black bg-white"
+                                        className="btn btn-outline border transparent-border-black bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>
@@ -120,7 +106,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     )}
                 </div>
 
-                <div className="cont gap-20 mt-20">
+                <div className="cont gap-6 md:gap-16 lg:gap-20 mt-20">
                     <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>
