@@ -1,5 +1,5 @@
+import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
@@ -16,22 +16,16 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                 limits, just seamless flow.
                             </span>
                         </div>
-                        <div className="cont gap-4 w-full">
-                            <div className="w-full flex lg:flex-row md:flex-col sm:flex-row flex-col gap-8  lg:items-center md:items-start sm:items-center items-start">
-                                <Link href="/signup">
-                                    <button className="btn btn-accent">Sign Up</button>
-                                </Link>
-                            </div>
-                            <div className="flex w-full">
+
+                        <div className="cont gap-2 w-full">
+                            <button className="btn btn-accent" onClick={(e) => handleRedirect(e, '/signup?')}>
+                                Sign Up
+                            </button>
+                            <div className="flex gap-4 flex-wrap">
                                 {signupFeatures.map((point, index) => (
-                                    <div
-                                        key={index}
-                                        className={`font-semibold py-4 px-1 transparent-border-black w-full text-center flex items-start justify-start`}
-                                    >
-                                        <div className="flex gap-1 h6 items-center">
-                                            <p className="text-accent">✔ </p>
-                                            <p>{point}</p>
-                                        </div>
+                                    <div key={index} className="flex gap-0.5 h6 items-center">
+                                        <p className="text-accent">✔ </p>
+                                        <p className="text-nowrap">{point}</p>
                                     </div>
                                 ))}
                             </div>

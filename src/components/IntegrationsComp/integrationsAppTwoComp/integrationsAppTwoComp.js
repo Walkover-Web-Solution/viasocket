@@ -12,9 +12,9 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -30,13 +30,6 @@ export default function IntegrationsAppTwoComp({
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-    useEffect(() => {
-        const utmData = setUtmSource({
-            source: `integrations/${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`,
-        });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     return (
         <>
@@ -53,11 +46,13 @@ export default function IntegrationsAppTwoComp({
             >
                 <div className="container cont py-8 gap-4 flex items-center justify-between">
                     <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                            <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
-                                Login to viaSocket <MdOpenInNew />{' '}
-                            </button>
-                        </Link>
+                        <button
+                            className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
+                            onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                            rel="nofollow"
+                        >
+                            Login to viaSocket <MdOpenInNew />{' '}
+                        </button>
                     </div>
                     <div className="flex w-full flex-col md:flex-row ">
                         <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border border-r-0 transparent-border-black bg-white w-full max-w-[300px] min-w-fit">
@@ -144,12 +139,7 @@ export default function IntegrationsAppTwoComp({
                                                     'https://placehold.co/40x40',
                                             }}
                                             description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                            onClick={() =>
-                                                setUtmInCookies({
-                                                    source: `integrations/${appOneDetails?.appslugname}-${appTwoDetails?.appslugname}`,
-                                                })
-                                            }
+                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
                                         />
                                     );
                                 })}

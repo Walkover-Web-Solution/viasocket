@@ -2,9 +2,9 @@ import { MdMenu, MdLogin, MdPersonAdd, MdOutlineKeyboardArrowDown } from 'react-
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
-import { useEffect, useState } from 'react';
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { useState } from 'react';
 import Support from '../chat-widget/support';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function Navbar({ navData, utm }) {
     let shorterData = [];
@@ -35,13 +35,6 @@ export default function Navbar({ navData, utm }) {
     } else {
         backgroundClass = textClass + '!text-xs !capitalize';
     }
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-    const source = typeof window !== 'undefined' ? window.location.pathname : '';
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: source });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -81,85 +74,13 @@ export default function Navbar({ navData, utm }) {
                 </Link>
 
                 <div className="flex">
-                    {shorterData &&
-                        shorterData.map((option, index) => {
-                            if (!option) return null;
-
-                            return (
-                                <div key={index} className="relative xl:flex hidden">
-                                    {option.is_parent ? (
-                                        <div className="dropdown dropdown-hover">
-                                            {option.link ? (
-                                                <Link
-                                                    href={option.link}
-                                                    target={option.open_in_new_tab ? '_blank' : '_self'}
-                                                >
-                                                    <button
-                                                        tabIndex={0}
-                                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
-                                                    >
-                                                        <span className="!text-xs">{option.name}</span>
-                                                        <MdOutlineKeyboardArrowDown size={20} />
-                                                    </button>
-                                                </Link>
-                                            ) : (
-                                                <button
-                                                    tabIndex={0}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
-                                                >
-                                                    <span className="!text-xs">{option.name}</span>
-                                                    <MdOutlineKeyboardArrowDown size={20} />
-                                                </button>
-                                            )}
-                                            <ul
-                                                tabIndex={0}
-                                                className="dropdown-content menu shadow bg-white border border-gray-200 w-40"
-                                            >
-                                                {shorterData.map(
-                                                    (childOption, childIndex) =>
-                                                        childOption &&
-                                                        childOption.is_child &&
-                                                        childOption.group_name === option.name && (
-                                                            <li key={childIndex}>
-                                                                <Link
-                                                                    href={childOption.link || '#'}
-                                                                    target={
-                                                                        childOption.open_in_new_tab ? '_blank' : '_self'
-                                                                    }
-                                                                    className="text-black hover:bg-gray-100 py-2 block !text-xs"
-                                                                >
-                                                                    {childOption.name}
-                                                                </Link>
-                                                            </li>
-                                                        )
-                                                )}
-                                            </ul>
-                                        </div>
-                                    ) : (
-                                        !option.is_child && (
-                                            <Link
-                                                key={index}
-                                                target={
-                                                    option.open_in_new_tab
-                                                        ? '_blank'
-                                                        : option.link?.startsWith('http')
-                                                          ? '_blank'
-                                                          : '_self'
-                                                }
-                                                href={option.link || '#'}
-                                            >
-                                                <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4`}
-                                                >
-                                                    {option.name}
-                                                </div>
-                                            </Link>
-                                        )
-                                    )}
-                                </div>
-                            );
-                        })}
-
+                    <Link
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        href={`https://viasocket.com/discovery`}
+                        rel="nofollow"
+                    >
+                        Explore Apps
+                    </Link>
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`/pricing`}
@@ -167,22 +88,22 @@ export default function Navbar({ navData, utm }) {
                     >
                         Pricing
                     </Link>
-                    <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                        href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
+                    <button
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                         rel="nofollow"
                     >
                         Login
-                    </Link>
-                    <Link
-                        className={`${style.nav_btn} ${borderClass} hidden md:flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
-                        href={`/signup?state=${defaultUtmSource}`}
+                    </button>
+                    <button
+                        className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
+                        onClick={(e) => handleRedirect(e, '/signup?')}
                     >
                         Start Free Trial
-                    </Link>
+                    </button>
                     <button
                         onClick={handleClick}
-                        className={`${borderClass} hover-bg-grey-100-text-black items-center bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
+                        className={`${borderClass} hover-bg-grey-100-text-black items-center outline-none bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
                         aria-label="Menu"
                     >
                         <MdMenu size={24} />

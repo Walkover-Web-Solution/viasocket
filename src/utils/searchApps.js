@@ -7,7 +7,7 @@ export default async function searchApps(query) {
         const response = await axios.get(url);
         return response.data.data;
     } catch (error) {
-        console.log(error);
+        console.error(error);
     } finally {
     }
 }
