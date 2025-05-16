@@ -1,5 +1,5 @@
+import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
-import Link from 'next/link';
 
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
@@ -18,9 +18,9 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                         </div>
 
                         <div className="cont gap-2 w-full">
-                            <Link href="/signup?utm_source=index">
-                                <button className="btn btn-accent">Sign Up</button>
-                            </Link>
+                            <button className="btn btn-accent" onClick={(e) => handleRedirect(e, '/signup?')}>
+                                Sign Up
+                            </button>
                             <div className="flex gap-4">
                                 {signupFeatures.map((point, index) => (
                                     <div key={index} className="flex gap-0.5 h6 items-center">

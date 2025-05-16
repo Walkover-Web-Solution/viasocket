@@ -12,11 +12,11 @@ import FAQSection from '@/components/faqSection/faqSection';
 import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTools } from 'react-icons/fa';
 import { BsStars } from 'react-icons/bs';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import style from './McpIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
 import Script from 'next/script';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function McpIndexComp({
     pageInfo,
@@ -41,13 +41,7 @@ export default function McpIndexComp({
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
     const [searchedCategoies, setSearchedCategoies] = useState([]);
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `mcp` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -152,12 +146,13 @@ export default function McpIndexComp({
                                     build your own, power users!
                                 </h2>
                             </div>
-                            <Link
-                                href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
-                                onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
+
+                            <button
+                                className="btn btn-accent"
+                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
                             >
-                                <button className="btn btn-accent">Get Your MCP URL</button>
-                            </Link>
+                                Get Your MCP URL
+                            </button>
                         </div>
                         {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
                             <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
@@ -340,7 +335,7 @@ export default function McpIndexComp({
                 <div className="container cont">
                     <Table data={tableData} />
                 </div>
-                <div className='container cont'>
+                <div className="container cont">
                     <div className="cont__py p-12 h-fit border gap-12 flex flex-col  bg-black text-white">
                         <h2 className="h2 py-2">Ready, Set, MCP in 3 Simple Steps</h2>
 
@@ -359,7 +354,7 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                <div className='container cont'>
+                <div className="container cont">
                     <div className="flex gap-12 flex-col text-black p-12 border transparent-border-black bg-white">
                         <div className="flex flex-col gap-2 justify-center">
                             <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
@@ -393,8 +388,8 @@ export default function McpIndexComp({
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">For Enterprises</h2>
                                     <h3 className="text-xl">
-                                        viaSocket MCP for Enterprises empowers AI models to securely connect to thousands of
-                                        apps in minutes
+                                        viaSocket MCP for Enterprises empowers AI models to securely connect to
+                                        thousands of apps in minutes
                                     </h3>
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
@@ -448,7 +443,7 @@ const FeaturesGrid = ({ featuresData }) => {
         }
     };
     return (
-        <div className='container cont'>
+        <div className="container cont">
             <div className="p-12 py-20 bg-black text-white">
                 <div className="mb-20">
                     <div className="flex gap-4">
@@ -456,9 +451,9 @@ const FeaturesGrid = ({ featuresData }) => {
                         <BsStars size={42} />
                     </div>
                     <h2 className="sub__h1 text-gray-300 max-w-[800px]">
-                        viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now send
-                        messages, manage data, schedule events, and update records, turning it from a chat tool into a real
-                        action taker.
+                        viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now
+                        send messages, manage data, schedule events, and update records, turning it from a chat tool
+                        into a real action taker.
                     </h2>
                 </div>
 
@@ -499,7 +494,9 @@ const Table = ({ data }) => {
                     <tbody>
                         {data.map((conntent, index) => (
                             <tr key={index} className="">
-                                <td className="p-4 text-lg font-semibold border transparent-border-black">{conntent?.aspects}</td>
+                                <td className="p-4 text-lg font-semibold border transparent-border-black">
+                                    {conntent?.aspects}
+                                </td>
                                 <td className="p-4 text-lg  border transparent-border-black">{conntent?.api}</td>
                                 <td className="p-4 text-lg  border transparent-border-black">{conntent?.mcp}</td>
                             </tr>

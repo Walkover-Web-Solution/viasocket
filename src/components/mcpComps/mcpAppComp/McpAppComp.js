@@ -6,7 +6,6 @@ import Footer from '@/components/footer/footer';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
@@ -14,6 +13,7 @@ import { IoPersonOutline } from 'react-icons/io5';
 import { VscSend } from 'react-icons/vsc';
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import Navbar from '@/components/navbar/navbar';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 const APPERPAGE = 9;
 
@@ -32,16 +32,9 @@ export default function McpAppComp({
     mcpAIIntegrationData,
     navData,
 }) {
-    const utm = pageInfo?.url;
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `mcp/${appOneDetails.appslugname}` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     useEffect(() => {
         const search = async () => {
@@ -155,14 +148,13 @@ export default function McpAppComp({
                                         Cursor using the viaSocket MCP Server.
                                     </p>
                                 </div>
-                                <Link
-                                    href={`https://flow.viasocket.com/mcp?state=${defaultUtmSource}`}
-                                    onClick={() => setUtmInCookies({ source: `mcp/${appOneDetails.appslugname}` })}
+
+                                <button
+                                    className="btn btn-accent"
+                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
                                 >
-                                    <button className="btn border-0 bg-accent text-white hover-bg-grey-100-text-black">
-                                        Get Your MCP URL
-                                    </button>
-                                </Link>
+                                    Get Your MCP URL
+                                </button>
                             </div>
                         </div>
                         <div className="w-full lg:w-1/3 py-0 lg:py-12 ">

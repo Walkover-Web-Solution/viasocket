@@ -60,12 +60,3 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
 
     return `${utmData}&${queryString}`;
 };
-
-export const setUtmInCookies = ({ source = 'index' } = {}) => {
-    let utmData = getCookie('utmData');
-
-    if (!utmData) {
-        utmData = JSON.stringify({ utm_source: source });
-        setCookie('utmData', utmData, 1);
-    }
-};
