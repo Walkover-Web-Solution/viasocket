@@ -75,11 +75,11 @@ export default function Navbar({ navData, utm }) {
 
                 <div className="flex">
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                        href={`/pricing`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        href={`https://viasocket.com/discovery`}
                         rel="nofollow"
                     >
-                        Integrations
+                        Explore Apps
                     </Link>
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
@@ -89,14 +89,14 @@ export default function Navbar({ navData, utm }) {
                         Pricing
                     </Link>
                     <button
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                         rel="nofollow"
                     >
                         Login
                     </button>
                     <button
-                        className={`${style.nav_btn} ${borderClass} hidden md:flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
+                        className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
                         onClick={(e) => handleRedirect(e, '/signup?')}
                     >
                         Start Free Trial
