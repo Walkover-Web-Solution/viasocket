@@ -1,15 +1,12 @@
 import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
-import Link from 'next/link';
 import { FiExternalLink } from 'react-icons/fi';
 
 const TemplateCard = ({ template }) => {
     return (
         <div
-            // href={`https://flow.viasocket.com/template/${template?.id}`}
             onClick={(e) => handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)}
             className="group cont justify-between bg-white border transparent-border-black cursor-pointer hover:bg-gray-100 group relative"
-            // style={backgroundColor}
         >
             <div className="flex flex-col gap-1 px-8 py-4">
                 <h1 className="h3">{template?.title}</h1>
