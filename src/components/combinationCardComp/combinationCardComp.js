@@ -1,11 +1,12 @@
+import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiArrowUpRight } from 'react-icons/fi';
 
 export default function CombinationCardComp({ trigger, action, description, link }) {
     return (
-        <Link
-            href={link}
+        <button
+            onClick={(e) => handleRedirect(e, link)}
             className="border transparent-border-black border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group"
         >
             <div className="cont w-full">
@@ -27,6 +28,6 @@ export default function CombinationCardComp({ trigger, action, description, link
             <div className="text-white font-semibold flex gap-1 justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity">
                 Try it <FiArrowUpRight size={20} />
             </div>
-        </Link>
+        </button>
     );
 }

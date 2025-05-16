@@ -30,7 +30,6 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
-import { setUtmSource } from '@/utils/handleUtmSource';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
 import {
@@ -236,13 +235,6 @@ const Index = ({
             }
         }
     };
-
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `/makeflow/trigger/combos` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     return (
         <>

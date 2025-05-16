@@ -8,14 +8,14 @@ import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import VideoGrid from '@/components/videoGrid/videoGrid';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -34,13 +34,6 @@ export default function IntegrationsAppOneComp({
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
-    const utm = pageInfo?.url;
-
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `integrations/${appOneDetails.appslugname}` });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     return (
         <>
@@ -68,11 +61,14 @@ export default function IntegrationsAppOneComp({
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
-                            <Link href={`https://flow.viasocket.com?state=${defaultUtmSource}`} rel="nofollow">
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
-                                    Login to viaSocket <MdOpenInNew />{' '}
-                                </button>
-                            </Link>
+
+                            <button
+                                className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
+                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                rel="nofollow"
+                            >
+                                Login to viaSocket <MdOpenInNew />{' '}
+                            </button>
                         </div>
                         <div className="flex  gap-2 items-center w-full justify-start">
                             <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border transparent-border-black">
@@ -91,15 +87,13 @@ export default function IntegrationsAppOneComp({
                         </div>
                     </div>
                 </div>
-                <Link
-                    target="_blank"
-                    href={`${process.env.NEXT_PUBLIC_FLOW_URL}/connect/${appOneDetails?.rowid}?state=${defaultUtmSource}`}
-                    onClick={() => setUtmInCookies({ source: `integrations/${appOneDetails?.appslugname}` })}
+                <button
+                    onClick={(e) => handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)}
                     className="flex items-center gap-2 container hover:text-blue-600"
                     rel="nofollow"
                 >
                     Connect to {appOneDetails?.name} <MdOpenInNew />
-                </Link>
+                </button>
             </div>
 
             <div className="container cont cont__gap">
@@ -154,12 +148,7 @@ export default function IntegrationsAppOneComp({
                                                     'https://placehold.co/40x40',
                                             }}
                                             description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&state=${defaultUtmSource}`}
-                                            onClick={() =>
-                                                setUtmInCookies({
-                                                    source: `integrations/${appOneDetails?.appslugname}`,
-                                                })
-                                            }
+                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
                                         />
                                     );
                                 })}
@@ -324,9 +313,7 @@ export default function IntegrationsAppOneComp({
                     </div>
                 </div>
 
-                <div className="container">
-                    <Footer footerData={footerData} />
-                </div>
+                <Footer footerData={footerData} />
             </div>
         </>
     );

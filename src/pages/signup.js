@@ -1,11 +1,10 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
-import { setUtmInCookies, setUtmSource } from '@/utils/handleUtmSource';
 import CustomLogin from '@/components/customLogin/CustomLogin';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export const runtime = 'experimental-edge';
 
@@ -29,13 +28,6 @@ export async function getServerSideProps(context) {
 }
 
 const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footerData }) => {
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: `signup` });
-        setDefaultUtmSource(utmData);
-    }, []);
-
     return (
         <>
             <div className="min-h-screen">
@@ -56,14 +48,13 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                                     <h2 className="h2">Sign up for viaSocket</h2>
                                     <p className="text-sm">
                                         create a free account or{' '}
-                                        <Link
+                                        <button
                                             className="active-link text-link"
-                                            href={`${process.env.NEXT_PUBLIC_FLOW_URL}?state=${defaultUtmSource}`}
-                                            onClick={() => setUtmInCookies({ source: `signup` })}
+                                            onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                             rel="nofollow"
                                         >
                                             Log in
-                                        </Link>
+                                        </button>
                                     </p>
                                 </div>
                                 <div className="cont gap-8">

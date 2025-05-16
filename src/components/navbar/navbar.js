@@ -2,9 +2,9 @@ import { MdMenu, MdLogin, MdPersonAdd, MdOutlineKeyboardArrowDown } from 'react-
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
-import { useEffect, useState } from 'react';
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { useState } from 'react';
 import Support from '../chat-widget/support';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function Navbar({ navData, utm }) {
     let shorterData = [];
@@ -35,13 +35,6 @@ export default function Navbar({ navData, utm }) {
     } else {
         backgroundClass = textClass + '!text-xs !capitalize';
     }
-    const [defaultUtmSource, setDefaultUtmSource] = useState('');
-    const source = typeof window !== 'undefined' ? window.location.pathname : '';
-
-    useEffect(() => {
-        const utmData = setUtmSource({ source: source });
-        setDefaultUtmSource(utmData);
-    }, []);
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
@@ -88,7 +81,7 @@ export default function Navbar({ navData, utm }) {
                                 const children = shorterData.filter(
                                     (child) => child.is_child && child.name === option.names
                                 );
-                            
+
                                 return (
                                     <div key={index} className="relative xl:flex hidden">
                                         <div className="dropdown dropdown-hover">
@@ -120,16 +113,20 @@ export default function Navbar({ navData, utm }) {
                                             >
                                                 {children.length > 0 ? (
                                                     children.map((childOption, childIndex) => (
-                                                        <li key={childIndex} className='hover:bg-gray-100 py-2'>
+                                                        <li key={childIndex} className="hover:bg-gray-100 py-2">
                                                             <Link
                                                                 href={childOption.link || '#'}
-                                                                target={childOption.open_in_new_tab ? '_blank' : '_self'}
+                                                                target={
+                                                                    childOption.open_in_new_tab ? '_blank' : '_self'
+                                                                }
                                                                 className="text-black py-1 block !text-xs"
                                                             >
                                                                 {childOption.names}
                                                                 {/* {childOption.description} */}
                                                             </Link>
-                                                            <span className='py-0 text-xs'>{childOption.description}</span>
+                                                            <span className="py-0 text-xs">
+                                                                {childOption.description}
+                                                            </span>
                                                         </li>
                                                     ))
                                                 ) : (
@@ -149,8 +146,8 @@ export default function Navbar({ navData, utm }) {
                                             option.open_in_new_tab
                                                 ? '_blank'
                                                 : option.link?.startsWith('http')
-                                                    ? '_blank'
-                                                    : '_self'
+                                                  ? '_blank'
+                                                  : '_self'
                                         }
                                         href={option.link || '#'}
                                     >
@@ -166,7 +163,6 @@ export default function Navbar({ navData, utm }) {
                             return null;
                         })}
 
-
                     <Link
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                         href={`/pricing`}
@@ -174,19 +170,19 @@ export default function Navbar({ navData, utm }) {
                     >
                         Pricing
                     </Link>
-                    <Link
+                    <button
                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black flex px-4 sm:min-w-[120px] xl:min-w-[130px] border transparent-border-black border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                        href={`https://flow.viasocket.com?state=${defaultUtmSource}`}
+                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                         rel="nofollow"
                     >
                         Login
-                    </Link>
-                    <Link
+                    </button>
+                    <button
                         className={`${style.nav_btn} ${borderClass} hidden md:flex text-white text-nowrap px-5 border transparent-border-black border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
-                        href={`/signup?state=${defaultUtmSource}`}
+                        onClick={(e) => handleRedirect(e, '/signup?')}
                     >
                         Start Free Trial
-                    </Link>
+                    </button>
                     <button
                         onClick={handleClick}
                         className={`${borderClass} hover-bg-grey-100-text-black items-center bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 transparent-border-black`}
