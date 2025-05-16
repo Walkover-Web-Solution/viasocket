@@ -405,6 +405,34 @@ export default function pricing({
     //     </div>
     // </>
     // )
+
+    const pricingPlans = [
+        {
+            name: 'Free',
+            price: '$0/month',
+            subheading: 'For builders who want to explore, experiment, and automate—at no cost, forever',
+            features: ['Perfect for individuals and early-stage users.'],
+            buttonTag: 'Start Free',
+            buttonLink: '/signup?utm_source=pricng/free',
+        },
+        {
+            name: 'Pro',
+            price: '$200/month',
+            subheading: 'Includes $200 in credits to get your workflows built by viaSocket automation experts',
+            features: ['Ideal for teams that want expert guidance and fast setup.'],
+            buttonTag: 'Buy Now',
+            buttonLink: '/signup?utm_source=pricing/pro',
+        },
+        {
+            name: 'Enterprise',
+            price: 'Custom',
+            subheading: 'Tailored onboarding, support, and features for larger teams and mission-critical workflows',
+            features: ['Best for organizations with complex or large-scale automation needs.'],
+            buttonTag: 'Talk to Sales',
+            buttonLink: '/signup?utm_source=pricing/enterprise',
+        },
+    ];
+
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
@@ -430,6 +458,37 @@ export default function pricing({
                     </Link>
                 </div>
 
+                <div className="cont gap-4">
+                    <h2 className="h2">Pricing Plans</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3">
+                        {pricingPlans.map((plan, index) => (
+                            <div key={index} className="bg-white cont justify-between h-full">
+                                <div
+                                    className={`cont gap-4 p-12 border transparent-border-black h-full flex flex-col ${index == 2 ? '' : ' border-r-0'}`}
+                                >
+                                    <div className="cont gap-1">
+                                        <h2 className="h2">{plan.name}</h2>
+                                        <p className="h3 text-accent font-semibold">{plan.price}</p>
+                                    </div>
+                                    <div className="cont gap-1 flex-grow">
+                                        <p className="text-base font-semibold leading-none">{plan.subheading}</p>
+                                        {/* <ul className="">
+                                            {plan.features.map((feature, idx) => (
+                                                <li key={idx} className="flex items-center">
+                                                    <span className="leading-none">{feature}</span>
+                                                </li>
+                                            ))}
+                                        </ul> */}
+                                    </div>
+                                    <Link href={plan.buttonLink}>
+                                        <button className="btn btn-accent">{plan.buttonTag}</button>
+                                    </Link>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
                 <div className="cont gap-8 border transparent-border-black p-12 bg-white">
                     <div className="cont gap-1">
                         <h2 className="h2">All features. Zero commitment.</h2>
@@ -452,33 +511,6 @@ export default function pricing({
                             </Link>
                         </div>
                     </div>
-                </div>
-
-                <div className="bg-black text-white p-12 cont gap-8 ">
-                    <div className="cont gap-1">
-                        <h2 className="h2">
-                            viaSocket Pro Plan - <span className="text-accent font-bold">$200</span>
-                        </h2>
-                        {/* <h3 className="sub__h1">Get $200 worth of workflow automation built by our experts</h3> */}
-                        <p className="sub__h2 text-gray-400 max-w-[800px]">
-                            With the viaSocket Pro Plan, you pay $200 and receive an equal amount in credits to use
-                            toward having your workflows designed and built by our automation specialists.
-                        </p>
-                    </div>
-                    <div className="cont gap-2">
-                        <p className="h3">What's Included:</p>
-                        <ul className="h6 text-left list-disc list-inside text-gray-400">
-                            <li>$200 in credits to use for custom workflow development</li>
-                            <li>Direct access to viaSocket automation experts</li>
-                            <li>End-to-end implementation based on your business needs</li>
-                            <li>Ideal for teams that want to save time and get results without the technical lift</li>
-                        </ul>
-                    </div>
-                    <Link href={`/signup?utm_source=pricing/proplan`} className="w-fit">
-                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
-                            Buy Pro Plan
-                        </button>
-                    </Link>
                 </div>
 
                 <div className="cont lg:gap-20 md:gap-16 gap-8 pb-4">
