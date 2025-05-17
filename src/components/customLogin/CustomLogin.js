@@ -1,59 +1,70 @@
 import { setUtmSource } from '@/utils/handleUtmSource';
-import { usePathname } from 'next/navigation';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 
 const CustomLogin = ({ redirect_to }) => {
-    const pathname = usePathname();
-    useLayoutEffect(() => {
-        const configuration = {
+    const [isLoading, setIsLoading] = useState(true);
+
+    const getConfiguration = () => {
+        const config = {
             referenceId: process.env.NEXT_PUBLIC_REFERENCE_ID,
-            success: (data) => {},
+            success: () => setIsLoading(false),
             failure: (error) => {
                 console.error('failure reason', error);
             },
+            state: setUtmSource(),
         };
+
         if (redirect_to) {
-            configuration.addInfo = {};
-            configuration.addInfo = {
-                redirect_path: redirect_to,
-            };
+            config.addInfo = { redirect_path: redirect_to };
         }
 
-        const utm_source = setUtmSource();
-        configuration.state = utm_source;
+        return config;
+    };
 
-        const runVerification = () => {
-            if (pathname === '/signup') {
-                window.__init_verification_ran__ = false;
-            }
+    const runVerification = (isMounted) => {
+        try {
             if (!window.__init_verification_ran__) {
-                window.initVerification?.(configuration);
+                window.initVerification?.(getConfiguration());
                 window.__init_verification_ran__ = true;
             }
-        };
+        } finally {
+            if (isMounted) setIsLoading(false);
+        }
+    };
+
+    const loadScript = (isMounted) => {
+        const script = document.createElement('script');
+        script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
+        script.onload = () => runVerification(isMounted);
+        document.body.appendChild(script);
+        window.__custom_login_script_loaded__ = true;
+    };
+
+    useLayoutEffect(() => {
+        let isMounted = true;
 
         if (typeof window.initVerification === 'function') {
-            runVerification();
+            runVerification(isMounted);
         } else if (!window.__custom_login_script_loaded__) {
-            const script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
-
-            script.addEventListener('load', runVerification);
-
-            document.body.appendChild(script);
-            window.__custom_login_script_loaded__ = true;
-
-            return () => {
-                script.removeEventListener('load', runVerification);
-            };
+            loadScript(isMounted);
         } else {
-            runVerification();
+            runVerification(isMounted);
         }
-    }, []);
+
+        return () => {
+            isMounted = false;
+        };
+    }, [redirect_to]);
 
     return (
-        <div className="min-h-[222px]">
+        <div className="min-h-[222px] relative">
+            {isLoading && (
+                <div className="absolute inset-0 rounded-lg">
+                    <div className="h-10 bg-gray-300 skeleton rounded mb-2 w-[230px]"></div>
+                    <div className="h-10 bg-gray-300 skeleton rounded mb-2 w-[230px]"></div>
+                    <div className="h-10 bg-gray-300 skeleton rounded mb-2 w-[230px]"></div>
+                </div>
+            )}
             <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2" />
         </div>
     );
