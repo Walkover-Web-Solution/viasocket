@@ -145,20 +145,20 @@ export default function Support({ open, onClose }) {
                         </section>
                     </div>
 
-                    <div className="p-5 space-y-4 border-t">
-                        <h3 className="text-xl font-semibold px-2 mb-2">We'd Love to Hear From You!</h3>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    <div className="space-y-4">
+                        <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd Love to Hear From You!</h3>
+                        <ul className="grid grid-cols-1 md:grid-cols-2 border border-b-0">
                             {ContactListArray.map((item, index) => (
                                 <li
                                     key={index}
-                                    className="border rounded hover:bg-gray-100 transition"
+                                    className="hover:bg-gray-100 transition border-b border-r"
                                 >
                                     {item.href ? (
                                         <a
                                             href={item.href}
                                             target={item.target}
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 p-2"
+                                            className="flex items-center gap-2 py-2 px-5"
                                         >
                                             {item.icon}
                                             <span className="text-sm">{item.text}</span>
@@ -166,7 +166,7 @@ export default function Support({ open, onClose }) {
                                     ) : (
                                         <button
                                             onClick={item.onClick}
-                                            className="flex items-center gap-2 p-2 w-full text-left"
+                                            className="flex items-center gap-2 py-2 px-5 w-full text-left"
                                         >
                                             {item.icon}
                                             <span className="text-sm">{item.text}</span>
