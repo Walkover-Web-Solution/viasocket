@@ -99,6 +99,10 @@ export default function Support({ open, onClose }) {
         { href: 'https://viasocket.com/faq/partners/automation-experts', title: 'Become a Partner', subtitle: 'Help your customers to automate anything' },
     ];
 
+    const Pricing = [
+        { href: '/pricing', title: 'Plans & Pricing', subtitle: 'AI Automation plans and pricing' },
+    ];
+
     return (
         <div className={`fixed inset-0 z-50 pointer-events-${open ? 'auto' : 'none'}`}>
             <div
@@ -136,7 +140,8 @@ export default function Support({ open, onClose }) {
                         </section>
 
                         <section className="border-b p-5">
-                            <h3 className="text-xl font-semibold px-2 mb-2"><a href="/pricing">Pricing</a></h3>
+                            <h3 className="text-xl font-semibold px-2 mb-2">Pricing</h3>
+                            <NavList items={Pricing} />
                         </section>
                     </div>
 
