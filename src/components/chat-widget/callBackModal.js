@@ -23,13 +23,18 @@ function CallBackModal() {
             return;
         }
 
+        if (!email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+
         const payload = {
             phone: phone.trim(),
             email: email.trim(),
             query: query.trim(),
         };
 
-        setQuery(''); 
+        setQuery('');
 
         try {
             const response = await fetch('https://flow.sokt.io/func/scriOw4adAVk', {
@@ -42,7 +47,7 @@ function CallBackModal() {
 
             if (response.ok) {
                 alert('Request submitted successfully!');
-                document.getElementById('callback_modal').close(); 
+                document.getElementById('callback_modal').close();
             } else {
                 console.error('Failed to submit response');
                 alert('There was an error submitting your request. Please try again.');
@@ -70,14 +75,19 @@ function CallBackModal() {
                                     type="email"
                                     className="input input-bordered w-full focus:outline-none form-control"
                                     value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value.trim();
+                                        if (value === '' || value.match(/^[a-zA-Z0-9._-]+@?[a-zA-Z0-9.-]*\.?[a-zA-Z]*$/)) {
+                                            setEmail(value);
+                                        }
+                                    }}
                                     onBlur={() => setIsEditingEmail(false)}
                                     placeholder="Enter your email here"
                                 />
                             ) : (
                                 <div className="d-flex align-items-center">
-                                    <span className="me-2">{email || 'Enter your email here'}</span>
-                                    <button type="button" className="btn btn-link p-0" onClick={handleEditEmailClick}>
+                                    <span className="me-2">{email || 'Enter your email here*'}</span>
+                                    <button type="button" className="btn btn-link p-0 outline-none" onClick={handleEditEmailClick}>
                                         <MdEdit />
                                     </button>
                                 </div>
@@ -97,7 +107,7 @@ function CallBackModal() {
                             ) : (
                                 <div className="d-flex align-items-center">
                                     <span className="me-2">{phone || 'Enter mobile number here*'}</span>
-                                    <button type="button" className="btn btn-link p-0" onClick={handleEditMobileClick}>
+                                    <button type="button" className="btn btn-link p-0 outline-none" onClick={handleEditMobileClick}>
                                         <MdEdit />
                                     </button>
                                 </div>
@@ -117,14 +127,14 @@ function CallBackModal() {
 
                     <div className="flex gap-3">
                         <button
-                            className="btn btn-md btn-accent"
+                            className="btn btn-accent min-w-[120px] xl:min-w-[130px]"
                             onClick={() => document.getElementById('callback_modal').close()}
                         >
                             Close
                         </button>
                         <button
-                            disabled={phone.trim().length < 10}
-                            className="btn btn-primary btn-outline"
+                            disabled={phone.trim().length < 10 || !email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)}
+                            className="btn btn-primary min-w-[120px] xl:min-w-[130px]"
                             onClick={handleSubmit}
                         >
                             Submit
