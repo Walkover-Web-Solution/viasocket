@@ -20,7 +20,6 @@ function NavList({ items }) {
 }
 
 export default function Support({ open, onClose, navData }) {
-    console.log(navData);
     const panelRef = useRef();
 
     useEffect(() => {

@@ -97,11 +97,10 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                             )}
                         </>
                     ) : (
-                        <div className="flex justify-center w-full py-12">
-                            <div className="text-center">
-                                <h3 className="text-xl font-medium mb-2">No templates found</h3>
-                                <p className="text-gray-500">Try adjusting your search or filters</p>
-                            </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {[...Array(TEMPLATES_PER_PAGE)].map((_, index) => (
+                                <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
+                            ))}
                         </div>
                     )}
                 </div>
