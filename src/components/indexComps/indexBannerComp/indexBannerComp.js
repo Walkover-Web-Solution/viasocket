@@ -23,8 +23,8 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                             </button>
                             <div className="flex gap-4 flex-wrap">
                                 {signupFeatures.map((point, index) => (
-                                    <div key={index} className="flex gap-0.5 h6 items-center">
-                                        <p className="text-accent">✔ </p>
+                                    <div key={index} className="flex gap-1 h6 items-center">
+                                        <p className="text-accent">✔</p>
                                         <p className="text-nowrap">{point}</p>
                                     </div>
                                 ))}

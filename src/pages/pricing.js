@@ -1,69 +1,17 @@
-
-// ==============================================
 import FAQSection from '@/components/faqSection/faqSection';
-import { useEffect, useState } from 'react';
 import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getNavData, getPricingBetterChoice } from '@/utils/getData';
-// import { getPricingData } from '@/utils/getPricingData';
-import {
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    METADATA_FIELDS,
-    NAVIGATION_FIELDS,
-    PRICINGBETTERCHOICE_FIELDS,
-} from '@/const/fields';
-import getCountries from '@/utils/getCountries';
+import { getFaqData, getFooterData, getMetaData, getNavData, getPricingFeatureData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
-import { CustomAutocomplete } from '@/components/CustomAutocomplete/CustomAutocomplete';
-import { getCountryName } from '@/utils/getCountryName';
 import Link from 'next/link';
-import getPricingData from '@/utils/getPricingData';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ navData, footerData, faqData, metaData, countries, blogData, betterChoiceData }) {
-    const [isLoading, setIsLoading] = useState(false);
-    const [pricingData, setPricingData] = useState({
-        isDevelopment: false,
-        currencySymbol: '$',
-        starterPlan: '30',
-        teamPlan: '60',
-    });
-
-    useEffect(() => {
-        const fetchInitialData = async () => {
-            setIsLoading(true);
-            try {
-                const countryResponse = await getCountryName();
-                const fullCountryDetails = countries.find(
-                    (country) => country?.country?.toLowerCase() === countryResponse?.toLowerCase()
-                );
-            } catch (error) {
-                console.error('Error initializing country data:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchInitialData();
-    }, []);
-
-    const getPlanPrice = (planType, isYearly, applyDiscount = false) => {
-        let basePrice = planType === 'starter' ? pricingData.starterPlan : pricingData.teamPlan;
-        let numericPrice = parseFloat(basePrice);
-
-        if (applyDiscount) {
-            numericPrice = numericPrice * 0.1;
-        }
-        const finalPrice = isYearly ? numericPrice * 10 : numericPrice;
-
-        return Math.floor(finalPrice).toString();
-    };
-
+export default function pricing({ navData, footerData, faqData, metaData, blogData, features }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
@@ -77,77 +25,73 @@ export default function pricing({ navData, footerData, faqData, metaData, countr
                             Build Powerful Automation for <span className="text-accent">Free</span>
                         </h1>
                         <p className="sub__h1 ">
-                            Get full access to all the features you need to build and run workflows for free under Fair Usage Policy.
+                            Get full access to all the features you need to build and run workflows for free under Fair
+                            Usage Policy.
                         </p>
                     </div>
                 </div>
-                <div class="px-4 pb-8 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div class="border transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 class="text-xl font-semibold">Free</h3>
-                        <strong class="text-3xl">$0</strong>
-                        <p class="text-gray-600">For builders who want to explore, experiment, and automate—at no cost.</p>
-                        <Link href='https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/'>
-                            <button className="btn btn-primary">Get Started</button>
+
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b transparent-border-black bg-white p-12 flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold">Free</h3>
+                        <strong className="text-3xl">$0</strong>
+                        <p className="text-gray-600">
+                            For builders who want to explore, experiment, and automate—at no cost.
+                        </p>
+                        <Link href="/singup?utm_source=pricing/free">
+                            <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div class="border transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 class="text-xl font-semibold">Premium</h3>
-                        <strong class="text-3xl">$200</strong>
-                        <p class="text-gray-600">Includes $200 in credits to get your workflows built by viaSocket automation experts.</p>
-                        <Link href='https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/'>
-                            <button className="btn btn-primary">Get Started</button>
+                    <div className="border border-b-0 md:border-b lg:border-r-0 transparent-border-black bg-white p-12 flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold">Premium</h3>
+                        <strong className="text-3xl">$200</strong>
+                        <p className="text-gray-600">
+                            Includes $200 in credits to get your workflows built by viaSocket automation experts.
+                        </p>
+                        <Link href="/singup?utm_source=pricing/premium">
+                            <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div class="border transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 class="text-xl font-semibold">Enterprise</h3>
-                        <strong class="text-3xl">Contact for pricing</strong>
-                        <p class="text-gray-600">Tailored onboarding, support, and features for larger teams and mission-critical workflows.</p>
-                        <Link href='https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/'>
-                            <button className="btn btn-primary">Contact sales</button>
+                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-4">
+                        <h3 className="text-xl font-semibold">Enterprise</h3>
+                        <strong className="text-3xl">Contact for pricing</strong>
+                        <p className="text-gray-600">
+                            Tailored onboarding, support, and features for larger teams and mission-critical workflows.
+                        </p>
+                        <Link href="/signup?utm_source=pricing/enterprise">
+                            <button className="btn btn-accent">Contact sales</button>
                         </Link>
                     </div>
                 </div>
 
-                <div className="container bg-white border transparent-border-black p-12">
-                    <h2 className='h2 mb-12'>Explore All Features and Start Automating your Tasks for Free</h2>
-                    <table className='border transparent-border-black w-full mb-8'>
-                        <tr className='border transparent-border-black'>
-                            <td className='p-3 border transparent-border-black'>Connect to 1500+ Apps
-                            </td>
-                            <td className='p-3 border transparent-border-black'>Conditional Workflows / Multiple Paths</td>
-                            <td className='p-3 border transparent-border-black'>Memory</td>
-                        </tr>
-                        <tr className='border transparent-border-black'>
-                            <td className='p-3 border transparent-border-black'>Webhooks</td>
-                            <td className='p-3 border transparent-border-black'>Custom JS Functions</td>
-                            <td className='p-3 border transparent-border-black'>Add Delay</td>
-                        </tr>
-                        <tr className='border transparent-border-black'>
-                            <td className='p-3 border transparent-border-black'>Build Workflows with AI</td>
-                            <td className='p-3 border transparent-border-black'>AI Apps</td>
-                            <td className='p-3 border transparent-border-black'>Scheduled Workflows</td>
-                        </tr>
-                        <tr className='border transparent-border-black'>
-                            <td className='p-3 border transparent-border-black'>Custom API</td>
-                            <td className='p-3 border transparent-border-black'>Human Intervention</td>
-                            <td className='p-3 border transparent-border-black'>Unlimited Workflows</td>
-                        </tr>
-                    </table>
-                    <Link href={'/features'} className=''>
-                        <button className='btn btn-primary'>Explore Features</button>
-                    </Link>
+                <div className="cont gap-8 border transparent-border-black p-12 bg-white">
+                    <h2 className="h2">Explore All Features and Start Automating your Tasks for Free</h2>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                        {features.map((feature, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                                <div className="text-lg text-accent">✔</div>
+                                <p className="text-lg leading-tight">{feature.featurename}</p>
+                            </div>
+                        ))}
+                        <div className="flex items-start gap-1">
+                            <p className="text-accent">+</p>
+                            <Link href="/features" className="text-lg text-accent hover:underline w-fit">
+                                See all features
+                            </Link>
+                        </div>
+                    </div>
                 </div>
 
-                <div className='container bg-white  border transparent-border-black p-12 flex flex-col gap-8'>
-                    <h2 className='h2'>Upgrade from Free to Premium and Get Expert Assistance
-                    </h2>
-                    <p className='sub__h1'>
-                        With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use toward having your workflows designed and built by our automation specialists.
+                <div className="container bg-white  border transparent-border-black p-12 flex flex-col gap-8">
+                    <h2 className="h2">Upgrade from Free to Premium and Get Expert Assistance</h2>
+                    <p className="sub__h1">
+                        With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use
+                        toward having your workflows designed and built by our automation specialists.
                     </p>
-                    <Link href='https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/'>
-                        <button className="btn btn-primary">Upgrade to Premium</button>
+                    <Link href="https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/">
+                        <button className="btn btn-accent">Upgrade to Premium</button>
                     </Link>
-
                 </div>
 
                 <div className="cont lg:gap-36 md:gap-24 gap-12">
@@ -167,20 +111,17 @@ export async function getServerSideProps() {
     const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`);
-    const countries = await getCountries();
     const blogTags = 'pricing';
     const blogData = await getBlogData({ tag1: blogTags });
-    const betterChoiceData = await getPricingBetterChoice(PRICINGBETTERCHOICE_FIELDS);
+    const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
-            countries: countries || [],
-            blogTags: blogTags || [],
             blogData: blogData || [],
-            betterChoiceData: betterChoiceData || [],
+            features: features || [],
         },
     };
 }
