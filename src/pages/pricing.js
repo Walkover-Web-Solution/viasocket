@@ -70,7 +70,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {features.map((feature, index) => (
                             <div key={index} className="flex items-center gap-2">
-                                <div className="text-lg text-accent">✔</div>
+                                <div className="h-3 w-3 bg-accent" />
                                 <p className="text-lg leading-tight">{feature.featurename}</p>
                             </div>
                         ))}
