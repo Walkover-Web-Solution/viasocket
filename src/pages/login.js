@@ -96,7 +96,6 @@ const Login = ({ features, metaData, pathArray, redirect_to, navData, footerData
                         </Link>
 
                         <div className="text-2xl font-bold">Login</div>
-                        <div id="googleLogin" className="loginBtn_google" />
                         <CustomLogin redirect_to={redirect_to} />
                         <div className="flex">
                             <span className="text-sm">Create a new Account,</span>

@@ -82,12 +82,6 @@
     box-sizing: border-box;
 }
 
-.loginBtn_google {
-    // button {
-    //     margin: px !important;
-    // }
-}
-
 .int-card-des:first-letter {
     text-transform: capitalize;
 }
@@ -236,12 +230,11 @@
 }
 
 /** Custom Login Button */
-.loginBtn_google{
+.loginBtn_google {
     button {
         margin: 0px !important;
     }
 }
-
 
 /**Using viasocket footer responsive container */
 @media screen and (width >=1050px) {
