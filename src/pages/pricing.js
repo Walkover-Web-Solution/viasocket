@@ -32,32 +32,39 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border border-b-0 md:border-r-0 lg:border-b transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 className="text-xl font-semibold">Free</h3>
-                        <strong className="text-3xl">$0</strong>
-                        <p className="text-gray-600">
-                            For builders who want to explore, experiment, and automate—at no cost.
-                        </p>
-                        <Link href="/singup?utm_source=pricing/free">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b transparent-border-black bg-white p-12 flex flex-col gap-2">
+                        <h3 className="h2">Free</h3>
+                        <div className="cont gap-1">
+                            <p className="h3 text-accent">$0</p>
+                            <p className="h6 text-gray-600">
+                                For builders who want to explore, experiment, and automate-at no cost.
+                            </p>
+                        </div>
+                        <Link href="/signup?utm_source=pricing/free">
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border border-b-0 md:border-b lg:border-r-0 transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 className="text-xl font-semibold">Premium</h3>
-                        <strong className="text-3xl">$200</strong>
-                        <p className="text-gray-600">
-                            Includes $200 in credits to get your workflows built by viaSocket automation experts.
-                        </p>
-                        <Link href="/singup?utm_source=pricing/premium">
+                    <div className="border border-b-0 md:border-b lg:border-r-0 transparent-border-black bg-white p-12 flex flex-col gap-2">
+                        <h3 className="h2">Premium</h3>
+                        <div className="cont gap-1">
+                            <p className="h3 text-accent">$200</p>
+                            <p className="h6 text-gray-600">
+                                Includes $200 in credits to get your workflows built by viaSocket automation experts.
+                            </p>
+                        </div>
+                        <Link href="/signup?utm_source=pricing/premium">
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-4">
-                        <h3 className="text-xl font-semibold">Enterprise</h3>
-                        <strong className="text-3xl">Contact for pricing</strong>
-                        <p className="text-gray-600">
-                            Tailored onboarding, support, and features for larger teams and mission-critical workflows.
-                        </p>
+                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-2">
+                        <h3 className="h2">Enterprise</h3>
+                        <div className="cont gap-1">
+                            <p className="h3 text-accent">Contact for pricing</p>
+                            <p className="h6 text-gray-600">
+                                Tailored onboarding, support, and features for larger teams and mission-critical
+                                workflows.
+                            </p>
+                        </div>
                         <Link href="/signup?utm_source=pricing/enterprise">
                             <button className="btn btn-accent">Contact sales</button>
                         </Link>
