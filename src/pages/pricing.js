@@ -30,8 +30,9 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         </p>
                     </div>
                 </div>
-                <div className="px-4 pb-8 grid gap-8 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-4">
+
+                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b transparent-border-black bg-white p-12 flex flex-col gap-4">
                         <h3 className="text-xl font-semibold">Free</h3>
                         <strong className="text-3xl">$0</strong>
                         <p className="text-gray-600">
@@ -41,7 +42,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-4">
+                    <div className="border border-b-0 md:border-b lg:border-r-0 transparent-border-black bg-white p-12 flex flex-col gap-4">
                         <h3 className="text-xl font-semibold">Premium</h3>
                         <strong className="text-3xl">$200</strong>
                         <p className="text-gray-600">
@@ -69,8 +70,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {features.map((feature, index) => (
                             <div key={index} className="flex items-center gap-2">
-                                {/* <p className="text-accent text-lg leading-none translate-y-[2px]">■</p> */}
-                                <div className="h-3 w-3 bg-accent" />
+                                <div className="text-lg text-accent">✔</div>
                                 <p className="text-lg leading-tight">{feature.featurename}</p>
                             </div>
                         ))}
