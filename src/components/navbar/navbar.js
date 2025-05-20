@@ -1,4 +1,4 @@
-import { MdMenu, MdLogin, MdPersonAdd, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdMenu } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
@@ -110,7 +110,7 @@ export default function Navbar({ navData, utm }) {
                     </button>
                 </div>
             </div>
-            <Support open={open} onClose={handleClose} />
+            <Support open={open} onClose={handleClose} navData={navData} />
         </>
     );
 }
