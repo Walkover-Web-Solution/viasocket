@@ -1,21 +1,9 @@
 import React, { useState } from 'react';
-import { MdEdit } from 'react-icons/md';
 
 function CallBackModal() {
     const [query, setQuery] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-
-    const [isEditingEmail, setIsEditingEmail] = useState(false);
-    const [isEditingMobile, setIsEditingMobile] = useState(false);
-
-    const handleEditEmailClick = () => {
-        setIsEditingEmail(true);
-    };
-
-    const handleEditMobileClick = () => {
-        setIsEditingMobile(true);
-    };
 
     const handleSubmit = async () => {
         if (phone.trim().length < 10) {
@@ -58,6 +46,9 @@ function CallBackModal() {
         }
     };
 
+    const isEmailValid = email === '' || email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/);
+    const isPhoneValid = phone === '' || phone.trim().length === 10;
+
     return (
         <dialog id="callback_modal" className="modal rounded-none">
             <div className="modal-box">
@@ -68,58 +59,43 @@ function CallBackModal() {
                             minutes
                         </p>
                     </div>
-                    <div className="flex gap-3 flex-col">
+                    <div className="flex gap-6 flex-col">
                         <div>
-                            {isEditingEmail ? (
-                                <input
-                                    type="email"
-                                    className="input input-bordered w-full focus:outline-none form-control"
-                                    value={email}
-                                    onChange={(e) => {
-                                        const value = e.target.value.trim();
-                                        if (value === '' || value.match(/^[a-zA-Z0-9._-]+@?[a-zA-Z0-9.-]*\.?[a-zA-Z]*$/)) {
-                                            setEmail(value);
-                                        }
-                                    }}
-                                    onBlur={() => setIsEditingEmail(false)}
-                                    placeholder="Enter your email here"
-                                />
-                            ) : (
-                                <div className="d-flex align-items-center">
-                                    <span className="me-2">{email || 'Enter your email here*'}</span>
-                                    <button type="button" className="btn btn-link p-0 outline-none" onClick={handleEditEmailClick}>
-                                        <MdEdit />
-                                    </button>
-                                </div>
-                            )}
+                            <label className="block text-sm mb-1">Enter your email here*</label>
+                            <input
+                                type="email"
+                                className={`input input-bordered w-full focus:outline-none form-control ${!isEmailValid ? 'border-red-500' : ''}`}
+                                value={email}
+                                onChange={(e) => {
+                                    const value = e.target.value.trim();
+                                    if (value === '' || value.match(/^[a-zA-Z0-9._-]+@?[a-zA-Z0-9.-]*\.?[a-zA-Z]*$/)) {
+                                        setEmail(value);
+                                    }
+                                }}
+                                placeholder='Example: example@email.com'
+                            />
+                            {!isEmailValid && <small className="text-red-500">Please enter a valid email address</small>}
                         </div>
 
                         <div>
-                            {isEditingMobile ? (
-                                <input
-                                    type="text"
-                                    className="input input-bordered w-full focus:outline-none form-control"
-                                    value={phone}
-                                    onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                                    onBlur={() => setIsEditingMobile(false)}
-                                    placeholder="Enter mobile number here"
-                                />
-                            ) : (
-                                <div className="d-flex align-items-center">
-                                    <span className="me-2">{phone || 'Enter mobile number here*'}</span>
-                                    <button type="button" className="btn btn-link p-0 outline-none" onClick={handleEditMobileClick}>
-                                        <MdEdit />
-                                    </button>
-                                </div>
-                            )}
+                            <label className="block text-sm mb-1">Enter mobile number here*</label>
+                            <input
+                                type="text"
+                                className={`input input-bordered w-full focus:outline-none form-control ${!isPhoneValid ? 'border-red-500' : ''}`}
+                                value={phone}
+                                onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                                placeholder='Example: 9876543210'
+                            />
+                            {!isPhoneValid && phone !== '' && <small className="text-red-500">Please enter a valid 10-digit mobile number</small>}
                         </div>
 
                         <div className="mb-3">
+                            <label className="block text-sm mb-1">Specify your query here (optional)</label>
                             <textarea
-                                className="textarea textarea-bordered focus:outline-none min-h-[100px] w-full form-control"
+                                className="textarea textarea-bordered transparent-border-black focus:outline-none min-h-[100px] w-full form-control"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
-                                placeholder="Specify your query here (optional)"
+                                placeholder="Specify your query here"
                                 rows={4}
                             />
                         </div>
