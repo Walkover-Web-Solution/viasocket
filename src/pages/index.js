@@ -1,14 +1,11 @@
-import { useEffect, useRef, useState, useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import { MdOutlineAutoAwesome } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import Industries from '@/assets/data/categories.json';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import searchApps from '@/utils/searchApps';
 import {
     getCaseStudyData,
     getFaqData,
@@ -28,7 +25,6 @@ import {
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
 import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
-import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import Navbar from '@/components/navbar/navbar';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
@@ -50,17 +46,6 @@ import { FiExternalLink } from 'react-icons/fi';
 
 export const runtime = 'experimental-edge';
 
-const useDebounce = (value, delay) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-
-    useEffect(() => {
-        const handler = setTimeout(() => setDebouncedValue(value), delay);
-        return () => clearTimeout(handler);
-    }, [value, delay]);
-
-    return debouncedValue;
-};
-
 const Index = ({
     testimonials,
     caseStudies,
@@ -68,7 +53,6 @@ const Index = ({
     faqData,
     navData,
     footerData,
-    initialIndus,
     redirect_to,
     utm_source,
     blogData,
@@ -78,165 +62,6 @@ const Index = ({
     signupFeatures,
     securityGridData,
 }) => {
-    const formattedIndustries = useMemo(() => Industries.industries.map((name, id) => ({ name, id: id + 1 })), []);
-    const formattedDepartments = useMemo(() => Industries.departments.map((name, id) => ({ name, id: id + 1 })), []);
-
-    const [indusSearchTerm, setIndusSearchTerm] = useState('');
-    const [selectedIndus, setSelectedIndus] = useState(initialIndus);
-    const [showIndusDropdown, setShowIndusDropdown] = useState(false);
-    const [deptSearchTerm, setDeptSearchTerm] = useState('');
-    const [selectedDept, setSelectedDept] = useState('');
-    const [showDeptDropdown, setShowDeptDropdown] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-
-    const [selectedApps, setSelectedApps] = useState([]);
-    const [searchData, setSearchData] = useState([]);
-    const [appLoading, setAppLoading] = useState(true);
-    const [searchLoading, setSearchLoading] = useState(false);
-    const [combinationLoading, setCombinationLoading] = useState(true);
-    const debounceValue = useDebounce(searchTerm, 300);
-
-    const [renderCombos, setRenderCombos] = useState();
-    const [showInput, setShowInput] = useState(false);
-    const hasRunFirstEffect = useRef(false);
-    const inputRef = useRef(null);
-    const fetchAppsData = useCallback(async () => await fetchApps(), []);
-    const filterSelectedApps = useCallback(
-        (apps) => {
-            if (apps?.length > 0) {
-                return apps?.filter(
-                    (app) => !selectedApps.some((selectedApp) => selectedApp?.appslugname === app?.appslugname)
-                );
-            } else {
-                return [];
-            }
-        },
-        [selectedApps]
-    );
-
-    useEffect(() => {
-        const fetchInitialApps = async () => {
-            setSearchLoading(true);
-            try {
-                const apps = await fetchAppsData();
-                setSearchData(filterSelectedApps(apps));
-            } catch (error) {
-                setAppLoading(false);
-                console.error(error);
-            } finally {
-                setAppLoading(false);
-                setSearchLoading(false);
-            }
-        };
-
-        fetchInitialApps();
-    }, [fetchAppsData, filterSelectedApps]);
-
-    useEffect(() => {
-        if (!hasRunFirstEffect.current && searchData.length > 0) {
-            const initialApps = searchData.slice(0, 3);
-            initialApps.forEach((app) => handleSelectApp(app.appslugname));
-            hasRunFirstEffect.current = true;
-        }
-    }, [searchData]);
-
-    useEffect(() => {
-        if (hasRunFirstEffect.current && selectedApps.length === 3) {
-            handleGenerate();
-        }
-    }, [selectedApps]);
-
-    const handleSelectApp = (appName) => {
-        const app = searchData.find((app) => app.appslugname === appName);
-        if (app) {
-            setSearchData((prev) => prev.filter((item) => item?.appslugname !== appName));
-            setSelectedApps((prev) => [...prev, app]);
-        }
-        setSearchTerm('');
-    };
-
-    useEffect(() => {
-        filterApps();
-    }, [debounceValue]);
-
-    const filterApps = async () => {
-        if (debounceValue) {
-            setSearchLoading(true);
-            try {
-                const result = await searchApps(debounceValue);
-                setSearchData(filterSelectedApps(result));
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setSearchLoading(false);
-            }
-        } else {
-            const apps = await fetchAppsData();
-            setSearchData(filterSelectedApps(apps));
-        }
-    };
-
-    const removeAppFromArray = (indexToRemove) => {
-        if (indexToRemove >= 0 && indexToRemove < selectedApps.length) {
-            const appToRemove = selectedApps[indexToRemove];
-            setSelectedApps((prev) => {
-                const updatedSelectedApps = prev.filter((_, index) => index !== indexToRemove);
-                if (updatedSelectedApps.length > 0 || selectedApps.length === 1) {
-                    setSearchData((prevSearchData) => [appToRemove, ...filterSelectedApps(prevSearchData)]);
-                }
-                return updatedSelectedApps;
-            });
-        }
-    };
-
-    const handleGenerate = async () => {
-        setCombinationLoading(true);
-        const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
-        try {
-            const combos = await fetchCombos(selectedAppSlugs, selectedIndus, selectedDept);
-            setRenderCombos(combos?.data);
-        } catch (error) {
-            console.error('Error fetching combos:', error);
-        } finally {
-            setCombinationLoading(false);
-        }
-    };
-
-    const handleSelectIndus = (val) => {
-        setIndusSearchTerm('');
-        setSelectedIndus(val);
-        setShowIndusDropdown(false);
-    };
-
-    const filterIndustries = (searchTerm) => {
-        return formattedIndustries.filter((industry) => industry.name.toLowerCase().includes(searchTerm.toLowerCase()));
-    };
-
-    const handleSelectDept = (val) => {
-        setDeptSearchTerm('');
-        setSelectedDept(val);
-        setShowDeptDropdown(false);
-    };
-
-    const filterDepts = (searchTerm) => {
-        return formattedDepartments.filter((industry) =>
-            industry.name.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-    };
-    const [highlightedIndex, setHighlightedIndex] = useState(-1);
-
-    const handleKeyDown = (e) => {
-        if (e.key === 'ArrowDown') {
-            setHighlightedIndex((prevIndex) => (prevIndex < searchData?.length - 1 ? prevIndex + 1 : prevIndex));
-        } else if (e.key === 'ArrowUp') {
-            setHighlightedIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
-        } else if (e.key === 'Enter') {
-            if (highlightedIndex >= 0 && highlightedIndex < searchData?.length) {
-                handleSelectApp(searchData[highlightedIndex].appslugname);
-            }
-        }
-    };
-
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
@@ -515,9 +340,6 @@ export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
 
-    const randomIndex = Math.floor(Math.random() * Industries.industries.length);
-    const initialIndus = Industries.industries[randomIndex];
-
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
     const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
@@ -670,9 +492,8 @@ export async function getServerSideProps(context) {
             navData: navData || [],
             footerData: footerData || [],
             blogData: blogData || [],
-            initialIndus,
             redirect_to: redirect_to || '',
-            utm_source: utm_source || 'website',
+            utm_source: utm_source || 'index',
             blogTags: blogTags,
             featuresData: featuresData,
             indexSteps: indexSteps,
@@ -683,18 +504,18 @@ export async function getServerSideProps(context) {
     };
 }
 
-async function fetchApps(category) {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
-    );
-    const rawData = await response.json();
-    return rawData?.data;
-}
+// async function fetchApps(category) {
+//     const response = await fetch(
+//         `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+//     );
+//     const rawData = await response.json();
+//     return rawData?.data;
+// }
 
-async function fetchCombos(pathArray, industry, department) {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/recommend/services?${pathArray.map((service) => `service=${service}`).join('&')}&industry=${industry && industry.toLowerCase()}&department=${department && department !== 'All' && department.toLowerCase()}`
-    );
-    const responseData = await response.json();
-    return responseData;
-}
+// async function fetchCombos(pathArray, industry, department) {
+//     const response = await fetch(
+//         `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/recommend/services?${pathArray.map((service) => `service=${service}`).join('&')}&industry=${industry && industry.toLowerCase()}&department=${department && department !== 'All' && department.toLowerCase()}`
+//     );
+//     const responseData = await response.json();
+//     return responseData;
+// }
