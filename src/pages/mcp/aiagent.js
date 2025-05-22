@@ -32,7 +32,7 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                     </div>
                 </div>
 
-                <div className="container py-8">
+                <div className=" py-8">
                     <h2 className="text-3xl font-bold mb-6">Why choose Embed over MCP?</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         <li>Run your own MCP server for over 1,000 tools</li>
@@ -43,7 +43,7 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                     </ul>
                 </div>
 
-                <div className="container py-8">
+                <div className=" py-8">
                     <h2 className="text-3xl font-bold mb-6">Getting Started</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         <li>
@@ -61,7 +61,7 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                     </ul>
                 </div>
 
-                <div className="container py-8">
+                <div className=" py-8">
                     <h2 className="text-3xl font-bold mb-6">Why viaSocket MCP?</h2>
                     <ul className="space-y-4 text-xl">
                         <li>✅ One link, thousands of integrations</li>
@@ -72,10 +72,10 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border transparent-border-black  justify-center items-center text-center gap-12 bg-white">
-                <div className="flex flex-col justify-center items-center">
-                    <h2 className="h1  max-w-[1200px]">Ready to Embed?</h2>
-                    <p className="sub__h1 max-w-[1000px]">
+            <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+                <div className="cont items-start gap-1">
+                    <h2 className="h1 text-left">Ready to Embed?</h2>
+                    <p className="sub__h1 text-left">
                         Start integrating viaSocket MCP today and give your users the power to connect their agents with
                         the tools they already use — no extra coding required.
                     </p>
@@ -90,16 +90,18 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <BlogGrid posts={blogData} />
+            <div className="container">
+                <BlogGrid posts={blogData} />
+            </div>
             <div>
                 {faqData?.length > 0 && (
                     <div className="container">
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
-              <div className='container'>
-                        <Footer footerData={footerData} />
-                    </div>
+                <div className="container">
+                    <Footer footerData={footerData} />
+                </div>
             </div>
         </div>
     );

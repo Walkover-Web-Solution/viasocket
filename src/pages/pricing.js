@@ -24,8 +24,14 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         Build Powerful Automation for <span className="text-accent">Free</span>
                     </h1>
                     <p className="sub__h1 ">
-                        Get full access to all the features you need to build and run workflows for free under Fair
-                        Usage Policy.
+                        Get full access to all the features you need to build and run workflows for free under
+                        <Link
+                            href="https://viasocket.com/faq/pricing/fair-usage-policy"
+                            className=" underline text-accent hover:cursor-pointer"
+                        >
+                            {' '}
+                            Fair Usage Policy.
+                        </Link>
                     </p>
                 </div>
 
@@ -35,7 +41,8 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$0</p>
                             <p className="h6 text-gray-600">
-                                For builders who want to explore, experiment, and automate-at no cost.
+                                Free Plan includes all workflow tools-webhooks, HTTPS API, Human Intervention, cron and
+                                1500+ app integrations
                             </p>
                         </div>
                         <Link href="/signup?utm_source=pricing/free">
@@ -47,7 +54,8 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
                             <p className="h6 text-gray-600">
-                                Includes $200 in credits to get your workflows built by viaSocket automation experts.
+                                ncludes all features plus automation expert support to design and build custom workflows
+                                tailored to your business needs
                             </p>
                         </div>
                         <Link href="/signup?utm_source=pricing/premium">
@@ -60,7 +68,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                             <p className="h3 text-accent">Contact for pricing</p>
                             <p className="h6 text-gray-600">
                                 Tailored onboarding, support, and features for larger teams and mission-critical
-                                workflows.
+                                workflows
                             </p>
                         </div>
                         <Link href="/signup?utm_source=pricing/enterprise">
