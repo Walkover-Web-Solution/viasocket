@@ -64,7 +64,7 @@ export default function IntegrationsDisconnectedComp({
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                     width={36}
                                     height={36}
-                                    alt="Slack"
+                                    alt={appOneDetails?.name}
                                 />
                                 <div>
                                     <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
@@ -142,7 +142,7 @@ export default function IntegrationsDisconnectedComp({
                                         src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                         width={36}
                                         height={36}
-                                        alt="Slack"
+                                        alt={appOneDetails?.name}
                                     />
                                     <h3>About {appOneDetails?.name}</h3>
                                 </div>
@@ -165,7 +165,7 @@ export default function IntegrationsDisconnectedComp({
                                         src={'/assets/brand/fav_ico.svg'}
                                         width={36}
                                         height={36}
-                                        alt="Slack"
+                                        alt="viaSocket"
                                     />
                                     <h3>About viaSocket</h3>
                                 </div>

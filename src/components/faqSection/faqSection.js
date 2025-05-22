@@ -19,18 +19,18 @@ export default function FAQSection({ faqData, faqName, isBlack = false }) {
                                     <input
                                         type="radio"
                                         name="my-accordion-3 border-none bg-white"
-                                        className="min-h-[28px]"
+                                        className="min-h-[28px] pl-0"
                                         defaultChecked={index == 0}
                                     />
                                     <div
-                                        className={`collapse-title text-lg font-semibold pb-0 min-h-[28px] ${isBlack ? '!text-white' : ''}`}
+                                        className={` pl-0 collapse-title text-lg font-semibold pb-0 min-h-[28px] ${isBlack ? '!text-white' : ''}`}
                                     >
                                         {faq?.que}
                                     </div>
                                     <div
-                                        className={`collapse-content flex flex-col gap-2 ${isBlack ? '!bg-black' : ''}`}
+                                        className={`collapse-content flex flex-col gap-2 ${isBlack ? '!bg-black' : ''} pl-0`}
                                     >
-                                        <div className={`font- ${isBlack ? 'text-white' : ''}`}>{faq?.ans}</div>
+                                        <div className={`font-${isBlack ? 'text-white' : ''}`}>{faq?.ans}</div>
                                         {faq?.link && <LinkButton content="Learn More" href={faq?.link} />}
                                     </div>
                                 </div>

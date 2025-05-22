@@ -61,7 +61,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                         <div className="flex lg:flex-row flex-col w-full gap-2">
                             {trigger?.length > 0 && (
                                 <div className="cont gap-2 w-full">
-                                    <h3 className="h2">Triggers</h3>
+                                    <h3 className="h3">Triggers</h3>
                                     {trigger.slice(0, visibleEvents).map((event, index) => {
                                         return (
                                             <div
@@ -96,7 +96,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                             )}
                             {actions?.length > 0 && (
                                 <div className="cont gap-2 w-full  ">
-                                    <h3 className="h2">Actions</h3>
+                                    <h3 className="h3">Actions</h3>
                                     {actions.slice(0, visibleEvents).map((event, index) => {
                                         return (
                                             <div
@@ -229,7 +229,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                     <div className="flex lg:flex-row flex-col w-full gap-2">
                         {trigger?.length > 0 && (
                             <div className="cont gap-2 w-full">
-                                <h3 className="h2 flex items-center gap-2">
+                                <h3 className="h3 flex items-center gap-2">
                                     <MdAdsClick fontSize={20} />
                                     When this happens
                                     <span className="bg-red-100 text-red-700 text-sm px-2 py-0.5 inline-flex items-center">
@@ -261,7 +261,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                         )}
                         {actions?.length > 0 && (
                             <div className="cont gap-2 w-full  ">
-                                <h3 className="h2 flex items-center gap-2">
+                                <h3 className="h3 flex items-center gap-2">
                                     <IoMdCheckmarkCircleOutline fontSize={20} />
                                     Do this
                                     <span className="bg-blue-100 text-blue-700 text-sm px-2 py-0.5 inline-flex items-center">
