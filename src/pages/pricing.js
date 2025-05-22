@@ -54,7 +54,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
                             <p className="h6 text-gray-600">
-                                ncludes all features plus automation expert support to design and build custom workflows
+                                Includes all features plus automation expert support to design and build custom workflows
                                 tailored to your business needs
                             </p>
                         </div>
