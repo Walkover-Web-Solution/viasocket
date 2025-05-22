@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
-    const filteredData = footerData?.filter(item => !item?.hidden);
+    const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
         const groupName = obj?.group_name;
         if (!acc[groupName]) {
@@ -62,7 +62,10 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                     <div
                         className={`flex flex-col gap-12 md:p-10 p-4 sm:border-r lg:border-b-0  border-b ${borderTheme}`}
                     >
-                        {renderedGroups?.slice(Math.ceil(renderedGroups?.length / 3), 2 * Math.ceil(renderedGroups?.length / 3))}
+                        {renderedGroups?.slice(
+                            Math.ceil(renderedGroups?.length / 3),
+                            2 * Math.ceil(renderedGroups?.length / 3)
+                        )}
 
                         <div className="flex gap-2 md:gap-4 mt-auto">
                             <Link
@@ -94,11 +97,10 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
                             <span>© 2025 viaSocket. All rights reserved.</span>
                             <Link href="/privacy" className="active-link text-link">
-                                Privacy
+                                Privacy<span className="text-black">,</span>
                             </Link>
-                            ,
                             <Link href="/terms" className="active-link text-link">
-                                Terms.
+                                Terms
                             </Link>
                             <span>and</span>
                             <Link href="/data-deletion-policy" className="active-link text-link">

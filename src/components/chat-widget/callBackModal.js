@@ -64,7 +64,7 @@ function CallBackModal() {
                             <label className="block text-sm mb-1">Enter your email here*</label>
                             <input
                                 type="email"
-                                className={`input input-bordered w-full focus:outline-none form-control ${!isEmailValid ? 'border-red-500' : ''}`}
+                                className={`input input-bordered transparent-border-black w-full focus:outline-none form-control ${!isEmailValid ? 'border-red-500' : ''}`}
                                 value={email}
                                 onChange={(e) => {
                                     const value = e.target.value.trim();
@@ -72,21 +72,25 @@ function CallBackModal() {
                                         setEmail(value);
                                     }
                                 }}
-                                placeholder='Example: example@email.com'
+                                placeholder="Example: example@email.com"
                             />
-                            {!isEmailValid && <small className="text-red-500">Please enter a valid email address</small>}
+                            {!isEmailValid && (
+                                <small className="text-red-500">Please enter a valid email address</small>
+                            )}
                         </div>
 
                         <div>
                             <label className="block text-sm mb-1">Enter mobile number here*</label>
                             <input
                                 type="text"
-                                className={`input input-bordered w-full focus:outline-none form-control ${!isPhoneValid ? 'border-red-500' : ''}`}
+                                className={`input input-bordered transparent-border-black w-full focus:outline-none form-control ${!isPhoneValid ? 'border-red-500' : ''}`}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
-                                placeholder='Example: 9876543210'
+                                placeholder="Example: 9876543210"
                             />
-                            {!isPhoneValid && phone !== '' && <small className="text-red-500">Please enter a valid 10-digit mobile number</small>}
+                            {!isPhoneValid && phone !== '' && (
+                                <small className="text-red-500">Please enter a valid 10-digit mobile number</small>
+                            )}
                         </div>
 
                         <div className="mb-3">
@@ -103,17 +107,20 @@ function CallBackModal() {
 
                     <div className="flex gap-3">
                         <button
+                            disabled={
+                                phone.trim().length < 10 ||
+                                !email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)
+                            }
                             className="btn btn-accent min-w-[120px] xl:min-w-[130px]"
-                            onClick={() => document.getElementById('callback_modal').close()}
-                        >
-                            Close
-                        </button>
-                        <button
-                            disabled={phone.trim().length < 10 || !email.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)}
-                            className="btn btn-primary min-w-[120px] xl:min-w-[130px]"
                             onClick={handleSubmit}
                         >
                             Submit
+                        </button>
+                        <button
+                            className="btn btn-primary min-w-[120px] xl:min-w-[130px]"
+                            onClick={() => document.getElementById('callback_modal').close()}
+                        >
+                            Close
                         </button>
                     </div>
                 </div>

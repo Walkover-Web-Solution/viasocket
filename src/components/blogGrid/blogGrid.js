@@ -54,7 +54,7 @@ const CardComponent = ({ card, isBlack = false }) => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="card-body flex flex-col gap-2 flex-grow">
+                <div className="card-body flex flex-col gap-2 flex-grow p-4">
                     <div className="flex-grow">
                         <h3 className="font-semibold">{card?.title}</h3>
                         <p className="text-base">{card?.description}</p>

@@ -61,7 +61,7 @@ export default function IntegrationsAppTwoComp({
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                 width={36}
                                 height={36}
-                                alt="Slack"
+                                alt={appOneDetails?.name}
                             />
                             <div>
                                 <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
@@ -73,7 +73,7 @@ export default function IntegrationsAppTwoComp({
                                 src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
                                 width={36}
                                 height={36}
-                                alt="Slack"
+                                alt={appTwoDetails?.name}
                             />
                             <div>
                                 <h2 className="text-xl md:text-2xl font-bold">{appTwoDetails?.name}</h2>
@@ -194,7 +194,7 @@ export default function IntegrationsAppTwoComp({
                 appOneDetails?.events?.length > 0 &&
                 appTwoDetails?.events?.length > 0 && (
                     <div className="container cont gap-4">
-                        <h2 className="h2 mb-4">Actions and Triggers</h2>
+                        <h2 className="h2">Actions and Triggers</h2>
                         <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     </div>
                 )}
@@ -229,7 +229,7 @@ export default function IntegrationsAppTwoComp({
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                     width={36}
                                     height={36}
-                                    alt="Slack"
+                                    alt={appOneDetails?.name}
                                 />
                                 <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
@@ -266,7 +266,7 @@ export default function IntegrationsAppTwoComp({
                                     src={appTwoDetails?.iconurl || 'https://placehold.co/36x36'}
                                     width={36}
                                     height={36}
-                                    alt="Slack"
+                                    alt={appTwoDetails?.name}
                                 />
                                 <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
                             </div>

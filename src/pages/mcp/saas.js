@@ -21,10 +21,9 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             </div>
             <McpSwitchComp />
             <div className="container ">
-                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
+                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                     <div className="cont gap-4 w-full text-left">
                         <h1 className="h1">
-                            {/* Connect Your AI with<span className="text-accent"> 1,000+</span> MCPs */}
                             Your App. <span className="text-accent"> Your MCP Server.</span> Zero Overhead
                         </h1>
                         <h2 className="sub__h1">
@@ -34,7 +33,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </div>
                 </div>
 
-                <div className="container py-8">
+                <div className="py-8">
                     <h2 className="text-3xl font-bold mb-6">What You Can Enable for Your Customers</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         {' '}
@@ -55,7 +54,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </ul>
                 </div>
 
-                <div className="container py-8">
+                <div className="py-8">
                     <h2 className="text-3xl font-bold mb-6">How It Works</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         <li>
@@ -77,7 +76,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </ul>
                 </div>
 
-                <div className="container py-8">
+                <div className=" py-8">
                     <h2 className="text-3xl font-bold mb-6">Benefits</h2>
                     <ul className="space-y-4 text-xl">
                         <li>✅ Make your app compatible with AI interfaces</li>
@@ -89,24 +88,24 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont cont__py border transparent-border-black  justify-center items-center text-center gap-12 bg-white">
-                <div className="flex flex-col justify-center items-center">
-                    <h2 className="h1  max-w-[1200px]">Join the Ecosystem</h2>
-                    <p className="sub__h1 max-w-[1000px]">
+            <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+                <div className="cont gap-1 text-left">
+                    <h2 className="h1">Join the Ecosystem</h2>
+                    <p className="sub__h1">
                         Let your app become part of the AI-first workflow revolution.viaSocket handles the automation
                         layer. You focus on your core product.
                     </p>
                 </div>
                 <div className="flex gap-4">
-                    {' '}
-                    {/* Added flex container for the buttons */}
                     <Link href="https://cal.id/team/viasocket/superheros">
                         <button className="btn btn-accent">Schedule a Meeting</button>
                     </Link>
                 </div>
             </div>
 
-            <BlogGrid posts={blogData} />
+            <div className="container">
+                <BlogGrid posts={blogData} />
+            </div>
             <div>
                 {faqData?.length > 0 && (
                     <div className="container">

@@ -118,7 +118,7 @@ export default function McpIndexComp({
 
     {
         return (
-            <>
+            <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
                 <MetaHeadComp metaData={metaData} page={'/mcp'} />
                 <Script id="twitter-conversion-tracking" strategy="afterInteractive">
                     {`
@@ -165,8 +165,8 @@ export default function McpIndexComp({
                                 key={index}
                                 className={`font-semibold py-4 px-1 transparent-border-black w-full sm:w-1/2 lg:w-1/4 text-center flex items-center justify-center  min-h-[80px]`}
                             >
-                                <div className="flex gap-1 text-lg items-center">
-                                    <p className="text-accent">✔ </p>
+                                <div className="flex gap-2 h6 items-center">
+                                    <div className="h-3 w-3 bg-accent" />
                                     <p>{point}</p>
                                 </div>
                             </div>
@@ -408,7 +408,7 @@ export default function McpIndexComp({
                     <BlogGrid posts={blogsData} />
                 </div>
 
-                <div className="pb-4">
+                <div className="">
                     {faqData?.length > 0 && (
                         <div className="container cont">
                             <FAQSection faqData={faqData} faqName={'/index'} />
@@ -418,7 +418,7 @@ export default function McpIndexComp({
                         <Footer footerData={footerData} />
                     </div>
                 </div>
-            </>
+            </div>
         );
     }
 }
@@ -443,34 +443,30 @@ const FeaturesGrid = ({ featuresData }) => {
         }
     };
     return (
-        <div className="container cont">
-            <div className="p-12 py-20 bg-black text-white">
-                <div className="mb-20">
-                    <div className="flex gap-4">
-                        <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
-                        <BsStars size={42} />
-                    </div>
-                    <h2 className="sub__h1 text-gray-300 max-w-[800px]">
-                        viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now
-                        send messages, manage data, schedule events, and update records, turning it from a chat tool
-                        into a real action taker.
-                    </h2>
+        <div className="container cont p-12 bg-black text-white">
+            <div className="mb-20">
+                <div className="flex gap-4">
+                    <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
+                    <BsStars size={42} />
                 </div>
+                <h2 className="sub__h1 text-gray-300 max-w-[800px]">
+                    viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now send
+                    messages, manage data, schedule events, and update records, turning it from a chat tool into a real
+                    action taker.
+                </h2>
+            </div>
 
-                {/* <div className="flex justify-center items-center"> */}
-                <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
-                    {featuresData.map((feature, index) => (
-                        <div
-                            key={index}
-                            className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
-                        >
-                            <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
-                            <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
-                            <p className="sub__h2 text-gray-300">{feature.content}</p>
-                        </div>
-                    ))}
-                </div>
-                {/* </div> */}
+            <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">
+                {featuresData.map((feature, index) => (
+                    <div
+                        key={index}
+                        className="border border-white cont max-w-[500px] mx-auto md:mx-0  lg:py-12 py-8 px-8 transition-transform duration-300 hover:scale-105"
+                    >
+                        <div className="text-accent mb-4">{getIconComponent(feature.iconName)}</div>
+                        <h3 className="h3 font-bold mb-3">{feature.heading}</h3>
+                        <p className="sub__h2 text-gray-300">{feature.content}</p>
+                    </div>
+                ))}
             </div>
         </div>
     );
