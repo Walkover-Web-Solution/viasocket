@@ -458,7 +458,7 @@ export default function McpAppComp({
                                         src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                         width={36}
                                         height={36}
-                                        alt="Slack"
+                                        alt={appOneDetails?.name}
                                     />
                                     <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                                 </div>
@@ -484,7 +484,7 @@ export default function McpAppComp({
                                         src="/assets/brand/smiley_white.svg"
                                         width={46}
                                         height={46}
-                                        alt="Slack"
+                                        alt="viaSocket MCP"
                                     />
                                     <h3 className="h3 font-bold pt-5">About viaSocket MCP server</h3>
                                 </div>

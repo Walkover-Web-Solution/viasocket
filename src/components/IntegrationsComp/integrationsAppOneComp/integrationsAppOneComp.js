@@ -77,7 +77,7 @@ export default function IntegrationsAppOneComp({
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                     width={36}
                                     height={36}
-                                    alt="Slack"
+                                    alt={appOneDetails?.name}
                                 />
                                 <div>
                                     <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
@@ -200,7 +200,7 @@ export default function IntegrationsAppOneComp({
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                 width={36}
                                 height={36}
-                                alt="Slack"
+                                alt={appOneDetails?.name}
                             />
                             <h2 className="text-2xl font-bold">{appOneDetails?.name}</h2>
                         </div>
@@ -217,7 +217,7 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                    <h2 className="h2 mb-4">Actions and Triggers</h2>
+                    <h2 className="h2 ">Actions and Triggers</h2>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
@@ -253,7 +253,7 @@ export default function IntegrationsAppOneComp({
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                 width={36}
                                 height={36}
-                                alt="Slack"
+                                alt={appOneDetails?.name}
                             />
                             <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                         </div>
@@ -287,7 +287,7 @@ export default function IntegrationsAppOneComp({
                                 src={'/assets/brand/fav_ico.svg'}
                                 width={36}
                                 height={36}
-                                alt="Slack"
+                                alt="viaSocket"
                             />
                             <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                         </div>
