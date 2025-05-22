@@ -18,17 +18,15 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
-            <div className="container cont pb-4 lg:gap-24 gap-6">
-                <div className="container pt-20">
-                    <div className="flex flex-col text-left gap-2">
-                        <h1 className="h1">
-                            Build Powerful Automation for <span className="text-accent">Free</span>
-                        </h1>
-                        <p className="sub__h1 ">
-                            Get full access to all the features you need to build and run workflows for free under Fair
-                            Usage Policy.
-                        </p>
-                    </div>
+            <div className="container cont pb-4 pt-20 lg:gap-24 gap-6">
+                <div className="flex flex-col text-left gap-2">
+                    <h1 className="h1">
+                        Build Powerful Automation for <span className="text-accent">Free</span>
+                    </h1>
+                    <p className="sub__h1 ">
+                        Get full access to all the features you need to build and run workflows for free under Fair
+                        Usage Policy.
+                    </p>
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
