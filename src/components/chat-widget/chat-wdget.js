@@ -9,10 +9,10 @@ export default function ChatWidget() {
         <>
             <button
                 onClick={openChatWidget}
-                className={`${style.chat_widget} btn btn-lg btn-primary `}
+                className={`${style.chat_widget} flex gap-1 items-center h6 px-4 py-2 bg-black text-white`}
                 aria-label="Talk to an expert"
             >
-                <MdCircle color="#dc3545" fontSize={12} /> Support
+                <MdCircle color="green" fontSize={12} /> Chat
             </button>
         </>
     );

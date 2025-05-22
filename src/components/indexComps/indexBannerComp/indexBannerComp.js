@@ -12,7 +12,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                 Build<span className="text-accent"> Intelligent</span> Automations
                             </h1>
                             <span className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
-                                Orchestrate logic with human and AI steps, delays, custom code, APIs, and 1500+ apps—no
+                                Orchestrate logic with human and AI steps, delays, custom code, APIs, and 1500+ apps-no
                                 limits, just seamless flow.
                             </span>
                         </div>
@@ -37,6 +37,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                         width={1080}
                         height={1080}
                         alt="Website flow"
+                        priority
                     />
                 </div>
             </div>

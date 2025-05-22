@@ -24,10 +24,9 @@ export default function CombinationCardComp({ trigger, action, description, link
                 <p className="h3">{description}</p>
             </div>
 
-            <div className="text-white font-semibold flex gap-1 justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="text-black font-semibold flex gap-1 justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity">
                 Try it <FiArrowUpRight size={20} />
             </div>
-            <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />
         </button>
     );
 }

@@ -417,9 +417,9 @@ export default function McpAppComp({
                         {/* </div> */}
                         <div className="cont gap-4 justify-center w-full lg:w-1/2">
                             {mcpAIIntegrationData.map((steps, index) => (
-                                <div key={index} className="flex items-start gap-2">
-                                    <span className="text-2xl text-green-600">✔ </span>
-                                    <p className="text-2xl">{steps}</p>
+                                <div key={index} className="flex items-center gap-4">
+                                    <div className="h-5 w-5 bg-accent flex-shrink-0" />
+                                    <p className="text-2xl leading-tight">{steps}</p>
                                 </div>
                             ))}
                         </div>
