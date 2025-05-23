@@ -222,26 +222,28 @@ export default function McpAppComp({
                     </div>
                 )}
 
-                <div className="container cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
-                    <div className="flex flex-col gap-2 justify-center w-full">
-                        <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
-                        <h3 className="sub__h1">
-                            viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
-                            like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
-                            integrations or deal with a bulky setup.
-                        </h3>
-                    </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
-                        {mcpAppSteps.map((step, index) => (
-                            <div
-                                key={index}
-                                className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
-                            >
-                                <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
-                                <h3 className="h3 font-bold">{step.title}</h3>
-                                <p className="sub__h2">{step.description}</p>
-                            </div>
-                        ))}
+                <div className="container">
+                    <div className="cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
+                        <div className="flex flex-col gap-2 justify-center w-full">
+                            <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
+                            <h3 className="sub__h1">
+                                viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
+                                like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
+                                integrations or deal with a bulky setup.
+                            </h3>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
+                            {mcpAppSteps.map((step, index) => (
+                                <div
+                                    key={index}
+                                    className="max-w-[400px] lg:py-20 py-8 px-8 border-2 border-gray-200 flex flex-col gap-2 transition-transform transform hover:scale-110"
+                                >
+                                    <p className="text-accent text-2xl font-semibold">{`Step ${index + 1}`}</p>
+                                    <h3 className="h3 font-bold">{step.title}</h3>
+                                    <p className="sub__h2">{step.description}</p>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
 
@@ -355,49 +357,51 @@ export default function McpAppComp({
                     )}
                 </div>
 
-                <div className="container cont gap-12 py-20 px-12 bg-black text-white">
-                    <div className="flex flex-col gap-2 justify-center">
-                        <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
-                        <p className="sub__h1">
-                            Break free from isolation-connect your AI to real-world data for smarter, more impactful
-                            results.
-                        </p>
-                    </div>
-                    <div className="flex flex-col md:flex-row gap-8 ">
-                        <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-white">
-                            <div className="cont gap-4">
-                                <h2 className="text-4xl font-bold">Free for Lifetime</h2>
-                                <h3 className="text-xl">
-                                    viaSocket MCP is free to use for lifetime under a{' '}
-                                    <span className="underline font-semibold">
-                                        <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
-                                            {' '}
-                                            fair usage policy
-                                        </Link>{' '}
-                                    </span>{' '}
-                                    without rate limits
-                                </h3>
-                            </div>
-                            <Link href="/signup?utm_source=mcp">
-                                <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group active:scale-95 transition-transform duration-75">
-                                    Get Your MCP URL for Free
-                                </button>
-                            </Link>
+                <div className="container">
+                    <div className="cont gap-12 py-20 px-12 bg-black text-white">
+                        <div className="flex flex-col gap-2 justify-center">
+                            <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                            <p className="sub__h1">
+                                Break free from isolation-connect your AI to real-world data for smarter, more impactful
+                                results.
+                            </p>
                         </div>
-                        <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-white">
-                            <div className="cont gap-4">
-                                <h2 className="text-4xl font-bold">For Enterprises</h2>
-                                <h3 className="text-xl">
-                                    viaSocket MCP for Enterprises empowers AI models to securely connect to thousands of
-                                    apps in minutes
-                                </h3>
-                            </div>
-                            <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
-                                <Link href="/support">
-                                    <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
-                                        Self-Hosted MCP
+                        <div className="flex flex-col md:flex-row gap-8 ">
+                            <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-white">
+                                <div className="cont gap-4">
+                                    <h2 className="text-4xl font-bold">Free for Lifetime</h2>
+                                    <h3 className="text-xl">
+                                        viaSocket MCP is free to use for lifetime under a{' '}
+                                        <span className="underline font-semibold">
+                                            <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                                {' '}
+                                                fair usage policy
+                                            </Link>{' '}
+                                        </span>{' '}
+                                        without rate limits
+                                    </h3>
+                                </div>
+                                <Link href="/signup?utm_source=mcp">
+                                    <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group active:scale-95 transition-transform duration-75">
+                                        Get Your MCP URL for Free
                                     </button>
                                 </Link>
+                            </div>
+                            <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-white">
+                                <div className="cont gap-4">
+                                    <h2 className="text-4xl font-bold">For Enterprises</h2>
+                                    <h3 className="text-xl">
+                                        viaSocket MCP for Enterprises empowers AI models to securely connect to
+                                        thousands of apps in minutes
+                                    </h3>
+                                </div>
+                                <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
+                                    <Link href="/support">
+                                        <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
+                                            Self-Hosted MCP
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -426,19 +430,21 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont cont__py  bg-black text-white  justify-center gap-12 px-12">
-                    <div className="flex flex-col gap-2 justify-center">
-                        <h2 className="h2 text-white">Discover More About viaSocket MCP</h2>
-                        <p className="sub__h1">
-                            Check out our easy-to-follow documentation and start exploring all the cool things you can
-                            do with viaSocket MCP.
-                        </p>
+                <div className="container">
+                    <div className="cont cont__py  bg-black text-white  justify-center gap-4 px-12">
+                        <div className="cont gap-1">
+                            <h2 className="h2 text-white">Discover More About viaSocket MCP</h2>
+                            <p className="sub__h1">
+                                Check out our easy-to-follow documentation and start exploring all the cool things you
+                                can do with viaSocket MCP.
+                            </p>
+                        </div>
+                        <Link href="https://viasocket.com/faq/viaSocket-MCP">
+                            <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
+                                Explore The Documentation
+                            </button>
+                        </Link>
                     </div>
-                    <Link href="https://viasocket.com/faq/viaSocket-MCP">
-                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
-                            Explore The Documentation
-                        </button>
-                    </Link>
                 </div>
 
                 {blogsData?.length > 0 && (
@@ -447,9 +453,9 @@ export default function McpAppComp({
                         <BlogGrid posts={blogsData} />
                     </div>
                 )}
-                <div className="container pb-4">
-                    <div className="cont">
-                        <div className="container">{faqData && <FAQSection faqData={faqData} />}</div>
+                <div className="pb-4">
+                    <div className=" container cont">
+                        {faqData && <FAQSection faqData={faqData} />}
                         <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
                             <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
                                 <div>
@@ -507,9 +513,8 @@ export default function McpAppComp({
                                 </div>
                             </div>
                         </div>
-                        <div className="container">
-                            <Footer footerData={footerData} />
-                        </div>
+
+                        <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>

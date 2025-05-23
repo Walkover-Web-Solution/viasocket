@@ -18,20 +18,20 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
-            <div className="container cont pb-4 pt-20 lg:gap-24 gap-6">
+            <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
                         Build Powerful Automation for <span className="text-accent">Free</span>
                     </h1>
                     <p className="sub__h1 ">
-                        Get full access to all the features you need to build and run workflows for free under
+                        Get full access to all the features you need to build and run workflows for free under{' '}
                         <Link
                             href="https://viasocket.com/faq/pricing/fair-usage-policy"
                             className=" underline text-accent hover:cursor-pointer"
                         >
-                            {' '}
-                            Fair Usage Policy.
+                            Fair Usage Policy
                         </Link>
+                        .
                     </p>
                 </div>
 
@@ -54,8 +54,8 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
                             <p className="h6 text-gray-600">
-                                Includes all features plus automation expert support to design and build custom workflows
-                                tailored to your business needs
+                                Includes all features plus automation expert support to design and build custom
+                                workflows tailored to your business needs
                             </p>
                         </div>
                         <Link href="/signup?utm_source=pricing/premium">
@@ -107,7 +107,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </Link>
                 </div>
 
-                <div className="cont lg:gap-36 md:gap-24 gap-12">
+                <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <BlogGrid posts={blogData} />
                     <div className="cont">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}

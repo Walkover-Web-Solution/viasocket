@@ -88,18 +88,20 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
-                <div className="cont gap-1 text-left">
-                    <h2 className="h1">Join the Ecosystem</h2>
-                    <p className="sub__h1">
-                        Let your app become part of the AI-first workflow revolution.viaSocket handles the automation
-                        layer. You focus on your core product.
-                    </p>
-                </div>
-                <div className="flex gap-4">
-                    <Link href="https://cal.id/team/viasocket/superheros">
-                        <button className="btn btn-accent">Schedule a Meeting</button>
-                    </Link>
+            <div className='container'>
+                <div className="cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+                    <div className="cont gap-1 text-left">
+                        <h2 className="h2">Join the Ecosystem</h2>
+                        <p className="sub__h1">
+                            Let your app become part of the AI-first workflow revolution.viaSocket handles the
+                            automation layer. You focus on your core product.
+                        </p>
+                    </div>
+                    <div className="flex gap-4">
+                        <Link href="https://cal.id/team/viasocket/superheros">
+                            <button className="btn btn-accent">Schedule a Meeting</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
 

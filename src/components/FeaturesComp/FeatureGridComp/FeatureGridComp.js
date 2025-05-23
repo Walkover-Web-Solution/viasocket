@@ -28,9 +28,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
         }
         return (
             'lg:p-10 p-4 border transparent-border-black border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
-            gridClass +
-            ' ' +
-            'feature_block'
+            gridClass
         );
     }
 
@@ -39,7 +37,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
     if (features && features.length > 0) {
         return (
             <div className="container">
-                <div className="bg-white features_grid grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 border transparent-border-black border-b-0 border-r-0">
+                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 border transparent-border-black border-b-0 border-r-0">
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (
@@ -51,13 +49,6 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     <Image
                                         className="icon__dark"
                                         src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
-                                        width={36}
-                                        height={36}
-                                        alt={feature.name}
-                                    />
-                                    <Image
-                                        className="icon__light"
-                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}

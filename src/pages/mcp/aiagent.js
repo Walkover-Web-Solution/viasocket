@@ -74,7 +74,7 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
 
             <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
                 <div className="cont items-start gap-1">
-                    <h2 className="h1 text-left">Ready to Embed?</h2>
+                    <h2 className="h2 text-left">Ready to Embed?</h2>
                     <p className="sub__h1 text-left">
                         Start integrating viaSocket MCP today and give your users the power to connect their agents with
                         the tools they already use — no extra coding required.
