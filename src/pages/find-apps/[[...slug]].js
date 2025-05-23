@@ -1,8 +1,7 @@
-import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import AlphabetComp from '@/components/aZComp/alphabetComp/alphabetComp';
 import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
 import Head from 'next/head';
-import Image from 'next/image';
+
 
 export const runtime = 'experimental-edge';
 

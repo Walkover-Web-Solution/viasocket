@@ -142,32 +142,28 @@ export function Skeleton() {
                 <meta content="Loading the viaSocket application, please wait..."></meta>
             </Head>
 
-            <div className="h-dvh w-dvw container p-6 overflow-hidden">
-                {/* Responsive Navbar */}
+            {/* <div className="h-dvh w-dvw container p-6 overflow-hidden">
+               
                 <div className="flex items-center justify-between mb-8">
-                    <div className="h-10 w-40 bg-gray-100 rounded-md skeleton"></div> {/* Logo */}
+                    <div className="h-10 w-40 bg-gray-100 rounded-md skeleton"></div>
                     <div className="hidden md:flex gap-4">
-                        {' '}
-                        {/* Hide links on smaller screens */}
+
                         <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
                         <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
                         <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
                         <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
                     </div>
                     <div className="md:hidden">
-                        <div className="h-8 w-8 bg-gray-100 rounded-md skeleton"></div>{' '}
-                        {/* Hamburger menu for small screens */}
+                        <div className="h-8 w-8 bg-gray-100 rounded-md skeleton"></div>
                     </div>
                 </div>
 
                 <div className="flex flex-wrap lg:flex-nowrap gap-8 w-full">
-                    {/* Left Section */}
                     <div className="hidden lg:flex flex-col w-1/5 gap-4">
                         <div className="h-1/3 bg-gray-100 rounded-md skeleton"></div>
                         <div className="h-2/3 bg-gray-100 rounded-md skeleton"></div>
                     </div>
 
-                    {/* Middle Section */}
                     <div className="flex flex-col gap-8 w-full lg:w-3/5">
                         <div className="h-full w-full rounded-md">
                             <div className="h-10 w-3/4 bg-gray-100 rounded-md skeleton mb-4"></div>
@@ -185,8 +181,7 @@ export function Skeleton() {
                         </div>
 
                         <div className="h-full w-full rounded-md hidden lg:block">
-                            {' '}
-                            {/* Hidden on small screens */}
+
                             <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
@@ -194,8 +189,7 @@ export function Skeleton() {
                             <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                         </div>
                         <div className="h-full w-full rounded-md hidden lg:block">
-                            {' '}
-                            {/* Hidden on small screens */}
+
                             <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-极6 bg-gray-100 rounded-md skeleton mb-4"></div>
@@ -204,13 +198,41 @@ export function Skeleton() {
                             <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                         </div>
                         <div className="h-full w-full rounded-md hidden lg:block">
-                            {' '}
-                            {/* Hidden on small screens */}
+
                             <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
                             <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
+                        </div>
+                    </div>
+                </div>
+            </div> */}
+
+            <div className="h-dvh w-dvw overflow-hidden p-8">
+                <div className="flex justify-between w-full h-10">
+                    <div className="h-full w-40 bg-gray-100 rounded-sm skeleton"></div>
+                    <div className="flex gap-2 h-full">
+                        <div className="h-full w-32 bg-gray-100 rounded-sm skeleton"></div>
+                        <div className="h-full w-32 bg-gray-100 rounded-sm skeleton"></div>
+                        <div className="h-full w-32 bg-gray-100 rounded-sm skeleton"></div>
+                        <div className="h-full w-10 bg-gray-100 rounded-sm skeleton"></div>
+                    </div>
+                </div>
+
+                <div className="container cont gap-20 mt-20">
+                    <div className="cont gap-1">
+                        <div className="h-32 w-3/5 bg-gray-100 rounded-sm skeleton"></div>
+                        <div className="h-32 w-4/5 bg-gray-100 rounded-sm skeleton"></div>
+                        <div className="h-10 w-3/5 bg-gray-100 rounded-sm skeleton"></div>
+                    </div>
+
+                    <div className="w-full">
+                        <div className="h-16 w-1/3 bg-gray-100 rounded-sm skeleton mb-4"></div>
+                        <div className="grid grid-cols-3 gap-2">
+                            {[...Array(6)].map((_, i) => (
+                                <div key={i} className="h-44 bg-gray-100 rounded-sm skeleton"></div>
+                            ))}
                         </div>
                     </div>
                 </div>

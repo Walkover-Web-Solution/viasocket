@@ -41,7 +41,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (
-                                <Link
+                                <Link 
                                     href={`/features/${feature?.slug}`}
                                     key={index}
                                     className={handleGridLayout(index)}
