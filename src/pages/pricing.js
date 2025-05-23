@@ -15,7 +15,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/pricing'} />
             </div>
             <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
@@ -36,7 +36,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border border-b-0 md:border-r-0 lg:border-b transparent-border-black bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2">
                         <h3 className="h2">Free</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$0</p>
@@ -49,7 +49,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border border-b-0 md:border-b lg:border-r-0 transparent-border-black bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2">
                         <h3 className="h2">Premium</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
@@ -62,7 +62,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border transparent-border-black bg-white p-12 flex flex-col gap-2">
+                    <div className="border custom-border bg-white p-12 flex flex-col gap-2">
                         <h3 className="h2">Enterprise</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">Contact for pricing</p>
@@ -77,7 +77,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </div>
                 </div>
 
-                <div className="cont gap-8 border transparent-border-black p-12 bg-white">
+                <div className="cont gap-8 border custom-border p-12 bg-white">
                     <h2 className="h2">Explore All Features and Start Automating your Tasks for Free</h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -96,7 +96,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                     </div>
                 </div>
 
-                <div className="container bg-white  border transparent-border-black p-12 flex flex-col gap-8">
+                <div className="container bg-white  border custom-border p-12 flex flex-col gap-8">
                     <h2 className="h2">Upgrade from Free to Premium and Get Expert Assistance</h2>
                     <p className="sub__h1">
                         With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use

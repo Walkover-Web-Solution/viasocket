@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            'lg:p-10 p-4 border transparent-border-black border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
+            'lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
             gridClass
         );
     }
@@ -37,7 +37,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
     if (features && features.length > 0) {
         return (
             <div className="container">
-                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 border transparent-border-black border-b-0 border-r-0">
+                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 border custom-border border-b-0 border-r-0">
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (

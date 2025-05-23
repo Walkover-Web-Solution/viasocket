@@ -14,7 +14,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
         return acc;
     }, {});
 
-    const borderTheme = isBlack ? 'white' : 'transparent-border-black';
+    const borderTheme = isBlack ? 'white' : 'custom-border';
 
     const renderedGroups =
         groupedData &&

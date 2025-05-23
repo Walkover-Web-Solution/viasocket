@@ -14,9 +14,9 @@ export const runtime = 'experimental-edge';
 
 export default function aiagent({ navData, footerData, faqData, metaData, blogData }) {
     return (
-        <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
+        <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <McpSwitchComp />
@@ -72,7 +72,7 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                 </div>
             </div>
 
-            <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+            <div className="container cont p-12 border custom-border justify-start items-start gap-4 bg-white">
                 <div className="cont items-start gap-1">
                     <h2 className="h2 text-left">Ready to Embed?</h2>
                     <p className="sub__h1 text-left">

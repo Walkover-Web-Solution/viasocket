@@ -89,7 +89,7 @@ export default function Support({ open, onClose, navData }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l transparent-border-black shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
                     open ? 'translate-x-0' : 'translate-x-full'
                 }`}
                 role="dialog"
@@ -145,7 +145,7 @@ export default function Support({ open, onClose, navData }) {
                                     ) : (
                                         <button
                                             onClick={item.onClick}
-                                            className="flex items-center gap-2 py-2 px-5 w-full text-left"
+                                            className="flex items-center gap-2 py-3 px-5 w-full text-left"
                                         >
                                             {item.icon}
                                             <span className="text-lg">{item.text}</span>

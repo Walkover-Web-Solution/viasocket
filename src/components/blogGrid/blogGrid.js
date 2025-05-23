@@ -26,7 +26,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
                             customClasses={
                                 isBlack
                                     ? 'btn border-white border-t-0'
-                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white transparent-border-black'
+                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white custom-border'
                             }
                         />
                     </Link>

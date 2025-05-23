@@ -5,7 +5,7 @@ import Link from 'next/link';
 export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
     return (
         <>
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={pageInfo?.url} />
             </div>
             <div className="container">
@@ -39,7 +39,7 @@ export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
                         {featureData?.image && (
                             <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center">
                                 <Image
-                                    className="max-w-[2000px] border transparent-border-black w-full"
+                                    className="max-w-[2000px] border custom-border w-full"
                                     src={featureData?.image[0] || 'https://placehold.co/40x40'}
                                     alt={featureData?.name}
                                     width={1080}

@@ -69,7 +69,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedTrigger(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer bg-white"
+                                                className="p-4 border custom-border flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer bg-white"
                                             >
                                                 <Image
                                                     src={
@@ -104,7 +104,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     setSelectedAction(event);
                                                 }}
                                                 key={index}
-                                                className="p-4 border max-w-[800px] transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer"
+                                                className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer"
                                             >
                                                 <Image
                                                     src={
@@ -135,17 +135,17 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                 onClick={() => {
                                     setVisibleEvents(visibleEvents + 6);
                                 }}
-                                className={`btn btn-outline transparent-border-black -mt-2 ${trigger.length >= visibleEvents ? 'border-t-0' : ''}`}
+                                className={`btn btn-outline custom-border -mt-2 ${trigger.length >= visibleEvents ? 'border-t-0' : ''}`}
                             >
                                 Load More <MdKeyboardArrowDown fontSize={20} />
                             </button>
                         )}
                     </div>
                     {(selectedTrigger || selectedAction) && (
-                        <div className="fixed bottom-0 left-0 w-full z-50 bg-white border transparent-border-black p-4 ">
+                        <div className="fixed bottom-0 left-0 w-full z-50 bg-white border custom-border p-4 ">
                             <div className="container flex flex-col lg:flex-row items-center gap-3 justify-between">
                                 <div className="flex items-center gap-4 w-full flex-col md:flex-row ">
-                                    <div className="flex items-center gap-2 max-w-[800px] border transparent-border-black p-2 w-full min-h-12 min-w-[220px]">
+                                    <div className="flex items-center gap-2 max-w-[800px] border custom-border p-2 w-full min-h-12 min-w-[220px]">
                                         {selectedTrigger && (
                                             <>
                                                 <Image
@@ -171,7 +171,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         )}
                                     </div>
                                     <MdAdd fontSize={30} />
-                                    <div className="flex items-center max-w-[800px] gap-2 border transparent-border-black p-2 w-full min-h-12 min-w-[220px]">
+                                    <div className="flex items-center max-w-[800px] gap-2 border custom-border p-2 w-full min-h-12 min-w-[220px]">
                                         {selectedAction && (
                                             <>
                                                 <Image
@@ -241,7 +241,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     return (
                                         <div
                                             key={index}
-                                            className="p-4 border max-w-[800px] transparent-border-black flex gap-3 flex-col sm:flex-row items-start bg-white"
+                                            className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
                                         >
                                             <Image
                                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
@@ -272,7 +272,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     return (
                                         <div
                                             key={index}
-                                            className="p-4 border max-w-[800px] transparent-border-black flex gap-3 flex-col sm:flex-row items-start bg-white"
+                                            className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
                                         >
                                             <Image
                                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
@@ -296,7 +296,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                             onClick={() => {
                                 setVisibleEvents(visibleEvents + 6);
                             }}
-                            className={`bg-white btn btn-outline transparent-border-black -mt-2 ${trigger.length >= visibleEvents ? 'border-t-0' : ''}`}
+                            className={`bg-white btn btn-outline custom-border -mt-2 ${trigger.length >= visibleEvents ? 'border-t-0' : ''}`}
                         >
                             Load More <MdKeyboardArrowDown fontSize={20} />
                         </button>

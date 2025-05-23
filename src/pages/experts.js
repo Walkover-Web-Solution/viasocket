@@ -56,7 +56,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/experts'} />
             </div>
             <div className="">
@@ -78,7 +78,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                 </div>
 
                 <div className="container">
-                    <div className=" bg-white border transparent-border-black p-12">
+                    <div className=" bg-white border custom-border p-12">
                         <div className="cont gap-8">
                             <div className="grid md:grid-cols-2 grid-cols-1 gap-12 justify-between items-center">
                                 <div className="flex flex-col gap-9  h-full justify-center">
@@ -129,7 +129,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                                 return (
                                     <div
                                         key={index}
-                                        className="flex flex-col gap-4 bg-white p-6 border transparent-border-black"
+                                        className="flex flex-col gap-4 bg-white p-6 border custom-border"
                                     >
                                         <MdOutlineArticle color="#8F9396" fontSize={36} />
                                         <p className="text-xl ">{expertsHelpBlog?.description}</p>

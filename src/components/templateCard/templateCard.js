@@ -6,7 +6,7 @@ const TemplateCard = ({ template }) => {
     return (
         <div
             onClick={(e) => handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)}
-            className="group cont justify-between bg-white border transparent-border-black cursor-pointer hover:bg-gray-100 group relative"
+            className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
         >
             <div className="flex flex-col gap-1 px-8 py-4">
                 <h1 className="h3">{template?.title}</h1>

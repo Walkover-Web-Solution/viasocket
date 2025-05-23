@@ -14,9 +14,9 @@ export const runtime = 'experimental-edge';
 
 export default function pricing({ navData, footerData, faqData, metaData, blogData }) {
     return (
-        <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
+        <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
             <McpSwitchComp />
@@ -34,28 +34,21 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
                 </div>
 
                 <div className="py-8">
-                    <h2 className="text-3xl font-bold mb-6">What You Can Enable for Your Customers</h2>
+                    <h2 className="text-3xl font-bold mb-4">What you can enable for your customers</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
-                        {' '}
-                        {/* Added list-disc and padding */}
                         <li>
                             Let users perform actions inside your app through their AI agents (e.g., "Send invoice",
                             "Create lead", "Update task")
                         </li>
                         <li>
-                            Embed viaSocket MCP directly inside your product, so your users can:
-                            <ul className="list-disc pl-6">
-                                {' '}
-                                {/* Added sublist with bullet points */}
-                                <li>Generate an MCP endpoint for their account</li>
-                                <li>Trigger workflows from OpenAI, Claude, or any LLM</li>
-                            </ul>
-                        </li>
+                            Embed viaSocket MCP directly inside your product </li>
+                            <li>Generate an MCP endpoint for their account</li>
+                            <li>Trigger workflows from OpenAI, Claude, or any LLM</li>
                     </ul>
                 </div>
 
                 <div className="py-8">
-                    <h2 className="text-3xl font-bold mb-6">How It Works</h2>
+                    <h2 className="text-3xl font-bold mb-6">How it works</h2>
                     <ul className="space-y-4 text-xl list-disc  pl-6">
                         <li>
                             <strong>You Provide APIs:</strong>viaSocket’s Plugin team will use your public APIs to
@@ -89,7 +82,7 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             </div>
 
             <div className='container'>
-                <div className="cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+                <div className="cont p-12 border custom-border justify-start items-start gap-4 bg-white">
                     <div className="cont gap-1 text-left">
                         <h2 className="h2">Join the Ecosystem</h2>
                         <p className="sub__h1">
