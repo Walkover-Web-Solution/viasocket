@@ -174,7 +174,7 @@ const Index = ({
                             </div>
                         )}
                         <div className="container cont">
-                            <AlphabeticalComponent step={0} />
+                            <AlphabeticalComponent />
                         </div>
                         <SecuritySection securityGridData={securityGridData} />
                         <div className="container">

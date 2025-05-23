@@ -132,45 +132,42 @@ export default function McpIndexComp({
                     <Navbar navData={navData} utm={'/index'} />
                 </div>
 
-                <McpSwitchComp />
+                <div className="cont gap-8">
+                    <McpSwitchComp />
 
-                <div className="container cont">
-                    <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
-                        <div className="cont gap-4 w-full text-left">
-                            <div className="cont gap-1">
-                                <h1 className="h1">
-                                    Give your <span className="text-accent">AI agent </span> the power to act
-                                </h1>
-                                <h2 className="sub__h1">
-                                    Any action in<span className="text-accent"> 1500+</span> app - no complex setups. OR
-                                    build your own, power users!
-                                </h2>
+                    <div className="container cont gap-8">
+                        <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
+                            <div className="cont gap-4 w-full text-left">
+                                <div className="cont gap-1">
+                                    <h1 className="h1">
+                                        Give your <span className="text-accent">AI agent </span> the power to act
+                                    </h1>
+                                    <h2 className="sub__h1">
+                                        Any action in<span className="text-accent"> 1500+</span> app - no complex
+                                        setups. OR build your own, power users!
+                                    </h2>
+                                </div>
+
+                                <button
+                                    className="btn btn-accent"
+                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
+                                >
+                                    Get Your MCP URL
+                                </button>
                             </div>
-
-                            <button
-                                className="btn btn-accent"
-                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
-                            >
-                                Get Your MCP URL
-                            </button>
-                        </div>
-                        {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
+                            {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
                             <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
                         </div> */}
-                    </div>
+                        </div>
 
-                    <div className="flex flex-wrap gap-4">
-                        {keyPointData.map((point, index) => (
-                            <div
-                                key={index}
-                                className={`font-semibold py-4 px-1`}
-                            >
-                                <div className="flex gap-2 h6 items-center">
+                        <div className="flex flex-wrap gap-6">
+                            {keyPointData.map((point, index) => (
+                                <div key={index} className="flex gap-2 h6 items-center">
                                     <div className="h-3 w-3 bg-accent" />
-                                    <p>{point}</p>
+                                    <p className="text-nowrap">{point}</p>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
 

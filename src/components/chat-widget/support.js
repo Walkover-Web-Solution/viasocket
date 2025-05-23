@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { MdClose, MdCircle, MdEmail } from 'react-icons/md';
+import { MdCircle, MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoCall } from 'react-icons/io5';
 import CallBackModal from './callBackModal';
@@ -23,24 +23,18 @@ export default function Support({ open, onClose, navData }) {
     const panelRef = useRef();
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') onClose();
-        };
-
-        const handleClickOutside = (e) => {
-            if (panelRef.current && !panelRef.current.contains(e.target)) {
+        const handleMouseLeave = (e) => {
+            if (panelRef.current && !panelRef.current.contains(e.relatedTarget)) {
                 onClose();
             }
         };
 
         if (open) {
-            document.addEventListener('keydown', handleKeyDown);
-            document.addEventListener('mousedown', handleClickOutside);
+            panelRef.current?.addEventListener('mouseleave', handleMouseLeave);
         }
 
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('mousedown', handleClickOutside);
+            panelRef.current?.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, [open, onClose]);
 
@@ -54,23 +48,23 @@ export default function Support({ open, onClose, navData }) {
 
     const ContactListArray = [
         {
-            text: 'Request a Callback Now',
+            text: 'Request a callback now',
             onClick: handleOpenModal,
             icon: <IoCall className="h-5 w-5 text-blue-500" />,
         },
         {
-            text: 'Send Us an Email',
+            text: 'Send us an email',
             onClick: () => (window.location.href = 'mailto:sales@viasocket.com'),
             icon: <MdEmail className="h-5 w-5 text-blue-500" />,
         },
         {
-            text: 'Chat on WhatsApp',
+            text: 'Chat on whatsApp',
             href: 'https://wa.me/+13154442439',
             target: '_blank',
             icon: <FaWhatsapp className="h-5 w-5 text-green-600" />,
         },
         {
-            text: 'Live Chat Now',
+            text: 'Live chat now',
             onClick: () => {
                 toggleChatWidget();
                 onClose();
@@ -95,13 +89,7 @@ export default function Support({ open, onClose, navData }) {
                 role="dialog"
                 aria-modal="true"
             >
-                <div className="flex justify-end p-2">
-                    <button onClick={onClose} aria-label="Close" className="p-1">
-                        <MdClose size={22} />
-                    </button>
-                </div>
-
-                <div className="flex flex-col justify-between h-[calc(100%-46px)]">
+                <div className="flex flex-col justify-between h-full pt-8">
                     {navData && (
                         <div className="cont gap-4">
                             {navData
@@ -137,7 +125,7 @@ export default function Support({ open, onClose, navData }) {
                                             href={item.href}
                                             target={item.target}
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 py-2 px-5"
+                                            className="flex items-center gap-2 py-4 px-6"
                                         >
                                             {item.icon}
                                             <span className="text-lg">{item.text}</span>
@@ -145,7 +133,7 @@ export default function Support({ open, onClose, navData }) {
                                     ) : (
                                         <button
                                             onClick={item.onClick}
-                                            className="flex items-center gap-2 py-3 px-5 w-full text-left"
+                                            className="flex items-center gap-2 py-4 px-6 w-full text-left"
                                         >
                                             {item.icon}
                                             <span className="text-lg">{item.text}</span>

@@ -38,7 +38,7 @@ export default function Navbar({ navData, utm }) {
 
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const handleClick = (event) => {
+    const handleHover = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleClose = () => {
@@ -101,13 +101,13 @@ export default function Navbar({ navData, utm }) {
                     >
                         Start Free Trial
                     </button>
-                    <button
-                        onClick={handleClick}
+                    <div
+                        onMouseEnter={handleHover}
                         className={`${borderClass} hover-bg-grey-100-text-black items-center outline-none bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 custom-border`}
                         aria-label="Menu"
                     >
                         <MdMenu size={24} />
-                    </button>
+                    </div>
                 </div>
             </div>
             <Support open={open} onClose={handleClose} navData={navData} />

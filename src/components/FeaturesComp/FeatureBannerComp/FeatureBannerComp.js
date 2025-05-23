@@ -9,20 +9,11 @@ export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
                 <Navbar navData={navData} utm={pageInfo?.url} />
             </div>
             <div className="container">
-                <div
-                    style={{
-                        backgroundImage: featureData?.image
-                            ? `url(/assets/img/bg/feature_page.png)`
-                            : 'url(/assets/img/bg/feature_index.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}
-                    className="lg:px-20 px-4 h-fit  "
-                >
-                    <div className="py-32 cont gap-16 h-full flex justify-center ">
-                        <div className="cont gap-6">
-                            <div className="cont gap-2 text-white">
-                                <h1 className="h1 !text-white">
+                <div className="h-fit ">
+                    <div className="py-20 cont gap-16 h-full flex justify-center ">
+                        <div className="cont gap-4">
+                            <div className="cont gap-1">
+                                <h1 className="h1 ">
                                     {featureData?.name || 'Explore Hundreds of Features, Available on Every Plan'}
                                 </h1>
                                 <p className="sub__h1">
@@ -37,7 +28,7 @@ export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
                             )}
                         </div>
                         {featureData?.image && (
-                            <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center">
+                            <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center border custom-border">
                                 <Image
                                     className="max-w-[2000px] border custom-border w-full"
                                     src={featureData?.image[0] || 'https://placehold.co/40x40'}
