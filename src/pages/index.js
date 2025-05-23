@@ -109,37 +109,40 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container cont gap-2 border transparent-border-black py-20 px-12 bg-white">
-                        <h2 className="h2 text-left">AI Agents That Work For You</h2>
-                        <p className="text-2xl font-semibold text-accent">
-                            Build, deploy, and automate with intelligent agents
-                        </p>
-                        <h3 className="sub__h1 ">
-                            Create intelligent workflows that handle your business processes automatically without
-                            coding. Simply describe what you need in plain language, and our platform builds custom AI
-                            agents that connect your apps, make smart decisions, and improve over time.
-                        </h3>
-                    </div>
-
-                    <div className="container cont border transparent-border-black gap-2 py-20 px-12 bg-white">
-                        <div className="cont gap-1">
-                            <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
-                            <p className="text-2xl font-semibold text-accent ">
-                                Edit workflows with AI, anywhere, anytime
+                    <div className="container">
+                        <div className="cont gap-2 border transparent-border-black p-12 bg-white">
+                            <h2 className="h2 text-left">AI Agents That Work For You</h2>
+                            <p className="text-2xl font-semibold text-accent">
+                                Build, deploy, and automate with intelligent agents
                             </p>
-                            <h3 className="sub__h1">
-                                Create and modify automation workflows from your smartphone with AI assistance. Build
-                                new workflows, make quick edits, and stay in control of your business no matter where
-                                you are.
+                            <h3 className="sub__h1 ">
+                                Create intelligent workflows that handle your business processes automatically without
+                                coding. Simply describe what you need in plain language, and our platform builds custom
+                                AI agents that connect your apps, make smart decisions, and improve over time.
                             </h3>
                         </div>
-                        <Link
-                            href="https://walkover.typeform.com/to/U33OiMgy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <button className="btn btn-accent">Apply For Early Access</button>
-                        </Link>
+                    </div>
+                    <div className="container">
+                        <div className="cont border transparent-border-black gap-2 p-12 bg-white">
+                            <div className="cont gap-1">
+                                <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
+                                <p className="text-2xl font-semibold text-accent ">
+                                    Edit workflows with AI, anywhere, anytime
+                                </p>
+                                <h3 className="sub__h1">
+                                    Create and modify automation workflows from your smartphone with AI assistance.
+                                    Build new workflows, make quick edits, and stay in control of your business no
+                                    matter where you are.
+                                </h3>
+                            </div>
+                            <Link
+                                href="https://walkover.typeform.com/to/U33OiMgy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <button className="btn btn-accent">Apply For Early Access</button>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="container">

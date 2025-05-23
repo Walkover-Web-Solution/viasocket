@@ -86,7 +86,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-end w-full container mt-4">
+                                <div className="flex justify-end w-full mt-4">
                                     <button
                                         onClick={handleLoadMore}
                                         className="btn btn-outline border transparent-border-black bg-white"
@@ -105,7 +105,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     )}
                 </div>
 
-                <div className="cont gap-6 md:gap-16 lg:gap-20 mt-20">
+                <div className="cont gap-12 md:gap-16 lg:gap-20 mt-20">
                     <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>

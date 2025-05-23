@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
-        <div className="container home-page-container  min-h-fit flex flex-col">
+        <div className="container min-h-fit cont">
             <div className=" flex flex-col h-full cont__gap">
                 <div className="md:flex-row h-full flex-col gap-4 md:text-start flex px-5 pt-16">
                     <div className="w-full flex flex-col items-center justify-center md:items-start gap-4">

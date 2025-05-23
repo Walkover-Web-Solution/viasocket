@@ -40,7 +40,7 @@ const Embed = ({
             <div className="sticky top-0 z-[100] border-b transparent-border-black">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
-            <div className="cont lg:gap-36 md:gap-24 gap-12">
+            <div className="cont lg:gap-20 md:gap-16 gap-12">
                 <div className="w-full min-h-fit lg:h-dvh  border-b transparent-border-black">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full">
@@ -57,11 +57,11 @@ const Embed = ({
                                 </div>
                                 <div className="flex flex-row  flex-wrap gap-4 items-center">
                                     <Link href="https://viasocket.com/faq/viasocket-embed">
-                                        <button className="btn btn-accent transparent-border-black">How To Start</button>
+                                        <button className="btn btn-accent">How To Start</button>
                                     </Link>
                                     <p className="text-gray-500 text-center">Or</p>
                                     <Link href="login?utm_source=/embed">
-                                        <button className="btn btn-outline transparent-border-black">Self Embed</button>
+                                        <button className="btn btn-outline bg-white">Self Embed</button>
                                     </Link>
                                 </div>
                             </div>
@@ -72,17 +72,17 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className="container w-full min-h-fit lg:h-dvh flex justify-center items-center gap-12">
-                    <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-center items-center gap-6 lg:gap-24">
+                <div className="container w-full min-h-fit lg:h-dvh">
+                    <div className="w-full h-full flex flex-col-reverse lg:flex-row justify-center items-center gap-6">
                         <div className="block w-full h-full  max-h-[600px] aspect-square min-h-[400px] bg-[#FFF5F5] md:p-6 p-2 border">
-                            <div className="flex justify-center items-center h-full w-full overflow-hidden">
+                            <div className="flex relative justify-center items-center h-full w-full overflow-hidden">
                                 <Image
                                     src={selectedImage || 'https://placehold.co/40x40'}
-                                    // layout="fill"
-                                    width={1080}
-                                    height={1080}
+                                    layout="fill"
+                                    // width={1080}
+                                    // height={1080}
                                     alt="Connector Image"
-                                    className="max-w-full h-fit "
+                                    className="object-contain"
                                 />
                             </div>
                         </div>
@@ -90,15 +90,15 @@ const Embed = ({
                             {embedData.map((item, index) => (
                                 <div
                                     key={index}
-                                    className={`px-4 py-8 group w-full ${selectedImage === item?.image[0] ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'}`}
+                                    className={`px-4 py-8 group w-full ${selectedImage === item?.image[0] ? 'bg-gray-100 text-black' : 'hover-bg-grey-100-text-black'}`}
                                     onMouseEnter={() => setSelectedImage(item?.image[0])}
                                 >
                                     <div
-                                        className={`text-lg cursor-pointer ${selectedImage === item?.image[0] ? 'text-white' : 'text-gray-400 group-hover:text-white'}`}
+                                        className={`text-lg cursor-pointer ${selectedImage === item?.image[0] ? 'text-black' : 'text-gray-700 group-hover:text-black'}`}
                                     >
                                         <div className="flex items-center gap-2">
                                             <div
-                                                className={`text-xl font-bold sm:whitespace-nowrap ${selectedImage === item?.image[0] ? 'text-white' : 'text-black group-hover:text-white'}`}
+                                                className={`text-xl font-bold sm:whitespace-nowrap ${selectedImage === item?.image[0] ? 'text-black' : 'text-black group-hover:text-black'}`}
                                             >
                                                 {item?.name}
                                             </div>
@@ -115,12 +115,13 @@ const Embed = ({
                     <Table data={tableData} />
                 </div>
 
-                <div className='container'>
+                <div className="container">
                     <div className="cont cont__py gap-12 px-24  h-fit border bg-[#F5FBFF]">
                         <div className="flex flex-col gap-2 w-full">
                             <h2 className="h2">How it works</h2>
                             <p className="sub__h1">
-                                Follow these steps, and your product will be seamlessly integrated with the viaSocket embed
+                                Follow these steps, and your product will be seamlessly integrated with the viaSocket
+                                embed
                             </p>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 justify-items-center">
@@ -137,8 +138,8 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className='container'>
-                    <div className="cont cont__py border transparent-border-black gap-12 px-12 bg-white">
+                <div className="container">
+                    <div className="cont border transparent-border-black gap-4 p-12 bg-white">
                         <div className="flex flex-col justify-start">
                             <h2 className="h2 text-left">Upgrade your Product Today with viaSocket</h2>
                             <p className="sub__h1 text-left">
@@ -154,10 +155,10 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className='container'>
-                    <div className="min-h-fit bg-white border transparent-border-black px-12">
-                        <div className="flex flex-col lg:flex-row h-full gap-12 items-center">
-                            <div className="h-full w-full lg:w-3/5 flex flex-col gap-8 px-4 lg:px-0 justify-center">
+                <div className="container">
+                    <div className=" min-h-fit bg-white border transparent-border-black p-12">
+                        <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
+                            <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
                                     <h2 className="h2">Give Your Chatbot the Power of 5,000+ Integrations</h2>
                                     <p className="sub__h1">
@@ -177,14 +178,14 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className='container'>
-                    <div className="cont cont__py border transparent-border-black p-12 gap-8 bg-white">
-                        <div className="flex flex-col gap-8">
+                <div className="container">
+                    <div className="cont border transparent-border-black p-12 gap-2 bg-white">
+                        <div className="flex flex-col gap-2">
                             <h2 className="h2">Embed Pricing</h2>
-                            <p className="h2">Start from : $500/month + $0.0005/invocation</p>
+                            <p className="h3">Start from : $500/month + $0.0005/invocation</p>
                         </div>
-                        <div>
-                            <h3 className="text-2xl md:text-3xl text-nowrap font-medium text-accent">Pay as You Grow!</h3>
+                        <div className="cont gap-1">
+                            <h3 className="h6 text-nowrap font-medium text-accent">Pay as You Grow!</h3>
                             <p className="sub__h1 max-w-[700px]">
                                 Starts after 2 year or once your customer count exceeds 1,000,whichever comes later
                             </p>
@@ -200,13 +201,13 @@ const Embed = ({
                     </div>
                 </div>
 
-                <div className='container'>
-                    <div className="cont cont__py bg-black text-white text-left gap-12 px-12">
-                        <div className="flex flex-col gap-2">
+                <div className="container">
+                    <div className="cont  bg-black text-white text-left gap-4 p-12">
+                        <div className="flex flex-col gap-1">
                             <h2 className="h2 text-white">Start Showing Automation Use Cases on Your Platform</h2>
                             <p className="sub__h1">
-                                Simply add the provided embed code to your blog or website, and instantly display real-world
-                                automation examples that highlight how your app connects with others.
+                                Simply add the provided embed code to your blog or website, and instantly display
+                                real-world automation examples that highlight how your app connects with others.
                             </p>
                         </div>
                         <Link href="https://viasocket.com/faq/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script">
@@ -234,10 +235,9 @@ const Embed = ({
                         </div>
                     )}
 
-                    <div className='container'>
+                    <div className="container">
                         <Footer footerData={footerData} />
                     </div>
-
                 </div>
             </div>
         </>

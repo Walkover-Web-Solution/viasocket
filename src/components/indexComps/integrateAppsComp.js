@@ -49,7 +49,7 @@ export default function IntegrateAppsComp() {
                             );
                         })}
                     </div>
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-end w-full">
                         <LinkButton
                             customClasses={'btn btn-accent'}
                             href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}

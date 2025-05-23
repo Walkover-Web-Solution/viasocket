@@ -101,7 +101,7 @@ export default function Support({ open, onClose, navData }) {
                     </button>
                 </div>
 
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between h-[calc(100%-46px)]">
                     {navData && (
                         <div className="cont gap-4">
                             {navData
@@ -127,8 +127,8 @@ export default function Support({ open, onClose, navData }) {
                         </div>
                     )}
 
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd Love to Hear From You!</h3>
+                    <div className="">
+                        <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd love to hear from you!</h3>
                         <ul className="grid grid-cols-1 md:grid-cols-2 border border-b-0">
                             {ContactListArray.map((item, index) => (
                                 <li key={index} className="hover:bg-gray-100 transition border-b border-r">
@@ -140,7 +140,7 @@ export default function Support({ open, onClose, navData }) {
                                             className="flex items-center gap-2 py-2 px-5"
                                         >
                                             {item.icon}
-                                            <span className="text-sm">{item.text}</span>
+                                            <span className="text-lg">{item.text}</span>
                                         </a>
                                     ) : (
                                         <button
@@ -148,7 +148,7 @@ export default function Support({ open, onClose, navData }) {
                                             className="flex items-center gap-2 py-2 px-5 w-full text-left"
                                         >
                                             {item.icon}
-                                            <span className="text-sm">{item.text}</span>
+                                            <span className="text-lg">{item.text}</span>
                                         </button>
                                     )}
                                 </li>

@@ -297,9 +297,8 @@ export default function IntegrationsAppTwoComp({
                             </Link>
                         </div>
                     </div>
-                    <div className="container">
-                        <Footer footerData={footerData} />
-                    </div>
+
+                    <Footer footerData={footerData} />
                 </div>
             </div>
         </>

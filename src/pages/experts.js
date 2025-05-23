@@ -76,52 +76,61 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                     <h2 className="h2">Non-verified automation agencies</h2>
                     {nonVerifiedArr.length > 0 && <AgencyList agencies={nonVerifiedArr} type={'nonverified'} />}
                 </div>
-                <div className="py-container  bg-white">
-                    <div className="container flex flex-col gap-9 ">
-                        <div className="grid md:grid-cols-2 grid-cols-1 gap-12 justify-between items-center">
-                            <div className="flex flex-col gap-9  h-full justify-center">
-                                <h2 className="h2">
-                                    Register your agency as our verified <br />
-                                    Experts for automations.
-                                </h2>
-                                <ul className="list-disc flex flex-col gap-3 ps-4">
-                                    <li>Lifetime free access To viasocket’s Team Plan with all advanced features</li>
-                                    <li>Assistance in creating and troubleshooting complex workflows</li>
-                                    <li>
-                                        Customized Training sessions tailored to your specific needs and skill level
-                                    </li>
-                                    <li>Free access to our comprehensive educational resources</li>
-                                    <li>Get your requested plugin live within 48 hours</li>
-                                    <li>
-                                        Showcase your expertise to a global audience by being featured on our dedicated
-                                        Expert page
-                                    </li>
-                                    <li>
-                                        Leverage our extensive network and client base to receive valuable referrals
-                                    </li>
-                                    <li>Enjoy a full year of free onboarding with our exclusive coupon code.</li>
-                                </ul>
-                                <Link target="_blank" href="https://cal.id/team/viasocket/superheros">
-                                    <button className="btn btn-md btn-accent w-fit">Be an Expert</button>
-                                </Link>
+
+                <div className="container">
+                    <div className=" bg-white border transparent-border-black p-12">
+                        <div className="cont gap-8">
+                            <div className="grid md:grid-cols-2 grid-cols-1 gap-12 justify-between items-center">
+                                <div className="flex flex-col gap-9  h-full justify-center">
+                                    <h2 className="h2">
+                                        Register your agency as our verified <br />
+                                        Experts for automations.
+                                    </h2>
+                                    <ul className="list-disc flex flex-col gap-3 ps-4">
+                                        <li>
+                                            Lifetime free access To viasocket’s Team Plan with all advanced features
+                                        </li>
+                                        <li>Assistance in creating and troubleshooting complex workflows</li>
+                                        <li>
+                                            Customized Training sessions tailored to your specific needs and skill level
+                                        </li>
+                                        <li>Free access to our comprehensive educational resources</li>
+                                        <li>Get your requested plugin live within 48 hours</li>
+                                        <li>
+                                            Showcase your expertise to a global audience by being featured on our
+                                            dedicated Expert page
+                                        </li>
+                                        <li>
+                                            Leverage our extensive network and client base to receive valuable referrals
+                                        </li>
+                                        <li>Enjoy a full year of free onboarding with our exclusive coupon code.</li>
+                                    </ul>
+                                    <Link target="_blank" href="https://cal.id/team/viasocket/superheros">
+                                        <button className="btn btn-md btn-accent w-fit">Be an Expert</button>
+                                    </Link>
+                                </div>
+                                <Image
+                                    src={'/assets/img/expertpage.png'}
+                                    className=""
+                                    width={1080}
+                                    height={1080}
+                                    alt="be an expert image"
+                                />
                             </div>
-                            <Image
-                                src={'/assets/img/expertpage.png'}
-                                className=""
-                                width={1080}
-                                height={1080}
-                                alt="be an expert image"
-                            />
                         </div>
                     </div>
                 </div>
+
                 <div className="flex flex-col gap-9 py-container container">
                     <h2 className="h2">How experts can help?</h2>
                     <div className="mt-6 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 justify-center md:justify-start gap-6">
                         {expertsHelp &&
                             expertsHelp.map((expertsHelpBlog, index) => {
                                 return (
-                                    <div key={index} className="flex flex-col gap-4 bg-white p-6 ">
+                                    <div
+                                        key={index}
+                                        className="flex flex-col gap-4 bg-white p-6 border transparent-border-black"
+                                    >
                                         <MdOutlineArticle color="#8F9396" fontSize={36} />
                                         <p className="text-xl ">{expertsHelpBlog?.description}</p>
                                         {expertsHelpBlog?.link && (
@@ -139,7 +148,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                     </div>
                 </div>
             </div>
-            <div className="container pt-16 pb-4">
+            <div className="container pb-4">
                 <Footer footerData={footerData} />
             </div>
         </>

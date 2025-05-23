@@ -4,11 +4,8 @@ import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useState } from 'react';
 import createURL from '@/utils/createURL';
-
 import IntegrationsHeadComp from '../../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsEventsComp from '../../integrationsEventsComp/integrationsEventsComp';
 
@@ -100,9 +97,9 @@ export default function IntegrationsDisconnectedComp({
                                             : `<span class="sub__h1">Your ${appOneDetails?.name} access has been disconnected, which may disrupt your workflows. Reconnect now to restore seamless access. 
                    ${
                        appOneDetails?.name === 'QuickBooks'
-                                                ? `<a target='_blank' href="https://viasocket.com/faq/integration-guides/How-to-Reconnect-QuickBooks-with-viaSocket-" class="text-blue-500 underline"> How to Reconnect?</a>`
-                                                : ''
-                                            }
+                           ? `<a target='_blank' href="https://viasocket.com/faq/integration-guides/How-to-Reconnect-QuickBooks-with-viaSocket-" class="text-blue-500 underline"> How to Reconnect?</a>`
+                           : ''
+                   }
                    </span>`,
                                 }}
                             ></div>
@@ -179,10 +176,9 @@ export default function IntegrationsDisconnectedComp({
                             </div>
                         </div>
 
-                        <div className='container'>
+                        <div className="container">
                             <Footer footerData={footerData} />
                         </div>
-
                     </div>
                 </div>
             </div>
