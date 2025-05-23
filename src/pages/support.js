@@ -82,7 +82,7 @@ export default function Support({ navData, footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/support'} />
             </div>
             <div className="container flex flex-col md:gap-16 gap-4 my-12 md:my-24">

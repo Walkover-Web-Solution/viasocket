@@ -37,11 +37,11 @@ const Embed = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-20 md:gap-16 gap-12">
-                <div className="w-full min-h-fit lg:h-dvh  border-b transparent-border-black">
+                <div className="w-full min-h-fit lg:h-dvh  border-b custom-border">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full">
                             <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
@@ -139,7 +139,7 @@ const Embed = ({
                 </div>
 
                 <div className="container">
-                    <div className="cont border transparent-border-black gap-4 p-12 bg-white">
+                    <div className="cont border custom-border gap-4 p-12 bg-white">
                         <div className="flex flex-col justify-start">
                             <h2 className="h2 text-left">Upgrade your Product Today with viaSocket</h2>
                             <p className="sub__h1 text-left">
@@ -156,7 +156,7 @@ const Embed = ({
                 </div>
 
                 <div className="container">
-                    <div className=" min-h-fit bg-white border transparent-border-black p-12">
+                    <div className=" min-h-fit bg-white border custom-border p-12">
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
@@ -179,7 +179,7 @@ const Embed = ({
                 </div>
 
                 <div className="container">
-                    <div className="cont border transparent-border-black p-12 gap-2 bg-white">
+                    <div className="cont border custom-border p-12 gap-2 bg-white">
                         <div className="flex flex-col gap-2">
                             <h2 className="h2">Embed Pricing</h2>
                             <p className="h3">Start from : $500/month + $0.0005/invocation</p>
@@ -246,7 +246,7 @@ const Embed = ({
 
 const Table = ({ data }) => {
     return (
-        <div className="w-full h-full cont gap-12 p-2 sm:p-20 border transparent-border-black bg-white">
+        <div className="w-full h-full cont gap-12 p-2 sm:p-20 border custom-border bg-white">
             <div className="flex flex-col gap-0">
                 <h2 className="h2">viaSocket Embed vs Custom Development:</h2>
                 <h2 className="h2">A Quick Overview</h2>

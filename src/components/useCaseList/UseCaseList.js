@@ -14,7 +14,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
 
     return (
         <div className="container">
-            <div className="cont gap-8 bg-white border transparent-border-black p-12">
+            <div className="cont gap-8 bg-white border custom-border p-12">
                 <div className="cont gap-2">
                     <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
                     <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>
@@ -54,7 +54,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                             </div>
                         ))}
                     </div>
-                    <div className="w-full flex justify-center items-center border transparent-border-black p-8 sm:p-16">
+                    <div className="w-full flex justify-center items-center border custom-border p-8 sm:p-16">
                         <ul className="list-disc">
                             {activeUseCases?.map((item, j) => (
                                 <li key={j} className="text-xl mb-4">

@@ -4,7 +4,7 @@ const AlphabeticalComponent = ({ alphabet, appDetails, step }) => {
     const alphabets = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 
     return (
-        <div className="border transparent-border-black p-12 border-b-0 bg-white flex flex-col gap-2 w-full ">
+        <div className="border custom-border p-12 border-b-0 bg-white flex flex-col gap-2 w-full ">
             {step === 0 && <h3 className="h3 font-semibold text-center">Browse Apps by Name</h3>}
             {step === 2 && <h3 className="h3 font-semibold text-center">Select an app to integrate with</h3>}
 

@@ -63,7 +63,7 @@ const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footer
                             </div>
                         </div>
                     </div>
-                    <div className="cont gap-4 bg-white p-6 border transparent-border-black m-auto md:w-[34vw]">
+                    <div className="cont gap-4 bg-white p-6 border custom-border m-auto md:w-[34vw]">
                         <div className="flex flex-col gap-2">
                             <div className="cont gap-2">
                                 <div className="flex gap-1">

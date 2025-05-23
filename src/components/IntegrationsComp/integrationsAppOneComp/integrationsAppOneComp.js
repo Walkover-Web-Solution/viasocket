@@ -57,13 +57,13 @@ export default function IntegrationsAppOneComp({
                                         : 'http://' + appOneDetails?.domain
                                 }
                             >
-                                <button className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
+                                <button className="bg-white flex border custom-border items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
                                     Login to {appOneDetails?.name} <MdOpenInNew />{' '}
                                 </button>
                             </Link>
 
                             <button
-                                className="bg-white flex border transparent-border-black items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
+                                className="bg-white flex border custom-border items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
                                 onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                 rel="nofollow"
                             >
@@ -71,7 +71,7 @@ export default function IntegrationsAppOneComp({
                             </button>
                         </div>
                         <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border transparent-border-black">
+                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
                                 <Image
                                     className="h-8 md:h-10 w-fit"
                                     src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -121,7 +121,7 @@ export default function IntegrationsAppOneComp({
                             </p>
                         </div>
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t transparent-border-black">
+                            <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
@@ -245,8 +245,8 @@ export default function IntegrationsAppOneComp({
             <div className="container pb-4 cont">
                 {faqData && <FAQSection faqData={faqData} />}
 
-                <div className="flex flex-col md:flex-row border border-x-0 border-b-0 transparent-border-black bg-white">
-                    <div className="cont gap-4 p-12 border-x transparent-border-black w-full md:border-b-0 border-b">
+                <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
+                    <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
                         <div>
                             <Image
                                 className="h-10 w-fit"
@@ -280,7 +280,7 @@ export default function IntegrationsAppOneComp({
                             <LinkText children={'Learn More'} />
                         </Link>
                     </div>
-                    <div className="w-full cont gap-4 p-12 border-x md:border-l-0 transparent-border-black">
+                    <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
                             <Image
                                 className="h-10 w-fit"

@@ -128,11 +128,11 @@ export default function McpAppComp({
 
                     <div className="container flex flex-col lg:flex-row gap-4">
                         <div className="cont gap-16 w-full lg:w-2/3">
-                            <div className="flex gap-4">
-                                <div className="border transparent-border-black p-4 bg-gray-200">
+                            <div className="flex gap-4 items-center">
+                                <div className="border custom-border p-3 bg-gray-200">
                                     <Image src={appOneDetails?.iconurl} width={50} height={50} />
                                 </div>
-                                <div className="cont gap-1">
+                                <div className="cont">
                                     <h2 className="text-2xl"> {appOneDetails?.name} MCP</h2>
                                     <h2 className="text-2xl text-gray-500">{appOneDetails?.category[0]}</h2>
                                 </div>
