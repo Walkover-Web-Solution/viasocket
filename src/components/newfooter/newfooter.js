@@ -50,9 +50,9 @@ const NewFooter = ({ footerData, borderClass }) => {
     return (
         <>
             <div
-                className={`grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border  transparent-border-black ${borderClass}`}
+                className={`grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border  custom-border ${borderClass}`}
             >
-                <div className="row-span-1 col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4  lg:border-r border-r-0 transparent-border-black">
+                <div className="row-span-1 col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4  lg:border-r border-r-0 custom-border">
                     <div className="flex flex-col gap-2 mb-12 sm:mb-6 py-4">
                         <Link href="/" aria-label="socket fav icon">
                             <Image
@@ -73,15 +73,15 @@ const NewFooter = ({ footerData, borderClass }) => {
                     </div>
                 </div>
                 <div className=" row-span-1 col-span-4 lg:col-span-3 grid sm:grid-cols-3 grid-cols-1">
-                    <div className="flex flex-col gap-8 md:p-10 p-4 lg:border-b-0  border-b sm:border-r transparent-border-black">
+                    <div className="flex flex-col gap-8 md:p-10 p-4 lg:border-b-0  border-b sm:border-r custom-border">
                         {renderedGroups.slice(0, 2)}
                     </div>
 
-                    <div className="flex flex-col gap-8 md:p-10 p-4 sm:border-r lg:border-b-0  border-b transparent-border-black">
+                    <div className="flex flex-col gap-8 md:p-10 p-4 sm:border-r lg:border-b-0  border-b custom-border">
                         {renderedGroups.slice(2, 4)}
                     </div>
 
-                    <div className="flex flex-col lg:border-b-0 border-b transparent-border-black gap-8 md:p-10 p-4 ">
+                    <div className="flex flex-col lg:border-b-0 border-b custom-border gap-8 md:p-10 p-4 ">
                         {renderedGroups.slice(4, 5)}
                         <div className="flex gap-2 md:gap-4">
                             <Link

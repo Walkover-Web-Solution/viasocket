@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { MdClose, MdCircle, MdEmail } from 'react-icons/md';
+import { MdCircle, MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoCall } from 'react-icons/io5';
 import CallBackModal from './callBackModal';
@@ -23,24 +23,18 @@ export default function Support({ open, onClose, navData }) {
     const panelRef = useRef();
 
     useEffect(() => {
-        const handleKeyDown = (e) => {
-            if (e.key === 'Escape') onClose();
-        };
-
-        const handleClickOutside = (e) => {
-            if (panelRef.current && !panelRef.current.contains(e.target)) {
+        const handleMouseLeave = (e) => {
+            if (panelRef.current && !panelRef.current.contains(e.relatedTarget)) {
                 onClose();
             }
         };
 
         if (open) {
-            document.addEventListener('keydown', handleKeyDown);
-            document.addEventListener('mousedown', handleClickOutside);
+            panelRef.current?.addEventListener('mouseleave', handleMouseLeave);
         }
 
         return () => {
-            document.removeEventListener('keydown', handleKeyDown);
-            document.removeEventListener('mousedown', handleClickOutside);
+            panelRef.current?.removeEventListener('mouseleave', handleMouseLeave);
         };
     }, [open, onClose]);
 
@@ -54,23 +48,23 @@ export default function Support({ open, onClose, navData }) {
 
     const ContactListArray = [
         {
-            text: 'Request a Callback Now',
+            text: 'Request a callback now',
             onClick: handleOpenModal,
             icon: <IoCall className="h-5 w-5 text-blue-500" />,
         },
         {
-            text: 'Send Us an Email',
+            text: 'Send us an email',
             onClick: () => (window.location.href = 'mailto:sales@viasocket.com'),
             icon: <MdEmail className="h-5 w-5 text-blue-500" />,
         },
         {
-            text: 'Chat on WhatsApp',
+            text: 'Chat on whatsApp',
             href: 'https://wa.me/+13154442439',
             target: '_blank',
             icon: <FaWhatsapp className="h-5 w-5 text-green-600" />,
         },
         {
-            text: 'Live Chat Now',
+            text: 'Live chat now',
             onClick: () => {
                 toggleChatWidget();
                 onClose();
@@ -89,19 +83,13 @@ export default function Support({ open, onClose, navData }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l transparent-border-black shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
                     open ? 'translate-x-0' : 'translate-x-full'
                 }`}
                 role="dialog"
                 aria-modal="true"
             >
-                <div className="flex justify-end p-2">
-                    <button onClick={onClose} aria-label="Close" className="p-1">
-                        <MdClose size={22} />
-                    </button>
-                </div>
-
-                <div className="flex flex-col justify-between">
+                <div className="flex flex-col justify-between h-full pt-8">
                     {navData && (
                         <div className="cont gap-4">
                             {navData
@@ -127,8 +115,8 @@ export default function Support({ open, onClose, navData }) {
                         </div>
                     )}
 
-                    <div className="space-y-4">
-                        <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd Love to Hear From You!</h3>
+                    <div className="">
+                        <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd love to hear from you!</h3>
                         <ul className="grid grid-cols-1 md:grid-cols-2 border border-b-0">
                             {ContactListArray.map((item, index) => (
                                 <li key={index} className="hover:bg-gray-100 transition border-b border-r">
@@ -137,18 +125,18 @@ export default function Support({ open, onClose, navData }) {
                                             href={item.href}
                                             target={item.target}
                                             rel="noreferrer"
-                                            className="flex items-center gap-2 py-2 px-5"
+                                            className="flex items-center gap-2 py-4 px-6"
                                         >
                                             {item.icon}
-                                            <span className="text-sm">{item.text}</span>
+                                            <span className="text-lg">{item.text}</span>
                                         </a>
                                     ) : (
                                         <button
                                             onClick={item.onClick}
-                                            className="flex items-center gap-2 py-2 px-5 w-full text-left"
+                                            className="flex items-center gap-2 py-4 px-6 w-full text-left"
                                         >
                                             {item.icon}
-                                            <span className="text-sm">{item.text}</span>
+                                            <span className="text-lg">{item.text}</span>
                                         </button>
                                     )}
                                 </li>

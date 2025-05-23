@@ -86,7 +86,7 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="container flex justify-center items-center">
@@ -101,7 +101,7 @@ export default function IntegrationsIndexComp({
                 </div>
             </div>
             <div className="container cont">
-                <label className="input border max-w-[400px] transparent-border-black flex items-center gap-2 focus-within:outline-none">
+                <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -114,7 +114,7 @@ export default function IntegrationsIndexComp({
                     />
                 </label>
                 <div className="flex">
-                    <div className=" border transparent-border-black border-t-0 lg:block hidden bg-white">
+                    <div className=" border custom-border border-t-0 lg:block hidden bg-white">
                         <div className="cont max-w-[252px] min-w-[252px] ">
                             {debounceValue ? (
                                 searchedCategoies ? (
@@ -123,7 +123,7 @@ export default function IntegrationsIndexComp({
                                             return (
                                                 <a
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:custom-border'}`}
                                                     href={createURL(`/integrations/category/${category?.slug}`)}
                                                 >
                                                     {category?.name}
@@ -132,7 +132,7 @@ export default function IntegrationsIndexComp({
                                         }
                                     })
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
+                                    <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
                                         No category found for Searched name{' '}
                                     </span>
                                 )
@@ -142,7 +142,7 @@ export default function IntegrationsIndexComp({
                                         return (
                                             <a
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:transparent-border-black'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category?.slug === integrationsInfo?.category ? 'border-accent' : 'border-white hover:custom-border'}`}
                                                 href={createURL(`/integrations/category/${category?.slug}`)}
                                             >
                                                 {category?.name}
@@ -181,7 +181,7 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
 
-                        <div className={`${style.appsgrid} transparent-border-black`}>
+                        <div className={`${style.appsgrid} custom-border`}>
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
                                     searchedApps?.map((app, index) => {
@@ -208,7 +208,7 @@ export default function IntegrationsIndexComp({
                                         );
                                     })
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border transparent-border-black border-l-0 border-t-0 ">
+                                    <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
                                         No Apps found for Searched name{' '}
                                     </span>
                                 )
@@ -218,7 +218,7 @@ export default function IntegrationsIndexComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/integrations/${app?.appslugname}`)}
-                                            className={`${style.app} hover-bg-grey-100-text-black transparent-border-black`}
+                                            className={`${style.app} hover-bg-grey-100-text-black custom-border`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <div className="border flex items-center justify-center w-9 h-9 bg-white">
@@ -255,8 +255,24 @@ export default function IntegrationsIndexComp({
                     </div>
                 )}
             </div>
+            <div className='container'>
+                <div className="cont gap-2 border custom-border p-12 bg-white">
+                    <h2 className="h2 text-left">List your app on the viaSocket marketplace
+                    </h2>
+                    <p className="sub__h1">
+                        viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace.
+                    </p>
+                    <Link
+                        href="https://viasocket.com/faq/developer-hub"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <button className="btn btn-accent">Build viaSocket integration</button>
+                    </Link>
+                </div>
+            </div>
             <div className="container my-6 bg-white">
-                <div className="border transparent-border-black p-20 cont cont__gap">
+                <div className="border custom-border p-12 cont cont__gap">
                     <div className="cont gap-2">
                         <h2 className="h2">Couldn't Find Your App? Don’t Worry, We’ll Build It For You</h2>
                         <p className="text-xl">

@@ -4,7 +4,7 @@
         width: 100% !important;
     }
     &.btn-outline {
-        @apply hover:bg-black hover:text-white transparent-border-black;
+        @apply hover:bg-black hover:text-white custom-border;
     }
     &.btn-white {
         @apply bg-white border-0 hover:bg-gray-300 transition-all duration-200;
@@ -18,7 +18,7 @@
     }
 
     &.btn-accent {
-        @apply text-white transparent-border-black;
+        @apply text-white custom-border;
         &:hover {
             @apply bg-black;
         }

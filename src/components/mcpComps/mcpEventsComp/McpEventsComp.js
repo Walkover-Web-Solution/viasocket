@@ -33,7 +33,7 @@ export default function McpEventComp({ appOneDetails }) {
                     {pair.map((event, index) => (
                         <div
                             key={index}
-                            className="p-4 border transparent-border-black flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer bg-white"
+                            className="p-4 border custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
                         >
                             <Image
                                 src={getIcons(event?.pluginslugname) || 'https://placehold.co/40x40'}
@@ -72,7 +72,7 @@ export default function McpEventComp({ appOneDetails }) {
                         onClick={() => {
                             setVisibleEvents(visibleEvents + 6);
                         }}
-                        className="btn border transparent-border-black hover-bg-grey-100-text-black bg-white"
+                        className="btn border custom-border hover-bg-grey-100-text-black bg-white"
                     >
                         Load More <MdKeyboardArrowDown fontSize={20} />
                     </button>

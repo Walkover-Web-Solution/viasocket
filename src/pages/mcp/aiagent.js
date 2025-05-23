@@ -14,67 +14,71 @@ export const runtime = 'experimental-edge';
 
 export default function aiagent({ navData, footerData, faqData, metaData, blogData }) {
     return (
-        <div className="cont pb-4 lg:gap-20 md:gap-16 gap-12">
+        <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/mcp'} />
             </div>
-            <McpSwitchComp />
-            <div className="container cont">
-                <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
-                    <div className="cont gap-4 w-full text-left">
-                        <h1 className="h1">
-                            <span className="text-accent"> Ditch MCP,</span> Embed Actions
-                        </h1>
-                        <h2 className="sub__h1">
-                            Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical baggage
-                        </h2>
+
+            <div className="cont gap-8">
+                <McpSwitchComp />
+                <div className="container cont">
+                    <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
+                        <div className="cont gap-4 w-full text-left">
+                            <h1 className="h1">
+                                <span className="text-accent"> Ditch MCP,</span> Embed Actions
+                            </h1>
+                            <h2 className="sub__h1">
+                                Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical
+                                baggage
+                            </h2>
+                        </div>
                     </div>
-                </div>
 
-                <div className=" py-8">
-                    <h2 className="text-3xl font-bold mb-6">Why choose Embed over MCP?</h2>
-                    <ul className="space-y-4 text-xl list-disc  pl-6">
-                        <li>Run your own MCP server for over 1,000 tools</li>
-                        <li>Manage Servers for your users in your Agents</li>
-                        <li>Secure Connection with Built-In Auth</li>
-                        <li>No more context switching</li>
-                        <li>Setup in Minutes without any complexity</li>
-                    </ul>
-                </div>
+                    <div className=" py-8">
+                        <h2 className="text-3xl font-bold mb-6">Why choose Embed over MCP?</h2>
+                        <ul className="space-y-4 text-xl list-disc  pl-6">
+                            <li>Run your own MCP server for over 1,000 tools</li>
+                            <li>Manage Servers for your users in your Agents</li>
+                            <li>Secure Connection with Built-In Auth</li>
+                            <li>No more context switching</li>
+                            <li>Setup in Minutes without any complexity</li>
+                        </ul>
+                    </div>
 
-                <div className=" py-8">
-                    <h2 className="text-3xl font-bold mb-6">Getting Started</h2>
-                    <ul className="space-y-4 text-xl list-disc  pl-6">
-                        <li>
-                            <strong>Creating an MCP Client:</strong> Within your AI agent, you need to create a
-                            component that acts as an MCP client
-                        </li>
-                        <li>
-                            <strong>Embed MCP:</strong>In just a few lines of script, you can bring 1,000+ MCP servers
-                            into your AI Agent platform
-                        </li>
-                        <li>
-                            <strong>Your AI Starts Acting in the Real World:</strong> Read emails, schedule meetings,
-                            update tickets, and automate business tasks—all via your agent
-                        </li>
-                    </ul>
-                </div>
+                    <div className=" py-8">
+                        <h2 className="text-3xl font-bold mb-6">Getting Started</h2>
+                        <ul className="space-y-4 text-xl list-disc  pl-6">
+                            <li>
+                                <strong>Creating an MCP Client:</strong> Within your AI agent, you need to create a
+                                component that acts as an MCP client
+                            </li>
+                            <li>
+                                <strong>Embed MCP:</strong> In just a few lines of script, you can bring 1,000+ MCP
+                                servers into your AI Agent platform
+                            </li>
+                            <li>
+                                <strong>Your AI Starts Acting in the Real World:</strong> Read emails, schedule
+                                meetings, update tickets, and automate business tasks—all via your agent
+                            </li>
+                        </ul>
+                    </div>
 
-                <div className=" py-8">
-                    <h2 className="text-3xl font-bold mb-6">Why viaSocket MCP?</h2>
-                    <ul className="space-y-4 text-xl">
-                        <li>✅ One link, thousands of integrations</li>
-                        <li>✅ Zero custom backend development</li>
-                        <li>✅ Secure, scalable, and easy to embed</li>
-                        <li>✅ Supports built-in authentication flows</li>
-                    </ul>
+                    <div className=" py-8">
+                        <h2 className="text-3xl font-bold mb-6">Why viaSocket MCP?</h2>
+                        <ul className="space-y-4 text-xl">
+                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> One link, thousands of integrations</li>
+                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Zero custom backend development</li>
+                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Secure, scalable, and easy to embed</li>
+                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Supports built-in authentication flows</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
-            <div className="container cont p-12 border transparent-border-black justify-start items-start gap-4 bg-white">
+            <div className="container cont p-12 border custom-border justify-start items-start gap-4 bg-white">
                 <div className="cont items-start gap-1">
-                    <h2 className="h1 text-left">Ready to Embed?</h2>
+                    <h2 className="h2 text-left">Ready to Embed?</h2>
                     <p className="sub__h1 text-left">
                         Start integrating viaSocket MCP today and give your users the power to connect their agents with
                         the tools they already use — no extra coding required.

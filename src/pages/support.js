@@ -82,11 +82,11 @@ export default function Support({ navData, footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/support'} />
             </div>
-            <div className="container flex flex-col justify-center items-center md:gap-16 gap-4 my-12 md:my-24">
-                <div className="flex flex-col gap-3 md:text-center text-start md:items-center md:w-full sm:w-1/2 w-full min-w-[300px}">
+            <div className="container flex flex-col md:gap-16 gap-4 my-12 md:my-24">
+                <div className="flex flex-col gap-3 text-start md:w-full sm:w-1/2 w-full min-w-[300px}">
                     <h1 className="md:text-5xl text-4xl font-semibold">viaSocket Support</h1>
                     <p className="md:text-xl text-lg font-medium md:w-2/3">
                         We are here to assist you with any questions, concerns, or feedback you may have. Whether you're
@@ -94,17 +94,17 @@ export default function Support({ navData, footerData, metaData }) {
                         hear from you.
                     </p>
                 </div>
-                <div className=" flex flex-col justify-center items-center gap-16 mx-auto  md:flex-row  my-4 ">
-                    <div className="flex flex-col gap-10 md:w-full sm:w-1/2 w-full min-w-[300px}  ">
-                        <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-16 md:flex-row my-4">
+                    <div className="flex flex-col gap-10 md:w-full sm:w-1/2 w-full min-w-[300px]">
+                        <div className="flex flex-col gap-2 text-left">
                             <h2 className="md:text-3xl text-2xl font-semibold">Get In Touch</h2>
-                            <p className="fext-lg font-medium md:w-2/3">
+                            <p className="text-lg font-medium">
                                 Our team is available 24/7 to assist you. Get in touch via email, phone, or live chat
                                 and experience seamless support and integration!
                             </p>
                         </div>
-                        <div className="flex flex-col gap-6 w-full">
-                            <div className="flex align-center gap-3">
+                        <div className="flex flex-col gap-6 w-full text-left">
+                            <div className="flex items-center gap-3">
                                 <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
                                     <MdCall color="primary" fontSize={22} />
                                 </div>
@@ -118,7 +118,7 @@ export default function Support({ navData, footerData, metaData }) {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex align-center gap-3">
+                            <div className="flex items-center gap-3">
                                 <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
                                     <MdOutlineWhatsapp color="primary" fontSize={22} />
                                 </div>
@@ -132,7 +132,7 @@ export default function Support({ navData, footerData, metaData }) {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex align-center gap-3">
+                            <div className="flex items-center gap-3">
                                 <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
                                     <MdMail color="primary" fontSize={22} />
                                 </div>
@@ -146,7 +146,7 @@ export default function Support({ navData, footerData, metaData }) {
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex align-center gap-3">
+                            <div className="flex items-center gap-3">
                                 <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
                                     <MdMail color="primary" fontSize={22} />
                                 </div>
@@ -166,20 +166,20 @@ export default function Support({ navData, footerData, metaData }) {
                                 Live Chat
                             </button>
                             <Link href="https://cal.id/team/viasocket/superheros" target="_blank">
-                                <button className="btn btn-primary btn-outline">Book a Meeting</button>
+                                <button className="btn btn-primary btn-outline bg-white">Book a Meeting</button>
                             </Link>
                             <Link href="https://viasocket.com/faq" target="_blank">
-                                <button className="btn btn-primary btn-outline">Help Doc</button>
+                                <button className="btn btn-primary btn-outline bg-white">Help Doc</button>
                             </Link>
                             <Link href="https://viasocket.com/community" target="_blank">
-                                <button className="btn btn-primary btn-outline">Community </button>
+                                <button className="btn btn-primary btn-outline bg-white">Community </button>
                             </Link>
                         </div>
                     </div>
 
-                    <div className="flex flex-col items-center justify-center gap-5 w-full md:w-full sm:w-1/2 md:max-w-[500px] bg-[#EDE8DE] lg:p-12 md:p-8 sm:p-12 p-4  h-[500px]">
+                    <div className="flex flex-col gap-5 w-full md:w-full sm:w-1/2 md:max-w-[500px] bg-[#EDE8DE] lg:p-12 md:p-8 sm:p-12 p-4 h-[500px]">
                         {issubmit ? (
-                            <div className="flex flex-col items-center gap-4 max-w-[300px]">
+                            <div className="flex flex-col gap-4 max-w-[300px]">
                                 <Image
                                     className="h-[140px] w-[140px]"
                                     src={`/assets/img/check.png`}
@@ -187,12 +187,12 @@ export default function Support({ navData, footerData, metaData }) {
                                     height={100}
                                     alt={'img'}
                                 />
-                                <p className="text-center">
+                                <p className="text-left">
                                     Stay tuned, you will receive a response within the next 24 hours.
-                                </p>{' '}
+                                </p>
                             </div>
                         ) : (
-                            <div className="flex flex-col gap-4 w-full  ">
+                            <div className="flex flex-col gap-4 w-full text-left">
                                 <h2 className="md:text-3xl text-2xl font-semibold">Send a message</h2>
                                 <input
                                     required
@@ -227,9 +227,9 @@ export default function Support({ navData, footerData, metaData }) {
                             </div>
                         )}
                     </div>
-                </div>{' '}
+                </div>
             </div>
-            <div className="container pt-16 pb-4">
+            <div className="container pb-4">
                 <Footer footerData={footerData} />
             </div>
         </>

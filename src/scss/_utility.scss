@@ -1,12 +1,12 @@
 /** We need custom colors, custom sizes, etc. So, create a class and use this class in all components */
 
 /** Border Colors */
-.transparent-border-black {
-    border-color: var(--transparent-border-black) !important;
+.custom-border {
+    border-color: var(--custom-border) !important;
 }
 
 .border-right-color {
-    border-right: 1px solid var(--transparent-border-black) !important;
+    border-right: 1px solid var(--custom-border) !important;
 }
 
 /** Hover classes */

@@ -65,7 +65,7 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/index'} />
             </div>
             <div className="add-background-color">
@@ -79,7 +79,7 @@ const Index = ({
                     <StreamlineDataGrid items={streamlineData} />
 
                     <div className="container cont">
-                        <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border transparent-border-black bg-white">
+                        <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border custom-border bg-white">
                             <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
                             <StepDisplay steps={indexSteps} />
                         </div>
@@ -95,6 +95,24 @@ const Index = ({
                         <IntegrateAppsComp />
                     </div>
 
+                    <div className='container'>
+                        <div className="cont gap-2 border custom-border p-12 bg-white">
+                            <h2 className="h2 text-left">List your app on the viaSocket marketplace
+                            </h2>
+                            <p className="sub__h1">
+                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace.
+                            </p>
+                            <Link
+                                href="https://viasocket.com/faq/developer-hub"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <button className="btn btn-accent">Build viaSocket integration</button>
+                            </Link>
+                        </div>
+                    </div>
+
+
                     <div className="container cont">
                         <CaseStudiesSection caseStudies={caseStudies} />
                         <div className="flex justify-end">
@@ -102,44 +120,47 @@ const Index = ({
                                 href="https://viasocket.com/blog/tag/client-story"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border transparent-border-black border-t-0 px-4 py-2 "
+                                className="border custom-border border-t-0 px-4 py-2 "
                             >
                                 <LinkText>Read More</LinkText>
                             </Link>
                         </div>
                     </div>
 
-                    <div className="container cont gap-2 border transparent-border-black py-20 px-12 bg-white">
-                        <h2 className="h2 text-left">AI Agents That Work For You</h2>
-                        <p className="text-2xl font-semibold text-accent">
-                            Build, deploy, and automate with intelligent agents
-                        </p>
-                        <h3 className="sub__h1 ">
-                            Create intelligent workflows that handle your business processes automatically without
-                            coding. Simply describe what you need in plain language, and our platform builds custom AI
-                            agents that connect your apps, make smart decisions, and improve over time.
-                        </h3>
-                    </div>
-
-                    <div className="container cont border transparent-border-black gap-2 py-20 px-12 bg-white">
-                        <div className="cont gap-1">
-                            <h2 className="h2 text-left">Be First in Line: Mobile App Early Access</h2>
-                            <p className="text-2xl font-semibold text-accent ">
-                                Edit workflows with AI, anywhere, anytime
+                    <div className="container">
+                        <div className="cont gap-2 border custom-border p-12 bg-white">
+                            <h2 className="h2 text-left">AI agents that work for you</h2>
+                            <p className="text-2xl font-semibold text-accent">
+                                Build, deploy, and automate with intelligent agents
                             </p>
-                            <h3 className="sub__h1">
-                                Create and modify automation workflows from your smartphone with AI assistance. Build
-                                new workflows, make quick edits, and stay in control of your business no matter where
-                                you are.
+                            <h3 className="sub__h1 ">
+                                Create intelligent workflows that handle your business processes automatically without
+                                coding. Simply describe what you need in plain language, and our platform builds custom
+                                AI agents that connect your apps, make smart decisions, and improve over time.
                             </h3>
                         </div>
-                        <Link
-                            href="https://walkover.typeform.com/to/U33OiMgy"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            <button className="btn btn-accent">Apply For Early Access</button>
-                        </Link>
+                    </div>
+                    <div className="container">
+                        <div className="cont border custom-border gap-2 p-12 bg-white">
+                            <div className="cont gap-1">
+                                <h2 className="h2 text-left">Be first in line: mobile app early access</h2>
+                                <p className="text-2xl font-semibold text-accent ">
+                                    Edit workflows with AI, anywhere, anytime
+                                </p>
+                                <h3 className="sub__h1">
+                                    Create and modify automation workflows from your smartphone with AI assistance.
+                                    Build new workflows, make quick edits, and stay in control of your business no
+                                    matter where you are.
+                                </h3>
+                            </div>
+                            <Link
+                                href="https://walkover.typeform.com/to/U33OiMgy"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+                                <button className="btn btn-accent">Apply For Early Access</button>
+                            </Link>
+                        </div>
                     </div>
 
                     <div className="container">
@@ -153,7 +174,7 @@ const Index = ({
                             </div>
                         )}
                         <div className="container cont">
-                            <AlphabeticalComponent step={0} />
+                            <AlphabeticalComponent />
                         </div>
                         <SecuritySection securityGridData={securityGridData} />
                         <div className="container">
@@ -189,12 +210,12 @@ const StreamlineDataGrid = ({ items }) => {
     return (
         <div className="container cont">
             <h2 className="h2 mb-4">Streamline Every Department with AI Workflow Automation</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border transparent-border-black border-t-0 border-r-0 bg-white cursor-pointer">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border custom-border border-t-0 border-r-0 bg-white cursor-pointer">
                 {items.map((item, index) => (
                     <Link
                         href={item.link}
                         key={index}
-                        className="cont gap-1 py-12 px-8 border transparent-border-black border-b-0 border-l-0 hover:bg-gray-100 group relative"
+                        className="cont gap-1 py-12 px-8 border custom-border border-b-0 border-l-0 hover:bg-gray-100 group relative"
                     >
                         {getIconComponent(item.iconName)}
                         <h4 className="h3">{item.title}</h4>
@@ -217,7 +238,7 @@ const TestimonialsSection = ({ testimonials }) => (
                 <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
                     <div className="flex flex-col  gap-2 ">
                         <Image
-                            className="border transparent-border-black"
+                            className="border custom-border"
                             src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
                             width={50}
                             height={50}
@@ -238,7 +259,7 @@ const TestimonialsSection = ({ testimonials }) => (
 const CaseStudiesSection = ({ caseStudies }) => (
     <div className="flex flex-col gap-9">
         <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border transparent-border-black p-8 bg-white">
+        <div className="flex flex-col gap-8 w-full border custom-border p-8 bg-white">
             {caseStudies.map((caseStudy, index) => (
                 <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
             ))}
@@ -268,7 +289,7 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
             <div className={`hidden md:flex w-full ${isEven ? 'flex-row-reverse' : 'flex-row'}`}>
                 <div className="w-1/2 casestudy_img overflow-hidden px-8">
                     <Image
-                        className="h-full w-full object-cover border transparent-border-black"
+                        className="h-full w-full object-cover border custom-border"
                         src={caseStudy?.image_1[0] || 'https://placehold.co/40x40'}
                         width={1080}
                         height={1080}
@@ -306,7 +327,7 @@ const SecuritySection = ({ securityGridData }) => {
     };
     return (
         <div className="container">
-            <div className="border transparent-border-black p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
+            <div className="border custom-border p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
                 <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>

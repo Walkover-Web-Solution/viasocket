@@ -47,7 +47,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
@@ -66,7 +66,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
 
                 <div className="cont container">
                     <div className="max-w-[400px] w-full">
-                        <label className="input border transparent-border-black flex items-center gap-1 focus-within:outline-none h-[42px] mb-4">
+                        <label className="input border custom-border flex items-center gap-1 focus-within:outline-none h-[42px] mb-4">
                             <MdSearch size={20} />
                             <input
                                 type="text"
@@ -86,10 +86,10 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                                 ))}
                             </div>
                             {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-end w-full container mt-4">
+                                <div className="flex justify-end w-full mt-4">
                                     <button
                                         onClick={handleLoadMore}
-                                        className="btn btn-outline border transparent-border-black bg-white"
+                                        className="btn btn-outline border custom-border bg-white"
                                     >
                                         Load More <MdKeyboardArrowDown size={24} />
                                     </button>
@@ -105,7 +105,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
                     )}
                 </div>
 
-                <div className="cont gap-6 md:gap-16 lg:gap-20 mt-20">
+                <div className="cont gap-12 md:gap-16 lg:gap-20 mt-20">
                     <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>

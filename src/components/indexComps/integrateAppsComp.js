@@ -22,7 +22,7 @@ export default function IntegrateAppsComp() {
     if (apps?.length > 0) {
         return (
             <>
-                <div className="cont cont__gap border transparent-border-black p-12 bg-white">
+                <div className="cont cont__gap border custom-border p-12 bg-white">
                     <h2 className="h2">
                         Integrate <span className="text-accent italic">1500+</span> Apps
                     </h2>
@@ -49,7 +49,7 @@ export default function IntegrateAppsComp() {
                             );
                         })}
                     </div>
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-end w-full">
                         <LinkButton
                             customClasses={'btn btn-accent'}
                             href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}

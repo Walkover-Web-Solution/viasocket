@@ -64,7 +64,7 @@ function CallBackModal() {
                             <label className="block text-sm mb-1">Enter your email here*</label>
                             <input
                                 type="email"
-                                className={`input input-bordered transparent-border-black w-full focus:outline-none form-control ${!isEmailValid ? 'border-red-500' : ''}`}
+                                className={`input input-bordered custom-border w-full focus:outline-none form-control ${!isEmailValid ? 'border-red-500' : ''}`}
                                 value={email}
                                 onChange={(e) => {
                                     const value = e.target.value.trim();
@@ -83,7 +83,7 @@ function CallBackModal() {
                             <label className="block text-sm mb-1">Enter mobile number here*</label>
                             <input
                                 type="text"
-                                className={`input input-bordered transparent-border-black w-full focus:outline-none form-control ${!isPhoneValid ? 'border-red-500' : ''}`}
+                                className={`input input-bordered custom-border w-full focus:outline-none form-control ${!isPhoneValid ? 'border-red-500' : ''}`}
                                 value={phone}
                                 onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                                 placeholder="Example: 9876543210"
@@ -96,7 +96,7 @@ function CallBackModal() {
                         <div className="mb-3">
                             <label className="block text-sm mb-1">Specify your query here (optional)</label>
                             <textarea
-                                className="textarea textarea-bordered transparent-border-black focus:outline-none min-h-[100px] w-full form-control"
+                                className="textarea textarea-bordered custom-border focus:outline-none min-h-[100px] w-full form-control"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
                                 placeholder="Specify your query here"

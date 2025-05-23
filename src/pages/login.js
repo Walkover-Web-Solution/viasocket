@@ -47,7 +47,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, navData, footerData
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/login'} pathArray={pathArray} />
-            <div className="sticky top-0 z-[100] border-b transparent-border-black">
+            <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar navData={navData} utm={'/signup'} />
             </div>
             <div className="flex flex-col-reverse md:flex-row md:min-h-[calc(100vh-200px)]">
