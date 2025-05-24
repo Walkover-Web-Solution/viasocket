@@ -5,8 +5,10 @@ import style from './navbar.module.scss';
 import { useState } from 'react';
 import Support from '../chat-widget/support';
 import { handleRedirect } from '@/utils/handleRedirection';
+import { useRouter } from 'next/router';
 
 export default function Navbar({ navData, utm }) {
+    const router = useRouter();
     let shorterData = [];
     if (navData?.length > 0) {
         const prioritizedItems = navData.filter((item) => item.priority);
@@ -45,6 +47,10 @@ export default function Navbar({ navData, utm }) {
         setAnchorEl(null);
     };
 
+    const isActive = (path) => {
+        return router.pathname === path ? 'text-accent !font-semibold' : '';
+    };
+
     return (
         <>
             <div className="justify-between flex bg-white px-4">
@@ -74,15 +80,26 @@ export default function Navbar({ navData, utm }) {
                 </Link>
 
                 <div className="flex">
+                    {router.pathname !== '/pricing' && (
+                        <Link
+                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center !text-accent !font-semibold`}
+                            href={router.pathname}
+                            rel="nofollow"
+                        >
+                            {router.pathname === '/' ? 'Home' :
+                                router.pathname.split('/')[1].charAt(0).toUpperCase() +
+                                router.pathname.split('/')[1].slice(1).toLowerCase()}
+                        </Link>
+                    )}
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/discovery')}`}
                         href={`https://viasocket.com/discovery`}
                         rel="nofollow"
                     >
                         Explore Apps
                     </Link>
                     <Link
-                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
                         href={`/pricing`}
                         rel="nofollow"
                     >

@@ -98,6 +98,24 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             </div>
 
             <div className="container">
+                <div className="cont gap-2 border custom-border p-12 bg-white">
+                    <h2 className="h2 text-left">Build your app to be MCP-Ready
+                    </h2>
+                    <p className="sub__h1">
+                        List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude, Windsurf, and many others—enabling your users to perform actions within your app directly through AI.
+                    </p>
+                    <Link
+                        href="https://viasocket.com/faq/developer-hub"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        <button className="btn btn-accent">Quick start guide</button>
+                    </Link>
+                </div>
+            </div>
+
+
+            <div className="container">
                 <div className="cont p-12 border custom-border justify-start items-start gap-4 bg-white">
                     <div className="cont gap-1 text-left">
                         <h2 className="h2">Join the Ecosystem</h2>

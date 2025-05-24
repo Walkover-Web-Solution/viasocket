@@ -340,7 +340,8 @@ export default function McpIndexComp({
                         >
                             <button className="btn btn-accent">Quick start guide</button>
                         </Link>
-                    </div></div>
+                    </div>
+                </div>
 
                 <FeaturesGrid featuresData={featuresData} />
 
