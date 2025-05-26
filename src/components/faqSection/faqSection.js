@@ -1,5 +1,5 @@
-import { LinkButton, LinkText } from '../uiComponents/buttons';
-export default function FAQSection({ faqData, faqName, isBlack = false }) {
+
+export default function FAQSection({ faqData, isBlack = false }) {
     return (
         <div className={`border custom-border border-b-0 p-12 bg-white ${isBlack ? 'text-white' : ''}`}>
             {faqData?.length > 0 && (
