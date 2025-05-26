@@ -6,8 +6,10 @@ import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 import { getFaqData, getFooterData, getMetaData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
-import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones, ArrowRight } from 'lucide-react';
+import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
 import { MdGroups } from 'react-icons/md';
+
+export const runtime = 'experimental-edge';
 
 const getIconComponent = (iconName) => {
     switch (iconName) {
@@ -74,7 +76,7 @@ const automations = ({
                 <section className="bg-black text-white py-20 px-12">
                     <div className="flex md:flex-row flex-col gap-8 items-center">
                         <div className="w-full md:w-3/5 cont gap-4">
-                            <h2 className="h2 font-bold">What is Workflow Automation?</h2>
+                            <h2 className="h2 font-bold">What is workflow automation?</h2>
                             <div className="text-lg text-gray-300 cont gap-1">
                                 <p>
                                     Workflow automation is a way to make tasks happen automatically without needing
@@ -106,7 +108,7 @@ const automations = ({
                 {/* How it Works - White */}
                 <section className="bg-white py-20 px-12 border custom-border">
                     <div className="text-left mb-16">
-                        <h2 className="h2 mb-1">How Does Workflow Automation Work?</h2>
+                        <h2 className="h2 mb-1">How does workflow automation work?</h2>
                         <p className="text-lg text-gray-600">Automation follows a simple process:</p>
                     </div>
 
@@ -134,7 +136,7 @@ const automations = ({
                 {/* Why Important - Black */}
                 <section className="bg-black text-white py-20 px-12">
                     <div className="text-left mb-16">
-                        <h2 className="h2 font-bold mb-1">Why is Workflow Automation Important?</h2>
+                        <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
                         <p className="text-lg text-gray-300">
                             Many businesses deal with a lot of tasks every day. If done manually, these tasks take time
                             and effort. Automating workflows helps in many ways:
@@ -159,7 +161,7 @@ const automations = ({
                 {/* Examples - White */}
                 <section className="bg-white py-20 px-12 border custom-border">
                     <div className="text-left mb-16">
-                        <h2 className="h2 font-bold text-black mb-1">Examples of Workflow Automation</h2>
+                        <h2 className="h2 font-bold text-black mb-1">Examples of workflow automation</h2>
                         <p className="text-lg text-gray-600">
                             Workflow automation is used in many industries to speed up work. Here are some common
                             examples using the "When this happens, do this" logic:
@@ -188,7 +190,7 @@ const automations = ({
                 {/* Getting Started - Black */}
                 <section className="bg-black text-white py-20 px-12">
                     <div className="text-left mb-16">
-                        <h2 className="h2 font-bold mb-1">How to Start with Workflow Automation</h2>
+                        <h2 className="h2 font-bold mb-1">How to start with workflow automation</h2>
                         <p className="text-lg text-gray-300">If you are new to automation, follow these steps:</p>
                     </div>
 
@@ -214,7 +216,7 @@ const automations = ({
 
                 <div className=" cont gap-4 bg-black text-white p-12">
                     <div className="cont gap-1">
-                        <h2 className="h2">Ready to Work Smarter, Not Harder?</h2>
+                        <h2 className="h2">Ready to work smarter, not harder?</h2>
                         <p className="text-lg text-gray-300">
                             Join thousands of businesses leveraging AI-powered automation to increase productivity and
                             drive growth.
@@ -222,7 +224,7 @@ const automations = ({
                     </div>
                     <Link href="/signup?utm_source=worflow-automations">
                         <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
-                            Get Started with viaSocket
+                            Get started with viaSocket
                         </button>
                     </Link>
                 </div>
@@ -245,27 +247,27 @@ export async function getServerSideProps() {
 
     const automationSteps = [
         {
-            title: 'Find Repetitive Tasks',
+            title: 'Find repetitive tasks',
             description:
                 'Identify tasks that are done over and over, like sending emails, approving documents, or updating spreadsheets.',
         },
         {
-            title: 'Set Up Triggers',
+            title: 'Set up triggers',
             description:
                 'A trigger is an event that starts the automation. For example, "When a customer submits a form" can be a trigger to start a workflow.',
         },
         {
-            title: 'Define Actions',
+            title: 'Define actions',
             description:
                 'An action is what happens after the trigger. For example, "Do this: Send an automated confirmation email." AI can assist by analyzing patterns and suggesting optimized triggers and actions.',
         },
         {
-            title: 'Let Automation Do the Work',
+            title: 'Let automation do the work',
             description:
                 'Once the workflow is set up, it runs on its own, completing tasks based on triggers and actions without manual input.',
         },
         {
-            title: 'Track and Improve',
+            title: 'Track and improve',
             description:
                 'Monitor how the automation is working and make changes to improve it over time. AI-driven analytics can help refine workflows for better efficiency.',
         },
@@ -273,23 +275,23 @@ export async function getServerSideProps() {
 
     const importancePoints = [
         {
-            title: 'Saves Time',
+            title: 'Saves time',
             description: 'Instead of doing the same work again and again, employees can focus on bigger tasks.',
             iconName: 'time',
         },
         {
-            title: 'Reduces Errors',
+            title: 'Reduces errors',
             description:
                 'Automated tasks follow set rules, reducing human mistakes. AI-powered automation ensures accuracy by handling complex data operations.',
             iconName: 'error',
         },
         {
-            title: 'Improves Teamwork',
+            title: 'Improves teamwork',
             description: 'Everyone knows what is happening because tasks are completed and shared automatically.',
             iconName: 'team',
         },
         {
-            title: 'Makes Scaling Easy',
+            title: 'Makes scaling easy',
             description:
                 'Businesses can grow without worrying about handling too many tasks manually. AI enables businesses to scale by automating advanced workflows without additional complexity.',
             iconName: 'scale',
