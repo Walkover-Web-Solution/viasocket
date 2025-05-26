@@ -96,7 +96,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, footerData }) => {
                         <CustomLogin redirect_to={redirect_to} />
                         <div className="flex">
                             <span className="text-sm">Create a new Account,</span>
-                            <Link href="/signup" className="ms-1 text-sm text-sky-700">
+                            <Link href="/signup?utm_source=/login" className="ms-1 text-sm text-sky-700">
                                 Sign Up
                             </Link>
                         </div>

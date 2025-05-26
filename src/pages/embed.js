@@ -189,7 +189,7 @@ const Embed = ({
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-8">
-                            <Link href="/signup">
+                            <Link href="/signup?utm_source=/embed">
                                 <button className="btn btn-accent text-nowrap">START GROWING NOW</button>
                             </Link>
                             <Link href="/support">
