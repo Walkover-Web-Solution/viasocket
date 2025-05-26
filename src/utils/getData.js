@@ -39,11 +39,6 @@ const handleFieldsFilter = (fields, filter) => {
     return queryString || null;
 };
 
-export async function getNavData() {
-    const data = await getDataFromTable(NAVIGATION);
-    return handleData(data);
-}
-
 export async function getFooterData() {
     const data = await getDataFromTable(FOOTER);
     return handleData(data);

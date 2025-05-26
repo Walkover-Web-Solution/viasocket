@@ -9,10 +9,9 @@ import {
     FOOTER_FIELDS,
     GETSTARTED_FIELDS,
     METADATA_FIELDS,
-    NAVIGATION_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getMetaData, getNavData } from '@/utils/getData';
+import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getMetaData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
@@ -22,7 +21,6 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 export const runtime = 'experimental-edge';
 
 const Embed = ({
-    navData,
     blogData,
     footerData,
     faqData,
@@ -38,7 +36,7 @@ const Embed = ({
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/embed'} />
+                <Navbar footerData={footerData} utm={'/embed'} />
             </div>
             <div className="cont lg:gap-20 md:gap-16 gap-12">
                 <div className="w-full min-h-fit lg:h-dvh  border-b custom-border">
@@ -279,7 +277,6 @@ export default Embed;
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`);
     const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
@@ -313,7 +310,6 @@ export async function getServerSideProps() {
 
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             blogData: blogData || [],
             faqData: faqData || [],

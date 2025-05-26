@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
-import { getFaqData, getFooterData, getMetaData, getNavData, getValidTemplatesData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
+import { getFaqData, getFooterData, getMetaData, getValidTemplatesData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
 import getTemplates from '@/utils/getTemplates';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -15,7 +15,7 @@ export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ navData, footerData, templateData, validTemplates, metaData, faqData, blogData }) => {
+const Template = ({ footerData, templateData, validTemplates, metaData, faqData, blogData }) => {
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -48,7 +48,7 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/template'} />
+                <Navbar  footerData={footerData} utm={'/template'} />
             </div>
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container pt-20 pb-10">
@@ -128,7 +128,6 @@ const Template = ({ navData, footerData, templateData, validTemplates, metaData,
 export default Template;
 
 export async function getServerSideProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const templateData = await getTemplates();
     const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS);
@@ -138,7 +137,6 @@ export async function getServerSideProps() {
     const blogData = await getBlogData({ tag1: blogTags });
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             templateData: templateData || [],
             validTemplates: validTemplates || [],

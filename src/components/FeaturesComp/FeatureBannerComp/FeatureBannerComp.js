@@ -2,11 +2,11 @@ import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function FeatureBannerComp({ navData, featureData, pageInfo }) {
+export default function FeatureBannerComp({ featureData, footerData, pageInfo }) {
     return (
         <>
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={pageInfo?.url} />
+                <Navbar footerData={footerData} utm={pageInfo?.url} />
             </div>
             <div className="container">
                 <div className="h-fit ">

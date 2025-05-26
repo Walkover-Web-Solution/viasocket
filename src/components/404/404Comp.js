@@ -1,11 +1,8 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MdArrowBackIos } from 'react-icons/md';
-import Footer from '../footer/footer';
-import Navbar from '../navbar/navbar';
 
-export default function ErrorComp({ navData, footerData, utm }) {
+export default function ErrorComp() {
     const router = useRouter();
 
     return (

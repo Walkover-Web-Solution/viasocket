@@ -1,5 +1,4 @@
-export const NAVIGATION_FIELDS = [];
-export const FOOTER_FIELDS = [];
+export const FOOTER_FIELDS = ['group_name', 'name', 'link', 'hidden', 'description', 'icons', 'priority'];
 export const ALLFEATURES_FIELDS = [
     'name',
     'slug',

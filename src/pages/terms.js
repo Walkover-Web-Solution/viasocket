@@ -1,16 +1,14 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
@@ -18,12 +16,12 @@ export async function getStaticProps() {
 }
 export const runtime = 'experimental-edge';
 
-const Terms = ({ navData, footerData, metaData }) => {
+const Terms = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/terms'} />
+                <Navbar footerData={footerData} utm={'/terms'} />
             </div>
             <div className="container mt-28 bg-white p-12">
                 <style

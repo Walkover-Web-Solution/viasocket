@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
-import { getFooterData, getIndexFeatures, getMetaData, getNavData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexFeatures, getMetaData } from '@/utils/getData';
 import { setUtmSource } from '@/utils/handleUtmSource';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
@@ -16,13 +15,11 @@ export const runtime = 'experimental-edge';
 export async function getServerSideProps(context) {
     const { redirect_to } = context?.query;
     const { utm_source } = context?.query;
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/login'`);
     const features = await getIndexFeatures();
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: [],
             redirect_to: redirect_to || '',
@@ -32,7 +29,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ features, metaData, pathArray, redirect_to, navData, footerData }) => {
+const Login = ({ features, metaData, pathArray, redirect_to, footerData }) => {
     let featuresArrOne = [];
     let featuresArrTwo = [];
     features.map((feature) => {
@@ -48,7 +45,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, navData, footerData
         <>
             <MetaHeadComp metaData={metaData} page={'/login'} pathArray={pathArray} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/signup'} />
+                <Navbar footerData={footerData} utm={'/signup'} />
             </div>
             <div className="flex flex-col-reverse md:flex-row md:min-h-[calc(100vh-200px)]">
                 <div className="md:w-3/5 w-full py-6 px-3 md:p-10 flex flex-col gap-6 md:max-w-4xl md:mx-auto">
