@@ -6,7 +6,6 @@ import {
     getFooterData,
     getGetStartedData,
     getMetaData,
-    getNavData,
     getUsecasesData,
 } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
@@ -27,7 +26,6 @@ import {
     INTECATEGORY_FIELDS,
     INTECATEGORYlIST_FILED,
     METADATA_FIELDS,
-    NAVIGATION_FIELDS,
     USECASES_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
@@ -42,7 +40,6 @@ export default function Integrations({
     combosData,
     faqData,
     footerData,
-    navData,
     categoryData,
     appOneDetails,
     appTwoDetails,
@@ -60,7 +57,7 @@ export default function Integrations({
                 <Head>
                     <title>{'404 - Page not found'}</title>
                 </Head>
-                <ErrorComp navData={navData} footerData={footerData} />
+                <ErrorComp footerData={footerData} />
             </>
         );
     } else if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
@@ -125,7 +122,6 @@ export default function Integrations({
                 <IntegrationsIndexComp
                     pageInfo={pageInfo}
                     integrationsInfo={integrationsInfo}
-                    navData={navData}
                     footerData={footerData}
                     apps={apps}
                     blogsData={blogData}
@@ -157,7 +153,6 @@ export async function getServerSideProps(context) {
             return {
                 props: {
                     pageInfo: pageInfo || {},
-                    navData: [],
                     footerData: footerData || [],
                     apps: [],
                     metadata: metadata || {},
@@ -173,17 +168,14 @@ export async function getServerSideProps(context) {
                 },
             };
         } else {
-            const navData = await getNavData();
             return {
                 props: {
                     noData: true,
-                    navData: navData || {},
                     footerData: footerData || {},
                 },
             };
         }
     } else if (integrationsInfo?.appone) {
-        // const navData = await getNavData();
         const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`);
         const categoryData = await getCategoryData(
@@ -211,7 +203,6 @@ export async function getServerSideProps(context) {
             return {
                 props: {
                     pageInfo: pageInfo || {},
-                    navData: {},
                     footerData: footerData || {},
                     apps: apps || [],
                     metadata: metadata || {},
@@ -229,17 +220,14 @@ export async function getServerSideProps(context) {
                 },
             };
         } else {
-            const navData = await getNavData(NAVIGATION_FIELDS);
             return {
                 props: {
                     noData: true,
-                    navData: navData || {},
                     footerData: footerData || {},
                 },
             };
         }
     } else {
-        const navData = await getNavData(NAVIGATION_FIELDS);
         const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations'`);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/integrations'`);
         const categoryData = await getCategoryData(
@@ -253,7 +241,6 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 pageInfo: pageInfo || {},
-                navData: navData || {},
                 footerData: footerData || {},
                 apps: apps || [],
                 metadata: metadata || {},

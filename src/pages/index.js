@@ -11,7 +11,6 @@ import {
     getFaqData,
     getFooterData,
     getMetaData,
-    getNavData,
     getTestimonialData,
 } from '@/utils/getData';
 import {
@@ -19,7 +18,6 @@ import {
     FAQS_FIELDS,
     FOOTER_FIELDS,
     METADATA_FIELDS,
-    NAVIGATION_FIELDS,
     TESTIMONIALS_FIELDS,
 } from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
@@ -51,7 +49,6 @@ const Index = ({
     caseStudies,
     metaData,
     faqData,
-    navData,
     footerData,
     redirect_to,
     utm_source,
@@ -66,7 +63,7 @@ const Index = ({
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/index'} />
+                <Navbar footerData={footerData} utm={'/index'} />
             </div>
             <div className="add-background-color">
                 <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12">
@@ -95,12 +92,13 @@ const Index = ({
                         <IntegrateAppsComp />
                     </div>
 
-                    <div className='container'>
+                    <div className="container">
                         <div className="cont gap-2 border custom-border p-12 bg-white">
-                            <h2 className="h2 text-left">List your app on the viaSocket marketplace
-                            </h2>
+                            <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
                             <p className="sub__h1">
-                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace.
+                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
+                                Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
+                                the viaSocket Marketplace.
                             </p>
                             <Link
                                 href="https://viasocket.com/faq/developer-hub"
@@ -111,7 +109,6 @@ const Index = ({
                             </Link>
                         </div>
                     </div>
-
 
                     <div className="container cont">
                         <CaseStudiesSection caseStudies={caseStudies} />
@@ -365,7 +362,6 @@ export async function getServerSideProps(context) {
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
     const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const blogTags = 'index';
     const blogData = await getBlogData({ tag1: blogTags });
@@ -510,7 +506,6 @@ export async function getServerSideProps(context) {
             caseStudies: caseStudies || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             faqData: faqData || [],
-            navData: navData || [],
             footerData: footerData || [],
             blogData: blogData || [],
             redirect_to: redirect_to || '',

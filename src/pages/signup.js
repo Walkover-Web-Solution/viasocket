@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFooterData, getMetaData, getNavData, getTestimonialData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData, getTestimonialData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -11,13 +11,11 @@ export const runtime = 'experimental-edge';
 export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             redirect_to: redirect_to || '',
@@ -27,7 +25,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-const Login = ({ metaData, testimonials, pathArray, redirect_to, navData, footerData }) => {
+const Login = ({ testimonials, redirect_to }) => {
     return (
         <>
             <div className="min-h-screen">

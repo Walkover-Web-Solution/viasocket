@@ -7,17 +7,8 @@ import Support from '../chat-widget/support';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
 
-export default function Navbar({ navData, utm }) {
+export default function Navbar({ footerData, utm }) {
     const router = useRouter();
-    let shorterData = [];
-    if (navData?.length > 0) {
-        const prioritizedItems = navData.filter((item) => item.priority);
-        shorterData = prioritizedItems.sort((a, b) => {
-            return parseInt(a.priority) - parseInt(b.priority);
-        });
-        const nonPrioritizedItems = navData.filter((item) => !item.priority);
-        shorterData = shorterData.concat(nonPrioritizedItems);
-    }
 
     let mode = 'light';
 
@@ -86,9 +77,10 @@ export default function Navbar({ navData, utm }) {
                             href={router.pathname}
                             rel="nofollow"
                         >
-                            {router.pathname === '/' ? 'Home' :
-                                router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                router.pathname.split('/')[1].slice(1).toLowerCase()}
+                            {router.pathname === '/'
+                                ? 'Home'
+                                : router.pathname.split('/')[1].charAt(0).toUpperCase() +
+                                  router.pathname.split('/')[1].slice(1).toLowerCase()}
                         </Link>
                     )}
                     <Link
@@ -127,7 +119,7 @@ export default function Navbar({ navData, utm }) {
                     </div>
                 </div>
             </div>
-            <Support open={open} onClose={handleClose} navData={navData} />
+            <Support open={open} onClose={handleClose} footerData={footerData} />
         </>
     );
 }

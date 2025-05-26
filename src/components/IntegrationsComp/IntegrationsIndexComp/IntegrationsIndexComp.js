@@ -16,7 +16,6 @@ import ErrorComp from '@/components/404/404Comp';
 export default function IntegrationsIndexComp({
     pageInfo,
     integrationsInfo,
-    navData,
     footerData,
     apps,
     blogsData,
@@ -87,7 +86,7 @@ export default function IntegrationsIndexComp({
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/index'} />
+                <Navbar footerData={footerData} utm={'/index'} />
             </div>
             <div className="container flex justify-center items-center">
                 <div className="cont text-left">
@@ -255,18 +254,15 @@ export default function IntegrationsIndexComp({
                     </div>
                 )}
             </div>
-            <div className='container'>
+            <div className="container">
                 <div className="cont gap-2 border custom-border p-12 bg-white">
-                    <h2 className="h2 text-left">List your app on the viaSocket marketplace
-                    </h2>
+                    <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
                     <p className="sub__h1">
-                        viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace.
+                        viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a
+                        step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket
+                        Marketplace.
                     </p>
-                    <Link
-                        href="https://viasocket.com/faq/developer-hub"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                    >
+                    <Link href="https://viasocket.com/faq/developer-hub" target="_blank" rel="noopener noreferrer">
                         <button className="btn btn-accent">Build viaSocket integration</button>
                     </Link>
                 </div>

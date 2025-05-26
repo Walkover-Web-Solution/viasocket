@@ -4,34 +4,17 @@ import FeatureContentComp from '@/components/FeaturesComp/FeatureContentComp/Fea
 import FeatureGridComp from '@/components/FeaturesComp/FeatureGridComp/FeatureGridComp';
 import FeaturesFooterComp from '@/components/FeaturesComp/FeaturesFooterComp/FeaturesFooterComp';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { ALLFEATURES_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { ALLFEATURES_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import {
-    getAllFeatures,
-    getDefaultBlogData,
-    getFeatureData,
-    getFooterData,
-    getMetaData,
-    getNavData,
-} from '@/utils/getData';
+import { getAllFeatures, getFeatureData, getFooterData, getMetaData } from '@/utils/getData';
 import GetPageInfo from '@/utils/getPageInfo';
-import { useEffect, useState } from 'react';
 
-export default function Features({
-    features,
-    featureData,
-    navData,
-    footerData,
-    metaData,
-    pathArray,
-    pageInfo,
-    blogData,
-}) {
+export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={pathArray?.join('/')} pathArray={pathArray} />
             <div className="cont ">
-                <FeatureBannerComp featureData={featureData} navData={navData} pageInfo={pageInfo} />
+                <FeatureBannerComp featureData={featureData} footerData={footerData} pageInfo={pageInfo} />
                 <FeatureGridComp features={features} pageInfo={pageInfo} />
                 <FeatureContentComp featureData={featureData?.faqs} pageInfo={pageInfo} />
                 <div className="container cont cont__py">
@@ -51,7 +34,6 @@ export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
     const pageInfo = GetPageInfo(context);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`);
     let feature = null;
@@ -71,7 +53,6 @@ export async function getServerSideProps(context) {
 
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             features: features || [],
             featureData: (featureData?.length > 0 && featureData[0]) || {},

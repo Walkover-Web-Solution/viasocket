@@ -1,16 +1,14 @@
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/privacy'`);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
@@ -19,13 +17,13 @@ export async function getStaticProps() {
 
 export const runtime = 'experimental-edge';
 
-const Privacy = ({ navData, footerData, metaData }) => {
+const Privacy = ({  footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
 
             <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/privacy'} />
+                <Navbar footerData={footerData} utm={'/privacy'} />
             </div>
             <div className="container mb-4 mt-28 bg-white p-12">
                 <style

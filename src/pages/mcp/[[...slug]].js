@@ -6,7 +6,6 @@ import {
     getGetStartedData,
     getMCPPromptData,
     getMetaData,
-    getNavData,
 } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
@@ -21,7 +20,6 @@ import {
     INTECATEGORYlIST_FILED,
     MCP_FIELDS,
     METADATA_FIELDS,
-    NAVIGATION_FIELDS,
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
@@ -36,7 +34,6 @@ export default function Mcp({
     apps,
     faqData,
     footerData,
-    navData,
     categoryData,
     appOneDetails,
     noData,
@@ -67,7 +64,7 @@ export default function Mcp({
                 <Head>
                     <title>{'404 - Page not found'}</title>
                 </Head>
-                <ErrorComp navData={navData} footerData={footerData} />
+                <ErrorComp footerData={footerData} />
             </>
         );
     } else if (mcpInfo?.appone) {
@@ -88,7 +85,6 @@ export default function Mcp({
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
-                    navData={navData}
                     searchTerm={searchTerm}
                     setSearchTerm={setSearchTerm}
                     debounceValue={debounceValue}
@@ -106,7 +102,6 @@ export default function Mcp({
                 <McpIndexComp
                     pageInfo={pageInfo}
                     integrationsInfo={mcpInfo}
-                    navData={navData}
                     footerData={footerData}
                     apps={apps}
                     blogsData={blogData}
@@ -128,7 +123,6 @@ export async function getServerSideProps(context) {
     const pageInfo = getPageInfo(context);
     const mcpInfo = getMcpInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS);
-    const navData = await getNavData(NAVIGATION_FIELDS);
 
     if (mcpInfo?.appone) {
         const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`);
@@ -170,7 +164,6 @@ export async function getServerSideProps(context) {
             return {
                 props: {
                     pageInfo: pageInfo || {},
-                    navData: navData || {},
                     footerData: footerData || {},
                     apps: apps || [],
                     metaData: (metaData?.length > 0 && metaData[0]) || {},
@@ -190,7 +183,6 @@ export async function getServerSideProps(context) {
             return {
                 props: {
                     noData: true,
-                    navData: navData || {},
                     footerData: footerData || {},
                 },
             };
@@ -285,7 +277,6 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 pageInfo: pageInfo || {},
-                navData: navData || {},
                 footerData: footerData || {},
                 apps: apps || [],
                 metaData: (metaData?.length > 0 && metaData[0]) || {},
