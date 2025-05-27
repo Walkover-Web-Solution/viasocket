@@ -17,7 +17,7 @@ export async function getStaticProps() {
     };
 }
 
-export default function DataDeletionPolicy({  footerData, metaData }) {
+export default function DataDeletionPolicy({ footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/data-deletion-policy'} />
@@ -25,22 +25,16 @@ export default function DataDeletionPolicy({  footerData, metaData }) {
             <div className="sticky top-0 z-[100] border-b custom-border">
                 <Navbar footerData={footerData} utm={'/data-deletion-policy'} />
             </div>
-            <div className="container mb-4 mt-28 bg-white p-12">
-                <div data-custom-class="body" className="cont gap-6">
-                    <div>
-                        <strong>
-                            <h1 style={{ fontSize: '26px' }}>
-                                <span data-custom-class="title">Data Deletion Policy</span>
-                            </h1>
-                        </strong>
-                        <span data-custom-class="body_text">
-                            At viaSocket, we respect your privacy and are committed to ensuring that your data is
-                            handled securely and transparently. This Data Deletion Policy outlines our practices
-                            regarding data usage, retention, and deletion to give you complete clarity.
-                        </span>
-                    </div>
-
-                    <div></div>
+            <div className="container mb-4 mt-12 flex flex-col gap-16">
+                <h1 className='h1'>
+                    Data Deletion Policy
+                </h1>
+                <div data-custom-class="body" className="cont gap-6 bg-white p-12 border custom-border">
+                    <span data-custom-class="body_text">
+                        At viaSocket, we respect your privacy and are committed to ensuring that your data is
+                        handled securely and transparently. This Data Deletion Policy outlines our practices
+                        regarding data usage, retention, and deletion to give you complete clarity.
+                    </span>
                     <div>
                         <strong>1. Scope of Policy</strong>
                         <p data-custom-class="body_text">
