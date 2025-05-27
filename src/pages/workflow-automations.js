@@ -49,6 +49,7 @@ const automations = ({
     importancePoints,
     automationExamples,
     gettingStartedSteps,
+    workflowAutomationTools,
 }) => {
     return (
         <>
@@ -68,7 +69,8 @@ const automations = ({
                         business processes or workflows
                     </p>
                 </section>
-                <section className="bg-black text-white py-20 px-12 flex flex-col gap-10">
+
+                <section className="bg-black text-white p-12 flex flex-col gap-10">
                     <div className="flex md:flex-row flex-col gap-8 items-center">
                         <div className="w-full md:w-3/5 cont gap-1">
                             <h2 className="h2 font-bold">What is workflow automation?</h2>
@@ -109,35 +111,24 @@ const automations = ({
                 </section>
 
                 {/* How it Works - White */}
-                <section className="bg-white py-20 px-12 border custom-border">
+                <section className="bg-white p-12 border custom-border">
                     <div className="text-left mb-10">
                         <h2 className="h2 mb-1">How does workflow automation work?</h2>
                         <p className="text-lg text-gray-600">Automation follows a simple process:</p>
                     </div>
 
-                    <div className="space-y-0">
+                    <div className="space-y-0 border custom-border border-r-0 border-b-0">
                         {automationSteps.map((step, index) => (
-                            <div key={index} className={`flex items-center justify-start`}>
-                                <div
-                                    className={`w-full flex flex-col sm:flex-row items-start sm:items-center gap-8 py-6 pl-0`}
-                                >
-                                    <div className="flex-shrink-0">
-                                        <div className="w-12 h-12 bg-accent text-white flex items-center justify-center text-2xl font-bold border custom-border">
-                                            {index + 1}
-                                        </div>
-                                    </div>
-                                    <div className={`space-y-3 text-left`}>
-                                        <h3 className="h3 font-bold text-black">{step.title}</h3>
-                                        <p className="text-gray-600 text-lg !mt-0">{step.description}</p>
-                                    </div>
-                                </div>
+                            <div key={index} className='p-8 w-full border-r border-b custom-border'>
+                                <h3 className="h3 font-bold">{step.title}</h3>
+                                <p className="text-gray-600 text-lg !mt-0">{step.description}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
                 {/* Why Important - Black */}
-                <section className="bg-black text-white py-20 px-12">
+                <section className="bg-black text-white p-12">
                     <div className="text-left mb-16">
                         <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
                         <p className="text-lg text-gray-300">
@@ -160,7 +151,7 @@ const automations = ({
                 </section>
 
                 {/* Examples - White */}
-                <section className="bg-white py-20 px-12 border custom-border">
+                <section className="bg-white p-12 border custom-border">
                     <div className="text-left mb-16">
                         <h2 className="h2 font-bold text-black mb-1">Examples of workflow automation</h2>
                         <p className="text-lg text-gray-600">
@@ -188,8 +179,20 @@ const automations = ({
                     </div>
                 </section>
 
+                <section className='border custom-border p-12 bg-black flex flex-col gap-8'>
+                    <h2 className='h2 font-bold text-white'>What are the features to look for in workflow automation tools?</h2>
+                    <div className='grid sm:grid-cols-1 lg:grid-cols-2 border custom-border border-r-0 border-b-0 bg-white'>
+                        {workflowAutomationTools.map((tool, index) => (
+                            <div key={index} className="p-8 border-r custom-border border-b">
+                                <h3 className="h3 font-bold">{tool.title}</h3>
+                                <p className="after:text-gray-300">{tool.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 {/* Getting Started - Black */}
-                <section className="bg-black text-white py-20 px-12">
+                <section className="bg-black text-white p-12">
                     <div className="text-left mb-16">
                         <h2 className="h2 font-bold mb-1">How to start with workflow automation</h2>
                         <p className="text-lg text-gray-300">If you are new to automation, follow these steps:</p>
@@ -350,6 +353,36 @@ export async function getServerSideProps() {
         },
     ];
 
+
+    const workflowAutomationTools = [
+        {
+            title: 'Ease of use',
+            description: 'The software you choose for creating automated workflows must be simple to use by people of all technical levels. A tool with a drag-and-drop interface is ideally suited for this.'
+        },
+        {
+            title: 'Role-based controls',
+            description: 'While creating workflow automation for an approval process, having access controls based on organizational hierarchy will help you better secure data.',
+        },
+        {
+            title: 'Dashboards & reports',
+            description: 'You should be able to visualize key performance indicators, and analyze business data with interactive charts, gauges, tables, and more, within a few clicks.',
+        },
+        {
+            title: 'Seamless integrations',
+            description: 'Choose workflow automation tools that have pre built integrations with ERPs, payment gateways, third-party vendors, and authentication services.',
+        },
+        {
+            title: 'Mobile support',
+            description:
+                'For in-the-field jobs, mobile support is crucial. Look for a workflow automation system that supports easy mobile access.',
+        },
+        {
+            title: 'Extensibility',
+            description:
+                'In case you want to incorporate more functionalities to your automated workflows, the platform should provide options like APIs and custom functions, to make your process as customizable as possible.',
+        },
+    ];
+
     return {
         props: {
             footerData: footerData || [],
@@ -359,6 +392,7 @@ export async function getServerSideProps() {
             importancePoints: importancePoints,
             automationExamples: automationExamples,
             gettingStartedSteps: gettingStartedSteps,
+            workflowAutomationTools: workflowAutomationTools,
         },
     };
 }
