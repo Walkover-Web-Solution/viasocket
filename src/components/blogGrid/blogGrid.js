@@ -15,7 +15,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
             <div className="flex flex-col gap-9">
                 <h2 className="h2">{heading}</h2>
                 <div className="w-full cont">
-                    <div className="grid md:grid-cols-3 grid-cols-1 index_blog_grid bg-white">
+                    <div className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid border custom-border border-r-0 border-b-0 bg-white">
                         {posts?.map((post, index) => (
                             <CardComponent key={index} card={post} isBlack={isBlack} />
                         ))}
@@ -41,7 +41,7 @@ const CardComponent = ({ card, isBlack = false }) => {
             href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
-            className={`${isBlack ? 'border border-white' : 'block_border'} card rounded-none LinkButtonCard`}
+            className={`${isBlack ? 'border border-white' : 'border-r custom-border'} card rounded-none LinkButtonCard`}
         >
             {' '}
             <div className="flex flex-col gap-4 h-full">
@@ -54,7 +54,7 @@ const CardComponent = ({ card, isBlack = false }) => {
                         className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="card-body flex flex-col gap-2 flex-grow p-4">
+                <div className="card-body flex flex-col gap-2 flex-grow p-4 border-b custom-border">
                     <div className="flex-grow">
                         <h3 className="font-semibold">{card?.title}</h3>
                         <p className="text-base">{card?.description}</p>

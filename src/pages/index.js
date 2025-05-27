@@ -230,9 +230,9 @@ const TestimonialsSection = ({ testimonials }) => (
         <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
-        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full bg-white">
+        <div className="border custom-border border-r-0 sm:grid-cols-1 lg:grid-cols-3 grid bg-white sm:border-b-0 lg:border-b">
             {testimonials.map((testimonial, index) => (
-                <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
+                <div className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border" key={index}>
                     <div className="flex flex-col  gap-2 ">
                         <Image
                             className="border custom-border"
