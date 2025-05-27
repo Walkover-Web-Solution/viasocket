@@ -117,7 +117,7 @@ const Index = ({
                                 href="https://viasocket.com/blog/tag/client-story"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border custom-border border-t-0 px-4 py-2 "
+                                className="border custom-border border-t-0 px-4 py-2 bg-white"
                             >
                                 <LinkText>Read More</LinkText>
                             </Link>
