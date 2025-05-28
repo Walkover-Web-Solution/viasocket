@@ -16,6 +16,7 @@ import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
+import Navbar from '@/components/navbar/navbar';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -36,7 +37,16 @@ export default function IntegrationsAppOneComp({
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
 
     return (
-        <>
+        <div
+            style={{
+                borderLeftColor: appOneDetails?.brandcolor,
+                borderLeftWidth: '10px',
+            }}
+            className="cont gap-12 md:gap-16 lg:gap-20"
+        >
+            <div className="sticky top-0 z-[100] border-b custom-border">
+                <Navbar footerData={footerData} utm={'/integrations/appone'} />
+            </div>
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}
@@ -45,55 +55,28 @@ export default function IntegrationsAppOneComp({
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}
             />
-            <div className="flex flex-col gap-8">
-                <div style={{ background: appOneDetails?.brandcolor }}>
-                    <div className="container cont py-8 gap-4 flex items-center justify-between">
-                        <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                            <Link
-                                target="_blank"
-                                href={
-                                    appOneDetails?.domain.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain
-                                }
-                            >
-                                <button className="bg-white flex border custom-border items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all">
-                                    Login to {appOneDetails?.name} <MdOpenInNew />{' '}
-                                </button>
-                            </Link>
-
-                            <button
-                                className="bg-white flex border custom-border items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
-                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                rel="nofollow"
-                            >
-                                Login to viaSocket <MdOpenInNew />{' '}
-                            </button>
-                        </div>
-                        <div className="flex  gap-2 items-center w-full justify-start">
-                            <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
-                                <Image
-                                    className="h-8 md:h-10 w-fit"
-                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt={appOneDetails?.name}
-                                />
-                                <div>
-                                    <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
-                                    <div className="flex flex-wrap gap-2"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <div className="container cont gap-1 ">
+                <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
+                    <Image
+                        className="h-8 md:h-10 w-fit"
+                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                        width={36}
+                        height={36}
+                        alt={appOneDetails?.name}
+                    />
+                    <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
                 </div>
-                <button
-                    onClick={(e) => handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)}
-                    className="flex items-center gap-2 container hover:text-blue-600"
-                    rel="nofollow"
-                >
-                    Connect to {appOneDetails?.name} <MdOpenInNew />
-                </button>
+                <div className="w-fit flex justify-start">
+                    <button
+                        onClick={(e) =>
+                            handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
+                        }
+                        className="flex items-center gap-2 container hover:text-blue-600"
+                        rel="nofollow"
+                    >
+                        Connect to {appOneDetails?.name} <MdOpenInNew />
+                    </button>
+                </div>
             </div>
 
             <div className="container cont cont__gap">
@@ -315,6 +298,6 @@ export default function IntegrationsAppOneComp({
 
                 <Footer footerData={footerData} />
             </div>
-        </>
+        </div>
     );
 }
