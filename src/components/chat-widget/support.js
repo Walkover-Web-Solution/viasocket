@@ -6,7 +6,7 @@ import CallBackModal from './callBackModal';
 
 function NavList({ items }) {
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2">
+        <ul className="grid grid-cols-1 md:grid-cols-2 list-none">
             {items?.map((item, i) => (
                 <li key={i} className="hover:bg-gray-100 text-black p-2">
                     <a href={item?.link} className="flex flex-col">
@@ -118,7 +118,7 @@ export default function Support({ open, onClose, footerData }) {
 
                     <div className="">
                         <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd love to hear from you!</h3>
-                        <ul className="grid grid-cols-1 md:grid-cols-2 border border-b-0">
+                        <ul className="grid grid-cols-1 md:grid-cols-2 border border-b-0 list-none">
                             {ContactListArray.map((item, index) => (
                                 <li key={index} className="hover:bg-gray-100 transition border-b border-r">
                                     {item.href ? (
