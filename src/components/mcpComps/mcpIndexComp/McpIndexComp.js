@@ -21,7 +21,6 @@ import { handleRedirect } from '@/utils/handleRedirection';
 export default function McpIndexComp({
     pageInfo,
     integrationsInfo,
-    navData,
     footerData,
     apps,
     blogsData,
@@ -128,14 +127,13 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="sticky top-0 z-[100] border-b custom-border">
-                    <Navbar navData={navData} utm={'/index'} />
-                </div>
+
+                <Navbar footerData={footerData} utm={'/index'} />
 
                 <div className="cont gap-8">
                     <McpSwitchComp />
 
-                    <div className="container cont gap-8">
+                    <div className="container cont gap-2">
                         <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                             <div className="cont gap-4 w-full text-left">
                                 <div className="cont gap-1">
@@ -328,19 +326,17 @@ export default function McpIndexComp({
                 </div>
                 <div className="container">
                     <div className="cont gap-2 border custom-border p-12 bg-white">
-                        <h2 className="h2 text-left">Build your app to be MCP-Ready
-                        </h2>
+                        <h2 className="h2 text-left">Build your app to be MCP-Ready</h2>
                         <p className="sub__h1">
-                            List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude, Windsurf, and many others—enabling your users to perform actions within your app directly through AI.
+                            List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor,
+                            Claude, Windsurf, and many others—enabling your users to perform actions within your app
+                            directly through AI.
                         </p>
-                        <Link
-                            href="https://viasocket.com/faq/developer-hub"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <Link href="https://viasocket.com/faq/developer-hub" target="_blank" rel="noopener noreferrer">
                             <button className="btn btn-accent">Quick start guide</button>
                         </Link>
-                    </div></div>
+                    </div>
+                </div>
 
                 <FeaturesGrid featuresData={featuresData} />
 
@@ -502,9 +498,7 @@ const Table = ({ data }) => {
                     <tbody>
                         {data.map((conntent, index) => (
                             <tr key={index} className="">
-                                <td className="p-4 text-lg font-semibold border custom-border">
-                                    {conntent?.aspects}
-                                </td>
+                                <td className="p-4 text-lg font-semibold border custom-border">{conntent?.aspects}</td>
                                 <td className="p-4 text-lg  border custom-border">{conntent?.api}</td>
                                 <td className="p-4 text-lg  border custom-border">{conntent?.mcp}</td>
                             </tr>

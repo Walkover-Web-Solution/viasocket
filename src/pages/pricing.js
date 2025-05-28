@@ -3,21 +3,20 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getNavData, getPricingFeatureData } from '@/utils/getData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
+import { getFaqData, getFooterData, getMetaData, getPricingFeatureData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ navData, footerData, faqData, metaData, blogData, features }) {
+export default function pricing({ footerData, faqData, metaData, blogData, features }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/pricing'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/pricing'} />
+
             <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
@@ -121,7 +120,6 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/pricing'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`);
     const blogTags = 'pricing';
@@ -130,7 +128,6 @@ export async function getServerSideProps() {
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
-            navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],

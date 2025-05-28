@@ -43,7 +43,7 @@ const AgencyList = ({ agencies, type }) => {
                                                         src={agency?.logo[0] || 'https://placehold.co/40x40'}
                                                         width={1080}
                                                         height={1080}
-                                                        alt="img"
+                                                        alt="agnecy logo"
                                                     />
                                                 ) : (
                                                     <h3 className="text-sm">{agency?.name}</h3>

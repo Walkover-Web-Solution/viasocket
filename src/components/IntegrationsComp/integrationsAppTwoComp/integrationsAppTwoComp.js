@@ -14,7 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
-import { handleRedirect } from '@/utils/handleRedirection';
+import Navbar from '@/components/navbar/navbar';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -32,56 +32,47 @@ export default function IntegrationsAppTwoComp({
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
 
     return (
-        <>
+        <div
+            style={{ borderLeftColor: appOneDetails?.brandcolor, borderLeftWidth: '10px' }}
+            className="cont gap-12 md:gap-16 lg:gap-20"
+        >
+            <Navbar footerData={footerData} utm={'/integrations/apptwo'} />
+
             <IntegrationsHeadComp
                 metaData={metaData}
-                page={'/integrations/AppOne/AppTwo'}
-                plugins={[appOneDetails, appTwoDetails]}
+                page={'/integrations/AppOne'}
+                plugins={[appOneDetails]}
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
-            <div
-                style={{ background: appOneDetails?.brandcolor }}
-                className="border custom-border border-t-0 border-r-0 border-l-0"
-            >
-                <div className="container cont py-8 gap-4 flex items-center justify-between">
-                    <div className="flex md:items-center w-full justify-end gap-2 md:gap-4 flex-col md:flex-row ">
-                        <button
-                            className="bg-white flex border custom-border items-center gap-2 px-5 py-3 hover-bg-grey-100-text-black transition-all"
-                            onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                            rel="nofollow"
-                        >
-                            Login to viaSocket <MdOpenInNew />{' '}
-                        </button>
+
+            <div className="container flex w-full flex-col md:flex-row ">
+                <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border border-r-0 custom-border bg-white w-full max-w-[300px] min-w-fit">
+                    <Image
+                        className="h-8 md:h-10 w-fit"
+                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                        width={36}
+                        height={36}
+                        alt={appOneDetails?.name}
+                    />
+                    <div>
+                        <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
                     </div>
-                    <div className="flex w-full flex-col md:flex-row ">
-                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border border-r-0 custom-border bg-white w-full max-w-[300px] min-w-fit">
-                            <Image
-                                className="h-8 md:h-10 w-fit"
-                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                width={36}
-                                height={36}
-                                alt={appOneDetails?.name}
-                            />
-                            <div>
-                                <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
-                            </div>
-                        </div>
-                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border custom-border bg-white w-full max-w-[300px] min-w-fit">
-                            <Image
-                                className="h-8 md:h-10 w-fit"
-                                src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
-                                width={36}
-                                height={36}
-                                alt={appTwoDetails?.name}
-                            />
-                            <div>
-                                <h2 className="text-xl md:text-2xl font-bold">{appTwoDetails?.name}</h2>
-                            </div>
-                        </div>
+                </div>
+                <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border custom-border bg-white w-full max-w-[300px] min-w-fit">
+                    <Image
+                        className="h-8 md:h-10 w-fit"
+                        src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
+                        width={36}
+                        height={36}
+                        alt={appTwoDetails?.name}
+                    />
+                    <div>
+                        <h2 className="text-xl md:text-2xl font-bold">{appTwoDetails?.name}</h2>
                     </div>
                 </div>
             </div>
+
             <div className="container cont cont__gap">
                 <div className="flex flex-wrap items-center md:gap-2 gap-0 md:text-lg text-sm">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
@@ -301,6 +292,6 @@ export default function IntegrationsAppTwoComp({
                     <Footer footerData={footerData} />
                 </div>
             </div>
-        </>
+        </div>
     );
 }

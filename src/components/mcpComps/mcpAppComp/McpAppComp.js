@@ -30,7 +30,6 @@ export default function McpAppComp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
-    navData,
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -106,9 +105,8 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <div className="sticky top-0 z-[100] border-b custom-border">
-                        <Navbar navData={navData} utm={'/index'} />
-                    </div>
+                    <Navbar footerData={footerData} utm={'/mcp'} />
+
                     <div className="flex flex-col gap-8">
                         <div className="container cont cont__gap">
                             <div className="flex items-center gap-2 text-lg">
@@ -130,7 +128,12 @@ export default function McpAppComp({
                         <div className="cont gap-12 w-full lg:w-2/3">
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-gray-200">
-                                    <Image src={appOneDetails?.iconurl} width={30} height={30} />
+                                    <Image
+                                        src={appOneDetails?.iconurl}
+                                        alt={appOneDetails?.name}
+                                        width={30}
+                                        height={30}
+                                    />
                                 </div>
                                 <div className="cont">
                                     <h2 className="h3"> {appOneDetails?.name} MCP</h2>
@@ -163,6 +166,7 @@ export default function McpAppComp({
                                     <div>
                                         <Image
                                             src="/assets/brand/smileyLogo.svg"
+                                            alt="smiley logo"
                                             width={30}
                                             height={30}
                                             className="pb-4 flex-shrink-0"
@@ -189,6 +193,7 @@ export default function McpAppComp({
                                     <div>
                                         <Image
                                             src="/assets/brand/smileyLogo.svg"
+                                            alt='smiley logo'
                                             width={30}
                                             height={30}
                                             className="pb-4"
@@ -200,7 +205,7 @@ export default function McpAppComp({
                                             <h3 className="sub__h1">MCP Tool Calling...</h3>
                                             <div className="border custom-border bg-gray-200 px-4 py-2 shadow-md cont gap-2">
                                                 <div className="flex gap-4 items-center">
-                                                    <Image src={appOneDetails.iconurl} width={30} height={30} />
+                                                    <Image src={appOneDetails?.iconurl} alt={appOneDetails?.name} width={30} height={30} />
                                                     <h2 className="sub__h1 text-gray-500">Action in Progress...</h2>
                                                 </div>
                                                 {mcpPromptData[0]?.action && (

@@ -1,16 +1,14 @@
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/privacy'`);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
@@ -19,55 +17,24 @@ export async function getStaticProps() {
 
 export const runtime = 'experimental-edge';
 
-const Privacy = ({ navData, footerData, metaData }) => {
+const Privacy = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
+            <Navbar footerData={footerData} utm={'/privacy'} />
 
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/privacy'} />
-            </div>
-            <div className="container mb-4 mt-28 bg-white p-12">
+            <div className="container mb-4 mt-12 flex flex-col gap-16">
                 <style
                     dangerouslySetInnerHTML={{
-                        __html: "\n  [data-custom-class='body'], [data-custom-class='body'] * {\n          background: transparent !important;\n        }\n[data-custom-class='title'], [data-custom-class='title'] * {\n          font-family: Arial !important;\nfont-size: 26px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\n          font-family: Arial !important;\ncolor: #fffff!important;\nfont-size: 14px !important;\n        }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\n          font-family: Arial !important;\nfont-size: 19px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\n          font-family: Arial !important;\nfont-size: 17px !important;\ncolor: #fffff !important;\n        }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\n          color: #fffff!important;\nfont-size: 14px !important;\nfont-family: Arial !important;\n        }\n[data-custom-class='link'], [data-custom-class='link'] * {\n          color: #0000ff !important;\nfont-size: 14px !important;\nfont-family: Arial !important;\nword-break: break-word !important;\n        }\n",
+                        __html: "\n [data-custom-class='body'], [data-custom-class='body'] * {\n background: transparent !important;\n }\n[data-custom-class='title'], [data-custom-class='title'] * {\nfont-size: 26px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\ncolor: #fffff!important;\nfont-size: 14px !important;\n }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\nfont-size: 19px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\nfont-size: 17px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\ncolor: #fffff!important;\nfont-size: 14px !important;\n\n }\n[data-custom-class='link'], [data-custom-class='link'] * {\ncolor: #0000ff !important;\nfont-size: 14px !important;\n\nword-break: break-word !important;\n }\n",
                     }}
                 />
-                <div data-custom-class="body">
-                    <div>
-                        <strong>
-                            <span style={{ fontSize: '26px' }}>
-                                <span data-custom-class="title">
-                                    <bdt className="block-component" />
-                                    <bdt className="question">PRIVACY POLICY</bdt>
-                                    <bdt className="statement-end-if-in-editor" />
-                                </span>
-                            </span>
-                        </strong>
-                    </div>
-                    <div>
-                        <br />
-                    </div>
-                    <div>
-                        <span style={{ color: 'rgb(127, 127, 127)' }}>
-                            <strong>
-                                <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="subtitle">
-                                        Last updated <bdt className="question">September 26, 2023</bdt>
-                                    </span>
-                                </span>
-                            </strong>
-                        </span>
-                    </div>
-                    <div>
-                        <br />
-                    </div>
-                    <div>
-                        <br />
-                    </div>
-                    <div>
-                        <br />
-                    </div>
+                <div>
+                    <h1 className="h1">PRIVACY POLICY</h1>
+                    <span className="font-semibold">Last updated September 26, 2023 </span>
+                </div>
+
+                <div className="border custom-border p-12 !bg-white">
                     <div style={{ lineHeight: '1.5' }}>
                         <span style={{ color: 'rgb(127, 127, 127)' }}>
                             <span
@@ -7302,11 +7269,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <span
@@ -7335,9 +7304,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <span
@@ -7366,9 +7337,9 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '14.9084%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                     }}
@@ -7401,11 +7372,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7440,9 +7413,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7506,9 +7481,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         verticalAlign:
                                                                                                                                                             'middle',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7582,11 +7559,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7632,9 +7611,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7674,9 +7655,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7719,11 +7702,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7763,9 +7748,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7809,9 +7796,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7855,11 +7844,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7899,9 +7890,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7939,9 +7932,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7986,11 +7981,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8034,9 +8031,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8094,9 +8093,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8139,11 +8140,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8183,9 +8186,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8222,9 +8227,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8267,11 +8274,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8317,9 +8326,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8368,9 +8379,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8413,11 +8426,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '33.8274%',
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8459,9 +8474,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                     style={{
                                                                                                                                                         width: '51.4385%',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8526,9 +8543,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8570,12 +8589,14 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         width: '33.8274%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8614,10 +8635,12 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         width: '51.4385%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8656,10 +8679,12 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         width: '14.9084%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8703,10 +8728,12 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         borderWidth:
                                                                                                                                                             '1px',
                                                                                                                                                         borderColor:
-                                                                                                                                                            'black',
+                                                                                                                                                            '#0000004d',
                                                                                                                                                         borderStyle:
                                                                                                                                                             'solid',
                                                                                                                                                         width: '33.8274%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8749,12 +8776,14 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderBottom:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         width: '51.4385%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8813,12 +8842,14 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                         textAlign:
                                                                                                                                                             'center',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderBottom:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderTop:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         width: '14.9084%',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8882,13 +8913,15 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderLeft:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderBottom:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         lineHeight:
                                                                                                                                                             '1.5',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <span data-custom-class="body_text">
@@ -8905,11 +8938,13 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderBottom:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         lineHeight:
                                                                                                                                                             '1.5',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <bdt className="block-component">
@@ -8919,9 +8954,11 @@ const Privacy = ({ navData, footerData, metaData }) => {
                                                                                                                                                 <td
                                                                                                                                                     style={{
                                                                                                                                                         borderRight:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
                                                                                                                                                         borderBottom:
-                                                                                                                                                            '1px solid black',
+                                                                                                                                                            '1px solid #0000004d',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div

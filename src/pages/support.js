@@ -5,16 +5,14 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Image from 'next/image';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/support'`);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
@@ -22,7 +20,7 @@ export async function getStaticProps() {
 }
 export const runtime = 'experimental-edge';
 
-export default function Support({ navData, footerData, metaData }) {
+export default function Support({ footerData, metaData }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
@@ -82,9 +80,8 @@ export default function Support({ navData, footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/support'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/support'} />
+
             <div className="container flex flex-col md:gap-16 gap-4 my-12 md:my-24">
                 <div className="flex flex-col gap-3 text-start md:w-full sm:w-1/2 w-full min-w-[300px}">
                     <h1 className="md:text-5xl text-4xl font-semibold">viaSocket Support</h1>

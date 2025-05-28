@@ -3,8 +3,8 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFaqData, getFooterData, getMetaData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
@@ -12,13 +12,11 @@ import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 
 export const runtime = 'experimental-edge';
 
-export default function aiagent({ navData, footerData, faqData, metaData, blogData }) {
+export default function aiagent({ footerData, faqData, metaData, blogData }) {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/mcp'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/mcp'} />
 
             <div className="cont gap-8">
                 <McpSwitchComp />
@@ -67,10 +65,18 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
                     <div className=" py-8">
                         <h2 className="text-3xl font-bold mb-6">Why viaSocket MCP?</h2>
                         <ul className="space-y-4 text-xl">
-                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> One link, thousands of integrations</li>
-                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Zero custom backend development</li>
-                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Secure, scalable, and easy to embed</li>
-                            <li className="flex gap-2 items-center"><div className="h-3 w-3 bg-accent" /> Supports built-in authentication flows</li>
+                            <li className="flex gap-2 items-center">
+                                <div className="h-3 w-3 bg-accent" /> One link, thousands of integrations
+                            </li>
+                            <li className="flex gap-2 items-center">
+                                <div className="h-3 w-3 bg-accent" /> Zero custom backend development
+                            </li>
+                            <li className="flex gap-2 items-center">
+                                <div className="h-3 w-3 bg-accent" /> Secure, scalable, and easy to embed
+                            </li>
+                            <li className="flex gap-2 items-center">
+                                <div className="h-3 w-3 bg-accent" /> Supports built-in authentication flows
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -113,7 +119,6 @@ export default function aiagent({ navData, footerData, faqData, metaData, blogDa
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
     const blogTags = 'mcp';
@@ -121,7 +126,6 @@ export async function getServerSideProps() {
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
-            navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],

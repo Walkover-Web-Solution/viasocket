@@ -13,15 +13,15 @@
 }
 
 .index_client_grid {
-    @apply border custom-border border-r-0 border-b-0;
+    @apply border custom-border border-r-0;
     .block_border {
-        @apply border custom-border border-s-0 border-t-0;
+        @apply border custom-border border-s-0 border-t-0 border-b-0;
     }
 }
 
 .index_blog_grid {
-    @apply border custom-border border-r-0 border-b-0;
+    @apply border custom-border border-r-0;
     .block_border {
-        @apply border custom-border border-s-0 border-t-0;
+        @apply border custom-border border-s-0 border-t-0 border-b-0;
     }
 }

@@ -6,22 +6,8 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import {
-    getCaseStudyData,
-    getFaqData,
-    getFooterData,
-    getMetaData,
-    getNavData,
-    getTestimonialData,
-} from '@/utils/getData';
-import {
-    CASESTUDY_FIELDS,
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    METADATA_FIELDS,
-    NAVIGATION_FIELDS,
-    TESTIMONIALS_FIELDS,
-} from '@/const/fields';
+import { getCaseStudyData, getFaqData, getFooterData, getMetaData, getTestimonialData } from '@/utils/getData';
+import { CASESTUDY_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
 import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
@@ -51,7 +37,6 @@ const Index = ({
     caseStudies,
     metaData,
     faqData,
-    navData,
     footerData,
     redirect_to,
     utm_source,
@@ -65,9 +50,8 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/index'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/index'} />
+
             <div className="add-background-color">
                 <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12">
                     <IndexBannerComp
@@ -95,12 +79,13 @@ const Index = ({
                         <IntegrateAppsComp />
                     </div>
 
-                    <div className='container'>
+                    <div className="container">
                         <div className="cont gap-2 border custom-border p-12 bg-white">
-                            <h2 className="h2 text-left">List your app on the viaSocket marketplace
-                            </h2>
+                            <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
                             <p className="sub__h1">
-                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace.
+                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
+                                Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
+                                the viaSocket Marketplace.
                             </p>
                             <Link
                                 href="https://viasocket.com/faq/developer-hub"
@@ -112,7 +97,6 @@ const Index = ({
                         </div>
                     </div>
 
-
                     <div className="container cont">
                         <CaseStudiesSection caseStudies={caseStudies} />
                         <div className="flex justify-end">
@@ -120,7 +104,7 @@ const Index = ({
                                 href="https://viasocket.com/blog/tag/client-story"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border custom-border border-t-0 px-4 py-2 "
+                                className="border custom-border border-t-0 px-4 py-2 bg-white"
                             >
                                 <LinkText>Read More</LinkText>
                             </Link>
@@ -233,9 +217,12 @@ const TestimonialsSection = ({ testimonials }) => (
         <h2 className="h2 flex gap-2 flex-wrap">
             What clients says <MdOutlineAutoAwesome />
         </h2>
-        <div className="index_client_grid grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 w-full bg-white">
+        <div className="border custom-border border-r-0 sm:grid-cols-1 lg:grid-cols-3 grid bg-white sm:border-b-0 lg:border-b">
             {testimonials.map((testimonial, index) => (
-                <div className="block_border flex flex-col sm:p-12 p-6 gap-4" key={index}>
+                <div
+                    className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border"
+                    key={index}
+                >
                     <div className="flex flex-col  gap-2 ">
                         <Image
                             className="border custom-border"
@@ -337,8 +324,8 @@ const SecuritySection = ({ securityGridData }) => {
                         </h3>
                     </div>
                     <div className="flex gap-4 mr-12">
-                        <Image src="assets/img/aicpa-soc-badge.webp" width={100} height={100} />
-                        <Image src="assets/img/iso-certified.webp" width={100} height={100} />
+                        <Image src="assets/img/aicpa-soc-badge.webp" alt='aicpa soc badge' width={100} height={100} />
+                        <Image src="assets/img/iso-certified.webp" alt='iso certified badge' width={100} height={100} />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">
@@ -365,7 +352,6 @@ export async function getServerSideProps(context) {
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
     const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const blogTags = 'index';
     const blogData = await getBlogData({ tag1: blogTags });
@@ -510,7 +496,6 @@ export async function getServerSideProps(context) {
             caseStudies: caseStudies || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             faqData: faqData || [],
-            navData: navData || [],
             footerData: footerData || [],
             blogData: blogData || [],
             redirect_to: redirect_to || '',

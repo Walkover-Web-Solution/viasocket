@@ -1,16 +1,14 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps() {
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`);
     return {
         props: {
-            navData: navData || [],
             footerData: footerData || [],
             metaData: (metaData?.length > 0 && metaData[0]) || {},
         },
@@ -18,53 +16,28 @@ export async function getStaticProps() {
 }
 export const runtime = 'experimental-edge';
 
-const Terms = ({ navData, footerData, metaData }) => {
+const Terms = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/terms'} />
-            </div>
-            <div className="container mt-28 bg-white p-12">
+            <Navbar footerData={footerData} utm={'/terms'} />
+
+            <div className="container mt-12 flex gap-16 flex-col">
                 <style
                     dangerouslySetInnerHTML={{
-                        __html: "\n  [data-custom-class='body'], [data-custom-class='body'] * {\n          background: transparent !important;\n        }\n[data-custom-class='title'], [data-custom-class='title'] * {\n          font-family: Arial !important;\nfont-size: 26px !important;\n !important;\n        }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\n          font-family: Arial !important;\n;\nfont-size: 14px !important;\n        }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\n          font-family: Arial !important;\nfont-size: 19px !important;\n;\n        }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\n          font-family: Arial !important;\nfont-size: 17px !important;\n;\n        }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\n          \nfont-size: 14px !important;\nfont-family: Arial !important;\n        }\n[data-custom-class='link'], [data-custom-class='link'] * {\n          color: #0000ff !important;\nfont-size: 14px !important;\nfont-family: Arial !important;\nword-break: break-word !important;\n        }\n",
+                        __html: "\n  [data-custom-class='body'], [data-custom-class='body'] * {\n          background: transparent !important;\n        }\n[data-custom-class='title'], [data-custom-class='title'] * {\nfont-size: 26px !important;\n !important;\n        }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\n;\nfont-size: 14px !important;\n        }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\nfont-size: 19px !important;\n;\n        }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\nfont-size: 17px !important;\n;\n        }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\n          \nfont-size: 14px !\n        }\n[data-custom-class='link'], [data-custom-class='link'] * {\n          color: #0000ff !important;\nfont-size: 14px !\nword-break: break-word !important;\n        }\n",
                     }}
                 />
-                <div data-custom-class="body">
-                    <div align="center" style={{ textAlign: 'left' }}>
-                        <div className="MsoNormal" data-custom-class="title" style={{ lineHeight: '1.5' }}>
-                            <bdt className="block-component">
-                                <span style={{ fontSize: '19px' }} />
-                            </bdt>
-                            <bdt className="question">
-                                <strong>T&amp;C</strong>
-                            </bdt>
-                            <bdt className="statement-end-if-in-editor" />
-                        </div>
-                        <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
-                            <br />
-                        </div>
-                        <div className="MsoNormal" data-custom-class="subtitle" style={{ lineHeight: '1.5' }}>
-                            <strong>Last updated</strong>{' '}
-                            <bdt className="question">
-                                <strong>September 22, 2023</strong>
-                            </bdt>
-                        </div>
-                        <div className="MsoNormal" style={{ lineHeight: '1.1' }}>
-                            <br />
-                        </div>
-                        <div className="MsoNormal" style={{ lineHeight: '115%' }}>
-                            <br />
-                        </div>
-                        <div className="MsoNormal" style={{ lineHeight: '115%' }}>
-                            <br />
-                        </div>
-                        <div style={{ lineHeight: '1.5' }}>
-                            <strong>
-                                <span data-custom-class="heading_1">AGREEMENT TO OUR LEGAL TERMS</span>
-                            </strong>
-                        </div>
+
+                <div>
+                    <h1 className="h1">T&amp;C</h1>
+                    <span className="font-semibold">Last updated September 22, 2023 </span>
+                </div>
+                <div className="!bg-white p-12 border custom-border">
+                    <div style={{ lineHeight: '1.5' }}>
+                        <strong>
+                            <span data-custom-class="heading_1">AGREEMENT TO OUR LEGAL TERMS</span>
+                        </strong>
                     </div>
                     <div align="center" style={{ textAlign: 'left' }}>
                         <div className="MsoNormal" id="agreement" style={{ lineHeight: '1.5' }}>
@@ -84,7 +57,6 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -125,7 +97,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -142,7 +114,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -163,7 +135,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -191,7 +163,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -223,7 +195,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                                 fontSize: '11.0pt',
                                                 lineHeight: '115%',
                                                 fontFamily: 'Arial',
-                                                // color: "#ffff",
+
                                                 msoThemecolor: 'text1',
                                                 msoThemetint: 166,
                                             }}
@@ -742,7 +714,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -769,7 +741,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -788,7 +760,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -844,7 +816,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -863,7 +835,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -884,7 +856,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -909,7 +881,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -927,7 +899,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -945,7 +917,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1119,7 +1091,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1539,7 +1511,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1562,7 +1534,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1581,7 +1553,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1600,7 +1572,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1619,7 +1591,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1638,7 +1610,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1652,7 +1624,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1666,7 +1638,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1700,7 +1672,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1745,7 +1717,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -5856,7 +5828,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -5952,7 +5924,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6089,7 +6061,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6196,7 +6168,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6275,7 +6247,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6361,7 +6333,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6440,7 +6412,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6535,7 +6507,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                    // color: "#ffff",
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6592,7 +6564,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                        // color: "#ffff",
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6616,7 +6588,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                        // color: "#ffff",
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6638,7 +6610,7 @@ const Terms = ({ navData, footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                        // color: "#ffff",
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6650,30 +6622,29 @@ const Terms = ({ navData, footerData, metaData }) => {
                             </strong>
                         </div>
                     </div>
+                    <div
+                        style={{
+                            fontSize: '14px',
+                            fontFamily: 'Arial',
+                            paddingTop: '16px',
+                        }}
+                    >
+                        These terms of use were created using Termly's{' '}
+                        <a
+                            style={{ color: 'rgb(48, 48, 241) !important' }}
+                            href="https://termly.io/products/terms-and-conditions-generator/"
+                            aria-label="privacy"
+                        >
+                            Terms and Conditions Generator
+                        </a>
+                        .
+                    </div>
                 </div>
                 <style
                     dangerouslySetInnerHTML={{
                         __html: '\n      ul {\n        list-style-type: square;\n      }\n      ul > li > ul {\n        list-style-type: circle;\n      }\n      ul > li > ul > li > ul {\n        list-style-type: square;\n      }\n      ol li {\n        font-family: Arial ;\n      }\n    ',
                     }}
                 />
-                <div
-                    style={{
-                        // color: "#ffff",
-                        fontSize: '14px',
-                        fontFamily: 'Arial',
-                        paddingTop: '16px',
-                    }}
-                >
-                    These terms of use were created using Termly's{' '}
-                    <a
-                        style={{ color: 'rgb(48, 48, 241) !important' }}
-                        href="https://termly.io/products/terms-and-conditions-generator/"
-                        aria-label="privacy"
-                    >
-                        Terms and Conditions Generator
-                    </a>
-                    .
-                </div>
             </div>
             <div className="container pt-16 pb-4">
                 <Footer footerData={footerData} />

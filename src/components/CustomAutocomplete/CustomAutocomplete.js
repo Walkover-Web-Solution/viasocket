@@ -105,7 +105,7 @@ export const CustomAutocomplete = ({
         <div className="relative" ref={wrapperRef}>
             <div className="relative w-full h-full bg-white">
                 <div className="absolute left-2 top-1/2 -translate-y-1/2 flex items-center pointer-events-none">
-                    {selectedFlag && <img src={selectedFlag} alt={''} className="w-5 h-5" />}
+                    {selectedFlag && <img src={selectedFlag} alt={'selected flag'} className="w-5 h-5" />}
                 </div>
                 <input
                     type="text"

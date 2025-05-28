@@ -5,19 +5,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
-import { getAgencies, getExpertBlogs, getFooterData, getMetaData, getNavData, getPageData } from '@/utils/getData';
-import {
-    AGENCIES_FIELDS,
-    EXPERTBLOGS_FIELDS,
-    FOOTER_FIELDS,
-    METADATA_FIELDS,
-    NAVIGATION_FIELDS,
-    PAGEDATA_FIELDS,
-} from '@/const/fields';
+import { getAgencies, getExpertBlogs, getFooterData, getMetaData, getPageData } from '@/utils/getData';
+import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const pageData = await getPageData(PAGEDATA_FIELDS);
     const agencies = await getAgencies(AGENCIES_FIELDS);
@@ -28,14 +20,13 @@ export async function getServerSideProps() {
             pageData: (pageData?.length > 0 && pageData[0]) || {},
             metaData: (metaData?.length > 0 && metaData[0]) || {},
             expertsHelp: expertsBlog || [],
-            navData: navData || [],
             footerData: footerData || [],
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData, footerData }) => {
+const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerData }) => {
     let verifiedArr = [];
     let nonVerifiedArr = [];
 
@@ -56,9 +47,8 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/experts'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/experts'} />
+
             <div className="">
                 <div className=" py-container container">
                     <div className="flex flex-col gap-10">
@@ -127,10 +117,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, navData
                         {expertsHelp &&
                             expertsHelp.map((expertsHelpBlog, index) => {
                                 return (
-                                    <div
-                                        key={index}
-                                        className="flex flex-col gap-4 bg-white p-6 border custom-border"
-                                    >
+                                    <div key={index} className="flex flex-col gap-4 bg-white p-6 border custom-border">
                                         <MdOutlineArticle color="#8F9396" fontSize={36} />
                                         <p className="text-xl ">{expertsHelpBlog?.description}</p>
                                         {expertsHelpBlog?.link && (

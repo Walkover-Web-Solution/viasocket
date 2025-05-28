@@ -3,8 +3,8 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getNavData } from '@/utils/getData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
+import { getFaqData, getFooterData, getMetaData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
@@ -12,13 +12,11 @@ import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ navData, footerData, faqData, metaData, blogData }) {
+export default function pricing({ footerData, faqData, metaData, blogData }) {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar navData={navData} utm={'/mcp'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/mcp'} />
 
             <div className="cont gap-8">
                 <McpSwitchComp />
@@ -98,6 +96,20 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
             </div>
 
             <div className="container">
+                <div className="cont gap-2 border custom-border p-12 bg-white">
+                    <h2 className="h2 text-left">Build your app to be MCP-Ready</h2>
+                    <p className="sub__h1">
+                        List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude,
+                        Windsurf, and many others—enabling your users to perform actions within your app directly
+                        through AI.
+                    </p>
+                    <Link href="https://viasocket.com/faq/developer-hub" target="_blank" rel="noopener noreferrer">
+                        <button className="btn btn-accent">Quick start guide</button>
+                    </Link>
+                </div>
+            </div>
+
+            <div className="container">
                 <div className="cont p-12 border custom-border justify-start items-start gap-4 bg-white">
                     <div className="cont gap-1 text-left">
                         <h2 className="h2">Join the Ecosystem</h2>
@@ -133,7 +145,6 @@ export default function pricing({ navData, footerData, faqData, metaData, blogDa
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
-    const navData = await getNavData(NAVIGATION_FIELDS);
     const footerData = await getFooterData(FOOTER_FIELDS);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
     const blogTags1 = 'mcp';
@@ -142,7 +153,6 @@ export async function getServerSideProps() {
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},
-            navData: navData || [],
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],
