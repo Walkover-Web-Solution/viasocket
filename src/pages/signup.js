@@ -77,7 +77,7 @@ const Login = ({ testimonials, redirect_to }) => {
                                     src={testimonials[0]?.client_img[0] || 'https://placehold.co/40x40'}
                                     width={36}
                                     height={36}
-                                    alt=""
+                                    alt="testimonial image"
                                 />
                                 <div className="cont">
                                     <p className="font-semibold">{testimonials[0]?.given_by}</p>

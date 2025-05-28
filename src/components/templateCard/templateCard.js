@@ -19,6 +19,7 @@ const TemplateCard = ({ template }) => {
                     layout="fill"
                     className="object-top"
                     style={{ objectFit: 'contain', height: '100%', width: '100%' }}
+                    alt='template image'
                 />
             </div>
             <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />
