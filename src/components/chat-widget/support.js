@@ -84,7 +84,7 @@ export default function Support({ open, onClose, footerData }) {
     const Pricing = [{ link: '/pricing', name: 'Plans & Pricing', description: 'AI Automation plans and pricing' }];
 
     return (
-        <div className={`fixed inset-0 z-50 pointer-events-${open ? 'auto' : 'none'}`}>
+        <div className={`fixed inset-0 z-[9999] pointer-events-${open ? 'auto' : 'none'}`}>
             <div
                 className={`absolute inset-0 bg-black/30 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
             />

@@ -5,14 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
-import { getAgencies, getExpertBlogs, getFooterData, getMetaData,  getPageData } from '@/utils/getData';
-import {
-    AGENCIES_FIELDS,
-    EXPERTBLOGS_FIELDS,
-    FOOTER_FIELDS,
-    METADATA_FIELDS,
-    PAGEDATA_FIELDS,
-} from '@/const/fields';
+import { getAgencies, getExpertBlogs, getFooterData, getMetaData, getPageData } from '@/utils/getData';
+import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
 
 export async function getServerSideProps() {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`);
@@ -53,9 +47,8 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/experts'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/experts'} />
+
             <div className="">
                 <div className=" py-container container">
                     <div className="flex flex-col gap-10">

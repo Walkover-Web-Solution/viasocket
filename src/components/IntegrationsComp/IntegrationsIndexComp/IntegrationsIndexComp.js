@@ -85,9 +85,8 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/index'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/index'} />
+
             <div className="container flex justify-center items-center">
                 <div className="cont text-left">
                     <h1 className="h1">

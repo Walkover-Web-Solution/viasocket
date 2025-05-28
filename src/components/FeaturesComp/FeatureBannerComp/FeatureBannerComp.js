@@ -5,9 +5,8 @@ import Link from 'next/link';
 export default function FeatureBannerComp({ featureData, footerData, pageInfo }) {
     return (
         <>
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={pageInfo?.url} />
-            </div>
+            <Navbar footerData={footerData} utm={pageInfo?.url} />
+
             <div className="container">
                 <div className="h-fit ">
                     <div className="py-20 cont gap-16 h-full flex justify-center ">

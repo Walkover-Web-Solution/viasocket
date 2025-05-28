@@ -36,9 +36,8 @@ export default function IntegrationsAppTwoComp({
             style={{ borderLeftColor: appOneDetails?.brandcolor, borderLeftWidth: '10px' }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/integrations/apptwo'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/integrations/apptwo'} />
+
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}

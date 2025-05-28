@@ -6,20 +6,8 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import {
-    getCaseStudyData,
-    getFaqData,
-    getFooterData,
-    getMetaData,
-    getTestimonialData,
-} from '@/utils/getData';
-import {
-    CASESTUDY_FIELDS,
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    METADATA_FIELDS,
-    TESTIMONIALS_FIELDS,
-} from '@/const/fields';
+import { getCaseStudyData, getFaqData, getFooterData, getMetaData, getTestimonialData } from '@/utils/getData';
+import { CASESTUDY_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
 import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
@@ -62,9 +50,8 @@ const Index = ({
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/index'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/index'} />
+
             <div className="add-background-color">
                 <div className="w-full hero_gradint cont md:gap-20 sm:gap-16 gap-12">
                     <IndexBannerComp
@@ -232,7 +219,10 @@ const TestimonialsSection = ({ testimonials }) => (
         </h2>
         <div className="border custom-border border-r-0 sm:grid-cols-1 lg:grid-cols-3 grid bg-white sm:border-b-0 lg:border-b">
             {testimonials.map((testimonial, index) => (
-                <div className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border" key={index}>
+                <div
+                    className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border"
+                    key={index}
+                >
                     <div className="flex flex-col  gap-2 ">
                         <Image
                             className="border custom-border"

@@ -127,9 +127,8 @@ export default function McpIndexComp({
                         });
                     `}
                 </Script>
-                <div className="sticky top-0 z-[100] border-b custom-border">
-                    <Navbar footerData={footerData} utm={'/index'} />
-                </div>
+
+                <Navbar footerData={footerData} utm={'/index'} />
 
                 <div className="cont gap-8">
                     <McpSwitchComp />

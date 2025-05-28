@@ -15,9 +15,8 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar  footerData={footerData} utm={'/pricing'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/pricing'} />
+
             <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">

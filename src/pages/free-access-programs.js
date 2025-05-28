@@ -9,9 +9,8 @@ export default function Programs({ footerData, metaData, programs }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/free-access-programs'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/free-access-programs'} />
+
             <div className="container cont cont__py cont__gap">
                 <div className="cont gap-2">
                     <h1 className="h1 ">

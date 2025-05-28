@@ -21,10 +21,8 @@ const Privacy = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
+            <Navbar footerData={footerData} utm={'/privacy'} />
 
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/privacy'} />
-            </div>
             <div className="container mb-4 mt-12 flex flex-col gap-16">
                 <style
                     dangerouslySetInnerHTML={{
@@ -33,7 +31,7 @@ const Privacy = ({ footerData, metaData }) => {
                 />
                 <div>
                     <h1 className="h1">PRIVACY POLICY</h1>
-                    <span className='font-semibold'>Last updated September 26, 2023 </span>
+                    <span className="font-semibold">Last updated September 26, 2023 </span>
                 </div>
 
                 <div className="border custom-border p-12 !bg-white">
@@ -7276,9 +7274,9 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
-
                                                                                                                                                 >
                                                                                                                                                     <span
                                                                                                                                                         style={{
@@ -7309,7 +7307,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderRight:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <span
@@ -7378,7 +7377,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7416,7 +7416,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderRight:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7483,7 +7484,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7562,7 +7564,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7611,7 +7614,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7654,7 +7658,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7702,7 +7707,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7745,7 +7751,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7792,7 +7799,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7841,7 +7849,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7884,7 +7893,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7925,7 +7935,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -7975,7 +7986,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8022,7 +8034,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8083,7 +8096,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8131,7 +8145,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8174,7 +8189,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8214,7 +8230,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8262,7 +8279,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8311,7 +8329,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8363,7 +8382,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8411,7 +8431,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8456,7 +8477,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8524,7 +8546,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8572,7 +8595,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         width: '33.8274%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8615,7 +8639,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         width: '51.4385%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8658,7 +8683,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         width: '14.9084%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8706,7 +8732,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderStyle:
                                                                                                                                                             'solid',
                                                                                                                                                         width: '33.8274%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8755,7 +8782,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderRight:
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         width: '51.4385%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8820,7 +8848,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         borderTop:
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         width: '14.9084%',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div
@@ -8891,7 +8920,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         lineHeight:
                                                                                                                                                             '1.5',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <span data-custom-class="body_text">
@@ -8913,7 +8943,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         lineHeight:
                                                                                                                                                             '1.5',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <bdt className="block-component">
@@ -8926,7 +8957,8 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             '1px solid #0000004d',
                                                                                                                                                         borderBottom:
                                                                                                                                                             '1px solid #0000004d',
-                                                                                                                                                        padding: '10px',
+                                                                                                                                                        padding:
+                                                                                                                                                            '10px',
                                                                                                                                                     }}
                                                                                                                                                 >
                                                                                                                                                     <div

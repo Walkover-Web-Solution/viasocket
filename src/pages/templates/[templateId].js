@@ -26,9 +26,8 @@ const TemplateDetailPage = ({ footerData, templateData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/template'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/template'} />
+
             <div className="container my-40 cont justify-between items-center">
                 <div className="flex w-full gap-12">
                     <div className="w-[60%] cont gap-1">

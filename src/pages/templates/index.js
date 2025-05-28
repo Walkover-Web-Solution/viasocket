@@ -47,9 +47,8 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar  footerData={footerData} utm={'/template'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/template'} />
+
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container pt-20 pb-10">
                     <div className="flex flex-col text-left gap-2">
