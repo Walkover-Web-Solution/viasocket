@@ -106,7 +106,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         }
     }
 
-    const showMCPBanner = !router.pathname.includes('/pricing');
+    const showMCPBanner = !['/pricing', '/mcp', '/integrations'].some((path) => router.pathname.includes(path));
     const show404Banner = router.pathname === '/404';
 
     return (
@@ -122,7 +122,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                         <Link href="/mcp">
                             <div className="w-full p-2 text-center custom-border gradient-background border-b border-b-black">
                                 <p className="!text-xs text-black hover:underline">
-                                    Give your AI agent the power to act—generate your MCP URL today
+                                    Give your AI agent the power to act-get your MCP cURL now
                                 </p>
                             </div>
                         </Link>
@@ -141,73 +141,6 @@ export function Skeleton() {
                 <title>Loading . . . </title>
                 <meta content="Loading the viaSocket application, please wait..."></meta>
             </Head>
-
-            {/* <div className="h-dvh w-dvw container p-6 overflow-hidden">
-               
-                <div className="flex items-center justify-between mb-8">
-                    <div className="h-10 w-40 bg-gray-100 rounded-md skeleton"></div>
-                    <div className="hidden md:flex gap-4">
-
-                        <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
-                        <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
-                        <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
-                        <div className="h-8 w-20 bg-gray-100 rounded-md skeleton"></div>
-                    </div>
-                    <div className="md:hidden">
-                        <div className="h-8 w-8 bg-gray-100 rounded-md skeleton"></div>
-                    </div>
-                </div>
-
-                <div className="flex flex-wrap lg:flex-nowrap gap-8 w-full">
-                    <div className="hidden lg:flex flex-col w-1/5 gap-4">
-                        <div className="h-1/3 bg-gray-100 rounded-md skeleton"></div>
-                        <div className="h-2/3 bg-gray-100 rounded-md skeleton"></div>
-                    </div>
-
-                    <div className="flex flex-col gap-8 w-full lg:w-3/5">
-                        <div className="h-full w-full rounded-md">
-                            <div className="h-10 w-3/4 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 w-2/3 bg-gray-100 rounded-md skeleton mb-4"></div>
-                        </div>
-
-                        <div className="h-full w-full rounded-md">
-                            <div className="h-10 w-1/2 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                        </div>
-
-                        <div className="h-full w-full rounded-md hidden lg:block">
-
-                            <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                        </div>
-                        <div className="h-full w-full rounded-md hidden lg:block">
-
-                            <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-极6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                        </div>
-                        <div className="h-full w-full rounded-md hidden lg:block">
-
-                            <div className="h-10 w-2/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 bg-gray-100 rounded-md skeleton mb-4"></div>
-                            <div className="h-6 w-4/5 bg-gray-100 rounded-md skeleton mb-4"></div>
-                        </div>
-                    </div>
-                </div>
-            </div> */}
 
             <div className="h-dvh w-dvw overflow-hidden p-8">
                 <div className="flex justify-between w-full h-10">

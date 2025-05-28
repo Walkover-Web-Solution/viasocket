@@ -20,9 +20,8 @@ const Terms = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/terms'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/terms'} />
+
             <div className="container mt-12 flex gap-16 flex-col">
                 <style
                     dangerouslySetInnerHTML={{
@@ -30,11 +29,11 @@ const Terms = ({ footerData, metaData }) => {
                     }}
                 />
 
-                <div> 
+                <div>
                     <h1 className="h1">T&amp;C</h1>
-                    <span className='font-semibold'>Last updated September 22, 2023 </span>
+                    <span className="font-semibold">Last updated September 22, 2023 </span>
                 </div>
-                <div className='!bg-white p-12 border custom-border'>
+                <div className="!bg-white p-12 border custom-border">
                     <div style={{ lineHeight: '1.5' }}>
                         <strong>
                             <span data-custom-class="heading_1">AGREEMENT TO OUR LEGAL TERMS</span>
@@ -98,7 +97,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -115,7 +114,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -136,7 +135,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -164,7 +163,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -196,7 +195,7 @@ const Terms = ({ footerData, metaData }) => {
                                                 fontSize: '11.0pt',
                                                 lineHeight: '115%',
                                                 fontFamily: 'Arial',
-                                            
+
                                                 msoThemecolor: 'text1',
                                                 msoThemetint: 166,
                                             }}
@@ -715,7 +714,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -742,7 +741,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -761,7 +760,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -817,7 +816,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -836,7 +835,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -857,7 +856,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -882,7 +881,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -900,7 +899,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -918,7 +917,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1092,7 +1091,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1512,7 +1511,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1535,7 +1534,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1554,7 +1553,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1573,7 +1572,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1592,7 +1591,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1611,7 +1610,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1625,7 +1624,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1639,7 +1638,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1673,7 +1672,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -1718,7 +1717,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -5829,7 +5828,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -5925,7 +5924,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6062,7 +6061,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6169,7 +6168,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6248,7 +6247,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6334,7 +6333,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6413,7 +6412,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6508,7 +6507,7 @@ const Terms = ({ footerData, metaData }) => {
                                     fontSize: '11.0pt',
                                     lineHeight: '115%',
                                     fontFamily: 'Arial',
-                                
+
                                     msoThemecolor: 'text1',
                                     msoThemetint: 166,
                                 }}
@@ -6565,7 +6564,7 @@ const Terms = ({ footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                    
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6589,7 +6588,7 @@ const Terms = ({ footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                    
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6611,7 +6610,7 @@ const Terms = ({ footerData, metaData }) => {
                                         fontSize: '11.0pt',
                                         lineHeight: '115%',
                                         fontFamily: 'Arial',
-                                    
+
                                         msoThemecolor: 'text1',
                                         msoThemetint: 166,
                                     }}
@@ -6624,23 +6623,22 @@ const Terms = ({ footerData, metaData }) => {
                         </div>
                     </div>
                     <div
-                    style={{
-                    
-                        fontSize: '14px',
-                        fontFamily: 'Arial',
-                        paddingTop: '16px',
-                    }}
-                >
-                    These terms of use were created using Termly's{' '}
-                    <a
-                        style={{ color: 'rgb(48, 48, 241) !important' }}
-                        href="https://termly.io/products/terms-and-conditions-generator/"
-                        aria-label="privacy"
+                        style={{
+                            fontSize: '14px',
+                            fontFamily: 'Arial',
+                            paddingTop: '16px',
+                        }}
                     >
-                        Terms and Conditions Generator
-                    </a>
-                    .
-                </div>
+                        These terms of use were created using Termly's{' '}
+                        <a
+                            style={{ color: 'rgb(48, 48, 241) !important' }}
+                            href="https://termly.io/products/terms-and-conditions-generator/"
+                            aria-label="privacy"
+                        >
+                            Terms and Conditions Generator
+                        </a>
+                        .
+                    </div>
                 </div>
                 <style
                     dangerouslySetInnerHTML={{

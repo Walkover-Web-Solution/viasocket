@@ -44,9 +44,8 @@ export default function IntegrationsAppOneComp({
             }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/integrations/appone'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/integrations/appone'} />
+
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}

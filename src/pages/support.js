@@ -80,9 +80,8 @@ export default function Support({ footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <div className="sticky top-0 z-[100] border-b custom-border">
-                <Navbar footerData={footerData} utm={'/support'} />
-            </div>
+            <Navbar footerData={footerData} utm={'/support'} />
+
             <div className="container flex flex-col md:gap-16 gap-4 my-12 md:my-24">
                 <div className="flex flex-col gap-3 text-start md:w-full sm:w-1/2 w-full min-w-[300px}">
                     <h1 className="md:text-5xl text-4xl font-semibold">viaSocket Support</h1>
