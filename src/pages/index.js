@@ -324,8 +324,8 @@ const SecuritySection = ({ securityGridData }) => {
                         </h3>
                     </div>
                     <div className="flex gap-4 mr-12">
-                        <Image src="assets/img/aicpa-soc-badge.webp" width={100} height={100} />
-                        <Image src="assets/img/iso-certified.webp" width={100} height={100} />
+                        <Image src="assets/img/aicpa-soc-badge.webp" alt='aicpa soc badge' width={100} height={100} />
+                        <Image src="assets/img/iso-certified.webp" alt='iso certified badge' width={100} height={100} />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">
