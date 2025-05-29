@@ -29,7 +29,7 @@ import {
 import { FaCogs, FaShieldAlt, FaUserFriends } from 'react-icons/fa';
 import StepDisplay from '@/components/stepDisplay/StepDisplay';
 import { FiExternalLink } from 'react-icons/fi';
-
+import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -59,6 +59,7 @@ const Index = ({
                         utm_source={utm_source}
                         signupFeatures={signupFeatures}
                     />
+                    <IndexTemplateComp />
 
                     <StreamlineDataGrid items={streamlineData} />
 
@@ -75,9 +76,7 @@ const Index = ({
                         <TestimonialsSection testimonials={testimonials} />
                     </div>
 
-                    <div className="container">
-                        <IntegrateAppsComp />
-                    </div>
+                    <IntegrateAppsComp />
 
                     <div className="container">
                         <div className="cont gap-2 border custom-border p-12 bg-white">
@@ -324,8 +323,8 @@ const SecuritySection = ({ securityGridData }) => {
                         </h3>
                     </div>
                     <div className="flex gap-4 mr-12">
-                        <Image src="assets/img/aicpa-soc-badge.webp" alt='aicpa soc badge' width={100} height={100} />
-                        <Image src="assets/img/iso-certified.webp" alt='iso certified badge' width={100} height={100} />
+                        <Image src="assets/img/aicpa-soc-badge.webp" alt="aicpa soc badge" width={100} height={100} />
+                        <Image src="assets/img/iso-certified.webp" alt="iso certified badge" width={100} height={100} />
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">

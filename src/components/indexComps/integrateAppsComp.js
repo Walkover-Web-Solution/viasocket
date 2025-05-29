@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import getApps from '@/utils/getApps';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -6,58 +6,112 @@ import { LinkButton } from '../uiComponents/buttons';
 
 export default function IntegrateAppsComp() {
     const [apps, setApps] = useState([]);
+    const [displayedApps, setDisplayedApps] = useState([]);
+    const containerRef = useRef(null);
+    const isAutoScrolling = useRef(false);
 
+    // Fetch apps on mount
     useEffect(() => {
-        const fetchApps = async () => {
+        (async () => {
             try {
                 const appsData = await getApps();
                 setApps(appsData);
+                // Duplicate for infinite effect
+                const limitedApps = appsData.slice(0, 40);
+                setDisplayedApps([...limitedApps, ...limitedApps, ...limitedApps]);
             } catch (error) {
                 console.error('Error fetching apps:', error);
             }
-        };
-
-        fetchApps();
+        })();
     }, []);
-    if (apps?.length > 0) {
-        return (
-            <>
-                <div className="cont cont__gap border custom-border p-12 bg-white">
+
+    // Infinite scroll when near right edge
+    const handleInfiniteScroll = () => {
+        if (!containerRef.current || apps.length === 0) return;
+        const { scrollWidth, scrollLeft, offsetWidth } = containerRef.current;
+        if (scrollWidth - (scrollLeft + offsetWidth) < 100) {
+            setDisplayedApps((prev) => [...prev, ...apps.slice(0, 40)]);
+        }
+    };
+
+    // Auto-scroll effect
+    useEffect(() => {
+        if (!containerRef.current || displayedApps.length === 0) return;
+        let animationId;
+        const scrollSpeed = 10;
+
+        function smoothAutoScroll() {
+            if (!containerRef.current || isAutoScrolling.current) return;
+            const container = containerRef.current;
+            container.scrollLeft += scrollSpeed;
+
+            if (container.scrollLeft >= container.scrollWidth - container.clientWidth) {
+                container.scrollLeft = 0;
+            }
+
+            handleInfiniteScroll();
+            animationId = requestAnimationFrame(smoothAutoScroll);
+        }
+        animationId = requestAnimationFrame(smoothAutoScroll);
+        return () => cancelAnimationFrame(animationId);
+    }, [displayedApps]);
+
+    if (!displayedApps?.length) return null;
+
+    return (
+        <div className="cont cont__gap py-12 border custom-border bg-[#FAF9F6]">
+            <div className="container flex">
+                <div className="cont py-20 gap-1">
                     <h2 className="h2">
-                        Integrate <span className="text-accent italic">1500+</span> Apps
+                        Connect with <span className="text-accent">1,500+ Apps</span> Effortlessly
                     </h2>
-                    <div className="grid 2xl:grid-cols-8 xl:grid-cols-6 md:grid-cols-4 sm:grid-cols-3 grid-cols-1 gap-3 ">
-                        {apps?.slice(0, 40).map((app, index) => {
-                            return (
-                                <>
-                                    <Link
-                                        key={index}
-                                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
-                                        className="flex flex-row md:flex-col gap-1 md:py-6 py-2 px-2 items-center hover-bg-grey-100-text-black"
-                                    >
-                                        <div className="bg-white p-1">
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                width={28}
-                                                height={28}
-                                                alt={app?.name}
-                                            />
-                                        </div>
-                                        <p className="text-sm">{app?.name}</p>
-                                    </Link>
-                                </>
-                            );
-                        })}
-                    </div>
-                    <div className="flex justify-end w-full">
-                        <LinkButton
-                            customClasses={'btn btn-accent'}
-                            href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}
-                            content={'See All'}
-                        />
+                    <p className="text-lg text-gray-400">
+                        Viasocket automates your workflows by bridging the tools you use — seamlessly, reliably, and at
+                        scale.
+                    </p>
+                    <LinkButton
+                        customClasses={'btn btn-accent mt-12'}
+                        href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}
+                        content={'See All'}
+                    />
+                </div>
+                {/* <div className="flex items-center w-1/2 relative min-h-[400px]">
+                    <Image
+                        src="/assets/brand/mcpAiIntegration.svg"
+                        alt="Selected Embed Image"
+                        layout="fill"
+                        objectFit="contain"
+                        className="object-contain"
+                    />
+                </div> */}
+            </div>
+            <div className="relative w-full overflow-hidden group">
+                <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-transparent z-20 pointer-events-none" />
+                <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/90 to-transparent z-20 pointer-events-none" />
+                <div
+                    ref={containerRef}
+                    className="flex overflow-x-hidden py-4 w-full scroll-smooth"
+                    style={{ scrollBehavior: 'smooth' }}
+                >
+                    <div className="flex gap-8 min-w-max">
+                        {displayedApps.map((app, idx) => (
+                            <Link
+                                key={`${app?.appslugname}-${idx}`}
+                                href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
+                                className="flex items-center gap-1 px-2 hover:scale-105 transition-transform"
+                            >
+                                <Image
+                                    src={app?.iconurl || 'https://placehold.co/40x40'}
+                                    width={32}
+                                    height={32}
+                                    alt={app?.name}
+                                />
+                                <p className="text-lg text-center whitespace-nowrap">{app?.name}</p>
+                            </Link>
+                        ))}
                     </div>
                 </div>
-            </>
-        );
-    }
+            </div>
+        </div>
+    );
 }

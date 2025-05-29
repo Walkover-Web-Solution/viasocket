@@ -2,9 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 
 function CallBackModal() {
-    const router = useRouter()
-    console.log(router.asPath)
-    
+    const router = useRouter();
+
     const [query, setQuery] = useState('');
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
@@ -24,7 +23,7 @@ function CallBackModal() {
             phone: phone.trim(),
             email: email.trim(),
             query: query.trim(),
-            source:`website-${router.asPath}`
+            source: `website-${router.asPath}`,
         };
 
         setQuery('');
