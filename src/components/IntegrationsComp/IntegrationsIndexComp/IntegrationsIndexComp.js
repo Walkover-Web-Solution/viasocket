@@ -12,6 +12,7 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 import ErrorComp from '@/components/404/404Comp';
+import Cta from '@/components/CTA/Cta';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -253,36 +254,21 @@ export default function IntegrationsIndexComp({
                     </div>
                 )}
             </div>
-            <div className="container">
-                <div className="cont gap-2 border custom-border p-12 bg-white">
-                    <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
-                    <p className="sub__h1">
-                        viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a
-                        step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket
-                        Marketplace.
-                    </p>
-                    <Link href="https://viasocket.com/faq/developer-hub" target="_blank" rel="noopener noreferrer">
-                        <button className="btn btn-accent">Build viaSocket integration</button>
-                    </Link>
-                </div>
-            </div>
-            <div className="container my-6 bg-white">
-                <div className="border custom-border p-12 cont cont__gap">
-                    <div className="cont gap-2">
-                        <h2 className="h2">Couldn't Find Your App? Don’t Worry, We’ll Build It For You</h2>
-                        <p className="text-xl">
-                            If your app isn’t available on viaSocket, simply request an integration, and our team will
-                            build it for you, ensuring seamless connection and effortless automation of your workflows.
-                        </p>
-                    </div>
-                    <button
-                        onClick={() => document.getElementById('plugin_request_form').showModal()}
-                        className="btn btn-accent "
-                    >
-                        Request your plugin now
-                    </button>
-                </div>
-            </div>
+
+            <Cta
+                title="List your app on the viaSocket marketplace"
+                description="viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace."
+                buttonLabel="Build viaSocket integration"
+                buttonLink="https://viasocket.com/faq/developer-hub"
+            />
+
+            <Cta
+                title="Couldn't Find Your App? Don’t Worry, We’ll Build It For You"
+                description="If your app isn’t available on viaSocket, simply request an integration, and our team will build it for you, ensuring seamless connection and effortless automation of your workflows."
+                buttonLabel="Request your plugin now"
+                buttonLink="https://viasocket.com/faq/developer-hub"
+            />
+
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
             </div>

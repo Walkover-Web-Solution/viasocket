@@ -14,6 +14,7 @@ import { VscSend } from 'react-icons/vsc';
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import { handleRedirect } from '@/utils/handleRedirection';
+import Cta from '@/components/CTA/Cta';
 
 const APPERPAGE = 9;
 
@@ -193,7 +194,7 @@ export default function McpAppComp({
                                     <div>
                                         <Image
                                             src="/assets/brand/smileyLogo.svg"
-                                            alt='smiley logo'
+                                            alt="smiley logo"
                                             width={30}
                                             height={30}
                                             className="pb-4"
@@ -205,7 +206,12 @@ export default function McpAppComp({
                                             <h3 className="sub__h1">MCP Tool Calling...</h3>
                                             <div className="border custom-border bg-gray-200 px-4 py-2 shadow-md cont gap-2">
                                                 <div className="flex gap-4 items-center">
-                                                    <Image src={appOneDetails?.iconurl} alt={appOneDetails?.name} width={30} height={30} />
+                                                    <Image
+                                                        src={appOneDetails?.iconurl}
+                                                        alt={appOneDetails?.name}
+                                                        width={30}
+                                                        height={30}
+                                                    />
                                                     <h2 className="sub__h1 text-gray-500">Action in Progress...</h2>
                                                 </div>
                                                 {mcpPromptData[0]?.action && (
@@ -442,22 +448,13 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container">
-                    <div className="cont cont__py  bg-black text-white  justify-center gap-4 px-12">
-                        <div className="cont gap-1">
-                            <h2 className="h2 text-white">Discover More About viaSocket MCP</h2>
-                            <p className="sub__h1">
-                                Check out our easy-to-follow documentation and start exploring all the cool things you
-                                can do with viaSocket MCP.
-                            </p>
-                        </div>
-                        <Link href="https://viasocket.com/faq/viaSocket-MCP">
-                            <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
-                                Explore The Documentation
-                            </button>
-                        </Link>
-                    </div>
-                </div>
+                <Cta
+                    title="Discover More About viaSocket MCP"
+                    description="Check out our easy-to-follow documentation and start exploring all the cool things you can do with viaSocket MCP."
+                    buttonLabel="Explore The Documentation"
+                    buttonLink="https://viasocket.com/faq/viaSocket-MCP"
+                    theme="dark"
+                />
 
                 {blogsData?.length > 0 && (
                     <div className="container">

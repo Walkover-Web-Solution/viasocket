@@ -22,7 +22,7 @@ export default function FeatureBannerComp({ featureData, footerData, pageInfo })
                             </div>
                             {!featureData?.image && (
                                 <Link className="w-fit" href={`/signup?utm_source=${pageInfo?.url}`}>
-                                    <button className="btn btn-accent btn-lg">Start Free Trial</button>
+                                    <button className="btn btn-accent">Start Free Trial</button>
                                 </Link>
                             )}
                         </div>

@@ -8,6 +8,7 @@ import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PRICINGFEATURE_FIELDS } fr
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
+import Cta from '@/components/CTA/Cta';
 
 export const runtime = 'experimental-edge';
 
@@ -95,16 +96,13 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                     </div>
                 </div>
 
-                <div className="container bg-white  border custom-border p-12 flex flex-col gap-8">
-                    <h2 className="h2">Upgrade from Free to Premium and Get Expert Assistance</h2>
-                    <p className="sub__h1">
-                        With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use
-                        toward having your workflows designed and built by our automation specialists.
-                    </p>
-                    <Link href="https://flow.viasocket.com/?state={%22utm_source%22:%22/%22}&utm_source=/">
-                        <button className="btn btn-accent">Upgrade to Premium</button>
-                    </Link>
-                </div>
+                <Cta
+                    title="Upgrade from Free to Premium and Get Expert Assistance"
+                    description="With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use
+                    toward having your workflows designed and built by our automation specialists."
+                    buttonLabel="Upgrade to Premium"
+                    buttonLink={`https://flow.viasocket.com/?state={"utm_source":"pricing/premium"}&utm_source=pricing/premium`}
+                />
 
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <BlogGrid posts={blogData} />

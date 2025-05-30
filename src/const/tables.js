@@ -20,3 +20,4 @@ export const COUNTRIES = 'tblxvza45';
 export const TEMPLATES = 'tblz2bm2n';
 export const MCP = 'tblctk342';
 export const PRICINGFEATURE = 'tbl76iei5';
+export const INDEXTEMPLATE = 'tbllsxcvm';
