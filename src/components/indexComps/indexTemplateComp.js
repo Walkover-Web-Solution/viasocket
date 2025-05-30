@@ -2,7 +2,6 @@ import getTemplates from '@/utils/getTemplates';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiExternalLink } from 'react-icons/fi';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Social Media', scriptid: 'scriqePfVQxF' });
