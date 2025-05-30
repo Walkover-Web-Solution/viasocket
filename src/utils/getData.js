@@ -19,8 +19,9 @@ import {
     TEMPLATES,
     MCP,
     PRICINGFEATURE,
+    INDEXTEMPLATE,
 } from '@/const/tables';
-import { FOOTER, METADATA, NAVIGATION } from '@/const/tables';
+import { FOOTER, METADATA } from '@/const/tables';
 import getDataFromTable from './getDataFromTable';
 
 const handleData = (data) => {
@@ -148,5 +149,10 @@ export async function getMCPPromptData(fields, filter) {
 
 export async function getPricingFeatureData(fields, filter) {
     const data = await getDataFromTable(PRICINGFEATURE, handleFieldsFilter(fields, filter));
+    return handleData(data);
+}
+
+export async function getIndexTemplateData(fields, filter) {
+    const data = await getDataFromTable(INDEXTEMPLATE, handleFieldsFilter(fields, filter));
     return handleData(data);
 }

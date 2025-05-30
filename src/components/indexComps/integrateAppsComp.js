@@ -61,29 +61,20 @@ export default function IntegrateAppsComp() {
     return (
         <div className="cont cont__gap py-12 border custom-border bg-[#FAF9F6]">
             <div className="container flex">
-                <div className="cont py-20 gap-1">
+                <div className="cont gap-1">
                     <h2 className="h2">
                         Connect with <span className="text-accent">1,500+ Apps</span> Effortlessly
                     </h2>
                     <p className="text-lg text-gray-400">
-                        Viasocket automates your workflows by bridging the tools you use — seamlessly, reliably, and at
-                        scale.
+                        viaSocket automates your workflows by bridging the tools you use - seamlessly, reliably, and at
+                        scale
                     </p>
                     <LinkButton
-                        customClasses={'btn btn-accent mt-12'}
+                        customClasses={'btn btn-accent mt-8'}
                         href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}
                         content={'See All'}
                     />
                 </div>
-                {/* <div className="flex items-center w-1/2 relative min-h-[400px]">
-                    <Image
-                        src="/assets/brand/mcpAiIntegration.svg"
-                        alt="Selected Embed Image"
-                        layout="fill"
-                        objectFit="contain"
-                        className="object-contain"
-                    />
-                </div> */}
             </div>
             <div className="relative w-full overflow-hidden group">
                 <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-transparent z-20 pointer-events-none" />
@@ -98,7 +89,7 @@ export default function IntegrateAppsComp() {
                             <Link
                                 key={`${app?.appslugname}-${idx}`}
                                 href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
-                                className="flex items-center gap-1 px-2 hover:scale-105 transition-transform"
+                                className="flex items-center gap-1 px-2 hover:scale-110 transition-transform"
                             >
                                 <Image
                                     src={app?.iconurl || 'https://placehold.co/40x40'}
