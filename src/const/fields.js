@@ -30,3 +30,4 @@ export const COUNTRIES_FIELDS = ['country', 'codes', 'img', 'isdeveloping'];
 export const TEMPLATES_FIELDS = ['name'];
 export const MCP_FIELDS = ['action', 'description', 'name', 'prompt', 'slug_names'];
 export const PRICINGFEATURE_FIELDS = ['featurename'];
+export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId'];

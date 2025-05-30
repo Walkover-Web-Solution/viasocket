@@ -6,8 +6,22 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import { getCaseStudyData, getFaqData, getFooterData, getMetaData, getTestimonialData } from '@/utils/getData';
-import { CASESTUDY_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
+import {
+    getCaseStudyData,
+    getFaqData,
+    getFooterData,
+    getIndexTemplateData,
+    getMetaData,
+    getTestimonialData,
+} from '@/utils/getData';
+import {
+    CASESTUDY_FIELDS,
+    FAQS_FIELDS,
+    FOOTER_FIELDS,
+    INDEXTEMPLATE_FIELDS,
+    METADATA_FIELDS,
+    TESTIMONIALS_FIELDS,
+} from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
 import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
@@ -46,6 +60,7 @@ const Index = ({
     streamlineData,
     signupFeatures,
     securityGridData,
+    indexTemplateData,
 }) => {
     return (
         <>
@@ -59,7 +74,7 @@ const Index = ({
                         utm_source={utm_source}
                         signupFeatures={signupFeatures}
                     />
-                    <IndexTemplateComp />
+                    <IndexTemplateComp categories={indexTemplateData} />
 
                     <StreamlineDataGrid items={streamlineData} />
 
@@ -489,6 +504,8 @@ export async function getServerSideProps(context) {
         },
     ];
 
+    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS);
+
     return {
         props: {
             testimonials: testimonials || [],
@@ -505,6 +522,7 @@ export async function getServerSideProps(context) {
             streamlineData: streamlineData,
             signupFeatures: signupFeatures,
             securityGridData: securityGridData,
+            indexTemplateData: indexTemplateData,
         },
     };
 }

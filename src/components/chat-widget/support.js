@@ -3,6 +3,7 @@ import { MdCircle, MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoCall } from 'react-icons/io5';
 import CallBackModal from './callBackModal';
+import { X } from 'lucide-react';
 
 function NavList({ items }) {
     return (
@@ -97,7 +98,10 @@ export default function Support({ open, onClose, footerData }) {
                 role="dialog"
                 aria-modal="true"
             >
-                <div className="flex flex-col justify-between h-full pt-8">
+                <div className="sm:hidden flex justify-end p-4">
+                    <X className="h-8 w-8" onClick={onClose} />
+                </div>
+                <div className="cont justify-between h-full pt-0 sm:pt-8">
                     {footerData && (
                         <div className="cont gap-4">
                             {groups?.map((group, index) => {
