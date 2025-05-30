@@ -89,14 +89,15 @@ export default function IntegrateAppsComp() {
                             <Link
                                 key={`${app?.appslugname}-${idx}`}
                                 href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations/${app?.appslugname}`}
-                                className="flex items-center gap-1 px-2 hover:scale-110 transition-transform"
+                                className="flex items-center gap-2 px-2 hover:scale-110 transition-transform"
                             >
-                                <Image
-                                    src={app?.iconurl || 'https://placehold.co/40x40'}
-                                    width={32}
-                                    height={32}
-                                    alt={app?.name}
-                                />
+                                <div className="w-8 h-8 bg-white flex items-center justify-center border custom-border">
+                                    <img
+                                        src={app?.iconurl || 'https://placehold.co/40x40'}
+                                        className="h-4 w-4"
+                                        alt={app?.name}
+                                    />
+                                </div>
                                 <p className="text-lg text-center whitespace-nowrap">{app?.name}</p>
                             </Link>
                         ))}

@@ -44,6 +44,7 @@ import { FaCogs, FaShieldAlt, FaUserFriends } from 'react-icons/fa';
 import StepDisplay from '@/components/stepDisplay/StepDisplay';
 import { FiExternalLink } from 'react-icons/fi';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
+import Cta from '@/components/CTA/Cta';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -80,36 +81,21 @@ const Index = ({
 
                     <IntegrateAppsComp />
 
-                    {/* <div className="container cont">
-                        <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border custom-border bg-white">
-                            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-                            <StepDisplay steps={indexSteps} />
-                        </div>
-                    </div> */}
-
                     <FeatureGrid featuresData={featuresData} />
 
                     <div className="container">
                         <TestimonialsSection testimonials={testimonials} />
                     </div>
 
-                    <div className="container">
-                        <div className="cont gap-2 border custom-border p-12 bg-white">
-                            <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
-                            <p className="sub__h1">
-                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
-                                Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
-                                the viaSocket Marketplace.
-                            </p>
-                            <Link
-                                href="https://viasocket.com/faq/developer-hub"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <button className="btn btn-accent mt-8">Build viaSocket integration</button>
-                            </Link>
-                        </div>
-                    </div>
+                    <Cta
+                        title="List your app on the viaSocket marketplace"
+                        description="viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
+                        Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
+                        the viaSocket Marketplace."
+                        buttonLabel="Build viaSocket integration"
+                        buttonLink="https://viasocket.com/faq/developer-hub"
+                        newTab={true}
+                    />
 
                     <div className="container cont">
                         <CaseStudiesSection caseStudies={caseStudies} />
@@ -125,44 +111,26 @@ const Index = ({
                         </div>
                     </div>
 
-                    <div className="container">
-                        <div className="cont gap-2 border custom-border p-12 bg-white">
-                            <h2 className="h2 text-left">AI agents that work for you</h2>
-                            <p className="text-2xl font-semibold text-accent">
-                                Build, deploy, and automate with intelligent agents
-                            </p>
-                            <h3 className="sub__h1 ">
-                                Create intelligent workflows that handle your business processes automatically without
+                    <Cta
+                        title="AI agents that work for you"
+                        subDescription="Build, deploy, and automate with intelligent agents"
+                        description="Create intelligent workflows that handle your business processes automatically without
                                 coding. Simply describe what you need in plain language, and our platform builds custom
-                                AI agents that connect your apps, make smart decisions, and improve over time.
-                            </h3>
-                            <Link href="/integrations/category/ai-tools">
-                                <button className="btn btn-accent mt-8">Explore AI</button>
-                            </Link>
-                        </div>
-                    </div>
-                    <div className="container">
-                        <div className="cont border custom-border gap-2 p-12 bg-white">
-                            <div className="cont gap-1">
-                                <h2 className="h2 text-left">Be first in line: mobile app early access</h2>
-                                <p className="text-2xl font-semibold text-accent ">
-                                    Edit workflows with AI, anywhere, anytime
-                                </p>
-                                <h3 className="sub__h1">
-                                    Create and modify automation workflows from your smartphone with AI assistance.
+                                AI agents that connect your apps, make smart decisions, and improve over time."
+                        buttonLabel="Explore AI"
+                        buttonLink="/integrations/category/ai-tools"
+                    />
+
+                    <Cta
+                        title="Be first in line: mobile app early access"
+                        subDescription="Edit workflows with AI, anywhere, anytime"
+                        description="Create and modify automation workflows from your smartphone with AI assistance.
                                     Build new workflows, make quick edits, and stay in control of your business no
-                                    matter where you are.
-                                </h3>
-                            </div>
-                            <Link
-                                href="https://walkover.typeform.com/to/U33OiMgy"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <button className="btn btn-accent mt-8">Apply For Early Access</button>
-                            </Link>
-                        </div>
-                    </div>
+                                    matter where you are."
+                        buttonLabel="Apply For Early Access"
+                        buttonLink="https://walkover.typeform.com/to/U33OiMgy"
+                        newTab={true}
+                    />
 
                     <div className="container">
                         <BlogGrid posts={blogData} />
