@@ -136,7 +136,7 @@ const Index = ({
                                 coding. Simply describe what you need in plain language, and our platform builds custom
                                 AI agents that connect your apps, make smart decisions, and improve over time.
                             </h3>
-                            <Link href="/integrations/category/ai-tools" target="_blank" rel="noopener noreferrer">
+                            <Link href="/integrations/category/ai-tools">
                                 <button className="btn btn-accent mt-8">Explore AI</button>
                             </Link>
                         </div>
