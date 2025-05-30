@@ -78,20 +78,20 @@ const Index = ({
 
                     <StreamlineDataGrid items={streamlineData} />
 
-                    <div className="container cont">
+                    <IntegrateAppsComp />
+
+                    {/* <div className="container cont">
                         <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border custom-border bg-white">
                             <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
                             <StepDisplay steps={indexSteps} />
                         </div>
-                    </div>
+                    </div> */}
 
                     <FeatureGrid featuresData={featuresData} />
 
                     <div className="container">
                         <TestimonialsSection testimonials={testimonials} />
                     </div>
-
-                    <IntegrateAppsComp />
 
                     <div className="container">
                         <div className="cont gap-2 border custom-border p-12 bg-white">
@@ -106,7 +106,7 @@ const Index = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <button className="btn btn-accent">Build viaSocket integration</button>
+                                <button className="btn btn-accent mt-8">Build viaSocket integration</button>
                             </Link>
                         </div>
                     </div>
@@ -136,6 +136,9 @@ const Index = ({
                                 coding. Simply describe what you need in plain language, and our platform builds custom
                                 AI agents that connect your apps, make smart decisions, and improve over time.
                             </h3>
+                            <Link href="/integrations/category/ai-tools" target="_blank" rel="noopener noreferrer">
+                                <button className="btn btn-accent mt-8">Explore AI</button>
+                            </Link>
                         </div>
                     </div>
                     <div className="container">
@@ -156,7 +159,7 @@ const Index = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-                                <button className="btn btn-accent">Apply For Early Access</button>
+                                <button className="btn btn-accent mt-8">Apply For Early Access</button>
                             </Link>
                         </div>
                     </div>
