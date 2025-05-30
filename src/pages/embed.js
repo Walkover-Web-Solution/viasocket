@@ -11,6 +11,7 @@ import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
+import Cta from '@/components/CTA/Cta';
 
 export const runtime = 'experimental-edge';
 
@@ -120,22 +121,12 @@ const Embed = ({ blogData, footerData, faqData, getStartedData, embedData, table
                     </div>
                 </div>
 
-                <div className="container">
-                    <div className="cont border custom-border gap-4 p-12 bg-white">
-                        <div className="flex flex-col justify-start">
-                            <h2 className="h2 text-left">Upgrade your Product Today with viaSocket</h2>
-                            <p className="sub__h1 text-left">
-                                Start using viaSocket embed and bring seamless automation within your product, so your
-                                customers can stick to your product while automating their day-to-day repetitive tasks.
-                            </p>
-                        </div>
-                        <div className="flex justify-start">
-                            <Link href="login?utm_source=/embed">
-                                <button className="btn btn-accent">Get Started</button>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                <Cta
+                    title="Upgrade your Product Today with viaSocket"
+                    description="Start using viaSocket embed and bring seamless automation within your product, so your customers can stick to your product while automating their day-to-day repetitive tasks."
+                    buttonLabel="Get Started"
+                    buttonLink="/signup?utm_source=/embed"
+                />
 
                 <div className="container">
                     <div className=" min-h-fit bg-white border custom-border p-12">
@@ -172,7 +163,7 @@ const Embed = ({ blogData, footerData, faqData, getStartedData, embedData, table
                                 Starts after 2 year or once your customer count exceeds 1,000,whichever comes later
                             </p>
                         </div>
-                        <div className="flex flex-col sm:flex-row gap-8">
+                        <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <Link href="/signup?utm_source=/embed">
                                 <button className="btn btn-accent text-nowrap">START GROWING NOW</button>
                             </Link>
@@ -183,22 +174,13 @@ const Embed = ({ blogData, footerData, faqData, getStartedData, embedData, table
                     </div>
                 </div>
 
-                <div className="container">
-                    <div className="cont  bg-black text-white text-left gap-4 p-12">
-                        <div className="flex flex-col gap-1">
-                            <h2 className="h2 text-white">Start Showing Automation Use Cases on Your Platform</h2>
-                            <p className="sub__h1">
-                                Simply add the provided embed code to your blog or website, and instantly display
-                                real-world automation examples that highlight how your app connects with others.
-                            </p>
-                        </div>
-                        <Link href="https://viasocket.com/faq/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script">
-                            <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
-                                Get your free embed code
-                            </button>
-                        </Link>
-                    </div>
-                </div>
+                <Cta
+                    title="Start Showing Automation Use Cases on Your Platform"
+                    description="Simply add the provided embed code to your blog or website, and instantly display real-world automation examples that highlight how your app connects with others."
+                    buttonLabel="Get your free embed code"
+                    buttonLink="https://viasocket.com/faq/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script"
+                    theme="dark"
+                />
 
                 {blogData?.length > 0 && (
                     <div className="container">
