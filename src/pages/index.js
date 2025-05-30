@@ -81,36 +81,11 @@ const Index = ({
 
                     <IntegrateAppsComp />
 
-                    {/* <div className="container cont">
-                        <div className="cont__py flex flex-col gap-20 md:p-12 p-4 h-fit border custom-border bg-white">
-                            <h2 className="h2">Create Powerful Workflows in Three Simple Steps</h2>
-                            <StepDisplay steps={indexSteps} />
-                        </div>
-                    </div> */}
-
                     <FeatureGrid featuresData={featuresData} />
 
                     <div className="container">
                         <TestimonialsSection testimonials={testimonials} />
                     </div>
-
-                    {/* <div className="container">
-                        <div className="cont gap-2 border custom-border p-12 bg-white">
-                            <h2 className="h2 text-left">List your app on the viaSocket marketplace</h2>
-                            <p className="sub__h1">
-                                viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
-                                Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
-                                the viaSocket Marketplace.
-                            </p>
-                            <Link
-                                href="https://viasocket.com/faq/developer-hub"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <button className="btn btn-accent mt-8">Build viaSocket integration</button>
-                            </Link>
-                        </div>
-                    </div> */}
 
                     <Cta
                         title="List your app on the viaSocket marketplace"
