@@ -31,7 +31,6 @@ const IndexTemplateComp = ({ categories }) => {
         if (templates.length > 0) {
             const found = templates?.find((template) => template?.id === selected?.scriptid);
             setCurrentTemplate(found);
-            console.log(found);
         }
     }, [selected, templates]);
 
