@@ -34,11 +34,11 @@ const IndexTemplateComp = ({ categories }) => {
     }, [selected, templates]);
 
     return (
-        <div className="cont gap-4">
-            <div className="container cont gap-1">
+        <div className="container cont gap-4">
+            <div className="cont gap-1">
                 <h2 className="h2">Take a look at ready-made templates</h2>
             </div>
-            <div className="container cont gap-4 border custom-border bg-white">
+            <div className="cont gap-4 border custom-border bg-white">
                 <div className="hidden md:flex flex-col w-full">
                     <div className="w-full flex flex-col md:flex-row">
                         {categories?.map((cat, i) => (
@@ -86,8 +86,8 @@ const IndexTemplateComp = ({ categories }) => {
                                 key={cat?.name}
                                 className={`flex-1 p-1 h6 font-medium transition-all duration-150 ${
                                     selected?.name === cat?.name
-                                        ? 'bg-accent text-white border-accent border sm:text-nowrap'
-                                        : 'bg-white text-gray-600 custom-border border  sm:text-nowrap'
+                                        ? 'bg-accent text-white border-accent border border-l-0 sm:text-nowrap'
+                                        : 'bg-white text-gray-600 custom-border border border-l-0 sm:text-nowrap'
                                 } ${i !== categories.length - 1 ? 'border-b-0' : ''} ${i === 0 ? 'border-t-0' : ''}`}
                                 onClick={() => setSelected(cat)}
                             >
