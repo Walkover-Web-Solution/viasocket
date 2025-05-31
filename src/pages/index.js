@@ -493,7 +493,7 @@ export async function getServerSideProps(context) {
             streamlineData: streamlineData,
             signupFeatures: signupFeatures,
             securityGridData: securityGridData,
-            indexTemplateData: indexTemplateData,
+            indexTemplateData: indexTemplateData || [],
         },
     };
 }

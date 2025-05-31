@@ -1,3 +1,5 @@
+import { sendErrorMessage } from "./SendErrorMessage";
+
 export const getCountryName = async () => {
     try {
         const response = await fetch('https://ipapi.co/json/', {
@@ -9,6 +11,6 @@ export const getCountryName = async () => {
         const data = await response.json();
         return data?.country_name || null;
     } catch (error) {
-        console.error('Error fetching country from IP:', error);
+        sendErrorMessage({ error });
     }
 };

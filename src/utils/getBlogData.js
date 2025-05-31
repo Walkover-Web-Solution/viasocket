@@ -1,3 +1,5 @@
+import { sendErrorMessage } from './SendErrorMessage';
+
 export async function getBlogs(tag) {
     try {
         const response = await fetch(
@@ -18,7 +20,7 @@ export async function getBlogs(tag) {
         const data = await response.json();
         return data?.data?.rows || [];
     } catch (error) {
-        console.error('Error fetching blog data:', error);
+        sendErrorMessage({ error });
         return [];
     }
 }

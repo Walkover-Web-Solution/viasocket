@@ -1,4 +1,5 @@
 import { APPERPAGE } from '@/const/integrations';
+import { sendErrorMessage } from './SendErrorMessage';
 
 export default async function getApps(query) {
     const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name : 'All';
@@ -20,7 +21,7 @@ export default async function getApps(query) {
         const apps = rawData?.data;
         return apps || [];
     } catch (error) {
-        console.error('Failed to fetch apps:', error);
+        sendErrorMessage({ error });
         return [];
     }
 }
