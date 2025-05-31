@@ -249,3 +249,15 @@
         padding: 0 !important;
     }
 }
+
+
+.grecaptcha-badge {
+    position: fixed !important;
+    bottom: 80px !important; 
+    right: -200px !important;
+    left: auto !important;
+    z-index: 9999 !important;
+    &:hover{
+       right: 0px !important;
+    }
+}
