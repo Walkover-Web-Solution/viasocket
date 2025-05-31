@@ -1,3 +1,5 @@
+import { sendErrorMessage } from './SendErrorMessage';
+
 export async function getVideos(tag) {
     try {
         const response = await fetch(
@@ -18,7 +20,7 @@ export async function getVideos(tag) {
         const data = await response.json();
         return data?.data?.rows || [];
     } catch (error) {
-        console.error('Error fetching video data:', error);
+        sendErrorMessage({ error });
         return [];
     }
 }

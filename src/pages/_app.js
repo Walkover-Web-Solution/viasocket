@@ -113,7 +113,6 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         <>
             <HeadComp canonicalUrl={canonicalUrl} />
             <ChatWidget />
-            {/* <Skeleton />  */}
             {showSkeleton ? (
                 <Skeleton />
             ) : (

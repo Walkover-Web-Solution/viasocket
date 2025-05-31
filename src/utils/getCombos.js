@@ -1,3 +1,5 @@
+import { sendErrorMessage } from './SendErrorMessage';
+
 export default async function getCombos(pageInfo) {
     if (pageInfo?.appone) {
         try {
@@ -7,7 +9,7 @@ export default async function getCombos(pageInfo) {
             const responseData = await response?.json();
             return responseData;
         } catch (error) {
-            console.error('Error fetching combos:', error);
+            sendErrorMessage({ error });
             return null;
         }
     }

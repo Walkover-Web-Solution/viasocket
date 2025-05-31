@@ -1,5 +1,6 @@
 import AlphabetComp from '@/components/aZComp/alphabetComp/alphabetComp';
 import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
+import { sendErrorMessage } from '@/utils/SendErrorMessage';
 import Head from 'next/head';
 
 
@@ -87,8 +88,13 @@ export async function getServerSideProps(context) {
     const step = slug?.length;
     switch (slug?.length) {
         case 1: {
-            const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
-            const data = await response.json();
+            let data = null;
+            try {
+                const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
+                data = await response.json();
+            } catch (error) {
+                sendErrorMessage({ error });
+            }
             return {
                 props: {
                     apps: data?.data?.rows || [],
@@ -99,36 +105,6 @@ export async function getServerSideProps(context) {
                 },
             };
         }
-        // case 2: {
-        //     const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[1]}`);
-        //     const data = await response.json();
-        //     const filteredData = data?.data?.rows.filter((app) => app.appslugname === slug[1]);
-        //     return {
-        //         props: {
-        //             apps: [],
-        //             appDetails: filteredData[0] || [],
-        //             alphabet: slug[0] || '',
-        //             step: step,
-        //             alphabet2: null,
-        //         },
-        //     };
-        // }
-        // case 3: {
-        //     const appResponse = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[1]}`);
-        //     const appData = await appResponse.json();
-        //     const filteredData = appData?.data?.rows.filter((app) => app.appslugname === slug[1]);
-        //     const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[2]}`);
-        //     const data = await response.json();
-        //     return {
-        //         props: {
-        //             apps: data?.data?.rows || [],
-        //             appDetails: filteredData[0] || [],
-        //             alphabet: slug[0] || '',
-        //             step: step,
-        //             alphabet2: slug[2] || '',
-        //         },
-        //     };
-        // }
         default: {
             return {
                 props: {
