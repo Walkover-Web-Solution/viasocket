@@ -1,6 +1,6 @@
 import { sendErrorMessage } from "./SendErrorMessage";
 
-export const getCountryName = async () => {
+export const getCountryName = async (req) => {
     try {
         const response = await fetch('https://ipapi.co/json/', {
             headers: { 'Accept': 'application/json' },
@@ -11,6 +11,6 @@ export const getCountryName = async () => {
         const data = await response.json();
         return data?.country_name || null;
     } catch (error) {
-        sendErrorMessage({ error });
+        sendErrorMessage({ error,req });
     }
 };

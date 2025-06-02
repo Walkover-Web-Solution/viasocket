@@ -11,9 +11,10 @@ export const runtime = 'experimental-edge';
 export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`);
-    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`, req);
+    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', req);
     return {
         props: {
             footerData: footerData || [],

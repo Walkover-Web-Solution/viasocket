@@ -4,9 +4,10 @@ import Navbar from '@/components/navbar/navbar';
 import { getFooterData, getMetaData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
-export async function getStaticProps() {
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`);
+export async function getStaticProps(context) {
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`, req);
     return {
         props: {
             footerData: footerData || [],

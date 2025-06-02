@@ -8,9 +8,10 @@ import Footer from '@/components/footer/footer';
 import { getFooterData, getMetaData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
-export async function getStaticProps() {
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/support'`);
+export async function getStaticProps(context) {
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/support'`, req);
     return {
         props: {
             footerData: footerData || [],

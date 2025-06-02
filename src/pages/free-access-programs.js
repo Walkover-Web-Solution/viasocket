@@ -121,10 +121,11 @@ export default function Programs({ footerData, metaData, programs }) {
         </>
     );
 }
-export async function getServerSideProps() {
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/free-access-programs'`);
-    const programs = await getProgramsData(PROGRAMS_FIELDS);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/free-access-programs'`, req);
+    const programs = await getProgramsData(PROGRAMS_FIELDS, '', req);
     return {
         props: {
             footerData: footerData || [],

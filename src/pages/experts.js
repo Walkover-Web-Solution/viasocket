@@ -8,12 +8,13 @@ import Navbar from '@/components/navbar/navbar';
 import { getAgencies, getExpertBlogs, getFooterData, getMetaData, getPageData } from '@/utils/getData';
 import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const pageData = await getPageData(PAGEDATA_FIELDS);
-    const agencies = await getAgencies(AGENCIES_FIELDS);
-    const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`, req);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const pageData = await getPageData(PAGEDATA_FIELDS, '', req);
+    const agencies = await getAgencies(AGENCIES_FIELDS, '', req);
+    const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS, '', req);
     return {
         props: {
             agencies: agencies || [],

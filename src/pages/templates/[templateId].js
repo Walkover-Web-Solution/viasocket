@@ -1,7 +1,7 @@
 // pages/template/[templateId].js
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, METADATA_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
 import { getFooterData, getMetaData } from '@/utils/getData';
 import getTemplates from '@/utils/getTemplates';
 import Image from 'next/image';
@@ -54,10 +54,11 @@ const TemplateDetailPage = ({ footerData, templateData, metaData }) => {
     );
 };
 
-export async function getServerSideProps() {
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const templateData = await getTemplates();
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const templateData = await getTemplates(req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, req);
     return {
         props: {
             footerData: footerData || [],

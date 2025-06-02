@@ -33,9 +33,10 @@ export default function Features({ features, featureData, footerData, metaData, 
 export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
+    const { req } = context;
     const pageInfo = GetPageInfo(context);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`);
+    const footerData = await getFooterData(FOOTER_FIELDS,'',req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`,req);
     let feature = null;
     let features = [];
     let featureData = [];
@@ -44,13 +45,12 @@ export async function getServerSideProps(context) {
     }
 
     if (!feature) {
-        features = await getAllFeatures(ALLFEATURES_FIELDS);
+        features = await getAllFeatures(ALLFEATURES_FIELDS,'',req);
     } else {
-        featureData = await getFeatureData([], `filter=slug='${feature}'`);
+        featureData = await getFeatureData([], `filter=slug='${feature}'`,req);
     }
     const blogTags = 'feature';
-    const blogData = await getBlogData({ tag1: blogTags });
-
+    const blogData = await getBlogData({ tag1: blogTags },req);
     return {
         props: {
             footerData: footerData || [],

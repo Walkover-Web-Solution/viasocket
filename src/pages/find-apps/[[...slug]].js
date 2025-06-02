@@ -3,7 +3,6 @@ import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
 import { sendErrorMessage } from '@/utils/SendErrorMessage';
 import Head from 'next/head';
 
-
 export const runtime = 'experimental-edge';
 
 const SelectedAlphabetPage = ({ apps, alphabet, appDetails, step, alphabet2 }) => {
@@ -84,6 +83,7 @@ export default SelectedAlphabetPage;
 
 // Fetch data from API
 export async function getServerSideProps(context) {
+    const { req } = context;
     const { slug } = context.query;
     const step = slug?.length;
     switch (slug?.length) {
@@ -93,7 +93,7 @@ export async function getServerSideProps(context) {
                 const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
                 data = await response.json();
             } catch (error) {
-                sendErrorMessage({ error });
+                sendErrorMessage({ error, req });
             }
             return {
                 props: {

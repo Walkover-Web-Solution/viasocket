@@ -251,10 +251,11 @@ const automations = ({
 
 export default automations;
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/workflow-automations'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/workflow-automations'`);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const metaData  = await getMetaData(METADATA_FIELDS, `filter=name='/workflow-automations'`, req);
+    const footerData = await getFooterData(FOOTER_FIELDS,'', req);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/workflow-automations'`, req);
 
     const automationSteps = [
         {

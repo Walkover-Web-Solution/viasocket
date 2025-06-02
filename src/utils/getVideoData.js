@@ -20,7 +20,7 @@ export async function getVideos(tag) {
         const data = await response.json();
         return data?.data?.rows || [];
     } catch (error) {
-        sendErrorMessage({ error });
+        sendErrorMessage({ error, req });
         return [];
     }
 }

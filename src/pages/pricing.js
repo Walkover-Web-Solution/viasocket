@@ -116,13 +116,14 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
     );
 }
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/pricing'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/pricing'`, req);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`, req);
     const blogTags = 'pricing';
-    const blogData = await getBlogData({ tag1: blogTags });
-    const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS);
+    const blogData = await getBlogData({ tag1: blogTags }, req);
+    const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS, '', req);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

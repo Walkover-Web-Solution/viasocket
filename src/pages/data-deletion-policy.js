@@ -6,9 +6,10 @@ import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export const runtime = 'experimental-edge';
 
-export async function getStaticProps() {
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/data-deletion-policy'`);
+export async function getStaticProps(context) {
+    const { req } = context;
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/data-deletion-policy'`, req);
     return {
         props: {
             footerData: footerData || [],

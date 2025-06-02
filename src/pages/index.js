@@ -332,14 +332,15 @@ export default Index;
 export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
+    const { req } = context;
 
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`);
-    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
-    const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`, req);
+    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', req);
+    const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS, '', req);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`, req);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
     const blogTags = 'index';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogData = await getBlogData({ tag1: blogTags }, req);
     const featuresData = [
         {
             heading: 'Save Hours Every Day',
@@ -475,7 +476,7 @@ export async function getServerSideProps(context) {
         },
     ];
 
-    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS);
+    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', req);
 
     return {
         props: {

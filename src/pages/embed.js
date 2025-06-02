@@ -241,14 +241,15 @@ const Table = ({ data }) => {
 
 export default Embed;
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`);
-    const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
-    const embedData = await getEmbedData(EMBED_FIELDS);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`, req);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, req);
+    const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', req);
+    const embedData = await getEmbedData(EMBED_FIELDS, '', req);
     const blogTags = 'embed';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogData = await getBlogData({ tag1: blogTags }, req);
     const tableData = [
         { Feature: 'Time to Implement', embed: 'Minutes', development: 'Weeks/Months' },
         { Feature: 'Developer Resources', embed: 'No Requirements', development: 'Required Development Team' },
