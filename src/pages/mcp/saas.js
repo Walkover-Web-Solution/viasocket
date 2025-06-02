@@ -145,12 +145,15 @@ export default function pricing({ footerData, faqData, metaData, blogData }) {
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, req);
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, pageUrl);
     const blogTags1 = 'mcp';
     const blogTags2 = 'saas';
-    const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, req);
+    const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

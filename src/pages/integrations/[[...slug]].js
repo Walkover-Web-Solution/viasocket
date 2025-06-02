@@ -135,21 +135,24 @@ export default function Integrations({
 
 export async function getServerSideProps(context) {
     const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
     const pageInfo = getPageInfo(context);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
-    const footerData = await getFooterData(FOOTER_FIELDS);
+    const footerData = await getFooterData(FOOTER_FIELDS,'',pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne/AppTwo'`, req);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[singleApp]'`, req);
-        const combosData = await getCombos(integrationsInfo, req);
+        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne/AppTwo'`, pageUrl);
+        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[singleApp]'`, pageUrl);
+        const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
         const blogTags1 = appOneDetails?.appslugname;
         const blogTags2 = appTwoDetails?.appslugname;
-        const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, req);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', req);
-        const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 }, req);
+        const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
+        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
+        const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -177,33 +180,33 @@ export async function getServerSideProps(context) {
             };
         }
     } else if (integrationsInfo?.appone) {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne'`, req);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`, req);
+        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne'`, pageUrl);
+        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${integrationsInfo?.category || 'all'}'`,
-            req
+            pageUrl
         );
-        const apps = await getApps({ page: integrationsInfo?.page, categoryData }, req);
-        const combosData = await getCombos(integrationsInfo, req);
+        const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
+        const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', req);
+        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
         const disconnecteData = await getDisconnectedData(
             DISCONNECTEDBY_FIELDS,
             `filter=slugname='${integrationsInfo?.appone}' `,
-            req
+            pageUrl
         );
 
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
-            const blogData = await getBlogData({ tag1: blogTags }, req);
+            const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
             const useCaseData = await getUsecasesData(
                 USECASES_FIELDS,
                 `filter=slugname='${appOneDetails?.appslugname}'`,
-                req
+                pageUrl
             );
 
-            const videoData = await getVideoData({ tag1: blogTags }, req);
+            const videoData = await getVideoData({ tag1: blogTags }, pageUrl);
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -232,17 +235,17 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations'`, req);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/integrations'`, req);
+        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations'`, pageUrl);
+        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/integrations'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${integrationsInfo?.category || 'all'}'`,
-            req
+            pageUrl
         );
-        const apps = await getApps({ page: integrationsInfo?.page, categoryData }, req);
-        const categories = await getCategoryData(INTECATEGORYlIST_FILED, '', req);
+        const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
+        const categories = await getCategoryData(INTECATEGORYlIST_FILED, '', pageUrl);
         const blogTags = 'integration';
-        const blogData = await getBlogData({ tag1: blogTags }, req);
+        const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
         return {
             props: {
                 pageInfo: pageInfo || {},

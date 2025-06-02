@@ -1,6 +1,6 @@
 import { sendErrorMessage } from './SendErrorMessage';
 
-export default async function getCombos(pageInfo, req) {
+export default async function getCombos(pageInfo, pageUrl) {
     if (pageInfo?.appone) {
         try {
             const response = await fetch(
@@ -9,7 +9,7 @@ export default async function getCombos(pageInfo, req) {
             const responseData = await response?.json();
             return responseData;
         } catch (error) {
-            sendErrorMessage({ error, req });
+            sendErrorMessage({ error, pageUrl });
             return null;
         }
     }

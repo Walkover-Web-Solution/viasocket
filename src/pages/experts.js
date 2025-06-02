@@ -10,11 +10,14 @@ import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PA
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`, req);
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const pageData = await getPageData(PAGEDATA_FIELDS, '', req);
-    const agencies = await getAgencies(AGENCIES_FIELDS, '', req);
-    const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS, '', req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const pageData = await getPageData(PAGEDATA_FIELDS, '', pageUrl);
+    const agencies = await getAgencies(AGENCIES_FIELDS, '', pageUrl);
+    const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS, '', pageUrl);
     return {
         props: {
             agencies: agencies || [],

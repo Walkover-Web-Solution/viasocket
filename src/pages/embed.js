@@ -243,13 +243,16 @@ export default Embed;
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`, req);
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, req);
-    const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', req);
-    const embedData = await getEmbedData(EMBED_FIELDS, '', req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, pageUrl);
+    const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
+    const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
     const blogTags = 'embed';
-    const blogData = await getBlogData({ tag1: blogTags }, req);
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     const tableData = [
         { Feature: 'Time to Implement', embed: 'Minutes', development: 'Weeks/Months' },
         { Feature: 'Developer Resources', embed: 'No Requirements', development: 'Required Development Team' },

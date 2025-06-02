@@ -84,6 +84,9 @@ export default SelectedAlphabetPage;
 // Fetch data from API
 export async function getServerSideProps(context) {
     const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
     const { slug } = context.query;
     const step = slug?.length;
     switch (slug?.length) {
@@ -93,7 +96,7 @@ export async function getServerSideProps(context) {
                 const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
                 data = await response.json();
             } catch (error) {
-                sendErrorMessage({ error, req });
+                sendErrorMessage({ error, pageUrl });
             }
             return {
                 props: {

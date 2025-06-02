@@ -128,13 +128,16 @@ export default Template;
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const templateData = await getTemplates(req);
-    const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS, '', req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, req);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/templates'`, req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const templateData = await getTemplates(pageUrl);
+    const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/templates'`, pageUrl);
     const blogTags = 'templates';
-    const blogData = await getBlogData({ tag1: blogTags }, req);
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     return {
         props: {
             footerData: footerData || [],

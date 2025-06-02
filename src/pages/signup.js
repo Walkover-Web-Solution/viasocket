@@ -12,9 +12,12 @@ export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
     const { req } = context;
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`, req);
-    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`, pageUrl);
+    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],

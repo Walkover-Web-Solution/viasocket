@@ -1,15 +1,11 @@
-export async function sendErrorMessage({ error, req }) {
+export async function sendErrorMessage({ error, pageUrl }) {
     const extractedError = error?.response?.data ?? error?.message ?? 'Unknown error';
 
-    let pageUrl = 'unknown';
-
-    if (typeof window !== 'undefined') {
-        // Client-side
-        pageUrl = window.location.href;
-    } else if (req?.url && req?.headers?.host) {
-        // Server-side
-        const protocol = req.headers['x-forwarded-proto'] || 'http';
-        pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    if (!pageUrl) {
+        if (typeof window != undefined) {
+            pageUrl = window.location.href;
+        }
+        pageUrl = 'Unknown';
     }
 
     try {

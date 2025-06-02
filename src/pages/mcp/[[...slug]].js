@@ -121,22 +121,25 @@ export default function Mcp({
 
 export async function getServerSideProps(context) {
     const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
     const pageInfo = getPageInfo(context);
     const mcpInfo = getMcpInfo(pageInfo?.pathArray);
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
 
     if (mcpInfo?.appone) {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`, req);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, req);
+        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`, pageUrl);
+        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,
-            req
+            pageUrl
         );
-        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 }, req);
-        const combosData = await getCombos(mcpInfo, req);
+        const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 }, pageUrl);
+        const combosData = await getCombos(mcpInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, mcpInfo?.appone);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', req);
+        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
         const mcpAppSteps = [
             {
                 title: 'Get Your MCP Endpoint',
@@ -157,7 +160,7 @@ export async function getServerSideProps(context) {
         const mcpPromptData = await getMCPPromptData(
             MCP_FIELDS,
             `filter=slug_names='${appOneDetails?.appslugname}'`,
-            req
+            pageUrl
         );
 
         const mcpAIIntegrationData = [
@@ -169,7 +172,7 @@ export async function getServerSideProps(context) {
 
         if (appOneDetails) {
             const blogTags = 'mcp';
-            const blogData = await getBlogData({ tag1: blogTags }, req);
+            const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
             return {
                 props: {
                     pageInfo: pageInfo || {},
@@ -197,17 +200,17 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, req);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, req);
+        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,
-            req
+            pageUrl
         );
-        const apps = await getApps({ page: mcpInfo?.page, categoryData }, req);
-        const categories = await getCategoryData(INTECATEGORYlIST_FILED, '', req);
+        const apps = await getApps({ page: mcpInfo?.page, categoryData }, pageUrl);
+        const categories = await getCategoryData(INTECATEGORYlIST_FILED, '', pageUrl);
         const blogTags = 'mcp';
-        const blogData = await getBlogData({ tag1: blogTags },req);
+        const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
         const mcpSteps = [
             {
                 title: 'Get Your MCP Endpoint',

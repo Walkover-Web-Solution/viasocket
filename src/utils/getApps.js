@@ -1,7 +1,7 @@
 import { APPERPAGE } from '@/const/integrations';
 import { sendErrorMessage } from './SendErrorMessage';
 
-export default async function getApps(query, req) {
+export default async function getApps(query, pageUrl) {
     const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name : 'All';
     try {
         const fetchUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all`; // Update the API endpoint
@@ -21,7 +21,7 @@ export default async function getApps(query, req) {
         const apps = rawData?.data;
         return apps || [];
     } catch (error) {
-        sendErrorMessage({ error, req });
+        sendErrorMessage({ error, pageUrl });
         return [];
     }
 }

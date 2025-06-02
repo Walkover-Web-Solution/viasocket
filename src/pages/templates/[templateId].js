@@ -56,9 +56,12 @@ const TemplateDetailPage = ({ footerData, templateData, metaData }) => {
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const templateData = await getTemplates(req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const templateData = await getTemplates(pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, pageUrl);
     return {
         props: {
             footerData: footerData || [],

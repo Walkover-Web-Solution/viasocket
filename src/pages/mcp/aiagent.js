@@ -119,11 +119,14 @@ export default function aiagent({ footerData, faqData, metaData, blogData }) {
 
 export async function getServerSideProps(context) {
     const { req } = context;
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, req);
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, pageUrl);
     const blogTags = 'mcp';
-    const blogData = await getBlogData({ tag1: blogTags }, req);
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

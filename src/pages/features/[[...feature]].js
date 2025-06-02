@@ -34,9 +34,12 @@ export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
     const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
     const pageInfo = GetPageInfo(context);
-    const footerData = await getFooterData(FOOTER_FIELDS,'',req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`,req);
+    const footerData = await getFooterData(FOOTER_FIELDS,'',pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`,pageUrl);
     let feature = null;
     let features = [];
     let featureData = [];
@@ -45,12 +48,12 @@ export async function getServerSideProps(context) {
     }
 
     if (!feature) {
-        features = await getAllFeatures(ALLFEATURES_FIELDS,'',req);
+        features = await getAllFeatures(ALLFEATURES_FIELDS,'',pageUrl);
     } else {
-        featureData = await getFeatureData([], `filter=slug='${feature}'`,req);
+        featureData = await getFeatureData([], `filter=slug='${feature}'`,pageUrl);
     }
     const blogTags = 'feature';
-    const blogData = await getBlogData({ tag1: blogTags },req);
+    const blogData = await getBlogData({ tag1: blogTags },pageUrl);
     return {
         props: {
             footerData: footerData || [],

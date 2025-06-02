@@ -123,9 +123,12 @@ export default function Programs({ footerData, metaData, programs }) {
 }
 export async function getServerSideProps(context) {
     const { req } = context;
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/free-access-programs'`, req);
-    const programs = await getProgramsData(PROGRAMS_FIELDS, '', req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/free-access-programs'`, pageUrl);
+    const programs = await getProgramsData(PROGRAMS_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],

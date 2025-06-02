@@ -6,8 +6,11 @@ import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
 export async function getStaticProps(context) {
     const { req } = context;
-    const footerData = await getFooterData(FOOTER_FIELDS, '', req);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`, req);
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`, pageUrl);
     return {
         props: {
             footerData: footerData || [],
