@@ -96,7 +96,11 @@ export async function getServerSideProps(context) {
                 const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
                 data = await response.json();
             } catch (error) {
-                sendErrorMessage({ error, pageUrl });
+                sendErrorMessage({
+                    error,
+                    pageUrl,
+                    source: `https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`,
+                });
             }
             return {
                 props: {

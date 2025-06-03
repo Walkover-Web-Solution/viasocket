@@ -4,8 +4,14 @@ export default function IntegrationsHeadComp({ pageInfo, metaData, integrationsI
     const keywords = metaData?.keywords && typeof metaData.keywords === 'string' ? metaData.keywords : '';
 
     if (type === 'appTwo') {
-        const title = `Integrate ${plugins[0]?.name} with ${plugins[1]?.name} for automation | viaSocket`;
-        const description = `viaSocket enables seamless integration between ${plugins[0]?.name} and ${plugins[1]?.name}, empowering you to automate tasks, and achieve more in less time. Get started now!`;
+        const title =
+            plugins[0]?.name && plugins[1]?.name
+                ? `Integrate ${plugins[0].name} with ${plugins[1].name} for automation | viaSocket`
+                : 'Quick and Easy Workflow Integrations';
+        const description =
+            plugins[0]?.name && plugins[1]?.name
+                ? `viaSocket enables seamless integration between ${plugins[0].name} and ${plugins[1].name}, empowering you to automate tasks, and achieve more in less time. Get started now!`
+                : 'Easily connect your favorite tools and automate workflows to save time, reduce manual tasks, and streamline your daily work processes without any hassle.';
         return (
             <>
                 <Head>
@@ -20,8 +26,12 @@ export default function IntegrationsHeadComp({ pageInfo, metaData, integrationsI
             </>
         );
     } else if (type === 'appOne') {
-        const title = `Integrate ${plugins[0]?.name} with thousands of apps | viaSocket`;
-        const description = `Connect ${plugins[0]?.name} with thousands of apps effortlessly using viaSocket. Streamline your workflow and enhance productivity. Try it now!`;
+        const title = plugins[0]?.name
+            ? `Integrate ${plugins[0].name} with thousands of apps | viaSocket`
+            : 'Quick and Easy Workflow Integrations';
+        const description = plugins[0]?.name
+            ? `Connect ${plugins[0].name} with thousands of apps effortlessly using viaSocket. Streamline your workflow and enhance productivity. Try it now!`
+            : 'Easily connect your favorite tools and automate workflows to save time, reduce manual tasks, and streamline your daily work processes without any hassle.';
         return (
             <>
                 <Head>

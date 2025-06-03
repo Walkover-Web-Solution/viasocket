@@ -8,7 +8,6 @@ export default async function searchApps(query) {
         const response = await axios.get(url);
         return response.data.data;
     } catch (error) {
-        sendErrorMessage({ error });
-    } finally {
+        sendErrorMessage({ error, source: url });
     }
 }

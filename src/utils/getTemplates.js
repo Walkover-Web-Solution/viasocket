@@ -6,6 +6,10 @@ export default async function getTemplates(pageUrl) {
         const data = await response.json();
         return data.data;
     } catch (error) {
-        sendErrorMessage({ error, pageUrl });
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: 'https://plugservice-api.viasocket.com/templates/all',
+        });
     }
 }
