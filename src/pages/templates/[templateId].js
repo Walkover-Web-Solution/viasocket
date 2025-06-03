@@ -1,9 +1,9 @@
 // pages/template/[templateId].js
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS, METADATA_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, METADATA_FIELDS,  } from '@/const/fields';
+import { getTemplates } from '@/utils/axiosCalls';
 import { getFooterData, getMetaData } from '@/utils/getData';
-import getTemplates from '@/utils/getTemplates';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';

@@ -5,8 +5,8 @@ import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
-import searchApps from '@/utils/searchApps';
 import createURL from '@/utils/createURL';
+import { searchApps } from '@/utils/axiosCalls';
 export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');

@@ -20,9 +20,10 @@ import {
     MCP,
     PRICINGFEATURE,
     INDEXTEMPLATE,
+    METADATA,
+    FOOTER,
 } from '@/const/tables';
-import { FOOTER, METADATA } from '@/const/tables';
-import getDataFromTable from './getDataFromTable';
+import { getDataFromTable } from './axiosCalls';
 
 const handleData = (data) => {
     return data?.data?.rows;

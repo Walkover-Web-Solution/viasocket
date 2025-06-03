@@ -1,6 +1,6 @@
 import AlphabetComp from '@/components/aZComp/alphabetComp/alphabetComp';
 import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
-import { sendErrorMessage } from '@/utils/SendErrorMessage';
+import { fetchPluginData } from '@/utils/axiosCalls';
 import Head from 'next/head';
 
 export const runtime = 'experimental-edge';
@@ -91,17 +91,8 @@ export async function getServerSideProps(context) {
     const step = slug?.length;
     switch (slug?.length) {
         case 1: {
-            let data = null;
-            try {
-                const response = await fetch(`https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`);
-                data = await response.json();
-            } catch (error) {
-                sendErrorMessage({
-                    error,
-                    pageUrl,
-                    source: `https://plugservice-api.viasocket.com/plugins/search?prefix=${slug[0]}`,
-                });
-            }
+            const data = await fetchPluginData(slug, pageUrl);
+
             return {
                 props: {
                     apps: data?.data?.rows || [],
