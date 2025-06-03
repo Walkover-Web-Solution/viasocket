@@ -57,7 +57,7 @@ export default function Navbar({ utm, footerData }) {
                     hide ? '-translate-y-full' : 'translate-y-0'
                 }`}
             >
-                <div className="border-b custom-border">
+                <div className="border-y custom-border">
                     <div className="justify-between flex bg-white px-4">
                         <Link
                             href="/"

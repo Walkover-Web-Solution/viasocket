@@ -119,7 +119,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <>
                     {!isSignupPage && showMCPBanner && !show404Banner && (
                         <Link href="/mcp">
-                            <div className="w-full p-2 text-center custom-border gradient-background border-b border-b-black">
+                            <div className="w-full p-2 text-center gradient-background">
                                 <p className="!text-xs text-black hover:underline">
                                     Give your AI agent the power to act-get your MCP cURL now
                                 </p>

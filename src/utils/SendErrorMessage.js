@@ -1,4 +1,4 @@
-export async function sendErrorMessage({ error, pageUrl }) {
+export async function sendErrorMessage({ error, pageUrl, source }) {
     const extractedError = error?.response?.data ?? error?.message ?? 'Unknown error';
 
     if (!pageUrl) {
@@ -13,6 +13,7 @@ export async function sendErrorMessage({ error, pageUrl }) {
         const queryParams = new URLSearchParams({
             error: JSON.stringify(extractedError),
             url: pageUrl,
+            source: source || 'unknown',
         });
 
         if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod') {

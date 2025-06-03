@@ -20,7 +20,11 @@ export async function getVideos(tag, pageUrl) {
         const data = await response.json();
         return data?.data?.rows || [];
     } catch (error) {
-        sendErrorMessage({ error, pageUrl });
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tblh3g587?filter=tags @> ARRAY['${tag}']`,
+        });
         return [];
     }
 }

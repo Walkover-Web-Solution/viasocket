@@ -38,7 +38,7 @@ const IndexTemplateComp = ({ categories }) => {
             <div className="cont gap-1">
                 <h2 className="h2">Take a look at ready-made templates</h2>
             </div>
-            <div className="cont gap-4 border custom-border bg-white">
+            <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col w-full">
                     <div className="w-full flex flex-col md:flex-row">
                         {categories?.map((cat, i) => (
@@ -46,7 +46,7 @@ const IndexTemplateComp = ({ categories }) => {
                                 key={cat?.name}
                                 className={`flex-1 px-4 py-2 h6 font-medium transition-all duration-150 ${
                                     selected?.name === cat?.name
-                                        ? 'bg-accent text-white border-accent border border-t-0'
+                                        ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
                                 }`}
                                 onClick={() => setSelected(cat)}
@@ -79,16 +79,16 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
                 </div>
 
-                <div className="md:hidden flex gap-4">
+                <div className="md:hidden flex gap-4 border-b custom-border">
                     <div className="cont justify-center">
                         {categories?.map((cat, i) => (
                             <button
                                 key={cat?.name}
                                 className={`flex-1 p-1 h6 font-medium transition-all duration-150 ${
                                     selected?.name === cat?.name
-                                        ? 'bg-accent text-white border-accent border border-l-0 sm:text-nowrap'
-                                        : 'bg-white text-gray-600 custom-border border border-l-0 sm:text-nowrap'
-                                } ${i !== categories.length - 1 ? 'border-b-0' : ''} ${i === 0 ? 'border-t-0' : ''}`}
+                                        ? `border-y custom-border sm:text-nowrap border-b-0`
+                                        : 'bg-white text-gray-600 custom-border border border-l-0 sm:text-nowrap border-b-0'
+                                } ${i === 0 ? 'border-t-0' : ''}`}
                                 onClick={() => setSelected(cat)}
                             >
                                 {cat?.name}
@@ -119,7 +119,7 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
                 </div>
 
-                <Link href="/templates" className="w-fit self-end my-4 mr-4">
+                <Link href="/templates" className="w-fit self-end mb-2 mr-2 md:mb-4 md:mr-4">
                     <button className="btn btn-accent">See All Templates</button>
                 </Link>
             </div>
