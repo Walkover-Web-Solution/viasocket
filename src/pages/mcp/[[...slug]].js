@@ -1,4 +1,4 @@
-import getApps from '@/utils/getApps';
+
 import {
     getCategoryData,
     getFaqData,
@@ -24,7 +24,7 @@ import {
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
-import getCombos from '@/utils/getCombos';
+import { getApps, getCombos } from '@/utils/axiosCalls';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({

@@ -70,6 +70,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         <div className="flex gap-2 md:gap-4 mt-auto">
                             <Link
                                 href={`https://www.instagram.com/walkover.inc/?igsh=MWEyZnptZmw3Z3phOQ%3D%3D`}
+                                target="_blank"
                                 className=""
                                 aria-label="instagram"
                             >
@@ -77,16 +78,22 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             </Link>
                             <Link
                                 href={`https://www.linkedin.com/company/viasocket-walkover/`}
+                                target="_blank"
                                 className=""
                                 aria-label="facebook"
                             >
                                 <FiLinkedin size={24} />
                             </Link>
 
-                            <Link href={`https://x.com/viasocket`} className="" aria-label="twitter">
+                            <Link href={`https://x.com/viasocket`} target="_blank" className="" aria-label="twitter">
                                 <FaXTwitter size={24} />
                             </Link>
-                            <Link href={`https://www.youtube.com/@viasocket`} className="" aria-label="youtube">
+                            <Link
+                                href={`https://www.youtube.com/@viasocket`}
+                                target="_blank"
+                                className=""
+                                aria-label="youtube"
+                            >
                                 <FiYoutube size={24} />
                             </Link>
                         </div>

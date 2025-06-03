@@ -1,4 +1,3 @@
-import getApps from '@/utils/getApps';
 import {
     getCategoryData,
     getDisconnectedData,
@@ -13,7 +12,6 @@ import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 import IntegrationsAppOneComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp';
 import getAppDetails from '@/utils/getAppDetail';
-import getCombos from '@/utils/getCombos';
 import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAppTwoComp/integrationsAppTwoComp';
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
 import ErrorComp from '@/components/404/404Comp';
@@ -30,6 +28,7 @@ import {
 } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
+import { getCombos, getApps } from '@/utils/axiosCalls';
 export const runtime = 'experimental-edge';
 
 export default function Integrations({
@@ -137,10 +136,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
+
     const pageInfo = getPageInfo(context);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
-    const footerData = await getFooterData(FOOTER_FIELDS,'',pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
         const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne/AppTwo'`, pageUrl);

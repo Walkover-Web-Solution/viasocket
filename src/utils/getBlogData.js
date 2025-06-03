@@ -1,33 +1,4 @@
-import { sendErrorMessage } from './SendErrorMessage';
-
-export async function getBlogs(tag, pageUrl) {
-    try {
-        const response = await fetch(
-            `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5?filter=tags @> ARRAY['${tag}']`,
-            {
-                method: 'GET',
-                headers: {
-                    'auth-key': process.env.NEXT_PUBLIC_BLOG_DB_KEY,
-                    'Content-Type': 'application/json',
-                },
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        const data = await response.json();
-        return data?.data?.rows || [];
-    } catch (error) {
-        sendErrorMessage({
-            error,
-            pageUrl,
-            source: `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5?filter=tags @> ARRAY['${tag}']`,
-        });
-        return [];
-    }
-}
+import { getBlogs } from './axiosCalls';
 
 export async function getBlogData({ tag1, tag2 }, pageUrl) {
     const MIN_BLOGS = 3;

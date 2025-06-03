@@ -1,7 +1,7 @@
-import getTemplates from '@/utils/getTemplates';
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { getTemplates } from '@/utils/axiosCalls';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Social Media', scriptid: 'scriqePfVQxF' });
@@ -17,13 +17,15 @@ const IndexTemplateComp = ({ categories }) => {
     });
 
     useEffect(() => {
-        getTemplates()
-            .then((data) => {
+        const fetchTemplates = async () => {
+            try {
+                const data = await getTemplates();
                 setTemplates(data || []);
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error('Error fetching templates:', error);
-            });
+            }
+        };
+        fetchTemplates();
     }, []);
 
     useEffect(() => {
@@ -39,7 +41,7 @@ const IndexTemplateComp = ({ categories }) => {
                 <h2 className="h2">Take a look at ready-made templates</h2>
             </div>
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
-                <div className="hidden md:flex flex-col w-full">
+                <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
                         {categories?.map((cat, i) => (
                             <button
@@ -56,7 +58,7 @@ const IndexTemplateComp = ({ categories }) => {
                         ))}
                     </div>
 
-                    <div className="cont p-4">
+                    <div className="cont p-4 px-32">
                         <div className="cont gap-1">
                             <h1 className="h3">{currentTemplate?.title}</h1>
                             <h2 className="h6 leading-none">
