@@ -332,14 +332,17 @@ export default Index;
 export async function getServerSideProps(context) {
     const { redirect_to } = context.query;
     const { utm_source } = context?.query;
+    const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`);
-    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS);
-    const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`, pageUrl);
+    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
+    const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const blogTags = 'index';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     const featuresData = [
         {
             heading: 'Save Hours Every Day',
@@ -475,7 +478,7 @@ export async function getServerSideProps(context) {
         },
     ];
 
-    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS);
+    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
 
     return {
         props: {

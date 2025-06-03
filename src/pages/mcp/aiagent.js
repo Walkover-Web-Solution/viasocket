@@ -117,12 +117,16 @@ export default function aiagent({ footerData, faqData, metaData, blogData }) {
     );
 }
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, pageUrl);
     const blogTags = 'mcp';
-    const blogData = await getBlogData({ tag1: blogTags });
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     return {
         props: {
             metaData: (metaData?.length > 0 && metaData[0]) || {},

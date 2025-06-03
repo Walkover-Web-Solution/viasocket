@@ -251,10 +251,14 @@ const automations = ({
 
 export default automations;
 
-export async function getServerSideProps() {
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/workflow-automations'`);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/workflow-automations'`);
+export async function getServerSideProps(context) {
+    const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/workflow-automations'`, pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/workflow-automations'`, pageUrl);
 
     const automationSteps = [
         {
