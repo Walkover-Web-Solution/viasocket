@@ -41,7 +41,7 @@ export default function IntegrationsAppTwoComp({
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}
-                plugins={[appOneDetails]}
+                plugins={[appOneDetails, appTwoDetails]}
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />

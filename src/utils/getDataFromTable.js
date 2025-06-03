@@ -13,6 +13,6 @@ export default async function getDataFromTable(table, query, pageUrl) {
         return responseData;
     } catch (error) {
         console.error(error?.response?.data || error.message);
-        sendErrorMessage({ error, pageUrl });
+        sendErrorMessage({ error, pageUrl, source: apiUrl });
     }
 }

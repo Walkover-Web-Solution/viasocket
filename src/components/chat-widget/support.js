@@ -98,10 +98,10 @@ export default function Support({ open, onClose, footerData }) {
                 role="dialog"
                 aria-modal="true"
             >
-                <div className="sm:hidden flex justify-end p-4">
+                <div className="md::hidden flex justify-end p-4">
                     <X className="h-8 w-8" onClick={onClose} />
                 </div>
-                <div className="cont justify-between h-full pt-0 sm:pt-8">
+                <div className="cont justify-between h-full pt-0 md:pt-8">
                     {footerData && (
                         <div className="cont gap-4">
                             {groups?.map((group, index) => {

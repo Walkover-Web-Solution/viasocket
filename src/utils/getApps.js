@@ -21,7 +21,11 @@ export default async function getApps(query, pageUrl) {
         const apps = rawData?.data;
         return apps || [];
     } catch (error) {
-        sendErrorMessage({ error, pageUrl });
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all`,
+        });
         return [];
     }
 }

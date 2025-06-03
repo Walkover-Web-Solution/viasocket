@@ -20,7 +20,11 @@ export async function getBlogs(tag, pageUrl) {
         const data = await response.json();
         return data?.data?.rows || [];
     } catch (error) {
-        sendErrorMessage({ error, pageUrl });
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5?filter=tags @> ARRAY['${tag}']`,
+        });
         return [];
     }
 }
