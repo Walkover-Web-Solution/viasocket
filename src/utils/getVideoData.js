@@ -1,13 +1,21 @@
 import { getVideos } from './axiosCalls';
 
 export async function getVideoData({ tag1, tag2 }, pageUrl) {
-    const tag1Videos = await getVideos(tag1, pageUrl);
-    let videos = [...tag1Videos];
+    const allVideos = await getVideos(pageUrl);
 
-    if (tag2) {
-        const tag2Videos = await getVideos(tag2, pageUrl);
-        videos = tag1Videos.filter((video) => tag2Videos.some((v) => v.rowid === video.rowid));
+    const matchTag = (video, tag) => Array.isArray(video?.tags) && video?.tags?.includes(tag);
+
+    let videos = [];
+
+    if (tag1 && tag2) {
+        const tag1Videos = allVideos?.filter((video) => matchTag(video, tag1));
+        const tag1Ids = new Set(tag1Videos?.map((video) => video.rowid));
+        const tag2Videos = allVideos?.filter((video) => matchTag(video, tag2) && !tag1Ids?.has(video.rowid));
+        videos = [...tag1Videos, ...tag2Videos];
+    } else if (tag1 || tag2) {
+        const tag = tag1 || tag2;
+        videos = allVideos?.filter((video) => matchTag(video, tag));
     }
 
-    return videos.slice(0, 6);
+    return videos?.slice(0, 6);
 }

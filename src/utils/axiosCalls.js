@@ -25,8 +25,8 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
-export async function getBlogs(tag, pageUrl) {
-    const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5?filter=tags @> ARRAY['${tag}']`;
+export async function getBlogs(pageUrl) {
+    const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {
         const response = await axiosWithCache.get(url, {
             headers: {
@@ -34,7 +34,7 @@ export async function getBlogs(tag, pageUrl) {
                 'Content-Type': 'application/json',
             },
             cache: {
-                ttl: 1000 * 60 * 20, //cache for 20 min
+                ttl: 1000 * 60 * 60, //cache for 1 hour
                 interpretHeader: false,
             },
         });
@@ -49,8 +49,8 @@ export async function getBlogs(tag, pageUrl) {
     }
 }
 
-export async function getVideos(tag, pageUrl) {
-    const url = `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tblh3g587?filter=tags @> ARRAY['${tag}']`;
+export async function getVideos(pageUrl) {
+    const url = `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tblh3g587`;
     try {
         const response = await axiosWithCache.get(url, {
             headers: {
