@@ -14,7 +14,8 @@ import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
-import { searchApps } from '@/utils/axiosCalls';
+import searchApps from '@/utils/searchApps';
+
 
 const APPERPAGE = 9;
 
