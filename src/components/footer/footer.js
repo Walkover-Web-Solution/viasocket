@@ -1,6 +1,7 @@
 import createURL from '@/utils/createURL';
 import Image from 'next/image';
 import Link from 'next/link';
+import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
@@ -95,6 +96,14 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 aria-label="youtube"
                             >
                                 <FiYoutube size={24} />
+                            </Link>
+                            <Link
+                                href={`https://discord.com/invite/wqsSsMAkkz`}
+                                target="_blank"
+                                className=""
+                                aria-label="discord"
+                            >
+                                <RxDiscordLogo size={24} />
                             </Link>
                         </div>
                     </div>
