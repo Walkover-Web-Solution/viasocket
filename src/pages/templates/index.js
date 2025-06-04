@@ -5,11 +5,11 @@ import TemplateCard from '@/components/templateCard/templateCard';
 import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
 import { getFaqData, getFooterData, getMetaData, getValidTemplatesData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
-import getTemplates from '@/utils/getTemplates';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getBlogData } from '@/utils/getBlogData';
 import BlogGrid from '@/components/blogGrid/blogGrid';
+import { getTemplates } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 

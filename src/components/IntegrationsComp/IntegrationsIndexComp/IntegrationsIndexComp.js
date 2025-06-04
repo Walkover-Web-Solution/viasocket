@@ -6,13 +6,13 @@ import Navbar from '@/components/navbar/navbar';
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
-import searchApps from '@/utils/searchApps';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 import ErrorComp from '@/components/404/404Comp';
 import Cta from '@/components/CTA/Cta';
+import searchApps from '@/utils/searchApps';
 
 export default function IntegrationsIndexComp({
     pageInfo,

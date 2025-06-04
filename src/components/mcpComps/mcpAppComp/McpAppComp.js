@@ -8,13 +8,14 @@ import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import searchApps from '@/utils/searchApps';
 import { IoPersonOutline } from 'react-icons/io5';
 import { VscSend } from 'react-icons/vsc';
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
+import searchApps from '@/utils/searchApps';
+
 
 const APPERPAGE = 9;
 

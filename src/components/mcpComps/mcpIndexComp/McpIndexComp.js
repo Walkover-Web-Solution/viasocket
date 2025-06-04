@@ -4,7 +4,6 @@ import { MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import { useEffect, useState } from 'react';
-import searchApps from '@/utils/searchApps';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
@@ -18,6 +17,8 @@ import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
 import Script from 'next/script';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
+import searchApps from '@/utils/searchApps';
+
 
 export default function McpIndexComp({
     pageInfo,
@@ -33,7 +34,6 @@ export default function McpIndexComp({
     featuresData,
     keyPointData,
     metaData,
-    appOneDetails,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;

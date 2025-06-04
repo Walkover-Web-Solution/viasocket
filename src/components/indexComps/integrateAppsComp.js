@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from 'react';
-import getApps from '@/utils/getApps';
 import Image from 'next/image';
 import Link from 'next/link';
 import { LinkButton } from '../uiComponents/buttons';
+import { getApps } from '@/utils/axiosCalls';
 
 export default function IntegrateAppsComp() {
     const [apps, setApps] = useState([]);
