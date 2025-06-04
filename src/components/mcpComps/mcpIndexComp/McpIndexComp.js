@@ -17,7 +17,8 @@ import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
 import Script from 'next/script';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
-import { searchApps } from '@/utils/axiosCalls';
+import searchApps from '@/utils/searchApps';
+
 
 export default function McpIndexComp({
     pageInfo,

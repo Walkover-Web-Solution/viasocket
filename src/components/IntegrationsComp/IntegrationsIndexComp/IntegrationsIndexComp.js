@@ -12,7 +12,7 @@ import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 import ErrorComp from '@/components/404/404Comp';
 import Cta from '@/components/CTA/Cta';
-import { searchApps } from '@/utils/axiosCalls';
+import searchApps from '@/utils/searchApps';
 
 export default function IntegrationsIndexComp({
     pageInfo,

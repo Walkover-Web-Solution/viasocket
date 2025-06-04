@@ -15,6 +15,7 @@ export async function getDataFromTable(table, query, pageUrl) {
             },
             cache: {
                 ttl: 1000 * 60 * 20, // Cache for 20 minutes
+                interpretHeader: false,
             },
         });
         return response?.data;
@@ -34,6 +35,7 @@ export async function getBlogs(tag, pageUrl) {
             },
             cache: {
                 ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
             },
         });
         return response?.data?.data?.rows || [];
@@ -57,6 +59,7 @@ export async function getVideos(tag, pageUrl) {
             },
             cache: {
                 ttl: 1000 * 60 * 60, // cache for 1 hour
+                interpretHeader: false,
             },
         });
         return response?.data?.data?.rows || [];
@@ -75,7 +78,8 @@ export async function getTemplates(pageUrl) {
     try {
         const response = await axiosWithCache.get(url, {
             cache: {
-                ttl: 1000 * 60 * 60, //cache for 1 hour
+                ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
             },
         });
         return response.data.data;
@@ -103,6 +107,7 @@ export async function getApps(query, pageUrl) {
             params,
             cache: {
                 ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
             },
         });
         const apps = response?.data?.data;
@@ -124,6 +129,7 @@ export async function getCombos(pageInfo, pageUrl) {
             const response = await axiosWithCache.get(url, {
                 cache: {
                     ttl: 1000 * 60 * 20, // cache for 20 min
+                    interpretHeader: false,
                 },
             });
             return response?.data;
@@ -145,6 +151,7 @@ export async function fetchPluginData(slug, pageUrl) {
         const response = await axiosWithCache.get(url, {
             cache: {
                 ttl: 1000 * 60 * 20, // cache for 20 min
+                interpretHeader: false,
             },
         });
         data = response.data;
@@ -156,19 +163,4 @@ export async function fetchPluginData(slug, pageUrl) {
         });
     }
     return data;
-}
-
-export async function searchApps(query) {
-    const url = `${process.env.NEXT_PUBLIC_SEARCH_API_URL}/search?key=${query}`;
-
-    try {
-        const response = await axiosWithCache.get(url, {
-            cache: {
-                ttl: 1000 * 60 * 20, // cache for 20 min
-            },
-        });
-        return response.data.data;
-    } catch (error) {
-        sendErrorMessage({ error, source: url });
-    }
 }
