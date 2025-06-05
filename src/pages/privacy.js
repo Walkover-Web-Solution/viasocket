@@ -4,7 +4,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getMetaData } from '@/utils/getData';
 import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
