@@ -3,9 +3,9 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
-import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, GETSTARTED_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFaqData, getFooterData, getGetStartedData, getMetaData } from '@/utils/getData';
+import { getEmbedData, getFaqData, getFooterData, getMetaData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ import Cta from '@/components/CTA/Cta';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ blogData, footerData, faqData, getStartedData, embedData, tableData, howItWorksData, metaData }) => {
+const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData }) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
@@ -193,11 +193,10 @@ const Embed = ({ blogData, footerData, faqData, getStartedData, embedData, table
                             <FAQSection faqData={faqData} faqName={'/embed'} />
                         </div>
                     )}
-                    {getStartedData && (
-                        <div className="container">
-                            <GetStarted data={getStartedData} isHero={'false'} />
-                        </div>
-                    )}
+
+                    <div className="container">
+                        <GetStarted />
+                    </div>
 
                     <div className="container">
                         <Footer footerData={footerData} />
@@ -249,7 +248,6 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`, pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, pageUrl);
-    const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
     const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
     const blogTags = 'embed';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
@@ -283,7 +281,6 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             blogData: blogData || [],
             faqData: faqData || [],
-            getStartedData: getStarted || [],
             embedData: embedData || [],
             tableData: tableData,
             howItWorksData: howItWorksData,

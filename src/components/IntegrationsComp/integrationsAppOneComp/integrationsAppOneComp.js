@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/md';
+import { MdAdd, MdChevronRight, MdOpenInNew } from 'react-icons/md';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -30,7 +30,6 @@ export default function IntegrationsAppOneComp({
     metaData,
     integrations,
     useCaseData,
-    getStartedData,
     videoData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -206,11 +205,9 @@ export default function IntegrationsAppOneComp({
 
             {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
 
-            {getStartedData && (
-                <div className="container">
-                    <GetStarted data={getStartedData} isHero={'false'} />
-                </div>
-            )}
+            <div className="container">
+                <GetStarted />
+            </div>
 
             {videoData?.length > 0 && (
                 <div className="container">
