@@ -6,7 +6,6 @@ import {
     DISCONNECTED,
     EXPERTBLOGS,
     FAQS,
-    GETSTARTED,
     INDEXFEATURES,
     PAGE,
     PRICINGBETTERCHOICE,
@@ -78,11 +77,6 @@ export async function getTestimonialData(fields, filter, pageUrl) {
 
 export async function getCaseStudyData(fields, filter, pageUrl) {
     const data = await getDataFromTable(CASESTUDY, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
-export async function getGetStartedData(fields, filter, pageUrl) {
-    const data = await getDataFromTable(GETSTARTED, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
 

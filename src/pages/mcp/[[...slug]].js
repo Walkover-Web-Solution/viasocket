@@ -3,7 +3,6 @@ import {
     getCategoryData,
     getFaqData,
     getFooterData,
-    getGetStartedData,
     getMCPPromptData,
     getMetaData,
 } from '@/utils/getData';
@@ -15,7 +14,6 @@ import Head from 'next/head';
 import {
     FAQS_FIELDS,
     FOOTER_FIELDS,
-    GETSTARTED_FIELDS,
     INTECATEGORY_FIELDS,
     INTECATEGORYlIST_FILED,
     MCP_FIELDS,
@@ -40,7 +38,6 @@ export default function Mcp({
     categories,
     blogData,
     useCaseData,
-    getStartedData,
     combosData,
     mcpSteps,
     tableData,
@@ -80,7 +77,6 @@ export default function Mcp({
                     faqData={faqData}
                     footerData={footerData}
                     useCaseData={useCaseData}
-                    getStartedData={getStartedData}
                     combosData={combosData}
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
@@ -139,7 +135,6 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: mcpInfo?.page, categoryData, limit: 16 }, pageUrl);
         const combosData = await getCombos(mcpInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, mcpInfo?.appone);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
         const mcpAppSteps = [
             {
                 title: 'Get Your MCP Endpoint',
@@ -184,7 +179,6 @@ export async function getServerSideProps(context) {
                     appOneDetails: appOneDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
-                    getStartedData: getStarted || [],
                     combosData: combosData || [],
                     mcpAppSteps: mcpAppSteps || [],
                     mcpPromptData: mcpPromptData || [],

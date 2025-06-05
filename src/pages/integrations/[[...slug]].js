@@ -1,9 +1,7 @@
 import {
     getCategoryData,
-    getDisconnectedData,
     getFaqData,
     getFooterData,
-    getGetStartedData,
     getMetaData,
     getUsecasesData,
 } from '@/utils/getData';
@@ -17,10 +15,8 @@ import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrat
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
 import {
-    DISCONNECTEDBY_FIELDS,
     FAQS_FIELDS,
     FOOTER_FIELDS,
-    GETSTARTED_FIELDS,
     INTECATEGORY_FIELDS,
     INTECATEGORYlIST_FILED,
     METADATA_FIELDS,
@@ -44,10 +40,8 @@ export default function Integrations({
     appTwoDetails,
     noData,
     categories,
-    disconnecteData,
     blogData,
     useCaseData,
-    getStartedData,
     videoData,
 }) {
     if (noData) {
@@ -75,7 +69,6 @@ export default function Integrations({
                     combosData={combosData}
                     faqData={faqData}
                     footerData={footerData}
-                    getStartedData={getStartedData}
                     videoData={videoData}
                 />
             </div>
@@ -92,7 +85,6 @@ export default function Integrations({
                     appOneDetails={appOneDetails}
                     faqData={faqData}
                     footerData={footerData}
-                    disconnecteData={disconnecteData}
                 />
             );
         } else {
@@ -109,7 +101,6 @@ export default function Integrations({
                         faqData={faqData}
                         footerData={footerData}
                         useCaseData={useCaseData}
-                        getStartedData={getStartedData}
                         videoData={videoData}
                     />
                 </div>
@@ -150,7 +141,6 @@ export async function getServerSideProps(context) {
         const blogTags1 = appOneDetails?.appslugname;
         const blogTags2 = appTwoDetails?.appslugname;
         const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
         const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
         if (appOneDetails && appTwoDetails) {
             return {
@@ -166,7 +156,6 @@ export async function getServerSideProps(context) {
                     appTwoDetails: appTwoDetails || {},
                     categoryData: {},
                     blogData: blogData || [],
-                    getStartedData: getStarted || [],
                     videoData: videoData || [],
                 },
             };
@@ -189,12 +178,6 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
         const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
-        const getStarted = await getGetStartedData(GETSTARTED_FIELDS, '', pageUrl);
-        const disconnecteData = await getDisconnectedData(
-            DISCONNECTEDBY_FIELDS,
-            `filter=slugname='${integrationsInfo?.appone}' `,
-            pageUrl
-        );
 
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
@@ -218,10 +201,8 @@ export async function getServerSideProps(context) {
                     appOneDetails: appOneDetails || {},
                     appTwoDetails: {},
                     categoryData: {},
-                    disconnecteData: disconnecteData || [],
                     blogData: blogData || [],
                     useCaseData: useCaseData || [],
-                    getStartedData: getStarted || [],
                     videoData: videoData || [],
                 },
             };

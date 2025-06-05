@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import style from './getStarted.module.scss';
 
-export default function GetStarted({ data, isHero }) {
+export default function GetStarted() {
     return (
         <>
             <div className="grid gap-2 bg-white border custom-border p-12 custom-border">
@@ -29,34 +29,22 @@ export default function GetStarted({ data, isHero }) {
                     </Link>
                 </div>
                 <div className="flex  lg:gap-6 gap-4  flex-wrap">
-                    {data[0] &&
-                        data?.map((faq, index) => {
-                            if (!faq?.name) {
-                                return null;
-                            }
+                    <button
+                        onClick={() => window.chatWidget.open()}
+                        className={`flex text-start justify-start gap-1 btn btn-accent`}
+                        aria-label="get started"
+                    >
+                        24X7 Chat with our AI and human Experts
+                    </button>
 
-                            return (
-                                <Link
-                                    key={index}
-                                    href={faq?.link && faq?.link}
-                                    target={faq?.link === '#chat' ? '' : '_blank'}
-                                    onClick={() => faq?.link === '#chat' && window.chatWidget.open()}
-                                    aria-label="chat"
-                                >
-                                    <button
-                                        className={`flex text-start justify-start gap-1 btn  ${
-                                            index == 0 && 'btn-accent custom-border'
-                                        } ${index == 1 && 'btn-primary btn-outline custom-border '} ${
-                                            index !== 1 && index !== 0 && 'btn-ghost'
-                                        }`}
-                                        aria-label="get started"
-                                    >
-                                        <span>{faq?.name}</span>
-                                        {/* <MdOutlineArrowForward /> */}
-                                    </button>
-                                </Link>
-                            );
-                        })}
+                    <Link href="https://viasocket.com/faq" target="_blank" aria-label="faq">
+                        <button
+                            className={`flex text-start justify-start gap-1 btn btn-primary btn-outline custom-border`}
+                            aria-label="get started"
+                        >
+                            Learn via source
+                        </button>
+                    </Link>
                 </div>
             </div>
         </>
