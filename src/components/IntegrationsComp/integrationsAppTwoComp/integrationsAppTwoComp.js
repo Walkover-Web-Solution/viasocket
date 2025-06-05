@@ -25,7 +25,6 @@ export default function IntegrationsAppTwoComp({
     appTwoDetails,
     blogsData,
     metaData,
-    getStartedData,
     videoData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -190,11 +189,11 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 )}
 
-            {getStartedData && (
+            
                 <div className="container cont">
-                    <GetStarted data={getStartedData} isHero={'false'} />
+                    <GetStarted  />
                 </div>
-            )}
+       
 
             {videoData?.length > 0 && (
                 <div className="container">

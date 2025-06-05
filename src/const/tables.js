@@ -5,7 +5,6 @@ export const FAQS = 'tblnoi7ng';
 export const CATEGORY = 'tblh9c91k';
 export const TESTIMONIALS = 'tblwql8n1';
 export const CASESTUDY = 'tblwoqytc';
-export const GETSTARTED = 'tblvgm05y';
 export const INDEXFEATURES = 'tblvo36my';
 export const PAGE = 'tblmsw3ci';
 export const AGENCIES = 'tblajmg8e';
