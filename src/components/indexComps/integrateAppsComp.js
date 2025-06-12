@@ -59,7 +59,7 @@ export default function IntegrateAppsComp() {
     if (!displayedApps?.length) return null;
 
     return (
-        <div className="cont cont__gap py-12 border custom-border bg-[#FAF9F6]">
+        <div className="cont cont__gap py-12 border custom-border border-r-0 bg-[#FAF9F6]">
             <div className="container flex">
                 <div className="cont gap-1">
                     <h2 className="h2">

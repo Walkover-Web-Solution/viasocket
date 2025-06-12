@@ -240,12 +240,12 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                 {!debounceValue && (
                     <div className="flex justify-end items-end w-full">
                         {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-ghost" href={createURL(goToPrev())}>
+                            <Link className="btn btn-accent !px-5" href={createURL(goToPrev())}>
                                 Prev
                             </Link>
                         )}
                         {showNext && (
-                            <Link className="btn btn-ghost" href={createURL(goToNext())}>
+                            <Link className="btn btn-accent !px-5" href={createURL(goToNext())}>
                                 Next
                             </Link>
                         )}

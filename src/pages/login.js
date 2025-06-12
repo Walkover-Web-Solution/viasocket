@@ -91,7 +91,7 @@ const Login = ({ features, metaData, pathArray, redirect_to, footerData }) => {
                             <Image src="/assets/brand/logo.svg" width={158.6} height={40} alt="viasocket" />
                         </Link>
 
-                        <div className="text-2xl font-bold">Login</div>
+                        <div className="text-2xl font-bold mb-4">Login</div>
                         <CustomLogin redirect_to={redirect_to} />
                         <div className="flex">
                             <span className="text-sm">Create a new Account,</span>

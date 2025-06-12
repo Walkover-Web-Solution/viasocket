@@ -313,12 +313,12 @@ export default function McpIndexComp({
                     {!debounceValue && (
                         <div className="flex justify-end items-end w-full">
                             {integrationsInfo?.page > 0 && (
-                                <Link className="btn btn-ghost" href={createURL(goToPrev())}>
+                                <Link className="btn btn-accent !px-5" href={createURL(goToPrev())}>
                                     Prev
                                 </Link>
                             )}
                             {showNext && (
-                                <Link className="btn btn-ghost" href={createURL(goToNext())}>
+                                <Link className="btn btn-accent !px-5" href={createURL(goToNext())}>
                                     Next
                                 </Link>
                             )}
@@ -477,7 +477,7 @@ const FeaturesGrid = ({ featuresData }) => {
 
 const Table = ({ data }) => {
     return (
-        <div className="border custom-border w-full h-full cont gap-8 bg-white py-8 px-0 lg:px-20">
+        <div className="border custom-border w-full h-full cont gap-8 bg-white p-12">
             <div className="flex flex-col gap-0">
                 <h2 className="h2">MCP vs Traditional APIs : The Paradigm Shift</h2>
             </div>
