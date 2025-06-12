@@ -7,7 +7,7 @@ export const runtime = 'experimental-edge';
 
 const SelectedAlphabetPage = ({ apps, alphabet, appDetails, step, alphabet2 }) => {
     return (
-        <div className="container py-20 gap-8 ">
+        <div className="container py-20 gap-8 h-screen">
             {step == 0 && (
                 <>
                     <AZMetaHeadComp alphabet={alphabet} />
@@ -51,7 +51,7 @@ const SelectedAlphabetPage = ({ apps, alphabet, appDetails, step, alphabet2 }) =
                             content={`Browse and discover a wide range of apps that start with the letter ${alphabet?.toUpperCase()}. Find the perfect app for your needs today!`}
                         />
                     </Head>
-                    <div className="w-full  flex flex-col gap-8 items-center">
+                    <div className="w-full  flex flex-col gap-8 items-center border custom-border bg-white p-12">
                         <div className="flex flex-col gap-8 items-center">
                             <h2 className="h2 text-center">Browse apps by name - {alphabet?.toUpperCase() || '-'}</h2>
 
