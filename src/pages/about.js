@@ -1,3 +1,4 @@
+import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
@@ -12,7 +13,7 @@ const about = ({ metaData, footerData }) => {
             <MetaHeadComp metaData={metaData} page={'/about'} />
             <Navbar footerData={footerData} utm={'/about'} />
             <div className="container">
-                <div className="min-h-screen mt-12 p-12 flex flex-col gap-16">
+                <div className="min-h-screen mt-12 flex flex-col gap-16">
                     <div className="about__hero">
                         <h2 className="m-0 h2">Our Purpose on This Planet is Simple:</h2>
                         <h1 className="h1">Bring Your Automation Ideas to Life and Spark New Ones</h1>
@@ -302,7 +303,7 @@ const about = ({ metaData, footerData }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="border custom-border gap-12 p-12 bg-white">
+                    <div className="border custom-border gap-12 p-12 bg-white border-b-0">
                         <h2 className="h2">In the news</h2>
                         <ul className="mt-5" style={{ listStyleType: 'square' }}>
                             <li>
@@ -318,6 +319,10 @@ const about = ({ metaData, footerData }) => {
                         </ul>
                     </div>
                 </div>
+            </div>
+
+            <div className="container">
+                <Footer footerData={footerData} />
             </div>
         </>
     );
