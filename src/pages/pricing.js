@@ -10,7 +10,19 @@ import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import Cta from '@/components/CTA/Cta';
 
+
 export const runtime = 'experimental-edge';
+
+const arrowIcon = (
+    <svg viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="arrow-icon">
+        <g className="arrow-head">
+            <path d="M1 1C4.5 4 5 4.38484 5 4.5C5 4.61516 4.5 5 1 8" stroke="currentColor" strokeWidth="1.5" />
+        </g>
+        <g className="arrow-body">
+            <path d="M3.5 4.5H0" stroke="currentColor" strokeWidth="1.5" />
+        </g>
+    </svg>
+);
 
 export default function pricing({ footerData, faqData, metaData, blogData, features }) {
     return (
@@ -60,6 +72,14 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                         </div>
                         <Link href="/signup?utm_source=pricing/premium">
                             <button className="btn btn-accent">Get Started</button>
+                        </Link>
+
+                        <Link
+                            href="https://viasocket.com/faq/pricing/200-pemium-plan"
+                            className="text-accent hover:underline w-fit flex items-center link-btn"
+                        >
+                            <span>Read more</span>
+                            {arrowIcon}
                         </Link>
                     </div>
                     <div className="border custom-border bg-white p-12 flex flex-col gap-2">
