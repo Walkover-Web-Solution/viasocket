@@ -10,7 +10,6 @@ import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import Cta from '@/components/CTA/Cta';
 
-
 export const runtime = 'experimental-edge';
 
 const arrowIcon = (
@@ -48,7 +47,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Free</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$0</p>
@@ -61,7 +60,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Premium</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
@@ -70,10 +69,6 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                 workflows tailored to your business needs
                             </p>
                         </div>
-                        <Link href="/signup?utm_source=pricing/premium">
-                            <button className="btn btn-accent">Get Started</button>
-                        </Link>
-
                         <Link
                             href="https://viasocket.com/faq/pricing/200-pemium-plan"
                             className="text-accent hover:underline w-fit flex items-center link-btn"
@@ -81,8 +76,12 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <span>Read more</span>
                             {arrowIcon}
                         </Link>
+
+                        <Link href="/signup?utm_source=pricing/premium">
+                            <button className="btn btn-accent">Get Started</button>
+                        </Link>
                     </div>
-                    <div className="border custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Enterprise</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">Contact for pricing</p>
