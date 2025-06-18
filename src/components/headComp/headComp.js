@@ -81,10 +81,10 @@ export default function HeadComp() {
     return (
         <>
             <Head>
-                {/* {!process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT ||
-                    (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod' && ( */}
-                <meta name="robots" content="noindex, nofollow" />
-                {/* ))} */}
+                {!process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT ||
+                    (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod' && (
+                        <meta name="robots" content="noindex, nofollow" />
+                    ))}
                 {/* Default favicons for SSR (e.g., direct visits) */}
                 <link id="favicon" rel="icon" type="image/png" href="/assets/brand/favicon-circle-48x48.png" />
                 <link id="favicon2" rel="icon" type="image/png" href="/assets/brand/favicon-circle-96x96.png" />
