@@ -45,11 +45,6 @@ export async function getFooterData(fields, filter, pageUrl) {
     return handleData(data);
 }
 
-export async function getMetaData(fields, filter, pageUrl) {
-    const data = await getDataFromTable(METADATA, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
 export async function getAllFeatures(fields, filter, pageUrl) {
     const data = await getDataFromTable(ALLFEATURES, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);

@@ -1,28 +1,15 @@
-
-import {
-    getCategoryData,
-    getFaqData,
-    getFooterData,
-    getMCPPromptData,
-    getMetaData,
-} from '@/utils/getData';
+import { getCategoryData, getFaqData, getFooterData, getMCPPromptData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
 import getAppDetails from '@/utils/getAppDetail';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import {
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    INTECATEGORY_FIELDS,
-    INTECATEGORYlIST_FILED,
-    MCP_FIELDS,
-    METADATA_FIELDS,
-} from '@/const/fields';
+import { FAQS_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getApps, getCombos } from '@/utils/axiosCalls';
+import { getMetaData } from '@/utils/getMetaData';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({
@@ -125,7 +112,7 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
 
     if (mcpInfo?.appone) {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`, pageUrl);
+        const metaData = await getMetaData('/mcp/appName', pageUrl);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
@@ -173,7 +160,7 @@ export async function getServerSideProps(context) {
                     pageInfo: pageInfo || {},
                     footerData: footerData || {},
                     apps: apps || [],
-                    metaData: (metaData?.length > 0 && metaData[0]) || {},
+                    metaData: metaData || {},
                     faqData: faqData || [],
                     mcpInfo: mcpInfo || {},
                     appOneDetails: appOneDetails || {},
@@ -194,7 +181,7 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+        const metaData = await getMetaData('/mcp', pageUrl);
         const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
@@ -289,7 +276,7 @@ export async function getServerSideProps(context) {
                 pageInfo: pageInfo || {},
                 footerData: footerData || {},
                 apps: apps || [],
-                metaData: (metaData?.length > 0 && metaData[0]) || {},
+                metaData: metaData || {},
                 faqData: faqData || [],
                 mcpInfo: mcpInfo || {},
                 appOneDetails: {},

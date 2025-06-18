@@ -1,8 +1,9 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
-import { getFooterData, getMetaData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
+import { getMetaData } from '@/utils/getMetaData';
 import React from 'react';
 
 export const runtime = 'experimental-edge';
@@ -283,12 +284,12 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/about'`, pageUrl);
+    const metaData = await getMetaData('/about', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
         },
     };
 }

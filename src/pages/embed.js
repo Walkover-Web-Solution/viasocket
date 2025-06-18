@@ -3,15 +3,16 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
-import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFaqData, getFooterData, getMetaData } from '@/utils/getData';
+import { getEmbedData, getFaqData, getFooterData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Cta from '@/components/CTA/Cta';
+import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
 
@@ -245,7 +246,7 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/embed'`, pageUrl);
+    const metaData = await getMetaData('/embed', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, pageUrl);
     const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
@@ -284,7 +285,7 @@ export async function getServerSideProps(context) {
             embedData: embedData || [],
             tableData: tableData,
             howItWorksData: howItWorksData,
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
         },
     };
 }

@@ -99,10 +99,18 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     // Determine the base path (first page)
     let canonicalUrl = `https://viasocket.com${router.asPath}`;
     if (isPaginated) {
-        if (pathSegments.includes('category')) {
-            canonicalUrl = `https://viasocket.com/integrations/category/${pathSegments[3]}`;
-        } else {
-            canonicalUrl = `https://viasocket.com/integrations/${pathSegments[2]}`;
+        if (router.pathname.startsWith('/mcp')) {
+            if (pathSegments.includes('category')) {
+                canonicalUrl = `https://viasocket.com/mcp/category/${pathSegments[3]}`;
+            } else {
+                canonicalUrl = `https://viasocket.com/mcp/${pathSegments[2]}`;
+            }
+        } else if (router.pathname.startsWith('/integrations')) {
+            if (pathSegments.includes('category')) {
+                canonicalUrl = `https://viasocket.com/integrations/category/${pathSegments[3]}`;
+            } else {
+                canonicalUrl = `https://viasocket.com/integrations/${pathSegments[2]}`;
+            }
         }
     }
 

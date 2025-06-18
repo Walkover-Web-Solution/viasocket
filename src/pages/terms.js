@@ -1,8 +1,9 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { getFooterData, getMetaData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getMetaData } from '@/utils/getMetaData';
 
 export async function getServerSideProps(context) {
     const { req } = context;
@@ -10,11 +11,11 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/terms'`, pageUrl);
+    const metaData = await getMetaData('/terms', pageUrl);
     return {
         props: {
             footerData: footerData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
         },
     };
 }

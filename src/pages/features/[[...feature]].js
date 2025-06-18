@@ -4,9 +4,10 @@ import FeatureContentComp from '@/components/FeaturesComp/FeatureContentComp/Fea
 import FeatureGridComp from '@/components/FeaturesComp/FeatureGridComp/FeatureGridComp';
 import FeaturesFooterComp from '@/components/FeaturesComp/FeaturesFooterComp/FeaturesFooterComp';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { ALLFEATURES_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { ALLFEATURES_FIELDS, FOOTER_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getAllFeatures, getFeatureData, getFooterData, getMetaData } from '@/utils/getData';
+import { getAllFeatures, getFeatureData, getFooterData } from '@/utils/getData';
+import { getMetaData } from '@/utils/getMetaData';
 import GetPageInfo from '@/utils/getPageInfo';
 
 export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData }) {
@@ -36,10 +37,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
+
     const pageInfo = GetPageInfo(context);
-    const footerData = await getFooterData(FOOTER_FIELDS,'',pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='${pageInfo?.url}'`,pageUrl);
+    const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const metaData = await getMetaData(pageInfo?.url, pageUrl);
     let feature = null;
     let features = [];
     let featureData = [];
@@ -48,18 +49,18 @@ export async function getServerSideProps(context) {
     }
 
     if (!feature) {
-        features = await getAllFeatures(ALLFEATURES_FIELDS,'',pageUrl);
+        features = await getAllFeatures(ALLFEATURES_FIELDS, '', pageUrl);
     } else {
-        featureData = await getFeatureData([], `filter=slug='${feature}'`,pageUrl);
+        featureData = await getFeatureData([], `filter=slug='${feature}'`, pageUrl);
     }
     const blogTags = 'feature';
-    const blogData = await getBlogData({ tag1: blogTags },pageUrl);
+    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     return {
         props: {
             footerData: footerData || [],
             features: features || [],
             featureData: (featureData?.length > 0 && featureData[0]) || {},
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             pageInfo: pageInfo || {},
             blogData: blogData || [],
         },
