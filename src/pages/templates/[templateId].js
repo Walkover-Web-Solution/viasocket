@@ -1,9 +1,10 @@
 // pages/template/[templateId].js
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS, METADATA_FIELDS,  } from '@/const/fields';
+import { FOOTER_FIELDS } from '@/const/fields';
 import { getTemplates } from '@/utils/axiosCalls';
-import { getFooterData, getMetaData } from '@/utils/getData';
+import { getFooterData } from '@/utils/getData';
+import { getMetaData } from '@/utils/getMetaData';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
@@ -58,15 +59,15 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
+
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, pageUrl);
+    const metaData = await getMetaData('/templates', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             templateData: templateData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
         },
     };
 }

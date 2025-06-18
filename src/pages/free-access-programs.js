@@ -2,9 +2,12 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import Link from 'next/link';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getMetaData, getProgramsData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, PROGRAMS_FIELDS } from '@/const/fields';
+import { getFooterData, getProgramsData } from '@/utils/getData';
+import { FOOTER_FIELDS, PROGRAMS_FIELDS } from '@/const/fields';
+import { getMetaData } from '@/utils/getMetaData';
+
 export const runtime = 'experimental-edge';
+
 export default function Programs({ footerData, metaData, programs }) {
     return (
         <>
@@ -127,12 +130,12 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/free-access-programs'`, pageUrl);
+    const metaData = await getMetaData('/free-access-programs', pageUrl);
     const programs = await getProgramsData(PROGRAMS_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             programs: programs || [],
         },
     };

@@ -6,20 +6,12 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkButton, LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import {
-    getCaseStudyData,
-    getFaqData,
-    getFooterData,
-    getIndexTemplateData,
-    getMetaData,
-    getTestimonialData,
-} from '@/utils/getData';
+import { getCaseStudyData, getFaqData, getFooterData, getIndexTemplateData, getTestimonialData } from '@/utils/getData';
 import {
     CASESTUDY_FIELDS,
     FAQS_FIELDS,
     FOOTER_FIELDS,
     INDEXTEMPLATE_FIELDS,
-    METADATA_FIELDS,
     TESTIMONIALS_FIELDS,
 } from '@/const/fields';
 import IntegrateAppsComp from '@/components/indexComps/integrateAppsComp';
@@ -45,6 +37,7 @@ import StepDisplay from '@/components/stepDisplay/StepDisplay';
 import { FiExternalLink } from 'react-icons/fi';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import Cta from '@/components/CTA/Cta';
+import { getMetaData } from '@/utils/getMetaData';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -340,7 +333,7 @@ export async function getServerSideProps(context) {
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/index'`, pageUrl);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
     const caseStudies = await getCaseStudyData(CASESTUDY_FIELDS, '', pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/'`, pageUrl);
+    const metaData = await getMetaData('/', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const blogTags = 'index';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
@@ -485,7 +478,7 @@ export async function getServerSideProps(context) {
         props: {
             testimonials: testimonials || [],
             caseStudies: caseStudies || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             faqData: faqData || [],
             footerData: footerData || [],
             blogData: blogData || [],

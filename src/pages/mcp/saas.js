@@ -3,12 +3,13 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData } from '@/utils/getData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
+import { getFaqData, getFooterData } from '@/utils/getData';
+import { FAQS_FIELDS, FOOTER_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
+import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
 
@@ -147,8 +148,8 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
+
+    const metaData = await getMetaData('/mcp', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/mcp'`, pageUrl);
     const blogTags1 = 'mcp';
@@ -156,7 +157,7 @@ export async function getServerSideProps(context) {
     const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
     return {
         props: {
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],

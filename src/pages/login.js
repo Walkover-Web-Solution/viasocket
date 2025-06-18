@@ -3,20 +3,24 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
-import { getFooterData, getIndexFeatures, getMetaData } from '@/utils/getData';
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexFeatures } from '@/utils/getData';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import CustomLogin from '@/components/customLogin/CustomLogin';
+import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
+    const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
     const { redirect_to } = context?.query;
     const { utm_source } = context?.query;
     const footerData = await getFooterData(FOOTER_FIELDS);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/login'`);
+    const metaData = await getMetaData('/login', pageUrl);
     const features = await getIndexFeatures();
     return {
         props: {
@@ -25,6 +29,7 @@ export async function getServerSideProps(context) {
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
             features: features || [],
+            metaData: metaData || {},
         },
     };
 }
