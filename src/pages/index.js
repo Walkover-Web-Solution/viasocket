@@ -95,6 +95,7 @@ const Index = ({
                         buttonLabel="Build viaSocket integration"
                         buttonLink="https://viasocket.com/faq/developer-hub"
                         newTab={true}
+                        readMoreLink="https://viasocket.com/faq/pricing/200-pemium-plan"
                     />
 
                     <div className="container cont">

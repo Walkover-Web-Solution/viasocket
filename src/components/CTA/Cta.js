@@ -12,7 +12,16 @@ const arrowIcon = (
     </svg>
 );
 
-const Cta = ({ title, subDescription, description, buttonLabel, buttonLink, theme = 'white', newTab = false }) => {
+const Cta = ({
+    title,
+    subDescription,
+    description,
+    buttonLabel,
+    buttonLink,
+    theme = 'white',
+    newTab = false,
+    readMoreLink,
+}) => {
     return (
         <div className="container">
             <div className={`cont border custom-border gap-2 p-12 ${theme === 'white' ? 'bg-white' : 'bg-black'}`}>
@@ -33,13 +42,12 @@ const Cta = ({ title, subDescription, description, buttonLabel, buttonLink, them
                     </button>
                 </Link>
 
-                <Link
-                    href="https://viasocket.com/faq/pricing/200-pemium-plan"
-                    className="text-accent hover:underline w-fit flex items-center link-btn"
-                >
-                    <span>Read more</span>
-                    {arrowIcon}
-                </Link>
+                {readMoreLink && (
+                    <Link href={readMoreLink} className="text-accent hover:underline w-fit flex items-center link-btn">
+                        <span>Read more</span>
+                        {arrowIcon}
+                    </Link>
+                )}
             </div>
         </div>
     );
