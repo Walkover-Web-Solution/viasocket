@@ -38,11 +38,11 @@ const about = ({ metaData, footerData }) => {
                             <div className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid mt-12 border custom-border border-r-0 sm:border-b-0 lg:border-b">
                                 <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="talk-to-founders">
-                                        <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="text-2xl font-semibold">
                                             Talk to the founders
                                         </h5>
 
-                                        <p className="font-normal text-gray-500 dark:text-gray-400">
+                                        <p className="font-normal">
                                             Want to share your thoughts, or just want to learn more about automation,
                                             the founders are here for a chat.
                                         </p>
@@ -57,11 +57,11 @@ const about = ({ metaData, footerData }) => {
                                 </div>
                                 <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="get-support-now">
-                                        <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="text-2xl font-semibold">
                                             Get support now
                                         </h5>
 
-                                        <p className="font-normal text-gray-500 dark:text-gray-400">
+                                        <p className="font-normal">
                                             Our support team is ready to assist you with any issues or questions you
                                             have.
                                         </p>
@@ -76,11 +76,11 @@ const about = ({ metaData, footerData }) => {
                                 </div>
                                 <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="book-a-meeting">
-                                        <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="text-2xl font-semibold">
                                             Book a meeting
                                         </h5>
 
-                                        <p className="font-normal text-gray-500 dark:text-gray-400">
+                                        <p className="font-normal">
                                             Schedule a Call and discuss your needs with us. We're here to help you grow
                                             your business with seamless automation.
                                         </p>
@@ -95,11 +95,11 @@ const about = ({ metaData, footerData }) => {
                                 </div>
                                 <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="join-the-community">
-                                        <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="text-2xl font-semibold">
                                             Join the Community
                                         </h5>
 
-                                        <p className="font-normal text-gray-500 dark:text-gray-400">
+                                        <p className="font-normal">
                                             Be part of a vibrant community of innovators and automation enthusiasts.
                                             Connect, learn, and share insights.
                                         </p>
@@ -193,11 +193,11 @@ const about = ({ metaData, footerData }) => {
                         <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="join-our-mission">
-                                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                    <h5 className="text-2xl font-semibold">
                                         Join our mission
                                     </h5>
 
-                                    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                                    <p className="mb-3 font-normal">
                                         We’re on a journey to make automation work for everyone—and we want YOU to be a
                                         part of it! Ready to join our team?
                                     </p>
@@ -212,11 +212,11 @@ const about = ({ metaData, footerData }) => {
                             </div>
                             <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="meet-our-awesome">
-                                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                    <h5 className="text-2xl font-semibold">
                                         Meet our awesome customers
                                     </h5>
 
-                                    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                                    <p className="mb-3 font-normal">
                                         See how businesses across the globe are using automation as the backbone of
                                         their success.
                                     </p>
@@ -232,11 +232,11 @@ const about = ({ metaData, footerData }) => {
                             </div>
                             <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="partner-with-us">
-                                    <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                    <h5 className="text-2xl font-semibold">
                                         Partner with us
                                     </h5>
 
-                                    <p className="mb-3 font-normal text-gray-500 dark:text-gray-400">
+                                    <p className="mb-3 font-normal">
                                         Become part of our growing network of businesses empowering users with
                                         automation solutions.
                                     </p>
