@@ -117,9 +117,9 @@ const about = ({ metaData, footerData }) => {
                     </div>
                     <div className="bg-white p-12 border custom-border">
                         <h2 className="h2">Let’s build a more productive future, together</h2>
-                        <div className="mt-8 flex flex-col gap-8">
+                        <div className="mt-2 flex flex-col gap-8">
                             <div className="gap-16 flex-row xl:flex">
-                                <div className="paragraph flex flex-col justify-around">
+                                <div className="paragraph flex flex-col justify-around md:gap-8">
                                     <p className="1">
                                         Eight years ago, I started <strong>viaSocket</strong> with a small, passionate
                                         team and a singular goal:{' '}
@@ -155,7 +155,7 @@ const about = ({ metaData, footerData }) => {
                                 <img
                                     src="https://images.contactout.com/profiles/1d4c2fa861915fecc3f5002b63cd33f9"
                                     alt=""
-                                    className="object-cover xl:w-full w-[25rem] h-[336px] mt-8 xl:mt-0"
+                                    className="object-cover xl:w-full w-[25rem] h-[25rem] mt-8 xl:mt-0"
                                 />
                             </div>
                             <p className="5">
