@@ -25,18 +25,18 @@ const about = ({ metaData, footerData }) => {
             <div className="container">
                 <div className="min-h-screen mt-12 flex flex-col gap-16">
                     <div className="about__hero">
-                        <h2 className="m-0 h2">Our Purpose on This Planet is Simple:</h2>
-                        <h1 className="h1">Bring Your Automation Ideas to Life and Spark New Ones</h1>
+                        <h2 className="m-0 h2">Our purpose on this planet is simple:</h2>
+                        <h1 className="h1">Bring your automation ideas to life and spark new ones</h1>
                     </div>
                     <div className="cont border custom-border gap-2 p-12 bg-white">
                         <div className="cont gap-1">
-                            <h2 className="h2">Always Within Your Reach</h2>
+                            <h2 className="h2">Always within your reach</h2>
                             <p className="sub__h1">
-                                Whether You Need Help or Just Have a Question About Automation, We’re Here for You—From
-                                Founders to Support.
+                                Whether you need help or just have a question about automation, we’re here for you—From
+                                founders to support.
                             </p>
-                            <div className="flex flex-wrap mt-12">
-                                <div className="max-w-[20rem] p-6 bg-white flex flex-col justify-between border custom-border border-r-0">
+                            <div className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 grid mt-12 border custom-border border-r-0 sm:border-b-0 lg:border-b">
+                                <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="talk-to-founders">
                                         <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Talk to the founders
@@ -55,7 +55,7 @@ const about = ({ metaData, footerData }) => {
                                         {arrowIcon}
                                     </a>
                                 </div>
-                                <div className="max-w-[20rem] p-6 bg-white flex flex-col justify-between border custom-border border-r-0">
+                                <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="get-support-now">
                                         <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Get support now
@@ -74,7 +74,7 @@ const about = ({ metaData, footerData }) => {
                                         {arrowIcon}
                                     </a>
                                 </div>
-                                <div className="max-w-[20rem] p-6 bg-white flex flex-col justify-between border custom-border border-r-0">
+                                <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="book-a-meeting">
                                         <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Book a meeting
@@ -93,7 +93,7 @@ const about = ({ metaData, footerData }) => {
                                         {arrowIcon}
                                     </a>
                                 </div>
-                                <div className="max-w-[20rem] p-6 bg-white flex flex-col justify-between border custom-border">
+                                <div className="p-6 bg-white flex flex-col justify-between border-b lg:border-b-0 border-r custom-border">
                                     <div className="join-the-community">
                                         <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                             Join the Community
@@ -190,8 +190,8 @@ const about = ({ metaData, footerData }) => {
                     </div>
                     <div className="cont border custom-border gap-12 p-12 bg-[#A8200D]">
                         <h2 className="h2 text-white">Explore more about viaSocket</h2>
-                        <div className="flex flex-wrap gap-8">
-                            <div className="max-w-[25rem] h-[26vh] p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
+                        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="join-our-mission">
                                     <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                         Join our mission
@@ -210,7 +210,7 @@ const about = ({ metaData, footerData }) => {
                                     {arrowIcon}
                                 </a>
                             </div>
-                            <div className="max-w-[25rem] h-[26vh] p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
+                            <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="meet-our-awesome">
                                     <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                         Meet our awesome customers
@@ -230,7 +230,7 @@ const about = ({ metaData, footerData }) => {
                                     {arrowIcon}
                                 </a>
                             </div>
-                            <div className="max-w-[25rem] h-[26vh] p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
+                            <div className="p-6 bg-white border custom-border border-r-0 flex flex-col justify-between">
                                 <div className="partner-with-us">
                                     <h5 className="text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                         Partner with us
