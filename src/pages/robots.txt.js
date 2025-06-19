@@ -1,3 +1,5 @@
+export const runtime = 'experimental-edge';
+
 export async function getServerSideProps({ res }) {
     const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod';
 
