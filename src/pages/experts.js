@@ -5,15 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
-import { getAgencies, getExpertBlogs, getFooterData, getMetaData, getPageData } from '@/utils/getData';
-import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
+import { getAgencies, getExpertBlogs, getFooterData, getPageData } from '@/utils/getData';
+import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
+import { getMetaData } from '@/utils/getMetaData';
 
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/experts'`, pageUrl);
+
+    const metaData = await getMetaData('/experts', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const pageData = await getPageData(PAGEDATA_FIELDS, '', pageUrl);
     const agencies = await getAgencies(AGENCIES_FIELDS, '', pageUrl);
@@ -22,7 +23,7 @@ export async function getServerSideProps(context) {
         props: {
             agencies: agencies || [],
             pageData: (pageData?.length > 0 && pageData[0]) || {},
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             expertsHelp: expertsBlog || [],
             footerData: footerData || [],
         },

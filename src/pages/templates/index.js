@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
-import { getFaqData, getFooterData, getMetaData, getValidTemplatesData } from '@/utils/getData';
+import { FOOTER_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
+import { getFooterData, getValidTemplatesData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdSearch } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getBlogData } from '@/utils/getBlogData';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getTemplates } from '@/utils/axiosCalls';
+import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
@@ -130,12 +132,12 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
+
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
     const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS, '', pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/templates'`, pageUrl);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/templates'`, pageUrl);
+    const metaData = await getMetaData('/templates', pageUrl);
+    const faqData = await getFaqData('/templates', pageUrl);
     const blogTags = 'templates';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     return {
@@ -143,7 +145,7 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             templateData: templateData || [],
             validTemplates: validTemplates || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             faqData: faqData || [],
             blogData: blogData || [],
         },

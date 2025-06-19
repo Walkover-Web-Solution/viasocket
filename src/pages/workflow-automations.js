@@ -2,12 +2,14 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS } from '@/const/fields';
-import { getFaqData, getFooterData, getMetaData } from '@/utils/getData';
+import {  FOOTER_FIELDS } from '@/const/fields';
+import {  getFooterData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
 import { MdGroups } from 'react-icons/md';
+import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
@@ -256,9 +258,9 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/workflow-automations'`, pageUrl);
+    const metaData = await getMetaData('/workflow-automations', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/workflow-automations'`, pageUrl);
+    const faqData = await getFaqData('/workflow-automations', pageUrl);
 
     const automationSteps = [
         {
@@ -401,7 +403,7 @@ export async function getServerSideProps(context) {
         props: {
             footerData: footerData || [],
             faqData: faqData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             automationSteps: automationSteps,
             importancePoints: importancePoints,
             automationExamples: automationExamples,

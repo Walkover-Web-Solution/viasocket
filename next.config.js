@@ -14,6 +14,16 @@ module.exports = {
         ],
     },
 
+    async redirects() {
+        return [
+            {
+                source: '/login',
+                destination: 'https://flow.viasocket.com/',
+                permanent: false,
+            },
+        ];
+    },
+
     webpack(config) {
         config.resolve.fallback = {
             ...config.resolve.fallback,

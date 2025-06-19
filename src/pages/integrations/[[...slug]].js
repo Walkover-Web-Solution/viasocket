@@ -1,10 +1,4 @@
-import {
-    getCategoryData,
-    getFaqData,
-    getFooterData,
-    getMetaData,
-    getUsecasesData,
-} from '@/utils/getData';
+import { getCategoryData, getFooterData, getUsecasesData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
@@ -14,17 +8,13 @@ import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAp
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import {
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    INTECATEGORY_FIELDS,
-    INTECATEGORYlIST_FILED,
-    METADATA_FIELDS,
-    USECASES_FIELDS,
-} from '@/const/fields';
+import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
 import { getCombos, getApps } from '@/utils/axiosCalls';
+import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
+
 export const runtime = 'experimental-edge';
 
 export default function Integrations({
@@ -117,6 +107,7 @@ export default function Integrations({
                     blogsData={blogData}
                     categoryData={categoryData}
                     categories={categories}
+                    faqData={faqData}
                 />
             </div>
         );
@@ -133,8 +124,8 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne/AppTwo'`, pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[singleApp]'`, pageUrl);
+        const metadata = await getMetaData('/integrations/AppOne/AppTwo', pageUrl);
+        const faqData = await getFaqData('[singleApp]', pageUrl);
         const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
         const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
@@ -168,8 +159,8 @@ export async function getServerSideProps(context) {
             };
         }
     } else if (integrationsInfo?.appone) {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations/AppOne'`, pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[doubleApp]'`, pageUrl);
+        const metadata = await getMetaData('/integrations/AppOne', pageUrl);
+        const faqData = await getFaqData('[doubleApp]', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${integrationsInfo?.category || 'all'}'`,
@@ -215,8 +206,8 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metadata = await getMetaData(METADATA_FIELDS, `filter=name='/integrations'`, pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/integrations'`, pageUrl);
+        const metadata = await getMetaData('/integrations', pageUrl);
+        const faqData = await getFaqData('/integrations', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${integrationsInfo?.category || 'all'}'`,

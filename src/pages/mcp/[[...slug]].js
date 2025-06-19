@@ -1,28 +1,16 @@
-
-import {
-    getCategoryData,
-    getFaqData,
-    getFooterData,
-    getMCPPromptData,
-    getMetaData,
-} from '@/utils/getData';
+import { getCategoryData, getFooterData, getMCPPromptData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
 import getAppDetails from '@/utils/getAppDetail';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import {
-    FAQS_FIELDS,
-    FOOTER_FIELDS,
-    INTECATEGORY_FIELDS,
-    INTECATEGORYlIST_FILED,
-    MCP_FIELDS,
-    METADATA_FIELDS,
-} from '@/const/fields';
+import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getApps, getCombos } from '@/utils/axiosCalls';
+import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({
@@ -37,7 +25,6 @@ export default function Mcp({
     noData,
     categories,
     blogData,
-    useCaseData,
     combosData,
     mcpSteps,
     tableData,
@@ -46,14 +33,6 @@ export default function Mcp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
-    searchTerm,
-    setSearchTerm,
-    debounceValue,
-    setDebounceValue,
-    searchedApps,
-    setSearchedApps,
-    searchedCategoies,
-    setSearchedCategoies,
 }) {
     if (noData) {
         return (
@@ -68,27 +47,18 @@ export default function Mcp({
         return (
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpAppComp
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
                     pageInfo={pageInfo}
                     integrationsInfo={mcpInfo}
-                    metaData={metaData}
-                    apps={apps}
-                    blogsData={blogData}
-                    appOneDetails={appOneDetails}
                     faqData={faqData}
                     footerData={footerData}
-                    useCaseData={useCaseData}
-                    combosData={combosData}
+                    blogsData={blogData}
+                    metaData={metaData}
+                    apps={apps}
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    debounceValue={debounceValue}
-                    setDebounceValue={setDebounceValue}
-                    searchedApps={searchedApps}
-                    setSearchedApps={setSearchedApps}
-                    searchedCategoies={searchedCategoies}
-                    setSearchedCategoies={setSearchedCategoies}
                 />
             </div>
         );
@@ -125,8 +95,8 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
 
     if (mcpInfo?.appone) {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp/appName'`, pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
+        const metaData = await getMetaData('/mcp/appName', pageUrl);
+        const faqData = await getFaqData('[mcpApp]', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,
@@ -173,7 +143,7 @@ export async function getServerSideProps(context) {
                     pageInfo: pageInfo || {},
                     footerData: footerData || {},
                     apps: apps || [],
-                    metaData: (metaData?.length > 0 && metaData[0]) || {},
+                    metaData: metaData || {},
                     faqData: faqData || [],
                     mcpInfo: mcpInfo || {},
                     appOneDetails: appOneDetails || {},
@@ -194,8 +164,8 @@ export async function getServerSideProps(context) {
             };
         }
     } else {
-        const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/mcp'`, pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
+        const metaData = await getMetaData('/mcp', pageUrl);
+        const faqData = await getFaqData('[mcpApp]', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,
@@ -289,7 +259,7 @@ export async function getServerSideProps(context) {
                 pageInfo: pageInfo || {},
                 footerData: footerData || {},
                 apps: apps || [],
-                metaData: (metaData?.length > 0 && metaData[0]) || {},
+                metaData: metaData || {},
                 faqData: faqData || [],
                 mcpInfo: mcpInfo || {},
                 appOneDetails: {},

@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFooterData, getMetaData, getTestimonialData } from '@/utils/getData';
-import { FOOTER_FIELDS, METADATA_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
+import { getFooterData, getTestimonialData } from '@/utils/getData';
+import { FOOTER_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { handleRedirect } from '@/utils/handleRedirection';
+import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
 
@@ -16,12 +17,12 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/signup'`, pageUrl);
+    const metaData = await getMetaData('/signup', pageUrl);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData|| {},
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
             testimonials: testimonials || [],

@@ -2,7 +2,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useLayoutEffect } from 'react';
 
-export default function HeadComp() {
+export default function HeadComp({ canonicalUrl }) {
     useLayoutEffect(() => {
         function updateFavicon() {
             const existingFavicon = document.getElementById('favicon');
@@ -57,6 +57,10 @@ export default function HeadComp() {
                 <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5" />
                 <meta name="msapplication-TileColor" content="#da532c" />
                 <meta name="theme-color" content="#ffffff" />
+                {/* Add canonical URL if provided */}
+                {canonicalUrl && (
+                    <link rel="canonical" href={canonicalUrl} />
+                )}
             </Head>
             <Script
                 id="gtm-script"

@@ -3,13 +3,14 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFaqData, getFooterData, getMetaData, getPricingFeatureData } from '@/utils/getData';
-import { FAQS_FIELDS, FOOTER_FIELDS, METADATA_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
+import { getFooterData, getPricingFeatureData } from '@/utils/getData';
+import { FOOTER_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import Cta from '@/components/CTA/Cta';
-
+import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
@@ -48,7 +49,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                 </div>
 
                 <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Free</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$0</p>
@@ -61,7 +62,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <button className="btn btn-accent">Get Started</button>
                         </Link>
                     </div>
-                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Premium</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">$200</p>
@@ -70,10 +71,6 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                 workflows tailored to your business needs
                             </p>
                         </div>
-                        <Link href="/signup?utm_source=pricing/premium">
-                            <button className="btn btn-accent">Get Started</button>
-                        </Link>
-
                         <Link
                             href="https://viasocket.com/faq/pricing/200-pemium-plan"
                             className="text-accent hover:underline w-fit flex items-center link-btn"
@@ -81,8 +78,12 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <span>Read more</span>
                             {arrowIcon}
                         </Link>
+
+                        <Link href="/signup?utm_source=pricing/premium">
+                            <button className="btn btn-accent">Get Started</button>
+                        </Link>
                     </div>
-                    <div className="border custom-border bg-white p-12 flex flex-col gap-2">
+                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Enterprise</h3>
                         <div className="cont gap-1">
                             <p className="h3 text-accent">Contact for pricing</p>
@@ -141,15 +142,15 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const metaData = await getMetaData(METADATA_FIELDS, `filter=name='/pricing'`, pageUrl);
+    const metaData = await getMetaData('/pricing', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/pricing'`, pageUrl);
+    const faqData = await getFaqData('/pricing', pageUrl);
     const blogTags = 'pricing';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS, '', pageUrl);
     return {
         props: {
-            metaData: (metaData?.length > 0 && metaData[0]) || {},
+            metaData: metaData || {},
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],

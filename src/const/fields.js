@@ -12,7 +12,6 @@ export const ALLFEATURES_FIELDS = [
 export const TESTIMONIALS_FIELDS = ['testimonial', 'client_img', 'given_by', 'giver_title', 'priority'];
 export const CASESTUDY_FIELDS = ['title', 'link', 'priority', 'image', 'image_1'];
 export const INDEXFEATURES_FIELDS = ['name', 'priority', 'description', 'link', 'iconname', 'block_type', 'image'];
-export const METADATA_FIELDS = ['title', 'description', 'dynamic', 'keywords'];
 export const PAGEDATA_FIELDS = ['h1', 'h2', 'h3'];
 export const AGENCIES_FIELDS = ['name', 'website', 'location', 'logo', 'verified'];
 export const EXPERTBLOGS_FIELDS = ['link', 'description'];
