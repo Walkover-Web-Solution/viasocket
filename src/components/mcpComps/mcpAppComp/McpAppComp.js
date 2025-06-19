@@ -131,7 +131,7 @@ export default function McpAppComp({
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-gray-200">
                                     <Image
-                                        src={appOneDetails?.iconurl}
+                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
                                         alt={appOneDetails?.name}
                                         width={30}
                                         height={30}
@@ -208,7 +208,7 @@ export default function McpAppComp({
                                             <div className="border custom-border bg-gray-200 px-4 py-2 shadow-md cont gap-2">
                                                 <div className="flex gap-4 items-center">
                                                     <Image
-                                                        src={appOneDetails?.iconurl}
+                                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
                                                         alt={appOneDetails?.name}
                                                         width={30}
                                                         height={30}
