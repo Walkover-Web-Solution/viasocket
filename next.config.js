@@ -18,17 +18,6 @@ module.exports = {
         return [
             {
                 source: '/login',
-                destination: 'https://flow.viasocket.com/:path*',
-                has: [
-                    {
-                        type: 'query',
-                        key: '(.*)',
-                    },
-                ],
-                permanent: false,
-            },
-            {
-                source: '/login',
                 destination: 'https://flow.viasocket.com/',
                 permanent: false,
             },
