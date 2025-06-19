@@ -24,7 +24,6 @@ export default function Mcp({
     noData,
     categories,
     blogData,
-    useCaseData,
     combosData,
     mcpSteps,
     tableData,
@@ -33,14 +32,6 @@ export default function Mcp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
-    searchTerm,
-    setSearchTerm,
-    debounceValue,
-    setDebounceValue,
-    searchedApps,
-    setSearchedApps,
-    searchedCategoies,
-    setSearchedCategoies,
 }) {
     if (noData) {
         return (
@@ -55,27 +46,18 @@ export default function Mcp({
         return (
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpAppComp
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
                     pageInfo={pageInfo}
                     integrationsInfo={mcpInfo}
-                    metaData={metaData}
-                    apps={apps}
-                    blogsData={blogData}
-                    appOneDetails={appOneDetails}
                     faqData={faqData}
                     footerData={footerData}
-                    useCaseData={useCaseData}
-                    combosData={combosData}
+                    blogsData={blogData}
+                    metaData={metaData}
+                    apps={apps}
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
-                    searchTerm={searchTerm}
-                    setSearchTerm={setSearchTerm}
-                    debounceValue={debounceValue}
-                    setDebounceValue={setDebounceValue}
-                    searchedApps={searchedApps}
-                    setSearchedApps={setSearchedApps}
-                    searchedCategoies={searchedCategoies}
-                    setSearchedCategoies={setSearchedCategoies}
                 />
             </div>
         );
