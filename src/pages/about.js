@@ -24,10 +24,10 @@ const about = ({ metaData, footerData }) => {
             <MetaHeadComp metaData={metaData} page={'/about'} />
             <Navbar footerData={footerData} utm={'/about'} />
             <div className="container">
-                <div className="min-h-screen mt-12 flex flex-col gap-16">
+                <div className="min-h-screen pt-20 flex flex-col gap-16">
                     <div className="about__hero">
-                        <h2 className="m-0 h2">Our purpose on this planet is simple:</h2>
-                        <h1 className="h1">Bring your automation ideas to life and spark new ones</h1>
+                        <h6 className="m-0">Our purpose on this planet is simple:</h6>
+                        <h1 className="h1">Bring your <span className="text-accent">automation ideas</span> to life and spark new ones</h1>
                     </div>
                     <div className="cont border custom-border gap-2 p-12 bg-white">
                         <div className="cont gap-1">
@@ -199,7 +199,7 @@ const about = ({ metaData, footerData }) => {
                                     </h5>
 
                                     <p className="mb-3 font-normal">
-                                        We’re on a journey to make automation work for everyone—and we want YOU to be a
+                                        We’re on a journey to make automation work for everyone—and we want you to be a
                                         part of it! Ready to join our team?
                                     </p>
                                 </div>
