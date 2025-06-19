@@ -3,9 +3,9 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
-import { EMBED_FIELDS, FAQS_FIELDS, FOOTER_FIELDS } from '@/const/fields';
+import { EMBED_FIELDS, FOOTER_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFaqData, getFooterData } from '@/utils/getData';
+import { getEmbedData, getFooterData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
@@ -13,6 +13,7 @@ import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
@@ -248,7 +249,7 @@ export async function getServerSideProps(context) {
 
     const metaData = await getMetaData('/embed', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/embed'`, pageUrl);
+    const faqData = await getFaqData('/embed', pageUrl);
     const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
     const blogTags = 'embed';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);

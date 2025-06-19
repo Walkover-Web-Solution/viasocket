@@ -1,4 +1,3 @@
-
 export default function FAQSection({ faqData, isBlack = false }) {
     return (
         <div className={`border custom-border border-b-0 p-12 bg-white ${isBlack ? 'text-white' : ''}`}>
@@ -8,7 +7,7 @@ export default function FAQSection({ faqData, isBlack = false }) {
 
                     {faqData?.map((faq, index) => {
                         return (
-                            <ul key={index} className="flex flex-col gap-1 pl-5" style={{listStyleType: 'square'}}>
+                            <ul key={index} className="flex flex-col gap-1 pl-5" style={{ listStyleType: 'square' }}>
                                 <li className={`font-semibold text-lg ${isBlack ? 'text-white' : ''}`}>{faq?.que}</li>
                                 <li className={`list-none ${isBlack ? 'text-white' : ''}`}>{faq?.ans}</li>
                             </ul>
