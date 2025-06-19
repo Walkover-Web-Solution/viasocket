@@ -1,15 +1,16 @@
-import { getCategoryData, getFaqData, getFooterData, getMCPPromptData } from '@/utils/getData';
+import { getCategoryData, getFooterData, getMCPPromptData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
 import getAppDetails from '@/utils/getAppDetail';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import { FAQS_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({
@@ -95,7 +96,7 @@ export async function getServerSideProps(context) {
 
     if (mcpInfo?.appone) {
         const metaData = await getMetaData('/mcp/appName', pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
+        const faqData = await getFaqData('[mcpApp]', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,
@@ -164,7 +165,7 @@ export async function getServerSideProps(context) {
         }
     } else {
         const metaData = await getMetaData('/mcp', pageUrl);
-        const faqData = await getFaqData(FAQS_FIELDS, `filter=page='[mcpApp]'`, pageUrl);
+        const faqData = await getFaqData('[mcpApp]', pageUrl);
         const categoryData = await getCategoryData(
             INTECATEGORY_FIELDS,
             `filter=slug='${mcpInfo?.category || 'all'}'`,

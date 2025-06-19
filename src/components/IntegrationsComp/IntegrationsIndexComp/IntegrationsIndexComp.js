@@ -13,6 +13,7 @@ import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequest
 import ErrorComp from '@/components/404/404Comp';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
+import FAQSection from '@/components/faqSection/faqSection';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -22,6 +23,7 @@ export default function IntegrationsIndexComp({
     blogsData,
     categoryData,
     categories,
+    faqData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -272,8 +274,15 @@ export default function IntegrationsIndexComp({
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
             </div>
-            <div className="container my-6 bg-white">
-                <Footer footerData={footerData} />
+            <div className="pb-4">
+                {faqData?.length > 0 && (
+                    <div className="container cont">
+                        <FAQSection faqData={faqData} faqName={'/index'} />
+                    </div>
+                )}
+                <div className="container">
+                    <Footer footerData={footerData} />
+                </div>
             </div>
             <IntegrationsRequestComp />
         </>

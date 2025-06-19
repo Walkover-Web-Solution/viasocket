@@ -184,3 +184,23 @@ export async function getMeta(pageUrl) {
         sendErrorMessage({ error, pageUrl, source: apiUrl });
     }
 }
+
+export async function getFaq(pageUrl) {
+    const apiUrl = `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65d2ed33fa9d1a94a5224235/tblnoi7ng`;
+
+    try {
+        const response = await axiosWithCache.get(apiUrl, {
+            headers: {
+                'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY}`,
+            },
+            cache: {
+                ttl: 1000 * 60 * 20, // Cache for 20 minutes
+                interpretHeader: false,
+            },
+        });
+        return response?.data?.data?.rows;
+    } catch (error) {
+        console.error(error?.response?.data || error.message);
+        sendErrorMessage({ error, pageUrl, source: apiUrl });
+    }
+}

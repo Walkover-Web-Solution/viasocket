@@ -5,7 +5,6 @@ import {
     CATEGORY,
     DISCONNECTED,
     EXPERTBLOGS,
-    FAQS,
     INDEXFEATURES,
     PAGE,
     PRICINGBETTERCHOICE,
@@ -19,7 +18,6 @@ import {
     MCP,
     PRICINGFEATURE,
     INDEXTEMPLATE,
-    METADATA,
     FOOTER,
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
@@ -52,11 +50,6 @@ export async function getAllFeatures(fields, filter, pageUrl) {
 
 export async function getFeatureData(fields, filter, pageUrl) {
     const data = await getDataFromTable(ALLFEATURES, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
-export async function getFaqData(fields, filter, pageUrl) {
-    const data = await getDataFromTable(FAQS, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
 
