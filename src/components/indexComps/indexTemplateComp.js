@@ -6,6 +6,7 @@ import { getTemplates } from '@/utils/axiosCalls';
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Social Media', scriptid: 'scriqePfVQxF' });
     const [templates, setTemplates] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState({
         'id': 'scriqePfVQxF',
         'title': 'Auto-Respond to Instagram Comments with DM and notify team in Slack',
@@ -35,6 +36,13 @@ const IndexTemplateComp = ({ categories }) => {
         }
     }, [selected, templates]);
 
+    const handleCategoryClick = async (cat) => {
+        setIsLoading(true);
+        setSelected(cat);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setIsLoading(false);
+    };
+
     return (
         <div className="container cont gap-4">
             <div className="cont gap-1">
@@ -51,7 +59,7 @@ const IndexTemplateComp = ({ categories }) => {
                                         ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
                                 }`}
-                                onClick={() => setSelected(cat)}
+                                onClick={() => handleCategoryClick(cat)}
                             >
                                 {cat?.name}
                             </button>
@@ -59,25 +67,35 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
 
                     <div className="cont p-4 px-32">
-                        <div className="cont gap-1">
-                            <h1 className="h3">{currentTemplate?.title}</h1>
-                            <h2 className="h6 leading-none">
-                                {currentTemplate?.metadata?.description || currentTemplate?.description}
-                            </h2>
-                        </div>
-                        <div className="w-full h-[70vh] relative">
-                            <Image
-                                src={
-                                    currentTemplate?.metadata?.templateUrl ||
-                                    currentTemplate?.templateUrl ||
-                                    'https://placehold.co/600x400'
-                                }
-                                alt={currentTemplate?.title}
-                                className="w-full h-full object-contain"
-                                objectFit="contain"
-                                layout="fill"
-                            />
-                        </div>
+                        {isLoading ? (
+                            <div className="space-y-4">
+                                <div className="h-6 w-64 bg-gray-200 rounded skeleton"></div>
+                                <div className="h-6 w-96 bg-gray-200 rounded skeleton"></div>
+                                <div className="w-full h-[70vh] bg-gray-200 rounded skeleton "></div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="cont gap-1">
+                                    <h1 className="h3">{currentTemplate?.title}</h1>
+                                    <h2 className="h6 leading-none">
+                                        {currentTemplate?.metadata?.description || currentTemplate?.description}
+                                    </h2>
+                                </div>
+                                <div className="w-full h-[70vh] relative">
+                                    <Image
+                                        src={
+                                            currentTemplate?.metadata?.templateUrl ||
+                                            currentTemplate?.templateUrl ||
+                                            'https://placehold.co/600x400'
+                                        }
+                                        alt={currentTemplate?.title}
+                                        className="w-full h-full object-contain"
+                                        objectFit="contain"
+                                        layout="fill"
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
 
