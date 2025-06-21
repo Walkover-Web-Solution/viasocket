@@ -48,7 +48,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                     </p>
                 </div>
 
-                <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {/* <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                     <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Free</h3>
                         <div className="cont gap-1">
@@ -96,7 +96,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <button className="btn btn-accent">Contact sales</button>
                         </Link>
                     </div>
-                </div>
+                </div> */}
 
                 <div className="cont gap-8 border custom-border p-12 bg-white">
                     <h2 className="h2">Explore All Features and Start Automating your Tasks for Free</h2>
