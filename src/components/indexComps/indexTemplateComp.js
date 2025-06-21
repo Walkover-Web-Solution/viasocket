@@ -35,13 +35,13 @@ const IndexTemplateComp = ({ categories }) => {
             setCurrentTemplate(found);
         }
     }, [selected, templates]);
-
-    const handleCategoryClick = async (cat) => {
-        setIsLoading(true);
-        setSelected(cat);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setIsLoading(false);
-    };
+    //wrong approach
+    // const handleCategoryClick = async (cat) => {
+    //     setIsLoading(true);
+    //     setSelected(cat);
+    //     await new Promise(resolve => setTimeout(resolve, 500));
+    //     setIsLoading(false);
+    // };
 
     return (
         <div className="container cont gap-4">
@@ -59,7 +59,7 @@ const IndexTemplateComp = ({ categories }) => {
                                         ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
                                 }`}
-                                onClick={() => handleCategoryClick(cat)}
+                                onClick={() => setSelected(cat)}
                             >
                                 {cat?.name}
                             </button>
