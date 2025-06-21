@@ -2,14 +2,15 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import {  FOOTER_FIELDS } from '@/const/fields';
-import {  getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
 import { MdGroups } from 'react-icons/md';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export const runtime = 'experimental-edge';
 
@@ -68,20 +69,51 @@ const automations = ({
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
+                    <button className="btn btn-accent mt-3" onClick={(e) => handleRedirect(e, '/signup?')}>
+                        Start Free Trial
+                    </button>
                 </section>
 
                 <section className="bg-black text-white p-12 flex flex-col gap-10">
-                    <div className="flex md:flex-row flex-col gap-8 items-center">
-                        <div className="w-full md:w-3/5 cont gap-1">
-                            <h2 className="h2 font-bold">What is workflow automation?</h2>
-                            <p>
-                                Workflow automation is a way to make tasks happen automatically without needing people
-                                to do them manually. It helps businesses save time, reduce mistakes, and make sure
-                                things run smoothly. With workflow automation, tasks are completed based on triggers and
-                                actions, following a set of predefined rules that keep operations efficient. <br /> It
-                                follows the simple logic of "When this happens, do this." AI-powered automation further
-                                enhances this by simplifying complex workflows and handling data processing efficiently.
-                            </p>
+                    <div className="flex md:flex-row flex-col gap-8">
+                        <div className="w-full md:w-3/5 cont gap-4 justify-between">
+                            {/* <div> */}
+                            <div className="flex flex-col gap-2">
+                                <h2 className="h2 font-bold">What is workflow automation?</h2>
+                                <p>
+                                    Workflow automation is a way to make tasks happen automatically without needing
+                                    people to do them manually. It helps businesses save time, reduce mistakes, and make
+                                    sure things run smoothly.
+                                </p>
+                                <p>
+                                    With workflow automation, tasks are completed based on triggers and actions,
+                                    following a set of predefined rules that keep operations efficient.{' '}
+                                </p>
+                                <p>
+                                    It follows the simple logic of "When this happens, do this." AI-powered automation
+                                    further enhances this by simplifying complex workflows and handling data processing
+                                    efficiently.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col gap-4">
+                                <div className="border p-8">
+                                    <h3 className="h3">What is workflow?</h3>
+                                    <p>
+                                        A workflow is a series of tasks or steps within the apps that are followed to
+                                        complete a particular process.
+                                    </p>
+                                </div>
+
+                                <div className="border p-8">
+                                    <h3 className="h3">What is automation?</h3>
+                                    <p>
+                                        Automation is just making things happen automatically. At its core, it’s a
+                                        simple rule: WHEN something happens, DO something else. Even the most complex
+                                        automation follows this basic idea.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div className="w-full md:w-2/5 flex justify-center items-center py-20 bg-gradient-to-r from-blue-100 to-purple-100">
                             <div className="cont items-center">
@@ -94,23 +126,6 @@ const automations = ({
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-                    <div className="border p-8">
-                        <h3 className="h3">What is workflow?</h3>
-                        <p>
-                            A workflow is a series of tasks or steps within the apps that are followed to complete a
-                            particular process.
-                        </p>
-                    </div>
-
-                    <div className="border p-8">
-                        <h3 className="h3">What is automation?</h3>
-                        <p>
-                            Automation is just making things happen automatically. At its core, it’s a simple rule: WHEN
-                            something happens, DO something else. Even the most complex automation follows this basic
-                            idea.
-                        </p>
                     </div>
                 </section>
 
@@ -133,7 +148,7 @@ const automations = ({
 
                 {/* Why Important - Black */}
                 <section className="bg-black text-white p-12">
-                    <div className="text-left mb-16">
+                    <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
                         <p className="text-lg text-gray-300">
                             Many businesses deal with a lot of tasks every day. If done manually, these tasks take time
@@ -159,7 +174,7 @@ const automations = ({
 
                 {/* Examples - White */}
                 <section className="bg-white p-12 border custom-border">
-                    <div className="text-left mb-16">
+                    <div className="text-left mb-10">
                         <h2 className="h2 font-bold text-black mb-1">Examples of workflow automation</h2>
                         <p className="text-lg text-gray-600">
                             Workflow automation is used in many industries to speed up work. Here are some common
@@ -186,7 +201,7 @@ const automations = ({
                     </div>
                 </section>
 
-                <section className="border custom-border p-12 bg-black flex flex-col gap-8">
+                <section className="border custom-border p-12 bg-black flex flex-col gap-10">
                     <h2 className="h2 font-bold text-white">
                         What are the features to look for in workflow automation tools?
                     </h2>
@@ -202,7 +217,7 @@ const automations = ({
 
                 {/* Getting Started - Black */}
                 <section className="bg-black text-white p-12">
-                    <div className="text-left mb-16">
+                    <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">How to start with workflow automation</h2>
                         <p className="text-lg text-gray-300">If you are new to automation, follow these steps:</p>
                     </div>
