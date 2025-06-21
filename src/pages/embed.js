@@ -135,9 +135,9 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
-                                    <h2 className="h2">Give Your Chatbot the Power of 5,000+ Integrations</h2>
+                                    <h2 className="h2">Give Your Chatbot the Power of 1500+ Integrations</h2>
                                     <p className="sub__h1">
-                                        You can connect your chatbot to over 5000 apps on viaSocket. Automate tasks,
+                                        You can connect your chatbot to over 1500 apps on viaSocket. Automate tasks,
                                         streamline workflows and enhance your chatbot's capabilities—all in just a few
                                         clicks. Explore the possibilities and watch your chatbot evolve.
                                     </p>
@@ -154,16 +154,59 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                 </div>
 
                 <div className="container">
-                    <div className="cont border custom-border p-12 gap-2 bg-white">
-                        <div className="flex flex-col gap-2">
+                    <div className="cont border custom-border p-12 gap-6 bg-white">
+                        <div className="flex flex-col gap-1">
                             <h2 className="h2">Embed Pricing</h2>
-                            <p className="h3">Start from : $500/month + $0.0005/invocation</p>
-                        </div>
-                        <div className="cont gap-1">
-                            <h3 className="h6 text-nowrap font-medium text-accent">Pay as You Grow!</h3>
-                            <p className="sub__h1 max-w-[700px]">
-                                Starts after 2 year or once your customer count exceeds 1,000,whichever comes later
+                            <p className="h3">Get Started for Free</p>
+                            <p>
+                                viaSocket Embed is available at no base cost for the first 2 years or until your
+                                customer count exceeds 1,000 — whichever comes first
                             </p>
+                            <p>
+                                You get full access to core features during this period to help you build and scale
+                                without upfront commitments
+                            </p>
+                        </div>
+
+                        <div>
+                            <h3 className="h3">Pricing After the Free Period</h3>
+                            <p>Once the free usage period ends, pricing starts at $500/month, which includes:</p>
+
+                            <ul
+                                style={{ listStyleType: 'disc', listStylePosition: 'inside' }}
+                                className="flex flex-col gap-1"
+                            >
+                                <li>
+                                    Full access to all apps available in our{' '}
+                                    <a
+                                        href="https://viasocket.com/integrations"
+                                        className="text-accent hover:underline"
+                                    >
+                                        marketplace
+                                    </a>
+                                </li>
+                                <li>Instant upgrades as new apps from our pipeline go live</li>
+                                <li>
+                                    Need an app we haven’t planned for yet? You can request it. Most popular apps are
+                                    already in our roadmap, but if it’s outside our pipeline, custom development charges
+                                    may apply
+                                </li>
+                                <li>
+                                    Comes with 2,00,000 free{' '}
+                                    <a
+                                        href="https://viasocket.com/faq/pricing/invocations"
+                                        className="text-accent hover:underline"
+                                    >
+                                        invocations
+                                    </a>{' '}
+                                    every month
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div>
+                            <h3 className="h3">Beyond the included quota:</h3>
+                            <p>$0.0005 per invocation — simple, usage-based pricing with no hidden fees.</p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-4 mt-8">
                             <Link href="/signup?utm_source=/embed">
