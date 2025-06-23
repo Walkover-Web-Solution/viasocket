@@ -116,6 +116,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
 
     const showMCPBanner = !['/pricing', '/mcp', '/integrations'].some((path) => router.pathname.includes(path));
     const show404Banner = router.pathname === '/404';
+    const showPricingBanner = router.pathname === '/pricing';
 
     return (
         <>
@@ -130,6 +131,15 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                             <div className="w-full p-2 text-center gradient-background">
                                 <p className="!text-xs text-black hover:underline">
                                     Give your AI agent the power to act-get your MCP cURL now
+                                </p>
+                            </div>
+                        </Link>
+                    )}
+                    {showPricingBanner && (
+                        <Link href="https://viasocket.com/faq/pricing/lifetime-free-access-limited-time-offer">
+                            <div className="w-full p-2 text-center gradient-background">
+                                <p className="!text-xs text-black hover:underline">
+                                    Avail Lifetime Free Access - Limited Time Period Offer
                                 </p>
                             </div>
                         </Link>
