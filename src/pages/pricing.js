@@ -117,14 +117,6 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                     </div>
                 </div>
 
-                <Cta
-                    title="Upgrade from Free to Premium and Get Expert Assistance"
-                    description="With the viaSocket Premium Plan, you pay $200 and receive an equal amount in credits to use
-                    toward having your workflows designed and built by our automation specialists."
-                    buttonLabel="Upgrade to Premium"
-                    buttonLink={`https://flow.viasocket.com/?state={"utm_source":"pricing/premium"}&utm_source=pricing/premium`}
-                />
-
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <BlogGrid posts={blogData} />
                     <div className="cont">
