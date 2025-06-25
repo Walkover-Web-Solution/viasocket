@@ -40,10 +40,14 @@ export default function Support({ open, onClose, footerData }) {
 
         if (open) {
             panelRef.current?.addEventListener('mouseleave', handleMouseLeave);
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
         }
 
         return () => {
             panelRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+            document.body.style.overflow = '';
         };
     }, [open, onClose]);
 
