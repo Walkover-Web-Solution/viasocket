@@ -122,7 +122,7 @@ export default function Navbar({ utm, footerData }) {
                                 className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
                                 onClick={(e) => handleRedirect(e, '/signup?')}
                             >
-                                Start Free Trial
+                                Sign Up
                             </button>
                             <div
                                 onMouseEnter={() => setSupportOpen(true)}
