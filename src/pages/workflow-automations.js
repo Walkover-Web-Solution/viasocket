@@ -189,7 +189,7 @@ const automations = ({
                                 key={index}
                                 className="p-8 w-full border-r border-b custom-border bg-white flex items-center gap-8"
                             >
-                                <div className="w-12 h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
+                                <div className="min-w-12 min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
                                     {index + 1}
                                 </div>
                                 <div className="automation-work-step">
