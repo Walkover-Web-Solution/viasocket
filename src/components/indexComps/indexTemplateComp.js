@@ -49,10 +49,10 @@ const IndexTemplateComp = ({ categories }) => {
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
-                        {categories?.map((cat, i) => (
+                        {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex-1 px-4 py-2 h6 font-medium transition-all duration-150 ${
+                                className={`flex-1 px-4 py-2 h6 font-medium text-start min-h-[60px] ${
                                     selected?.name === cat?.name
                                         ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
