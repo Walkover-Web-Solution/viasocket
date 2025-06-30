@@ -28,9 +28,9 @@ export default function MetaHeadComp({ metaData, page, plugin, pathSlugs }) {
             <>
                 <Head>
                     <title>{title && title}</title>
-                    <meta name="description" content={description && description} />
-                    <meta property="og:title" content={title && title} />
-                    <meta property="og:description" content={description && description} />
+                    {description && <meta name="description" content={description} />}
+                    {title && <meta property="og:title" content={title} />}
+                    {description && <meta property="og:description" content={description} />}
                     <meta property="og:image" content="https://files.msg91.com/342616/wnitwkyk" />
                     {keywords && <meta name="keywords" content={keywords} />}
                 </Head>
