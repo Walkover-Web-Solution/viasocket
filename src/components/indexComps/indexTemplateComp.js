@@ -19,11 +19,14 @@ const IndexTemplateComp = ({ categories }) => {
 
     useEffect(() => {
         const fetchTemplates = async () => {
+            setIsLoading(true);
             try {
                 const data = await getTemplates();
                 setTemplates(data || []);
             } catch (error) {
                 console.error('Error fetching templates:', error);
+            } finally {
+                setIsLoading(false);
             }
         };
         fetchTemplates();
@@ -31,17 +34,12 @@ const IndexTemplateComp = ({ categories }) => {
 
     useEffect(() => {
         if (templates.length > 0) {
+            setIsLoading(true);
             const found = templates?.find((template) => template?.id === selected?.scriptid);
             setCurrentTemplate(found);
+            setIsLoading(false);
         }
     }, [selected, templates]);
-    //wrong approach
-    // const handleCategoryClick = async (cat) => {
-    //     setIsLoading(true);
-    //     setSelected(cat);
-    //     await new Promise(resolve => setTimeout(resolve, 500));
-    //     setIsLoading(false);
-    // };
 
     return (
         <div className="container cont gap-4">
@@ -69,9 +67,13 @@ const IndexTemplateComp = ({ categories }) => {
                     <div className="cont p-4 px-32">
                         {isLoading ? (
                             <div className="space-y-4">
-                                <div className="h-6 w-64 bg-gray-200 rounded skeleton"></div>
-                                <div className="h-6 w-96 bg-gray-200 rounded skeleton"></div>
-                                <div className="w-full h-[70vh] bg-gray-200 rounded skeleton "></div>
+                                <div className="skeleton">
+                                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                                    <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                                </div>
+                                <div className="skeleton">
+                                    <div className="h-[70vh] bg-gray-200 rounded-lg"></div>
+                                </div>
                             </div>
                         ) : (
                             <>

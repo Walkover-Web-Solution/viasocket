@@ -6,6 +6,7 @@
         "dev": "next dev -p 1111",
         "build": "next build ",
         "start": "next start -p 1111",
+        "prebuild": "node build-utilities/generate-robots-txt.js",
         "pages:build": "npx @cloudflare/next-on-pages",
         "preview": "npm run pages:build && wrangler pages dev",
         "deploy": "npm run pages:build && wrangler pages deploy"

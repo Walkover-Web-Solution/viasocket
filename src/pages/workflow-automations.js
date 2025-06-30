@@ -2,16 +2,45 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import {  FOOTER_FIELDS } from '@/const/fields';
-import {  getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
 import { MdGroups } from 'react-icons/md';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { handleRedirect } from '@/utils/handleRedirection';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
+import { FaUserShield } from 'react-icons/fa6';
+import { MdDashboardCustomize } from 'react-icons/md';
+import { MdIntegrationInstructions } from 'react-icons/md';
+import { MdOutlineMobileFriendly } from 'react-icons/md';
+import { FaCogs } from 'react-icons/fa';
+import { IoRepeatSharp } from 'react-icons/io5';
+import { GrTrigger } from 'react-icons/gr';
+import { GrAction } from 'react-icons/gr';
+import { TbSettingsAutomation } from 'react-icons/tb';
+import { FaChartLine } from 'react-icons/fa';
 
 export const runtime = 'experimental-edge';
+
+const getAutomationWorkIcon = (automationWork) => {
+    switch (automationWork) {
+        case 'Find repetitive tasks':
+            return <IoRepeatSharp size={32} />;
+        case 'Set up triggers':
+            return <GrTrigger size={32} />;
+        case 'Define actions':
+            return <GrAction size={32} />;
+        case 'Let automation do the work':
+            return <TbSettingsAutomation size={32} />;
+        case 'Track and improve':
+            return <FaChartLine size={32} />;
+        default:
+            return <Clock size={32} />;
+    }
+};
 
 const getIconComponent = (iconName) => {
     switch (iconName) {
@@ -31,15 +60,34 @@ const getIconComponent = (iconName) => {
 const getCategoryIcon = (category) => {
     switch (category) {
         case 'Marketing':
-            return <Mail size={32} className="text-white" />;
+            return <Mail size={32} className="text-black" />;
         case 'Sales & CRM':
-            return <BarChart3 size={32} className="text-white" />;
+            return <BarChart3 size={32} className="text-black" />;
         case 'HR & Payroll':
-            return <UserPlus size={32} className="text-white" />;
+            return <UserPlus size={32} className="text-black" />;
         case 'IT & Support':
-            return <Headphones size={32} className="text-white" />;
+            return <Headphones size={32} className="text-black" />;
         default:
-            return <FileText size={32} className="text-white" />;
+            return <FileText size={32} className="text-black" />;
+    }
+};
+
+const getToolsIcon = (tools) => {
+    switch (tools) {
+        case 'Ease of use':
+            return <AiOutlineCheckCircle size={32} className="text-black" />;
+        case 'Role-based controls':
+            return <FaUserShield size={32} className="text-black" />;
+        case 'Dashboards & reports':
+            return <MdDashboardCustomize size={32} className="text-black" />;
+        case 'Seamless integrations':
+            return <MdIntegrationInstructions size={32} className="text-black" />;
+        case 'Mobile support':
+            return <MdOutlineMobileFriendly size={32} className="text-black" />;
+        case 'Extensibility':
+            return <FaCogs size={32} className="text-black" />;
+        default:
+            return <AiOutlineCheckCircle size={32} className="text-black" />;
     }
 };
 
@@ -68,20 +116,51 @@ const automations = ({
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
+                    <button className="btn btn-accent mt-3" onClick={(e) => handleRedirect(e, '/signup?')}>
+                        Start Free Trial
+                    </button>
                 </section>
 
                 <section className="bg-black text-white p-12 flex flex-col gap-10">
-                    <div className="flex md:flex-row flex-col gap-8 items-center">
-                        <div className="w-full md:w-3/5 cont gap-1">
-                            <h2 className="h2 font-bold">What is workflow automation?</h2>
-                            <p>
-                                Workflow automation is a way to make tasks happen automatically without needing people
-                                to do them manually. It helps businesses save time, reduce mistakes, and make sure
-                                things run smoothly. With workflow automation, tasks are completed based on triggers and
-                                actions, following a set of predefined rules that keep operations efficient. <br /> It
-                                follows the simple logic of "When this happens, do this." AI-powered automation further
-                                enhances this by simplifying complex workflows and handling data processing efficiently.
-                            </p>
+                    <div className="flex md:flex-row flex-col gap-8">
+                        <div className="w-full md:w-3/5 cont gap-8 justify-between">
+                            {/* <div> */}
+                            <div className="flex flex-col gap-2">
+                                <h2 className="h2 font-bold">What is workflow automation?</h2>
+                                <p>
+                                    Workflow automation is a way to make tasks happen automatically without needing
+                                    people to do them manually. It helps businesses save time, reduce mistakes, and make
+                                    sure things run smoothly.
+                                </p>
+                                <p>
+                                    With workflow automation, tasks are completed based on triggers and actions,
+                                    following a set of predefined rules that keep operations efficient.{' '}
+                                </p>
+                                <p>
+                                    It follows the simple logic of "When this happens, do this." AI-powered automation
+                                    further enhances this by simplifying complex workflows and handling data processing
+                                    efficiently.
+                                </p>
+                            </div>
+
+                            <div className="flex flex-col gap-4">
+                                <div className="border p-8">
+                                    <h3 className="h3">What is workflow?</h3>
+                                    <p>
+                                        A workflow is a series of tasks or steps within the apps that are followed to
+                                        complete a particular process.
+                                    </p>
+                                </div>
+
+                                <div className="border p-8">
+                                    <h3 className="h3">What is automation?</h3>
+                                    <p>
+                                        Automation is just making things happen automatically. At its core, it’s a
+                                        simple rule: WHEN something happens, DO something else. Even the most complex
+                                        automation follows this basic idea.
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                         <div className="w-full md:w-2/5 flex justify-center items-center py-20 bg-gradient-to-r from-blue-100 to-purple-100">
                             <div className="cont items-center">
@@ -95,27 +174,10 @@ const automations = ({
                             </div>
                         </div>
                     </div>
-
-                    <div className="border p-8">
-                        <h3 className="h3">What is workflow?</h3>
-                        <p>
-                            A workflow is a series of tasks or steps within the apps that are followed to complete a
-                            particular process.
-                        </p>
-                    </div>
-
-                    <div className="border p-8">
-                        <h3 className="h3">What is automation?</h3>
-                        <p>
-                            Automation is just making things happen automatically. At its core, it’s a simple rule: WHEN
-                            something happens, DO something else. Even the most complex automation follows this basic
-                            idea.
-                        </p>
-                    </div>
                 </section>
 
                 {/* How it Works - White */}
-                <section className="bg-white p-12 border custom-border">
+                <section className="bg-[#FAF9F6] p-12 border custom-border">
                     <div className="text-left mb-10">
                         <h2 className="h2 mb-1">How does workflow automation work?</h2>
                         <p className="text-lg text-gray-600">Automation follows a simple process:</p>
@@ -123,45 +185,53 @@ const automations = ({
 
                     <div className="space-y-0 border custom-border border-r-0 border-b-0">
                         {automationSteps.map((step, index) => (
-                            <div key={index} className="p-8 w-full border-r border-b custom-border">
-                                <h3 className="h3 font-bold">{step.title}</h3>
-                                <p className="text-gray-600 text-lg !mt-0">{step.description}</p>
+                            <div
+                                key={index}
+                                className="p-8 w-full border-r border-b custom-border bg-white flex items-center gap-8"
+                            >
+                                <div className="min-w-12 min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
+                                    {index + 1}
+                                </div>
+                                <div className="automation-work-step">
+                                    <h3 className="h3 font-bold flex gap-2">
+                                        <span>{getAutomationWorkIcon(step.title)}</span>
+                                        <span>{step.title}</span>
+                                    </h3>
+                                    <p className="text-gray-600 text-lg !mt-0">{step.description}</p>
+                                </div>
                             </div>
                         ))}
                     </div>
                 </section>
 
                 {/* Why Important - Black */}
-                <section className="bg-black text-white p-12">
-                    <div className="text-left mb-16">
+                <section className="bg-white border custom-border text-black p-12">
+                    <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
-                        <p className="text-lg text-gray-300">
+                        <p className="text-lg">
                             Many businesses deal with a lot of tasks every day. If done manually, these tasks take time
                             and effort. Automating workflows helps in many ways:
                         </p>
                     </div>
 
-                    <div className="sm:grid-cols-1 lg:grid-cols-2 grid border custom-border border-r-0 border-b-0">
+                    <div className="sm:grid-cols-1 lg:grid-cols-2 grid gap-8">
                         {importancePoints.map((point, index) => (
-                            <div
-                                key={index}
-                                className="bg-white text-black p-8 cont gap-1 border-r custom-border border-b"
-                            >
+                            <div key={index} className="bg-[#F2F2F2] text-black p-8 cont gap-1 border custom-border">
                                 <div className="flex items-center gap-2">
                                     {getIconComponent(point.iconName)}
                                     <h3 className="h3 font-bold">{point.title}</h3>
                                 </div>
-                                <p className="text-gray-600 text-lg">{point.description}</p>
+                                <p className="text-lg">{point.description}</p>
                             </div>
                         ))}
                     </div>
                 </section>
 
                 {/* Examples - White */}
-                <section className="bg-white p-12 border custom-border">
-                    <div className="text-left mb-16">
-                        <h2 className="h2 font-bold text-black mb-1">Examples of workflow automation</h2>
-                        <p className="text-lg text-gray-600">
+                <section className="bg-black p-12 border custom-border">
+                    <div className="text-left mb-10">
+                        <h2 className="h2 font-bold text-white mb-1">Examples of workflow automation</h2>
+                        <p className="text-lg text-white">
                             Workflow automation is used in many industries to speed up work. Here are some common
                             examples using the "When this happens, do this" logic:
                         </p>
@@ -169,7 +239,7 @@ const automations = ({
 
                     <div className="grid lg:grid-cols-2 gap-8">
                         {automationExamples.map((example, index) => (
-                            <div key={index} className="bg-black text-white p-8 cont gap-2 border custom-border">
+                            <div key={index} className="bg-[#FAF9F6] text-black p-8 cont gap-2 border custom-border">
                                 <div className="flex items-center gap-2">
                                     {getCategoryIcon(example.category)}
                                     <h3 className="h3 font-bold">{example.category}</h3>
@@ -177,8 +247,8 @@ const automations = ({
                                 <p className="after:text-gray-300">{example.description}</p>
                                 {example.aiNote && (
                                     <div className="flex items-center gap-2 mt-4">
-                                        <Zap size={20} className="text-white flex-shrink-0" />
-                                        <p className="text-white">{example.aiNote}</p>
+                                        <Zap size={20} className="text-black flex-shrink-0" />
+                                        <p className="text-black">{example.aiNote}</p>
                                     </div>
                                 )}
                             </div>
@@ -186,14 +256,15 @@ const automations = ({
                     </div>
                 </section>
 
-                <section className="border custom-border p-12 bg-black flex flex-col gap-8">
-                    <h2 className="h2 font-bold text-white">
-                        What are the features to look for in workflow automation tools?
-                    </h2>
-                    <div className="grid sm:grid-cols-1 lg:grid-cols-2 border custom-border border-r-0 border-b-0 bg-white">
+                <section className="border custom-border p-12 bg-[#F2F2F2] flex flex-col gap-10">
+                    <h2 className="h2 font-bold">What are the features to look for in workflow automation tools?</h2>
+                    <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
                         {workflowAutomationTools.map((tool, index) => (
-                            <div key={index} className="p-8 border-r custom-border border-b">
-                                <h3 className="h3 font-bold">{tool.title}</h3>
+                            <div key={index} className="p-8 border custom-border bg-white">
+                                <div className="flex items-center gap-2">
+                                    {getToolsIcon(tool.title)}
+                                    <h3 className="h3 font-bold">{tool.title}</h3>
+                                </div>
                                 <p className="after:text-gray-300">{tool.description}</p>
                             </div>
                         ))}
@@ -202,7 +273,7 @@ const automations = ({
 
                 {/* Getting Started - Black */}
                 <section className="bg-black text-white p-12">
-                    <div className="text-left mb-16">
+                    <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">How to start with workflow automation</h2>
                         <p className="text-lg text-gray-300">If you are new to automation, follow these steps:</p>
                     </div>
@@ -227,10 +298,10 @@ const automations = ({
                     </div>
                 </section>
 
-                <div className=" cont gap-4 bg-black text-white p-12">
+                <div className="border custom-border bg-white cont gap-4 text-black p-12">
                     <div className="cont gap-1">
                         <h2 className="h2">Ready to work smarter, not harder?</h2>
-                        <p className="text-lg text-gray-300">
+                        <p className="text-lg">
                             Join thousands of businesses leveraging AI-powered automation to increase productivity and
                             drive growth.
                         </p>
