@@ -2,6 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTemplates } from '@/utils/axiosCalls';
+import { RiSearchLine } from 'react-icons/ri';
+import { HiCurrencyRupee } from "react-icons/hi2";
+import { FaBullhorn } from "react-icons/fa6";
+import { FaUserGroup } from 'react-icons/fa6';
+import { MdManageAccounts } from "react-icons/md";
+import { MdHeadset } from "react-icons/md";
+
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Social Media', scriptid: 'scriqePfVQxF' });
@@ -42,24 +49,56 @@ const IndexTemplateComp = ({ categories }) => {
     }, [selected, templates]);
 
     return (
-        <div className="container cont gap-4">
+        <div className="container cont gap-4 mt-8">
             <div className="cont gap-1">
-                <h2 className="h2">Take a look at ready-made templates</h2>
+                <h2 className="h2">Streamline Every Department with AI Workflow Automation</h2>
             </div>
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
-                        {categories?.map((cat, i) => (
+                        {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex-1 px-4 py-2 h6 font-medium transition-all duration-150 ${
+                                className={`flex-1 flex flex-col px-4 py-3 h6 font-medium text-start min-h-[60px] ${
                                     selected?.name === cat?.name
                                         ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
                                 }`}
                                 onClick={() => setSelected(cat)}
                             >
-                                {cat?.name}
+                                <div className="flex items-center gap-2">
+                                    <span className="flex items-center">
+                                        {cat?.name === 'HR' ? (
+                                            <FaUserGroup size={24} />
+                                        ) : cat?.name === 'Marketing' ? (
+                                            <FaBullhorn size={24} />
+                                        ) : cat?.name === 'Support' ? (
+                                            <MdHeadset size={24} />
+                                        ) : cat?.name === 'Finance' ? (
+                                            <HiCurrencyRupee size={24} />
+                                        ) : cat?.name === 'Project Management' ? (
+                                            <MdManageAccounts size={24} />
+                                        ) : (
+                                            <RiSearchLine size={24} />
+                                        )}
+                                    </span>
+                                    <span className="block">{cat?.name}</span>
+                                </div>
+                                <div className="flex-1">
+                                    <span className="block text-sm">
+                                        {cat?.name === 'HR'
+                                            ? 'On-board new employees'
+                                            : cat?.name === 'Marketing'
+                                              ? 'Boost social media engagement'
+                                              : cat?.name === 'Support'
+                                                ? 'Efficiently manage support tickets'
+                                                : cat?.name === 'Finance'
+                                                  ? 'Quick and simple expense approval'
+                                                  : cat?.name === 'Project Management'
+                                                    ? 'Instant bug alerts on slack'
+                                                    : 'Discover powerful automation workflows'}
+                                    </span>
+                                </div>
                             </button>
                         ))}
                     </div>

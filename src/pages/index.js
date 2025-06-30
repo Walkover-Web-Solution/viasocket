@@ -16,19 +16,13 @@ import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
 import {
     FaBug,
-    FaBullhorn,
     FaCertificate,
-    FaChartLine,
     FaClock,
-    FaCoins,
     FaEye,
     FaRegClock,
-    FaServer,
     FaUserShield,
 } from 'react-icons/fa6';
-import { FaCogs, FaShieldAlt, FaUserFriends } from 'react-icons/fa';
-import { FiExternalLink } from 'react-icons/fi';
-import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
+import { FaShieldAlt } from 'react-icons/fa';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -44,7 +38,6 @@ const Index = ({
     utm_source,
     blogData,
     featuresData,
-    streamlineData,
     signupFeatures,
     securityGridData,
     indexTemplateData,
@@ -60,10 +53,8 @@ const Index = ({
                         redirect_to={redirect_to}
                         utm_source={utm_source}
                         signupFeatures={signupFeatures}
+                        indexTemplateData={indexTemplateData}
                     />
-                    <IndexTemplateComp categories={indexTemplateData} />
-
-                    <StreamlineDataGrid items={streamlineData} />
 
                     <IntegrateAppsComp />
 
@@ -143,46 +134,6 @@ const Index = ({
     );
 };
 
-const StreamlineDataGrid = ({ items }) => {
-    const getIconComponent = (iconName) => {
-        switch (iconName) {
-            case 'chart-line':
-                return <FaChartLine size={28} />;
-            case 'bullhorn':
-                return <FaBullhorn size={28} />;
-            case 'coins':
-                return <FaCoins size={28} />;
-            case 'user-friends':
-                return <FaUserFriends size={28} />;
-            case 'server':
-                return <FaServer size={28} />;
-            case 'cogs':
-                return <FaCogs size={28} />;
-            default:
-                return <FaRegClock size={28} />;
-        }
-    };
-
-    return (
-        <div className="container cont">
-            <h2 className="h2 mb-4">Streamline Every Department with AI Workflow Automation</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border custom-border border-t-0 border-r-0 bg-white cursor-pointer">
-                {items.map((item, index) => (
-                    <Link
-                        href={item.link}
-                        key={index}
-                        className="cont gap-1 py-12 px-8 border custom-border border-b-0 border-l-0 hover:bg-gray-100 group relative"
-                    >
-                        {getIconComponent(item.iconName)}
-                        <h4 className="h3">{item.title}</h4>
-                        <p className="sub__h2 text-gray-700">{item.description}</p>
-                        <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />
-                    </Link>
-                ))}
-            </div>
-        </div>
-    );
-};
 
 const TestimonialsSection = ({ testimonials }) => (
     <div className="flex flex-col gap-9">
