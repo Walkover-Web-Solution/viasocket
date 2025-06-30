@@ -49,7 +49,7 @@ const IndexTemplateComp = ({ categories }) => {
     }, [selected, templates]);
 
     return (
-        <div className="container cont gap-4 mt-8">
+        <div className="cont gap-4 mt-8">
             <div className="cont gap-1">
                 <h2 className="h2">Streamline Every Department with AI Workflow Automation</h2>
             </div>
