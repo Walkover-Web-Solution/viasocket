@@ -88,6 +88,13 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const { slug } = context.query;
+
+    if (!slug || slug.length !== 1) {
+        return {
+            notFound: true,
+        };
+    }
+
     const step = slug?.length;
     switch (slug?.length) {
         case 1: {
