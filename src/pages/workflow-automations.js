@@ -117,7 +117,7 @@ const automations = ({
                         business processes or workflows
                     </p>
                     <button className="btn btn-accent mt-3" onClick={(e) => handleRedirect(e, '/signup?')}>
-                        Start Free Trial
+                        Start for free
                     </button>
                 </section>
 

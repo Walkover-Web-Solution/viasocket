@@ -206,6 +206,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                             ) : (
                                 apps
                                     ?.filter((app) => !app?.category?.some((cat) => appCategories?.includes(cat)))
+                                    ?.slice(0, 12)
                                     ?.map((app, index) => {
                                         if (app?.appslugname != integrationsInfo?.appone) {
                                             return (
