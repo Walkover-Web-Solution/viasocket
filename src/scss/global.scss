@@ -263,7 +263,6 @@
 }
 
 /** Using only marquee for moving tags for integrateAppsComp.js component */
-
 .marquee-moving-tags {
     & .flex {
         animation: scroll-left 480s linear infinite;
@@ -275,11 +274,6 @@
             transform 0.3s ease-in-out,
             box-shadow 0.3s ease-in-out;
         perspective: 1000px;
-
-        &:hover {
-            transform: rotateY(10deg) rotateX(5deg) scale(1.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        }
     }
 }
 
