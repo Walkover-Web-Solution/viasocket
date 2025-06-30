@@ -5,7 +5,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures, indexTemp
     return (
         <div className="container min-h-fit mt-4 mb-12">
             <div className="flex flex-col h-full cont__gap">
-                <div className="w-full flex flex-col items-center justify-center md:items-start gap-12 py-8">
+                <div className="w-full flex flex-col items-center justify-center md:items-start gap-12 py-8 px-12 2xl:px-0">
                     <div className="flex gap-12 flex-col items-center">
                         <div className="flex flex-col gap-4">
                             <h1 className="h1 text-black text-start ">
