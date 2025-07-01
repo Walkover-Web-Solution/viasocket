@@ -11,16 +11,16 @@ import { MdHeadset } from "react-icons/md";
 
 
 const IndexTemplateComp = ({ categories }) => {
-    const [selected, setSelected] = useState({ name: 'Social Media', scriptid: 'scriqePfVQxF' });
+    const [selected, setSelected] = useState({ name: 'HR', scriptid: 'scri6qgpCHsJ' });
     const [templates, setTemplates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState({
-        'id': 'scriqePfVQxF',
-        'title': 'Auto-Respond to Instagram Comments with DM and notify team in Slack',
+        'id': 'scri6qgpCHsJ',
+        'title': 'Automate Employee Onboarding',
         'metadata': {
             'description':
-                'Automatically reply to Instagram comments with a DM link when DM is mentioned, and notify your team in Slack for other messages.',
-            'templateUrl': 'https://static.viasocket.com/templates/p/YPLQYPK3fR.png',
+                'This workflow adds a new candidate details, records them in a spreadsheet, and sends a welcome email.',
+            'templateUrl': 'https://static.viasocket.com/templates/p/V0hHEqnnbd.png',
         },
     });
 
@@ -56,7 +56,7 @@ const IndexTemplateComp = ({ categories }) => {
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
-                        {categories?.slice(0, 5)?.map((cat, i) => (
+                        {categories?.slice(0, 5)?.map((cat, i) => ( 
                             <button
                                 key={cat?.name}
                                 className={`flex-1 flex flex-col px-4 py-3 h6 font-medium text-start min-h-[60px] ${
