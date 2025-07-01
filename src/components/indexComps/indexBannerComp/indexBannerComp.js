@@ -16,12 +16,12 @@ export default function IndexBannerComp({ redirect_to, signupFeatures, indexTemp
                                     <button className="btn btn-accent" onClick={(e) => handleRedirect(e, '/signup?')}>
                                         Start for free
                                     </button>
-                                    <button
+                                    <a
+                                        href="https://cal.id/team/viasocket/superheros"
                                         className="btn hover:bg-gray-900 bg-white hover:text-white border custom-border"
-                                        onClick={(e) => handleRedirect(e, '/signup?')}
                                     >
                                        Free call with automation experts
-                                    </button>
+                                    </a>
                                 </div>
                                 <div className="flex gap-6 flex-wrap">
                                     {signupFeatures.map((point, index) => (

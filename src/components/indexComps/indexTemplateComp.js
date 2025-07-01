@@ -11,16 +11,16 @@ import { MdHeadset } from "react-icons/md";
 
 
 const IndexTemplateComp = ({ categories }) => {
-    const [selected, setSelected] = useState({ name: 'HR', scriptid: 'scri6qgpCHsJ' });
+    const [selected, setSelected] = useState({ name: 'Finance', scriptid: 'scriFymkmpzr' });
     const [templates, setTemplates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState({
-        'id': 'scri6qgpCHsJ',
-        'title': 'Automate Employee Onboarding',
+        'id': 'scriFymkmpzr',
+        'title': 'Expense Report Approval Process',
         'metadata': {
             'description':
-                'This workflow adds a new candidate details, records them in a spreadsheet, and sends a welcome email.',
-            'templateUrl': 'https://static.viasocket.com/templates/p/V0hHEqnnbd.png',
+                'This workflow facilitates the approval of expense requests, enabling users to accept or reject expenses and process the outcomes accordingly.',
+            'templateUrl': 'https://static.viasocket.com/templates/p/YbcIhIa8nt.png',
         },
     });
 
@@ -56,7 +56,7 @@ const IndexTemplateComp = ({ categories }) => {
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
-                        {categories?.slice(0, 5)?.map((cat, i) => ( 
+                        {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
                                 className={`flex-1 flex flex-col px-4 py-3 h6 font-medium text-start min-h-[60px] ${
