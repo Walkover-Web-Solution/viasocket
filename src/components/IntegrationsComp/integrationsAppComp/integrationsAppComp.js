@@ -98,7 +98,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     return (
         <>
             <div className="container cont">
-                <label className="input border max-w-[400px] custom-border border-b-0 flex items-center gap-2 focus-within:outline-none">
+                <label className="input border max-w-[400px] custom-border border-b-0 flex items-center gap-2 focus-within:outline-none bg-white">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -215,7 +215,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} hover-bg-grey-100-text-black custom-border`}
+                                                    className={`${style.app} hover-bg-grey-100-text-black custom-border bg-white`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <div className="border flex items-center justify-center w-9 h-9 bg-white">
