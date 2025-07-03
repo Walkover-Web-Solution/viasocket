@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import Countdown from 'react-countdown';
 
 export const runtime = 'experimental-edge';
 
@@ -34,72 +35,101 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
             <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
-                        Build Powerful Automation for <span className="text-accent">Free</span>
+                        Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation
                     </h1>
                     <p className="sub__h1 ">
-                        Get full access to all the features you need to build and run workflows for free under{' '}
-                        <Link
-                            href="https://viasocket.com/faq/pricing/fair-usage-policy"
-                            className=" underline text-accent hover:cursor-pointer"
-                        >
-                            Fair Usage Policy
-                        </Link>
-                        .
+                        Sign up before 30 August 2025, and get lifetime free access to the intelligent and most powerful
+                        automation platform
                     </p>
+
+                    <div className="flex items-center gap-8 mt-5">
+                        <Link href="/signup" className="btn btn-accent">
+                            Sign up for free
+                        </Link>
+                        <div>
+                            <p className="text-sm font-semibold text-gray-500">Offer expires in</p>
+                            <Countdown
+                                date={new Date('2025-08-30')}
+                                renderer={({ days, hours, minutes, seconds }) => (
+                                    <div className="flex space-x-4 flex-wrap">
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{days}</div>
+                                            <div className="text-sm text-gray-500">DAYS</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{hours}</div>
+                                            <div className="text-sm text-gray-500">HOURS</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{minutes}</div>
+                                            <div className="text-sm text-gray-500">MINUTES</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{seconds}</div>
+                                            <div className="text-sm text-gray-500">SECONDS</div>
+                                        </div>
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </div>
                 </div>
 
-                {/* <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    <div className="border border-b-0 md:border-r-0 lg:border-b custom-border bg-white p-12 flex flex-col gap-2 justify-between">
-                        <h3 className="h2">Free</h3>
-                        <div className="cont gap-1">
-                            <p className="h3 text-accent">$0</p>
-                            <p className="h6 text-gray-600">
-                                Free Plan includes all workflow tools-webhooks, HTTPS API, Human Intervention, cron and
-                                1500+ app integrations
-                            </p>
-                        </div>
-                        <Link href="/signup?utm_source=pricing/free">
-                            <button className="btn btn-accent">Get Started</button>
-                        </Link>
-                    </div>
-                    <div className="border border-b-0 md:border-b lg:border-r-0 custom-border bg-white p-12 flex flex-col gap-2 justify-between">
-                        <h3 className="h2">Premium</h3>
-                        <div className="cont gap-1">
-                            <p className="h3 text-accent">$200</p>
-                            <p className="h6 text-gray-600">
-                                Includes all features plus automation expert support to design and build custom
-                                workflows tailored to your business needs
-                            </p>
-                        </div>
-                        <Link
-                            href="https://viasocket.com/faq/pricing/200-pemium-plan"
-                            className="text-accent hover:underline w-fit flex items-center link-btn"
+                <div className="cont gap-8 border custom-border p-12 bg-white">
+                    <h2 className="h2">Don’t miss the limited time opportunity</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div
+                            className="p-8 flex flex-col gap-6 border custom-border"
+                            style={{ boxShadow: '0 3px 3px -2px #0003, 0 3px 4px #00000024, 0 1px 8px #0000001f' }}
                         >
-                            <span>Read more</span>
-                            {arrowIcon}
-                        </Link>
+                            <div className="flex flex-col">
+                                <h2 className="h2">Lifetime Free Access</h2>
+                                <p className="flex items-center gap-2 text-3xl text-accent">
+                                    <strike className="sub__h1">$50/month</strike>
+                                    <span>$0</span>
+                                </p>
+                                <p>
+                                    Sign up before 30 August and keep using the viasocket forever under fair usage
+                                    policy.
+                                </p>
+                            </div>
+                            <div className="bottom-section">
+                                <h3 className="text-lg font-semibold">What's Included:</h3>
+                                <ul className="pl-1 flex flex-col gap-2">
+                                    <li className="flex items-center gap-2">
+                                        <div className="h-3 w-3 bg-accent"></div>
+                                        <span>100% Free Support</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <div className="h-3 w-3 bg-accent"></div>
+                                        <span>Access to All Features</span>
+                                    </li>
+                                    <li className="flex items-center gap-2">
+                                        <div className="h-3 w-3 bg-accent"></div>
+                                        <span>Access to All Upcoming Features</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <Link href="/signup" className="btn border custom-border btn-accent">
+                                Sign up now
+                            </Link>
+                        </div>
 
-                        <Link href="/signup?utm_source=pricing/premium">
-                            <button className="btn btn-accent">Get Started</button>
-                        </Link>
-                    </div>
-                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
-                        <h3 className="h2">Enterprise</h3>
-                        <div className="cont gap-1">
-                            <p className="h3 text-accent">Contact for pricing</p>
-                            <p className="h6 text-gray-600">
-                                Tailored onboarding, support, and features for larger teams and mission-critical
-                                workflows
+                        <div className="p-8 text-gray-500 hover:text-black border custom-border">
+                            <h2 className="h2">Paid Plan</h2>
+                            <p className="text-3xl text-accent">$50/month</p>
+                            <p>
+                                For new users starting 1st September, pricing will apply. Existing users who sign up
+                                before the deadline will continue with their Lifetime Free Access.
                             </p>
                         </div>
-                        <Link href="/signup?utm_source=pricing/enterprise">
-                            <button className="btn btn-accent">Contact sales</button>
-                        </Link>
                     </div>
-                </div> */}
+                </div>
 
                 <div className="cont gap-8 border custom-border p-12 bg-white">
-                    <h2 className="h2">Explore All Features and Start Automating your Tasks for Free</h2>
+                    <h2 className="h2">
+                        Explore All Features and Automate Your Tasks for Free—Plus Get Access to Future Features
+                    </h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {features.map((feature, index) => (
