@@ -15,7 +15,7 @@ import Navbar from '@/components/navbar/navbar';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
-
+import { MdSupportAgent } from 'react-icons/md';
 
 const APPERPAGE = 9;
 
@@ -144,10 +144,7 @@ export default function McpAppComp({
                             </div>
                             <div className="cont justify-center gap-2">
                                 <div className="cont gap-1">
-                                    <h2 className="h1">
-                                        Connect<span className="text-accent"> {appOneDetails?.name} Server</span> with
-                                        any AI assistant
-                                    </h2>
+                                    <h1 className="h1">{appOneDetails?.name} MCP Server</h1>
                                     <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
                                         Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and
                                         Cursor using the viaSocket MCP Server.
@@ -162,70 +159,54 @@ export default function McpAppComp({
                                 </button>
                             </div>
                         </div>
-                        <div className="w-full lg:w-1/3 ">
-                            <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-12">
-                                <div className="flex gap-4">
-                                    <div>
-                                        <Image
-                                            src="/assets/brand/smileyLogo.svg"
-                                            alt="smiley logo"
-                                            width={30}
-                                            height={30}
-                                            className="pb-4 flex-shrink-0"
-                                        />
-                                    </div>
-                                    <div className="cont justify-between gap-1">
-                                        <h2 className="h3 font-semibold">viaSocket Agent</h2>
-                                        <h3 className="sub__h1 text-gray-500">What can I help you with?</h3>
-                                    </div>
+                        <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-12 w-full lg:w-fit lg:ml-auto">
+                            <div className="flex gap-4 items-center">
+                                <MdSupportAgent size={28} />
+                                <div className="">
+                                    <h2 className="font-semibold">AI Agent</h2>
+                                    <h3 className="text-gray-500">What can I help you with?</h3>
                                 </div>
-                                <div className="flex gap-4">
-                                    <div className="bg-gray-300 p-2 h-fit">
-                                        <IoPersonOutline size={16} />
-                                    </div>
-                                    <div className="cont justify-between gap-1">
-                                        <h2 className="h3 font-semibold">You</h2>
-                                        <h3 className="sub__h1 text-gray-500">
-                                            {mcpPromptData[0]?.prompt ||
-                                                `I want to perform an action in ${appOneDetails?.name}`}
-                                        </h3>
-                                    </div>
+                            </div>
+
+                            <div className="flex gap-4 items-center">
+                                <div className="bg-gray-300 p-2 h-fit">
+                                    <IoPersonOutline size={16} />
                                 </div>
-                                <div className="flex gap-4">
-                                    <div>
-                                        <Image
-                                            src="/assets/brand/smileyLogo.svg"
-                                            alt="smiley logo"
-                                            width={30}
-                                            height={30}
-                                            className="pb-4"
-                                        />
-                                    </div>
-                                    <div className="cont justify-between gap-2">
-                                        <h2 className="text-2xl font-semibold">viaSocket Agent</h2>
-                                        <div className="cont gap-1">
-                                            <h3 className="sub__h1">MCP Tool Calling...</h3>
-                                            <div className="border custom-border bg-gray-200 px-4 py-2 shadow-md cont gap-2">
-                                                <div className="flex gap-4 items-center">
-                                                    <Image
-                                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
-                                                        alt={appOneDetails?.name}
-                                                        width={30}
-                                                        height={30}
-                                                    />
-                                                    <h2 className="sub__h1 text-gray-500">Action in Progress...</h2>
-                                                </div>
-                                                {mcpPromptData[0]?.action && (
-                                                    <p className="sub__h1">{mcpPromptData[0]?.action}</p>
-                                                )}
-                                            </div>
+                                <div className="">
+                                    <h2 className="font-semibold">You</h2>
+                                    <h3 className="text-gray-500">
+                                        {mcpPromptData[0]?.prompt ||
+                                            `I want to perform an action in ${appOneDetails?.name}`}
+                                    </h3>
+                                </div>
+                            </div>
+                            <div className="flex gap-4 items-start">
+                                <MdSupportAgent size={28} />
+
+                                <div className="flex flex-col gap-2">
+                                    <h2 className="flex items-center flex-wrap gap-2">
+                                        <span className="font-semibold">AI Agent</span>
+                                        <span>MCP Tool Calling...</span>
+                                    </h2>
+                                    <div className="border custom-border bg-gray-200 px-4 py-2 shadow-md">
+                                        <div className="flex gap-2 items-center">
+                                            <Image
+                                                src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
+                                                alt={appOneDetails?.name}
+                                                width={30}
+                                                height={30}
+                                            />
+                                            <h2 className="text-gray-500">Action in Progress...</h2>
                                         </div>
+                                        {mcpPromptData[0]?.action && (
+                                            <p className="text-gray-500">{mcpPromptData[0]?.action}</p>
+                                        )}
                                     </div>
                                 </div>
-                                <div className="border custom-border px-4 py-2 flex justify-between items-center">
-                                    <p className="text-gray-300 sub__h1">Message your agent</p>
-                                    <VscSend size={16} />
-                                </div>
+                            </div>
+                            <div className="border custom-border px-4 py-2 flex justify-between items-center">
+                                <p className="text-gray-300">Message your agent</p>
+                                <VscSend size={16} />
                             </div>
                         </div>
                     </div>

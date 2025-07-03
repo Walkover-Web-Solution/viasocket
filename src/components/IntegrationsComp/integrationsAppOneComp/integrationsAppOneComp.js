@@ -62,7 +62,7 @@ export default function IntegrationsAppOneComp({
                         height={36}
                         alt={appOneDetails?.name}
                     />
-                    <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
+                    <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
                 </div>
                 <div className="w-fit flex justify-start">
                     <button
@@ -172,10 +172,10 @@ export default function IntegrationsAppOneComp({
             </div>
 
             {appOneDetails?.events.length > 0 && (
-                <div className="cont cont__gap ">
+                <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
                     <div className="container cont gap-6">
-                        <h2 className="h2">{`Connect Any App with ${appOneDetails?.name}`}</h2>
-                        <div className="flex items-center gap-4 ">
+                        <h2 className="h2">{`Select Any App to connect with ${appOneDetails?.name}`}</h2>
+                        <div className="flex items-center gap-4 border custom-border p-6 w-fit">
                             <Image
                                 className="h-10 w-fit"
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -183,7 +183,7 @@ export default function IntegrationsAppOneComp({
                                 height={36}
                                 alt={appOneDetails?.name}
                             />
-                            <h2 className="text-2xl font-bold">{appOneDetails?.name}</h2>
+                            <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
                         </div>
                         <MdAdd fontSize={36} />
                     </div>
