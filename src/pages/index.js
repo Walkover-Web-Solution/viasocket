@@ -26,6 +26,7 @@ import { FaShieldAlt } from 'react-icons/fa';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -55,6 +56,8 @@ const Index = ({
                         signupFeatures={signupFeatures}
                         indexTemplateData={indexTemplateData}
                     />
+                    
+                      <IndexTemplateComp categories={indexTemplateData} />
 
                     <IntegrateAppsComp />
 
