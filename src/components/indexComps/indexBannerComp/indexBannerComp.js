@@ -1,11 +1,10 @@
 import { handleRedirect } from '@/utils/handleRedirection';
-import IndexTemplateComp from '../indexTemplateComp';
 
-export default function IndexBannerComp({ redirect_to, signupFeatures, indexTemplateData }) {
+export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
-        <div className="container min-h-fit mt-4 mb-12">
+        <div className="container min-h-fit my-8">
             <div className="flex flex-col h-full cont__gap">
-                <div className="w-full flex flex-col items-center justify-center md:items-start gap-12 py-8">
+                <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                     <div className="flex gap-12 flex-col items-center">
                         <div className="flex flex-col gap-4">
                             <h1 className="h1 text-black text-start ">
@@ -36,8 +35,6 @@ export default function IndexBannerComp({ redirect_to, signupFeatures, indexTemp
                     </div>
                 </div>
             </div>
-
-            <IndexTemplateComp categories={indexTemplateData} />
         </div>
     );
 }
