@@ -51,7 +51,7 @@ const IndexTemplateComp = ({ categories }) => {
     return (
         <div className="cont gap-4 container">
             <div className="cont gap-1">
-                <h2 className="h2">Streamline Every Department with AI Workflow Automation</h2>
+                <h2 className="h2">Take a look at ready-made templates</h2>
             </div>
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
