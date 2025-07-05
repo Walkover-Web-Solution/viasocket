@@ -262,18 +262,53 @@
     }
 }
 
-/** Using only marquee for moving tags for integrateAppsComp.js component */
+// /** Using only marquee for moving tags for integrateAppsComp.js component */
+// .marquee-moving-tags {
+//     & .flex {
+//         animation: scroll-left 480s linear infinite;
+//     }
+
+//     .marquee-moving-apps {
+//         display: inline-flex;
+//         transition:
+//             transform 0.3s ease-in-out,
+//             box-shadow 0.3s ease-in-out;
+//         perspective: 1000px;
+//     }
+// }
+
+// @keyframes scroll-left {
+//     0% {
+//         transform: translateX(0);
+//     }
+//     100% {
+//         transform: translateX(-100%);
+//     }
+// }
+
 .marquee-moving-tags {
+    position: relative;
+
     & .flex {
         animation: scroll-left 480s linear infinite;
+        animation-play-state: running;
+    }
+
+    &:hover .flex {
+        animation-play-state: paused;
     }
 
     .marquee-moving-apps {
-        display: inline-flex;
-        transition:
-            transform 0.3s ease-in-out,
-            box-shadow 0.3s ease-in-out;
-        perspective: 1000px;
+    display: inline-flex;
+    transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+    perspective: 1000px;
+
+    .hover-scale-wrapper {
+        transition: transform 0.3s ease-in-out;
+
+         }
     }
 }
 
