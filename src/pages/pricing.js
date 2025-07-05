@@ -88,9 +88,15 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <strike className="sub__h1">$50/month</strike>
                                     <span>$0</span>
                                 </p>
-                                <p>
-                                    Sign up before 30 August and keep using the viasocket forever under fair usage
-                                    policy.
+                                <p className="flex items-center gap-1">
+                                    <span>Sign up before 30 August and keep using the viasocket forever under </span>
+                                    <a
+                                        target="_blank"
+                                        className="hover:underline text-accent"
+                                        href="https://viasocket.com/faq/viasocket-mcp/fair-usage-policy"
+                                    >
+                                        fair usage policy
+                                    </a>
                                 </p>
                             </div>
                             <div className="bottom-section">
