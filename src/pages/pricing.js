@@ -43,7 +43,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                     </p>
 
                     <div className="flex items-center gap-8 mt-5">
-                        <Link href="/signup" className="btn btn-accent">
+                        <Link href="/signup?utm_source=/pricing" className="btn btn-accent">
                             Sign up for free
                         </Link>
                         <div>
@@ -116,7 +116,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     </li>
                                 </ul>
                             </div>
-                            <Link href="/signup" className="btn border custom-border btn-accent">
+                            <Link href="/signup?utm_source=/pricing" className="btn border custom-border btn-accent">
                                 Sign up now
                             </Link>
                         </div>
