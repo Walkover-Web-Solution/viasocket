@@ -1,5 +1,6 @@
 export async function sendErrorMessage({ error, pageUrl, source }) {
     const extractedError = error?.response?.data ?? error?.message ?? 'Unknown error';
+    const statusCode = error?.response?.status ?? error?.status ?? 'unknown';
 
     if (!pageUrl) {
         if (typeof window !== 'undefined') {
@@ -14,6 +15,7 @@ export async function sendErrorMessage({ error, pageUrl, source }) {
             error: JSON.stringify(extractedError),
             url: pageUrl,
             source: source || 'unknown',
+            statusCode: String(statusCode),
         });
 
         if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod') {
