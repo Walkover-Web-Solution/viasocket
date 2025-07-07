@@ -11,7 +11,7 @@ export default function ChatWidget() {
         <>
             <button
                 onClick={openChatWidget}
-                className={`${style.chat_widget} flex gap-2 rounded items-center py-3 px-4 bg-black text-white border custom-border`}
+                className={`${style.chat_widget} flex gap-2 items-center py-3 px-4 bg-black text-white border custom-border`}
                 aria-label="Talk to an expert"
             >
                 <IoChatboxEllipsesOutline color="white" fontSize={28} />
