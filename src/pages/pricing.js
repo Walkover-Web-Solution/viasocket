@@ -88,8 +88,8 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <strike className="sub__h1">$50/month</strike>
                                     <span>$0</span>
                                 </p>
-                                <p className="flex items-center gap-1">
-                                    <span>Sign up before 30 August and keep using the viasocket forever under </span>
+                                <p>
+                                    <span>Sign up before 30 August and keep using the viaSocket forever under </span>
                                     <a
                                         target="_blank"
                                         className="hover:underline text-accent"
