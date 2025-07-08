@@ -158,15 +158,15 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
 
                     <div className="container mt-12">
                         <div className="h-full flex flex-col lg:flex-row">
-                            <div className="h-full w-full lg:w-1/2 flex flex-col justify-center gap-4 px-8 py-20 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
+                            <div className="h-full w-full lg:w-1/2 flex flex-col gap-4 p-8 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
                                 <div className="flex items-center w-full group">
-                                    <h1 className="h1 text-nowrap">I use</h1>
+                                    <h1 className="h2 text-nowrap">I use</h1>
 
                                     <div className="ml-2 flex items-center gap-3">
                                         {selectedApps?.map((app) => (
                                             <div key={app?.appslugname} className="flex items-center">
                                                 {selectedApps?.length === 1 ? (
-                                                    <span className="h1 text-red-500 ml-2">{app?.name}</span>
+                                                    <span className="text-red-500 ml-2">{app?.name}</span>
                                                 ) : (
                                                     <Image
                                                         src={app.iconurl || 'https://placehold.co/36x36'}
@@ -184,7 +184,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                         <div className="relative overflow-visible" ref={dropdownRef}>
                                             <input
                                                 type="text"
-                                                className="h1 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
+                                                className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
                                                 placeholder="App"
                                                 value={searchTerm}
                                                 onFocus={() => setShowAppDropdown(true)}
@@ -222,7 +222,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                         </div>
                                     ) : (
                                         <button
-                                            className="flex h1 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-4"
+                                            className="flex h2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-4"
                                             onClick={() => setShowAppDropdown(true)}
                                         >
                                             <CiSquarePlus size={30} />
@@ -231,10 +231,10 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 </div>
 
                                 <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-start items-start">
-                                    <h1 className="h1 text-nowrap ">We're in the </h1>
+                                    <h1 className="h2 text-nowrap ">We're in the </h1>
                                     <input
                                         type="text"
-                                        className="h1 ml-0 sm:ml-2 lg:ml-0 xl:ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
+                                        className="h2 ml-0 sm:ml-2 lg:ml-0 xl:ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
                                         placeholder="Industry type"
                                         value={selectedDomain}
                                         onFocus={(e) => {
@@ -254,10 +254,10 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 </div>
 
                                 <div className="flex items-center">
-                                    <h1 className="h1 text-nowrap">I run </h1>
+                                    <h1 className="h2 text-nowrap">I run </h1>
                                     <input
                                         type="text"
-                                        className="h1 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
+                                        className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
                                         placeholder="domain.com"
                                         value={selectedIndustry}
                                         onFocus={(e) => {
@@ -275,26 +275,26 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                         onChange={(e) => setSelectedIndustry(e.target.value)}
                                     />
                                 </div>
-                                {renderCombos?.app_suggestions?.filter(
-                                    (app) => !excludedApps?.includes(app?.toLowerCase())
-                                )?.length > 0 && (
-                                    <>
-                                        <h1 className="h1 text-nowrap">App Suggestions: </h1>
-                                        <div className="flex items-center flex-wrap">
-                                            {renderCombos?.app_suggestions
-                                                ?.filter((app) => !excludedApps?.includes(app.toLowerCase()))
-                                                .map((app, index, filteredApps) => (
-                                                    <div className="border px-4 py-2 rounded-sm">
-                                                        <h1 key={index} className="h2">
-                                                            {app}
-                                                            {index !== filteredApps?.length - 1 && <span>,&nbsp;</span>}
-                                                        </h1>
-                                                    </div>
-                                                ))}
-                                        </div>
-                                    </>
-                                )}
 
+                                <div className="mt-8">
+                                    {renderCombos?.app_suggestions?.filter(
+                                        (app) => !excludedApps?.includes(app?.toLowerCase())
+                                    )?.length > 0 && (
+                                        <>
+                                            <h1 className="h2 text-nowrap">App Suggestions: </h1>
+                                            <div className="flex items-center flex-wrap mt-3 gap-2"> 
+                                                {renderCombos?.app_suggestions
+                                                    ?.filter((app) => !excludedApps?.includes(app.toLowerCase()))
+                                                    .map((app, index, filteredApps) => (
+                                                        <span key={index} className="border custom-border p-2 flex items-center">
+                                                            {app}
+                                                            {index !== filteredApps?.length - 1 && <span> &nbsp;</span>}
+                                                        </span>
+                                                    ))}
+                                            </div>
+                                        </>
+                                    )}
+                                </div>
                                 <textarea
                                     className="mt-6 p-4 w-full h-[150px] input input-bordered"
                                     placeholder="eg: I run an eCommerce website and manage sales on Shopify and use Notion for database."
@@ -309,14 +309,14 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 </div>
                             </div>
 
-                            <div className="w-full lg:w-1/2 h-full bg-gray-100 border-gray-400 border ">
-                                <div className="flex flex-col w-full h-svh overflow-y-scroll scrollbar-thin">
+                            <div className="w-full lg:w-1/2 h-full bg-gray-10 custom-border border border-b-0 bg-white">
+                                <div className="h-full overflow-y-scroll scrollbar-none">
                                     {combinationLoading ? (
                                         <>
                                             {[...Array(9)].map((_, i) => (
                                                 <div
                                                     key={i}
-                                                    className="flex justify-center items-center w-full h-[86px] p-4 skeleton bg-slate-100 border-b flex-shrink-0"
+                                                    className="flex justify-center items-center w-full h-[86px] p-4 skeleton custom-border border-b flex-shrink-0"
                                                 ></div>
                                             ))}
                                         </>
@@ -359,7 +359,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                                             .join(
                                                                 ','
                                                             )}&integrations=${integrations}&action&utm_source=${utm}`}
-                                                        className="px-4 py-6 flex items-center gap-4 border-b hover:bg-white flex-shrink-0"
+                                                        className="px-4 py-6 flex items-center gap-4 border-b custom-border hover-bg-grey-100-text-black flex-shrink-0"
                                                     >
                                                         <img src={triggerIcon} alt="Trigger Icon" className="w-6 h-6" />
                                                         <img src={actionIcon} alt="Action Icon" className="w-6 h-6" />
@@ -436,7 +436,7 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
 
 export async function getServerSideProps() {
     // const navData = await getNavData(NAVIGATION_FIELDS);
-    // const footerData = await getFooterData(FOOTER_FIELDS);
+    const footerData = await getFooterData(FOOTER_FIELDS);
     // const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/autmation_solutions'`);
     // const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
     const blogTags = 'automation';
@@ -444,7 +444,7 @@ export async function getServerSideProps() {
     return {
         props: {
             // navData: navData,
-            // footerData: footerData,
+            footerData: footerData,
             // getStartedData: getStarted || [],
             blogData: blogData || [],
             // faqData: faqData || [],
