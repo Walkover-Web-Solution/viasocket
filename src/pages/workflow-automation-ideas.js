@@ -159,7 +159,13 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                     <div className="container mt-12">
                         <div className="h-full flex flex-col lg:flex-row">
                             <div className="h-full w-full lg:w-1/2 flex flex-col gap-4 p-8 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
-                                <div className="flex items-center w-full group">
+                                <div className="flex flex-col gap-2">
+                                    <h2 className="h2">
+                                        Need Workflow Automation <span className="text-accent">Ideas?</span>
+                                    </h2>
+                                    <p className="sub__h1">Find Your Inspiration Here</p>
+                                </div>
+                                <div className="flex items-center w-full group mt-12">
                                     <h1 className="h2 text-nowrap">I use</h1>
 
                                     <div className="ml-2 flex items-center gap-3">
@@ -230,7 +236,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                     )}
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-start items-start">
+                                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-start items-center">
                                     <h1 className="h2 text-nowrap ">We're in the </h1>
                                     <input
                                         type="text"
@@ -276,7 +282,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                     />
                                 </div>
 
-                                <div className="mt-8">
+                                {/* <div className="mt-8">
                                     {renderCombos?.app_suggestions?.filter(
                                         (app) => !excludedApps?.includes(app?.toLowerCase())
                                     )?.length > 0 && (
@@ -294,7 +300,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                             </div>
                                         </>
                                     )}
-                                </div>
+                                </div> */}
                                 <textarea
                                     className="mt-6 p-4 w-full h-[150px] input input-bordered"
                                     placeholder="eg: I run an eCommerce website and manage sales on Shopify and use Notion for database."
@@ -303,7 +309,7 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                 ></textarea>
 
                                 <div className="flex justify-end items-center p-2 w-full">
-                                    <button className="btn btn-outline bg-black text-white" onClick={handleGenerate}>
+                                    <button className="btn btn-accent" onClick={handleGenerate}>
                                         Generate
                                     </button>
                                 </div>
