@@ -128,7 +128,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
                                         {expertsHelpBlog?.link && (
                                             <Link
                                                 target="_blank"
-                                                href={expertsHelpBlog?.link}
+                                                href='https://viasocket.com/faq/partners/automation-experts'
                                                 className="flex items-center mt-auto text-[#4485F2]"
                                             >
                                                 Learn More <MdChevronRight fontSize={22} />
