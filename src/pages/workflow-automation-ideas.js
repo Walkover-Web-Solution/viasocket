@@ -1,6 +1,6 @@
 import Navbar from '@/components/navbar/navbar';
-import { FAQS_FIELDS, FOOTER_FIELDS, GETSTARTED_FIELDS, NAVIGATION_FIELDS } from '@/const/fields';
-import { getFaqData, getFooterData, getGetStartedData, getNavData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
 import { CgArrowTopRight } from 'react-icons/cg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
@@ -24,7 +24,7 @@ const useDebounce = (value, delay) => {
     return debouncedValue;
 };
 
-export default function AutomationSuggestions({ navData, footerData, getStartedData, faqData, blogData }) {
+export default function AutomationSuggestions({ footerData, blogData, faqData, getStartedData }) {
     const [selectedDomain, setSelectedDomain] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -236,11 +236,11 @@ export default function AutomationSuggestions({ navData, footerData, getStartedD
                                     )}
                                 </div>
 
-                                <div className="flex flex-col sm:flex-row lg:flex-col xl:flex-row justify-start items-center">
+                                <div className="flex items-center">
                                     <h1 className="h2 text-nowrap ">We're in the </h1>
                                     <input
                                         type="text"
-                                        className="h2 ml-0 sm:ml-2 lg:ml-0 xl:ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
+                                        className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
                                         placeholder="Industry type"
                                         value={selectedDomain}
                                         onFocus={(e) => {
