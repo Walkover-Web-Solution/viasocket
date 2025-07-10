@@ -16,6 +16,8 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
+import ReCaptchaProvider from '@/components/IntegrationsComp/IntegrationsBetaComp/reCaptchaProvider';
+import RequestPluginFormComp from '@/components/IntegrationsComp/IntegrationsBetaComp/requestPluginFormComp';
 
 const APPERPAGE = 9;
 
@@ -151,12 +153,21 @@ export default function McpAppComp({
                                     </p>
                                 </div>
 
-                                <button
-                                    className="btn btn-accent"
-                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
-                                >
-                                    Get Your MCP URL
-                                </button>
+                                {mcpPromptData[0]?.prompt ? (
+                                    <button
+                                        className="btn btn-accent"
+                                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
+                                    >
+                                        Get Your MCP URL
+                                    </button>
+                                ) : (
+                                    <button
+                                        className="btn btn-accent"
+                                        onClick={() => document.getElementById('beta_request').showModal()}
+                                    >
+                                        Request Beta Access
+                                    </button>
+                                )}
                             </div>
                         </div>
                         <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-12 w-full lg:w-fit lg:ml-auto">
@@ -509,6 +520,12 @@ export default function McpAppComp({
                     </div>
                 </div>
             </div>
+
+            <dialog id="beta_request" className="modal rounded-none">
+                <ReCaptchaProvider>
+                    <RequestPluginFormComp appOneDetails={appOneDetails} />
+                </ReCaptchaProvider>
+            </dialog>
         </>
     );
 }
