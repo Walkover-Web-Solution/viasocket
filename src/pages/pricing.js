@@ -125,13 +125,14 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     Sign up now
                                 </Link>
                                 <Link
+                                    target="_blank"
                                     href="https://viasocket.com/faq/pricing/lifetime-free-access-limited-time-offer"
                                     className="btn border custom-border btn-outline"
                                 >
                                     Learn more
                                 </Link>
                             </div>
-                        </div>  
+                        </div>
 
                         <div className="p-8 text-gray-500 hover:text-black border custom-border">
                             <h2 className="h2">Paid Plan</h2>

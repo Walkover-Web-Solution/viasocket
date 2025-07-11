@@ -93,7 +93,7 @@ export default function IntegrationsIndexComp({
             <div className="container flex justify-center items-center">
                 <div className="cont text-left">
                     <h1 className="h1">
-                        Explore<span className="text-accent"> 1,500+ </span> Pre-Built App Integrations
+                        Explore Pre-Built <span className="text-accent">App Integrations</span>
                     </h1>
                     <h2 className="sub__h1">
                         Browse our extensive library of integrations to easily connect and automate workflows across
