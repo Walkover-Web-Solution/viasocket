@@ -47,6 +47,23 @@ const IndexTemplateComp = ({ categories }) => {
         }
     }, [selected, templates]);
 
+    const getTemplateLink = () => {
+        switch (selected?.name) {
+            case 'HR':
+                return 'https://flow.viasocket.com/template/scri6qgpCHsJ';
+            case 'Finance':
+                return 'https://flow.viasocket.com/template/scriFymkmpzr';
+            case 'Project Management':
+                return 'https://flow.viasocket.com/template/scriQ4VgKtQT';
+            case 'Marketing':
+                return 'https://flow.viasocket.com/template/scrifyZ5OYFq';
+            case 'Support':
+                return 'https://flow.viasocket.com/template/scriJtjw4SkV';
+            default:
+                return '#';
+        }
+    };
+
     return (
         <div className="cont gap-4 container">
             <div className="cont gap-1">
@@ -180,7 +197,7 @@ const IndexTemplateComp = ({ categories }) => {
                 </div>
 
                 <div className="flex items-center justify-end m-4 flex-wrap gap-2">
-                    <Link href="https://flow.viasocket.com/" className="btn btn-accent">
+                    <Link href={getTemplateLink()} className="btn btn-accent">
                         Use this template
                     </Link>
 
