@@ -60,7 +60,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
                         {/* {pageData?.h3 && <h3 className="h6 text-accent">{pageData?.h3}</h3>} */}
                         {pageData?.h1 && (
                             <h1 className="h1">
-                                Connect with <span className="text-accent">expert</span> automation specialists
+                                Connect with <span className="text-accent">Automation Experts</span> for Your Business
                             </h1>
                         )}
                         {pageData?.h2 && (
