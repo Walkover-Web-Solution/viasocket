@@ -16,8 +16,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
-import ReCaptchaProvider from '@/components/IntegrationsComp/IntegrationsBetaComp/reCaptchaProvider';
-import RequestPluginFormComp from '@/components/IntegrationsComp/IntegrationsBetaComp/requestPluginFormComp';
+import integrationsRequestComp from '@/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp';
 
 const APPERPAGE = 9;
 
@@ -163,7 +162,7 @@ export default function McpAppComp({
                                 ) : (
                                     <button
                                         className="btn btn-accent"
-                                        onClick={() => document.getElementById('beta_request').showModal()}
+                                        onClick={() => document.getElementById('plugin_request_form').showModal()}
                                     >
                                         Request Beta Access
                                     </button>
@@ -521,11 +520,7 @@ export default function McpAppComp({
                 </div>
             </div>
 
-            <dialog id="beta_request" className="modal rounded-none">
-                <ReCaptchaProvider>
-                    <RequestPluginFormComp appOneDetails={appOneDetails} />
-                </ReCaptchaProvider>
-            </dialog>
+            <IntegrationsRequestComp />
         </>
     );
 }
