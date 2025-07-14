@@ -1,52 +1,7 @@
-import Image from 'next/image';
-import { useState } from 'react';
-import RequestPluginFormComp from './requestPluginFormComp';
-import ReCaptchaProvider from './reCaptchaProvider';
+import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 
 export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
-    const currentUrl = typeof window !== 'undefined' ? window.location.href : '';
-    const [isLoading, setIsLoading] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        useCase: '',
-        app_name: currentUrl || ' ',
-        plugin: appOneDetails?.name,
-    });
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevState) => ({
-            ...prevState,
-            [name]: value,
-        }));
-    };
-    const handleSubmit = async () => {
-        if (!formData.name || !formData.email) {
-            alert('Name and Email are required.');
-            return;
-        }
-        setIsLoading(true);
-        try {
-            const response = await fetch('https://flow.sokt.io/func/scrioitLgnvb', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            const data = await response.json();
-
-            if (data?.data?.success) {
-                document.getElementById('beta_request').close();
-            }
-        } catch (error) {
-            console.error('Failed to submit:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
     return (
         <>
             <div className="cont gap-2 ">
@@ -65,7 +20,7 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                         </p>
                         <button
                             className="btn btn-accent"
-                            onClick={() => document.getElementById('beta_request').showModal()}
+                            onClick={() => document.getElementById('plugin_request_form').showModal()}
                         >
                             Request Combination
                         </button>
@@ -81,7 +36,7 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                         </p>
                         <button
                             className="btn btn-accent"
-                            onClick={() => document.getElementById('beta_request').showModal()}
+                            onClick={() => document.getElementById('plugin_request_form').showModal()}
                         >
                             Request Beta Access
                         </button>
@@ -89,11 +44,7 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                 )}
             </div>
 
-            <dialog id="beta_request" className="modal rounded-none">
-                <ReCaptchaProvider>
-                    <RequestPluginFormComp appOneDetails={appOneDetails} />
-                </ReCaptchaProvider>
-            </dialog>
+            <IntegrationsRequestComp />
         </>
     );
 }

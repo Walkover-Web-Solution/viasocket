@@ -264,12 +264,23 @@ export default function IntegrationsIndexComp({
                 buttonLink="https://viasocket.com/faq/developer-hub"
             />
 
-            <Cta
-                title="Couldn't Find Your App? Don’t Worry, We’ll Build It For You"
-                description="If your app isn’t available on viaSocket, simply request an integration, and our team will build it for you, ensuring seamless connection and effortless automation of your workflows."
-                buttonLabel="Request your plugin now"
-                buttonLink="https://viasocket.com/faq/developer-hub"
-            />
+            <div className="container">
+                <div className="bg-white border custom-border p-12 cont gap-2">
+                    <div className="cont gap-1">
+                        <h2 className="h2">Couldn't Find Your App? Don’t Worry, We’ll Build It For You</h2>
+                        <p className="sub__h1">
+                            If your app isn’t available on viaSocket, simply request an integration, and our team will
+                            build it for you, ensuring seamless connection and effortless automation of your workflows.
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => document.getElementById('plugin_request_form').showModal()}
+                        className="btn btn-accent mt-8"
+                    >
+                        Request your plugin now
+                    </button>
+                </div>
+            </div>
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
