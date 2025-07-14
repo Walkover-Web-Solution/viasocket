@@ -202,7 +202,7 @@ export function RequestPlugin() {
     );
 }
 
-export default function integrationsRequestComp() {
+export default function IntegrationsRequestComp() {
     return (
         <dialog id="plugin_request_form" className="modal rounded-none">
             <ReCaptchaProvider>

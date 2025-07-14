@@ -16,7 +16,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
-import integrationsRequestComp from '@/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp';
+import IntegrationsRequestComp from '@/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp';
 
 const APPERPAGE = 9;
 

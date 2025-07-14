@@ -1,7 +1,6 @@
-import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
+import IntegrationsRequestComp from "./integrationsRequestComp";
 
 export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
-
     return (
         <>
             <div className="cont gap-2 ">
