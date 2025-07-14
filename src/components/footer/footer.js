@@ -118,8 +118,8 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 Terms
                             </Link>
                             <span>and</span>
-                            <Link href="/data-deletion-policy" className="active-link text-link">
-                                Data Deletion Policy
+                            <Link href="/data-retention-deletion" className="active-link text-link">
+                                Data Retention & Deletion Policy
                             </Link>
                         </p>
                     </div>
