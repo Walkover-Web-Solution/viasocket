@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import ReCaptchaProvider from './reCaptchaProvider';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Image from 'next/image';
 import Link from 'next/link';
 
+function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
 export function RequestPlugin() {
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
-        name: '',
-        email: '',
+        userId: '',
+        userEmail: '',
         useCase: '',
-        app_name: '',
+        plugName: '',
+        source: 'website',
+        environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
     });
+    const [emailError, setEmailError] = useState('');
+    const emailInputRef = useRef(null);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -20,18 +28,34 @@ export function RequestPlugin() {
             ...prevState,
             [name]: value,
         }));
+
+        if (name === 'userEmail') {
+            if (value === '' || isValidEmail(value)) {
+                setEmailError('');
+            } else {
+                setEmailError('Please enter a valid email address.');
+            }
+        }
     };
+
     const handleSubmit = async (event) => {
         window.signals.identify({
-            email: formData.email,
-            name: formData.name,
+            email: formData.userEmail,
+            name: formData.userId,
         });
 
         event.preventDefault();
 
-        debugger;
-        if (!formData.name || !formData.email) {
+        if (!formData.userId || !formData.userEmail) {
             alert('Name and Email are required.');
+            return;
+        }
+
+        if (!isValidEmail(formData.userEmail)) {
+            setEmailError('Please enter a valid email address.');
+            if (emailInputRef.current) {
+                emailInputRef.current.focus();
+            }
             return;
         }
 
@@ -54,7 +78,7 @@ export function RequestPlugin() {
 
             if (recaptchaData?.success) {
                 setIsLoading(true);
-                const pluginResponse = await fetch('https://flow.sokt.io/func/scriSOoxebkJ', {
+                const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -101,10 +125,10 @@ export function RequestPlugin() {
                             <input
                                 required
                                 type="text"
-                                name="name"
+                                name="userId"
                                 placeholder="Enter your name"
                                 className="input input-bordered w-full focus:outline-none "
-                                value={formData.name}
+                                value={formData.userId}
                                 onChange={handleInputChange}
                             />
                         </label>
@@ -115,12 +139,14 @@ export function RequestPlugin() {
                             <input
                                 required
                                 type="text"
-                                name="email"
+                                name="userEmail"
                                 placeholder="Enter your Email"
-                                className="input input-bordered w-full s focus:outline-none "
-                                value={formData.email}
+                                className={`input input-bordered w-full focus:outline-none ${emailError ? 'input-error' : ''}`}
+                                value={formData.userEmail}
                                 onChange={handleInputChange}
+                                ref={emailInputRef}
                             />
+                            {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
                         </label>
                         <label className="form-control w-full">
                             <div className="label">
@@ -129,10 +155,10 @@ export function RequestPlugin() {
                             <input
                                 required
                                 type="text"
-                                name="app_name"
+                                name="plugName"
                                 placeholder="Plugin Name"
                                 className="input input-bordered w-full s focus:outline-none "
-                                value={formData.app_name}
+                                value={formData.plugName}
                                 onChange={handleInputChange}
                             />
                         </label>
@@ -161,7 +187,7 @@ export function RequestPlugin() {
                     </Link>
                     <div className="flex gap-3">
                         <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
-                            {isLoading ? 'Submiting...' : 'Submit'}
+                            {isLoading ? 'Submitting...' : 'Submit'}
                         </button>
                         <button
                             className="btn btn-primary btn-outline"
@@ -176,7 +202,7 @@ export function RequestPlugin() {
     );
 }
 
-export default function integrationsRequestComp() {
+export default function IntegrationsRequestComp() {
     return (
         <dialog id="plugin_request_form" className="modal rounded-none">
             <ReCaptchaProvider>

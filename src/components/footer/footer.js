@@ -1,5 +1,4 @@
 import createURL from '@/utils/createURL';
-import Image from 'next/image';
 import Link from 'next/link';
 import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
@@ -111,7 +110,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                     <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-12 md:p-10 p-4 `}>
                         {renderedGroups?.slice(2 * Math.ceil(renderedGroups?.length / 3))}
                         <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
-                            <span>© 2025 viaSocket. All rights reserved.</span>
+                            <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
                             <Link href="/privacy" className="active-link text-link">
                                 Privacy<span className="text-black">,</span>
                             </Link>
@@ -119,8 +118,8 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 Terms
                             </Link>
                             <span>and</span>
-                            <Link href="/data-deletion-policy" className="active-link text-link">
-                                Data Deletion Policy
+                            <Link href="/data-retention-deletion" className="active-link text-link">
+                                Data Retention & Deletion Policy
                             </Link>
                         </p>
                     </div>

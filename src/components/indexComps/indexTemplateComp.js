@@ -3,12 +3,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { getTemplates } from '@/utils/axiosCalls';
 import { RiSearchLine } from 'react-icons/ri';
-import { HiCurrencyRupee } from "react-icons/hi2";
-import { FaBullhorn } from "react-icons/fa6";
+import { HiCurrencyRupee } from 'react-icons/hi2';
+import { FaBullhorn } from 'react-icons/fa6';
 import { FaUserGroup } from 'react-icons/fa6';
-import { MdManageAccounts } from "react-icons/md";
-import { MdHeadset } from "react-icons/md";
-
+import { MdManageAccounts } from 'react-icons/md';
+import { MdHeadset } from 'react-icons/md';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Finance', scriptid: 'scriFymkmpzr' });
@@ -47,6 +46,14 @@ const IndexTemplateComp = ({ categories }) => {
             setIsLoading(false);
         }
     }, [selected, templates]);
+
+    const getTemplateLink = () => {
+        const template = templates?.find(t => t?.id === selected?.scriptid);
+        if (template) {
+            return `https://flow.viasocket.com/template/${template.id}`;
+        }
+        return '#';
+    };
 
     return (
         <div className="cont gap-4 container">
@@ -180,9 +187,15 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
                 </div>
 
-                <Link href="/templates" className="w-fit self-end mb-2 mr-2 md:mb-4 md:mr-4">
-                    <button className="btn btn-accent">See All Templates</button>
-                </Link>
+                <div className="flex items-center justify-end m-4 flex-wrap gap-2">
+                    <Link href={getTemplateLink()} className="btn btn-accent">
+                        Use this template
+                    </Link>
+
+                    <Link href="/templates" className="btn btn-outline">
+                        See All Templates
+                    </Link>
+                </div>
             </div>
         </div>
     );

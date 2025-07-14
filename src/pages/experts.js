@@ -55,11 +55,19 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
             <Navbar footerData={footerData} utm={'/experts'} />
 
             <div className="">
-                <div className=" py-container container">
+                <div className="pt-12 container">
                     <div className="flex flex-col">
-                        {pageData?.h3 && <h3 className="h6 text-accent">{pageData?.h3}</h3>}
-                        {pageData?.h1 && <h1 className="h1">{pageData?.h1}</h1>}
-                        {pageData?.h2 && <h3 className="sub__h1">{pageData?.h2}</h3>}
+                        {/* {pageData?.h3 && <h3 className="h6 text-accent">{pageData?.h3}</h3>} */}
+                        {pageData?.h1 && (
+                            <h1 className="h1">
+                                Connect with <span className="text-accent">Automation Experts</span> for Your Business
+                            </h1>
+                        )}
+                        {pageData?.h2 && (
+                            <h3 className="sub__h1">
+                                Find and work with experts to simplify your workflows and make the most of viaSocket.
+                            </h3>
+                        )}
                     </div>
                 </div>
 
@@ -128,7 +136,7 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
                                         {expertsHelpBlog?.link && (
                                             <Link
                                                 target="_blank"
-                                                href={expertsHelpBlog?.link}
+                                                href="https://viasocket.com/faq/partners/automation-experts"
                                                 className="flex items-center mt-auto text-[#4485F2]"
                                             >
                                                 Learn More <MdChevronRight fontSize={22} />

@@ -15,7 +15,7 @@ const AgencyList = ({ agencies, type }) => {
     };
 
     const offset = currentPage * itemsPerPage;
-    const paginatedAgencies = agencies.slice(offset, offset + itemsPerPage);
+    const paginatedAgencies = [...agencies].reverse().slice(offset, offset + itemsPerPage);
     return (
         <>
             <div className="grid row-1 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-6">

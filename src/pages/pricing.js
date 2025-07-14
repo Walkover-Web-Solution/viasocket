@@ -88,8 +88,8 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <strike className="sub__h1">$50/month</strike>
                                     <span>$0</span>
                                 </p>
-                                <p className="flex items-center gap-1">
-                                    <span>Sign up before 30 August and keep using the viasocket forever under </span>
+                                <p>
+                                    <span>Sign up before 30 August and keep using the viaSocket forever under </span>
                                     <a
                                         target="_blank"
                                         className="hover:underline text-accent"
@@ -116,9 +116,22 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     </li>
                                 </ul>
                             </div>
-                            <Link href="/signup?utm_source=/pricing" className="btn border custom-border btn-accent">
-                                Sign up now
-                            </Link>
+                            <div className="flex items-center gap-2 flex-wrap">
+                                {' '}
+                                <Link
+                                    href="/signup?utm_source=/pricing"
+                                    className="btn border custom-border btn-accent"
+                                >
+                                    Sign up now
+                                </Link>
+                                <Link
+                                    target="_blank"
+                                    href="https://viasocket.com/faq/pricing/lifetime-free-access-limited-time-offer"
+                                    className="btn border custom-border btn-outline"
+                                >
+                                    Learn more
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="p-8 text-gray-500 hover:text-black border custom-border">

@@ -30,23 +30,26 @@ export default function IntegrateAppsComp() {
             <div className="container flex">
                 <div className="cont gap-1">
                     <h2 className="h2">
-                        Connect with <span className="text-accent">1,500+ Apps</span> Effortlessly
+                        <span className="text-accent">1,500+ Apps</span> and APIs to Integrate Anything
                     </h2>
                     <p className="text-lg text-gray-400">
-                        viaSocket automates your workflows by bridging the tools you use - seamlessly, reliably, and at
-                        scale
+                        With 1,500+ pre-built apps, easily integrate and customize your workflows. If your app isn't
+                        listed, integrate it using our flexible API
                     </p>
                     <LinkButton
                         customClasses={'btn btn-accent mt-8'}
                         href={`${process.env.NEXT_PUBLIC_BASE_URL}/integrations`}
-                        content={'See All'}
+                        content={'Browse all apps'}
                     />
                 </div>
             </div>
             <div className="relative w-full overflow-hidden group">
                 <div className="absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-[#FAF9F6] via-[#FAF9F6]/90 to-transparent z-20 pointer-events-none" />
                 <div className="absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-[#FAF9F6] via-[#FAF9F6]/90 to-transparent z-20 pointer-events-none" />
-                <div ref={containerRef} className="flex overflow-hidden py-4 w-full scroll-smooth marquee-moving-tags w-100">
+                <div
+                    ref={containerRef}
+                    className="flex overflow-hidden py-4 w-full scroll-smooth marquee-moving-tags w-100"
+                >
                     <div className="flex gap-8 min-w-max">
                         {displayedApps.map((app, idx) => (
                             <Link
