@@ -48,20 +48,11 @@ const IndexTemplateComp = ({ categories }) => {
     }, [selected, templates]);
 
     const getTemplateLink = () => {
-        switch (selected?.name) {
-            case 'HR':
-                return 'https://flow.viasocket.com/template/scri6qgpCHsJ';
-            case 'Finance':
-                return 'https://flow.viasocket.com/template/scriFymkmpzr';
-            case 'Project Management':
-                return 'https://flow.viasocket.com/template/scriQ4VgKtQT';
-            case 'Marketing':
-                return 'https://flow.viasocket.com/template/scrifyZ5OYFq';
-            case 'Support':
-                return 'https://flow.viasocket.com/template/scriJtjw4SkV';
-            default:
-                return '#';
+        const template = templates?.find(t => t?.id === selected?.scriptid);
+        if (template) {
+            return `https://flow.viasocket.com/template/${template.id}`;
         }
+        return '#';
     };
 
     return (
