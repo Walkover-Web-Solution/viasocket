@@ -30,11 +30,12 @@ export default function IntegrateAppsComp() {
             <div className="container flex">
                 <div className="cont gap-1">
                     <h2 className="h2">
-                        <span className="text-accent">1,500+ Apps</span> and APIs to Integrate Anything
+                        Connect <span className="text-accent">your apps</span> and automate workflows in just a few
+                        clicks
                     </h2>
                     <p className="text-lg text-gray-400">
-                        With 1,500+ pre-built apps, easily integrate and customize your workflows. If your app isn't
-                        listed, integrate it using our flexible API
+                        Connect your favorite apps and watch them work like a dream team. No coding, no headaches, just
+                        smooth integrations that actually make sense.
                     </p>
                     <LinkButton
                         customClasses={'btn btn-accent mt-8'}
