@@ -13,7 +13,7 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const metaData = await getMetaData('/data-deletion-policy', pageUrl);
+    const metaData = await getMetaData('/data-retention-deletion-policy', pageUrl);
     return {
         props: {
             footerData: footerData || [],
@@ -22,11 +22,11 @@ export async function getServerSideProps(context) {
     };
 }
 
-export default function DataDeletionPolicy({ footerData, metaData }) {
+export default function DataRetentionDeletionPolicy({ footerData, metaData }) {
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/data-deletion-policy'} />
-            <Navbar footerData={footerData} utm={'/data-deletion-policy'} />
+            <MetaHeadComp metaData={metaData} page={'/data-retention-deletion-policy'} />
+            <Navbar footerData={footerData} utm={'/data-retention-deletion-policy'} />
 
             <div className="container mb-4 mt-12 flex flex-col gap-16">
                 <h1 className="h1">

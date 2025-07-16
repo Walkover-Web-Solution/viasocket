@@ -29,65 +29,65 @@ export default function DataDeletionPolicy({ footerData, metaData }) {
             <Navbar footerData={footerData} utm={'/data-deletion-policy'} />
 
             <div className="container mb-4 mt-12 flex flex-col gap-16">
-                <h1 className="h1">Data Deletion Policy</h1>
+                <h1 className="h1">
+                    <span className="text-accent">Data</span> Retention and Deletion Policy
+                </h1>
                 <div data-custom-class="body" className="cont gap-6 bg-white p-12 border custom-border">
                     <span data-custom-class="body_text">
-                        At viaSocket, we respect your privacy and are committed to ensuring that your data is handled
-                        securely and transparently. This Data Deletion Policy outlines our practices regarding data
-                        usage, retention, and deletion to give you complete clarity.
+                        At viaSocket, we prioritize the security and privacy of your data. This Data Retention and
+                        Deletion Policy outlines how we manage, retain, and delete your data to ensure transparency and
+                        clarity in our practices.
                     </span>
                     <div>
                         <strong>1. Scope of Policy</strong>
                         <p data-custom-class="body_text">
-                            This policy applies to all data processed by viaSocket in connection with workflows and
-                            integrations created by our users.
+                            This policy applies to all data processed by viaSocket related to workflows and integrations
+                            created by our users
                         </p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <strong>2. Our Data Practices</strong>
+                        <strong>2. Data Retention Practices</strong>
                         <p data-custom-class="body_text">
                             <strong>Workflow Content</strong>
                             <br />
-                            Workflow Content refers to the data transferred in and out of workflows during their
-                            execution. We do not store or access this data. It is temporarily processed solely for the
-                            purpose of integrating apps and enabling workflows.
+                            Workflow Content refers to the data transferred through workflows during execution. We do
+                            not store or retain this data. It is temporarily processed only to integrate apps and
+                            facilitate workflow execution.
                         </p>
                         <p data-custom-class="body_text">
                             <strong>Workflow Logs</strong>
                             <br />
-                            Workflow Logs include metadata about workflows, such as the workflow name, dates and times
-                            of workflow runs, and workflow status. These logs are retained for 7 days to allow
-                            troubleshooting and are then archived.
+                            Workflow Logs include metadata like workflow names, execution dates, times, and statuses.
+                            These logs are retained for a period of 15 days for troubleshooting purposes and are
+                            archived after this period.
                         </p>
                         <p data-custom-class="body_text">
                             <strong>Workflow Metrics</strong>
                             <br />
-                            Workflow Metrics consist of statistical metadata about workflows, such as the count of
-                            workflow invocations. We retain only this aggregate statistical information and do not store
-                            any detailed data or content related to workflows.
-                        </p>
-                        <p data-custom-class="body_text">
-                            If you request data deletion, all relevant logs and content are instantly removed, and you
-                            are notified immediately upon completion.
+                            Workflow Metrics include aggregated statistics about workflows, such as the number of
+                            invocations. Only statistical data is retained, and no detailed workflow content or data is
+                            stored.
                         </p>
                     </div>
                     <div>
-                        <strong>3. How to Request Data Deletion</strong>
-                        <p data-custom-class="body_text">To request the deletion of your data, you may:</p>
+                        <strong>3. Data Deletion Process</strong>
+                        <p data-custom-class="body_text">
+                            To request the deletion of your data, you can follow these steps:
+                        </p>
                         <ul className="list-disc pl-4">
                             <li>
                                 Contact Support: Send an email to{' '}
-                                <a className="text-link" href="mailTo:support@viasocket.com">
+                                <a className="text-link" href="mailto:support@viasocket.com">
                                     support@viasocket.com
                                 </a>{' '}
                                 with the subject line "Data Deletion Request."
                             </li>
                             <li>
-                                Provide Information: Include the following details in your email:
+                                Provide Information: Include the following details in your request:
                                 <ul className="list-disc pl-4">
-                                    <li>Your registered email address</li>
+                                    <li>Registered email address</li>
                                     <li>Workspace name</li>
-                                    <li>A brief description of the data you wish to delete</li>
+                                    <li>Brief description of the data to be deleted</li>
                                 </ul>
                             </li>
                         </ul>
@@ -95,66 +95,64 @@ export default function DataDeletionPolicy({ footerData, metaData }) {
                     <div>
                         <strong>4. Verification Process</strong>
                         <p data-custom-class="body_text">
-                            To ensure the security of your account and prevent unauthorized requests, we may:
+                            For security and to prevent unauthorized data deletion requests, we may ask for:
                         </p>
                         <ul className="list-disc pl-4">
-                            <li>Request verification of your identity</li>
-                            <li>Confirm your ownership of the workspace associated with the request</li>
+                            <li>Verification of your identity.</li>
+                            <li>Confirmation of workspace ownership linked to the data request.</li>
                         </ul>
                     </div>
                     <div>
-                        <strong>5. Processing Timeline</strong>
-                        <p data-custom-class="body_text">Once your request has been verified, we will:</p>
+                        <strong>5. Data Deletion Timeline</strong>
+                        <p data-custom-class="body_text">Once your request is verified:</p>
                         <ul className="list-disc pl-4">
-                            <li>Instantly delete the specified data</li>
-                            <li>Notify you immediately upon completion</li>
+                            <li>We will immediately delete the specified data.</li>
+                            <li>You will receive a notification confirming the deletion completion.</li>
                         </ul>
                     </div>
                     <div>
                         <strong>6. Retention Periods</strong>
                         <p data-custom-class="body_text">
-                            Workflow data is retained for 7 days by default and then archived for 7 days. Archived data
-                            is not used actively in the system.
+                            Workflow Data: Retained for 7 days and then archived for an additional 7 days. Archived data
+                            is not actively used in the system.
                         </p>
                         <p data-custom-class="body_text">
-                            If you do not submit a deletion request, data is retained as outlined in our Privacy Policy
-                            to improve services and comply with legal requirements.
+                            If no deletion request is made, data is retained as per our Privacy Policy to enhance our
+                            services and meet legal obligations.
                         </p>
                     </div>
                     <div>
-                        <strong>7. Limitations</strong>
-                        <p data-custom-class="body_text">Certain data may not be eligible for deletion if:</p>
+                        <strong>7. Data Deletion Limitations</strong>
+                        <p data-custom-class="body_text">
+                            Certain data may not be eligible for deletion in cases where:
+                        </p>
                         <ul className="list-disc pl-4">
-                            <li>It is required to comply with legal obligations</li>
-                            <li>It is necessary for resolving disputes or enforcing agreements</li>
-                            <li>It is part of anonymized datasets that cannot identify you</li>
+                            <li>It is required to comply with legal obligations.</li>
+                            <li>It is necessary for resolving disputes or enforcing agreements.</li>
+                            <li>It forms part of anonymized datasets that cannot be traced back to you.</li>
                         </ul>
                     </div>
                     <div>
-                        <strong>8. Effect of Deletion</strong>
-                        <p data-custom-class="body_text">
-                            Deleting your data will impact your ability to use viaSocket services. Once data is deleted:
-                        </p>
+                        <strong>8. Impact of Data Deletion</strong>
+                        <p data-custom-class="body_text">After data deletion:</p>
                         <ul className="list-disc pl-4">
-                            <li>It cannot be recovered</li>
-                            <li>
-                                Any associated workflows or integrations relying on that data will cease to function
-                            </li>
+                            <li>The data cannot be recovered.</li>
+                            <li>Any workflows or integrations relying on the deleted data will no longer function.</li>
                         </ul>
                     </div>
                     <div>
-                        <strong>9. Changes to This Policy</strong>
+                        <strong>9. Updates to This Policy</strong>
                         <p data-custom-class="body_text">
-                            We may update this policy periodically to reflect changes in our practices or for
-                            operational, legal, or regulatory reasons. Any updates will be posted on this page with the
-                            date of revision.
+                            We may update this policy periodically to reflect changes in our data retention and deletion
+                            practices or for legal/regulatory reasons. Any changes will be reflected here with the
+                            updated date.
                         </p>
                     </div>
                     <div>
                         <p data-custom-class="body_text">Last Updated: 10/01/2025</p>
                         <p data-custom-class="body_text">
-                            For questions or concerns about this policy, please contact us at{' '}
-                            <a className="text-link" href="mailTo:support@viasocket.com">
+                            For any questions or concerns about this policy, please contact us at{' '}
+                            <a className="text-link" href="mailto:support@viasocket.com">
                                 support@viasocket.com
                             </a>
                             .
