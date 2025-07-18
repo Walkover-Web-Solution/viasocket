@@ -1,4 +1,4 @@
-import Navbar from '@/components/navbar/navbar';
+
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getFooterData } from '@/utils/getData';
 import { CgArrowTopRight } from 'react-icons/cg';
@@ -6,7 +6,6 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
 import { CiSquarePlus } from 'react-icons/ci';
-import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import FAQSection from '@/components/faqSection/faqSection';
 import BlogGrid from '@/components/blogGrid/blogGrid';
@@ -152,9 +151,8 @@ export default function AutomationSuggestions({ footerData, blogData, faqData, g
 
     return (
         <>
-            <div className="cont gap-36">
+            <div className="cont">
                 <div className="w-full cont min-h-fit h-screen">
-                    <Navbar footerData={footerData} utm={'/index'} />
 
                     <div className="container mt-12">
                         <div className="h-full flex flex-col lg:flex-row">
@@ -405,9 +403,7 @@ export default function AutomationSuggestions({ footerData, blogData, faqData, g
                             <GetStarted data={getStartedData} isHero={'false'} />
                         </div>
                     )}
-                    <div className="container">
-                        <Footer footerData={footerData} />
-                    </div>
+                  
                 </div>
             </div>
             <dialog ref={modalRef} className="modal rounded-md">

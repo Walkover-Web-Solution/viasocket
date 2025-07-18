@@ -56,7 +56,7 @@ export default function IntegrationsAppOneComp({
             <div className="container cont gap-1 ">
                 <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
                     <Image
-                        className="h-8 md:h-10 w-fit"
+                        className="h-8 md:h-[72px] w-fit"
                         src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                         width={36}
                         height={36}
