@@ -88,98 +88,77 @@ export default function Support({ footerData, metaData }) {
             <Navbar footerData={footerData} utm={'/support'} />
 
             <div className="container flex flex-col md:gap-16 gap-4 my-12 md:my-24">
-                <div className="flex flex-col gap-3 text-start md:w-full sm:w-1/2 w-full min-w-[300px}">
-                    <h1 className="md:text-5xl text-4xl font-semibold">viaSocket Support</h1>
-                    <p className="md:text-xl text-lg font-medium md:w-2/3">
-                        We are here to assist you with any questions, concerns, or feedback you may have. Whether you're
-                        seeking support, have a business inquiry, or simply want to connect with us, we are eager to
-                        hear from you.
-                    </p>
+                <div className="flex flex-col text-start md:w-full w-full min-w-[300px]">
+                    <h6 className="h6 mb-0">viaSocket Support</h6>
+                    <h1 className="h1">
+                        Always here <span className="text-accent">for you</span>, every step of the way
+                    </h1>
                 </div>
-                <div className="flex flex-col gap-16 md:flex-row my-4">
-                    <div className="flex flex-col gap-10 md:w-full sm:w-1/2 w-full min-w-[300px]">
+                <div className="flex flex-col gap-16 lg:flex-row my-4 items-center border custom-border p-8 bg-white">
+                    <div className="flex flex-col gap-10 md:w-full w-full min-w-[300px]">
                         <div className="flex flex-col gap-2 text-left">
-                            <h2 className="md:text-3xl text-2xl font-semibold">Get In Touch</h2>
+                            <h2 className="md:text-3xl text-2xl font-semibold">Reach out however you prefer</h2>
                             <p className="text-lg font-medium">
-                                Our team is available 24/7 to assist you. Get in touch via email, phone, or live chat
-                                and experience seamless support and integration!
+                                Our team is available 24/7 to assist with any questions or challenges. Reach out anytime
                             </p>
                         </div>
-                        <div className="flex flex-col gap-6 w-full text-left">
-                            <div className="flex items-center gap-3">
-                                <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
-                                    <MdCall color="primary" fontSize={22} />
-                                </div>
+                        <div className="grid xl:grid-cols-2 grid-cols-1 gap-6 w-full text-left">
+                            <div className="flex items-center gap-3 border custom-border p-6">
                                 <div className="flex flex-col justify-center">
-                                    <h3 className="font-bold text-lg">Phone Number</h3>
+                                    <MdCall size={30} />
+                                    <h3 className="font-semibold">Give us a call</h3>
+                                    <span>Sometimes it's easier to just talk it through</span>
                                     <Link
-                                        href={'tel:+13154442439'}
-                                        className="hover:underline cursor-pointer hover:text-gray-900 transition-all w-fit"
+                                        href={'tel:+1 (315) 444-2439'}
+                                        className="hover:underline hover:text-accent cursor-pointer transition-all w-fit"
                                     >
-                                        +13154442439
+                                        +1 (315) 444-2439
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
-                                    <MdOutlineWhatsapp color="primary" fontSize={22} />
-                                </div>
+                            <div className="flex items-center gap-3 border custom-border p-6">
                                 <div className="flex flex-col justify-center">
-                                    <h3 className="font-bold text-lg">WhatsApp Number</h3>
+                                    <MdOutlineWhatsapp size={30} />
+                                    <h3 className="font-semibold">Text us on WhatsApp</h3>
+                                    <span>Quick questions? Send us a message</span>
                                     <Link
-                                        href={'https://wa.me/+13154442439'}
-                                        className="hover:underline cursor-pointer hover:text-gray-900 transition-all w-fit"
+                                        href={'https://wa.me/+1 (315) 444-2439'}
+                                        className="hover:underline hover:text-accent cursor-pointer transition-all w-fit"
                                     >
-                                        +13154442439
+                                        +1 (315) 444-2439
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
-                                    <MdMail color="primary" fontSize={22} />
-                                </div>
+                            <div className="flex items-center gap-3 border custom-border p-6">
                                 <div className="flex flex-col justify-center">
-                                    <h3 className="font-bold text-lg">For setting up workflows </h3>
+                                    <MdMail size={30} />
+                                    <h3 className="font-semibold">Email for workflows</h3>
+                                    <span>Having trouble with an automation? We'll help you fix it</span>
                                     <Link
-                                        href={'mailto:support@viasocket.com'}
-                                        className="hover:underline cursor-pointer hover:text-gray-900 transition-all w-fit"
+                                        href={'mailto:support@viasocket.com '}
+                                        className="hover:underline hover:text-accent cursor-pointer transition-all w-fit"
                                     >
                                         support@viasocket.com
                                     </Link>
                                 </div>
                             </div>
-                            <div className="flex items-center gap-3">
-                                <div className="h-14 w-14 flex items-center justify-center rounded-full bg-[#EDE8DE]">
-                                    <MdMail color="primary" fontSize={22} />
-                                </div>
+                            <div className="flex items-center gap-3 border custom-border p-6">
                                 <div className="flex flex-col justify-center">
-                                    <h3 className="font-bold text-lg">For queries/request related to plugins</h3>
+                                    <MdMail size={30} />
+                                    <h3 className="font-semibold">Email us to bring your app</h3>
+                                    <span>Need help connecting your apps? We've got you covered</span>
                                     <Link
                                         href={'mailto:plugs@viasocket.com'}
-                                        className="hover:underline cursor-pointer hover:text-gray-900 transition-all w-fit"
+                                        className="hover:underline hover:text-accent cursor-pointer transition-all w-fit"
                                     >
                                         plugs@viasocket.com
                                     </Link>
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-wrap w-full gap-3">
-                            <button className="btn btn-accent" onClick={() => window.chatWidget.open()}>
-                                Live Chat
-                            </button>
-                            <Link href="https://cal.id/team/viasocket/superheros" target="_blank">
-                                <button className="btn btn-primary btn-outline bg-white">Book a Meeting</button>
-                            </Link>
-                            <Link href="https://viasocket.com/faq" target="_blank">
-                                <button className="btn btn-primary btn-outline bg-white">Help Doc</button>
-                            </Link>
-                            <Link href="https://viasocket.com/community" target="_blank">
-                                <button className="btn btn-primary btn-outline bg-white">Community </button>
-                            </Link>
-                        </div>
                     </div>
 
-                    <div className="flex flex-col gap-5 w-full md:w-full sm:w-1/2 md:max-w-[500px] bg-[#EDE8DE] lg:p-12 md:p-8 sm:p-12 p-4 h-[500px]">
+                    <div className="flex flex-col gap-5 w-full md:w-full lg:max-w-[500px] bg-[#FAF9F6] lg:p-12 md:p-8 sm:p-12 p-4 h-[500px]">
                         {issubmit ? (
                             <div className="flex flex-col gap-4 max-w-[300px]">
                                 <Image
@@ -195,7 +174,7 @@ export default function Support({ footerData, metaData }) {
                             </div>
                         ) : (
                             <div className="flex flex-col gap-4 w-full text-left">
-                                <h2 className="md:text-3xl text-2xl font-semibold">Send a message</h2>
+                                <h2 className="md:text-3xl text-2xl font-semibold">Tell us how we can help</h2>
                                 <input
                                     required
                                     type="text"
@@ -228,6 +207,52 @@ export default function Support({ footerData, metaData }) {
                                 </button>
                             </div>
                         )}
+                    </div>
+                </div>
+
+                <div className="border custom-border bg-black text-white p-8 flex flex-col gap-8">
+                    <h2 className="h2">Other ways to get help</h2>
+
+                    <div className="grid md:grid-cols-2 sm:grid-cols-1 xl:grid-cols-4 gap-8">
+                        <div className="flex justify-between gap-4 flex-col border border-white p-6">
+                            <p className="flex flex-col">
+                                <strong>Live Chat</strong>
+                                <span> Chat with us right now</span>
+                            </p>
+                            <button className="btn btn-accent" onClick={() => window.chatWidget.open()}>
+                                Live Chat
+                            </button>
+                        </div>
+
+                        <div className="flex justify-between gap-4 flex-col border border-white p-6">
+                            <p className="flex flex-col">
+                                <strong>Book a Meeting</strong>
+                                <span> Let's hop on a call and figure it out together</span>
+                            </p>
+                            <Link href="https://cal.id/forms/55f3930f-0e5e-4204-b3d5-f4858dcf202f" target="_blank">
+                                <button className="btn btn-primary btn-outline bg-white">Book a Meeting</button>
+                            </Link>
+                        </div>
+
+                        <div className="flex justify-between gap-4 flex-col border border-white p-6">
+                            <p className="flex flex-col">
+                                <strong>Help Docs</strong>
+                                <span> Check out our guides and tutorials</span>
+                            </p>
+                            <Link href="https://viasocket.com/faq" target="_blank">
+                                <button className="btn btn-primary btn-outline bg-white">Help Doc</button>
+                            </Link>
+                        </div>
+
+                        <div className="flex justify-between gap-4 flex-col border border-white p-6">
+                            <p className="flex flex-col">
+                                <strong>Community</strong>
+                                <span> Ask questions and share tips with other users</span>
+                            </p>
+                            <Link href="https://viasocket.com/community" target="_blank">
+                                <button className="btn btn-primary btn-outline bg-white">Community </button>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
