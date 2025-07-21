@@ -135,7 +135,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
-                                    <h2 className="h2">Give Your Chatbot the Power of 1500+ Integrations</h2>
+                                    <h2 className="h2">Give Your Chatbot the Power of 2000+ Integrations</h2>
                                     <p className="sub__h1">
                                         You can connect your chatbot to over 1500 apps on viaSocket. Automate tasks,
                                         streamline workflows and enhance your chatbot's capabilities—all in just a few

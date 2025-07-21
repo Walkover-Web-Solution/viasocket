@@ -170,7 +170,7 @@ export default function IntegrationsIndexComp({
                                 <>
                                     <h2 className="h2 !text-accent italic ">
                                         {' '}
-                                        1500+
+                                        2000+
                                         <span className="text-black not-italic"> Apps</span>
                                     </h2>
                                     <p>
