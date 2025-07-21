@@ -162,7 +162,7 @@ export default function Support({ footerData, metaData }) {
                             </div>
                         </div>
                         <div className="w-full lg:w-2/5">
-                            <div className="flex flex-col gap-5 p-12 h-[500px]">
+                            <div className="flex flex-col gap-5 p-12 h-[500px] items-center justify-center">
                                 {issubmit ? (
                                     <div className="flex flex-col gap-4 max-w-[300px]">
                                         <Image
