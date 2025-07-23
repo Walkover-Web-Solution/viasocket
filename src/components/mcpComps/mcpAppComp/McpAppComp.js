@@ -152,7 +152,7 @@ export default function McpAppComp({
                                     </p>
                                 </div>
 
-                                {mcpPromptData[0]?.prompt ? (
+                                {mcpPromptData[0]?.prompt || appOneDetails.events.length > 0 ? (
                                     <button
                                         className="btn btn-accent"
                                         onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}

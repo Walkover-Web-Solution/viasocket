@@ -142,7 +142,7 @@ export default function McpIndexComp({
                                         Give your <span className="text-accent">AI agent </span> the power to act
                                     </h1>
                                     <h2 className="sub__h1">
-                                        Any action in<span className="text-accent"> 1500+</span> app - no complex
+                                        Any action in<span className="text-accent"> 2000+</span> app - no complex
                                         setups. OR build your own, power users!
                                     </h2>
                                 </div>
@@ -239,7 +239,7 @@ export default function McpIndexComp({
                                     <>
                                         <h2 className="h2 text-accent italic">
                                             {' '}
-                                            1500+
+                                            2000+
                                             <span className="text-black not-italic"> MCP Servers</span>
                                         </h2>
                                         <p>

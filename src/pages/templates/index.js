@@ -12,12 +12,13 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getTemplates } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import AutomationSuggestions from '../workflow-automation-ideas';
 
 export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateData, validTemplates, metaData, faqData, blogData }) => {
+const Template = ({ footerData, templateData, validTemplates, metaData, faqData, blogData, automationSuggestionsData }) => {
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -106,7 +107,8 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
                     )}
                 </div>
 
-                <div className="cont gap-12 md:gap-16 lg:gap-20 mt-20">
+                <AutomationSuggestions  />
+                <div className="cont gap-12 md:gap-16 lg:gap-20">
                     <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>
@@ -132,7 +134,6 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
     const validTemplates = await getValidTemplatesData(TEMPLATES_FIELDS, '', pageUrl);

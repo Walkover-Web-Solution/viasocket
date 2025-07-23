@@ -17,11 +17,13 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/experts', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const pageData = await getPageData(PAGEDATA_FIELDS, '', pageUrl);
-    const agencies = await getAgencies(AGENCIES_FIELDS, '', pageUrl);
+    const verifiedAgencies = await getAgencies(AGENCIES_FIELDS, 'filter=verified=true', pageUrl);
+    const notVerifiesAgencies = await getAgencies(AGENCIES_FIELDS, 'filter=verified IS NULL', pageUrl);
     const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS, '', pageUrl);
     return {
         props: {
-            agencies: agencies || [],
+            verifiedAgencies: verifiedAgencies || [],
+            notVerifiesAgencies: notVerifiesAgencies || [],
             pageData: (pageData?.length > 0 && pageData[0]) || {},
             metaData: metaData || {},
             expertsHelp: expertsBlog || [],
@@ -31,24 +33,7 @@ export async function getServerSideProps(context) {
 }
 export const runtime = 'experimental-edge';
 
-const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerData }) => {
-    let verifiedArr = [];
-    let nonVerifiedArr = [];
-
-    // Iterate through the objects and categorize them
-    if (agencies.length > 0) {
-        agencies.forEach((obj) => {
-            switch (obj.verified) {
-                case true:
-                    verifiedArr.push(obj);
-                    break;
-
-                default:
-                    nonVerifiedArr.push(obj);
-                    break;
-            }
-        });
-    }
+const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
@@ -57,7 +42,6 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
             <div className="">
                 <div className="pt-12 container">
                     <div className="flex flex-col">
-                        {/* {pageData?.h3 && <h3 className="h6 text-accent">{pageData?.h3}</h3>} */}
                         {pageData?.h1 && (
                             <h1 className="h1">
                                 Connect with <span className="text-accent">Automation Experts</span> for Your Business
@@ -73,11 +57,13 @@ const Experts = ({ agencies, pageData, pathArray, metaData, expertsHelp, footerD
 
                 <div className="flex flex-col gap-9 py-container container">
                     <h2 className="h2 ">Verified automation agencies by viaSocket</h2>
-                    {verifiedArr.length > 0 && <AgencyList agencies={verifiedArr} type={'verified'} />}
+                    {verifiedAgencies.length > 0 && <AgencyList agencies={verifiedAgencies} type={'verified'} />}
                 </div>
                 <div className="flex flex-col gap-9 py-container container">
                     <h2 className="h2">Non-verified automation agencies</h2>
-                    {nonVerifiedArr.length > 0 && <AgencyList agencies={nonVerifiedArr} type={'nonverified'} />}
+                    {notVerifiesAgencies.length > 0 && (
+                        <AgencyList agencies={notVerifiesAgencies} type={'nonverified'} />
+                    )}
                 </div>
 
                 <div className="container">
