@@ -1,4 +1,4 @@
-import IntegrationsRequestComp from "./integrationsRequestComp";
+import RequestFormButtonComp from '@/components/ReuestFormButton/RequestFormButtonComp';
 
 export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
     return (
@@ -17,12 +17,7 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                         <p className="sub__h1">
                             If you can’t wait, we can add the beta version to your viaSocket workspace within 24 hours.
                         </p>
-                        <button
-                            className="btn btn-accent"
-                            onClick={() => document.getElementById('plugin_request_form').showModal()}
-                        >
-                            Request Combination
-                        </button>
+                        <RequestFormButtonComp type="combination" />
                     </>
                 ) : (
                     <>
@@ -33,17 +28,10 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                         <p className="sub__h1">
                             If you can’t wait, we can add the beta version to your viaSocket workspace within 24 hours.
                         </p>
-                        <button
-                            className="btn btn-accent"
-                            onClick={() => document.getElementById('plugin_request_form').showModal()}
-                        >
-                            Request Beta Access
-                        </button>
+                        <RequestFormButtonComp type="action" />
                     </>
                 )}
             </div>
-
-            <IntegrationsRequestComp />
         </>
     );
 }

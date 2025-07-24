@@ -160,12 +160,7 @@ export default function McpAppComp({
                                         Get Your MCP URL
                                     </button>
                                 ) : (
-                                    <button
-                                        className="btn btn-accent"
-                                        onClick={() => document.getElementById('plugin_request_form').showModal()}
-                                    >
-                                        Request Beta Access
-                                    </button>
+                                    <RequestFormButtonComp type="mcp" />
                                 )}
                             </div>
                         </div>
@@ -519,8 +514,6 @@ export default function McpAppComp({
                     </div>
                 </div>
             </div>
-
-            <IntegrationsRequestComp />
         </>
     );
 }
