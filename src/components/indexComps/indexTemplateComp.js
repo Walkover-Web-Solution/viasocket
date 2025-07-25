@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getTemplates } from '@/utils/axiosCalls';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiCurrencyRupee } from 'react-icons/hi2';
-import { FaBullhorn } from 'react-icons/fa6';
-import { FaUserGroup } from 'react-icons/fa6';
-import { MdManageAccounts } from 'react-icons/md';
-import { MdHeadset } from 'react-icons/md';
+import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
+import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({ name: 'Finance', scriptid: 'scriFymkmpzr' });
     const [templates, setTemplates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [currentTemplate, setCurrentTemplate] = useState({
-        'id': 'scriFymkmpzr',
-        'title': 'Expense Report Approval Process',
-        'metadata': {
-            'description':
-                'This workflow facilitates the approval of expense requests, enabling users to accept or reject expenses and process the outcomes accordingly.',
-            'templateUrl': 'https://static.viasocket.com/templates/p/YbcIhIa8nt.png',
-        },
-    });
+    const [currentTemplate, setCurrentTemplate] = useState(null);
 
+    // Fetch templates once
     useEffect(() => {
         const fetchTemplates = async () => {
             setIsLoading(true);
@@ -35,24 +26,34 @@ const IndexTemplateComp = ({ categories }) => {
                 setIsLoading(false);
             }
         };
+
         fetchTemplates();
     }, []);
 
+    // Create a map of templates { [id]: template }
+    const templateMap = useMemo(() => {
+        const map = {};
+        templates.forEach((template) => {
+            map[template.id] = template;
+        });
+        return map;
+    }, [templates]);
+
+    // Set default template if available
     useEffect(() => {
-        if (templates.length > 0) {
-            setIsLoading(true);
-            const found = templates?.find((template) => template?.id === selected?.scriptid);
-            setCurrentTemplate(found);
-            setIsLoading(false);
+        if (!currentTemplate && templateMap[selected?.scriptid]) {
+            setCurrentTemplate(templateMap[selected?.scriptid]);
         }
-    }, [selected, templates]);
+    }, [templateMap, selected, currentTemplate]);
+
+    const handleSelectCategory = (cat) => {
+        setSelected(cat);
+        setCurrentTemplate(templateMap[cat?.scriptid]);
+    };
 
     const getTemplateLink = () => {
-        const template = templates?.find(t => t?.id === selected?.scriptid);
-        if (template) {
-            return `https://flow.viasocket.com/template/${template.id}`;
-        }
-        return '#';
+        const template = templateMap[selected?.scriptid];
+        return template ? `https://flow.viasocket.com/template/${template.id}` : '#';
     };
 
     return (
@@ -60,6 +61,7 @@ const IndexTemplateComp = ({ categories }) => {
             <div className="cont gap-1">
                 <h2 className="h2">Take a look at ready-made templates</h2>
             </div>
+
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
@@ -71,7 +73,7 @@ const IndexTemplateComp = ({ categories }) => {
                                         ? `text-black ${i === 0 ? 'border-l-0' : 'border-l custom-border'}`
                                         : `bg-white text-gray-600 border custom-border border-r-0 border-t-0 ${i === 0 ? 'border-l-0' : ''}`
                                 }`}
-                                onClick={() => setSelected(cat)}
+                                onClick={() => handleSelectCategory(cat)}
                             >
                                 <div className="flex items-center gap-2">
                                     <span className="flex items-center">
@@ -111,7 +113,7 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
 
                     <div className="cont p-4 px-32">
-                        {isLoading ? (
+                        {isLoading || !currentTemplate ? (
                             <div className="space-y-4">
                                 <div className="skeleton">
                                     <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
@@ -140,6 +142,7 @@ const IndexTemplateComp = ({ categories }) => {
                                         className="w-full h-full object-contain"
                                         objectFit="contain"
                                         layout="fill"
+                                        loading="eager"
                                     />
                                 </div>
                             </>
@@ -157,7 +160,7 @@ const IndexTemplateComp = ({ categories }) => {
                                         ? `border-y custom-border sm:text-nowrap border-b-0`
                                         : 'bg-white text-gray-600 custom-border border border-l-0 sm:text-nowrap border-b-0'
                                 } ${i === 0 ? 'border-t-0' : ''}`}
-                                onClick={() => setSelected(cat)}
+                                onClick={() => handleSelectCategory(cat)}
                             >
                                 {cat?.name}
                             </button>
@@ -182,6 +185,7 @@ const IndexTemplateComp = ({ categories }) => {
                                 className="w-full h-full object-contain"
                                 objectFit="contain"
                                 layout="fill"
+                                loading="eager"
                             />
                         </div>
                     </div>
