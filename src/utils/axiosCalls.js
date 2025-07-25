@@ -82,7 +82,7 @@ export async function getTemplates(pageUrl) {
                 interpretHeader: false,
             },
         });
-        return response.data.data;
+        return response.data.data.templates;
     } catch (error) {
         sendErrorMessage({
             error,
@@ -201,6 +201,23 @@ export async function getFaq(pageUrl) {
         return response?.data?.data?.rows;
     } catch (error) {
         console.error(error?.response?.data || error.message);
+        sendErrorMessage({ error, pageUrl, source: apiUrl });
+    }
+}
+
+export async function getAppCount(pageUrl) {
+    const apiUrl = `https://plugservice-api.viasocket.com/get-apps-count`;
+
+    try {
+        const response = await axiosWithCache.get(apiUrl, {
+            cache: {
+                ttl: 1000 * 60 * 20, // Cache for 20 minutesr
+                interpretHeader: false,
+            },
+        });
+        return response.data.count;
+    } catch (error) {
+        console.log(error?.response?.data || error.message, 'errormesssageeeee');
         sendErrorMessage({ error, pageUrl, source: apiUrl });
     }
 }
