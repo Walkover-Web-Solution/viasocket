@@ -47,7 +47,7 @@ export default function Navbar({ utm, footerData }) {
     }
 
     const isActive = (path) => {
-        return router.pathname === path ? 'text-accent !font-semibold' : '';
+        return router.pathname.startsWith(path) ? 'text-accent !font-semibold' : '';
     };
 
     return (
@@ -85,11 +85,10 @@ export default function Navbar({ utm, footerData }) {
                         </Link>
 
                         <div className="flex">
-                            {router.pathname !== '/pricing' && (
+                            {router.pathname !== '/pricing' && !router.pathname.startsWith('/templates') && (
                                 <Link
                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
                                     href={router.pathname}
-                                    rel="nofollow"
                                 >
                                     {router.pathname === '/'
                                         ? 'Home'
@@ -98,16 +97,20 @@ export default function Navbar({ utm, footerData }) {
                                 </Link>
                             )}
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/discovery')}`}
-                                href={`https://viasocket.com/discovery`}
-                                rel="nofollow"
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
+                                href={`/templates`}
+                            >
+                                Templates
+                            </Link>
+                            <Link
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
+                                href={`/integrations`}
                             >
                                 Explore Apps
                             </Link>
                             <Link
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
                                 href={`/pricing`}
-                                rel="nofollow"
                             >
                                 Pricing
                             </Link>

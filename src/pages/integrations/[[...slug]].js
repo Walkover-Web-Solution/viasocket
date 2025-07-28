@@ -11,7 +11,7 @@ import Head from 'next/head';
 import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
-import { getCombos, getApps } from '@/utils/axiosCalls';
+import { getCombos, getApps, getAppCount } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
@@ -33,6 +33,7 @@ export default function Integrations({
     blogData,
     useCaseData,
     videoData,
+    appCount,
 }) {
     if (noData) {
         return (
@@ -92,6 +93,7 @@ export default function Integrations({
                         footerData={footerData}
                         useCaseData={useCaseData}
                         videoData={videoData}
+                        appCount={appCount}
                     />
                 </div>
             );
@@ -108,6 +110,7 @@ export default function Integrations({
                     categoryData={categoryData}
                     categories={categories}
                     faqData={faqData}
+                    appCount={appCount}
                 />
             </div>
         );
@@ -122,6 +125,7 @@ export async function getServerSideProps(context) {
     const pageInfo = getPageInfo(context);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const appCount = await getAppCount(pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
         const metadata = await getMetaData('/integrations/AppOne/AppTwo', pageUrl);
@@ -148,6 +152,7 @@ export async function getServerSideProps(context) {
                     categoryData: {},
                     blogData: blogData || [],
                     videoData: videoData || [],
+                    appCount: appCount || 0,
                 },
             };
         } else {
@@ -195,6 +200,7 @@ export async function getServerSideProps(context) {
                     blogData: blogData || [],
                     useCaseData: useCaseData || [],
                     videoData: videoData || [],
+                    appCount: appCount || 0,
                 },
             };
         } else {
@@ -231,6 +237,7 @@ export async function getServerSideProps(context) {
                 categoryData: (categoryData?.length > 0 && categoryData[0]) || {},
                 categories: categories || [],
                 blogData: blogData || [],
+                appCount: appCount || 0,
             },
         };
     }
