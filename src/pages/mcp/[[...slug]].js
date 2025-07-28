@@ -8,7 +8,7 @@ import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS 
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
-import { getApps, getCombos } from '@/utils/axiosCalls';
+import { getAppCount, getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'experimental-edge';
@@ -33,6 +33,7 @@ export default function Mcp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
+    appCount,
 }) {
     if (noData) {
         return (
@@ -79,6 +80,7 @@ export default function Mcp({
                     featuresData={featuresData}
                     keyPointData={keyPointData}
                     metaData={metaData}
+                    appCount={appCount}
                 />
             </div>
         );
@@ -171,6 +173,7 @@ export async function getServerSideProps(context) {
             `filter=slug='${mcpInfo?.category || 'all'}'`,
             pageUrl
         );
+        const appCount = await getAppCount(pageUrl);
         const apps = await getApps({ page: mcpInfo?.page, categoryData }, pageUrl);
         const categories = await getCategoryData(INTECATEGORYlIST_FILED, '', pageUrl);
         const blogTags = 'mcp';
@@ -270,6 +273,7 @@ export async function getServerSideProps(context) {
                 tableData: tableData || [],
                 featuresData: featuresData || [],
                 keyPointData: keyPointData || [],
+                appCount: appCount || 0,
             },
         };
     }

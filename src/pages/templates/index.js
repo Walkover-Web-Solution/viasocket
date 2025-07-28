@@ -13,15 +13,27 @@ import { getTemplates } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import AutomationSuggestions from '../workflow-automation-ideas';
+import { useRouter } from 'next/router';
 
 export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateData, validTemplates, metaData, faqData, blogData, automationSuggestionsData }) => {
+const Template = ({
+    footerData,
+    templateData,
+    validTemplates,
+    metaData,
+    faqData,
+    blogData,
+    automationSuggestionsData,
+}) => {
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [isSearching, setIsSearching] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         const validTemplateNames = validTemplates.map((t) => t.name);
@@ -38,13 +50,45 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
         setFilteredTemplates(filtered);
     }, [searchTerm, templateData, validTemplates]);
 
+    useEffect(() => {
+        if (filteredTemplates.length > 0) {
+            setCurrentIndex(0);
+        }
+    }, [filteredTemplates]);
+
+    useEffect(() => {
+        if (filteredTemplates.length === 0) return;
+
+        const interval = setInterval(() => {
+            setCurrentIndex((prev) => (prev + 1) % filteredTemplates.length);
+        }, 5000);
+
+        return () => clearInterval(interval);
+    }, [filteredTemplates]);
+
+    const handlePrev = () => {
+        setCurrentIndex((prev) => (prev === 0 ? filteredTemplates.length - 1 : prev - 1));
+    };
+
+    const handleNext = () => {
+        setCurrentIndex((prev) => (prev + 1) % filteredTemplates.length);
+    };
+
+    const handleInstall = () => {
+        const currentTemplate = filteredTemplates[currentIndex];
+        if (currentTemplate) {
+            router.push(`/templates/${currentTemplate.id}`);
+        }
+    };
+
     const handleLoadMore = () => {
         setVisibleCount((prev) => prev + TEMPLATES_PER_PAGE);
     };
-
     const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
+        const value = e.target.value;
+        setSearchTerm(value);
         setVisibleCount(TEMPLATES_PER_PAGE);
+        setIsSearching(value.trim().length > 0);
     };
 
     return (
@@ -54,15 +98,25 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
 
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container pt-20 pb-10">
-                    <div className="flex flex-col text-left gap-2">
-                        <h2 className="h6 text-accent">Click. Build. Succeed.</h2>
+                    <div className="cont gap-4">
                         <h1 className="h1">
-                            Workflow Automation <span className="text-accent">Templates</span>
+                            {filteredTemplates.length > 0
+                                ? filteredTemplates[currentIndex]?.title
+                                : 'Loading Templates...'}
                         </h1>
-                        <p className="sub__h1 ">
-                            Take a look at our awesome collection of Workflow Automation Templates that automate your
-                            daily tasks and help you grow.
-                        </p>
+                        {filteredTemplates.length > 0 && (
+                            <div className="flex gap-2 items-center justify-end">
+                                <button onClick={handlePrev} className="btn btn-outline bg-white">
+                                    Prev
+                                </button>
+                                <button onClick={handleNext} className="btn btn-outline bg-white">
+                                    Next
+                                </button>
+                                <button onClick={handleInstall} className="btn btn-accent">
+                                    Install
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -98,6 +152,8 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
                                 </div>
                             )}
                         </>
+                    ) : isSearching ? (
+                        <h3 className="h3">No templates found</h3>
                     ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                             {[...Array(TEMPLATES_PER_PAGE)].map((_, index) => (
@@ -107,7 +163,6 @@ const Template = ({ footerData, templateData, validTemplates, metaData, faqData,
                     )}
                 </div>
 
-                <AutomationSuggestions  />
                 <div className="cont gap-12 md:gap-16 lg:gap-20">
                     <div className="container">
                         <BlogGrid posts={blogData} />

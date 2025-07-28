@@ -31,6 +31,7 @@ export default function IntegrationsAppOneComp({
     integrations,
     useCaseData,
     videoData,
+    appCount,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -192,6 +193,7 @@ export default function IntegrationsAppOneComp({
                         integrationsInfo={integrationsInfo}
                         apps={apps}
                         appCategories={appOneDetails?.category}
+                        appCount={appCount}
                     />
                 </div>
             )}

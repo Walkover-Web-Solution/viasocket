@@ -14,10 +14,11 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { getAppCount } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData }) => {
+const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData, appCount }) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
@@ -135,7 +136,9 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
-                                    <h2 className="h2">Give Your Chatbot the Power of 2000+ Integrations</h2>
+                                    <h2 className="h2">
+                                        Give Your Chatbot the Power of {+appCount + 300}+ Integrations
+                                    </h2>
                                     <p className="sub__h1">
                                         You can connect your chatbot to over 1500 apps on viaSocket. Automate tasks,
                                         streamline workflows and enhance your chatbot's capabilities—all in just a few
@@ -296,6 +299,7 @@ export async function getServerSideProps(context) {
     const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
     const blogTags = 'embed';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
+    const appCount = await getAppCount(pageUrl);
     const tableData = [
         { Feature: 'Time to Implement', embed: 'Minutes', development: 'Weeks/Months' },
         { Feature: 'Developer Resources', embed: 'No Requirements', development: 'Required Development Team' },
@@ -330,6 +334,7 @@ export async function getServerSideProps(context) {
             tableData: tableData,
             howItWorksData: howItWorksData,
             metaData: metaData || {},
+            appCount: appCount,
         },
     };
 }
