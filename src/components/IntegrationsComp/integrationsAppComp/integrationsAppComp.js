@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import searchApps from '@/utils/searchApps';
 
-
 export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -159,7 +158,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                 ) : (
                                     <h2 className="h2 text-accent italic">
                                         {' '}
-                                        2000+
+                                        {+appCount + 300}+
                                         <span className="text-black not-italic"> viaSocket Integrations</span>
                                     </h2>
                                 )}

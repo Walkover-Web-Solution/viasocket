@@ -24,6 +24,7 @@ export default function IntegrationsIndexComp({
     categoryData,
     categories,
     faqData,
+    appCount,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -170,8 +171,7 @@ export default function IntegrationsIndexComp({
                                 <>
                                     <h2 className="h2 !text-accent italic ">
                                         {' '}
-                                        2000+
-                                        <span className="text-black not-italic"> Apps</span>
+                                        {+appCount + 300}+<span className="text-black not-italic"> Apps</span>
                                     </h2>
                                     <p>
                                         Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,

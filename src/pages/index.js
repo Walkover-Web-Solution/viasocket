@@ -14,19 +14,13 @@ import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBanner
 import Navbar from '@/components/navbar/navbar';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
 import Link from 'next/link';
-import {
-    FaBug,
-    FaCertificate,
-    FaClock,
-    FaEye,
-    FaRegClock,
-    FaUserShield,
-} from 'react-icons/fa6';
+import { FaBug, FaCertificate, FaClock, FaEye, FaRegClock, FaUserShield } from 'react-icons/fa6';
 import { FaShieldAlt } from 'react-icons/fa';
 import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
+import { getAppCount } from '@/utils/axiosCalls';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -56,8 +50,8 @@ const Index = ({
                         signupFeatures={signupFeatures}
                         indexTemplateData={indexTemplateData}
                     />
-                    
-                      <IndexTemplateComp categories={indexTemplateData} />
+
+                    <IndexTemplateComp categories={indexTemplateData} />
 
                     <IntegrateAppsComp />
 
@@ -85,8 +79,7 @@ const Index = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="border custom-border border-t-0 px-4 py-2 bg-white"
-                            >
-                            </Link>
+                            ></Link>
                         </div>
                     </div>
 
@@ -134,7 +127,6 @@ const Index = ({
         </>
     );
 };
-
 
 const TestimonialsSection = ({ testimonials }) => (
     <div className="flex flex-col gap-9">
@@ -282,6 +274,7 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const blogTags = 'index';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
+    const appCount = await getAppCount(pageUrl);
     const featuresData = [
         {
             heading: 'Save Hours Every Day',
@@ -360,7 +353,7 @@ export async function getServerSideProps(context) {
         },
     ];
 
-    const signupFeatures = ['Unlimited active workflows', 'No credit card required', 'Connect 2000+ apps'];
+    const signupFeatures = ['Unlimited active workflows', 'No credit card required', `Connect ${+appCount + 300} apps`];
 
     const securityGridData = [
         {

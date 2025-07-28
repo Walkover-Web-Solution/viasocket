@@ -9,9 +9,11 @@ const TemplateCard = ({ template }) => {
             href={`/templates/${template?.id}`}
             className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
         >
-            <div className="flex flex-col gap-1 px-8 py-4">
-                <h1 className="h3">{template?.title}</h1>
-                <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2>
+            <div className="cont gap-2 px-8 py-4">
+                <div className="cont gap-1">
+                    <h1 className="h3">{template?.title}</h1>
+                    <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2>
+                </div>
                 <div className="flex gap-4 items-center">
                     {(() => {
                         const triggerIcon = template?.triggerIcon;
@@ -54,9 +56,8 @@ const TemplateCard = ({ template }) => {
             <div className="h-[400px] w-full relative overflow-x-hidden overflow-y-hidden">
                 <Image
                     src={template?.metadata?.templateUrl || template?.templateUrl || 'https://placehold.co/600x400'}
-                    layout="fill"
+                    fill
                     className="object-top"
-                    style={{ objectFit: 'contain', height: '100%', width: '100%' }}
                     alt="template image"
                 />
             </div>
