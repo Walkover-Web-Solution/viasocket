@@ -298,13 +298,11 @@ function AppVisual({ app, index }) {
             <div className="  flex items-center gap-2">
                 <h2 className="font-bold">
                     <span className="h3">💡</span>
-                    Can’t find your App? We’ll try to build it for you within 48 hours
+                    {' '}Request an App
                 </h2>
             </div>
-            <p className={`${style?.app__des}`}>
-                Click the button below to request an app, and we'll make it available for you as soon as possible!
-            </p>
-            <RequestIntegrationPopupOpener showType="button" title="Click here to request it" />
+            <p className={`${style?.app__des}`}>Can’t find your App? We’ll try to build it for you within 48 hours</p>
+            <RequestIntegrationPopupOpener showType="button" title="Request Now" />
         </div>
     );
 }
@@ -345,6 +343,12 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
         </div>
     );
 
+    const showFooter = (
+        <span className="text-sm cursor-pointer hover:underline transition-all duration-300 text-left" onClick={openModal}>
+            Request an Integration
+        </span>
+    );
+
     const getUi = () => {
         switch (showType) {
             case 'fullView':
@@ -353,13 +357,15 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
                 return dottedText;
             case 'button':
                 return showButton;
+            case 'footer':
+                return showFooter;
             default:
                 return fullView;
         }
     };
 
     return (
-        <div className="container">
+        <div className={`${showType !== 'footer' && 'container'}`}>
             {getUi()}
             {modalData.isOpen && (
                 <IntegrationsRequestComp appInfo={modalData.appInfo} type={modalData.type} onClose={closeModal} />

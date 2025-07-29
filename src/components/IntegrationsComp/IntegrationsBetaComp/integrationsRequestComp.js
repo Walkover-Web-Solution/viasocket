@@ -7,7 +7,6 @@ function isValidEmail(email) {
 }
 
 export function RequestPlugin({ appInfo, type, onClose }) {
-    const { executeRecaptcha } = useGoogleReCaptcha();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         userId: '',
