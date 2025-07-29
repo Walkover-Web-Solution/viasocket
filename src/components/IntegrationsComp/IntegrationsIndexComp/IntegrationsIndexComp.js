@@ -317,12 +317,10 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
 
     const openModal = () => {
         setModalData({ isOpen: true, appInfo, type });
-        document.getElementById('plugin_request_form')?.showModal()
     };
 
     const closeModal = () => {
         setModalData(prev => ({ ...prev, isOpen: false }));
-        document.getElementById('plugin_request_form')?.close()
     };
 
     const label = title || `Request a new ${type || 'App'}`;

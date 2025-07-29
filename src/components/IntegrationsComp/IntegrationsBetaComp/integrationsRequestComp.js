@@ -41,7 +41,7 @@ export function RequestPlugin({ appInfo, type, onClose }) {
         if (onClose) 
             onClose();
         else {
-            document.getElementById('plugin_request_form')?.close()
+            console.error('onclose not found in RequestPlugin')
         }
     }
 
@@ -215,7 +215,7 @@ export function RequestPlugin({ appInfo, type, onClose }) {
 
 export default function IntegrationsRequestComp({ appInfo, type, onClose }) {
     return (
-        <dialog className="modal rounded-none">
+        <dialog open className="modal rounded-none">
             <ReCaptchaProvider>
                 <RequestPlugin appInfo={appInfo} type={type} onClose={onClose} />
             </ReCaptchaProvider>
