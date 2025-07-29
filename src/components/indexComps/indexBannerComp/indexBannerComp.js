@@ -2,7 +2,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
-        <div className="container min-h-fit my-8">
+        <div className="container min-h-fit pt-20">
             <div className="flex flex-col h-full cont__gap">
                 <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                     <div className="flex gap-12 flex-col items-center">
@@ -19,7 +19,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                         href="https://cal.id/team/viasocket/superheros"
                                         className="btn hover:bg-gray-900 bg-white hover:text-white border custom-border"
                                     >
-                                       Free call with automation experts
+                                        Free call with automation experts
                                     </a>
                                 </div>
                                 <div className="flex gap-6 flex-wrap">
