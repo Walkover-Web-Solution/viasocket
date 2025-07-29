@@ -154,7 +154,7 @@ export default function IntegrationsAppTwoComp({
                 {!combosData?.combinations?.length > 0 &&
                     !appOneDetails?.events?.length > 0 &&
                     !appTwoDetails?.events?.length > 0 && (
-                        <IntegrationsBetaComp appOneDetails={appOneDetails} />
+                        <IntegrationsBetaComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                     )}
 
                 {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
