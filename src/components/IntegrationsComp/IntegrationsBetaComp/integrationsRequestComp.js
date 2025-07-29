@@ -8,14 +8,14 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function RequestPlugin() {
+export function RequestPlugin({ appInfo, type, onClose }) {
     const { executeRecaptcha } = useGoogleReCaptcha();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         userId: '',
         userEmail: '',
         useCase: '',
-        plugName: '',
+        plugName: appInfo?.name,
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
     });
@@ -37,6 +37,13 @@ export function RequestPlugin() {
             }
         }
     };
+    const handleClose = () => {
+        if (onClose) 
+            onClose();
+        else {
+            document.getElementById('plugin_request_form')?.close()
+        }
+    }
 
     const handleSubmit = async (event) => {
         window.signals.identify({
@@ -75,7 +82,8 @@ export function RequestPlugin() {
             });
 
             const recaptchaData = await recaptchaResponse.json();
-
+            const formDataToSend = formData
+            formDataToSend.category = appInfo?.category?.join(', ');
             if (recaptchaData?.success) {
                 setIsLoading(true);
                 const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
@@ -83,41 +91,43 @@ export function RequestPlugin() {
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify(formDataToSend),
                 });
 
                 const pluginData = await pluginResponse.json();
 
                 if (pluginData?.data?.success) {
-                    document.getElementById('plugin_request_form').close();
+                    handleClose()
                 }
             }
         } catch (error) {
             console.error('Failed to submit:', error);
         } finally {
             setIsLoading(false);
-            document.getElementById('plugin_request_form').close();
+            handleClose();
         }
     };
 
     return (
-        <>
+        <div className='fixed inset-0 z-50 grid place-items-center'>
+            <div className='absolute inset-0 bg-black bg-opacity-40' />
             <div className="modal-box">
-                <div className="flex flex-col gap-6">
-                    <Image
-                        src="/assets/brand/logo.svg"
-                        width={1080}
-                        height={1080}
-                        alt="viasocket"
-                        className="h-[36px] w-fit"
-                    />
-                    <div>
-                        <h3 className="h3 font-bold">Request a New Plugin</h3>
-                        <p className="">
-                            Submit your plugin request to integrate new tools or services seamlessly into your workflow.
-                        </p>
+                <div className="flex flex-col gap-4">
+                    <div className='flex flex-col gap-1'>
+                        <div className="flex gap-3 items-center">
+                            {type && <Image src={appInfo?.iconurl || 'https://placehold.co/40x40'} height={36} width={36} />}
+                            <h3 className="h3 font-bold">
+                                Request a new {type ? `${type} for ${appInfo?.name}` : 'Plugin'}
+                            </h3>
+                        </div>
+                            <p>
+                                {
+                                    !type ? 'Submit your plugin request to integrate new tools or services seamlessly into your workflow.' : `
+                                    Submit your new ${type} request and We’ll try to build it for you within 48 hours`
+                                }
+                            </p>
                     </div>
-                    <div className="flex gap-3 flex-col">
+                    <div className="flex gap-1 flex-col">
                         <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Name:</span>
@@ -148,7 +158,7 @@ export function RequestPlugin() {
                             />
                             {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
                         </label>
-                        <label className="form-control w-full">
+                        {!type && <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Plugin Name:</span>
                             </div>
@@ -162,6 +172,7 @@ export function RequestPlugin() {
                                 onChange={handleInputChange}
                             />
                         </label>
+                        }
                         <label className="form-control w-full ">
                             <div className="label">
                                 <span className="label-text">Use Case:</span>
@@ -191,22 +202,22 @@ export function RequestPlugin() {
                         </button>
                         <button
                             className="btn btn-primary btn-outline"
-                            onClick={() => document.getElementById('plugin_request_form').close()}
+                            onClick={handleClose}
                         >
                             Cancel
                         </button>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 
-export default function IntegrationsRequestComp() {
+export default function IntegrationsRequestComp({ appInfo, type, onClose }) {
     return (
-        <dialog id="plugin_request_form" className="modal rounded-none">
+        <dialog className="modal rounded-none">
             <ReCaptchaProvider>
-                <RequestPlugin />
+                <RequestPlugin appInfo={appInfo} type={type} onClose={onClose} />
             </ReCaptchaProvider>
         </dialog>
     );
