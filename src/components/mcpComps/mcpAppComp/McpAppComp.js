@@ -16,7 +16,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
-import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import IntegrationsRequestComp from '@/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp';
 
 const APPERPAGE = 9;
 
@@ -160,7 +160,12 @@ export default function McpAppComp({
                                         Get Your MCP URL
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener showType='button' appInfo={appOneDetails} type='app' title = 'Request an Integration' />
+                                    <button
+                                        className="btn btn-accent"
+                                        onClick={() => document.getElementById('plugin_request_form').showModal()}
+                                    >
+                                        Request Beta Access
+                                    </button>
                                 )}
                             </div>
                         </div>
@@ -514,6 +519,8 @@ export default function McpAppComp({
                     </div>
                 </div>
             </div>
+
+            <IntegrationsRequestComp />
         </>
     );
 }

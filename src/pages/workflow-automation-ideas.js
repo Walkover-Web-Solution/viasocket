@@ -76,6 +76,7 @@ export default function AutomationSuggestions() {
                     domain,
                     useCaseData
                 );
+                console.log(combos, ' asoifhoiasfoih');
                 setRenderCombos(combos?.data);
             } catch (error) {
                 console.error('Error fetching combos:', error);
