@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
+import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
@@ -57,6 +58,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         className={`flex flex-col gap-12 md:p-10 p-4 lg:border-b-0 border-b sm:border-r ${borderTheme}`}
                     >
                         {renderedGroups?.slice(0, Math.ceil(renderedGroups?.length / 3))}
+                        <div className='flex gap-2 md:gap-4 mt-auto'>
+                            <RequestIntegrationPopupOpener title = "Request an Integration" showType='dotted'/>
+                        </div>
                     </div>
 
                     <div
