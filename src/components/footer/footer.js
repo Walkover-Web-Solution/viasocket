@@ -36,6 +36,11 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     <span className="text-sm">{item?.name}</span>
                                 </Link>
                             ))}
+                            {
+                                groupName === 'Support' && (
+                                    <RequestIntegrationPopupOpener title = "Request an Integration" showType='footer' />
+                                )
+                            }
                         </div>
                     </div>
                 );
@@ -58,9 +63,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         className={`flex flex-col gap-12 md:p-10 p-4 lg:border-b-0 border-b sm:border-r ${borderTheme}`}
                     >
                         {renderedGroups?.slice(0, Math.ceil(renderedGroups?.length / 3))}
-                        <div className='flex gap-2 md:gap-4 mt-auto'>
-                            <RequestIntegrationPopupOpener title = "Request an Integration" showType='dotted'/>
-                        </div>
                     </div>
 
                     <div
