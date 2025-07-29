@@ -1,4 +1,3 @@
-
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getFooterData } from '@/utils/getData';
 import { CgArrowTopRight } from 'react-icons/cg';
@@ -23,7 +22,7 @@ const useDebounce = (value, delay) => {
     return debouncedValue;
 };
 
-export default function AutomationSuggestions({ footerData, blogData, faqData, getStartedData }) {
+export default function AutomationSuggestions() {
     const [selectedDomain, setSelectedDomain] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -153,7 +152,6 @@ export default function AutomationSuggestions({ footerData, blogData, faqData, g
         <>
             <div className="cont">
                 <div className="w-full cont min-h-fit h-screen">
-
                     <div className="container mt-12">
                         <div className="h-full flex flex-col lg:flex-row">
                             <div className="h-full w-full lg:w-1/2 flex flex-col gap-4 p-8 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
@@ -385,26 +383,6 @@ export default function AutomationSuggestions({ footerData, blogData, faqData, g
                         </div>
                     </div>
                 </div>
-
-                {blogData?.length > 0 && (
-                    <div className="container ">
-                        <BlogGrid posts={blogData} />
-                    </div>
-                )}
-
-                <div className="pb-6">
-                    {faqData?.length > 0 && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <FAQSection faqData={faqData} faqName={'/index'} />
-                        </div>
-                    )}
-                    {getStartedData && (
-                        <div className="container border border-black p-20 border-b-0">
-                            <GetStarted data={getStartedData} isHero={'false'} />
-                        </div>
-                    )}
-                  
-                </div>
             </div>
             <dialog ref={modalRef} className="modal rounded-md">
                 <div className="modal-box  bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
@@ -435,24 +413,6 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
         <span>{app?.name}</span>
     </div>
 );
-
-export async function getServerSideProps() {
-    // const navData = await getNavData(NAVIGATION_FIELDS);
-    const footerData = await getFooterData(FOOTER_FIELDS);
-    // const faqData = await getFaqData(FAQS_FIELDS, `filter=page='/autmation_solutions'`);
-    // const getStarted = await getGetStartedData(GETSTARTED_FIELDS);
-    const blogTags = 'automation';
-    const blogData = await getBlogData(blogTags);
-    return {
-        props: {
-            // navData: navData,
-            footerData: footerData,
-            // getStartedData: getStarted || [],
-            blogData: blogData || [],
-            // faqData: faqData || [],
-        },
-    };
-}
 
 async function fetchApps(category) {
     const response = await fetch(
