@@ -294,10 +294,8 @@ function AppVisual({ app, index }) {
             <p className={style?.app__des}>{app?.description}</p>
         </Link>
     ) : (
-        <div
-            className={`${style.app} custom-border border-2 hover-bg-grey-100-text-black border-dashed border-gray-300`}
-        >
-            <div className="flex items-center gap-2">
+        <div className={`${style.app}  border-2 hover-bg-grey-100-text-black border-dashed custom-border`}>
+            <div className="  flex items-center gap-2">
                 <h2 className="font-bold">
                     <span className="h3">💡</span>
                     Can’t find your App? We’ll try to build it for you within 48 hours
@@ -306,11 +304,10 @@ function AppVisual({ app, index }) {
             <p className={`${style?.app__des}`}>
                 Click the button below to request an app, and we'll make it available for you as soon as possible!
             </p>
-            <RequestIntegrationPopupOpener showType = "button" title = "Click here to request it" />
+            <RequestIntegrationPopupOpener showType="button" title="Click here to request it" />
         </div>
     );
 }
-
 
 export function RequestIntegrationPopupOpener({ className = '', showType = 'fullView', appInfo, type, title }) {
     const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
@@ -320,7 +317,7 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
     };
 
     const closeModal = () => {
-        setModalData(prev => ({ ...prev, isOpen: false }));
+        setModalData((prev) => ({ ...prev, isOpen: false }));
     };
 
     const label = title || `Request a new ${type || 'App'}`;
@@ -332,46 +329,41 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
     );
 
     const dottedText = (
-        <span
-            onClick={openModal}
-            className={`cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}
-        >
+        <span onClick={openModal} className={`cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}>
             {label}
         </span>
     );
 
     const fullView = (
-        <div className={`bg-white border custom-border p-12 cont gap-2 container w-full ${className}`}>
+        <div className={`bg-white border custom-border p-12 cont gap-2 w-full ${className}`}>
             <div className="cont gap-1">
                 <h2 className="h2">
                     💡 Can’t find your {type || 'App'}? We’ll try to build it for you within 48 hours
                 </h2>
             </div>
-            <div className="mt-8">
-                {showButton}
-            </div>
+            <div className="mt-8">{showButton}</div>
         </div>
     );
 
     const getUi = () => {
         switch (showType) {
-            case 'fullView': return fullView;
-            case 'dotted': return dottedText;
-            case 'button': return showButton;
-            default: return fullView;
+            case 'fullView':
+                return fullView;
+            case 'dotted':
+                return dottedText;
+            case 'button':
+                return showButton;
+            default:
+                return fullView;
         }
     };
 
     return (
-        <>
+        <div className="container">
             {getUi()}
             {modalData.isOpen && (
-                <IntegrationsRequestComp
-                    appInfo={modalData.appInfo}
-                    type={modalData.type}
-                    onClose={closeModal}
-                />
+                <IntegrationsRequestComp appInfo={modalData.appInfo} type={modalData.type} onClose={closeModal} />
             )}
-        </>
+        </div>
     );
 }
