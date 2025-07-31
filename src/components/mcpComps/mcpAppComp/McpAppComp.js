@@ -160,7 +160,7 @@ export default function McpAppComp({
                                         Get Your MCP URL
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener showType='button' appInfo={appOneDetails} type='app' title = 'Request an Integration' />
+                                    <RequestIntegrationPopupOpener showType='button' appInfo={appOneDetails} type='action' />
                                 )}
                             </div>
                         </div>
@@ -301,10 +301,12 @@ export default function McpAppComp({
                                     );
                                 })
                             ) : (
-                                <span className="p-8 text-3xl w-full col-span-3 border border-white border-l-0 border-t-0">
-                                    No Apps found for Searched name{' '}
-                                </span>
-                            )
+                                <div className="w-full col-span-full">
+                                    <RequestIntegrationPopupOpener
+                                        showType="searchView"
+                                        className="md:border-t-0 md:border-l-0"
+                                    />
+                                </div>)
                         ) : (
                             apps
                                 ?.filter((app) => app.appslugname !== appOneDetails.appslugname)

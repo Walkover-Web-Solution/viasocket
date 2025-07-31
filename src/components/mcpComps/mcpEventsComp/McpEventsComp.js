@@ -1,3 +1,4 @@
+import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';
@@ -60,13 +61,9 @@ export default function McpEventComp({ appOneDetails }) {
                 Add {actions.length} actions as tools to your MCP client for seamless integration
             </h3>
             <div className="flex lg:flex-row flex-col w-full gap-2">
-                {actions.length > 0 ? (
-                    <div className="cont gap-4 w-full">{renderActionGrid(actions.slice(0, visibleEvents))}</div>
-                ) : (
-                    <div className="w-full text-center p-8">No actions available</div>
-                )}
+                <div className="cont gap-4 w-full">{renderActionGrid(actions.slice(0, visibleEvents))}</div>
             </div>
-            {actions.length > visibleEvents && (
+            {actions.length > visibleEvents ? (
                 <div className="w-full flex justify-end">
                     <button
                         onClick={() => {
@@ -77,6 +74,8 @@ export default function McpEventComp({ appOneDetails }) {
                         Load More <MdKeyboardArrowDown fontSize={20} />
                     </button>
                 </div>
+            ) : (
+                    <RequestIntegrationPopupOpener appInfo={appOneDetails} className='lg:ml-auto' showType="dotted" type="action" />
             )}
         </div>
     );
