@@ -6,15 +6,15 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function RequestPlugin({ appInfo, type, onClose }) {
+export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
-        userId: '',
         userEmail: '',
         useCase: '',
         plugName: appInfo?.name,
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
+        plug: appInfo,
     });
     const [emailError, setEmailError] = useState('');
     const emailInputRef = useRef(null);
@@ -44,13 +44,12 @@ export function RequestPlugin({ appInfo, type, onClose }) {
     const handleSubmit = async (event) => {
         window.signals.identify({
             email: formData.userEmail,
-            name: formData.userId,
         });
 
         event.preventDefault();
 
-        if (!formData.userId || !formData.userEmail) {
-            alert('Name and Email are required.');
+        if (!formData.userEmail) {
+            alert('Email are required.');
             return;
         }
 
@@ -62,7 +61,10 @@ export function RequestPlugin({ appInfo, type, onClose }) {
             return;
         }
         const formDataToSend = formData;
+        delete formData.plug;
+        formDataToSend.userNeed = `New ${type || 'App'}`;
         formDataToSend.category = appInfo?.category?.join(', ');
+
         try {
             setIsLoading(true);
             const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
@@ -95,10 +97,14 @@ export function RequestPlugin({ appInfo, type, onClose }) {
                     <div className="flex flex-col gap-1">
                         <div className="flex gap-3 items-center">
                             {type && (
-                                <Image src={appInfo?.iconurl || 'https://placehold.co/40x40'} height={36} width={36} />
+                                <Image
+                                    src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
+                                    height={36}
+                                    width={36}
+                                />
                             )}
                             <h3 className="h3 font-bold">
-                                Request a new {type ? `${type} for ${appInfo?.name}` : 'Plugin'}
+                                Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
                             </h3>
                         </div>
                         <p>
@@ -109,20 +115,30 @@ export function RequestPlugin({ appInfo, type, onClose }) {
                         </p>
                     </div>
                     <div className="flex gap-1 flex-col">
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Name:</span>
-                            </div>
-                            <input
-                                required
-                                type="text"
-                                name="userId"
-                                placeholder="Enter your name"
-                                className="input input-bordered w-full focus:outline-none "
-                                value={formData.userId}
-                                onChange={handleInputChange}
-                            />
-                        </label>
+                        {secondAppInfo && (
+                            <label className="form-control w-full">
+                                <div className="label">
+                                    <span className="label-text">Select App</span>
+                                </div>
+                                <select
+                                    className="select select-bordered w-full focus:outline-none"
+                                    value={formData?.plug?.name}
+                                    onChange={(e) => {
+                                        const selectedName = e.target.value;
+                                        const selectedApp = selectedName === appInfo?.name ? appInfo : secondAppInfo;
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            plug: selectedApp,
+                                            plugName: selectedApp?.name,
+                                        }));
+                                    }}
+                                >
+                                    <option value={appInfo?.name}>{appInfo?.name}</option>
+                                    <option value={secondAppInfo?.name}>{secondAppInfo?.name}</option>
+                                </select>
+                            </label>
+                        )}
+
                         <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Email:</span>
@@ -149,13 +165,13 @@ export function RequestPlugin({ appInfo, type, onClose }) {
                                     type="text"
                                     name="plugName"
                                     placeholder="Plugin Name"
-                                    className="input input-bordered w-full s focus:outline-none "
+                                    className="input input-bordered w-full focus:outline-none"
                                     value={formData.plugName}
                                     onChange={handleInputChange}
                                 />
                             </label>
                         )}
-                        <label className="form-control w-full ">
+                        <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Use Case:</span>
                             </div>
@@ -192,10 +208,10 @@ export function RequestPlugin({ appInfo, type, onClose }) {
     );
 }
 
-export default function IntegrationsRequestComp({ appInfo, type, onClose }) {
+export default function IntegrationsRequestComp({ appInfo, secondAppInfo, type, onClose }) {
     return (
         <dialog open className="modal rounded-none">
-            <RequestPlugin appInfo={appInfo} type={type} onClose={onClose} />
+            <RequestPlugin appInfo={appInfo} secondAppInfo={secondAppInfo} type={type} onClose={onClose} />
         </dialog>
     );
 }

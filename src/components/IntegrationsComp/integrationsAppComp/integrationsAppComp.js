@@ -199,7 +199,12 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         </Link>
                                     ))
                                 ) : (
-                                    <RequestIntegrationPopupOpener className='w-full col-span-full border-t-0 border-l-0' />
+                                    <div className='col-span-full'>
+                                        <RequestIntegrationPopupOpener
+                                            showType="searchView"
+                                            className="md:border-t-0 md:border-l-0"
+                                        />
+                                    </div>
                                 )
                             ) : (
                                 apps

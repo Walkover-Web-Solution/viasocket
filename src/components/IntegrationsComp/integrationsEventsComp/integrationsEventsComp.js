@@ -78,7 +78,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             Load More <MdKeyboardArrowDown fontSize={20} />
                                         </button>
                                     ) : (
-                                        <RequestIntegrationPopupOpener showType="dotted" type="trigger" />
+                                        <RequestIntegrationPopupOpener appInfo={appOneDetails} secondAppInfo = {appTwoDetails} showType="dotted" type="trigger" />
                                     )}
                                 </div>
                             )}
@@ -90,7 +90,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         <div
                                             onClick={() => setSelectedAction(event)}
                                             key={index}
-                                            className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer"
+                                            className="bg-white p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start hover-bg-grey-100-text-black cursor-pointer"
                                         >
                                             <Image
                                                 src={getIcons(event?.pluginslugname)}
@@ -118,7 +118,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             Load More <MdKeyboardArrowDown fontSize={20} />
                                         </button>
                                     ) : (
-                                        <RequestIntegrationPopupOpener showType="dotted" type="action" />
+                                        <RequestIntegrationPopupOpener appInfo={appOneDetails} secondAppInfo = {appTwoDetails} className='lg:ml-auto' showType="dotted" type="action" />
                                     )}
                                 </div>
                             )}
@@ -240,11 +240,15 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         Load More <MdKeyboardArrowDown fontSize={20} />
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener appInfo={appOneDetails} showType="dotted" type="trigger" />
+                                    <RequestIntegrationPopupOpener
+                                        appInfo={appOneDetails}
+                                        showType="dotted"
+                                        type="trigger"
+                                    />
                                 )}
                             </div>
                         ) : (
-                            <NotFound type = "trigger" appInfo={appOneDetails} />
+                            <NotFound type="trigger" appInfo={appOneDetails} />
                         )}
                         {actions?.length > 0 ? (
                             <div className="cont gap-2 w-full">
@@ -281,16 +285,16 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         Load More <MdKeyboardArrowDown fontSize={20} />
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener
-                                        showType="dotted"
-                                        type="action"
-                                        className="self-end"
-                                        appInfo={appOneDetails}
-                                    />
+                                        <RequestIntegrationPopupOpener
+                                            showType="dotted"
+                                            type="action"
+                                            className="lg:ml-auto"
+                                            appInfo={appOneDetails}
+                                        />
                                 )}
                             </div>
                         ) : (
-                            <NotFound type = "action" appInfo={appOneDetails} />
+                            <NotFound type="action" appInfo={appOneDetails} />
                         )}
                     </div>
                 </div>
@@ -324,7 +328,7 @@ function NotFound({ type, appInfo }) {
             </h3>
             <div className="p-2 flex flex-col gap-3">
                 <p className="text-2xl">No {type} available</p>
-                <RequestIntegrationPopupOpener type={type} showType="button" appInfo = {appInfo} />
+                <RequestIntegrationPopupOpener type={type} showType="button" appInfo={appInfo} />
             </div>
         </div>
     );

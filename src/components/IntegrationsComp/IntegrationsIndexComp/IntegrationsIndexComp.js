@@ -210,18 +210,20 @@ export default function IntegrationsIndexComp({
                                     })
                                 ) : (
                                     <div className="w-full col-span-full">
-                                        <RequestIntegrationPopupOpener className="border-t-0 border-l-0 w-full" />
+                                        <RequestIntegrationPopupOpener
+                                            showType="searchView"
+                                            className="md:border-t-0 md:border-l-0"
+                                        />
                                     </div>
                                 )
                             ) : (
                                 <>
                                     {apps?.map((app, index) => (
-                                        <AppVisual app={app} index={index} />
+                                        <AppVisual redirectPart="integrations" app={app} index={index} />
                                     ))}
                                     <AppVisual
+                                        redirectPart="integrations"
                                         app={{
-                                            name: '',
-                                            description: '',
                                             rowid: 'request-new-app',
                                         }}
                                     />
@@ -253,7 +255,7 @@ export default function IntegrationsIndexComp({
                 buttonLink="https://viasocket.com/faq/developer-hub"
             />
 
-            <RequestIntegrationPopupOpener />
+            <RequestIntegrationPopupOpener className='container' />
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
@@ -272,11 +274,11 @@ export default function IntegrationsIndexComp({
     );
 }
 
-function AppVisual({ app, index }) {
+export function AppVisual({ app, index, redirectPart }) { // mcp, integrations
     return app.rowid !== 'request-new-app' ? (
         <Link
             key={index || app?.rowid}
-            href={createURL(`/integrations/${app?.appslugname}`)}
+            href={createURL(`/${redirectPart}/${app?.appslugname}`)}
             className={`${style.app} hover-bg-grey-100-text-black custom-border`}
         >
             <div className="flex items-center gap-2">
@@ -297,17 +299,16 @@ function AppVisual({ app, index }) {
         <div className={`${style.app}  border-2 hover-bg-grey-100-text-black border-dashed custom-border`}>
             <div className="  flex items-center gap-2">
                 <h2 className="font-bold">
-                    <span className="h3">💡</span>
-                    {' '}Request an App
+                    <span className="h3">💡</span> Request an App
                 </h2>
             </div>
-            <p className={`${style?.app__des}`}>Can’t find your App? We’ll try to build it for you within 48 hours</p>
+            <p className={`${style?.app__des}`}>Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours</p>
             <RequestIntegrationPopupOpener showType="button" title="Request Now" />
         </div>
     );
 }
 
-export function RequestIntegrationPopupOpener({ className = '', showType = 'fullView', appInfo, type, title }) {
+export function RequestIntegrationPopupOpener({ className = '', showType = 'fullView', appInfo, type, title, secondAppInfo = null }) {
     const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
 
     const openModal = () => {
@@ -321,13 +322,13 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
     const label = title || `Request a new ${type || 'App'}`;
 
     const showButton = (
-        <button onClick={openModal} className={`btn btn-accent max-w-max ${className}`}>
+        <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>
             {label}
         </button>
     );
 
     const dottedText = (
-        <span onClick={openModal} className={`cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}>
+        <span onClick={openModal} className={`block cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}>
             {label}
         </span>
     );
@@ -336,15 +337,34 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
         <div className={`bg-white border custom-border p-12 cont gap-2 w-full ${className}`}>
             <div className="cont gap-1">
                 <h2 className="h2">
-                    💡 Can’t find your {type || 'App'}? We’ll try to build it for you within 48 hours
+                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
                 </h2>
             </div>
             <div className="mt-8">{showButton}</div>
         </div>
     );
+    const SearchView = (
+        <div className={`w-full bg-white custom-border md:border grid grid-cols-1 md:grid-cols-2 ${className}`}>
+            <div className=" custom-border border-r p-12 cont gap-8">
+                    <h2 className="h3">
+                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
+                    </h2>
+                <div>{showButton}</div>
+            </div>
+            <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
+                    <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
+                    <Link href="https://viasocket.my.canva.site/viasocket-dh-playbook" target='_blank' className='max-w-max'>
+                        <button className="btn text-nowrap btn-accent">Read our playbook</button>
+                    </Link>
+            </div>
+        </div>
+    );
 
     const showFooter = (
-        <span className="text-sm cursor-pointer hover:underline transition-all duration-300 text-left" onClick={openModal}>
+        <span
+            className="text-sm cursor-pointer hover:underline transition-all duration-300 text-left"
+            onClick={openModal}
+        >
             Request an Integration
         </span>
     );
@@ -359,17 +379,19 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
                 return showButton;
             case 'footer':
                 return showFooter;
+            case 'searchView':
+                return SearchView;
             default:
                 return fullView;
         }
     };
 
     return (
-        <div className={`${showType !== 'footer' && 'container'}`}>
+        <>
             {getUi()}
             {modalData.isOpen && (
-                <IntegrationsRequestComp appInfo={modalData.appInfo} type={modalData.type} onClose={closeModal} />
+                <IntegrationsRequestComp appInfo={modalData.appInfo} secondAppInfo = {secondAppInfo} type={modalData.type} onClose={closeModal} />
             )}
-        </div>
+        </>
     );
 }
