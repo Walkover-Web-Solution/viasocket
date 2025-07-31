@@ -18,7 +18,6 @@ import Script from 'next/script';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
-import { AppVisual, RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 
 export default function McpIndexComp({
     pageInfo,
@@ -279,25 +278,34 @@ export default function McpIndexComp({
                                             );
                                         })
                                     ) : (
-                                        <div className="w-full col-span-full">
-                                            <RequestIntegrationPopupOpener
-                                                showType="searchView"
-                                                className="md:border-t-0 md:border-l-0"
-                                            />
-                                        </div>
+                                        <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
+                                            No Apps found for Searched name{' '}
+                                        </span>
                                     )
                                 ) : (
-                                    <>
-                                        {apps?.map((app, index) => (
-                                            <AppVisual redirectPart="mcp" app={app} index={index} />
-                                        ))}
-                                        <AppVisual
-                                            redirectPart="mcp"
-                                            app={{
-                                                rowid: 'request-new-app',
-                                            }}
-                                        />
-                                    </>
+                                    apps?.map((app, index) => {
+                                        return (
+                                            <Link
+                                                key={index}
+                                                href={createURL(`/mcp/${app?.appslugname}`)}
+                                                className={`${style.app} hover-bg-grey-100-text-black custom-border`}
+                                            >
+                                                <div className="flex items-center gap-2">
+                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                        <Image
+                                                            src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                            width={36}
+                                                            height={36}
+                                                            alt={app?.name}
+                                                            className="h-5 w-fit"
+                                                        />
+                                                    </div>
+                                                    <h2 className="font-bold">{app?.name}</h2>
+                                                </div>
+                                                <p className={style?.app__des}>{app?.description}</p>
+                                            </Link>
+                                        );
+                                    })
                                 )}
                             </div>
                         </div>
