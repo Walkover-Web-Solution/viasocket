@@ -254,8 +254,9 @@ export default function IntegrationsIndexComp({
                 buttonLabel="Build viaSocket integration"
                 buttonLink="https://viasocket.com/faq/developer-hub"
             />
-
-            <RequestIntegrationPopupOpener className='container' />
+            <div className="container">
+                <RequestIntegrationPopupOpener />
+            </div>
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
@@ -274,7 +275,8 @@ export default function IntegrationsIndexComp({
     );
 }
 
-export function AppVisual({ app, index, redirectPart }) { // mcp, integrations
+export function AppVisual({ app, index, redirectPart }) {
+    // mcp, integrations
     return app.rowid !== 'request-new-app' ? (
         <Link
             key={index || app?.rowid}
@@ -302,13 +304,22 @@ export function AppVisual({ app, index, redirectPart }) { // mcp, integrations
                     <span className="h3">💡</span> Request an App
                 </h2>
             </div>
-            <p className={`${style?.app__des}`}>Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours</p>
+            <p className={`${style?.app__des}`}>
+                Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours
+            </p>
             <RequestIntegrationPopupOpener showType="button" title="Request Now" />
         </div>
     );
 }
 
-export function RequestIntegrationPopupOpener({ className = '', showType = 'fullView', appInfo, type, title, secondAppInfo = null }) {
+export function RequestIntegrationPopupOpener({
+    className = '',
+    showType = 'fullView',
+    appInfo,
+    type,
+    title,
+    secondAppInfo = null,
+}) {
     const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
 
     const openModal = () => {
@@ -328,7 +339,10 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
     );
 
     const dottedText = (
-        <span onClick={openModal} className={`block cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}>
+        <span
+            onClick={openModal}
+            className={`block cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}
+        >
             {label}
         </span>
     );
@@ -346,16 +360,20 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
     const SearchView = (
         <div className={`w-full bg-white custom-border md:border grid grid-cols-1 md:grid-cols-2 ${className}`}>
             <div className=" custom-border border-r p-12 cont gap-8">
-                    <h2 className="h3">
+                <h2 className="h3">
                     💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
-                    </h2>
+                </h2>
                 <div>{showButton}</div>
             </div>
             <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
-                    <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
-                    <Link href="https://viasocket.my.canva.site/viasocket-dh-playbook" target='_blank' className='max-w-max'>
-                        <button className="btn text-nowrap btn-accent">Read our playbook</button>
-                    </Link>
+                <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
+                <Link
+                    href="https://viasocket.my.canva.site/viasocket-dh-playbook"
+                    target="_blank"
+                    className="max-w-max"
+                >
+                    <button className="btn text-nowrap btn-accent">Read our playbook</button>
+                </Link>
             </div>
         </div>
     );
@@ -390,7 +408,12 @@ export function RequestIntegrationPopupOpener({ className = '', showType = 'full
         <>
             {getUi()}
             {modalData.isOpen && (
-                <IntegrationsRequestComp appInfo={modalData.appInfo} secondAppInfo = {secondAppInfo} type={modalData.type} onClose={closeModal} />
+                <IntegrationsRequestComp
+                    appInfo={modalData.appInfo}
+                    secondAppInfo={secondAppInfo}
+                    type={modalData.type}
+                    onClose={closeModal}
+                />
             )}
         </>
     );
