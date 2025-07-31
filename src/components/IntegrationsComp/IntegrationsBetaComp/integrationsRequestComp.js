@@ -1,4 +1,6 @@
 import { useState, useRef } from 'react';
+import ReCaptchaProvider from './reCaptchaProvider';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,15 +8,16 @@ function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) {
+export function RequestPlugin() {
+    const { executeRecaptcha } = useGoogleReCaptcha();
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
+        userId: '',
         userEmail: '',
         useCase: '',
-        plugName: appInfo?.name,
+        plugName: '',
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
-        plug: appInfo,
     });
     const [emailError, setEmailError] = useState('');
     const emailInputRef = useRef(null);
@@ -34,22 +37,17 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             }
         }
     };
-    const handleClose = () => {
-        if (onClose) onClose();
-        else {
-            console.error('onclose not found in RequestPlugin');
-        }
-    };
 
     const handleSubmit = async (event) => {
         window.signals.identify({
             email: formData.userEmail,
+            name: formData.userId,
         });
 
         event.preventDefault();
 
-        if (!formData.userEmail) {
-            alert('Email are required.');
+        if (!formData.userId || !formData.userEmail) {
+            alert('Name and Email are required.');
             return;
         }
 
@@ -60,85 +58,80 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             }
             return;
         }
-        const formDataToSend = formData;
-        delete formData.plug;
-        formDataToSend.userNeed = `New ${type || 'App'}`;
-        formDataToSend.category = appInfo?.category?.join(', ');
+
+        if (!executeRecaptcha) {
+            console.error('Recaptcha not available');
+            return;
+        }
 
         try {
-            setIsLoading(true);
-            const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
+            const token = await executeRecaptcha('plugin_request');
+            const recaptchaResponse = await fetch('/api/verify-recaptcha', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-
-                body: JSON.stringify(formDataToSend),
+                body: JSON.stringify({ token }),
             });
 
-            const pluginData = await pluginResponse.json();
+            const recaptchaData = await recaptchaResponse.json();
 
-            if (pluginData?.data?.success) {
-                handleClose();
+            if (recaptchaData?.success) {
+                setIsLoading(true);
+                const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                const pluginData = await pluginResponse.json();
+
+                if (pluginData?.data?.success) {
+                    document.getElementById('plugin_request_form').close();
+                }
             }
         } catch (error) {
             console.error('Failed to submit:', error);
         } finally {
             setIsLoading(false);
-            handleClose();
+            document.getElementById('plugin_request_form').close();
         }
     };
 
     return (
-        <div className="fixed inset-0 z-50 grid place-items-center">
-            <div className="absolute inset-0 bg-black bg-opacity-40" />
+        <>
             <div className="modal-box">
-                <div className="flex flex-col gap-4">
-                    <div className="flex flex-col gap-1">
-                        <div className="flex gap-3 items-center">
-                            {type && (
-                                <Image
-                                    src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
-                                    height={36}
-                                    width={36}
-                                />
-                            )}
-                            <h3 className="h3 font-bold">
-                                Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
-                            </h3>
-                        </div>
-                        <p>
-                            {!type
-                                ? 'Submit your plugin request to integrate new tools or services seamlessly into your workflow.'
-                                : `
-                                    Submit your new ${type} request and We’ll try to build it for you within 48 hours`}
+                <div className="flex flex-col gap-6">
+                    <Image
+                        src="/assets/brand/logo.svg"
+                        width={1080}
+                        height={1080}
+                        alt="viasocket"
+                        className="h-[36px] w-fit"
+                    />
+                    <div>
+                        <h3 className="h3 font-bold">Request a New Plugin</h3>
+                        <p className="">
+                            Submit your plugin request to integrate new tools or services seamlessly into your workflow.
                         </p>
                     </div>
-                    <div className="flex gap-1 flex-col">
-                        {secondAppInfo && (
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text">Select App</span>
-                                </div>
-                                <select
-                                    className="select select-bordered w-full focus:outline-none"
-                                    value={formData?.plug?.name}
-                                    onChange={(e) => {
-                                        const selectedName = e.target.value;
-                                        const selectedApp = selectedName === appInfo?.name ? appInfo : secondAppInfo;
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            plug: selectedApp,
-                                            plugName: selectedApp?.name,
-                                        }));
-                                    }}
-                                >
-                                    <option value={appInfo?.name}>{appInfo?.name}</option>
-                                    <option value={secondAppInfo?.name}>{secondAppInfo?.name}</option>
-                                </select>
-                            </label>
-                        )}
-
+                    <div className="flex gap-3 flex-col">
+                        <label className="form-control w-full">
+                            <div className="label">
+                                <span className="label-text">Name:</span>
+                            </div>
+                            <input
+                                required
+                                type="text"
+                                name="userId"
+                                placeholder="Enter your name"
+                                className="input input-bordered w-full focus:outline-none "
+                                value={formData.userId}
+                                onChange={handleInputChange}
+                            />
+                        </label>
                         <label className="form-control w-full">
                             <div className="label">
                                 <span className="label-text">Email:</span>
@@ -155,23 +148,21 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             />
                             {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
                         </label>
-                        {!type && (
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text">Plugin Name:</span>
-                                </div>
-                                <input
-                                    required
-                                    type="text"
-                                    name="plugName"
-                                    placeholder="Plugin Name"
-                                    className="input input-bordered w-full focus:outline-none"
-                                    value={formData.plugName}
-                                    onChange={handleInputChange}
-                                />
-                            </label>
-                        )}
                         <label className="form-control w-full">
+                            <div className="label">
+                                <span className="label-text">Plugin Name:</span>
+                            </div>
+                            <input
+                                required
+                                type="text"
+                                name="plugName"
+                                placeholder="Plugin Name"
+                                className="input input-bordered w-full s focus:outline-none "
+                                value={formData.plugName}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <label className="form-control w-full ">
                             <div className="label">
                                 <span className="label-text">Use Case:</span>
                             </div>
@@ -198,20 +189,25 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                         <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
                             {isLoading ? 'Submitting...' : 'Submit'}
                         </button>
-                        <button className="btn btn-primary btn-outline" onClick={handleClose}>
+                        <button
+                            className="btn btn-primary btn-outline"
+                            onClick={() => document.getElementById('plugin_request_form').close()}
+                        >
                             Cancel
                         </button>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     );
 }
 
-export default function IntegrationsRequestComp({ appInfo, secondAppInfo, type, onClose }) {
+export default function IntegrationsRequestComp() {
     return (
-        <dialog open className="modal rounded-none">
-            <RequestPlugin appInfo={appInfo} secondAppInfo={secondAppInfo} type={type} onClose={onClose} />
+        <dialog id="plugin_request_form" className="modal rounded-none">
+            <ReCaptchaProvider>
+                <RequestPlugin />
+            </ReCaptchaProvider>
         </dialog>
     );
 }

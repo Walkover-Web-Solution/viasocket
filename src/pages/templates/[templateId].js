@@ -5,14 +5,29 @@ import Navbar from '@/components/navbar/navbar';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getTemplates } from '@/utils/axiosCalls';
 import { getFooterData } from '@/utils/getData';
+import { getMetaData } from '@/utils/getMetaData';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { Timer, Webhook } from 'lucide-react';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
 export const runtime = 'experimental-edge';
 
-const TemplateDetailPage = ({ footerData, metaData, template }) => {
+const TemplateDetailPage = ({ footerData, templateData, metaData }) => {
+    const router = useRouter();
+    const { templateId } = router.query;
+
+    const [template, setTemplate] = useState();
+
+    useEffect(() => {
+        if (templateId) {
+            const foundTemplate = templateData.find((t) => t.id === templateId);
+            setTemplate(foundTemplate);
+        }
+    }, []);
+
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
@@ -22,8 +37,8 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                 <div className="cont gap-4 pt-20">
                     <div className="flex flex-col">
                         <h1 className="h1">{template?.title}</h1>
-                        <div className="flex border custom-border shadow-lg bg-[#f2f2f2]">
-                            <div className="w-2/5 cont justify-between p-8 border-r custom-border">
+                        <div className="flex gap-8 bg-white border custom-border p-8">
+                            <div className="w-1/3 cont justify-between">
                                 <div className="cont gap-4">
                                     <h2 className="h2">{template?.description}</h2>
                                     <div className="flex gap-4 items-center">
@@ -41,30 +56,19 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                                             if (triggerIcon && !shownIcons.has(triggerIcon)) {
                                                 shownIcons.add(triggerIcon);
                                                 elements.push(
-                                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                        <Image
-                                                            key="trigger-icon"
-                                                            src={triggerIcon}
-                                                            alt="trigger icon"
-                                                            width={36}
-                                                            height={36}
-                                                            className="h-5 w-fit"
-                                                        />
-                                                    </div>
+                                                    <Image
+                                                        key="trigger-icon"
+                                                        src={triggerIcon}
+                                                        alt="trigger icon"
+                                                        width={32}
+                                                        height={32}
+                                                    />
                                                 );
                                             } else if (!triggerIcon) {
                                                 if (triggerType === 'webhook') {
-                                                    elements.push(
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                            <Webhook size={36} />
-                                                        </div>
-                                                    );
+                                                    elements.push(<Webhook size={32} />);
                                                 } else if (triggerType === 'cron') {
-                                                    elements.push(
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                            <Timer size={36} />
-                                                        </div>
-                                                    );
+                                                    elements.push(<Timer size={32} />);
                                                 }
                                             }
 
@@ -74,16 +78,13 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                                                 if (icon && !shownIcons.has(icon)) {
                                                     shownIcons.add(icon);
                                                     elements.push(
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                            <Image
-                                                                key={`app-icon-${i}`}
-                                                                src={icon}
-                                                                alt={`app icon`}
-                                                                width={36}
-                                                                height={36}
-                                                                className="h-5 w-fit"
-                                                            />
-                                                        </div>
+                                                        <Image
+                                                            key={`app-icon-${i}`}
+                                                            src={icon}
+                                                            alt={`app icon`}
+                                                            width={32}
+                                                            height={32}
+                                                        />
                                                     );
                                                 }
                                             }
@@ -113,18 +114,15 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-3/5 h-[500px] overflow-hidden flex justify-center items-start relative">
-                                <img src={template?.templateUrl} alt="Template Image" className="block" />
-                                <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
+                            <div className="w-2/3 relative h-[500px]">
+                                <Image src={template?.templateUrl} layout="fill" alt="Template Image" />
                             </div>
                         </div>
                     </div>
                 </div>
                 {template?.content && (
-                    <div className="flex justify-center">
-                        <div className="bg-[#FAF9F6] border custom-border p-8 max-w-[1000px]">
-                            <ReactMarkdown>{template?.content}</ReactMarkdown>
-                        </div>
+                    <div className="bg-[#FAF9F6] border custom-border p-8">
+                        <ReactMarkdown>{template?.content}</ReactMarkdown>
                     </div>
                 )}
                 <div className="pb-4">
@@ -136,25 +134,18 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
 };
 
 export async function getServerSideProps(context) {
-    const { req, query } = context;
-    const { templateId } = query;
+    const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
-
-    const template = templateData.find((t) => t.id === templateId) || null;
-    const metaData = {
-        title: template?.title,
-        description: template?.description,
-        keywords: template?.tags?.join(', '),
-    };
+    const metaData = await getMetaData('/templates', pageUrl);
     return {
         props: {
             footerData: footerData || [],
+            templateData: templateData || [],
             metaData: metaData || {},
-            template: template || null,
         },
     };
 }

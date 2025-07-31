@@ -16,7 +16,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
-import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import IntegrationsRequestComp from '@/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp';
 
 const APPERPAGE = 9;
 
@@ -160,7 +160,12 @@ export default function McpAppComp({
                                         Get Your MCP URL
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener showType='button' appInfo={appOneDetails} type='action' />
+                                    <button
+                                        className="btn btn-accent"
+                                        onClick={() => document.getElementById('plugin_request_form').showModal()}
+                                    >
+                                        Request Beta Access
+                                    </button>
                                 )}
                             </div>
                         </div>
@@ -301,12 +306,10 @@ export default function McpAppComp({
                                     );
                                 })
                             ) : (
-                                <div className="w-full col-span-full">
-                                    <RequestIntegrationPopupOpener
-                                        showType="searchView"
-                                        className="md:border-t-0 md:border-l-0"
-                                    />
-                                </div>)
+                                <span className="p-8 text-3xl w-full col-span-3 border border-white border-l-0 border-t-0">
+                                    No Apps found for Searched name{' '}
+                                </span>
+                            )
                         ) : (
                             apps
                                 ?.filter((app) => app.appslugname !== appOneDetails.appslugname)
@@ -516,6 +519,8 @@ export default function McpAppComp({
                     </div>
                 </div>
             </div>
+
+            <IntegrationsRequestComp />
         </>
     );
 }

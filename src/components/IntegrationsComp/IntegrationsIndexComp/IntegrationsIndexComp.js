@@ -209,25 +209,34 @@ export default function IntegrationsIndexComp({
                                         );
                                     })
                                 ) : (
-                                    <div className="w-full col-span-full">
-                                        <RequestIntegrationPopupOpener
-                                            showType="searchView"
-                                            className="md:border-t-0 md:border-l-0"
-                                        />
-                                    </div>
+                                    <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
+                                        No Apps found for Searched name{' '}
+                                    </span>
                                 )
                             ) : (
-                                <>
-                                    {apps?.map((app, index) => (
-                                        <AppVisual redirectPart="integrations" app={app} index={index} />
-                                    ))}
-                                    <AppVisual
-                                        redirectPart="integrations"
-                                        app={{
-                                            rowid: 'request-new-app',
-                                        }}
-                                    />
-                                </>
+                                apps?.map((app, index) => {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={createURL(`/integrations/${app?.appslugname}`)}
+                                            className={`${style.app} hover-bg-grey-100-text-black custom-border`}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <Image
+                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                        width={36}
+                                                        height={36}
+                                                        alt={app?.name}
+                                                        className="h-5 w-fit"
+                                                    />
+                                                </div>
+                                                <h2 className="font-bold">{app?.name}</h2>
+                                            </div>
+                                            <p className={style?.app__des}>{app?.description}</p>
+                                        </Link>
+                                    );
+                                })
                             )}
                         </div>
                     </div>
@@ -255,7 +264,23 @@ export default function IntegrationsIndexComp({
                 buttonLink="https://viasocket.com/faq/developer-hub"
             />
 
-            <RequestIntegrationPopupOpener className='container' />
+            <div className="container">
+                <div className="bg-white border custom-border p-12 cont gap-2">
+                    <div className="cont gap-1">
+                        <h2 className="h2">Couldn't Find Your App? Don’t Worry, We’ll Build It For You</h2>
+                        <p className="sub__h1">
+                            If your app isn’t available on viaSocket, simply request an integration, and our team will
+                            build it for you, ensuring seamless connection and effortless automation of your workflows.
+                        </p>
+                    </div>
+                    <button
+                        onClick={() => document.getElementById('plugin_request_form').showModal()}
+                        className="btn btn-accent mt-8"
+                    >
+                        Request your plugin now
+                    </button>
+                </div>
+            </div>
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
@@ -270,128 +295,7 @@ export default function IntegrationsIndexComp({
                     <Footer footerData={footerData} />
                 </div>
             </div>
-        </>
-    );
-}
-
-export function AppVisual({ app, index, redirectPart }) { // mcp, integrations
-    return app.rowid !== 'request-new-app' ? (
-        <Link
-            key={index || app?.rowid}
-            href={createURL(`/${redirectPart}/${app?.appslugname}`)}
-            className={`${style.app} hover-bg-grey-100-text-black custom-border`}
-        >
-            <div className="flex items-center gap-2">
-                <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                    <Image
-                        src={app?.iconurl || 'https://placehold.co/36x36'}
-                        width={36}
-                        height={36}
-                        alt={app?.name}
-                        className="h-5 w-fit"
-                    />
-                </div>
-                <h2 className="font-bold">{app?.name}</h2>
-            </div>
-            <p className={style?.app__des}>{app?.description}</p>
-        </Link>
-    ) : (
-        <div className={`${style.app}  border-2 hover-bg-grey-100-text-black border-dashed custom-border`}>
-            <div className="  flex items-center gap-2">
-                <h2 className="font-bold">
-                    <span className="h3">💡</span> Request an App
-                </h2>
-            </div>
-            <p className={`${style?.app__des}`}>Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours</p>
-            <RequestIntegrationPopupOpener showType="button" title="Request Now" />
-        </div>
-    );
-}
-
-export function RequestIntegrationPopupOpener({ className = '', showType = 'fullView', appInfo, type, title, secondAppInfo = null }) {
-    const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
-
-    const openModal = () => {
-        setModalData({ isOpen: true, appInfo, type });
-    };
-
-    const closeModal = () => {
-        setModalData((prev) => ({ ...prev, isOpen: false }));
-    };
-
-    const label = title || `Request a new ${type || 'App'}`;
-
-    const showButton = (
-        <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>
-            {label}
-        </button>
-    );
-
-    const dottedText = (
-        <span onClick={openModal} className={`block cursor-pointer text-lg text-accent hover:underline w-fit ${className}`}>
-            {label}
-        </span>
-    );
-
-    const fullView = (
-        <div className={`bg-white border custom-border p-12 cont gap-2 w-full ${className}`}>
-            <div className="cont gap-1">
-                <h2 className="h2">
-                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
-                </h2>
-            </div>
-            <div className="mt-8">{showButton}</div>
-        </div>
-    );
-    const SearchView = (
-        <div className={`w-full bg-white custom-border md:border grid grid-cols-1 md:grid-cols-2 ${className}`}>
-            <div className=" custom-border border-r p-12 cont gap-8">
-                    <h2 className="h3">
-                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
-                    </h2>
-                <div>{showButton}</div>
-            </div>
-            <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
-                    <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
-                    <Link href="https://viasocket.my.canva.site/viasocket-dh-playbook" target='_blank' className='max-w-max'>
-                        <button className="btn text-nowrap btn-accent">Read our playbook</button>
-                    </Link>
-            </div>
-        </div>
-    );
-
-    const showFooter = (
-        <span
-            className="text-sm cursor-pointer hover:underline transition-all duration-300 text-left"
-            onClick={openModal}
-        >
-            Request an Integration
-        </span>
-    );
-
-    const getUi = () => {
-        switch (showType) {
-            case 'fullView':
-                return fullView;
-            case 'dotted':
-                return dottedText;
-            case 'button':
-                return showButton;
-            case 'footer':
-                return showFooter;
-            case 'searchView':
-                return SearchView;
-            default:
-                return fullView;
-        }
-    };
-
-    return (
-        <>
-            {getUi()}
-            {modalData.isOpen && (
-                <IntegrationsRequestComp appInfo={modalData.appInfo} secondAppInfo = {secondAppInfo} type={modalData.type} onClose={closeModal} />
-            )}
+            <IntegrationsRequestComp />
         </>
     );
 }
