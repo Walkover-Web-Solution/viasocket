@@ -367,11 +367,7 @@ export function RequestIntegrationPopupOpener({
             </div>
             <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
                 <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
-                <Link
-                    href="https://viasocket.my.canva.site/viasocket-dh-playbook"
-                    target="_blank"
-                    className="max-w-max"
-                >
+                <Link href="https://viasocket.com/faq/developer-hub" target="_blank" className="max-w-max">
                     <button className="btn text-nowrap btn-accent">Read our playbook</button>
                 </Link>
             </div>

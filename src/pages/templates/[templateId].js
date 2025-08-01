@@ -2,6 +2,7 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
+import TemplateCard from '@/components/templateCard/templateCard';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getTemplates } from '@/utils/axiosCalls';
 import { getFooterData } from '@/utils/getData';
@@ -12,7 +13,8 @@ import ReactMarkdown from 'react-markdown';
 
 export const runtime = 'experimental-edge';
 
-const TemplateDetailPage = ({ footerData, metaData, template }) => {
+const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }) => {
+    console.log(template, metaData);
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
@@ -56,13 +58,13 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                                                 if (triggerType === 'webhook') {
                                                     elements.push(
                                                         <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                            <Webhook size={36} />
+                                                            <Webhook size={24} />
                                                         </div>
                                                     );
                                                 } else if (triggerType === 'cron') {
                                                     elements.push(
                                                         <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                                            <Timer size={36} />
+                                                            <Timer size={24} />
                                                         </div>
                                                     );
                                                 }
@@ -127,6 +129,16 @@ const TemplateDetailPage = ({ footerData, metaData, template }) => {
                         </div>
                     </div>
                 )}
+                {relatedTemplates?.length > 0 && (
+                    <div className="cont gap-4">
+                        <div className="h2">Related Templates</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {relatedTemplates.map((template) => (
+                                <TemplateCard key={template.id} template={template} />
+                            ))}
+                        </div>
+                    </div>
+                )}
                 <div className="pb-4">
                     <Footer footerData={footerData} />
                 </div>
@@ -144,17 +156,30 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
 
-    const template = templateData.find((t) => t.id === templateId) || null;
+    const selectedTemplate = templateData.find((t) => t.id === templateId);
+
+    const selectedCategories = Array.isArray(selectedTemplate?.category) ? selectedTemplate.category : [];
+
+    const relatedTemplates = templateData
+        .filter(
+            (template) =>
+                template.id !== selectedTemplate?.id &&
+                Array.isArray(template.category) &&
+                template.category.some((cat) => selectedCategories.includes(cat))
+        )
+        .slice(0, 3);
+
     const metaData = {
-        title: template?.title,
-        description: template?.description,
-        keywords: template?.tags?.join(', '),
+        title: selectedTemplate?.title,
+        description: selectedTemplate?.description,
+        keywords: selectedTemplate?.tags?.join(', '),
     };
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
-            template: template || null,
+            template: selectedTemplate || null,
+            relatedTemplates: relatedTemplates || [],
         },
     };
 }

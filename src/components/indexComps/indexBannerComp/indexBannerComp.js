@@ -2,7 +2,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
-        <div className="container min-h-fit pt-20">
+        <div className="container min-h-fit pt-12">
             <div className="flex flex-col h-full cont__gap">
                 <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                     <div className="flex gap-12 flex-col items-center">

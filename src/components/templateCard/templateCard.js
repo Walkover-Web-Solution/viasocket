@@ -42,13 +42,13 @@ const TemplateCard = ({ template, index }) => {
                             if (triggerType === 'webhook') {
                                 elements.push(
                                     <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                        <Webhook size={36} />
+                                        <Webhook size={24} />
                                     </div>
                                 );
                             } else if (triggerType === 'cron') {
                                 elements.push(
                                     <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
-                                        <Timer size={36} />
+                                        <Timer size={24} />
                                     </div>
                                 );
                             }

@@ -32,7 +32,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
             <Navbar footerData={footerData} utm={'/pricing'} />
 
-            <div className="container cont pb-4 pt-20 lg:gap-20 md:gap-16 gap-12">
+            <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
                         Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation
