@@ -27,9 +27,9 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
             <Navbar footerData={footerData} utm={'/embed'} />
 
             <div className="cont lg:gap-20 md:gap-16 gap-12">
-                <div className="w-full min-h-fit lg:h-dvh  border-b custom-border">
+                <div className="w-full min-h-fit py-12 border-b custom-border">
                     <div className="container h-full flex flex-col">
-                        <div className="flex flex-col lg:flex-row h-full">
+                        <div className="flex flex-col lg:flex-row h-full justify-center items-center">
                             <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
                                 <div className="cont">
                                     <h1 className="h1  ">
