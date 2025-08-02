@@ -14,7 +14,7 @@ export default function Programs({ footerData, metaData, programs }) {
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
             <Navbar footerData={footerData} utm={'/free-access-programs'} />
 
-            <div className="container cont cont__py cont__gap">
+            <div className="container cont py-12 cont__gap">
                 <div className="cont gap-2">
                     <h1 className="h1 ">
                         <span className="text-accent"> Free services </span> for impactful organisations

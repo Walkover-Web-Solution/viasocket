@@ -58,7 +58,7 @@ export default function Navbar({ utm, footerData }) {
                 }`}
             >
                 <div className="border-y custom-border">
-                    <div className="justify-between flex bg-white px-4">
+                    <div className="justify-between flex bg-[#FAF9F6] px-4">
                         <Link
                             href="/"
                             aria-label="logo"
@@ -122,7 +122,7 @@ export default function Navbar({ utm, footerData }) {
                                 Login
                             </button>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 bg-accent items-center justify-center !text-xs`}
+                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
                                 onClick={(e) => handleRedirect(e, '/signup?')}
                             >
                                 Sign Up

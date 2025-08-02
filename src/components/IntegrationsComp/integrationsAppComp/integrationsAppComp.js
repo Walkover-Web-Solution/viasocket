@@ -7,6 +7,7 @@ import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import searchApps from '@/utils/searchApps';
+import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
 
 export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
     const [searchTerm, setSearchTerm] = useState('');
@@ -198,9 +199,12 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         </Link>
                                     ))
                                 ) : (
-                                    <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
-                                        No Apps found for Searched name{' '}
-                                    </span>
+                                    <div className='col-span-full'>
+                                        <RequestIntegrationPopupOpener
+                                            showType="searchView"
+                                            className="md:border-t-0 md:border-l-0"
+                                        />
+                                    </div>
                                 )
                             ) : (
                                 apps

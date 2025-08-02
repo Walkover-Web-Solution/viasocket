@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
+import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
@@ -35,6 +36,11 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     <span className="text-sm">{item?.name}</span>
                                 </Link>
                             ))}
+                            {
+                                groupName === 'Support' && (
+                                    <RequestIntegrationPopupOpener title = "Request an Integration" showType='footer' />
+                                )
+                            }
                         </div>
                     </div>
                 );

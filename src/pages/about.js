@@ -24,7 +24,7 @@ const about = ({ metaData, footerData }) => {
             <MetaHeadComp metaData={metaData} page={'/about'} />
             <Navbar footerData={footerData} utm={'/about'} />
             <div className="container">
-                <div className="min-h-screen pt-20 flex flex-col gap-16">
+                <div className="min-h-screen pt-12 flex flex-col gap-16">
                     <div className="about__hero">
                         <h6 className="m-0">Our purpose on this planet is simple:</h6>
                         <h1 className="h1">Bring your <span className="text-accent">automation ideas</span> to life and spark new ones</h1>

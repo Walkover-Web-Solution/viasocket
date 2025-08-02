@@ -107,7 +107,7 @@ const automations = ({
             <Navbar footerData={footerData} utm={'/workflow-automations'} />
 
             <div className="container cont gap-12">
-                <section className="py-20">
+                <section className="py-12">
                     <h1 className="h1">
                         Your Business, Automated
                         <span className="text-accent"> Intelligently</span>
