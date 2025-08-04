@@ -14,7 +14,7 @@ import ReactMarkdown from 'react-markdown';
 export const runtime = 'experimental-edge';
 
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }) => {
-    console.log(template, metaData);
+    console.log(template.content);
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
@@ -22,12 +22,12 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
 
             <div className="container cont lg:gap-20 md:gap-16 gap-12">
                 <div className="cont gap-4 pt-20">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-4">
                         <h1 className="h1">{template?.title}</h1>
-                        <div className="flex border custom-border shadow-lg bg-[#f2f2f2]">
-                            <div className="w-2/5 cont justify-between p-8 border-r custom-border">
+                        <div className="flex flex-col md:flex-row md:gap-4 gap-0 border custom-border shadow-lg bg-[#f2f2f2]">
+                            <div className="w-full md:w-2/5 cont justify-between p-8 border-r-0 border-b md:border-b-0 md:border-r custom-border">
                                 <div className="cont gap-4">
-                                    <h2 className="h2">{template?.description}</h2>
+                                    <h2 className="h3">{template?.description}</h2>
                                     <div className="flex gap-4 items-center">
                                         {(() => {
                                             const triggerIcon = template?.triggerIcon;
@@ -115,7 +115,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-3/5 h-[500px] overflow-hidden flex justify-center items-start relative">
+                            <div className="md:w-3/5 w-full h-[500px] overflow-hidden flex justify-center items-start relative">
                                 <img src={template?.templateUrl} alt="Template Image" className="block" />
                                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
                             </div>

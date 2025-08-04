@@ -116,9 +116,9 @@ const automations = ({
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
-                    <button className="btn btn-accent mt-3" onClick={(e) => handleRedirect(e, '/signup?')}>
-                        Start for free
-                    </button>
+                    <Link href="/signup?utm_source=/workflow-automations">
+                        <button className="btn btn-accent mt-3">Start for free</button>
+                    </Link>
                 </section>
 
                 <section className="bg-black text-white p-12 flex flex-col gap-10">
