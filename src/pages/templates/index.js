@@ -133,7 +133,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
                 </div>
 
                 <div className="cont container">
-                    <div className="flex flex-col lg:flex-row gap-6 mb-8">
+                    <div className="flex flex-col md:flex-row gap-6 md:mb-8 mb-4">
                         <div className="flex-1">
                             <div className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                                 <MdSearch fontSize={20} />
@@ -146,70 +146,68 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
                             </div>
                         </div>
                         {categories?.length > 0 && (
-                            <div className="">
-                                <div className="relative">
-                                    <button
-                                        onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                                        className="w-full px-4 py-3 bg-white border custom-border text-left flex items-center justify-between gap-2 focus:outline-none"
-                                    >
-                                        {selectedCategories.length === 0 ? (
-                                            'Filter'
-                                        ) : (
-                                            <div className="flex gap-1 items-center">
-                                                <div className="w-6 h-6 flex items-center justify-center bg-gray-100 border custom-border text-sm font-medium">
-                                                    {selectedCategories.length}
-                                                </div>
-                                                Filter
+                            <div className="relative">
+                                <button
+                                    onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+                                    className="w-[200px] px-4 py-3 bg-white border custom-border text-left flex items-center justify-between gap-2 focus:outline-none"
+                                >
+                                    {selectedCategories.length === 0 ? (
+                                        'Filter'
+                                    ) : (
+                                        <div className="flex gap-1 items-center">
+                                            <div className="w-6 h-6 flex items-center justify-center bg-gray-100 border custom-border text-sm font-medium">
+                                                {selectedCategories.length}
                                             </div>
-                                        )}
-                                        <MdKeyboardArrowDown
-                                            className={`transform transition-transform duration-200 ${showCategoryDropdown ? 'rotate-180' : ''}`}
-                                            size={20}
-                                        />
-                                    </button>
-
-                                    {showCategoryDropdown && (
-                                        <div className="absolute top-full right-0 w-60 mt-1 bg-white border custom-border z-50 max-h-64 overflow-y-auto">
-                                            {categories.map((category) => (
-                                                <label
-                                                    key={category}
-                                                    className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
-                                                >
-                                                    <div className="relative">
-                                                        <input
-                                                            type="checkbox"
-                                                            checked={selectedCategories.includes(category)}
-                                                            onChange={() => toggleCategory(category)}
-                                                            className="sr-only"
-                                                        />
-                                                        <div
-                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-                                                                selectedCategories.includes(category)
-                                                                    ? 'bg-gray-500 border-gray-500'
-                                                                    : 'border-gray-300 bg-white'
-                                                            }`}
-                                                        >
-                                                            {selectedCategories.includes(category) && (
-                                                                <svg
-                                                                    className="w-3 h-3 text-white"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 20 20"
-                                                                >
-                                                                    <path
-                                                                        fillRule="evenodd"
-                                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                        clipRule="evenodd"
-                                                                    />
-                                                                </svg>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <span className="ml-2 h6">{category}</span>
-                                                </label>
-                                            ))}
+                                            Filter
                                         </div>
                                     )}
-                                </div>
+                                    <MdKeyboardArrowDown
+                                        className={`transform transition-transform duration-200 ${showCategoryDropdown ? 'rotate-180' : ''}`}
+                                        size={20}
+                                    />
+                                </button>
+
+                                {showCategoryDropdown && (
+                                    <div className="absolute top-full right-0 w-60 mt-1 bg-white border custom-border z-50 max-h-64 overflow-y-auto">
+                                        {categories.map((category) => (
+                                            <label
+                                                key={category}
+                                                className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
+                                            >
+                                                <div className="relative">
+                                                    <input
+                                                        type="checkbox"
+                                                        checked={selectedCategories.includes(category)}
+                                                        onChange={() => toggleCategory(category)}
+                                                        className="sr-only"
+                                                    />
+                                                    <div
+                                                        className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                                                            selectedCategories.includes(category)
+                                                                ? 'bg-gray-500 border-gray-500'
+                                                                : 'border-gray-300 bg-white'
+                                                        }`}
+                                                    >
+                                                        {selectedCategories.includes(category) && (
+                                                            <svg
+                                                                className="w-3 h-3 text-white"
+                                                                fill="currentColor"
+                                                                viewBox="0 0 20 20"
+                                                            >
+                                                                <path
+                                                                    fillRule="evenodd"
+                                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                    clipRule="evenodd"
+                                                                />
+                                                            </svg>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                                <span className="ml-2 h6">{category}</span>
+                                            </label>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
@@ -334,8 +332,31 @@ function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
 
         document.body.removeChild(measurer);
     }, [title]);
+    const [isMobile, setIsMobile] = useState(false);
 
-    return (
+    useEffect(() => {
+        const checkWidth = () => setIsMobile(window.innerWidth < 769);
+        checkWidth(); // Initial check
+        window.addEventListener('resize', checkWidth);
+        return () => window.removeEventListener('resize', checkWidth);
+    }, []);
+
+    return isMobile ? (
+        <div className="cont gap-1">
+            <h1 className="h1 line-clamp-2">{title}</h1>
+            <div className="flex gap-2">
+                <button onClick={onInstall} className="btn btn-accent">
+                    Install
+                </button>
+                <button onClick={onPrev} className="btn btn-outline bg-white">
+                    <MdKeyboardArrowLeft size={32} />
+                </button>
+                <button onClick={onNext} className="btn btn-outline bg-white">
+                    <MdKeyboardArrowRight size={32} />
+                </button>
+            </div>
+        </div>
+    ) : (
         <div ref={measureRef} className="h1">
             <div>
                 <span className="text-accent">Automate</span> {firstLine.replace(/^Automate\s*/i, '')}
