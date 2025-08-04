@@ -25,7 +25,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
     const [searchTerm, setSearchTerm] = useState('');
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [isSearching, setIsSearching] = useState(false);
     const [filteredTemplates, setFilteredTemplates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCategories, setSelectedCategories] = useState([]);
@@ -89,7 +88,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
     const handleSearchChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
-        setIsSearching(value.trim().length > 0);
     };
 
     const toggleCategory = (category) => {
@@ -162,72 +160,73 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
                                 />
                             </div>
                         </div>
-
-                        <div className="">
-                            <div className="relative">
-                                <button
-                                    onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
-                                    className="w-full px-4 py-3 bg-white border custom-border text-left flex items-center justify-between gap-2 focus:outline-none"
-                                >
-                                    {selectedCategories.length === 0 ? (
-                                        'Filter'
-                                    ) : (
-                                        <div className="flex gap-1 items-center">
-                                            <div className="w-6 h-6 flex items-center justify-center bg-gray-100 border custom-border text-sm font-medium">
-                                                {selectedCategories.length}
+                        {categories?.length > 0 && (
+                            <div className="">
+                                <div className="relative">
+                                    <button
+                                        onClick={() => setShowCategoryDropdown(!showCategoryDropdown)}
+                                        className="w-full px-4 py-3 bg-white border custom-border text-left flex items-center justify-between gap-2 focus:outline-none"
+                                    >
+                                        {selectedCategories.length === 0 ? (
+                                            'Filter'
+                                        ) : (
+                                            <div className="flex gap-1 items-center">
+                                                <div className="w-6 h-6 flex items-center justify-center bg-gray-100 border custom-border text-sm font-medium">
+                                                    {selectedCategories.length}
+                                                </div>
+                                                Filter
                                             </div>
-                                            Filter
+                                        )}
+                                        <MdKeyboardArrowDown
+                                            className={`transform transition-transform duration-200 ${showCategoryDropdown ? 'rotate-180' : ''}`}
+                                            size={20}
+                                        />
+                                    </button>
+
+                                    {showCategoryDropdown && (
+                                        <div className="absolute top-full right-0 w-60 mt-1 bg-white border custom-border z-50 max-h-64 overflow-y-auto">
+                                            {categories.map((category) => (
+                                                <label
+                                                    key={category}
+                                                    className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
+                                                >
+                                                    <div className="relative">
+                                                        <input
+                                                            type="checkbox"
+                                                            checked={selectedCategories.includes(category)}
+                                                            onChange={() => toggleCategory(category)}
+                                                            className="sr-only"
+                                                        />
+                                                        <div
+                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
+                                                                selectedCategories.includes(category)
+                                                                    ? 'bg-gray-500 border-gray-500'
+                                                                    : 'border-gray-300 bg-white'
+                                                            }`}
+                                                        >
+                                                            {selectedCategories.includes(category) && (
+                                                                <svg
+                                                                    className="w-3 h-3 text-white"
+                                                                    fill="currentColor"
+                                                                    viewBox="0 0 20 20"
+                                                                >
+                                                                    <path
+                                                                        fillRule="evenodd"
+                                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                                        clipRule="evenodd"
+                                                                    />
+                                                                </svg>
+                                                            )}
+                                                        </div>
+                                                    </div>
+                                                    <span className="ml-2 h6">{category}</span>
+                                                </label>
+                                            ))}
                                         </div>
                                     )}
-                                    <MdKeyboardArrowDown
-                                        className={`transform transition-transform duration-200 ${showCategoryDropdown ? 'rotate-180' : ''}`}
-                                        size={20}
-                                    />
-                                </button>
-
-                                {showCategoryDropdown && (
-                                    <div className="absolute top-full right-0 w-60 mt-1 bg-white border custom-border z-50 max-h-64 overflow-y-auto">
-                                        {categories.map((category) => (
-                                            <label
-                                                key={category}
-                                                className="flex items-center p-3 hover:bg-gray-100 cursor-pointer"
-                                            >
-                                                <div className="relative">
-                                                    <input
-                                                        type="checkbox"
-                                                        checked={selectedCategories.includes(category)}
-                                                        onChange={() => toggleCategory(category)}
-                                                        className="sr-only"
-                                                    />
-                                                    <div
-                                                        className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-                                                            selectedCategories.includes(category)
-                                                                ? 'bg-gray-500 border-gray-500'
-                                                                : 'border-gray-300 bg-white'
-                                                        }`}
-                                                    >
-                                                        {selectedCategories.includes(category) && (
-                                                            <svg
-                                                                className="w-3 h-3 text-white"
-                                                                fill="currentColor"
-                                                                viewBox="0 0 20 20"
-                                                            >
-                                                                <path
-                                                                    fillRule="evenodd"
-                                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                    clipRule="evenodd"
-                                                                />
-                                                            </svg>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <span className="ml-2 h6">{category}</span>
-                                            </label>
-                                        ))}
-                                    </div>
-                                )}
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
 
                     {loading ? (
