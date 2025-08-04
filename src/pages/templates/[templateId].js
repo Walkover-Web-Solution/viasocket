@@ -22,12 +22,12 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
 
             <div className="container cont lg:gap-20 md:gap-16 gap-12">
                 <div className="cont gap-4 pt-20">
-                    <div className="flex flex-col">
+                    <div className="flex flex-col gap-4">
                         <h1 className="h1">{template?.title}</h1>
                         <div className="flex border custom-border shadow-lg bg-[#f2f2f2]">
                             <div className="w-2/5 cont justify-between p-8 border-r custom-border">
                                 <div className="cont gap-4">
-                                    <h2 className="h2">{template?.description}</h2>
+                                    <h2 className="h3">{template?.description}</h2>
                                     <div className="flex gap-4 items-center">
                                         {(() => {
                                             const triggerIcon = template?.triggerIcon;
