@@ -1,5 +1,3 @@
-import { handleRedirect } from '@/utils/handleRedirection';
-
 export default function IndexBannerComp({ redirect_to, signupFeatures }) {
     return (
         <div className="container min-h-fit pt-12">
@@ -12,8 +10,8 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                             </h1>
                             <div className="cont gap-2 w-full">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                    <button className="btn btn-accent" onClick={(e) => handleRedirect(e, '/signup?')}>
-                                        Start for free
+                                    <button className="btn btn-accent">
+                                        <Link href="/signup?utm_source=/">Start for free</Link>
                                     </button>
                                     <a
                                         href="https://cal.id/team/viasocket/superheros"
