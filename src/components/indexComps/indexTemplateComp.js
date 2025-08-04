@@ -8,7 +8,10 @@ import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 
 const IndexTemplateComp = ({ categories }) => {
-    const [selected, setSelected] = useState({ name: 'Finance', scriptid: 'scriFymkmpzr' });
+    const [selected, setSelected] = useState({
+        name: 'Finance',
+        scriptid: '72077fe9954a5122c1301f4a0dce567ebd54e5d5e6c0e4ff05cfd884361c7e52',
+    });
     const [templates, setTemplates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState(null);

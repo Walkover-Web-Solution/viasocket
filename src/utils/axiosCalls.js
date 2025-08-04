@@ -73,42 +73,42 @@ export async function getVideos(pageUrl) {
     }
 }
 
-// export async function getTemplates(pageUrl) {
-//     const url = 'https://plugservice-api.viasocket.com/templates/all';
-//     try {
-//         const response = await axiosWithCache.get(url, {
-//             cache: {
-//                 ttl: 1000 * 60 * 20, //cache for 20 min
-//                 interpretHeader: false,
-//             },
-//         });
-//         return response.data.data.templates;
-//     } catch (error) {
-//         sendErrorMessage({
-//             error,
-//             pageUrl,
-//             source: url,
-//         });
-//         return [];
-//     }
-// }
-export const getTemplates = async () => {
+export async function getTemplates(pageUrl) {
+    const url = 'https://plugservice-api.viasocket.com/templates/all';
     try {
-        const response = await axios.get('http://dev-flow-api.viasocket.com/internal/get-all-templates', {
-            headers: {
-                'Accept': '*/*',
-                'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
-                'auth_key': '178066bc-edb4-455e-b223-67133bbaf674',
+        const response = await axiosWithCache.get(url, {
+            cache: {
+                ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
             },
         });
-
-        console.log('Templates:', response.data);
         return response.data.data.templates;
     } catch (error) {
-        console.error('Error fetching templates:', error);
-        throw error;
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return [];
     }
-};
+}
+// export const getTemplates = async () => {
+//     try {
+//         const response = await axios.get('http://dev-flow-api.viasocket.com/internal/get-all-templates', {
+//             headers: {
+//                 'Accept': '*/*',
+//                 'User-Agent': 'Thunder Client (https://www.thunderclient.com)',
+//                 'auth_key': '178066bc-edb4-455e-b223-67133bbaf674',
+//             },
+//         });
+
+//         console.log('Templates:', response.data);
+//         return response.data.data.templates;
+//     } catch (error) {
+//         console.error('Error fetching templates:', error);
+//         throw error;
+//     }
+// };
 
 export async function getApps(query, pageUrl) {
     const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name : 'All';
