@@ -10,11 +10,11 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import { Timer, Webhook } from 'lucide-react';
 import Image from 'next/image';
 import ReactMarkdown from 'react-markdown';
+import style from '@/components/templateCard/template.module.scss';
 
 export const runtime = 'experimental-edge';
 
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }) => {
-    console.log(template.content);
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/templates'} />
@@ -124,7 +124,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                 </div>
                 {template?.content && (
                     <div className="flex justify-center">
-                        <div className="bg-[#FAF9F6] border custom-border p-8 max-w-[1000px]">
+                        <div className={`bg-[#FAF9F6] border custom-border p-8 max-w-[1000px] ${style.markdownImage}`}>
                             <ReactMarkdown>{template?.content}</ReactMarkdown>
                         </div>
                     </div>
