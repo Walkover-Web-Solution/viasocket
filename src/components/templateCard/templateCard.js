@@ -6,7 +6,7 @@ import { FiExternalLink } from 'react-icons/fi';
 const TemplateCard = ({ template, index }) => {
     return (
         <Link
-            href={`/templates/${template?.id}`}
+            href={`/templates/${template?.title?.trim().replace(/\s+/g, '-').toLowerCase()}`}
             className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
         >
             <div className="cont gap-2 px-8 py-4">
@@ -81,8 +81,8 @@ const TemplateCard = ({ template, index }) => {
 
             <div className="h-[400px] w-full overflow-hidden flex justify-center items-start relative">
                 <img
-                    src={template?.metadata?.templateUrl || template?.templateUrl || 'https://placehold.co/600x400'}
-                    alt="template image"
+                    src={template?.templateUrl || 'https://placehold.co/600x400'}
+                    alt={template?.title}
                     className="block"
                 />
                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
