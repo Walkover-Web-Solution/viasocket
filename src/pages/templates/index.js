@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS, TEMPLATES_FIELDS } from '@/const/fields';
-import { getFooterData, getValidTemplatesData } from '@/utils/getData';
+import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdKeyboardArrowLeft, MdKeyboardArrowRight, MdSearch } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -14,12 +14,13 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { useRouter } from 'next/router';
 import AutomationSuggestions from '../workflow-automation-ideas';
+import TitleWithButtons from '@/components/templateCard/titleWithButtons';
 
 export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateToShow, metaData, faqData, blogData, templateData, categories }) => {
+const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories }) => {
     const router = useRouter();
 
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
@@ -65,19 +66,40 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
     };
 
     const filterTemplates = (search, categories) => {
-        let filtered = templateToShow;
+        let filtered = [...templateToShow];
 
+        // 1. Filter by selected categories (if any)
         if (categories.length > 0) {
             filtered = filtered.filter((template) => {
                 return template.category && template.category.some((cat) => categories.includes(cat));
             });
         }
 
+        // 2. Multi-word search filter
         if (search.trim()) {
-            filtered = filtered.filter((template) => template.title.toLowerCase().includes(search.toLowerCase()));
+            const searchWords = search.toLowerCase().split(/\s+/);
+
+            // Attach match count to each template
+            filtered = filtered
+                .map((template) => {
+                    const title = template.title?.toLowerCase() || '';
+                    const matchedWords = searchWords.filter((word) => title.includes(word));
+                    return {
+                        ...template,
+                        matchScore: matchedWords.length,
+                    };
+                })
+                .filter((t) => t.matchScore > 0) // Only keep templates that matched at least one word
+                .sort((a, b) => b.matchScore - a.matchScore); // Sort: most matches first
         }
 
-        setFilteredTemplates(filtered);
+        // 3. Remove templates without an image (LAST filter)
+        filtered = filtered.filter((template) => template.templateUrl && template.templateUrl.trim() !== '');
+
+        // 4. Remove the matchScore property if you don't need it
+        const cleaned = filtered.map(({ matchScore, ...rest }) => rest);
+
+        setFilteredTemplates(cleaned);
         setVisibleCount(TEMPLATES_PER_PAGE);
     };
 
@@ -108,6 +130,10 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, [showCategoryDropdown]);
+
+    const sortedTemplates = [...filteredTemplates].sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+    const latestTemplates = sortedTemplates.slice(0, 6);
+    const remainingTemplates = sortedTemplates.slice(6);
 
     return (
         <>
@@ -211,8 +237,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
                             </div>
                         )}
                     </div>
-
                     {loading ? (
+                        // Skeleton loader as before
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                             {[...Array(TEMPLATES_PER_PAGE)].map((_, index) => (
                                 <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
@@ -220,23 +246,42 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
                         </div>
                     ) : filteredTemplates.length > 0 ? (
                         <>
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                {filteredTemplates.slice(0, visibleCount).map((template, index) => (
-                                    <TemplateCard key={template.id} index={index} template={template} />
-                                ))}
-                            </div>
-                            {visibleCount < filteredTemplates.length && (
-                                <div className="flex justify-end w-full mt-4">
-                                    <button
-                                        onClick={handleLoadMore}
-                                        className="btn btn-outline border custom-border bg-white"
-                                    >
-                                        Load More <MdKeyboardArrowDown size={24} />
-                                    </button>
+                            {/* Newly Published Section */}
+                            {latestTemplates.length > 0 && (
+                                <div className="mb-10">
+                                    <h2 className="h2 mb-4">Newly Published</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                        {latestTemplates.map((template, index) => (
+                                            <TemplateCard key={template.id} index={index} template={template} />
+                                        ))}
+                                    </div>
                                 </div>
+                            )}
+
+                            {/* Rest of the Templates */}
+                            {remainingTemplates.length > 0 && (
+                                <>
+                                    <h2 className="h2 mb-4">All Templates</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                        {remainingTemplates.slice(0, visibleCount).map((template, index) => (
+                                            <TemplateCard key={template.id} index={index} template={template} />
+                                        ))}
+                                    </div>
+                                    {visibleCount < remainingTemplates.length && (
+                                        <div className="flex justify-end w-full mt-4">
+                                            <button
+                                                onClick={handleLoadMore}
+                                                className="btn btn-outline border custom-border bg-white"
+                                            >
+                                                Load More <MdKeyboardArrowDown size={24} />
+                                            </button>
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </>
                     ) : (
+                        // No results message and AutomationSuggestions
                         <div className="cont gap-4">
                             <p className="h3">
                                 We couldn't find any templates matching your{' '}
@@ -268,131 +313,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, tem
         </>
     );
 };
-
-function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
-    const [firstLine, setFirstLine] = useState('');
-    const [secondLine, setSecondLine] = useState('');
-    const measureRef = useRef(null);
-
-    useEffect(() => {
-        if (!title || !measureRef.current) return;
-
-        const cleanTitle = title.replace(/^Automate[d]?\s*/i, '');
-        const fullTitle = `Automate ${cleanTitle}`;
-
-        const measurer = document.createElement('div');
-        measurer.style.position = 'absolute';
-        measurer.style.visibility = 'hidden';
-        measurer.style.whiteSpace = 'nowrap';
-        measurer.className = measureRef.current.className;
-        document.body.appendChild(measurer);
-
-        const containerWidth = measureRef.current.offsetWidth;
-        const buttonWidth = 250;
-        const availableSecondLineWidth = containerWidth - buttonWidth;
-
-        let firstLineChars = 0;
-        for (let i = 1; i <= fullTitle.length; i++) {
-            measurer.textContent = fullTitle.substring(0, i);
-            if (measurer.offsetWidth > containerWidth) {
-                firstLineChars = i - 1;
-                break;
-            }
-        }
-
-        if (firstLineChars === 0 || firstLineChars >= fullTitle.length) {
-            setFirstLine(fullTitle);
-            setSecondLine('');
-        } else {
-            let breakPoint = firstLineChars;
-            while (breakPoint > 0 && fullTitle[breakPoint] !== ' ') {
-                breakPoint--;
-            }
-
-            if (breakPoint === 0) breakPoint = firstLineChars;
-
-            const firstPart = fullTitle.substring(0, breakPoint);
-            let secondPart = fullTitle.substring(breakPoint).trim();
-
-            measurer.textContent = secondPart;
-            if (measurer.offsetWidth > availableSecondLineWidth) {
-                while (secondPart.length > 0) {
-                    measurer.textContent = secondPart + '...';
-                    if (measurer.offsetWidth <= availableSecondLineWidth) {
-                        secondPart = secondPart + '...';
-                        break;
-                    }
-                    secondPart = secondPart.slice(0, -1);
-                }
-            }
-
-            setFirstLine(firstPart);
-            setSecondLine(secondPart);
-        }
-
-        document.body.removeChild(measurer);
-    }, [title]);
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        const checkWidth = () => setIsMobile(window.innerWidth < 769);
-        checkWidth(); // Initial check
-        window.addEventListener('resize', checkWidth);
-        return () => window.removeEventListener('resize', checkWidth);
-    }, []);
-
-    return isMobile ? (
-        <div className="cont gap-1">
-            <h1 className="h1 line-clamp-2">{title}</h1>
-            <div className="flex gap-2">
-                <button onClick={onInstall} className="btn btn-accent">
-                    Install
-                </button>
-                <button onClick={onPrev} className="btn btn-outline bg-white">
-                    <MdKeyboardArrowLeft size={32} />
-                </button>
-                <button onClick={onNext} className="btn btn-outline bg-white">
-                    <MdKeyboardArrowRight size={32} />
-                </button>
-            </div>
-        </div>
-    ) : (
-        <div ref={measureRef} className="h1">
-            <div>
-                <span className="text-accent">Automate</span> {firstLine.replace(/^Automate\s*/i, '')}
-            </div>
-            {secondLine && (
-                <div className="flex justify-between items-center">
-                    <span>{secondLine}</span>
-                    <div className="flex gap-2">
-                        <button onClick={onInstall} className="btn btn-accent">
-                            Install
-                        </button>
-                        <button onClick={onPrev} className="btn btn-outline bg-white">
-                            <MdKeyboardArrowLeft size={32} />
-                        </button>
-                        <button onClick={onNext} className="btn btn-outline bg-white">
-                            <MdKeyboardArrowRight size={32} />
-                        </button>
-                    </div>
-                </div>
-            )}
-            {!secondLine && (
-                <div className="flex justify-end gap-2 mt-2">
-                    <button onClick={onInstall} className="btn btn-accent">
-                        Install
-                    </button>
-                    <button onClick={onPrev} className="btn btn-outline bg-white">
-                        <MdKeyboardArrowLeft size={32} />
-                    </button>
-                    <button onClick={onNext} className="btn btn-outline bg-white">
-                        <MdKeyboardArrowRight size={32} />
-                    </button>
-                </div>
-            )}
-        </div>
-    );
-}
 
 export default Template;
 
