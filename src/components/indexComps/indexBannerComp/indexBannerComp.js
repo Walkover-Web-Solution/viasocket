@@ -17,7 +17,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                     </Link>
                                     <a
                                         href="https://cal.id/team/viasocket/superheros"
-                                        className="btn hover:bg-gray-900 bg-white hover:text-white border custom-border"
+                                        className="btn btn-outline"
                                     >
                                         Free call with automation experts
                                     </a>

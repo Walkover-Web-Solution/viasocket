@@ -2,7 +2,7 @@
 
 /** Border Colors */
 .custom-border {
-    border-color: black !important;
+    border-color: var(--custom-border) !important;
 }
 
 .border-right-color {
@@ -10,7 +10,6 @@
 }
 
 /** Hover classes */
-
 .hover-bg-grey-100-text-black {
     &:hover {
         background-color: var(--background-color-grey-100) !important;
@@ -22,5 +21,40 @@
     &:hover {
         background-color: var(--background-color-black) !important;
         color: var(--text-color-white) !important;
+    }
+}
+
+/**Note:- Globally using for all button */
+.btn {
+    &.btn-accent {
+        border: 1px solid var(--custom-border) !important;
+        width: fit-content !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 14px !important;
+        line-height: 1.75rem !important;
+        letter-spacing: 0.05em !important;
+        background-color: var(--background-color-accent) !important;
+
+        &:hover {
+            background-color: var(--background-color-black) !important;
+            color: var(--text-color-white) !important;
+        }
+    }
+}
+
+.btn {
+    &.btn-outline {
+        border: 1px solid var(--custom-border) !important;
+        width: fit-content !important;
+        padding: 0.5rem 1rem !important;
+        font-size: 14px !important;
+        line-height: 1.75rem !important;
+        letter-spacing: 0.05em !important;
+        background-color: var(--background-color-white) !important;
+
+        &:hover {
+            background-color: var(--background-color-black) !important;
+            color: var(--text-color-white) !important;
+        }
     }
 }

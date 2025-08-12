@@ -38,7 +38,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             ))}
                             {
                                 groupName === 'Support' && (
-                                    <RequestIntegrationPopupOpener title = "Request an Integration" showType='footer' />
+                                    <RequestIntegrationPopupOpener title="Request an Integration" showType='footer' />
                                 )
                             }
                         </div>
@@ -116,7 +116,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                     <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-12 md:p-10 p-4 `}>
                         {renderedGroups?.slice(2 * Math.ceil(renderedGroups?.length / 3))}
                         <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
-                            <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
+                            <span>© {new Date().getFullYear()} viaSocket.</span>
                             <Link href="/privacy" className="active-link text-link">
                                 Privacy<span className="text-black">,</span>
                             </Link>
@@ -127,6 +127,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             <Link href="/data-retention-deletion" className="active-link text-link">
                                 Data Retention & Deletion Policy
                             </Link>
+                            <p className="mt-1">Walkover Web Solutions Pvt Ltd. | All rights reserved.</p>
                         </p>
                     </div>
                 </div>
