@@ -91,19 +91,18 @@ export default function IntegrationsIndexComp({
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             <Navbar footerData={footerData} utm={'/index'} />
 
-            <div className="container flex justify-center items-center">
+            <div className="container flex items-center">
                 <div className="cont text-left">
                     <h1 className="h1">
-                        Explore Pre-Built <span className="text-accent">App Integrations</span>
+                        <span className="text-accent">Automate</span> Anything Anywhere
                     </h1>
                     <h2 className="sub__h1">
-                        Browse our extensive library of integrations to easily connect and automate workflows across
-                        your most-used apps.
+                        Connect with  {+appCount + 300}+ ready-made integrations - from CRM and Marketing to E-Commerce, Helpdesk, Payments, and more.
                     </h2>
                 </div>
             </div>
             <div className="container cont">
-                <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
+                <label className="input border min-w-[345px] max-w-[400px] ml-auto custom-border flex items-center gap-2 focus-within:outline-none border-b-0">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -116,7 +115,7 @@ export default function IntegrationsIndexComp({
                     />
                 </label>
                 <div className="flex">
-                    <div className=" border custom-border border-t-0 lg:block hidden bg-white">
+                    <div className=" border custom-border lg:block hidden bg-white">
                         <div className="cont max-w-[252px] min-w-[252px] ">
                             {debounceValue ? (
                                 searchedCategoies ? (
@@ -155,8 +154,8 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
                     </div>
-                    <div>
-                        <div className="p-4 md:p-8 cont gap-2">
+                    {/* <div> */}
+                    {/* <div className="p-4 md:p-8 cont gap-2">
                             {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                 <>
                                     <h2 className="h2 text-accent ">
@@ -180,57 +179,57 @@ export default function IntegrationsIndexComp({
                                     </p>
                                 </>
                             )}
-                        </div>
+                        </div> */}
 
-                        <div className={`${style.appsgrid} custom-border`}>
-                            {debounceValue ? (
-                                searchedApps?.length > 0 ? (
-                                    searchedApps?.map((app, index) => {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={createURL(`/integrations/${app?.appslugname}`)}
-                                                className={style.app}
-                                            >
-                                                <div className="flex items-center gap-2">
-                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                        <Image
-                                                            src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                            width={36}
-                                                            height={36}
-                                                            alt={app?.name}
-                                                            className="h-5 w-fit"
-                                                        />
-                                                    </div>
-                                                    <h2 className="font-bold">{app?.name}</h2>
+                    <div className={`${style.appsgrid} custom-border`}>
+                        {debounceValue ? (
+                            searchedApps?.length > 0 ? (
+                                searchedApps?.map((app, index) => {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={createURL(`/integrations/${app?.appslugname}`)}
+                                            className={style.app}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <Image
+                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                        width={36}
+                                                        height={36}
+                                                        alt={app?.name}
+                                                        className="h-5 w-fit"
+                                                    />
                                                 </div>
-                                                <p className={style?.app__des}>{app?.description}</p>
-                                            </Link>
-                                        );
-                                    })
-                                ) : (
-                                    <div className="w-full col-span-full">
-                                        <RequestIntegrationPopupOpener
-                                            showType="searchView"
-                                            className="md:border-t-0 md:border-l-0"
-                                        />
-                                    </div>
-                                )
+                                                <h2 className="font-bold">{app?.name}</h2>
+                                            </div>
+                                            <p className={style?.app__des}>{app?.description}</p>
+                                        </Link>
+                                    );
+                                })
                             ) : (
-                                <>
-                                    {apps?.map((app, index) => (
-                                        <AppVisual redirectPart="integrations" app={app} index={index} />
-                                    ))}
-                                    <AppVisual
-                                        redirectPart="integrations"
-                                        app={{
-                                            rowid: 'request-new-app',
-                                        }}
+                                <div className="w-full col-span-full">
+                                    <RequestIntegrationPopupOpener
+                                        showType="searchView"
+                                        className="md:border-t-0 md:border-l-0"
                                     />
-                                </>
-                            )}
-                        </div>
+                                </div>
+                            )
+                        ) : (
+                            <>
+                                {apps?.map((app, index) => (
+                                    <AppVisual redirectPart="integrations" app={app} index={index} />
+                                ))}
+                                <AppVisual
+                                    redirectPart="integrations"
+                                    app={{
+                                        rowid: 'request-new-app',
+                                    }}
+                                />
+                            </>
+                        )}
                     </div>
+                    {/* </div> */}
                 </div>
                 {!debounceValue && (
                     <div className="flex justify-end items-end w-full">
