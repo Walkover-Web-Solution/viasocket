@@ -94,15 +94,16 @@ export default function IntegrationsIndexComp({
             <div className="container flex items-center">
                 <div className="cont text-left">
                     <h1 className="h1">
-                        <span className="text-accent">Automate</span> Anything Anywhere
+                        <span className="text-accent">Automate</span> Anything. Anywhere.
                     </h1>
                     <h2 className="sub__h1">
-                        Connect with  {+appCount + 300}+ ready-made integrations - from CRM and Marketing to E-Commerce, Helpdesk, Payments, and more.
+                        Connect with {''}<span className='font-semibold'>{+appCount + 300}+ ready-made integrations</span>{''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
+
                     </h2>
                 </div>
             </div>
-            <div className="container cont">
-                <label className="input border min-w-[345px] max-w-[400px] ml-auto custom-border flex items-center gap-2 focus-within:outline-none border-b-0">
+            <div className="container cont gap-3">
+                <label className="input border min-w-[345px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -114,6 +115,7 @@ export default function IntegrationsIndexComp({
                         placeholder="Search your favorite tools "
                     />
                 </label>
+
                 <div className="flex">
                     <div className=" border custom-border lg:block hidden bg-white">
                         <div className="cont max-w-[252px] min-w-[252px] ">
