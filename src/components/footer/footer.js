@@ -115,7 +115,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         {renderedGroups?.slice(2 * Math.ceil(renderedGroups?.length / 3))}
                         <div className="flex flex-col gap-2">
                             <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
-                                <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
+                                <span>© {new Date().getFullYear()} viaSocket |</span>
                                 <Link href="/privacy" className="active-link text-link">
                                     Privacy<span className="text-black">,</span>
                                 </Link>
