@@ -36,11 +36,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     <span className="text-sm">{item?.name}</span>
                                 </Link>
                             ))}
-                            {
-                                groupName === 'Support' && (
-                                    <RequestIntegrationPopupOpener title = "Request an Integration" showType='footer' />
-                                )
-                            }
+                            {groupName === 'Support' && (
+                                <RequestIntegrationPopupOpener title="Request an Integration" showType="footer" />
+                            )}
                         </div>
                     </div>
                 );
@@ -115,19 +113,24 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
 
                     <div className={`flex flex-col lg:border-b-0 border-b ${borderTheme} gap-12 md:p-10 p-4 `}>
                         {renderedGroups?.slice(2 * Math.ceil(renderedGroups?.length / 3))}
-                        <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
-                            <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
-                            <Link href="/privacy" className="active-link text-link">
-                                Privacy<span className="text-black">,</span>
-                            </Link>
-                            <Link href="/terms" className="active-link text-link">
-                                Terms
-                            </Link>
-                            <span>and</span>
-                            <Link href="/data-retention-deletion" className="active-link text-link">
-                                Data Retention & Deletion Policy
-                            </Link>
-                        </p>
+                        <div className="flex flex-col gap-2">
+                            <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
+                                <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
+                                <Link href="/privacy" className="active-link text-link">
+                                    Privacy<span className="text-black">,</span>
+                                </Link>
+                                <Link href="/terms" className="active-link text-link">
+                                    Terms
+                                </Link>
+                                <span>and</span>
+                                <Link href="/data-retention-deletion" className="active-link text-link">
+                                    Data Retention & Deletion Policy
+                                </Link>
+                            </p>
+                            <p className="text-sm flex items-center gap-1 flex-wrap">
+                                Walkover Web Solutions Pvt Ltd. | All rights reserved.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
