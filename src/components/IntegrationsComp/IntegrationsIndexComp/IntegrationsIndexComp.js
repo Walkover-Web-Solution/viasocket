@@ -154,33 +154,6 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
                     </div>
-                    {/* <div> */}
-                    {/* <div className="p-4 md:p-8 cont gap-2">
-                            {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
-                                <>
-                                    <h2 className="h2 text-accent ">
-                                        <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
-                                        {integrationsInfo?.category === 'all'
-                                            ? 'Apps'
-                                            : decodeURIComponent(categoryData?.name)}
-                                    </h2>
-                                    <p>{categoryData?.subheading}</p>
-                                </>
-                            ) : (
-                                <>
-                                    <h2 className="h2 !text-accent italic ">
-                                        {' '}
-                                        {+appCount + 300}+<span className="text-black not-italic"> Apps</span>
-                                    </h2>
-                                    <p>
-                                        Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
-                                        E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for
-                                        streamlined business success.
-                                    </p>
-                                </>
-                            )}
-                        </div> */}
-
                     <div className={`${style.appsgrid} custom-border`}>
                         {debounceValue ? (
                             searchedApps?.length > 0 ? (
@@ -229,7 +202,6 @@ export default function IntegrationsIndexComp({
                             </>
                         )}
                     </div>
-                    {/* </div> */}
                 </div>
                 {!debounceValue && (
                     <div className="flex justify-end items-end w-full">
