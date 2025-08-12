@@ -89,8 +89,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-4">
-                    <div className="w-2/5 cont gap-4">
+                <div className="flex flex-col md:flex-row gap-4">
+                    <div className="w-full md:w-2/5 cont gap-4">
                         <SharePopup title={template?.title} />
                         {template?.instructions && (
                             <div className="w-full border custom-border p-4 h-64 cont gap-2 bg-white">
@@ -107,7 +107,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                         </div>
                     </div>
                     {template?.content && (
-                        <div className=" w-3/5 flex justify-center">
+                        <div className=" w-full md:w-3/5 flex justify-center">
                             <div className={`bg-[#FDF0BD] border custom-border p-8 ${style.markdownImage}`}>
                                 <ReactMarkdown>{template?.content}</ReactMarkdown>
                             </div>
@@ -134,16 +134,14 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
 
 export async function getServerSideProps(context) {
     const { req, query } = context;
-    const { templateId } = query;
+    const [templateName, templateId] = query.slug || [];
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
 
-    const selectedTemplate = templateData.find(
-        (t) => t.title?.trim().replace(/\s+/g, '-').toLowerCase() === templateId
-    );
+    const selectedTemplate = templateData.find((t) => String(t.id) === String(templateId));
 
     const selectedCategories = Array.isArray(selectedTemplate?.category) ? selectedTemplate.category : [];
 

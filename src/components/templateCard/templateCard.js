@@ -6,7 +6,11 @@ import { FiExternalLink } from 'react-icons/fi';
 const TemplateCard = ({ template, index }) => {
     return (
         <Link
-            href={`/templates/${template?.title?.trim().replace(/\s+/g, '-').toLowerCase()}`}
+            href={`/templates/${template?.title
+                ?.trim()
+                .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
+                .replace(/\s+/g, '-') // replace spaces with '-'
+                .toLowerCase()}/${template?.id}`}
             className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
         >
             <div className="cont gap-2 px-8 py-4">
