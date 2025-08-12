@@ -56,7 +56,13 @@ const IndexTemplateComp = ({ categories }) => {
 
     const getTemplateLink = () => {
         const template = templateMap[selected?.scriptid];
-        return template ? `https://flow.viasocket.com/template/${template.id}` : '#';
+        return template
+            ? `/templates/${template?.title
+                  ?.trim()
+                  .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
+                  .replace(/\s+/g, '-') // replace spaces with '-'
+                  .toLowerCase()}/${template?.id}`
+            : '#';
     };
 
     return (
