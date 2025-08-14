@@ -8,6 +8,7 @@ import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
 import Link from 'next/link';
 
+
 export const runtime = 'experimental-edge';
 
 export default function MyApp({ Component, pageProps, pagesData }) {
