@@ -10,7 +10,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         userEmail: '',
-        userName: '',
         useCase: '',
         plugName: appInfo?.name,
         source: 'website',
@@ -50,12 +49,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         event.preventDefault();
 
         if (!formData.userEmail) {
-            alert('Email is required.');
-            return;
-        }
-
-        if (!formData.userName) {
-            alert('Name is required.');
+            alert('Email are required.');
             return;
         }
 
@@ -144,21 +138,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 </select>
                             </label>
                         )}
-
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Name:</span>
-                            </div>
-                            <input
-                                required
-                                type="text"
-                                name="userName"
-                                placeholder="Enter your name"
-                                className="input input-bordered w-full focus:outline-none "
-                                value={formData.userName}
-                                onChange={handleInputChange}
-                            />
-                        </label>
 
                         <label className="form-control w-full">
                             <div className="label">
