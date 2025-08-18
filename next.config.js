@@ -1,6 +1,10 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-
+module.exports = {
+    // experimental: {
+    //     runtime: 'experimental-edge',
+    //   },
+     experimental: {
+        serverComponentsExternalPackages: [],
+    },
     images: {
         unoptimized: true,
         loader: 'akamai',
@@ -11,10 +15,6 @@ const nextConfig = {
                 hostname: 'placehold.co',
             },
         ],
-    },
-
-    experimental: {
-        serverComponentsExternalPackages: [],
     },
 
     async redirects() {
@@ -32,10 +32,7 @@ const nextConfig = {
             ...config.resolve.fallback,
             fs: false,
         };
-        config.cache = false;
 
         return config;
     },
 };
-
-export default nextConfig;
