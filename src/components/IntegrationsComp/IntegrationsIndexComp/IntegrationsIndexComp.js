@@ -91,19 +91,19 @@ export default function IntegrationsIndexComp({
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             <Navbar footerData={footerData} utm={'/index'} />
 
-            <div className="container flex justify-center items-center">
+            <div className="container flex items-center">
                 <div className="cont text-left">
                     <h1 className="h1">
-                        Explore Pre-Built <span className="text-accent">App Integrations</span>
+                        <span className="text-accent">Automate</span> Anything. Anywhere.
                     </h1>
                     <h2 className="sub__h1">
-                        Browse our extensive library of integrations to easily connect and automate workflows across
-                        your most-used apps.
+                        Connect with {''}<span className='font-semibold'>{+appCount + 300}+ ready-made integrations</span>{''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
+
                     </h2>
                 </div>
             </div>
-            <div className="container cont">
-                <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
+            <div className="container cont gap-3">
+                <label className="input border min-w-[345px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -115,8 +115,9 @@ export default function IntegrationsIndexComp({
                         placeholder="Search your favorite tools "
                     />
                 </label>
+
                 <div className="flex">
-                    <div className=" border custom-border border-t-0 lg:block hidden bg-white">
+                    <div className=" border custom-border lg:block hidden bg-white">
                         <div className="cont max-w-[252px] min-w-[252px] ">
                             {debounceValue ? (
                                 searchedCategoies ? (
@@ -155,81 +156,53 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
                     </div>
-                    <div>
-                        <div className="p-4 md:p-8 cont gap-2">
-                            {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
-                                <>
-                                    <h2 className="h2 text-accent ">
-                                        <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
-                                        {integrationsInfo?.category === 'all'
-                                            ? 'Apps'
-                                            : decodeURIComponent(categoryData?.name)}
-                                    </h2>
-                                    <p>{categoryData?.subheading}</p>
-                                </>
-                            ) : (
-                                <>
-                                    <h2 className="h2 !text-accent italic ">
-                                        {' '}
-                                        {+appCount + 300}+<span className="text-black not-italic"> Apps</span>
-                                    </h2>
-                                    <p>
-                                        Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
-                                        E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for
-                                        streamlined business success.
-                                    </p>
-                                </>
-                            )}
-                        </div>
-
-                        <div className={`${style.appsgrid} custom-border`}>
-                            {debounceValue ? (
-                                searchedApps?.length > 0 ? (
-                                    searchedApps?.map((app, index) => {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                href={createURL(`/integrations/${app?.appslugname}`)}
-                                                className={style.app}
-                                            >
-                                                <div className="flex items-center gap-2">
-                                                    <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                        <Image
-                                                            src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                            width={36}
-                                                            height={36}
-                                                            alt={app?.name}
-                                                            className="h-5 w-fit"
-                                                        />
-                                                    </div>
-                                                    <h2 className="font-bold">{app?.name}</h2>
+                    <div className={`${style.appsgrid} custom-border`}>
+                        {debounceValue ? (
+                            searchedApps?.length > 0 ? (
+                                searchedApps?.map((app, index) => {
+                                    return (
+                                        <Link
+                                            key={index}
+                                            href={createURL(`/integrations/${app?.appslugname}`)}
+                                            className={style.app}
+                                        >
+                                            <div className="flex items-center gap-2">
+                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                                    <Image
+                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                        width={36}
+                                                        height={36}
+                                                        alt={app?.name}
+                                                        className="h-5 w-fit"
+                                                    />
                                                 </div>
-                                                <p className={style?.app__des}>{app?.description}</p>
-                                            </Link>
-                                        );
-                                    })
-                                ) : (
-                                    <div className="w-full col-span-full">
-                                        <RequestIntegrationPopupOpener
-                                            showType="searchView"
-                                            className="md:border-t-0 md:border-l-0"
-                                        />
-                                    </div>
-                                )
+                                                <h2 className="font-bold">{app?.name}</h2>
+                                            </div>
+                                            <p className={style?.app__des}>{app?.description}</p>
+                                        </Link>
+                                    );
+                                })
                             ) : (
-                                <>
-                                    {apps?.map((app, index) => (
-                                        <AppVisual redirectPart="integrations" app={app} index={index} />
-                                    ))}
-                                    <AppVisual
-                                        redirectPart="integrations"
-                                        app={{
-                                            rowid: 'request-new-app',
-                                        }}
+                                <div className="w-full col-span-full">
+                                    <RequestIntegrationPopupOpener
+                                        showType="searchView"
+                                        className="md:border-t-0 md:border-l-0"
                                     />
-                                </>
-                            )}
-                        </div>
+                                </div>
+                            )
+                        ) : (
+                            <>
+                                {apps?.map((app, index) => (
+                                    <AppVisual redirectPart="integrations" app={app} index={index} />
+                                ))}
+                                <AppVisual
+                                    redirectPart="integrations"
+                                    app={{
+                                        rowid: 'request-new-app',
+                                    }}
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
                 {!debounceValue && (
