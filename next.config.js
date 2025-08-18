@@ -29,6 +29,7 @@ module.exports = {
             ...config.resolve.fallback,
             fs: false,
         };
+        config.cache = false;
 
         return config;
     },
