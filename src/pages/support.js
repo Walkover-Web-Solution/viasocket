@@ -105,7 +105,9 @@ export default function Support({ footerData, metaData, testimonials }) {
 
             <div className="container mt-12">
                 <div className="support-page-heading">
-                    <h1 className="h1">We're here to help, <span className="text-accent">now!</span></h1>
+                    <h1 className="h1">
+                        We're here to help, <span className="text-accent">now!</span>
+                    </h1>
                     <p>
                         If you need anything, just reach out—we're committed to being the automation assistant you
                         deserve!
@@ -273,10 +275,13 @@ export default function Support({ footerData, metaData, testimonials }) {
                         <div className="flex flex-col gap-4">
                             <div className="founder-info flex items-center gap-2">
                                 <Image
-                                    src="https://images.contactout.com/profiles/1d4c2fa861915fecc3f5002b63cd33f9"
-                                    width={50}
-                                    height={50}
-                                    alt="pushpendra"
+                                    src={
+                                        'https://images.contactout.com/profiles/1d4c2fa861915fecc3f5002b63cd33f9' ||
+                                        'https://placehold.co/40x40'
+                                    }
+                                    width={40}
+                                    height={40}
+                                    alt="Pushpendra Agrawal - Founder Profile Photo"
                                 />
                                 <div className="flex flex-col">
                                     <p> Pushpendra Agrawal (Founder) </p>
@@ -291,13 +296,16 @@ export default function Support({ footerData, metaData, testimonials }) {
                             </div>
                             <div className="founder-info flex items-center gap-2">
                                 <Image
-                                    src="https://media.licdn.com/dms/image/v2/D4D03AQFFuPdme6p-uw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718316029070?e=2147483647&v=beta&t=KV5pENgrIy7AkGL4-kH3U73Zg29Y9vpF5HmQVdSpc8E"
-                                    width={50}
-                                    height={50}
-                                    alt="pushpendra"
+                                    src={
+                                        'https://media.licdn.com/dms/image/v2/D4D03AQFFuPdme6p-uw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718316029070?e=2147483647&v=beta&t=KV5pENgrIy7AkGL4-kH3U73Zg29Y9vpF5HmQVdSpc8E' ||
+                                        'https://placehold.co/40x40'
+                                    }
+                                    width={40}
+                                    height={40}
+                                    alt="Ravi Paliwal - Co-founder Profile Photo"
                                 />
                                 <div className="flex flex-col">
-                                    <p>Ravi Palliwal (Co-founder)</p>
+                                    <p>Ravi Paliwal (Co-founder)</p>
                                     <Link
                                         href="mailto:rpaliwal@msg91.com"
                                         className="hover:text-blue-500 hover:underline"
