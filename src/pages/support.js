@@ -105,7 +105,9 @@ export default function Support({ footerData, metaData, testimonials }) {
 
             <div className="container mt-12">
                 <div className="support-page-heading">
-                    <h1 className="h1">We're here to help, now!</h1>
+                    <h1 className="h1">
+                        We're here to help, <span className="text-accent">now!</span>
+                    </h1>
                     <p>
                         If you need anything, just reach out—we're committed to being the automation assistant you
                         deserve!
@@ -187,19 +189,17 @@ export default function Support({ footerData, metaData, testimonials }) {
                                     href="https://viasocket.my.canva.site/viasocket-dh-playbook"
                                     className="btn btn-outline w-fit"
                                 >
-                                    Start Playbook
+                                    Read our playbook
                                 </Link>
                             </div>
                             <div className="w-full lg:w-2/5 border custom-border p-6 flex flex-col gap-4 bg-[#FAF9F6]">
-                                {/* <div className=" border custom-border p-6 bg-white"> */}
                                 <div className="flex flex-col">
-                                    <h3 className="h3">Get help building your app integration</h3>
-                                    <p>Our team would be delighted to assist you with the integration process. </p>
+                                    <h3 className="h3">Build it together with our team</h3>
+                                    <p>Our team can come on screen sharing and build it together with your team.</p>
                                 </div>
                                 <Link href="mailto:support@viasocket.com" className="btn btn-outline w-fit">
-                                    Drop us a mail
+                                    Connect with team
                                 </Link>
-                                {/* </div> */}
                             </div>
                         </div>
                     </div>
@@ -260,8 +260,8 @@ export default function Support({ footerData, metaData, testimonials }) {
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4 p-6 border custom-border bg-white">
-                        <div className="flex flex-col">
+                    <div className="flex flex-col gap-6 p-6 border custom-border bg-white">
+                        <div className="flex flex-col gap-1">
                             <h2 className="h2">Can't Get Help? Contact the Founders Directly</h2>
                             <p>
                                 If you're facing a challenge that our team hasn’t been able to resolve or if you have
@@ -272,24 +272,48 @@ export default function Support({ footerData, metaData, testimonials }) {
                             </p>
                         </div>
 
-                        <div className="flex flex-col gap-2">
-                            <div className="founder-info">
-                                <h3 className="h3">Contact</h3>
-                                <p> Pushpendra Agrawal (Founder) </p>
-                                <Link
-                                    href="mailto:pushpendra@walkover.in"
-                                    className="hover:text-blue-500 hover:underline"
-                                >
-                                    {' '}
-                                    Email: pushpendra@walkover.in
-                                </Link>
+                        <div className="flex flex-col gap-4">
+                            <div className="founder-info flex items-center gap-2">
+                                <Image
+                                    src={
+                                        'https://images.contactout.com/profiles/1d4c2fa861915fecc3f5002b63cd33f9' ||
+                                        'https://placehold.co/40x40'
+                                    }
+                                    width={40}
+                                    height={40}
+                                    alt="Pushpendra Agrawal - Founder Profile Photo"
+                                />
+                                <div className="flex flex-col">
+                                    <p> Pushpendra Agrawal (Founder) </p>
+                                    <Link
+                                        href="mailto:pushpendra@walkover.in"
+                                        className="hover:text-blue-500 hover:underline"
+                                    >
+                                        {' '}
+                                        Email: pushpendra@walkover.in
+                                    </Link>
+                                </div>
                             </div>
-                            <div className="founder-info">
-                                <p>Ravi Palliwal (Co-founder)</p>
-                                <Link href="mailto:rpaliwal@msg91.com" className="hover:text-blue-500 hover:underline">
-                                    {' '}
-                                    Email: rpaliwal@msg91.com
-                                </Link>
+                            <div className="founder-info flex items-center gap-2">
+                                <Image
+                                    src={
+                                        'https://media.licdn.com/dms/image/v2/D4D03AQFFuPdme6p-uw/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1718316029070?e=2147483647&v=beta&t=KV5pENgrIy7AkGL4-kH3U73Zg29Y9vpF5HmQVdSpc8E' ||
+                                        'https://placehold.co/40x40'
+                                    }
+                                    width={40}
+                                    height={40}
+                                    alt="Ravi Paliwal - Co-founder Profile Photo"
+                                />
+                                <div className="flex flex-col">
+                                    <p>Ravi Paliwal (Co-founder)</p>
+                                    <Link
+                                        href="mailto:rpaliwal@msg91.com"
+                                        className="hover:text-blue-500 hover:underline"
+                                    >
+                                        {' '}
+                                        Email: rpaliwal@msg91.com
+                                    </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
