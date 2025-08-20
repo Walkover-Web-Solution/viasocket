@@ -178,7 +178,7 @@ export default function IntegrationsIndexComp({
                                                     alt={app?.name}
                                                 />
 
-                                                <h2 className="font-bold">{app?.name}</h2>
+                                                <h2>{app?.name}</h2>
                                             </div>
                                             <p className={style?.app__des}>{app?.description}</p>
                                         </Link>
@@ -259,16 +259,16 @@ export function AppVisual({ app, index, redirectPart }) {
             className={`${style.app} hover-bg-grey-100-text-black custom-border flex align-center justify-center`}
         >
             <div className="flex items-center gap-2">
-                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+           
                     <Image
                         src={app?.iconurl || 'https://placehold.co/36x36'}
-                        width={36}
-                        height={36}
+                        width={40}
+                        height={40}
                         alt={app?.name}
-                        className="h-5 w-fit"
+                    
                     />
-                </div>
-                <h2 className="font-bold">{app?.name}</h2>
+             
+                <h2>{app?.name}</h2>
             </div>
             {/* <p className={style?.app__des}>{app?.description}</p> */}
         </Link>
@@ -277,7 +277,7 @@ export function AppVisual({ app, index, redirectPart }) {
             className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}
         >
             <div className="flex items-center gap-2 justify-between">
-                <h2 className="font-bold flex items-center gap-2">
+                <h2 className="flex items-center gap-2">
                     <span className="text-xl">💡</span>
                     <span>Request an App</span>
                 </h2>
