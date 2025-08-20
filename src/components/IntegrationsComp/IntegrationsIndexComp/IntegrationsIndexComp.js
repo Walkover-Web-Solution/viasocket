@@ -97,8 +97,9 @@ export default function IntegrationsIndexComp({
                         <span className="text-accent">Automate</span> Anything. Anywhere.
                     </h1>
                     <h2 className="sub__h1">
-                        Connect with {''}<span className='font-semibold'>{+appCount + 300}+ ready-made integrations</span>{''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
-
+                        Connect with {''}
+                        <span className="font-semibold">{+appCount + 300}+ ready-made integrations</span>
+                        {''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
                     </h2>
                 </div>
             </div>
@@ -117,8 +118,8 @@ export default function IntegrationsIndexComp({
                 </label>
 
                 <div className="flex">
-                    <div className=" border custom-border lg:block hidden bg-white">
-                        <div className="cont max-w-[252px] min-w-[252px] ">
+                    <div className="border custom-border lg:block hidden bg-white overflow-y-auto scrollbar-thin max-w-[252px] min-w-[252px] lg:h-[1201px] xl:h-[901px] h-[78.125vw]">
+                        <div className="cont">
                             {debounceValue ? (
                                 searchedCategoies ? (
                                     searchedCategoies.map((category, index) => {
@@ -156,7 +157,10 @@ export default function IntegrationsIndexComp({
                             )}
                         </div>
                     </div>
-                    <div className={`${style.appsgrid} custom-border`}>
+                    <div
+                        className="custom-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l lg:border-l-0 w-full"
+                        style={{ gridAutoRows: '75px' }}
+                    >
                         {debounceValue ? (
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
@@ -167,15 +171,13 @@ export default function IntegrationsIndexComp({
                                             className={style.app}
                                         >
                                             <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                    <Image
-                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                        width={36}
-                                                        height={36}
-                                                        alt={app?.name}
-                                                        className="h-5 w-fit"
-                                                    />
-                                                </div>
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={40}
+                                                    height={40}
+                                                    alt={app?.name}
+                                                />
+
                                                 <h2 className="font-bold">{app?.name}</h2>
                                             </div>
                                             <p className={style?.app__des}>{app?.description}</p>
@@ -254,7 +256,7 @@ export function AppVisual({ app, index, redirectPart }) {
         <Link
             key={index || app?.rowid}
             href={createURL(`/${redirectPart}/${app?.appslugname}`)}
-            className={`${style.app} hover-bg-grey-100-text-black custom-border`}
+            className={`${style.app} hover-bg-grey-100-text-black custom-border flex align-center justify-center`}
         >
             <div className="flex items-center gap-2">
                 <div className="border flex items-center justify-center w-9 h-9 bg-white">
@@ -268,19 +270,24 @@ export function AppVisual({ app, index, redirectPart }) {
                 </div>
                 <h2 className="font-bold">{app?.name}</h2>
             </div>
-            <p className={style?.app__des}>{app?.description}</p>
+            {/* <p className={style?.app__des}>{app?.description}</p> */}
         </Link>
     ) : (
-        <div className={`${style.app}  border-2 hover-bg-grey-100-text-black border-dashed custom-border`}>
-            <div className="  flex items-center gap-2">
-                <h2 className="font-bold">
-                    <span className="h3">💡</span> Request an App
+        <div
+            className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}
+        >
+            <div className="flex items-center gap-2 justify-between">
+                <h2 className="font-bold flex items-center gap-2">
+                    <span className="text-xl">💡</span>
+                    <span>Request an App</span>
                 </h2>
+
+                <RequestIntegrationPopupOpener showType="button" title="Request" />
             </div>
             <p className={`${style?.app__des}`}>
                 Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours
             </p>
-            <RequestIntegrationPopupOpener showType="button" title="Request Now" />
+            {/* <RequestIntegrationPopupOpener showType="button" title="Request Now" /> */}
         </div>
     );
 }
