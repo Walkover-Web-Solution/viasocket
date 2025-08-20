@@ -165,10 +165,10 @@ export default function IntegrationsIndexComp({
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
                                     return (
-                                        <Link
+                                        <Link 
                                             key={index}
                                             href={createURL(`/integrations/${app?.appslugname}`)}
-                                            className={style.app}
+                                            className={`${style.app} flex justify-center hover-bg-grey-100-text-black`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
