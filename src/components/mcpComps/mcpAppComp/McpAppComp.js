@@ -160,7 +160,11 @@ export default function McpAppComp({
                                         Get Your MCP URL
                                     </button>
                                 ) : (
-                                    <RequestIntegrationPopupOpener showType='button' appInfo={appOneDetails} type='action' />
+                                    <RequestIntegrationPopupOpener
+                                        showType="button"
+                                        appInfo={appOneDetails}
+                                        type="action"
+                                    />
                                 )}
                             </div>
                         </div>
@@ -252,13 +256,13 @@ export default function McpAppComp({
                     </div>
                 </div>
 
-                <div className="container cont mt-12">
-                    <div className="flex items-baseline gap-2 mb-6">
+                <div className="container cont mt-12 gap-4">
+                    <div className="flex items-baseline gap-2">
                         <h2 className="h2">Explore other MCP Servers</h2>
                     </div>
 
                     <div className="flex items-center max-w-[400px]">
-                        <label className="input border flex-grow custom-border border-b-0 flex items-center gap-2 focus-within:outline-none">
+                        <label className="input border flex-grow custom-border flex items-center gap-2 focus-within:outline-none">
                             <MdSearch fontSize={20} color="black" />
                             <input
                                 value={searchTerm}
@@ -272,7 +276,10 @@ export default function McpAppComp({
                         </label>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 xl:grid-cols-3 custom-border border border-r-0 border-b-0 ">
+                    <div
+                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 custom-border border border-r-0 border-b-0"
+                        style={{ gridAutoRows: '75px' }}
+                    >
                         {debounceValue ? (
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
@@ -280,23 +287,21 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 custom-border border border-l-0 border-t-0 gap-2  hover:text-white hover:bg-black"
+                                            className="flex bg-white hover-bg-grey-100-text-black pl-4 custom-border border border-l-0 border-t-0 gap-2"
                                         >
                                             <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9 ">
-                                                    <Image
-                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                        width={36}
-                                                        height={36}
-                                                        alt={app?.name}
-                                                        className="h-5 w-fit"
-                                                    />
-                                                </div>
-                                                <h2 className="font-bold">{app?.name}</h2>
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={40}
+                                                    height={40}
+                                                    alt={app?.name}
+                                                />
+
+                                                <h2>{app?.name}</h2>
                                             </div>
-                                            <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
                                                 {app?.description}
-                                            </p>
+                                            </p> */}
                                         </Link>
                                     );
                                 })
@@ -306,7 +311,8 @@ export default function McpAppComp({
                                         showType="searchView"
                                         className="md:border-t-0 md:border-l-0"
                                     />
-                                </div>)
+                                </div>
+                            )
                         ) : (
                             apps
                                 ?.filter((app) => app.appslugname !== appOneDetails.appslugname)
@@ -315,23 +321,21 @@ export default function McpAppComp({
                                         <Link
                                             key={index}
                                             href={createURL(`/mcp/${app?.appslugname}`)}
-                                            className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 custom-border border border-l-0 border-t-0 gap-2 hover:text-white hover:bg-black bg-white hover-bg-grey-100-text-black"
+                                            className="flex pl-4 custom-border border border-l-0 border-t-0 gap-2 bg-white hover-bg-grey-100-text-black"
                                         >
                                             <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9">
-                                                    <Image
-                                                        src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                        width={36}
-                                                        height={36}
-                                                        alt={app?.name}
-                                                        className="h-5 w-fit"
-                                                    />
-                                                </div>
-                                                <h2 className="font-bold">{app?.name}</h2>
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                    width={40}
+                                                    height={40}
+                                                    alt={app?.name}
+                                                />
+
+                                                <h2>{app?.name}</h2>
                                             </div>
-                                            <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
+                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
                                                 {app?.description}
-                                            </p>
+                                            </p> */}
                                         </Link>
                                     );
                                 })
