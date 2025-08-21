@@ -94,7 +94,7 @@ const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, m
                                         </li>
                                         <li>Enjoy a full year of free onboarding with our exclusive coupon code.</li>
                                     </ul>
-                                    <Link target="_blank" href="https://cal.id/team/viasocket/superheros">
+                                    <Link target="_blank" href="https://cal.id/team/viasocket/agencypartnership">
                                         <button className="btn btn-md btn-accent w-fit">Be an Expert</button>
                                     </Link>
                                 </div>
