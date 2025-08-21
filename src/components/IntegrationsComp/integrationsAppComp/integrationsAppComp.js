@@ -97,8 +97,8 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     };
     return (
         <>
-            <div className="container cont">
-                <label className="input border max-w-[400px] custom-border border-b-0 flex items-center gap-2 focus-within:outline-none bg-white">
+            <div className="container cont gap-4">
+                <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                     <MdSearch fontSize={20} />
                     <input
                         value={searchTerm}
@@ -148,7 +148,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                             </div>
                         </div>
                     )}
-                    <div>
+                    <div className="integration-app-one-component w-full">
                         {!integrationsInfo?.appone && (
                             <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'All' ? (
@@ -172,7 +172,10 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                             </div>
                         )}
 
-                        <div className={`${style.appsgrid} custom-border`}>
+                        <div
+                            className="border-t custom-border border-l grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
+                            style={{ gridAutoRows: '75px' }}
+                        >
                             {debounceValue ? (
                                 searchedApps?.length > 0 ? (
                                     searchedApps?.map((app, index) => (
@@ -181,25 +184,25 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={style.app}
+                                            className={`${style.app} hover-bg-grey-100-text-black justify-center`}
                                         >
                                             <div className="flex items-center gap-2">
-                                                <div className="border flex items-center justify-center w-9 h-9 bg-white">
+                                      
                                                     <Image
                                                         src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                        width={36}
-                                                        height={36}
+                                                        width={40}
+                                                        height={40}
                                                         alt={app?.name}
-                                                        className="h-5 w-fit"
+                                         
                                                     />
-                                                </div>
+                                               
                                                 <h2 className="font-bold">{app?.name}</h2>
                                             </div>
-                                            <p className={style?.app__des}>{app?.description}</p>
+                                            {/* <p className={style?.app__des}>{app?.description}</p> */}
                                         </Link>
                                     ))
                                 ) : (
-                                    <div className='col-span-full'>
+                                    <div className="col-span-full">
                                         <RequestIntegrationPopupOpener
                                             showType="searchView"
                                             className="md:border-t-0 md:border-l-0"
@@ -218,21 +221,19 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} hover-bg-grey-100-text-black custom-border bg-white`}
+                                                    className={`${style.app} hover-bg-grey-100-text-black custom-border bg-white flex justify-center`}
                                                 >
                                                     <div className="flex items-center gap-2">
-                                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                            <Image
-                                                                src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                                width={36}
-                                                                height={36}
-                                                                alt={app?.name}
-                                                                className="h-5 w-fit"
-                                                            />
-                                                        </div>
-                                                        <h2 className="font-bold">{app?.name}</h2>
+                                                        <Image
+                                                            src={app?.iconurl || 'https://placehold.co/40x40'}
+                                                            width={40}
+                                                            height={40}
+                                                            alt={app?.name}
+                                                        />
+
+                                                        <h2>{app?.name}</h2>
                                                     </div>
-                                                    <p className={style?.app__des}>{app?.description}</p>
+                                                    {/* <p className={style?.app__des}>{app?.description}</p> */}
                                                 </Link>
                                             );
                                         }

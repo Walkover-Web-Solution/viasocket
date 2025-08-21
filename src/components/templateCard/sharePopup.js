@@ -46,13 +46,13 @@ const SharePopup = ({ title }) => {
                     <h3 className="h3">Share this template</h3>
                 </div>
 
-                <div className="flex items-center gap-2 relative">
+                <div className="flex items-center gap-2 relative border custom-border p-2">
                     <input
                         readOnly
                         value={url}
-                        className="flex-1 h-[48px] outline-none text-lg border custom-border p-2"
+                        className="flex-1 h-[48px] outline-none text-lg p-2"
                     />
-                    <button onClick={handleCopy} className="btn btn-accent">
+                    <button onClick={handleCopy} className="btn btn-outline">
                         copy
                     </button>
                     {copied && (

@@ -18,7 +18,10 @@ import Script from 'next/script';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
-import { AppVisual, RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import {
+    AppVisual,
+    RequestIntegrationPopupOpener,
+} from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 
 export default function McpIndexComp({
     pageInfo,
@@ -171,7 +174,7 @@ export default function McpIndexComp({
                     </div>
                 </div>
 
-                <div className="container cont">
+                <div className="container cont gap-4">
                     <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
                         <input
@@ -185,8 +188,8 @@ export default function McpIndexComp({
                         />
                     </label>
                     <div className="flex">
-                        <div className=" border custom-border border-t-0 lg:block hidden bg-white">
-                            <div className="cont max-w-[252px] min-w-[252px] ">
+                        <div className="border custom-border lg:block hidden bg-white overflow-y-auto scrollbar-thin max-w-[252px] min-w-[252px] lg:h-[1201px] xl:h-[901px] h-[78.125vw]">
+                            <div className="cont">
                                 {debounceValue ? (
                                     searchedCategoies ? (
                                         searchedCategoies.map((category, index) => {
@@ -224,8 +227,8 @@ export default function McpIndexComp({
                                 )}
                             </div>
                         </div>
-                        <div>
-                            <div className="p-4 md:p-8 cont gap-2">
+                        <div className="mcp-page-apps">
+                            {/* <div className="p-4 md:p-8 cont gap-2">
                                 {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
                                     <>
                                         <h2 className="h1 text-accent">
@@ -250,9 +253,12 @@ export default function McpIndexComp({
                                         </p>
                                     </>
                                 )}
-                            </div>
+                            </div> */}
 
-                            <div className={`${style.appsgrid} custom-border`}>
+                            <div
+                                className="custom-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l lg:border-l-0 w-full"
+                                style={{ gridAutoRows: '75px' }}
+                            >
                                 {debounceValue ? (
                                     searchedApps?.length > 0 ? (
                                         searchedApps?.map((app, index) => {
@@ -260,19 +266,16 @@ export default function McpIndexComp({
                                                 <Link
                                                     key={index}
                                                     href={createURL(`/mcp/${app?.appslugname}`)}
-                                                    className={style.app}
+                                                    className={`${style.app} flex justify-center hover-bg-grey-100-text-black`}
                                                 >
-                                                    <div className="flex items-center gap-2 ">
-                                                        <div className="border flex items-center justify-center w-9 h-9 bg-white">
-                                                            <Image
-                                                                src={app?.iconurl || 'https://placehold.co/36x36'}
-                                                                width={36}
-                                                                height={36}
-                                                                alt={app?.name}
-                                                                className="h-5 w-fit"
-                                                            />
-                                                        </div>
-                                                        <h2 className="font-bold">{app?.name}</h2>
+                                                    <div className="flex items-center gap-2">
+                                                        <Image
+                                                            src={app?.iconurl || 'https://placehold.co/36x36'}
+                                                            width={40}
+                                                            height={40}
+                                                            alt={app?.name}                                                        />
+
+                                                        <h2>{app?.name}</h2>
                                                     </div>
                                                     <p className={style?.app__des}>{app?.description}</p>
                                                 </Link>
