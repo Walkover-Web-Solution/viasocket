@@ -212,7 +212,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             ></textarea>
                         </label>
                     </div>
-                    <Link href="https://cal.id/team/viasocket/superheros" target="_blank">
+                    <Link href="https://cal.id/team/viasocket/bring-saas-app-on-viasocket" target="_blank">
                         <p className="text-lg text-accent hover:underline">Schedule a meeting</p>
                     </Link>
                     <div className="flex gap-3">

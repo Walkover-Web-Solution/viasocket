@@ -105,8 +105,13 @@ export default function pricing({ footerData, faqData, metaData, blogData }) {
                         Windsurf, and many others—enabling your users to perform actions within your app directly
                         through AI.
                     </p>
-                    <Link href="https://viasocket.com/faq/developer-hub" target="_blank" rel="noopener noreferrer">
-                        <button className="btn btn-accent">Quick start guide</button>
+                    <Link
+                        href="https://viasocket.com/faq/developer-hub"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn btn-accent"
+                    >
+                        Quick start guide
                     </Link>
                 </div>
             </div>
@@ -121,7 +126,7 @@ export default function pricing({ footerData, faqData, metaData, blogData }) {
                         </p>
                     </div>
                     <div className="flex gap-4">
-                        <Link href="https://cal.id/team/viasocket/superheros">
+                        <Link href="https://cal.id/team/viasocket/mcp">
                             <button className="btn btn-accent">Schedule a Meeting</button>
                         </Link>
                     </div>
