@@ -41,7 +41,7 @@ export default function Navbar({ utm, footerData }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = 'text-black !text-xs !capitalize';
+        backgroundClass = '!text-xs !capitalize';
     } else {
         backgroundClass = textClass + '!text-xs !capitalize';
     }
@@ -85,7 +85,7 @@ export default function Navbar({ utm, footerData }) {
                         </Link>
 
                         <div className="flex">
-                            {router.pathname !== '/pricing' && !router.pathname.startsWith('/templates') && (
+                            {router.pathname !== '/pricing' && !router.pathname.startsWith('/templates') && !router.pathname.startsWith('/integrations') && (
                                 <Link
                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
                                     href={router.pathname}
