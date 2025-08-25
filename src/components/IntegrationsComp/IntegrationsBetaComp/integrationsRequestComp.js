@@ -1,6 +1,8 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { BsRocketTakeoffFill } from "react-icons/bs";
+
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -99,7 +101,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         <div className="fixed inset-0 z-50 grid place-items-center">
             <div className="absolute inset-0 bg-black bg-opacity-40" />
             <div className="modal-box">
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-6">
                     <div className="flex flex-col gap-1">
                         <div className="flex gap-3 items-center">
                             {type && (
@@ -113,12 +115,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
                             </h3>
                         </div>
-                        <p>
-                            {!type
-                                ? 'Submit your plugin request to integrate new tools or services seamlessly into your workflow.'
-                                : `
-                                    Submit your new ${type} request and We’ll try to build it for you within 48 hours`}
-                        </p>
                     </div>
                     <div className="flex gap-1 flex-col">
                         {secondAppInfo && (
@@ -213,7 +209,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                         </label>
                     </div>
                     <Link href="https://cal.id/team/viasocket/bring-saas-app-on-viasocket" target="_blank">
-                        <p className="text-lg text-accent hover:underline">Schedule a meeting</p>
+                        <p className="text-lg text-gray-500 hover:underline">Schedule a meeting</p>
+                        <p className="flex items-center gap-1"><span className='text-sm'>We’ll try to build it for you within 48 hours</span> <BsRocketTakeoffFill /></p>
                     </Link>
                     <div className="flex gap-3">
                         <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
