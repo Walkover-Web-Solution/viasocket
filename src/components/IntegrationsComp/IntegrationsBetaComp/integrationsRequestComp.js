@@ -1,8 +1,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BsRocketTakeoffFill } from "react-icons/bs";
-
+import { BsRocketTakeoffFill } from 'react-icons/bs';
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -10,6 +9,7 @@ function isValidEmail(email) {
 
 export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) {
     const [isLoading, setIsLoading] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [formData, setFormData] = useState({
         userEmail: '',
         userName: '',
@@ -44,11 +44,13 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         }
     };
 
-    const handleSubmit = async (event) => {
-        window.signals.identify({
-            email: formData.userEmail,
-        });
+    const handleDone = async () => {
+        await submitForm();
+        setShowSuccessPopup(false);
+        handleClose();
+    };
 
+    const handleSubmit = (event) => {
         event.preventDefault();
 
         if (!formData.userEmail) {
@@ -68,6 +70,15 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             }
             return;
         }
+
+        setShowSuccessPopup(true);
+    };
+
+    const submitForm = async () => {
+        window.signals.identify({
+            email: formData.userEmail,
+        });
+
         const formDataToSend = formData;
         delete formData.plug;
         formDataToSend.userNeed = `New ${type || 'App'}`;
@@ -93,135 +104,191 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             console.error('Failed to submit:', error);
         } finally {
             setIsLoading(false);
-            handleClose();
         }
     };
 
     return (
         <div className="fixed inset-0 z-50 grid place-items-center">
             <div className="absolute inset-0 bg-black bg-opacity-40" />
-            <div className="modal-box">
-                <div className="flex flex-col gap-6">
-                    <div className="flex flex-col gap-1">
-                        <div className="flex gap-3 items-center">
-                            {type && (
-                                <Image
-                                    src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
-                                    height={36}
-                                    width={36}
-                                />
-                            )}
-                            <h3 className="h3 font-bold">
-                                Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
-                            </h3>
+
+            {showSuccessPopup && (
+                <div className="modal-box max-w-md">
+                    <div className="flex flex-col items-center gap-4 text-center">
+                        <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
+                            <svg
+                                className="w-8 h-8 text-white"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth="2"
+                                    d="M5 13l4 4L19 7"
+                                ></path>
+                            </svg>
+                        </div>
+                        <div className="flex flex-col gap-2">
+                            <p className="flex items-left gap-1">
+                                <span className="text-sm text-gray-500">
+                                    {' '}
+                                    Got your request! We'll get back to you within 48 hours.{' '}
+                                </span>{' '}
+                                <BsRocketTakeoffFill />
+                            </p>
+                            <p className="text-sm text-gray-500">
+                                Have more queries? Feel free to{' '}
+                                <Link
+                                    className="underline text-gray-500 hover:text-accent"
+                                    href={'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'}
+                                    target="_blank"
+                                >
+                                    schedule a meeting
+                                </Link>{' '}
+                                with us.
+                            </p>
+                        </div>
+
+
+
+                        <div className="flex gap-3 w-full px-5 pt-5">
+                            <button className="bg-accent py-1 px-3 text-white text-sm" onClick={handleDone} disabled={isLoading}>
+                                {isLoading ? 'Submitting...' : 'Done'}
+                            </button>
+
                         </div>
                     </div>
-                    <div className="flex gap-1 flex-col">
-                        {secondAppInfo && (
+                </div>
+            )}
+
+            {!showSuccessPopup && (
+                <div className="modal-box">
+                    <div className="flex flex-col gap-6">
+                        <div className="flex flex-col gap-4">
+                            <div className="flex gap-3 items-center">
+                                {type && (
+                                    <Image
+                                        src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
+                                        height={36}
+                                        width={36}
+                                    />
+                                )}
+                                <h3 className="h3 font-bold">
+                                    Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
+                                </h3>
+                            </div>
+                            <p className="flex items-center gap-1">
+                                <span className="text-sm">
+                                    Sit back and relax — we'll build your app integration in only 48 hours!
+                                </span>{' '}
+                                <BsRocketTakeoffFill />
+                            </p>
+                        </div>
+                        <div className="flex gap-1 flex-col">
+                            {secondAppInfo && (
+                                <label className="form-control w-full">
+                                    <div className="label">
+                                        <span className="label-text">Select App</span>
+                                    </div>
+                                    <select
+                                        className="select select-bordered w-full focus:outline-none"
+                                        value={formData?.plug?.name}
+                                        onChange={(e) => {
+                                            const selectedName = e.target.value;
+                                            const selectedApp =
+                                                selectedName === appInfo?.name ? appInfo : secondAppInfo;
+                                            setFormData((prev) => ({
+                                                ...prev,
+                                                plug: selectedApp,
+                                                plugName: selectedApp?.name,
+                                            }));
+                                        }}
+                                    >
+                                        <option value={appInfo?.name}>{appInfo?.name}</option>
+                                        <option value={secondAppInfo?.name}>{secondAppInfo?.name}</option>
+                                    </select>
+                                </label>
+                            )}
+
                             <label className="form-control w-full">
                                 <div className="label">
-                                    <span className="label-text">Select App</span>
-                                </div>
-                                <select
-                                    className="select select-bordered w-full focus:outline-none"
-                                    value={formData?.plug?.name}
-                                    onChange={(e) => {
-                                        const selectedName = e.target.value;
-                                        const selectedApp = selectedName === appInfo?.name ? appInfo : secondAppInfo;
-                                        setFormData((prev) => ({
-                                            ...prev,
-                                            plug: selectedApp,
-                                            plugName: selectedApp?.name,
-                                        }));
-                                    }}
-                                >
-                                    <option value={appInfo?.name}>{appInfo?.name}</option>
-                                    <option value={secondAppInfo?.name}>{secondAppInfo?.name}</option>
-                                </select>
-                            </label>
-                        )}
-
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Name:</span>
-                            </div>
-                            <input
-                                required
-                                type="text"
-                                name="userName"
-                                placeholder="Enter your name"
-                                className="input input-bordered w-full focus:outline-none "
-                                value={formData.userName}
-                                onChange={handleInputChange}
-                            />
-                        </label>
-
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Email:</span>
-                            </div>
-                            <input
-                                required
-                                type="text"
-                                name="userEmail"
-                                placeholder="Enter your Email"
-                                className={`input input-bordered w-full focus:outline-none ${emailError ? 'input-error' : ''}`}
-                                value={formData.userEmail}
-                                onChange={handleInputChange}
-                                ref={emailInputRef}
-                            />
-                            {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
-                        </label>
-                        {!type && (
-                            <label className="form-control w-full">
-                                <div className="label">
-                                    <span className="label-text">Plugin Name:</span>
+                                    <span className="label-text">Name:</span>
                                 </div>
                                 <input
                                     required
                                     type="text"
-                                    name="plugName"
-                                    placeholder="Plugin Name"
-                                    className="input input-bordered w-full focus:outline-none"
-                                    value={formData.plugName}
+                                    name="userName"
+                                    placeholder="Enter your name"
+                                    className="input input-bordered w-full focus:outline-none "
+                                    value={formData.userName}
                                     onChange={handleInputChange}
                                 />
                             </label>
-                        )}
-                        <label className="form-control w-full">
-                            <div className="label">
-                                <span className="label-text">Use Case:</span>
-                            </div>
-                            <textarea
-                                required
-                                name="useCase"
-                                className="textarea textarea-bordered focus:outline-none min-h-[100px]"
-                                placeholder="Please describe your usecase"
-                                value={formData.useCase}
-                                onChange={(event) => {
-                                    handleInputChange(event);
-                                    event.target.style.height = 'auto';
-                                    event.target.style.height = `${event.target.scrollHeight}px`;
-                                }}
-                                rows="1"
-                                style={{ overflow: 'hidden' }}
-                            ></textarea>
-                        </label>
-                    </div>
-                    <Link href="https://cal.id/team/viasocket/bring-saas-app-on-viasocket" target="_blank">
-                        <p className="text-lg text-gray-500 hover:underline">Schedule a meeting</p>
-                        <p className="flex items-center gap-1"><span className='text-sm'>We’ll try to build it for you within 48 hours</span> <BsRocketTakeoffFill /></p>
-                    </Link>
-                    <div className="flex gap-3">
-                        <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
-                            {isLoading ? 'Submitting...' : 'Submit'}
-                        </button>
-                        <button className="btn btn-primary btn-outline" onClick={handleClose}>
-                            Cancel
-                        </button>
+
+                            <label className="form-control w-full">
+                                <div className="label">
+                                    <span className="label-text">Email:</span>
+                                </div>
+                                <input
+                                    required
+                                    type="text"
+                                    name="userEmail"
+                                    placeholder="Enter your Email"
+                                    className={`input input-bordered w-full focus:outline-none ${emailError ? 'input-error' : ''}`}
+                                    value={formData.userEmail}
+                                    onChange={handleInputChange}
+                                    ref={emailInputRef}
+                                />
+                                {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
+                            </label>
+                            {!type && (
+                                <label className="form-control w-full">
+                                    <div className="label">
+                                        <span className="label-text">Plugin Name:</span>
+                                    </div>
+                                    <input
+                                        required
+                                        type="text"
+                                        name="plugName"
+                                        placeholder="Plugin Name"
+                                        className="input input-bordered w-full focus:outline-none"
+                                        value={formData.plugName}
+                                        onChange={handleInputChange}
+                                    />
+                                </label>
+                            )}
+                            <label className="form-control w-full">
+                                <div className="label">
+                                    <span className="label-text">Use Case:</span>
+                                </div>
+                                <textarea
+                                    required
+                                    name="useCase"
+                                    className="textarea textarea-bordered focus:outline-none min-h-[100px]"
+                                    placeholder="Please describe your usecase"
+                                    value={formData.useCase}
+                                    onChange={(event) => {
+                                        handleInputChange(event);
+                                        event.target.style.height = 'auto';
+                                        event.target.style.height = `${event.target.scrollHeight}px`;
+                                    }}
+                                    rows="1"
+                                    style={{ overflow: 'hidden' }}
+                                ></textarea>
+                            </label>
+                        </div>
+                        <div className="flex gap-3">
+                            <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
+                                {isLoading ? 'Submitting...' : 'Submit'}
+                            </button>
+                            <button className="btn btn-primary btn-outline" onClick={handleClose}>
+                                Cancel
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }
