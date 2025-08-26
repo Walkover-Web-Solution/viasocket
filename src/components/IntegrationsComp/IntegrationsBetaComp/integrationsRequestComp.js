@@ -1,7 +1,6 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BsRocketTakeoffFill } from 'react-icons/bs';
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -115,12 +114,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                 <div className="modal-box max-w-md">
                     <div className="flex flex-col items-center gap-4 text-center">
                         <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
-                            <svg
-                                className="w-8 h-8 text-white"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                            >
+                            <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path
                                     strokeLinecap="round"
                                     strokeLinejoin="round"
@@ -131,16 +125,15 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                         </div>
                         <div className="flex flex-col gap-2">
                             <p className="flex items-left gap-1">
-                                <span className="text-sm text-gray-500">
+                                <span className="text-sm">
                                     {' '}
-                                    Got your request! We'll get back to you within 48 hours.{' '}
+                                    Got your request! We'll get back to you within 48 hours. 🚀
                                 </span>{' '}
-                                <BsRocketTakeoffFill />
                             </p>
-                            <p className="text-sm text-gray-500">
+                            <p className="text-sm">
                                 Have more queries? Feel free to{' '}
                                 <Link
-                                    className="underline text-gray-500 hover:text-accent"
+                                    className="underline hover:text-accent"
                                     href={'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'}
                                     target="_blank"
                                 >
@@ -150,13 +143,14 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             </p>
                         </div>
 
-
-
                         <div className="flex gap-3 w-full px-5 pt-5">
-                            <button className="bg-accent py-1 px-3 text-white text-sm" onClick={handleDone} disabled={isLoading}>
+                            <button
+                                className="bg-accent py-1 px-3 text-white text-sm"
+                                onClick={handleDone}
+                                disabled={isLoading}
+                            >
                                 {isLoading ? 'Submitting...' : 'Done'}
                             </button>
-
                         </div>
                     </div>
                 </div>
@@ -179,10 +173,9 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 </h3>
                             </div>
                             <p className="flex items-center gap-1">
-                                <span className="text-sm">
-                                    Sit back and relax — we'll build your app integration in only 48 hours!
+                                <span className="text-lg font-medium">
+                                    Sit back and relax — we'll build your app integration in only 48 hours! 🚀
                                 </span>{' '}
-                                <BsRocketTakeoffFill />
                             </p>
                         </div>
                         <div className="flex gap-1 flex-col">
