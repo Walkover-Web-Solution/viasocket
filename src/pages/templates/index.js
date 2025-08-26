@@ -49,11 +49,16 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
         const interval = setInterval(() => {
             setCurrentIndex((prev) => (prev + 1) % templateToShow.length);
+            console.log(templateToShow[currentIndex].templateUrl,"ghjkl");
         }, 5000);
 
         return () => clearInterval(interval);
+        
     }, [templateToShow]);
-
+    
+    console.log(templateToShow,"templateToShow"); 
+    console.log(filteredTemplates,"filteredTemplates"); 
+    
     useEffect(() => {
         setLoading(false);
     }, [templateToShow]);
@@ -95,20 +100,35 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         )}
                     </div>
                 </div>
-
                 <div className="cont container">
-                    <div className="mb-8">
-                        <AutocompleteFilter
-                            categories={categories}
-                            apps={apps}
-                            searchTerm={searchTerm}
-                            selectedCategories={selectedCategories}
-                            selectedApps={selectedApps}
-                            totalFilters={totalFilters}
-                            onFilterChange={handleFilterChange}
-                            onClearAll={clearAllFilters}
-                        />
+                <div className="cont container h-[400px] ">
+                    <div className="flex flex-col lg:flex-row gap-8 mb-10 h-full">
+                        {/* Left side - Template Image */}
+                        <div className="flex-1 h-full">
+                            {templateToShow[currentIndex]?.templateUrl && (
+                                <img 
+                                    src={templateToShow[currentIndex].templateUrl} 
+                                    alt={templateToShow[currentIndex]?.title}
+                                    className="w-full h-full object-contain bg-white border custom-border"
+                                />
+                            )}
+                        </div>
+                        
+                        {/* Right side - AutocompleteFilter */}
+                        <div className="flex-1 h-full">
+                            <AutocompleteFilter
+                                categories={categories}
+                                apps={apps}
+                                searchTerm={searchTerm}
+                                selectedCategories={selectedCategories}
+                                selectedApps={selectedApps}
+                                totalFilters={totalFilters}
+                                onFilterChange={handleFilterChange}
+                                onClearAll={clearAllFilters}
+                            />
+                        </div>
                     </div>
+                </div>
 
                     {loading ? (
                         // Skeleton loader as before
@@ -156,7 +176,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     ) : (
                         // No results message and AutomationSuggestions
                         <div className="cont gap-4">
-                            <p className="h3">
+                            <p className="h5">
                                 We couldn't find any templates matching your{' '}
                                 {totalFilters > 0 ? 'filters' : 'search'}.
                                 {totalFilters > 0 && ' Try removing some filters or '}
@@ -244,7 +264,11 @@ export async function getServerSideProps(context) {
     return {
         props: {
             footerData: footerData || [],
-            metaData: metaData || {},
+            metaData: metaData || {
+                title: 'Workflow Automation Templates',
+                description: 'Discover and use pre-built workflow automation templates',
+                keywords: 'automation, templates, workflow'
+            },
             templateToShow: validTemplateData || [],
             faqData: faqData || [],
             blogData: blogData || [],
