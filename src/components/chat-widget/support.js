@@ -171,6 +171,7 @@ export default function Support({ open, onClose, footerData }) {
                                 <NavList items={Pricing} />
                             </section>
                         </div>
+                        
                     )}
 
                     <div className="">
