@@ -165,7 +165,7 @@ export default function IntegrationsIndexComp({
                             searchedApps?.length > 0 ? (
                                 searchedApps?.map((app, index) => {
                                     return (
-                                        <Link
+                                        <Link 
                                             key={index}
                                             href={createURL(`/integrations/${app?.appslugname}`)}
                                             className={`${style.app} flex justify-center hover-bg-grey-100-text-black`}
@@ -259,8 +259,15 @@ export function AppVisual({ app, index, redirectPart }) {
             className={`${style.app} hover-bg-grey-100-text-black custom-border flex align-center justify-center`}
         >
             <div className="flex items-center gap-2">
-                <Image src={app?.iconurl || 'https://placehold.co/36x36'} width={40} height={40} alt={app?.name} />
-
+           
+                    <Image
+                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                        width={40}
+                        height={40}
+                        alt={app?.name}
+                    
+                    />
+             
                 <h2>{app?.name}</h2>
             </div>
             {/* <p className={style?.app__des}>{app?.description}</p> */}
@@ -303,7 +310,7 @@ export function RequestIntegrationPopupOpener({
         setModalData((prev) => ({ ...prev, isOpen: false }));
     };
 
-    const label = title || `Request App Integration`;
+    const label = title || `Request a new ${type || 'App'}`;
 
     const showButton = (
         <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>

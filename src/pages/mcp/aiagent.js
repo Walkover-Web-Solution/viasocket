@@ -96,7 +96,7 @@ export default function aiagent({ footerData, faqData, metaData, blogData }) {
                     <Link href="https://viasocket.com/faq/viaSocket-MCP">
                         <button className="btn btn-accent">View MCP Docs</button>
                     </Link>
-                    <Link href="https://cal.id/team/viasocket/embed">
+                    <Link href="https://cal.id/team/viasocket/superheros">
                         <button className="btn btn-accent">Schedule a Demo</button>
                     </Link>
                 </div>

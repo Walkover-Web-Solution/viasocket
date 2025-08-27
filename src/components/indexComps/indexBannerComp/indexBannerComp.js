@@ -16,7 +16,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                                         <button className="btn btn-accent">Start for free</button>
                                     </Link>
                                     <a
-                                        href="https://cal.id/team/viasocket/workflow-setup-discussion"
+                                        href="https://cal.id/team/viasocket/superheros"
                                         className="btn btn-outline"
                                     >
                                         Free call with automation experts

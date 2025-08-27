@@ -1,9 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { MdCircle, MdEmail } from 'react-icons/md';
 import { FaWhatsapp } from 'react-icons/fa';
 import { IoCall } from 'react-icons/io5';
-import CallBackModal from './callBackModal';
 import { X } from 'lucide-react';
+import { useRouter } from 'next/router';
 
 function NavList({ items }) {
     return (
@@ -22,6 +22,7 @@ function NavList({ items }) {
 
 export default function Support({ open, onClose, footerData }) {
     const panelRef = useRef();
+    const router = useRouter();
 
     let groups = [];
     if (footerData?.length) {
@@ -30,6 +31,8 @@ export default function Support({ open, onClose, footerData }) {
             ?.sort((a, b) => parseInt(a.priority) - parseInt(b.priority))
             ?.map((item) => item.group_name);
     }
+
+   
 
     useEffect(() => {
         const handleMouseLeave = (e) => {
@@ -51,9 +54,55 @@ export default function Support({ open, onClose, footerData }) {
         };
     }, [open, onClose]);
 
-    const handleOpenModal = () => {
-        document.getElementById('callback_modal')?.showModal();
+    const handleOpenTallyForm = () => {
+
+
+        
+        const script = document.createElement('script');
+        script.src = 'https://tally.so/widgets/embed.js';
+        script.async = true;
+        document.head.appendChild(script);
+
+        if (window.Tally && window.Tally.openPopup) {
+                window.Tally.openPopup('mByObA', {
+                layout: 'modal',
+                width: 600,
+                alignLeft: false,
+                hideTitle: false,
+                overlay: true,
+                autoClose: 0,
+                showCloseButton: true,
+                closeOnEscape: true,
+                closeOnOverlayClick: true,
+                hiddenFields: {}
+            });
+        }
     };
+
+    const handleModalClose = () => {
+        const existingScript = document.querySelector('script[src="https://tally.so/widgets/embed.js"]');
+        if (existingScript?.parentNode) {
+            existingScript.parentNode.removeChild(existingScript);
+        }
+    };
+
+    useEffect(() => {
+        const listener = (event) => {
+            try {
+             
+                if (typeof event.data === 'string' && event.data.startsWith('{')) {
+                    const parsedEvent = JSON.parse(event.data);
+                    if (parsedEvent.event === 'Tally.PopupClosed') {
+                        handleModalClose();
+                    }
+                }
+            } catch (error) {
+                console.debug('Non-JSON message received:', event.data);
+            }
+        };
+        window.addEventListener('message', listener);
+        return () => window.removeEventListener('message', listener);
+    }, []);
 
     const toggleChatWidget = () => {
         window.chatWidget?.open();
@@ -62,7 +111,7 @@ export default function Support({ open, onClose, footerData }) {
     const ContactListArray = [
         {
             text: 'Request a callback now',
-            onClick: handleOpenModal,
+            onClick: handleOpenTallyForm,
             icon: <IoCall className="h-5 w-5 text-blue-500" />,
         },
         {
@@ -153,8 +202,6 @@ export default function Support({ open, onClose, footerData }) {
                         </ul>
                     </div>
                 </div>
-
-                <CallBackModal />
             </div>
         </div>
     );
