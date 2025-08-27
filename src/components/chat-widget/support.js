@@ -173,6 +173,7 @@ export default function Support({ open, onClose, footerData }) {
                         </div>
                         
                     )}
+                    
 
                     <div className="">
                         <h3 className="text-xl font-semibold px-5 pt-5 mb-2">We'd love to hear from you!</h3>
