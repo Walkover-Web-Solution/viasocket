@@ -17,6 +17,7 @@ import AutomationSuggestions from '../workflow-automation-ideas';
 import TitleWithButtons from '@/components/templateCard/titleWithButtons';
 import AutocompleteFilter from '@/components/templateCard/automcompleteFilter';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
+import { validateTemplateData } from '@/utils/validateTemplateData';
 
 export const runtime = 'experimental-edge';
 
@@ -52,8 +53,12 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         }, 5000);
 
         return () => clearInterval(interval);
+        
     }, [templateToShow]);
-
+    
+    console.log(templateToShow,"templateToShow"); 
+    console.log(filteredTemplates,"filteredTemplates"); 
+    
     useEffect(() => {
         setLoading(false);
     }, [templateToShow]);
@@ -95,20 +100,36 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         )}
                     </div>
                 </div>
+                <div className="container">
+                <div className="h-[400px] relative">
+                    <div className="flex lg:flex-row gap-9 mb-10 h-full items-stretch">
 
-                <div className="cont container">
-                    <div className="mb-8">
-                        <AutocompleteFilter
-                            categories={categories}
-                            apps={apps}
-                            searchTerm={searchTerm}
-                            selectedCategories={selectedCategories}
-                            selectedApps={selectedApps}
-                            totalFilters={totalFilters}
-                            onFilterChange={handleFilterChange}
-                            onClearAll={clearAllFilters}
-                        />
+                        {/* Left side - Template Image */}
+                        <div className="flex-1 min-h-0">
+                            {templateToShow[currentIndex]?.templateUrl && (
+                                <img
+                                    src={templateToShow[currentIndex].templateUrl}
+                                    alt={templateToShow[currentIndex]?.title}
+                                    className="w-full h-[400px] object-contain bg-white border custom-border"
+                                />
+                            )}
+                        </div>
+                        
+                        {/* Right side - AutocompleteFilter */}
+                        <div className="flex-1 min-h-0">
+                            <AutocompleteFilter
+                                categories={categories}
+                                apps={apps}
+                                searchTerm={searchTerm}
+                                selectedCategories={selectedCategories}
+                                selectedApps={selectedApps}
+                                totalFilters={totalFilters}
+                                onFilterChange={handleFilterChange}
+                                onClearAll={clearAllFilters}
+                            />
+                        </div>
                     </div>
+                </div>
 
                     {loading ? (
                         // Skeleton loader as before
@@ -120,7 +141,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     ) : hasResults ? (
                         <>
                             {/* Newly Published Section */}
-                            {latestTemplates.length > 0 && (
+                            {/* {latestTemplates.length > 0 && (
                                 <div className="mb-10">
                                     <h2 className="h2 mb-4">Newly Published</h2>
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
@@ -129,12 +150,12 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         ))}
                                     </div>
                                 </div>
-                            )}
+                            )} */}
 
                             {/* Rest of the Templates */}
                             {remainingTemplates.length > 0 && (
                                 <>
-                                    <h2 className="h2 mb-4">All Templates</h2>
+                                    <h2 className="h2 mb-4 mt-3">All Templates</h2>
                                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                                         {remainingTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />
@@ -156,7 +177,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     ) : (
                         // No results message and AutomationSuggestions
                         <div className="cont gap-4">
-                            <p className="h3">
+                            <p className="h5 mt-3">
                                 We couldn't find any templates matching your{' '}
                                 {totalFilters > 0 ? 'filters' : 'search'}.
                                 {totalFilters > 0 && ' Try removing some filters or '}
@@ -202,7 +223,10 @@ export async function getServerSideProps(context) {
 
     const validStatuses = ['verified_by_ai', 'verified'];
 
-    const validTemplateData = templateData.filter((template) => validStatuses.includes(template.verified));
+    const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
+
+    const validTemplateData = validateTemplateData(verifiedTemplates);
+    
     const categories = [
         ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),
     ];
@@ -244,7 +268,11 @@ export async function getServerSideProps(context) {
     return {
         props: {
             footerData: footerData || [],
-            metaData: metaData || {},
+            metaData: metaData || {
+                title: 'Workflow Automation Templates',
+                description: 'Discover and use pre-built workflow automation templates',
+                keywords: 'automation, templates, workflow'
+            },
             templateToShow: validTemplateData || [],
             faqData: faqData || [],
             blogData: blogData || [],

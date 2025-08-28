@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
+import { validateTemplateData } from '@/utils/validateTemplateData';
 
 const TEMPLATES_PER_PAGE = 6;
 
@@ -10,7 +11,7 @@ export const useTemplateFilters = (templates = []) => {
 
     // Memoized filtered templates to avoid unnecessary recalculations
     const filteredTemplates = useMemo(() => {
-        let filtered = [...templates];
+    let filtered = validateTemplateData(templates);
 
         // Filter by categories
         if (selectedCategories.length > 0) {
@@ -47,8 +48,7 @@ export const useTemplateFilters = (templates = []) => {
                 .sort((a, b) => b.matchScore - a.matchScore);
         }
 
-        // Remove templates without image
-        filtered = filtered.filter((template) => template.templateUrl && template.templateUrl.trim() !== '');
+    // validateTemplateData already ensures templateUrl & name/title exist
 
         // Clean up match scores
         return filtered.map(({ matchScore, ...rest }) => rest);
