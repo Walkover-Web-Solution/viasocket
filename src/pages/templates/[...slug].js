@@ -81,9 +81,9 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                                 </div>
                             </div>
                             <div
-                                className={`md:w-3/5 w-full h-[500px] overflow-hidden flex justify-center items-start relative border custom-border ${style.templateImageBg}`}
+                                className={`md:w-3/5 w-full h-[500px] overflow-hidden flex justify-center items-center relative border custom-border ${style.templateImageBg}`}
                             >
-                                <img src={template?.templateUrl} alt={template?.title} className="block" />
+                                <img src={template?.templateUrl} alt={template?.title} className="block m-0 max-h-full max-w-full object-contain" />
                                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
                             </div>
                         </div>

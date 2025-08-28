@@ -233,7 +233,7 @@ const AutocompleteFilter = ({
     );
 
     return (
-        <div className="relative w-full max-w-2xl" ref={dropdownRef}>
+    <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
             {/* Input Field */}
             <div className="relative">
                 <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-white">
@@ -254,7 +254,7 @@ const AutocompleteFilter = ({
 
             {/* Selected Filters Display */}
             {(selectedCategories.length > 0 || selectedApps.length > 0) && (
-                <div className="mt-2 flex flex-wrap gap-2">
+                <div className="mt-2 flex flex-wrap gap-2 flex-none max-h-24 overflow-y-auto pr-1">
                     {selectedCategories.map((category) => (
                         <span
                             key={category}
@@ -297,9 +297,9 @@ const AutocompleteFilter = ({
             )}
 
             {/* Categories and Apps Display - Two separate boxes */}
-            <div className="mt-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="mt-2 grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-hidden">
                 {/* Categories Box */}
-                <div className="border custom-border p-3 bg-white max-h-[300px] templateToShow overflow-y-auto">
+                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`} >                
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">CATEGORIES</h4>
                     <div className="space-y-1">
                         {categories.map((category) => (
@@ -349,7 +349,7 @@ const AutocompleteFilter = ({
                 </div>
 
                 {/* Apps Box */}
-                <div className="border custom-border bg-white p-3 max-h-[300px] overflow-y-auto">
+                <div className={`border custom-border bg-white p-3 h-full overflow-y-auto`}>
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">APPS</h4>
                     <div className="space-y-1">
                         {apps.map((app) => (
