@@ -1,14 +1,9 @@
-import { FOOTER_FIELDS } from '@/const/fields';
-import { getFooterData } from '@/utils/getData';
+
 import { CgArrowTopRight } from 'react-icons/cg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
 import { CiSquarePlus } from 'react-icons/ci';
-import GetStarted from '@/components/getStarted/getStarted';
-import FAQSection from '@/components/faqSection/faqSection';
-import BlogGrid from '@/components/blogGrid/blogGrid';
-import { getBlogData } from '@/utils/getBlogData';
 export const runtime = 'experimental-edge';
 
 const useDebounce = (value, delay) => {
