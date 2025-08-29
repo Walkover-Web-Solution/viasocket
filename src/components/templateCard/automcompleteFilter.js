@@ -195,45 +195,9 @@ const AutocompleteFilter = ({
         });
     }, [inputValue, selectedCategories, selectedApps, onFilterChange]);
 
-    const handleClearAll = useCallback(() => {
-        setInputValue('');
-        if (onClearAll) {
-            onClearAll();
-        } else {
-            onFilterChange({
-                searchTerm: '',
-                selectedCategories: [],
-                selectedApps: [],
-            });
-        }
-    }, [onClearAll, onFilterChange]);
-
-    const removeCategory = useCallback(
-        (category) => {
-            const newCategories = selectedCategories.filter((c) => c !== category);
-            onFilterChange({
-                searchTerm: inputValue,
-                selectedCategories: newCategories,
-                selectedApps,
-            });
-        },
-        [selectedCategories, inputValue, selectedApps, onFilterChange]
-    );
-
-    const removeApp = useCallback(
-        (app) => {
-            const newApps = selectedApps.filter((a) => a !== app);
-            onFilterChange({
-                searchTerm: inputValue,
-                selectedCategories,
-                selectedApps: newApps,
-            });
-        },
-        [selectedApps, inputValue, selectedCategories, onFilterChange]
-    );
 
     return (
-        <div className="relative w-full max-w-2xl" ref={dropdownRef}>
+        <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
             {/* Input Field */}
             <div className="relative">
                 <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-white">
@@ -249,205 +213,129 @@ const AutocompleteFilter = ({
                         className="flex-1 outline-none"
                     />
 
-                    <button onClick={() => setIsOpen(!isOpen)} className="p-1 hover:bg-gray-100 rounded">
-                        <MdKeyboardArrowDown
-                            className={`transform transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
-                            size={20}
-                        />
-                    </button>
                 </div>
             </div>
 
-            {/* Active Filters Display */}
-            {(selectedCategories.length > 0 || selectedApps.length > 0) && (
-                <div className="mt-2 flex flex-wrap gap-2">
-                    {selectedCategories.map((category) => (
-                        <span
-                            key={category}
-                            className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
-                        >
-                            {category}
-                            <button onClick={() => removeCategory(category)} className="ml-1">
-                                <MdClose size={20} />
-                            </button>
-                        </span>
-                    ))}
-                    {selectedApps.map((app) => {
-                        const appData = apps.find((a) => a.pluginslugname === app);
-                        return (
-                            <span
-                                key={app}
-                                className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
+            {/* Categories and Apps Display - Two separate boxes */}
+            <div className="mt-2 grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-hidden">
+                {/* Categories Box */}
+                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`} >
+                    <h4 className="text-sm font-semibold text-gray-600 mb-2">CATEGORIES</h4>
+                    <div className="space-y-1">
+                        {categories.map((category) => (
+                            <div
+                                key={category}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedCategories.includes(category) ? 'bg-blue-50' : ''
+                                    }`}
+                                onClick={() => {
+                                    const newCategories = selectedCategories.includes(category)
+                                        ? selectedCategories.filter((c) => c !== category)
+                                        : [...selectedCategories, category];
+                                    onFilterChange({
+                                        searchTerm: inputValue,
+                                        selectedCategories: newCategories,
+                                        selectedApps,
+                                    });
+                                }}
                             >
-                                {app === 'webhook' ? (
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                        <Webhook size={16} />
+                                <div className="relative mr-3">
+                                    <div
+                                        className={`w-4 h-4 border-2 flex items-center justify-center ${selectedCategories.includes(category)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
+                                    >
+                                        {selectedCategories.includes(category) && (
+                                            <svg
+                                                className="w-3 h-3 text-white"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        )}
                                     </div>
-                                ) : app === 'cron' ? (
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                        <Timer size={16} />
+                                </div>
+                                <span className="text-sm">{category}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Apps Box */}
+                <div className={`border custom-border bg-white p-3 h-full overflow-y-auto`}>
+                    <h4 className="text-sm font-semibold text-gray-600 mb-2">APPS</h4>
+                    <div className="space-y-1">
+                        {apps.map((app) => (
+                            <div
+                                key={app.pluginslugname}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
+                                    }`}
+                                onClick={() => {
+                                    const newApps = selectedApps.includes(app.pluginslugname)
+                                        ? selectedApps.filter((a) => a !== app.pluginslugname)
+                                        : [...selectedApps, app.pluginslugname];
+                                    onFilterChange({
+                                        searchTerm: inputValue,
+                                        selectedCategories,
+                                        selectedApps: newApps,
+                                    });
+                                }}
+                            >
+                                <div className="relative mr-3">
+                                    <div
+                                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${selectedApps.includes(app.pluginslugname)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
+                                    >
+                                        {selectedApps.includes(app.pluginslugname) && (
+                                            <svg
+                                                className="w-3 h-3 text-white"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        )}
                                     </div>
-                                ) : appData?.iconurl ? (
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                        <Image src={appData.iconurl} alt={appData.pluginname} width={36} height={36} className="h-5 w-fit" />
+                                </div>
+                                {app.pluginslugname === 'webhook' ? (
+                                    <div className="flex items-center justify-center w-6 h-6 mr-2">
+                                        <Webhook size={12} />
+                                    </div>
+                                ) : app.pluginslugname === 'cron' ? (
+                                    <div className="flex items-center justify-center w-6 h-6 mr-2">
+                                        <Timer size={12} />
+                                    </div>
+                                ) : app.iconurl ? (
+                                    <div className="flex items-center justify-center w-6 h-6 mr-2">
+                                        <Image
+                                            src={app.iconurl}
+                                            alt={app.pluginname}
+                                            width={24}
+                                            height={24}
+                                            className="h-4 w-fit"
+                                        />
                                     </div>
                                 ) : null}
-                                {app === 'webhook' ? 'Webhook' : app === 'cron' ? 'Cron' : (appData?.pluginname || app)}
-                                <button onClick={() => removeApp(app)} className="ml-1">
-                                    <MdClose size={20} />
-                                </button>
-                            </span>
-                        );
-                    })}
+                                <span className="text-sm">{app.pluginname}</span>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            )}
+            </div>
 
-            {/* Dropdown */}
-            {isOpen && (
-                <div className="absolute top-full left-0 right-0 mt-1 bg-white border custom-border z-50 max-h-80 overflow-y-auto">
-                    {filteredItems.length === 0 ? (
-                        <div className="p-4 text-center text-gray-500">
-                            {inputValue.trim() ? 'No matching items found' : 'Start typing to search...'}
-                        </div>
-                    ) : (
-                        <>
-                            {/* Categories Section */}
-                            {filteredItems.some((item) => item.type === 'category') && (
-                                <div>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50 border-b">
-                                        Categories
-                                    </div>
-                                    {filteredItems
-                                        .filter((item) => item.type === 'category')
-                                        .map((item, index) => {
-                                            const globalIndex = filteredItems.findIndex((i) => i.id === item.id);
-                                            return (
-                                                <div
-                                                    key={item.id}
-                                                    ref={globalIndex === activeIndex ? activeItemRef : null}
-                                                    className={`flex items-center p-3 hover:bg-gray-100 cursor-pointer ${
-                                                        globalIndex === activeIndex ? 'bg-gray-50' : ''
-                                                    }`}
-                                                    onClick={() => handleItemClick(item)}
-                                                >
-                                                    <div className="relative mr-3">
-                                                        <div
-                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-                                                                item.isSelected
-                                                                    ? 'bg-gray-500 border-gray-500'
-                                                                    : 'border-gray-300 bg-white'
-                                                            }`}
-                                                        >
-                                                            {item.isSelected && (
-                                                                <svg
-                                                                    className="w-3 h-3 text-white"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 20 20"
-                                                                >
-                                                                    <path
-                                                                        fillRule="evenodd"
-                                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                        clipRule="evenodd"
-                                                                    />
-                                                                </svg>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <span className="text-sm">{item.label}</span>
-                                                </div>
-                                            );
-                                        })}
-                                </div>
-                            )}
-
-                            {/* Apps Section */}
-                            {filteredItems.some((item) => item.type === 'app') && (
-                                <div>
-                                    <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wider bg-gray-50 border-b">
-                                        Apps & Integrations
-                                    </div>
-                                    {filteredItems
-                                        .filter((item) => item.type === 'app')
-                                        .map((item) => {
-                                            const globalIndex = filteredItems.findIndex((i) => i.id === item.id);
-                                            return (
-                                                <div
-                                                    key={item.id}
-                                                    ref={globalIndex === activeIndex ? activeItemRef : null}
-                                                    className={`flex items-center p-3 hover:bg-gray-100 cursor-pointer ${
-                                                        globalIndex === activeIndex ? 'bg-gray-50' : ''
-                                                    }`}
-                                                    onClick={() => handleItemClick(item)}
-                                                >
-                                                    <div className="relative mr-3">
-                                                        <div
-                                                            className={`w-5 h-5 rounded border-2 flex items-center justify-center ${
-                                                                item.isSelected
-                                                                    ? 'bg-gray-500 border-gray-500'
-                                                                    : 'border-gray-300 bg-white'
-                                                            }`}
-                                                        >
-                                                            {item.isSelected && (
-                                                                <svg
-                                                                    className="w-3 h-3 text-white"
-                                                                    fill="currentColor"
-                                                                    viewBox="0 0 20 20"
-                                                                >
-                                                                    <path
-                                                                        fillRule="evenodd"
-                                                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                                                                        clipRule="evenodd"
-                                                                    />
-                                                                </svg>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    {item.value === 'webhook' ? (
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                                            <Webhook size={16} />
-                                                        </div>
-                                                    ) : item.value === 'cron' ? (
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                                            <Timer size={16} />
-                                                        </div>
-                                                    ) : item.icon ? (
-                                                        <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white mr-2">
-                                                            <Image
-                                                                src={item.icon}
-                                                                alt={item.label}
-                                                                width={36}
-                                                                height={36}
-                                                                className="h-5 w-fit"
-                                                            />
-                                                        </div>
-                                                    ) : null}
-                                                    <span className="text-sm">{item.label}</span>
-                                                </div>
-                                            );
-                                        })}
-                                </div>
-                            )}
-
-                            {/* Search Action */}
-                            {inputValue.trim() && (
-                                <div className="border-t">
-                                    <button
-                                        ref={activeIndex === filteredItems.length ? activeItemRef : null}
-                                        onClick={handleSearch}
-                                        className={`w-full flex items-center p-3 hover:bg-gray-100 text-left ${
-                                            activeIndex === filteredItems.length ? 'bg-gray-50' : ''
-                                        }`}
-                                    >
-                                        <MdSearch className="mr-3" size={16} />
-                                        <span className="text-sm">Search for "{inputValue}"</span>
-                                    </button>
-                                </div>
-                            )}
-                        </>
-                    )}
-                </div>
-            )}
         </div>
+        
     );
 };
 

@@ -16,7 +16,9 @@ const TemplateCard = ({ template, index }) => {
             <div className="cont gap-2 px-8 py-4">
                 <div className="cont gap-1">
                     <h1 className="h3">{template?.title}</h1>
-                    <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2>
+
+                    {/* Template description */}
+                    {/* <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2> */}
                 </div>
                 <div className="flex gap-4 items-center">
                     {(() => {
@@ -83,11 +85,11 @@ const TemplateCard = ({ template, index }) => {
                 </div>
             </div>
 
-            <div className="h-[400px] w-full overflow-hidden flex justify-center items-start relative">
+            <div className="h-[400px] w-full overflow-hidden flex justify-center items-center relative bg-white">
                 <img
                     src={template?.templateUrl || 'https://placehold.co/600x400'}
                     alt={template?.title}
-                    className="block"
+                    className="block m-0 max-h-full max-w-full object-contain"
                 />
                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
             </div>
