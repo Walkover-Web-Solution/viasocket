@@ -54,14 +54,25 @@ export default function Support({ open, onClose, footerData }) {
         };
     }, [open, onClose]);
 
-    const handleOpenTallyForm = () => {
 
+     const loadTallyScript = () => {
+     return new Promise((resolve, reject) => {
+      if (window.Tally && window.Tally.openPopup) {
+        resolve()
+        return
+      }
 
-        
-        const script = document.createElement('script');
+     const script = document.createElement('script');
         script.src = 'https://tally.so/widgets/embed.js';
         script.async = true;
+         script.onload = () => resolve()
+         script.onerror = () => reject(new Error('Tally script failed to load'))
         document.head.appendChild(script);
+      })
+  }
+    const handleOpenTallyForm = async () => {
+       
+    await loadTallyScript()
 
         if (window.Tally && window.Tally.openPopup) {
                 window.Tally.openPopup('mByObA', {
@@ -89,15 +100,12 @@ export default function Support({ open, onClose, footerData }) {
     useEffect(() => {
         const listener = (event) => {
             try {
-             
-                if (typeof event.data === 'string' && event.data.startsWith('{')) {
                     const parsedEvent = JSON.parse(event.data);
                     if (parsedEvent.event === 'Tally.PopupClosed') {
                         handleModalClose();
                     }
-                }
+                
             } catch (error) {
-                console.debug('Non-JSON message received:', event.data);
             }
         };
         window.addEventListener('message', listener);
