@@ -195,45 +195,9 @@ const AutocompleteFilter = ({
         });
     }, [inputValue, selectedCategories, selectedApps, onFilterChange]);
 
-    const handleClearAll = useCallback(() => {
-        setInputValue('');
-        if (onClearAll) {
-            onClearAll();
-        } else {
-            onFilterChange({
-                searchTerm: '',
-                selectedCategories: [],
-                selectedApps: [],
-            });
-        }
-    }, [onClearAll, onFilterChange]);
-
-    const removeCategory = useCallback(
-        (category) => {
-            const newCategories = selectedCategories.filter((c) => c !== category);
-            onFilterChange({
-                searchTerm: inputValue,
-                selectedCategories: newCategories,
-                selectedApps,
-            });
-        },
-        [selectedCategories, inputValue, selectedApps, onFilterChange]
-    );
-
-    const removeApp = useCallback(
-        (app) => {
-            const newApps = selectedApps.filter((a) => a !== app);
-            onFilterChange({
-                searchTerm: inputValue,
-                selectedCategories,
-                selectedApps: newApps,
-            });
-        },
-        [selectedApps, inputValue, selectedCategories, onFilterChange]
-    );
 
     return (
-    <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
+        <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
             {/* Input Field */}
             <div className="relative">
                 <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-white">
@@ -252,62 +216,17 @@ const AutocompleteFilter = ({
                 </div>
             </div>
 
-            {/* Selected Filters Display */}
-            {(selectedCategories.length > 0 || selectedApps.length > 0) && (
-                <div className="mt-2 flex flex-wrap gap-2 flex-none max-h-24 overflow-y-auto pr-1">
-                    {selectedCategories.map((category) => (
-                        <span
-                            key={category}
-                            className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
-                        >
-                            {category}
-                            <button onClick={() => removeCategory(category)} className="ml-1">
-                                <MdClose size={16} />
-                            </button>
-                        </span>
-                    ))}
-                    {selectedApps.map((app) => {
-                        const appData = apps.find((a) => a.pluginslugname === app);
-                        return (
-                            <span
-                                key={app}
-                                className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
-                            >
-                                {app === 'webhook' ? (
-                                    <div className="flex items-center justify-center w-6 h-6 mr-1">
-                                        <Webhook size={12} />
-                                    </div>
-                                ) : app === 'cron' ? (
-                                    <div className="flex items-center justify-center w-6 h-6 mr-1">
-                                        <Timer size={12} />
-                                    </div>
-                                ) : appData?.iconurl ? (
-                                    <div className="flex items-center justify-center w-6 h-6 mr-1">
-                                        <Image src={appData.iconurl} alt={appData.pluginname} width={24} height={24} className="h-4 w-fit" />
-                                    </div>
-                                ) : null}
-                                {app === 'webhook' ? 'Webhook' : app === 'cron' ? 'Cron' : (appData?.pluginname || app)}
-                                <button onClick={() => removeApp(app)} className="ml-1">
-                                    <MdClose size={16} />
-                                </button>
-                            </span>
-                        );
-                    })}
-                </div>
-            )}
-
             {/* Categories and Apps Display - Two separate boxes */}
             <div className="mt-2 grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-hidden">
                 {/* Categories Box */}
-                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`} >                
+                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`} >
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">CATEGORIES</h4>
                     <div className="space-y-1">
                         {categories.map((category) => (
                             <div
                                 key={category}
-                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${
-                                    selectedCategories.includes(category) ? 'bg-blue-50' : ''
-                                }`}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedCategories.includes(category) ? 'bg-blue-50' : ''
+                                    }`}
                                 onClick={() => {
                                     const newCategories = selectedCategories.includes(category)
                                         ? selectedCategories.filter((c) => c !== category)
@@ -321,11 +240,10 @@ const AutocompleteFilter = ({
                             >
                                 <div className="relative mr-3">
                                     <div
-                                        className={`w-4 h-4 border-2 flex items-center justify-center ${
-                                            selectedCategories.includes(category)
-                                                ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
-                                        }`}
+                                        className={`w-4 h-4 border-2 flex items-center justify-center ${selectedCategories.includes(category)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
                                     >
                                         {selectedCategories.includes(category) && (
                                             <svg
@@ -355,9 +273,8 @@ const AutocompleteFilter = ({
                         {apps.map((app) => (
                             <div
                                 key={app.pluginslugname}
-                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${
-                                    selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
-                                }`}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
+                                    }`}
                                 onClick={() => {
                                     const newApps = selectedApps.includes(app.pluginslugname)
                                         ? selectedApps.filter((a) => a !== app.pluginslugname)
@@ -371,11 +288,10 @@ const AutocompleteFilter = ({
                             >
                                 <div className="relative mr-3">
                                     <div
-                                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                                            selectedApps.includes(app.pluginslugname)
-                                                ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
-                                        }`}
+                                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${selectedApps.includes(app.pluginslugname)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
                                     >
                                         {selectedApps.includes(app.pluginslugname) && (
                                             <svg
@@ -419,6 +335,7 @@ const AutocompleteFilter = ({
             </div>
 
         </div>
+        
     );
 };
 

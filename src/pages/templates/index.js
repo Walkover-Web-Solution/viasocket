@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getFooterData } from '@/utils/getData';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getBlogData } from '@/utils/getBlogData';
@@ -18,6 +19,7 @@ import TitleWithButtons from '@/components/templateCard/titleWithButtons';
 import AutocompleteFilter from '@/components/templateCard/automcompleteFilter';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
+import { Webhook, Timer } from 'lucide-react';
 
 export const runtime = 'experimental-edge';
 
@@ -27,7 +29,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    
+
     // Use the custom hook for all filter-related logic
     const {
         searchTerm,
@@ -53,12 +55,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         }, 5000);
 
         return () => clearInterval(interval);
-        
+
     }, [templateToShow]);
-    
-    console.log(templateToShow,"templateToShow"); 
-    console.log(filteredTemplates,"filteredTemplates"); 
-    
+
     useEffect(() => {
         setLoading(false);
     }, [templateToShow]);
@@ -77,6 +76,29 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
             router.push(`/templates/${currentTemplate.id}`);
         }
     };
+
+    // helpers to remove a selected category/app from the page-level chips
+    const removeCategory = (category) => {
+        const newCategories = selectedCategories.filter((c) => c !== category);
+        handleFilterChange({
+            searchTerm,
+            selectedCategories: newCategories,
+            selectedApps,
+        });
+    };
+
+    const removeApp = (appSlug) => {
+        const newApps = selectedApps.filter((a) => a !== appSlug);
+        handleFilterChange({
+            searchTerm,
+            selectedCategories,
+            selectedApps: newApps,
+        });
+    };
+
+    // Choose which list to display: if there are items beyond the "latest" slice, use them; otherwise use all filtered
+    const displayTemplates = remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates;
+    const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
         <>
@@ -101,35 +123,83 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     </div>
                 </div>
                 <div className="container">
-                <div className="h-[400px] relative">
-                    <div className="flex lg:flex-row gap-9 mb-10 h-full items-stretch">
+                    <div className="h-[400px] relative">
+                        <div className="flex lg:flex-row gap-9 h-full items-stretch">
 
-                        {/* Left side - Template Image */}
-                        <div className="flex-1 min-h-0">
-                            {templateToShow[currentIndex]?.templateUrl && (
-                                <img
-                                    src={templateToShow[currentIndex].templateUrl}
-                                    alt={templateToShow[currentIndex]?.title}
-                                    className="w-full h-[400px] object-contain bg-white border custom-border"
+                            {/* Left side - Template Image */}
+                            <div className="flex-1 min-h-0">
+                                {templateToShow[currentIndex]?.templateUrl && (
+                                    <img
+                                        src={templateToShow[currentIndex].templateUrl}
+                                        alt={templateToShow[currentIndex]?.title}
+                                        className="w-full h-[400px] object-contain bg-white border custom-border"
+                                    />
+                                )}
+                            </div>
+
+                            {/* Right side - AutocompleteFilter */}
+                            <div className="flex-1 min-h-0">
+                                <AutocompleteFilter
+                                    categories={categories}
+                                    apps={apps}
+                                    searchTerm={searchTerm}
+                                    selectedCategories={selectedCategories}
+                                    selectedApps={selectedApps}
+                                    totalFilters={totalFilters}
+                                    onFilterChange={handleFilterChange}
+                                    onClearAll={clearAllFilters}
                                 />
-                            )}
+                            </div>
                         </div>
-                        
-                        {/* Right side - AutocompleteFilter */}
-                        <div className="flex-1 min-h-0">
-                            <AutocompleteFilter
-                                categories={categories}
-                                apps={apps}
-                                searchTerm={searchTerm}
-                                selectedCategories={selectedCategories}
-                                selectedApps={selectedApps}
-                                totalFilters={totalFilters}
-                                onFilterChange={handleFilterChange}
-                                onClearAll={clearAllFilters}
-                            />
-                        </div>
+
                     </div>
-                </div>
+
+                    <div>
+                        {(selectedCategories.length > 0 || selectedApps.length > 0) && (
+                            <div className="flex flex-row flex-wrap gap-2 mt-2">
+                                {selectedCategories.map((category) => (
+                                    <span
+                                        key={category}
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
+                                    >
+                                        {category}
+                                        <button onClick={() => removeCategory(category)} className="ml-1" aria-label={`Remove ${category}`}>
+                                            <MdClose size={16} />
+                                        </button>
+                                    </span>
+                                ))}
+                                {selectedApps.map((appSlug) => {
+                                    const appData = apps.find((a) => a.pluginslugname === appSlug);
+                                    const label = appSlug === 'webhook' ? 'Webhook' : appSlug === 'cron' ? 'Cron' : (appData?.pluginname || appSlug);
+                                    return (
+                                        <span
+                                            key={appSlug}
+                                            className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
+                                        >
+                                            {appSlug === 'webhook' ? (
+                                                <div className="flex items-center justify-center w-6 h-6 mr-1">
+                                                    <Webhook size={12} />
+                                                </div>
+                                            ) : appSlug === 'cron' ? (
+                                                <div className="flex items-center justify-center w-6 h-6 mr-1">
+                                                    <Timer size={12} />
+                                                </div>
+                                            ) : appData?.iconurl ? (
+                                                <div className="flex items-center justify-center w-6 h-6 mr-1">
+                                                    <Image src={appData.iconurl} alt={label} width={24} height={24} className="h-4 w-fit" />
+                                                </div>
+                                            ) : null}
+                                            {label}
+                                            <button onClick={() => removeApp(appSlug)} className="ml-1" aria-label={`Remove ${label}`}>
+                                                <MdClose size={16} />
+                                            </button>
+                                        </span>
+                                    );
+                                })}
+                                <button onClick={clearAllFilters} className="ml-2 text-sm underline text-gray-600">Clear all</button>
+                            </div>
+                        )}
+                    </div>
 
                     {loading ? (
                         // Skeleton loader as before
@@ -153,15 +223,15 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             )} */}
 
                             {/* Rest of the Templates */}
-                            {remainingTemplates.length > 0 && (
+                            {displayTemplates.length > 0 && (
                                 <>
-                                    <h2 className="h2 mb-4 mt-3">All Templates</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                        {remainingTemplates.slice(0, visibleCount).map((template, index) => (
+                                    {/* <h2 className="h2 mb-4 mt-3">All Templates</h2> */}
+                                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                        {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />
                                         ))}
                                     </div>
-                                    {hasMoreTemplates && (
+                                    {hasMoreToShow && (
                                         <div className="flex justify-end w-full mt-4">
                                             <button
                                                 onClick={handleLoadMore}
@@ -177,7 +247,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     ) : (
                         // No results message and AutomationSuggestions
                         <div className="cont gap-4">
-                            <p className="h5 mt-3">
+                            <p className="h3 mt-20">
                                 We couldn't find any templates matching your{' '}
                                 {totalFilters > 0 ? 'filters' : 'search'}.
                                 {totalFilters > 0 && ' Try removing some filters or '}
@@ -226,7 +296,7 @@ export async function getServerSideProps(context) {
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
 
     const validTemplateData = validateTemplateData(verifiedTemplates);
-    
+
     const categories = [
         ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),
     ];
