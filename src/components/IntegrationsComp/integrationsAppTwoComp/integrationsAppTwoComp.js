@@ -14,6 +14,7 @@ import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEvents
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
+import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
 
 export default function IntegrationsAppTwoComp({
@@ -44,36 +45,56 @@ export default function IntegrationsAppTwoComp({
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
+            <div className="container">
+                <div className="integration-page-double-app flex flex-col md:flex-row gap-4">
+                    <div className="flex w-full flex-col md:flex-row">
+                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3 border md:border-r-0 border-b-0 md:border-b custom-border bg-white w-full max-w-[300px] min-w-fit">
+                            <Image
+                                className="h-8 md:h-10 w-fit"
+                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                width={36}
+                                height={36}
+                                alt={appOneDetails?.name}
+                            />
+                            <div>
+                                <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
+                            </div>
+                        </div>
+                        <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border custom-border bg-white w-full max-w-[300px] min-w-fit">
+                            <Image
+                                className="h-8 md:h-10 w-fit"
+                                src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
+                                width={36}
+                                height={36}
+                                alt={appTwoDetails?.name}
+                            />
+                            <div>
+                                <h2 className="text-xl md:text-2xl font-bold">{appTwoDetails?.name}</h2>
+                            </div>
+                        </div>
+                    </div>
 
-            <div className="container flex w-full flex-col md:flex-row ">
-                <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border border-r-0 custom-border bg-white w-full max-w-[300px] min-w-fit">
-                    <Image
-                        className="h-8 md:h-10 w-fit"
-                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                        width={36}
-                        height={36}
-                        alt={appOneDetails?.name}
-                    />
-                    <div>
-                        <h2 className="text-xl md:text-2xl font-bold">{appOneDetails?.name}</h2>
+                    <div className="flex flex-col gap-4">
+                        <button
+                            onClick={(e) =>
+                                handleRedirect(e, `https://flow.viasocket.com/connect/${appTwoDetails?.rowid}?`)
+                            }
+                            className="btn btn-outline min-w-max w-full justify-start"
+                        >
+                            Connect to {appTwoDetails?.name}
+                        </button>
+                        <button
+                            onClick={(e) =>
+                                handleRedirect(e, `https://flow.viasocket.com/connect/${appTwoDetails?.rowid}?`)
+                            }
+                            className="btn btn-outline min-w-max w-full justify-start"
+                        >
+                            Connect to {appOneDetails?.name}
+                        </button>
                     </div>
                 </div>
-                <div className="flex md:h-28 items-center justify-center gap-4 px-5 py-3  border custom-border bg-white w-full max-w-[300px] min-w-fit">
-                    <Image
-                        className="h-8 md:h-10 w-fit"
-                        src={appTwoDetails?.iconurl || 'https://placehold.co/40x40'}
-                        width={36}
-                        height={36}
-                        alt={appTwoDetails?.name}
-                    />
-                    <div>
-                        <h2 className="text-xl md:text-2xl font-bold">{appTwoDetails?.name}</h2>
-                    </div>
-                </div>
-            </div>
 
-            <div className="container cont cont__gap">
-                <div className="flex flex-wrap items-center md:gap-2 gap-0 md:text-lg text-sm">
+                <div className="flex flex-wrap items-center md:gap-2 gap-0 md:text-lg text-base mt-1">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
                     </Link>
@@ -92,6 +113,9 @@ export default function IntegrationsAppTwoComp({
                         {appTwoDetails?.name}
                     </Link>
                 </div>
+            </div>
+
+            <div className="container cont cont__gap">
                 {combosData?.combinations?.length > 0 && (
                     <>
                         <div className="cont">
@@ -153,9 +177,7 @@ export default function IntegrationsAppTwoComp({
 
                 {!combosData?.combinations?.length > 0 &&
                     !appOneDetails?.events?.length > 0 &&
-                    !appTwoDetails?.events?.length > 0 && (
-                        <IntegrationsBetaComp appOneDetails={appOneDetails} />
-                    )}
+                    !appTwoDetails?.events?.length > 0 && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
 
                 {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
                     (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
@@ -189,11 +211,9 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 )}
 
-            
-                <div className="container cont">
-                    <GetStarted  />
-                </div>
-       
+            <div className="container cont">
+                <GetStarted />
+            </div>
 
             {videoData?.length > 0 && (
                 <div className="container">

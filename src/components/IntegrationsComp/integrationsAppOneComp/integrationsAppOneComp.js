@@ -54,32 +54,29 @@ export default function IntegrationsAppOneComp({
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}
             />
-            <div className="container cont gap-1 ">
-                <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
-                    <Image
-                        className="h-8 md:h-[72px] w-fit"
-                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                        width={36}
-                        height={36}
-                        alt={appOneDetails?.name}
-                    />
-                    <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
-                </div>
-                <div className="w-fit flex justify-start">
+            <div className="container">
+                <div className="flex justify-between gap-1 flex-wrap">
+                    <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white w-full max-w-[400px] border custom-border">
+                        <Image
+                            className="h-8 md:h-[72px] w-fit"
+                            src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                            width={36}
+                            height={36}
+                            alt={appOneDetails?.name}
+                        />
+                        <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
+                    </div>
                     <button
                         onClick={(e) =>
                             handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
                         }
-                        className="flex items-center gap-2 container hover:text-blue-600"
+                        className="btn btn-outline"
                         rel="nofollow"
                     >
                         Connect to {appOneDetails?.name} <MdOpenInNew />
                     </button>
                 </div>
-            </div>
-
-            <div className="container cont cont__gap">
-                <div className="flex items-center gap-2 text-lg">
+                <div className="flex items-center gap-2 text-base mt-1">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
                     </Link>
@@ -91,17 +88,45 @@ export default function IntegrationsAppOneComp({
                         {appOneDetails?.name}
                     </Link>
                 </div>
+            </div>
+
+            <h1 className="h1 container">
+                Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite
+                Apps
+            </h1>
+
+            {appOneDetails?.events.length > 0 && (
+                <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
+                    <div className="container cont gap-6">
+                        <h2 className="h2">{`Select Any App to connect with ${appOneDetails?.name}`}</h2>
+                        <div className="flex items-center gap-4 border custom-border p-6 w-fit">
+                            <Image
+                                className="h-10 w-fit"
+                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                width={36}
+                                height={36}
+                                alt={appOneDetails?.name}
+                            />
+                            <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
+                        </div>
+                        <MdAdd fontSize={36} />
+                    </div>
+                    <IntegrationsAppComp
+                        pageInfo={pageInfo}
+                        integrationsInfo={integrationsInfo}
+                        apps={apps}
+                        appCategories={appOneDetails?.category}
+                        appCount={appCount}
+                    />
+                </div>
+            )}
+
+            <div className="container cont cont__gap">
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <div className="cont gap-2">
-                            <h1 className="h1  ">
-                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
-                                and your favorite App
-                            </h1>
-                            <p className="sub__h1">
-                                {`  Create effective ${appOneDetails?.name} automations in minutes by using pre-made templates that are customized for your needs`}
-                            </p>
-                        </div>
+                        <p className="h2">
+                            {`  Create effective ${appOneDetails?.name} automations in minutes by using pre-made templates that are customized for your needs`}
+                        </p>
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
@@ -171,32 +196,6 @@ export default function IntegrationsAppOneComp({
                     </div>
                 )}
             </div>
-
-            {appOneDetails?.events.length > 0 && (
-                <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
-                    <div className="container cont gap-6">
-                        <h2 className="h2">{`Select Any App to connect with ${appOneDetails?.name}`}</h2>
-                        <div className="flex items-center gap-4 border custom-border p-6 w-fit">
-                            <Image
-                                className="h-10 w-fit"
-                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                width={36}
-                                height={36}
-                                alt={appOneDetails?.name}
-                            />
-                            <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
-                        </div>
-                        <MdAdd fontSize={36} />
-                    </div>
-                    <IntegrationsAppComp
-                        pageInfo={pageInfo}
-                        integrationsInfo={integrationsInfo}
-                        apps={apps}
-                        appCategories={appOneDetails?.category}
-                        appCount={appCount}
-                    />
-                </div>
-            )}
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">

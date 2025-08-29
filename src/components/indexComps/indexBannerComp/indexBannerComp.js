@@ -8,7 +8,7 @@ export default function IndexBannerComp({ redirect_to, signupFeatures }) {
                     <div className="flex gap-12 flex-col items-center">
                         <div className="flex flex-col gap-4">
                             <h1 className="h1 text-black text-start ">
-                                Build<span className="text-accent"> Intelligent</span> & Powerful automations
+                                Build<span className="text-accent"> Intelligent</span> automations
                             </h1>
                             <div className="cont gap-2 w-full">
                                 <div className="flex items-center gap-2 flex-wrap">
