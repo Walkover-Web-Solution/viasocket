@@ -37,8 +37,9 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                         Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation – Extended
                     </h1>
                     <p className="sub__h1 ">
-                        The response has been incredible, so we’re giving you 15 more days to grab Lifetime Free Access!
-                        Don’t wait—sign up now.
+                        We are truly grateful for the overwhelming response to our offer. To ensure more people can
+                        benefit, we have extended the deadline until 15 September 2025—sign up now and get lifetime free
+                        access to the intelligent and most powerful automation platform.
                     </p>
 
                     <div className="flex items-center gap-8 mt-5">
@@ -89,7 +90,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                 </p>
                                 <p>
                                     <span>
-                                        Sign up before 17th September and keep using the viasocket forever under fair
+                                        Sign up before 15th September and keep using the viasocket forever under fair
                                         usage policy.
                                     </span>{' '}
                                     <a
@@ -140,7 +141,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <h2 className="h2">Paid Plan</h2>
                             <p className="text-3xl text-accent">$50/month</p>
                             <p>
-                                For new users starting 17th September, pricing will apply. Existing users who sign up
+                                For new users starting 16th September, pricing will apply. Existing users who sign up
                                 before the deadline will continue with their Lifetime Free Access.
                             </p>
                         </div>
