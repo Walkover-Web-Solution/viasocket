@@ -606,6 +606,7 @@ const Privacy = ({ footerData, metaData }) => {
                                 </span>
                             </span>
                         </div>
+
                         <div style={{ lineHeight: '1.5' }}>
                             <span style={{ fontSize: '15px' }}>
                                 <a data-custom-class="link" href="#sociallogins" aria-label="privacy">
@@ -616,7 +617,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                     color: 'rgb(89, 89, 89)',
                                                 }}
                                             >
-                                                6. HOW DO WE HANDLE YOUR SOCIAL LOGINS?
+                                                6. VIASOCKET THIRD PARTY INTEGRATIONS
                                             </span>
                                         </span>
                                     </span>
@@ -649,6 +650,51 @@ const Privacy = ({ footerData, metaData }) => {
                                 </span>
                             </span>
                         </div>
+
+                        <div style={{ lineHeight: '1.5' }}>
+                            <span style={{ fontSize: '15px' }}>
+                                <a data-custom-class="link" href="#sociallogins" aria-label="privacy">
+                                    <span style={{ color: 'rgb(89, 89, 89)' }}>
+                                        <span style={{ color: 'rgb(89, 89, 89)' }}>
+                                            <span
+                                                style={{
+                                                    color: 'rgb(89, 89, 89)',
+                                                }}
+                                            >
+                                                7. HOW DO WE HANDLE YOUR SOCIAL LOGINS?
+                                            </span>
+                                        </span>
+                                    </span>
+                                </a>
+                                <span style={{ color: 'rgb(127, 127, 127)' }}>
+                                    <span style={{ color: 'rgb(89, 89, 89)' }}>
+                                        <span data-custom-class="body_text">
+                                            <span
+                                                style={{
+                                                    color: 'rgb(89, 89, 89)',
+                                                }}
+                                            >
+                                                <span
+                                                    style={{
+                                                        color: 'rgb(89, 89, 89)',
+                                                    }}
+                                                >
+                                                    <span
+                                                        style={{
+                                                            color: 'rgb(89, 89, 89)',
+                                                        }}
+                                                    >
+                                                        <bdt className="statement-end-if-in-editor" />
+                                                    </span>
+                                                </span>
+                                                <bdt className="block-component" />
+                                            </span>
+                                        </span>
+                                    </span>
+                                </span>
+                            </span>
+                        </div>
+
                         <div style={{ lineHeight: '1.5' }}>
                             <span style={{ fontSize: '15px' }}>
                                 <a
@@ -657,7 +703,7 @@ const Privacy = ({ footerData, metaData }) => {
                                     aria-label="how long do we keep your information"
                                 >
                                     <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                        7. HOW LONG DO WE KEEP YOUR INFORMATION?
+                                        8. HOW LONG DO WE KEEP YOUR INFORMATION?
                                     </span>
                                 </a>
                                 <span style={{ color: 'rgb(127, 127, 127)' }}>
@@ -685,7 +731,7 @@ const Privacy = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <a data-custom-class="link" href="#infosafe" aria-label="keep your information safe">
                                     <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                        8. HOW DO WE KEEP YOUR INFORMATION SAFE?
+                                        9. HOW DO WE KEEP YOUR INFORMATION SAFE?
                                     </span>
                                 </a>
                                 <span style={{ color: 'rgb(127, 127, 127)' }}>
@@ -708,7 +754,7 @@ const Privacy = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <span style={{ color: 'rgb(89, 89, 89)' }}>
                                     <a data-custom-class="link" href="#privacyrights" aria-label="privacy rights">
-                                        9. WHAT ARE YOUR PRIVACY RIGHTS?
+                                        10. WHAT ARE YOUR PRIVACY RIGHTS?
                                     </a>
                                 </span>
                             </span>
@@ -717,7 +763,7 @@ const Privacy = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <a data-custom-class="link" href="#DNT" aria-label="don-not track features">
                                     <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                        10. CONTROLS FOR DO-NOT-TRACK FEATURES
+                                        11. CONTROLS FOR DO-NOT-TRACK FEATURES
                                         <bdt className="block-component" />
                                     </span>
                                 </a>
@@ -727,7 +773,7 @@ const Privacy = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <a data-custom-class="link" href="#uslaws" aria-label="specific privacy rights">
                                     <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                        11. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
+                                        12. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
                                     </span>
                                 </a>
                             </span>
@@ -755,7 +801,7 @@ const Privacy = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <a data-custom-class="link" href="#policyupdates" aria-label="privacy">
                                     <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                        12. DO WE MAKE UPDATES TO THIS NOTICE?
+                                        13. DO WE MAKE UPDATES TO THIS NOTICE?
                                     </span>
                                 </a>
                             </span>
@@ -768,14 +814,14 @@ const Privacy = ({ footerData, metaData }) => {
                                         fontSize: '15px',
                                     }}
                                 >
-                                    13. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
+                                    14. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
                                 </span>
                             </a>
                         </div>
                         <div style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#request" aria-label="privacy">
                                 <span style={{ color: 'rgb(89, 89, 89)' }}>
-                                    14. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
+                                    15. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
                                 </span>
                             </a>
                         </div>
@@ -4351,6 +4397,336 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
                                                                                                                                                                     6.
+                                                                                                                                                                    VIASOCKET
+                                                                                                                                                                    THIRD
+                                                                                                                                                                    PARTY
+                                                                                                                                                                    INTEGRATIONS
+                                                                                                                                                                </span>
+                                                                                                                                                            </strong>
+                                                                                                                                                        </span>
+                                                                                                                                                    </span>
+                                                                                                                                                </span>
+                                                                                                                                            </span>
+                                                                                                                                        </span>
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <br />
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <span
+                                                                                                                                            style={{
+                                                                                                                                                fontSize:
+                                                                                                                                                    '15px',
+                                                                                                                                                color: 'rgb(89, 89, 89)',
+                                                                                                                                            }}
+                                                                                                                                        >
+                                                                                                                                            <span
+                                                                                                                                                style={{
+                                                                                                                                                    fontSize:
+                                                                                                                                                        '15px',
+                                                                                                                                                    color: 'rgb(89, 89, 89)',
+                                                                                                                                                }}
+                                                                                                                                            >
+                                                                                                                                                <span data-custom-class="body_text">
+                                                                                                                                                    <strong>
+                                                                                                                                                        <em>
+                                                                                                                                                            In
+                                                                                                                                                            Short:&nbsp;
+                                                                                                                                                        </em>
+                                                                                                                                                    </strong>
+                                                                                                                                                    <em>
+                                                                                                                                                        viaSocket
+                                                                                                                                                        enables
+                                                                                                                                                        you
+                                                                                                                                                        to
+                                                                                                                                                        connect
+                                                                                                                                                        with
+                                                                                                                                                        third-party
+                                                                                                                                                        applications
+                                                                                                                                                        to
+                                                                                                                                                        automate
+                                                                                                                                                        workflows.
+                                                                                                                                                        This
+                                                                                                                                                        Privacy
+                                                                                                                                                        Policy
+                                                                                                                                                        explains
+                                                                                                                                                        how
+                                                                                                                                                        your
+                                                                                                                                                        data
+                                                                                                                                                        is
+                                                                                                                                                        handled
+                                                                                                                                                        when
+                                                                                                                                                        using
+                                                                                                                                                        these
+                                                                                                                                                        integrations.
+                                                                                                                                                    </em>
+                                                                                                                                                </span>
+                                                                                                                                            </span>
+                                                                                                                                        </span>
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <br />
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <span
+                                                                                                                                            style={{
+                                                                                                                                                fontSize:
+                                                                                                                                                    '15px',
+                                                                                                                                                color: 'rgb(89, 89, 89)',
+                                                                                                                                            }}
+                                                                                                                                        >
+                                                                                                                                            <span
+                                                                                                                                                style={{
+                                                                                                                                                    fontSize:
+                                                                                                                                                        '15px',
+                                                                                                                                                    color: 'rgb(89, 89, 89)',
+                                                                                                                                                }}
+                                                                                                                                            >
+                                                                                                                                                <span data-custom-class="body_text">
+                                                                                                                                                    <strong>
+                                                                                                                                                        Data
+                                                                                                                                                        Sharing
+                                                                                                                                                    </strong>
+                                                                                                                                                    <br />
+                                                                                                                                                    Only
+                                                                                                                                                    the
+                                                                                                                                                    data
+                                                                                                                                                    necessary
+                                                                                                                                                    to
+                                                                                                                                                    perform
+                                                                                                                                                    your
+                                                                                                                                                    configured
+                                                                                                                                                    workflows
+                                                                                                                                                    is
+                                                                                                                                                    shared
+                                                                                                                                                    with
+                                                                                                                                                    third-party
+                                                                                                                                                    services.
+                                                                                                                                                    <br />
+                                                                                                                                                    viaSocket
+                                                                                                                                                    does
+                                                                                                                                                    not
+                                                                                                                                                    sell,
+                                                                                                                                                    rent,
+                                                                                                                                                    or
+                                                                                                                                                    trade
+                                                                                                                                                    your
+                                                                                                                                                    data.
+                                                                                                                                                    <br />
+                                                                                                                                                    Data
+                                                                                                                                                    is
+                                                                                                                                                    transmitted
+                                                                                                                                                    securely
+                                                                                                                                                    and
+                                                                                                                                                    processed
+                                                                                                                                                    only
+                                                                                                                                                    to
+                                                                                                                                                    enable
+                                                                                                                                                    the
+                                                                                                                                                    services
+                                                                                                                                                    you
+                                                                                                                                                    configure.
+                                                                                                                                                    <br />
+                                                                                                                                                    <br />
+                                                                                                                                                    <strong>
+                                                                                                                                                        YouTube
+                                                                                                                                                        API
+                                                                                                                                                        Services
+                                                                                                                                                    </strong>
+                                                                                                                                                    <br />
+                                                                                                                                                    viaSocket
+                                                                                                                                                    uses
+                                                                                                                                                    YouTube
+                                                                                                                                                    API
+                                                                                                                                                    Services
+                                                                                                                                                    for
+                                                                                                                                                    certain
+                                                                                                                                                    integrations.
+                                                                                                                                                    When
+                                                                                                                                                    you
+                                                                                                                                                    use
+                                                                                                                                                    these
+                                                                                                                                                    features:
+                                                                                                                                                    <br />
+
+                                                                                                                                                    •
+                                                                                                                                                    You
+                                                                                                                                                    are
+                                                                                                                                                    agreeing
+                                                                                                                                                    to
+                                                                                                                                                    the{' '}
+                                                                                                                                                    <a
+                                                                                                                                                        href="https://www.youtube.com/t/terms"
+                                                                                                                                                        target="_blank"
+                                                                                                                                                        rel="noopener noreferrer"
+                                                                                                                                                        className="text-[#0000ff]"
+                                                                                                                                                    >
+                                                                                                                                                        YouTube
+                                                                                                                                                        Terms
+                                                                                                                                                        of
+                                                                                                                                                        Service
+                                                                                                                                                    </a>
+                                                                                                                                                    <br />
+
+                                                                                                                                                    •
+                                                                                                                                                    You
+                                                                                                                                                    can
+                                                                                                                                                    review
+                                                                                                                                                    how
+                                                                                                                                                    Google
+                                                                                                                                                    handles
+                                                                                                                                                    your
+                                                                                                                                                    data
+                                                                                                                                                    in
+                                                                                                                                                    the{' '}
+                                                                                                                                                    <a
+                                                                                                                                                        href="https://policies.google.com/privacy?hl=en-US"
+                                                                                                                                                        target="_blank"
+                                                                                                                                                        rel="noopener noreferrer"
+                                                                                                                                                        className="text-[#0000ff]"
+                                                                                                                                                    >
+                                                                                                                                                        Google
+                                                                                                                                                        Privacy
+                                                                                                                                                        Policy
+                                                                                                                                                    </a>
+                                                                                                                                                    <br />
+
+                                                                                                                                                    •
+                                                                                                                                                    You
+                                                                                                                                                    may
+                                                                                                                                                    revoke
+                                                                                                                                                    viaSocket's
+                                                                                                                                                    access
+                                                                                                                                                    to
+                                                                                                                                                    your
+                                                                                                                                                    YouTube
+                                                                                                                                                    data
+                                                                                                                                                    at
+                                                                                                                                                    any
+                                                                                                                                                    time
+                                                                                                                                                    via
+                                                                                                                                                    the{' '}
+                                                                                                                                                    <a
+                                                                                                                                                        href="https://myaccount.google.com/connections?filters=3,4&hl=en&pli=1"
+                                                                                                                                                        target="_blank"
+                                                                                                                                                        rel="noopener noreferrer"
+                                                                                                                                                        className="text-[#0000ff]"
+                                                                                                                                                    >
+                                                                                                                                                        Google
+                                                                                                                                                        Security
+                                                                                                                                                        Settings
+                                                                                                                                                        page
+                                                                                                                                                    </a>
+                                                                                                                                                    <br />
+                                                                                                                                                    <br />
+                                                                                                                                                    <strong>
+                                                                                                                                                        Security
+                                                                                                                                                    </strong>
+                                                                                                                                                    <br />
+                                                                                                                                                    Data
+                                                                                                                                                    is
+                                                                                                                                                    transmitted
+                                                                                                                                                    securely
+                                                                                                                                                    and
+                                                                                                                                                    only
+                                                                                                                                                    processed
+                                                                                                                                                    to
+                                                                                                                                                    enable
+                                                                                                                                                    the
+                                                                                                                                                    services
+                                                                                                                                                    you
+                                                                                                                                                    configure.
+                                                                                                                                                    <span
+                                                                                                                                                        style={{
+                                                                                                                                                            fontSize:
+                                                                                                                                                                '15px',
+                                                                                                                                                        }}
+                                                                                                                                                    >
+                                                                                                                                                        <span
+                                                                                                                                                            style={{
+                                                                                                                                                                color: 'rgb(89, 89, 89)',
+                                                                                                                                                            }}
+                                                                                                                                                        >
+                                                                                                                                                            <span data-custom-class="body_text">
+                                                                                                                                                                <bdt className="block-component" />
+                                                                                                                                                            </span>
+                                                                                                                                                        </span>
+                                                                                                                                                    </span>
+                                                                                                                                                </span>
+                                                                                                                                            </span>
+                                                                                                                                        </span>
+                                                                                                                                    </div>
+                                                                                                                                    <div
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <br />
+                                                                                                                                    </div>
+
+                                                                                                                                    <div
+                                                                                                                                        id="sociallogins"
+                                                                                                                                        style={{
+                                                                                                                                            lineHeight:
+                                                                                                                                                '1.5',
+                                                                                                                                        }}
+                                                                                                                                    >
+                                                                                                                                        <span
+                                                                                                                                            style={{
+                                                                                                                                                color: 'rgb(127, 127, 127)',
+                                                                                                                                            }}
+                                                                                                                                        >
+                                                                                                                                            <span
+                                                                                                                                                style={{
+                                                                                                                                                    color: 'rgb(89, 89, 89)',
+                                                                                                                                                    fontSize:
+                                                                                                                                                        '15px',
+                                                                                                                                                }}
+                                                                                                                                            >
+                                                                                                                                                <span
+                                                                                                                                                    style={{
+                                                                                                                                                        fontSize:
+                                                                                                                                                            '15px',
+                                                                                                                                                        color: 'rgb(89, 89, 89)',
+                                                                                                                                                    }}
+                                                                                                                                                >
+                                                                                                                                                    <span
+                                                                                                                                                        style={{
+                                                                                                                                                            fontSize:
+                                                                                                                                                                '15px',
+                                                                                                                                                            color: 'rgb(89, 89, 89)',
+                                                                                                                                                        }}
+                                                                                                                                                    >
+                                                                                                                                                        <span
+                                                                                                                                                            id="control"
+                                                                                                                                                            style={{
+                                                                                                                                                                color: 'rgb(0, 0, 0)',
+                                                                                                                                                            }}
+                                                                                                                                                        >
+                                                                                                                                                            <strong>
+                                                                                                                                                                <span data-custom-class="heading_1">
+                                                                                                                                                                    7.
                                                                                                                                                                     HOW
                                                                                                                                                                     DO
                                                                                                                                                                     WE
@@ -4801,7 +5177,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         >
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
-                                                                                                                                                                    7.
+                                                                                                                                                                    8.
                                                                                                                                                                     HOW
                                                                                                                                                                     LONG
                                                                                                                                                                     DO
@@ -5171,7 +5547,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         >
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
-                                                                                                                                                                    8.
+                                                                                                                                                                    9.
                                                                                                                                                                     HOW
                                                                                                                                                                     DO
                                                                                                                                                                     WE
@@ -5465,7 +5841,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         >
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
-                                                                                                                                                                    9.
+                                                                                                                                                                    10.
                                                                                                                                                                     WHAT
                                                                                                                                                                     ARE
                                                                                                                                                                     YOUR
@@ -6871,7 +7247,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         >
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
-                                                                                                                                                                    10.
+                                                                                                                                                                    11.
                                                                                                                                                                     CONTROLS
                                                                                                                                                                     FOR
                                                                                                                                                                     DO-NOT-TRACK
@@ -7086,7 +7462,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                         >
                                                                                                                                                             <strong>
                                                                                                                                                                 <span data-custom-class="heading_1">
-                                                                                                                                                                    11.
+                                                                                                                                                                    12.
                                                                                                                                                                     DO
                                                                                                                                                                     UNITED
                                                                                                                                                                     STATES
@@ -10391,7 +10767,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                                                                     >
                                                                                                                                                                                                         <strong>
                                                                                                                                                                                                             <span data-custom-class="heading_1">
-                                                                                                                                                                                                                12.
+                                                                                                                                                                                                                13.
                                                                                                                                                                                                                 DO
                                                                                                                                                                                                                 WE
                                                                                                                                                                                                                 MAKE
@@ -10626,7 +11002,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                                                                     >
                                                                                                                                                                                                         <strong>
                                                                                                                                                                                                             <span data-custom-class="heading_1">
-                                                                                                                                                                                                                13.
+                                                                                                                                                                                                                14.
                                                                                                                                                                                                                 HOW
                                                                                                                                                                                                                 CAN
                                                                                                                                                                                                                 YOU
@@ -11046,7 +11422,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                                                                     >
                                                                                                                                                                                                         <strong>
                                                                                                                                                                                                             <span data-custom-class="heading_1">
-                                                                                                                                                                                                                14.
+                                                                                                                                                                                                                15.
                                                                                                                                                                                                                 HOW
                                                                                                                                                                                                                 CAN
                                                                                                                                                                                                                 YOU

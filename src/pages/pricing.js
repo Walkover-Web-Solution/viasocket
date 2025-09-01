@@ -8,7 +8,6 @@ import { FOOTER_FIELDS, PRICINGFEATURE_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
-import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import Countdown from 'react-countdown';
@@ -35,11 +34,11 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
-                        Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation
+                        Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation – Extended
                     </h1>
                     <p className="sub__h1 ">
-                        Sign up before 30 August 2025, and get lifetime free access to the intelligent and most powerful
-                        automation platform
+                        The response has been incredible, so we’re giving you 15 more days to grab Lifetime Free Access!
+                        Don’t wait—sign up now.
                     </p>
 
                     <div className="flex items-center gap-8 mt-5">
@@ -49,7 +48,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                         <div>
                             <p className="text-sm font-semibold text-gray-500">Offer expires in</p>
                             <Countdown
-                                date={new Date('2025-08-30')}
+                                date={new Date('2025-09-17')}
                                 renderer={({ days, hours, minutes, seconds }) => (
                                     <div className="flex space-x-4 flex-wrap">
                                         <div className="flex items-center space-x-2">
@@ -89,7 +88,10 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <span>$0</span>
                                 </p>
                                 <p>
-                                    <span>Sign up before 30 August and keep using the viaSocket forever under </span>
+                                    <span>
+                                        Sign up before 17th September and keep using the viasocket forever under fair
+                                        usage policy.
+                                    </span>{' '}
                                     <a
                                         target="_blank"
                                         className="hover:underline text-accent"
@@ -138,7 +140,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <h2 className="h2">Paid Plan</h2>
                             <p className="text-3xl text-accent">$50/month</p>
                             <p>
-                                For new users starting 1st September, pricing will apply. Existing users who sign up
+                                For new users starting 17th September, pricing will apply. Existing users who sign up
                                 before the deadline will continue with their Lifetime Free Access.
                             </p>
                         </div>
