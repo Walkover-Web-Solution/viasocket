@@ -139,7 +139,7 @@ export default function McpAppComp({
                                     />
                                 </div>
                                 <div className="cont">
-                                    <h2 className="h3"> {appOneDetails?.name} MCP</h2>
+                                    <h2 className="h3">MCP for {appOneDetails?.name}</h2>
                                     <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
                                 </div>
                             </div>
