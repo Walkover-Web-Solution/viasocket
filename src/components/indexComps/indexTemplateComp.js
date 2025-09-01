@@ -68,7 +68,7 @@ const IndexTemplateComp = ({ categories }) => {
     return (
         <div className="cont gap-4 container">
             <div className="cont gap-1">
-                <h2 className="h2">Take a look at ready-made templates</h2>
+                <h2 className="h2">Get started with ready-made templates</h2>
             </div>
 
             <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
