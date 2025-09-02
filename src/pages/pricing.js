@@ -34,7 +34,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="flex flex-col text-left gap-2">
                     <h1 className="h1">
-                        Lifetime <span className="text-accent">Free</span> Access to Intelligent Automation – Extended
+                        Lifetime free Access to Intelligent Automation – <span className="text-accent">Extended</span>
                     </h1>
                     <p className="sub__h1 ">
                         We are truly grateful for the overwhelming response to our offer. To ensure more people can
@@ -90,8 +90,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                 </p>
                                 <p>
                                     <span>
-                                        Sign up before 15th September and keep using the viasocket forever under fair
-                                        usage policy.
+                                        Sign up before 15th September and keep using the viasocket forever under
                                     </span>{' '}
                                     <a
                                         target="_blank"
