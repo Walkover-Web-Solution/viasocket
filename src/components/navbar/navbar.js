@@ -68,17 +68,17 @@ export default function Navbar({ utm, footerData }) {
                             {mode === 'dark' ? (
                                 <Image
                                     src="/assets/brand/socketWhitesvg.png"
-                                    className="h-[28px] w-auto "
-                                    width={60}
-                                    height={60}
+                                    className="h-[24px] w-auto "
+                                    width={40}
+                                    height={40}
                                     alt="viasocket"
                                 />
                             ) : (
                                 <Image
                                     src="/assets/brand/logo.svg"
-                                    className="h-[28px] w-auto "
-                                    width={60}
-                                    height={60}
+                                    className="h-[24px] w-auto "
+                                    width={40}
+                                    height={40}
                                     alt="viasocket"
                                 />
                             )}
@@ -87,7 +87,7 @@ export default function Navbar({ utm, footerData }) {
                         <div className="flex">
                             {router.pathname !== '/pricing' && !router.pathname.startsWith('/templates') && !router.pathname.startsWith('/integrations') && (
                                 <Link
-                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
+                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[100px] xl:min-w-[120px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
                                     href={router.pathname}
                                 >
                                     {router.pathname === '/'
@@ -97,25 +97,25 @@ export default function Navbar({ utm, footerData }) {
                                 </Link>
                             )}
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[100px] xl:min-w-[120px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
                                 href={`/templates`}
                             >
                                 Templates
                             </Link>
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[100px] xl:min-w-[120px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
                                 href={`/integrations`}
                             >
                                 Explore Apps
                             </Link>
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[100px] xl:min-w-[120px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
                                 href={`/pricing`}
                             >
                                 Pricing
                             </Link>
                             <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[100px] xl:min-w-[120px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                                 onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                 rel="nofollow"
                             >
