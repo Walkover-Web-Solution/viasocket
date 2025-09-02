@@ -25,10 +25,10 @@ export default function IndexBannerComp() {
                                     <Link
                                         href="/signup?utm_source=homepage_banner"
                                         className="btn btn-accent"
-                                        onClick={(e) => handleRedirect(e, '/signup?utm_source=homepage_banner', router)}
+                                        onClick={(e) => handleRedirect(e, '/signup?', router)}
                                     >
                                         Start for free
-                                    </Link> 
+                                    </Link>
                                     <a
                                         href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                         className="btn btn-outline"
