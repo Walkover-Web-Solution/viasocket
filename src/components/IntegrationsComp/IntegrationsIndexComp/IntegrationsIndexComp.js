@@ -96,26 +96,54 @@ export default function IntegrationsIndexComp({
                     <h1 className="h1">
                         <span className="text-accent">Automate</span> Anything. Anywhere.
                     </h1>
-                    <h2 className="sub__h1">
+                    {/* <h2 className="sub__h1">
                         Connect with {''}
                         <span className="font-semibold">{+appCount + 300}+ ready-made integrations</span>
                         {''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
-                    </h2>
+                    </h2> */}
                 </div>
             </div>
             <div className="container cont gap-3">
-                <label className="input border min-w-[345px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
-                    <MdSearch fontSize={20} />
-                    <input
-                        value={searchTerm}
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                        }}
-                        type="text"
-                        className={`${style.input} grow`}
-                        placeholder="Search your favorite tools "
-                    />
-                </label>
+                <div className="flex-col flex md:flex-row items-start md:items-center justify-between gap-8">
+                    <div className="cont gap-2">
+                        {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
+                            <>
+                                <h2 className="h2">
+                                    <span className="text-accent italic">{categoryData?.appcount || 300}+</span>{' '}
+                                    {integrationsInfo?.category === 'all'
+                                        ? 'Apps'
+                                        : decodeURIComponent(categoryData?.name)}
+                                </h2>
+                                <p className="text-black">{categoryData?.subheading}</p>
+                            </>
+                        ) : (
+                            <>
+                                <h2 className="h2 !text-accent italic ">
+                                    {' '}
+                                    <span>{+appCount + 300}+</span>
+                                    <span className="text-black not-italic"> Apps</span>
+                                </h2>
+                                <p>
+                                    Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
+                                    E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for streamlined
+                                    business success.
+                                </p>
+                            </>
+                        )}
+                    </div>
+                    <label className="input border min-w-[345px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
+                        <MdSearch fontSize={20} />
+                        <input
+                            value={searchTerm}
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                            }}
+                            type="text"
+                            className={`${style.input} grow`}
+                            placeholder="Search your favorite tools "
+                        />
+                    </label>
+                </div>
 
                 <div className="flex">
                     <div className="border custom-border lg:block hidden bg-white overflow-y-auto scrollbar-thin max-w-[252px] min-w-[252px] lg:h-[1201px] xl:h-[901px] h-[78.125vw]">

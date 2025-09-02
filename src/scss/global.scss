@@ -286,11 +286,19 @@
     }
 }
 
-/** Using for all btn font size */
-.btn {
-    font-size: 14px;
+/** Using for custom design */
+#__next {
+    border-left: 1px solid var(--custom-border);
+    border-right: 1px solid var(--custom-border);
 
-    @media screen and (width <= 768px) {
-        font-size: 12px;
+    /** Using for all btn font size */
+    .btn {
+        font-size: 14px;
+        padding-left: 12px;
+        padding-right: 12px;
+
+        @media screen and (width <= 768px) {
+            font-size: 12px;
+        }
     }
 }
