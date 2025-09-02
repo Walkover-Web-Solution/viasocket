@@ -90,6 +90,10 @@ export default function IntegrationsAppOneComp({
                 </div>
             </div>
 
+            <h1 className="h1 container">
+                Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite
+                Apps
+            </h1>
 
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
