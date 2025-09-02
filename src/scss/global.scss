@@ -290,3 +290,11 @@
 .btn {
     font-size: 14px;
 }
+
+.my-element {
+  transition: transform .2s; /* Animation */
+}
+/* Style to apply on hover (mouseenter) */
+.my-element:hover {
+  transform: scale(1.5);
+}
