@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import { GoArrowUpRight } from 'react-icons/go';
-import { useRouter } from 'next/router';
 import { handleRedirect } from '@/utils/handleRedirection';
+import { GoArrowUpRight } from 'react-icons/go';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 export default function IndexBannerComp() {
     const router = useRouter();
@@ -22,19 +22,20 @@ export default function IndexBannerComp() {
                             </div>
                             <div className="cont gap-2 w-full">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                    <Link
-                                        href="/signup?utm_source=homepage_banner"
+                                    <button
                                         className="btn btn-accent"
                                         onClick={(e) => handleRedirect(e, '/signup?', router)}
                                     >
                                         Start for free
-                                    </Link>
-                                    <a
+                                    </button>
+
+                                    <Link
                                         href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                         className="btn btn-outline"
+                                        target="_blank"
                                     >
                                         Free call with automation experts
-                                    </a>
+                                    </Link>
                                 </div>
                                 {/* <div className="flex gap-6 flex-wrap">
                                     {signupFeatures.map((point, index) => (
