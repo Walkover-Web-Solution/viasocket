@@ -134,7 +134,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 Have more queries? Feel free to{' '}
                                 <Link
                                     className="underline hover:text-accent"
-                                    href={'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'}
+                                    href={'https://cal.id/team/viasocket/workflow-setup-discussion'}
                                     target="_blank"
                                 >
                                     schedule a meeting
