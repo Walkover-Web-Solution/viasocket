@@ -55,7 +55,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         }, 5000);
 
         return () => clearInterval(interval);
-
     }, [templateToShow]);
 
     useEffect(() => {
@@ -73,7 +72,13 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const handleInstall = () => {
         const currentTemplate = templateToShow[currentIndex];
         if (currentTemplate) {
-            router.push(`/templates/${currentTemplate.id}`);
+            router.push(
+                `/templates/${currentTemplate?.title
+                    ?.trim()
+                    .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
+                    .replace(/\s+/g, '-') // replace spaces with '-'
+                    .toLowerCase()}/${currentTemplate?.id}`
+            );
         }
     };
 
@@ -125,7 +130,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                 <div className="container">
                     <div className="h-[400px] relative">
                         <div className="flex lg:flex-row gap-9 h-full items-stretch">
-
                             {/* Left side - Template Image */}
                             <div className="flex-1 min-h-0">
                                 {templateToShow[currentIndex]?.templateUrl && (
@@ -151,7 +155,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                 />
                             </div>
                         </div>
-
                     </div>
 
                     <div>
@@ -163,14 +166,23 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         className="inline-flex items-center gap-1 px-2 py-1 text-sm border custom-border bg-white hover:bg-gray-100"
                                     >
                                         {category}
-                                        <button onClick={() => removeCategory(category)} className="ml-1" aria-label={`Remove ${category}`}>
+                                        <button
+                                            onClick={() => removeCategory(category)}
+                                            className="ml-1"
+                                            aria-label={`Remove ${category}`}
+                                        >
                                             <MdClose size={16} />
                                         </button>
                                     </span>
                                 ))}
                                 {selectedApps.map((appSlug) => {
                                     const appData = apps.find((a) => a.pluginslugname === appSlug);
-                                    const label = appSlug === 'webhook' ? 'Webhook' : appSlug === 'cron' ? 'Cron' : (appData?.pluginname || appSlug);
+                                    const label =
+                                        appSlug === 'webhook'
+                                            ? 'Webhook'
+                                            : appSlug === 'cron'
+                                              ? 'Cron'
+                                              : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -186,17 +198,29 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                                 </div>
                                             ) : appData?.iconurl ? (
                                                 <div className="flex items-center justify-center w-6 h-6 mr-1">
-                                                    <Image src={appData.iconurl} alt={label} width={24} height={24} className="h-4 w-fit" />
+                                                    <Image
+                                                        src={appData.iconurl}
+                                                        alt={label}
+                                                        width={24}
+                                                        height={24}
+                                                        className="h-4 w-fit"
+                                                    />
                                                 </div>
                                             ) : null}
                                             {label}
-                                            <button onClick={() => removeApp(appSlug)} className="ml-1" aria-label={`Remove ${label}`}>
+                                            <button
+                                                onClick={() => removeApp(appSlug)}
+                                                className="ml-1"
+                                                aria-label={`Remove ${label}`}
+                                            >
                                                 <MdClose size={16} />
                                             </button>
                                         </span>
                                     );
                                 })}
-                                <button onClick={clearAllFilters} className="ml-2 text-sm underline text-gray-600">Clear all</button>
+                                <button onClick={clearAllFilters} className="ml-2 text-sm underline text-gray-600">
+                                    Clear all
+                                </button>
                             </div>
                         )}
                     </div>
@@ -248,8 +272,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         // No results message and AutomationSuggestions
                         <div className="cont gap-4">
                             <p className="h3 mt-20">
-                                We couldn't find any templates matching your{' '}
-                                {totalFilters > 0 ? 'filters' : 'search'}.
+                                We couldn't find any templates matching your {totalFilters > 0 ? 'filters' : 'search'}.
                                 {totalFilters > 0 && ' Try removing some filters or '}
                                 Tell us about your use case, and we'll craft a custom template just for you.
                             </p>
@@ -341,7 +364,7 @@ export async function getServerSideProps(context) {
             metaData: metaData || {
                 title: 'Workflow Automation Templates',
                 description: 'Discover and use pre-built workflow automation templates',
-                keywords: 'automation, templates, workflow'
+                keywords: 'automation, templates, workflow',
             },
             templateToShow: validTemplateData || [],
             faqData: faqData || [],
