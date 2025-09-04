@@ -286,7 +286,29 @@
     }
 }
 
-/** Using for all btn font size */
-.btn {
-    font-size: 14px;
+/** Using for custom design */
+#__next {
+    border-left: 1px solid var(--custom-border);
+    border-right: 1px solid var(--custom-border);
+
+    /** Using for all btn font size */
+    .btn {
+        font-size: 14px;
+        padding-left: 12px;
+        padding-right: 12px;
+        height: 40px;
+        min-height: 45px;
+
+        @media screen and (width <= 768px) {
+            font-size: 12px;
+        }
+    }
+}
+
+.my-element {
+  transition: transform .2s; /* Animation */
+}
+/* Style to apply on hover (mouseenter) */
+.my-element:hover {
+  transform: scale(1.5);
 }

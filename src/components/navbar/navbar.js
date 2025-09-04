@@ -58,7 +58,7 @@ export default function Navbar({ utm, footerData }) {
                 }`}
             >
                 <div className="border-y custom-border">
-                    <div className="justify-between flex bg-[#FAF9F6] px-4">
+                    <div className="justify-between flex bg-[#FAF9F6] px-4 h-[44px]">
                         <Link
                             href="/"
                             aria-label="logo"
@@ -68,61 +68,63 @@ export default function Navbar({ utm, footerData }) {
                             {mode === 'dark' ? (
                                 <Image
                                     src="/assets/brand/socketWhitesvg.png"
-                                    className="h-[28px] w-auto "
-                                    width={60}
-                                    height={60}
+                                    className="h-[24px] w-auto "
+                                    width={40}
+                                    height={40}
                                     alt="viasocket"
                                 />
                             ) : (
                                 <Image
                                     src="/assets/brand/logo.svg"
-                                    className="h-[28px] w-auto "
-                                    width={60}
-                                    height={60}
+                                    className="h-[24px] w-auto "
+                                    width={40}
+                                    height={40}
                                     alt="viasocket"
                                 />
                             )}
                         </Link>
 
                         <div className="flex">
-                            {router.pathname !== '/pricing' && !router.pathname.startsWith('/templates') && !router.pathname.startsWith('/integrations') && (
-                                <Link
-                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
-                                    href={router.pathname}
-                                >
-                                    {router.pathname === '/'
-                                        ? 'Home'
-                                        : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                          router.pathname.split('/')[1].slice(1).toLowerCase()}
-                                </Link>
-                            )}
+                            {router.pathname !== '/pricing' &&
+                                !router.pathname.startsWith('/templates') &&
+                                !router.pathname.startsWith('/integrations') && (
+                                    <Link
+                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
+                                        href={router.pathname}
+                                    >
+                                        {router.pathname === '/'
+                                            ? 'Home'
+                                            : router.pathname.split('/')[1].charAt(0).toUpperCase() +
+                                              router.pathname.split('/')[1].slice(1).toLowerCase()}
+                                    </Link>
+                                )}
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
                                 href={`/templates`}
                             >
                                 Templates
                             </Link>
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
                                 href={`/integrations`}
                             >
                                 Explore Apps
                             </Link>
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
                                 href={`/pricing`}
                             >
                                 Pricing
                             </Link>
                             <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[120px] xl:min-w-[130px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
                                 onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                 rel="nofollow"
                             >
                                 Login
                             </button>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 border-r-0 bg-accent items-center justify-center !text-xs`}
+                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Sign Up
