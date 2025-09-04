@@ -12,45 +12,39 @@ import { FaBug, FaCertificate, FaClock, FaEye, FaRegClock, FaUserShield } from '
 import { FaShieldAlt } from 'react-icons/fa';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { getAppCount } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getIndustries } from '@/utils/axiosCalls';
 import { CiSearch } from 'react-icons/ci';
 import searchApps from '@/utils/searchApps';
+import TemplateCard from '@/components/templateCard/templateCard';
+import { useTemplateFilters } from '@/hooks/useTemplateFilters';
+import { validateTemplateData } from '@/utils/validateTemplateData';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 
 import Link from 'next/link';
 export const runtime = 'experimental-edge';
 
 const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     const [selectedApps, setSelectedApps] = useState([]);
+    const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchData, setSearchData] = useState([]);
-    const [industryData, setIndustryData] = useState([]);
+    const [industries, setIndustries] = useState([]);
+    const [filteredIndustries, setFilteredIndustries] = useState([]);
+    const [allIndustries, setAllIndustries] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [templates, setTemplates] = useState([]);
+    const [showTemplates, setShowTemplates] = useState(false);
+    const [loadingTemplates, setLoadingTemplates] = useState(false);
 
-    // Define industries (using category-based approach)
-    const industries = [
-        'CRM',
-        'Marketing',
-        'E-commerce',
-        'Communication',
-        'Project Management',
-        'Analytics',
-        'Social Media',
-        'Email Marketing',
-        'Customer Support',
-        'Accounting',
-        'HR',
-        'Sales',
-        'Productivity',
-        'Design',
-        'Development',
-        'Storage',
-        'Video Conferencing',
-        'Payment',
-        'Survey',
-        'Automation',
-    ];
+    // Use template filters hook for template functionality
+    const {
+        filteredTemplates,
+        hasResults: hasTemplateResults,
+        handleFilterChange: handleTemplateFilterChange,
+    } = useTemplateFilters(templates);
 
     const fetchAppsData = useCallback(async () => await fetchApps(), []);
+    const fetchIndustriesData = useCallback(async () => await getIndustries(window?.location?.href), []);
 
     const filterSelectedApps = useCallback(
         (apps) =>
@@ -69,10 +63,19 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             }
         };
 
+        const fetchInitialIndustries = async () => {
+            try {
+                const industries = await fetchIndustriesData();
+                setIndustries(industries);
+                setAllIndustries(industries);
+                setFilteredIndustries(industries);
+            } catch (error) {
+                console.error(error);
+            }
+        };
         fetchInitialApps();
-        // Always show all industries when dropdown opens
-        setIndustryData(industries);
-    }, [fetchAppsData, filterSelectedApps]);
+        fetchInitialIndustries();
+    }, [fetchAppsData, filterSelectedApps, fetchIndustriesData]);
 
     const handleSearch = async (value) => {
         setSearchTerm(value);
@@ -80,50 +83,114 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             try {
                 const result = await searchApps(value);
                 setSearchData(filterSelectedApps(result));
-
-                // Filter industries based on search term
-                const filteredIndustries = industries.filter((industry) =>
-                    industry.toLowerCase().includes(value.toLowerCase())
-                );
-                setIndustryData(filteredIndustries);
+                
+                // Filter industries based on search term from the full list
+                const searchLower = value.toLowerCase();
+                const matchingIndustries = allIndustries.filter(industry => {
+                    const industryName = industry?.name || industry?.industry_name || industry;
+                    return industryName?.toLowerCase().includes(searchLower);
+                });
+                setFilteredIndustries(matchingIndustries);
             } catch (error) {
                 console.error(error);
             }
         } else {
             const apps = await fetchAppsData();
             setSearchData(filterSelectedApps(apps));
-            setIndustryData(industries);
-        }
-    };
-
-    const handleSelectIndustry = async (industry) => {
-        try {
-            const industryApps = await fetchApps(industry);
-            setSearchData(filterSelectedApps(industryApps));
-            setSearchTerm(industry);
-            setShowDropdown(false);
-        } catch (error) {
-            console.error(error);
+            setFilteredIndustries(allIndustries);
         }
     };
 
     const handleSelectApp = (app) => {
         setSelectedApps((prev) => {
             const exists = prev.some((selected) => selected.appslugname === app.appslugname);
+            let newSelectedApps;
             if (exists) {
-                return prev.filter((item) => item.appslugname !== app.appslugname);
+                newSelectedApps = prev.filter((item) => item.appslugname !== app.appslugname);
+            } else {
+                newSelectedApps = [...prev, { ...app }];
             }
-            return [...prev, { ...app }];
+
+            // Auto-trigger search when apps are selected
+            setTimeout(() => {
+                if (newSelectedApps.length > 0 || selectedIndustries.length > 0) {
+                    handleSearchTemplates();
+                }
+            }, 100);
+
+            return newSelectedApps;
         });
         setShowDropdown(false);
         setSearchTerm('');
+    };
+
+    const handleSelectIndustry = (industry) => {
+        const industryName = industry?.name || industry?.industry_name || industry;
+        setSelectedIndustries((prev) => {
+            const exists = prev.some((selected) => selected === industryName);
+            let newSelectedIndustries;
+            if (exists) {
+                newSelectedIndustries = prev.filter((item) => item !== industryName);
+            } else {
+                newSelectedIndustries = [...prev, industryName];
+            }
+
+            // Auto-trigger search when industries are selected
+            setTimeout(() => {
+                if (selectedApps.length > 0 || newSelectedIndustries.length > 0) {
+                    handleSearchTemplates();
+                }
+            }, 100);
+
+            return newSelectedIndustries;
+        });
+        setShowDropdown(false);
+        setSearchTerm('');
+    };
+
+    const handleSearchTemplates = async () => {
+        if (selectedApps.length === 0 && selectedIndustries.length === 0) {
+            return;
+        }
+
+        setLoadingTemplates(true);
+        setShowTemplates(true);
+
+        try {
+            const templateData = await getTemplates();
+            const validStatuses = ['verified_by_ai', 'verified'];
+            const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
+            const validTemplateData = validateTemplateData(verifiedTemplates);
+
+            setTemplates(validTemplateData);
+
+            // Filter templates based on selected apps and industries
+            const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
+            handleTemplateFilterChange({
+                searchTerm: '',
+                selectedIndustries: selectedIndustries,
+                selectedApps: selectedAppSlugs,
+            });
+        } catch (error) {
+            console.error('Error fetching templates:', error);
+        } finally {
+            setLoadingTemplates(false);
+        }
+    };
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            setShowDropdown(false);
+            handleSearchTemplates();
+        }
     };
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
             <Navbar footerData={footerData} utm={'/index'} />
-            <div className="min-h-screen flex items-center justify-center px-4">
-                <div className="max-w-4xl mx-auto text-center">
+            <div className="min-h-screen flex items-center justify-center flex-col px-4 mx-auto pt-12">
+                <div className="text-center">
                     <h1 className="h1 flex flex-col gap-1">
                         <span>Find automation ideas</span>
                         <span>
@@ -166,19 +233,47 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                         </button>
                                     </div>
                                 ))}
+                                {selectedIndustries?.map((industry) => (
+                                    <div
+                                        key={industry}
+                                        className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                                    >
+                                        <span>{industry}</span>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSelectIndustry(industry);
+                                            }}
+                                            className="ml-2"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
                                 <input
                                     type="text"
                                     className="flex-1 min-w-[200px] bg-transparent outline-none text-lg"
                                     placeholder={
-                                        selectedApps?.length > 0 ? 'Search more apps...' : 'Search for apps...'
+                                        selectedApps?.length > 0 || selectedIndustries?.length > 0
+                                            ? 'Search more apps or press Enter to search templates...'
+                                            : 'Search for apps...'
                                     }
                                     value={searchTerm}
                                     onChange={(e) => handleSearch(e.target.value)}
                                     onFocus={() => setShowDropdown(true)}
                                     onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                                    onKeyPress={handleKeyPress}
                                 />
                             </div>
-                            <button className="absolute right-3 top-1/2 transform -translate-y-1/2">
+                            <button
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:text-accent transition-colors cursor-pointer border custom-border p-1"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                    setShowDropdown(false);
+                                    handleSearchTemplates();
+                                }}
+                            >
                                 <CiSearch size={20} />
                             </button>
 
@@ -186,7 +281,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto max-w-[400px]">
                                     {/* Apps Section */}
                                     <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left">Apps</h3>
-                                    {searchData?.slice(0, 8).map((app, index) => (
+                                    {searchData?.map((app, index) => (
                                         <div
                                             key={index}
                                             className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
@@ -203,29 +298,29 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                         </div>
                                     ))}
 
-                                    {/* Industry Section */}
-                                    <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left border-t custom-border">
-                                        Industry
-                                    </h3>
-                                    {industryData?.slice(0, 8).map((industry, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                                            onClick={() => handleSelectIndustry(industry)}
-                                        >
-                                            <div className="w-6 h-6 bg-green-100 rounded flex items-center justify-center">
-                                                <span className="text-green-600 text-xs font-bold">
-                                                    {industry.charAt(0)}
-                                                </span>
-                                            </div>
-                                            <span className="text-sm">{industry}</span>
+                                    <div className="industries-section">
+                                        <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
+                                            Industries
+                                        </h3>
+                                        <div className="py-3">
+                                            {(searchTerm ? filteredIndustries : industries)?.map((industry, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                                    onClick={() => handleSelectIndustry(industry)}
+                                                >
+                                                    <span className="text-sm">
+                                                        {industry?.name || industry?.industry_name || industry}
+                                                    </span>
+                                                </div>
+                                            ))}
                                         </div>
-                                    ))}
+                                    </div>
 
                                     {/* No results */}
-                                    {searchTerm && searchData?.length === 0 && industryData?.length === 0 && (
+                                    {searchTerm && searchData?.length === 0 && (
                                         <div className="px-4 py-6 text-center text-gray-500">
-                                            <p className="text-sm">No apps or industries found for "{searchTerm}"</p>
+                                            <p className="text-sm">No apps found for "{searchTerm}"</p>
                                         </div>
                                     )}
                                 </div>
@@ -244,16 +339,76 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                         </Link>{' '}
                         with AI + human experts
                     </p>
-                    <div className="h2">
+                </div>
+
+                {/* Template Results Section */}
+                {showTemplates && (
+                    <div className="container mx-auto px-4 py-12">
+                        <h2 className="h2 mb-8 text-center">
+                            Templates for{' '}
+                            {selectedApps.map((app, index) => (
+                                <span key={app.appslugname}>
+                                    {index > 0 && ', '}
+                                    <span className="text-accent">{app.name}</span>
+                                </span>
+                            ))}
+                            {selectedIndustries.length > 0 && selectedApps.length > 0 && ' in '}
+                            {selectedIndustries.map((industry, index) => (
+                                <span key={industry}>
+                                    {index > 0 && ', '}
+                                    <span className="text-accent">{industry}</span>
+                                </span>
+                            ))}
+                        </h2>
+
+                        {loadingTemplates ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {[...Array(6)].map((_, index) => (
+                                    <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
+                                ))}
+                            </div>
+                        ) : hasTemplateResults ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {filteredTemplates.slice(0, 6).map((template, index) => (
+                                    <TemplateCard key={template.id} index={index} template={template} />
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-12">
+                                <p className="h3 text-gray-600">No templates found for the selected apps.</p>
+                                <p className="text-lg mt-4">
+                                    Try selecting different apps or{' '}
+                                    <Link href="/templates" className="text-accent hover:underline">
+                                        browse all templates
+                                    </Link>
+                                </p>
+                            </div>
+                        )}
+
+                        {/* {hasTemplateResults && filteredTemplates.length > 6 && (
+                            <div className="flex justify-center mt-8">
+                                <Link
+                                    href={`/templates?apps=${selectedApps.map((app) => app.appslugname).join(',')}&industries=${selectedIndustries.join(',')}`}
+                                    className="btn btn-outline border custom-border bg-white hover:bg-gray-100"
+                                >
+                                    View All Templates <MdKeyboardArrowDown size={24} />
+                                </Link>
+                            </div>
+                        )} */}
+                    </div>
+                )}
+
+                <div className="ai-agents">
+                    <h2 className="h2">
                         AI agents, Human intervention, IF and{' '}
                         <Link href="/features" target="_blank" className="hover:underline text-accent">
                             100+ Features
                         </Link>
-                    </div>
+                    </h2>
                 </div>
             </div>
 
-            <div className="pb-4">
+            <div className="py-12">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />

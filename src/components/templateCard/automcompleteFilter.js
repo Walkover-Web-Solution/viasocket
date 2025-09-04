@@ -273,7 +273,7 @@ const AutocompleteFilter = ({
                         {apps.map((app) => (
                             <div
                                 key={app.pluginslugname}
-                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded apps-ragini ${selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
                                     }`}
                                 onClick={() => {
                                     const newApps = selectedApps.includes(app.pluginslugname)
