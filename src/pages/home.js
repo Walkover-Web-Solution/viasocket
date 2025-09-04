@@ -189,7 +189,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
             <Navbar footerData={footerData} utm={'/index'} />
-            <div className="min-h-screen flex items-center justify-center flex-col px-4 mx-auto pt-12">
+            <div className={`${showTemplates ? 'min-h-0 pt-12' : 'min-h-screen flex items-center justify-center'} flex flex-col px-4 mx-auto`}>
                 <div className="text-center">
                     <h1 className="h1 flex flex-col gap-1">
                         <span>Find automation ideas</span>
