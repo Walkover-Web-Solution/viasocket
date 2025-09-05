@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -9,7 +9,9 @@ import { FOOTER_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { getAppCount, getTemplates, getIndustries, getDepartments, getVideos, getBlogs } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getIndustries, getDepartments, getBlogs } from '@/utils/axiosCalls';
+import { getVideoData } from '@/utils/getVideoData';
+import { getBlogData } from '@/utils/getBlogData';
 import { IoMdSearch } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
 import TemplateCard from '@/components/templateCard/templateCard';
@@ -34,17 +36,20 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     const [filteredDepartments, setFilteredDepartments] = useState([]);
     const [allDepartments, setAllDepartments] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [currentSuggestion, setCurrentSuggestion] = useState('');
+    const [suggestionText, setSuggestionText] = useState('');
+    const dropdownRef = useRef(null);
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
     const [videos, setVideos] = useState([]);
     const [showVideos, setShowVideos] = useState(false);
     const [loadingVideos, setLoadingVideos] = useState(false);
-    const [filteredVideos, setFilteredVideos] = useState([]);
+    // const [filteredVideos, setFilteredVideos] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [showBlogs, setShowBlogs] = useState(false);
     const [loadingBlogs, setLoadingBlogs] = useState(false);
-    const [filteredBlogs, setFilteredBlogs] = useState([]);
+    // const [filteredBlogs, setFilteredBlogs] = useState([]);
 
     // Use template filters hook for template functionality
     const {
@@ -105,7 +110,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         if (value) {
             try {
                 const result = await searchApps(value);
-                setSearchData(filterSelectedApps(result));
+                const filteredApps = filterSelectedApps(result);
+                setSearchData(filteredApps);
 
                 // Filter industries based on search term from the full list
                 const searchLower = value.toLowerCase();
@@ -121,6 +127,40 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     return departmentName?.toLowerCase().includes(searchLower);
                 });
                 setFilteredDepartments(matchingDepartments);
+
+                // Find first matching suggestion for autocomplete
+                let suggestion = '';
+                let suggestionType = '';
+                
+                if (filteredApps.length > 0) {
+                    const firstApp = filteredApps[0];
+                    if (firstApp.name.toLowerCase().startsWith(searchLower)) {
+                        suggestion = firstApp.name;
+                        suggestionType = 'app';
+                    }
+                } else if (matchingIndustries.length > 0) {
+                    const firstIndustry = matchingIndustries[0];
+                    const industryName = firstIndustry?.name || firstIndustry?.industry_name || firstIndustry;
+                    if (industryName.toLowerCase().startsWith(searchLower)) {
+                        suggestion = industryName;
+                        suggestionType = 'industry';
+                    }
+                } else if (matchingDepartments.length > 0) {
+                    const firstDepartment = matchingDepartments[0];
+                    const departmentName = firstDepartment?.name || firstDepartment?.department_name || firstDepartment;
+                    if (departmentName.toLowerCase().startsWith(searchLower)) {
+                        suggestion = departmentName;
+                        suggestionType = 'department';
+                    }
+                }
+
+                if (suggestion && suggestion.toLowerCase() !== value.toLowerCase()) {
+                    setCurrentSuggestion(suggestion);
+                    setSuggestionText(suggestion.slice(value.length));
+                } else {
+                    setCurrentSuggestion('');
+                    setSuggestionText('');
+                }
             } catch (error) {
                 console.error(error);
             }
@@ -129,10 +169,13 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             setSearchData(filterSelectedApps(apps));
             setFilteredIndustries(allIndustries);
             setFilteredDepartments(allDepartments);
+            setCurrentSuggestion('');
+            setSuggestionText('');
         }
     };
 
     const handleSelectApp = (app) => {
+        console.log("handleSelectApp", app);
         setSelectedApps((prev) => {
             const exists = prev.some((selected) => selected.appslugname === app.appslugname);
             let newSelectedApps;
@@ -242,42 +285,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         setShowVideos(true);
 
         try {
-            const videoData = await getVideos(window?.location?.href);
+            const videoData = await getVideoData(selectedApps.map(app => app.appslugname).filter(Boolean), window?.location?.href);
             setVideos(videoData);
-
-            // Filter videos based on selected apps, industries and departments
-            const selectedAppNames = selectedApps.map((app) => app.name.toLowerCase());
-            const selectedIndustriesLower = selectedIndustries.map((industry) => industry.toLowerCase());
-            const selectedDepartmentsLower = selectedDepartments.map((dept) => dept.toLowerCase());
-
-            const filtered = videoData.filter((video) => {
-                const videoTitle = (video.title || '').toLowerCase();
-                const videoDescription = (video.description || '').toLowerCase();
-                const videoTags = (video.tags || '').toLowerCase();
-                const videoApps = (video.apps || '').toLowerCase();
-                const videoIndustry = (video.industry || '').toLowerCase();
-                const videoDepartment = (video.department || '').toLowerCase();
-
-                const searchText = `${videoTitle} ${videoDescription} ${videoTags} ${videoApps} ${videoIndustry} ${videoDepartment}`;
-
-                // Check if any selected app is mentioned in the video
-                const hasMatchingApp =
-                    selectedAppNames.length === 0 || selectedAppNames.some((appName) => searchText.includes(appName));
-
-                // Check if any selected industry is mentioned in the video
-                const hasMatchingIndustry =
-                    selectedIndustriesLower.length === 0 ||
-                    selectedIndustriesLower.some((industry) => searchText.includes(industry));
-
-                // Check if any selected department is mentioned in the video
-                const hasMatchingDepartment =
-                    selectedDepartmentsLower.length === 0 ||
-                    selectedDepartmentsLower.some((dept) => searchText.includes(dept));
-
-                return hasMatchingApp || hasMatchingIndustry || hasMatchingDepartment;
-            });
-
-            setFilteredVideos(filtered);
         } catch (error) {
             console.error('Error fetching videos:', error);
         } finally {
@@ -294,43 +303,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         setShowBlogs(true);
 
         try {
-            const blogData = await getBlogs(window?.location?.href);
+            const blogData = await getBlogData(selectedApps.map(app => app.appslugname).filter(Boolean), window?.location?.href);
             setBlogs(blogData);
-
-            // Filter blogs based on selected apps, industries and departments
-            const selectedAppNames = selectedApps.map((app) => app.name.toLowerCase());
-            const selectedIndustriesLower = selectedIndustries.map((industry) => industry.toLowerCase());
-            const selectedDepartmentsLower = selectedDepartments.map((dept) => dept.toLowerCase());
-
-            const filtered = blogData.filter((blog) => {
-                const blogTitle = (blog.title || '').toLowerCase();
-                const blogDescription = (blog.description || '').toLowerCase();
-                const blogContent = (blog.content || '').toLowerCase();
-                const blogTags = (blog.tags || '').toLowerCase();
-                const blogApps = (blog.apps || '').toLowerCase();
-                const blogIndustry = (blog.industry || '').toLowerCase();
-                const blogDepartment = (blog.department || '').toLowerCase();
-
-                const searchText = `${blogTitle} ${blogDescription} ${blogContent} ${blogTags} ${blogApps} ${blogIndustry} ${blogDepartment}`;
-
-                // Check if any selected app is mentioned in the blog
-                const hasMatchingApp =
-                    selectedAppNames.length === 0 || selectedAppNames.some((appName) => searchText.includes(appName));
-
-                // Check if any selected industry is mentioned in the blog
-                const hasMatchingIndustry =
-                    selectedIndustriesLower.length === 0 ||
-                    selectedIndustriesLower.some((industry) => searchText.includes(industry));
-
-                // Check if any selected department is mentioned in the blog
-                const hasMatchingDepartment =
-                    selectedDepartmentsLower.length === 0 ||
-                    selectedDepartmentsLower.some((dept) => searchText.includes(dept));
-
-                return hasMatchingApp || hasMatchingIndustry || hasMatchingDepartment;
-            });
-
-            setFilteredBlogs(filtered);
         } catch (error) {
             console.error('Error fetching blogs:', error);
         } finally {
@@ -339,7 +313,15 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     };
 
     const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Tab' && currentSuggestion) {
+            e.preventDefault();
+            setSearchTerm(currentSuggestion);
+            setCurrentSuggestion('');
+            setSuggestionText('');
+            
+            // Trigger search with the accepted suggestion
+            handleSearch(currentSuggestion);
+        } else if (e.key === 'Enter') {
             e.preventDefault();
             setShowDropdown(false);
 
@@ -394,6 +376,23 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                 handleSearchVideos();
                 handleSearchBlogs();
             }
+        } else if (e.key === 'Backspace' && searchTerm === '') {
+            // Remove the last selected element when backspace is pressed and input is empty
+            e.preventDefault();
+            
+            if (selectedDepartments.length > 0) {
+                // Remove last department
+                const lastDepartment = selectedDepartments[selectedDepartments.length - 1];
+                handleSelectDepartment(lastDepartment);
+            } else if (selectedIndustries.length > 0) {
+                // Remove last industry
+                const lastIndustry = selectedIndustries[selectedIndustries.length - 1];
+                handleSelectIndustry(lastIndustry);
+            } else if (selectedApps.length > 0) {
+                // Remove last app
+                const lastApp = selectedApps[selectedApps.length - 1];
+                handleSelectApp(lastApp);
+            }
         }
     };
     return (
@@ -428,7 +427,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                         </span>
                     </h1>
 
-                    <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar">
+                    <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
                         <div className="relative">
                             <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-[#FAF9F6] border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2">
                                 {selectedApps?.map((app) => (
@@ -489,19 +488,28 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                         </button>
                                     </div>
                                 ))}
-                                <input
-                                    type="text"
-                                    className="flex-1 min-w-[200px] bg-transparent outline-none text-lg"
-                                    value={searchTerm}
-                                    onChange={(e) => handleSearch(e.target.value)}
-                                    onFocus={() => setShowDropdown(true)}
-                                    onBlur={(e) => {
-                                        if (!e.relatedTarget || !e.currentTarget.parentNode.contains(e.relatedTarget)) {
+                                <div className="relative flex-1 min-w-[200px]">
+                                    {/* Suggestion overlay */}
+                                    {suggestionText && (
+                                        <div className="absolute inset-0 pointer-events-none text-lg text-gray-400 flex items-center whitespace-pre">
+                                            <span style={{ color: 'transparent' }}>{searchTerm}</span>
+                                            <span>{suggestionText}</span>
+                                        </div>
+                                    )}
+                                    <input
+                                        type="text"
+                                        className="w-full bg-transparent outline-none text-lg relative z-10"
+                                        value={searchTerm}
+                                        onChange={(e) => handleSearch(e.target.value)}
+                                        onFocus={() => setShowDropdown(true)}
+                                        onClick={() => setShowDropdown(true)}
+                                        onBlur={() => {
                                             setTimeout(() => setShowDropdown(false), 200);
-                                        }
-                                    }}
-                                    onKeyPress={handleKeyPress}
-                                />
+                                        }}
+                                        onKeyDown={handleKeyPress}
+                                        placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
+                                    />
+                                </div>
                             </div>
                             <button
                                 className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1"
@@ -528,7 +536,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                                 <div
                                                     key={index}
                                                     className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                                                    onClick={() => handleSelectApp(app)}
+                                                    onMouseDown={(e) => {
+                                                        e.preventDefault();
+                                                        handleSelectApp(app);
+                                                    }}
                                                 >
                                                     <Image
                                                         src={app?.iconurl || 'https://placehold.co/24x24'}
@@ -559,7 +570,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                                     <div
                                                         key={index}
                                                         className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-4 py-3"
-                                                        onClick={() => handleSelectDepartment(department)}
+                                                        onMouseDown={(e) => {
+                                                            e.preventDefault();
+                                                            handleSelectDepartment(department);
+                                                        }}
                                                     >
                                                         <span className="text-sm">
                                                             {department?.name ||
@@ -590,7 +604,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                                         <div
                                                             key={index}
                                                             className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
-                                                            onClick={() => handleSelectIndustry(industry)}
+                                                            onMouseDown={(e) => {
+                                                                e.preventDefault();
+                                                                handleSelectIndustry(industry);
+                                                            }}
                                                         >
                                                             <span className="text-sm">
                                                                 {industry?.name || industry?.industry_name || industry}
@@ -713,8 +730,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                 <div key={index} className="skeleton bg-gray-100 h-[300px] rounded-none"></div>
                             ))}
                         </div>
-                    ) : filteredVideos.length > 0 ? (
-                        <VideoGrid videoData={filteredVideos.slice(0, 6)} />
+                    ) : videos.length > 0 ? (
+                        <VideoGrid videoData={videos} />
                     ) : (
                         <div className="text-center py-12">
                             <p className="h3">No videos found for the selected criteria.</p>
@@ -759,8 +776,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                 <div key={index} className="skeleton bg-gray-100 h-[400px] rounded-none"></div>
                             ))}
                         </div>
-                    ) : filteredBlogs.length > 0 ? (
-                        <BlogGrid posts={filteredBlogs.slice(0, 6)} />
+                    ) : blogs.length > 0 ? (
+                        <BlogGrid posts={blogs} />
                     ) : (
                         <div className="text-center py-12">
                             <p className="h3">No blogs found for the selected criteria.</p>
