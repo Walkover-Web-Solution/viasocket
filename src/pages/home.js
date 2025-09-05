@@ -7,32 +7,44 @@ import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import { getFooterData } from '@/utils/getData';
 import { FOOTER_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
-import { FaBug, FaCertificate, FaClock, FaEye, FaRegClock, FaUserShield } from 'react-icons/fa6';
-import { FaShieldAlt } from 'react-icons/fa';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { getAppCount, getTemplates, getIndustries } from '@/utils/axiosCalls';
-import { CiSearch } from 'react-icons/ci';
+import { getAppCount, getTemplates, getIndustries, getDepartments, getVideos, getBlogs } from '@/utils/axiosCalls';
+import { IoMdSearch } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
-
 import Link from 'next/link';
+import { GoArrowUpRight } from 'react-icons/go';
+import VideoGrid from '@/components/videoGrid/videoGrid';
+import BlogGrid from '@/components/blogGrid/blogGrid';
 export const runtime = 'experimental-edge';
 
 const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     const [selectedApps, setSelectedApps] = useState([]);
     const [selectedIndustries, setSelectedIndustries] = useState([]);
+    const [selectedDepartments, setSelectedDepartments] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const [searchData, setSearchData] = useState([]);
     const [industries, setIndustries] = useState([]);
     const [filteredIndustries, setFilteredIndustries] = useState([]);
     const [allIndustries, setAllIndustries] = useState([]);
+    const [departments, setDepartments] = useState([]);
+    const [filteredDepartments, setFilteredDepartments] = useState([]);
+    const [allDepartments, setAllDepartments] = useState([]);
     const [showDropdown, setShowDropdown] = useState(false);
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
+    const [videos, setVideos] = useState([]);
+    const [showVideos, setShowVideos] = useState(false);
+    const [loadingVideos, setLoadingVideos] = useState(false);
+    const [filteredVideos, setFilteredVideos] = useState([]);
+    const [blogs, setBlogs] = useState([]);
+    const [showBlogs, setShowBlogs] = useState(false);
+    const [loadingBlogs, setLoadingBlogs] = useState(false);
+    const [filteredBlogs, setFilteredBlogs] = useState([]);
 
     // Use template filters hook for template functionality
     const {
@@ -43,6 +55,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 
     const fetchAppsData = useCallback(async () => await fetchApps(), []);
     const fetchIndustriesData = useCallback(async () => await getIndustries(window?.location?.href), []);
+    const fetchDepartmentsData = useCallback(async () => await getDepartments(window?.location?.href), []);
 
     const filterSelectedApps = useCallback(
         (apps) =>
@@ -71,9 +84,21 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                 console.error(error);
             }
         };
+
+        const fetchInitialDepartments = async () => {
+            try {
+                const departments = await fetchDepartmentsData();
+                setDepartments(departments);
+                setAllDepartments(departments);
+                setFilteredDepartments(departments);
+            } catch (error) {
+                console.error(error);
+            }
+        };
         fetchInitialApps();
         fetchInitialIndustries();
-    }, [fetchAppsData, filterSelectedApps, fetchIndustriesData]);
+        fetchInitialDepartments();
+    }, [fetchAppsData, filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
 
     const handleSearch = async (value) => {
         setSearchTerm(value);
@@ -81,14 +106,21 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             try {
                 const result = await searchApps(value);
                 setSearchData(filterSelectedApps(result));
-                
+
                 // Filter industries based on search term from the full list
                 const searchLower = value.toLowerCase();
-                const matchingIndustries = allIndustries.filter(industry => {
+                const matchingIndustries = allIndustries.filter((industry) => {
                     const industryName = industry?.name || industry?.industry_name || industry;
                     return industryName?.toLowerCase().includes(searchLower);
                 });
                 setFilteredIndustries(matchingIndustries);
+
+                // Filter departments based on search term from the full list
+                const matchingDepartments = allDepartments.filter((department) => {
+                    const departmentName = department?.name || department?.department_name || department;
+                    return departmentName?.toLowerCase().includes(searchLower);
+                });
+                setFilteredDepartments(matchingDepartments);
             } catch (error) {
                 console.error(error);
             }
@@ -96,6 +128,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             const apps = await fetchAppsData();
             setSearchData(filterSelectedApps(apps));
             setFilteredIndustries(allIndustries);
+            setFilteredDepartments(allDepartments);
         }
     };
 
@@ -108,17 +141,16 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             } else {
                 newSelectedApps = [...prev, { ...app }];
             }
-
-            // Auto-trigger search when apps are selected
             setTimeout(() => {
-                if (newSelectedApps.length > 0 || selectedIndustries.length > 0) {
+                if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
                     handleSearchTemplates();
+                    handleSearchVideos();
+                    handleSearchBlogs();
                 }
             }, 100);
 
             return newSelectedApps;
         });
-        setShowDropdown(false);
         setSearchTerm('');
     };
 
@@ -133,21 +165,45 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                 newSelectedIndustries = [...prev, industryName];
             }
 
-            // Auto-trigger search when industries are selected
             setTimeout(() => {
-                if (selectedApps.length > 0 || newSelectedIndustries.length > 0) {
+                if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
                     handleSearchTemplates();
+                    handleSearchVideos();
+                    handleSearchBlogs();
                 }
             }, 100);
 
             return newSelectedIndustries;
         });
-        setShowDropdown(false);
+        setSearchTerm('');
+    };
+
+    const handleSelectDepartment = (department) => {
+        const departmentName = department?.name || department?.department_name || department;
+        setSelectedDepartments((prev) => {
+            const exists = prev.some((selected) => selected === departmentName);
+            let newSelectedDepartments;
+            if (exists) {
+                newSelectedDepartments = prev.filter((item) => item !== departmentName);
+            } else {
+                newSelectedDepartments = [...prev, departmentName];
+            }
+
+            setTimeout(() => {
+                if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
+                    handleSearchTemplates();
+                    handleSearchVideos();
+                    handleSearchBlogs();
+                }
+            }, 100);
+
+            return newSelectedDepartments;
+        });
         setSearchTerm('');
     };
 
     const handleSearchTemplates = async () => {
-        if (selectedApps.length === 0 && selectedIndustries.length === 0) {
+        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
             return;
         }
 
@@ -162,12 +218,13 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 
             setTemplates(validTemplateData);
 
-            // Filter templates based on selected apps and industries
+            // Filter templates based on selected apps, industries and departments
             const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
             handleTemplateFilterChange({
                 searchTerm: '',
                 selectedIndustries: selectedIndustries,
                 selectedApps: selectedAppSlugs,
+                selectedDepartments: selectedDepartments,
             });
         } catch (error) {
             console.error('Error fetching templates:', error);
@@ -176,28 +233,195 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         }
     };
 
+    const handleSearchVideos = async () => {
+        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+            return;
+        }
+
+        setLoadingVideos(true);
+        setShowVideos(true);
+
+        try {
+            const videoData = await getVideos(window?.location?.href);
+            setVideos(videoData);
+
+            // Filter videos based on selected apps, industries and departments
+            const selectedAppNames = selectedApps.map((app) => app.name.toLowerCase());
+            const selectedIndustriesLower = selectedIndustries.map((industry) => industry.toLowerCase());
+            const selectedDepartmentsLower = selectedDepartments.map((dept) => dept.toLowerCase());
+
+            const filtered = videoData.filter((video) => {
+                const videoTitle = (video.title || '').toLowerCase();
+                const videoDescription = (video.description || '').toLowerCase();
+                const videoTags = (video.tags || '').toLowerCase();
+                const videoApps = (video.apps || '').toLowerCase();
+                const videoIndustry = (video.industry || '').toLowerCase();
+                const videoDepartment = (video.department || '').toLowerCase();
+
+                const searchText = `${videoTitle} ${videoDescription} ${videoTags} ${videoApps} ${videoIndustry} ${videoDepartment}`;
+
+                // Check if any selected app is mentioned in the video
+                const hasMatchingApp =
+                    selectedAppNames.length === 0 || selectedAppNames.some((appName) => searchText.includes(appName));
+
+                // Check if any selected industry is mentioned in the video
+                const hasMatchingIndustry =
+                    selectedIndustriesLower.length === 0 ||
+                    selectedIndustriesLower.some((industry) => searchText.includes(industry));
+
+                // Check if any selected department is mentioned in the video
+                const hasMatchingDepartment =
+                    selectedDepartmentsLower.length === 0 ||
+                    selectedDepartmentsLower.some((dept) => searchText.includes(dept));
+
+                return hasMatchingApp || hasMatchingIndustry || hasMatchingDepartment;
+            });
+
+            setFilteredVideos(filtered);
+        } catch (error) {
+            console.error('Error fetching videos:', error);
+        } finally {
+            setLoadingVideos(false);
+        }
+    };
+
+    const handleSearchBlogs = async () => {
+        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+            return;
+        }
+
+        setLoadingBlogs(true);
+        setShowBlogs(true);
+
+        try {
+            const blogData = await getBlogs(window?.location?.href);
+            setBlogs(blogData);
+
+            // Filter blogs based on selected apps, industries and departments
+            const selectedAppNames = selectedApps.map((app) => app.name.toLowerCase());
+            const selectedIndustriesLower = selectedIndustries.map((industry) => industry.toLowerCase());
+            const selectedDepartmentsLower = selectedDepartments.map((dept) => dept.toLowerCase());
+
+            const filtered = blogData.filter((blog) => {
+                const blogTitle = (blog.title || '').toLowerCase();
+                const blogDescription = (blog.description || '').toLowerCase();
+                const blogContent = (blog.content || '').toLowerCase();
+                const blogTags = (blog.tags || '').toLowerCase();
+                const blogApps = (blog.apps || '').toLowerCase();
+                const blogIndustry = (blog.industry || '').toLowerCase();
+                const blogDepartment = (blog.department || '').toLowerCase();
+
+                const searchText = `${blogTitle} ${blogDescription} ${blogContent} ${blogTags} ${blogApps} ${blogIndustry} ${blogDepartment}`;
+
+                // Check if any selected app is mentioned in the blog
+                const hasMatchingApp =
+                    selectedAppNames.length === 0 || selectedAppNames.some((appName) => searchText.includes(appName));
+
+                // Check if any selected industry is mentioned in the blog
+                const hasMatchingIndustry =
+                    selectedIndustriesLower.length === 0 ||
+                    selectedIndustriesLower.some((industry) => searchText.includes(industry));
+
+                // Check if any selected department is mentioned in the blog
+                const hasMatchingDepartment =
+                    selectedDepartmentsLower.length === 0 ||
+                    selectedDepartmentsLower.some((dept) => searchText.includes(dept));
+
+                return hasMatchingApp || hasMatchingIndustry || hasMatchingDepartment;
+            });
+
+            setFilteredBlogs(filtered);
+        } catch (error) {
+            console.error('Error fetching blogs:', error);
+        } finally {
+            setLoadingBlogs(false);
+        }
+    };
+
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             setShowDropdown(false);
-            handleSearchTemplates();
+
+            // If there's a search term, try to create a chip from it
+            if (searchTerm.trim()) {
+                // Check if the search term matches any app
+                const matchingApp = searchData.find((app) => app.name.toLowerCase() === searchTerm.toLowerCase());
+
+                if (matchingApp) {
+                    handleSelectApp(matchingApp);
+                } else {
+                    // Check if it matches any industry
+                    const matchingIndustry = filteredIndustries.find((industry) => {
+                        const industryName = industry?.name || industry?.industry_name || industry;
+                        return industryName.toLowerCase() === searchTerm.toLowerCase();
+                    });
+
+                    if (matchingIndustry) {
+                        handleSelectIndustry(matchingIndustry);
+                    } else {
+                        // Check if it matches any department
+                        const matchingDepartment = filteredDepartments.find((department) => {
+                            const departmentName = department?.name || department?.department_name || department;
+                            return departmentName.toLowerCase() === searchTerm.toLowerCase();
+                        });
+
+                        if (matchingDepartment) {
+                            handleSelectDepartment(matchingDepartment);
+                        } else {
+                            // If no exact match, treat as a custom industry
+                            const customIndustry = searchTerm.trim();
+                            if (!selectedIndustries.includes(customIndustry)) {
+                                setSelectedIndustries((prev) => [...prev, customIndustry]);
+                                setSearchTerm('');
+                                setTimeout(() => {
+                                    if (
+                                        selectedApps.length > 0 ||
+                                        selectedIndustries.length > 0 ||
+                                        selectedDepartments.length > 0
+                                    ) {
+                                        handleSearchTemplates();
+                                        handleSearchVideos();
+                                        handleSearchBlogs();
+                                    }
+                                }, 100);
+                            }
+                        }
+                    }
+                }
+            } else {
+                handleSearchTemplates();
+                handleSearchVideos();
+                handleSearchBlogs();
+            }
         }
     };
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
             <Navbar footerData={footerData} utm={'/index'} />
-            <div className={`${showTemplates ? 'min-h-0 pt-12' : 'min-h-screen flex items-center justify-center'} flex flex-col px-4 mx-auto`}>
+            <div
+                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-128px)] flex flex-col justify-center'} px-4 mx-auto relative`}
+            >
+                <div className="absolute top-0 right-0 p-12">
+                    <p className="text-base">Want professional help?</p>
+                    <Link
+                        href="https://viasocket.com/experts"
+                        target="_blank"
+                        className="text-xs flex items-center gap-1 text-accent"
+                    >
+                        Ask an Expert <GoArrowUpRight />
+                    </Link>
+                </div>
+
                 <div className="text-center">
                     <h1 className="h1 flex flex-col gap-1">
-                        <span>Find automation ideas</span>
+                        <span>
+                            Find <span className="text-accent">automation ideas</span>
+                        </span>
                         <span>
                             around{' '}
-                            <Link
-                                href="https://viasocket.com/integrations"
-                                target="_blank"
-                                className="hover:underline text-accent"
-                            >
+                            <Link href="https://viasocket.com/integrations" target="_blank" className="underline">
                                 1500+ apps
                             </Link>{' '}
                             and AI
@@ -248,79 +472,142 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                         </button>
                                     </div>
                                 ))}
+                                {selectedDepartments?.map((department) => (
+                                    <div
+                                        key={department}
+                                        className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                                    >
+                                        <span>{department}</span>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleSelectDepartment(department);
+                                            }}
+                                            className="ml-2"
+                                        >
+                                            ×
+                                        </button>
+                                    </div>
+                                ))}
                                 <input
                                     type="text"
                                     className="flex-1 min-w-[200px] bg-transparent outline-none text-lg"
-                                    placeholder={
-                                        selectedApps?.length > 0 || selectedIndustries?.length > 0
-                                            ? 'Search more apps or press Enter to search templates...'
-                                            : 'Search for apps...'
-                                    }
                                     value={searchTerm}
                                     onChange={(e) => handleSearch(e.target.value)}
                                     onFocus={() => setShowDropdown(true)}
-                                    onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
+                                    onBlur={(e) => {
+                                        if (!e.relatedTarget || !e.currentTarget.parentNode.contains(e.relatedTarget)) {
+                                            setTimeout(() => setShowDropdown(false), 200);
+                                        }
+                                    }}
                                     onKeyPress={handleKeyPress}
                                 />
                             </div>
                             <button
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 hover:text-accent transition-colors cursor-pointer border custom-border p-1"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
                                     setShowDropdown(false);
                                     handleSearchTemplates();
+                                    handleSearchVideos();
+                                    handleSearchBlogs();
                                 }}
                             >
-                                <CiSearch size={20} />
+                                <IoMdSearch size={20} />
                             </button>
 
                             {showDropdown && (
                                 <div className="absolute top-full left-0 right-0 mt-1 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto max-w-[400px]">
-                                    {/* Apps Section */}
-                                    <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left">Apps</h3>
-                                    {searchData?.map((app, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
-                                            onClick={() => handleSelectApp(app)}
-                                        >
-                                            <Image
-                                                src={app?.iconurl || 'https://placehold.co/24x24'}
-                                                width={24}
-                                                height={24}
-                                                alt={app?.name}
-                                                className="rounded"
-                                            />
-                                            <span className="text-sm">{app?.name}</span>
-                                        </div>
-                                    ))}
+                                    <div className="apps-content">
+                                        <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left">
+                                            Apps
+                                        </h3>
+                                        {searchData?.length > 0 ? (
+                                            searchData.map((app, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                                                    onClick={() => handleSelectApp(app)}
+                                                >
+                                                    <Image
+                                                        src={app?.iconurl || 'https://placehold.co/24x24'}
+                                                        width={24}
+                                                        height={24}
+                                                        alt={app?.name}
+                                                        className="rounded"
+                                                    />
+                                                    <span className="text-sm">{app?.name}</span>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="px-4 py-6 text-center text-gray-500">
+                                                <p className="text-sm">
+                                                    No apps found
+                                                    {searchTerm ? ` for "${searchTerm}"` : ''}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="departments-content">
+                                        <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
+                                            Departments
+                                        </h3>
+                                        {(searchTerm ? filteredDepartments : departments)?.length > 0 ? (
+                                            (searchTerm ? filteredDepartments : departments).map(
+                                                (department, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-4 py-3"
+                                                        onClick={() => handleSelectDepartment(department)}
+                                                    >
+                                                        <span className="text-sm">
+                                                            {department?.name ||
+                                                                department?.department_name ||
+                                                                department}
+                                                        </span>
+                                                    </div>
+                                                )
+                                            )
+                                        ) : (
+                                            <div className="px-4 py-6 text-center text-gray-500">
+                                                <p className="text-sm">
+                                                    No departments found
+                                                    {searchTerm ? ` for "${searchTerm}"` : ''}
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
 
                                     <div className="industries-section">
                                         <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
                                             Industries
                                         </h3>
-                                        <div className="py-3">
-                                            {(searchTerm ? filteredIndustries : industries)?.map((industry, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
-                                                    onClick={() => handleSelectIndustry(industry)}
-                                                >
-                                                    <span className="text-sm">
-                                                        {industry?.name || industry?.industry_name || industry}
-                                                    </span>
-                                                </div>
-                                            ))}
-                                        </div>
+                                        {(searchTerm ? filteredIndustries : industries)?.length > 0 ? (
+                                            <div className="py-3">
+                                                {(searchTerm ? filteredIndustries : industries).map(
+                                                    (industry, index) => (
+                                                        <div
+                                                            key={index}
+                                                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                                            onClick={() => handleSelectIndustry(industry)}
+                                                        >
+                                                            <span className="text-sm">
+                                                                {industry?.name || industry?.industry_name || industry}
+                                                            </span>
+                                                        </div>
+                                                    )
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <div className="px-4 py-6 text-center text-gray-500">
+                                                <p className="text-sm">
+                                                    No industries found
+                                                    {searchTerm ? ` for "${searchTerm}"` : ''}
+                                                </p>
+                                            </div>
+                                        )}
                                     </div>
-
-                                    {/* No results */}
-                                    {searchTerm && searchData?.length === 0 && (
-                                        <div className="px-4 py-6 text-center text-gray-500">
-                                            <p className="text-sm">No apps found for "{searchTerm}"</p>
-                                        </div>
-                                    )}
                                 </div>
                             )}
                         </div>
@@ -328,72 +615,169 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 
                     <p className="text-xl mb-12 max-w-2xl mx-auto">
                         or{' '}
-                        <Link
-                            href="https://viasocket.com/signup"
-                            target="_blank"
-                            className="hover:underline text-accent"
-                        >
+                        <Link href="https://viasocket.com/signup" target="_blank" className="underline ">
                             build from scratch
                         </Link>{' '}
                         with AI + human experts
                     </p>
                 </div>
+            </div>
 
-                {/* Template Results Section */}
-                {showTemplates && (
-                    <div className="container mx-auto px-4 py-12">
-                        <h2 className="h2 mb-8 text-center">
-                            Templates for{' '}
-                            {selectedApps.map((app, index) => (
-                                <span key={app.appslugname}>
-                                    {index > 0 && ', '}
-                                    <span className="text-accent">{app.name}</span>
-                                </span>
-                            ))}
-                            {selectedIndustries.length > 0 && selectedApps.length > 0 && ' in '}
-                            {selectedIndustries.map((industry, index) => (
-                                <span key={industry}>
-                                    {index > 0 && ', '}
-                                    <span className="text-accent">{industry}</span>
-                                </span>
-                            ))}
-                        </h2>
-
-                        {loadingTemplates ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                {[...Array(6)].map((_, index) => (
-                                    <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
-                                ))}
-                            </div>
-                        ) : hasTemplateResults ? (
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                {filteredTemplates.slice(0, 6).map((template, index) => (
-                                    <TemplateCard key={template.id} index={index} template={template} />
-                                ))}
-                            </div>
-                        ) : (
-                            <div className="text-center py-12">
-                                <p className="h3 text-gray-600">No templates found for the selected apps.</p>
-                                <p className="text-lg mt-4">
-                                    Try selecting different apps or{' '}
-                                    <Link href="/templates" className="text-accent hover:underline">
-                                        browse all templates
-                                    </Link>
-                                </p>
-                            </div>
-                        )}
-
-                    </div>
-                )}
-
-                <div className="ai-agents">
-                    <h2 className="h2">
-                        AI agents, Human intervention, IF and{' '}
-                        <Link href="/features" target="_blank" className="hover:underline text-accent">
-                            100+ Features
-                        </Link>
+            {/* Template Results Section */}
+            {showTemplates && (
+                <div className="container mx-auto px-4 py-12">
+                    <h2 className="h2 mb-8 text-center">
+                        Templates for{' '}
+                        {selectedApps.map((app, index) => (
+                            <span key={app.appslugname}>
+                                {index > 0 && ', '}
+                                <span>{app.name}</span>
+                            </span>
+                        ))}
+                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                            selectedApps.length > 0 &&
+                            ' in '}
+                        {selectedIndustries.map((industry, index) => (
+                            <span key={industry}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{industry}</span>
+                            </span>
+                        ))}
+                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                        {selectedDepartments.map((department, index) => (
+                            <span key={department}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{department}</span>
+                            </span>
+                        ))}
                     </h2>
+
+                    {loadingTemplates ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {[...Array(6)].map((_, index) => (
+                                <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
+                            ))}
+                        </div>
+                    ) : hasTemplateResults ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {filteredTemplates.slice(0, 6).map((template, index) => (
+                                <TemplateCard key={template.id} index={index} template={template} />
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-12">
+                            <p className="h3">No templates found for the selected apps.</p>
+                            <p className="text-lg">
+                                Try selecting different apps or{' '}
+                                <Link href="/templates" className="border-b-2 custom-border">
+                                    browse all templates
+                                </Link>
+                            </p>
+                        </div>
+                    )}
                 </div>
+            )}
+
+            {/* Video Results Section */}
+            {showVideos && (
+                <div className="container mx-auto px-4 py-12">
+                    <h2 className="h2 mb-8 text-center">
+                        Videos for{' '}
+                        {selectedApps.map((app, index) => (
+                            <span key={app.appslugname}>
+                                {index > 0 && ', '}
+                                <span>{app.name}</span>
+                            </span>
+                        ))}
+                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                            selectedApps.length > 0 &&
+                            ' in '}
+                        {selectedIndustries.map((industry, index) => (
+                            <span key={industry}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{industry}</span>
+                            </span>
+                        ))}
+                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                        {selectedDepartments.map((department, index) => (
+                            <span key={department}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{department}</span>
+                            </span>
+                        ))}
+                    </h2>
+
+                    {loadingVideos ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {[...Array(6)].map((_, index) => (
+                                <div key={index} className="skeleton bg-gray-100 h-[300px] rounded-none"></div>
+                            ))}
+                        </div>
+                    ) : filteredVideos.length > 0 ? (
+                        <VideoGrid videoData={filteredVideos.slice(0, 6)} />
+                    ) : (
+                        <div className="text-center py-12">
+                            <p className="h3">No videos found for the selected criteria.</p>
+                            <p className="text-lg">Try selecting different apps or industries.</p>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* Blog Results Section */}
+            {showBlogs && (
+                <div className="container mx-auto px-4 py-12">
+                    <h2 className="h2 mb-8 text-center">
+                        Blogs for{' '}
+                        {selectedApps.map((app, index) => (
+                            <span key={app.appslugname}>
+                                {index > 0 && ', '}
+                                <span>{app.name}</span>
+                            </span>
+                        ))}
+                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                            selectedApps.length > 0 &&
+                            ' in '}
+                        {selectedIndustries.map((industry, index) => (
+                            <span key={industry}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{industry}</span>
+                            </span>
+                        ))}
+                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                        {selectedDepartments.map((department, index) => (
+                            <span key={department}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{department}</span>
+                            </span>
+                        ))}
+                    </h2>
+
+                    {loadingBlogs ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {[...Array(6)].map((_, index) => (
+                                <div key={index} className="skeleton bg-gray-100 h-[400px] rounded-none"></div>
+                            ))}
+                        </div>
+                    ) : filteredBlogs.length > 0 ? (
+                        <BlogGrid posts={filteredBlogs.slice(0, 6)} />
+                    ) : (
+                        <div className="text-center py-12">
+                            <p className="h3">No blogs found for the selected criteria.</p>
+                            <p className="text-lg">Try selecting different apps or industries.</p>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* AI Agents Section - Positioned at bottom of viewport */}
+            <div className="text-center pb-8 mt-auto">
+                <h2 className="h2">
+                    AI agents, Human intervention, IF and{' '}
+                    <Link href="/features" target="_blank" className="underline ">
+                        100+ Features
+                    </Link>
+                </h2>
             </div>
 
             <div className="py-12">
@@ -415,24 +799,6 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 };
 
 const SecuritySection = ({ securityGridData }) => {
-    const getIconComponent = (iconName) => {
-        switch (iconName) {
-            case 'shield-alt':
-                return <FaShieldAlt size={28} />;
-            case 'user-shield':
-                return <FaUserShield size={28} />;
-            case 'eye':
-                return <FaEye size={28} />;
-            case 'clock':
-                return <FaClock size={28} />;
-            case 'bug':
-                return <FaBug size={28} />;
-            case 'certificate':
-                return <FaCertificate size={28} />;
-            default:
-                return <FaRegClock size={28} />;
-        }
-    };
     return (
         <div className="container">
             <div className="border custom-border p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
@@ -511,7 +877,6 @@ export async function getServerSideProps(context) {
         },
     ];
 
-
     return {
         props: {
             metaData: metaData || {},
@@ -529,4 +894,3 @@ async function fetchApps(category) {
     const rawData = await response.json();
     return rawData?.data;
 }
-

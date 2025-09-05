@@ -73,6 +73,30 @@ export async function getIndustries(pageUrl) {
     }
 }
 
+export async function getDepartments(pageUrl) {
+    const url = `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tbluyx8o1`;
+    try {
+        const response = await axiosWithCache.get(url, {
+            headers: {
+                'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY}`,
+                'Content-Type': 'application/json',
+            },
+            cache: {
+                ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
+            },
+        });
+        return response?.data?.data?.rows || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return [];
+    }
+}
+
 export async function getVideos(pageUrl) {
     const url = `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tblh3g587`;
     try {
