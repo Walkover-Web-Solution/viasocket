@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { LinkText } from '../uiComponents/buttons';
 import Image from 'next/image';
 
-const BlogGrid = ({ posts, isBlack = false }) => {
+const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
     const router = useRouter();
     const heading = router.pathname.startsWith('/mcp')
         ? 'Know More About MCP'
@@ -13,7 +13,7 @@ const BlogGrid = ({ posts, isBlack = false }) => {
     if (posts?.length > 0) {
         return (
             <div className="flex flex-col gap-9">
-                <h2 className="h2">{heading}</h2>
+                {showHeading && <h2 className="h2">{heading}</h2>}
                 <div className="w-full cont">
                     <div className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid border custom-border border-r-0 border-b-0 bg-white">
                         {posts?.map((post, index) => (

@@ -131,7 +131,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                 // Find first matching suggestion for autocomplete
                 let suggestion = '';
                 let suggestionType = '';
-                
+
                 if (filteredApps.length > 0) {
                     const firstApp = filteredApps[0];
                     if (firstApp.name.toLowerCase().startsWith(searchLower)) {
@@ -175,7 +175,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     };
 
     const handleSelectApp = (app) => {
-        console.log("handleSelectApp", app);
+        console.log('handleSelectApp', app);
         setSelectedApps((prev) => {
             const exists = prev.some((selected) => selected.appslugname === app.appslugname);
             let newSelectedApps;
@@ -203,9 +203,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             const exists = prev.some((selected) => selected === industryName);
             let newSelectedIndustries;
             if (exists) {
-                newSelectedIndustries = prev.filter((item) => item !== industryName);
+                newSelectedIndustries = [];
             } else {
-                newSelectedIndustries = [...prev, industryName];
+                newSelectedIndustries = [industryName];
             }
 
             setTimeout(() => {
@@ -227,9 +227,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             const exists = prev.some((selected) => selected === departmentName);
             let newSelectedDepartments;
             if (exists) {
-                newSelectedDepartments = prev.filter((item) => item !== departmentName);
+                newSelectedDepartments = [];
             } else {
-                newSelectedDepartments = [...prev, departmentName];
+                newSelectedDepartments = [departmentName];
             }
 
             setTimeout(() => {
@@ -285,7 +285,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         setShowVideos(true);
 
         try {
-            const videoData = await getVideoData(selectedApps.map(app => app.appslugname).filter(Boolean), window?.location?.href);
+            const videoData = await getVideoData(
+                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                window?.location?.href
+            );
             setVideos(videoData);
         } catch (error) {
             console.error('Error fetching videos:', error);
@@ -303,7 +306,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         setShowBlogs(true);
 
         try {
-            const blogData = await getBlogData(selectedApps.map(app => app.appslugname).filter(Boolean), window?.location?.href);
+            const blogData = await getBlogData(
+                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                window?.location?.href
+            );
             setBlogs(blogData);
         } catch (error) {
             console.error('Error fetching blogs:', error);
@@ -318,7 +324,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             setSearchTerm(currentSuggestion);
             setCurrentSuggestion('');
             setSuggestionText('');
-            
+
             // Trigger search with the accepted suggestion
             handleSearch(currentSuggestion);
         } else if (e.key === 'Enter') {
@@ -379,7 +385,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         } else if (e.key === 'Backspace' && searchTerm === '') {
             // Remove the last selected element when backspace is pressed and input is empty
             e.preventDefault();
-            
+
             if (selectedDepartments.length > 0) {
                 // Remove last department
                 const lastDepartment = selectedDepartments[selectedDepartments.length - 1];
@@ -641,33 +647,33 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             </div>
 
             {/* Template Results Section */}
-            {showTemplates && (
+            {showTemplates && (loadingTemplates || hasTemplateResults) && (
                 <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-center">
-                        Templates for{' '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
-                            selectedApps.length > 0 &&
-                            ' in '}
-                        {selectedIndustries.map((industry, index) => (
-                            <span key={industry}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{industry}</span>
-                            </span>
-                        ))}
-                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
-                        {selectedDepartments.map((department, index) => (
-                            <span key={department}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{department}</span>
-                            </span>
-                        ))}
-                    </h2>
+                    {(loadingTemplates || hasTemplateResults) && (
+                        <h2 className="h2 mb-8 text-left">
+                            Top{' '}
+                            {selectedApps.map((app, index) => (
+                                <span key={app.appslugname}>
+                                    {index > 0 && ', '}
+                                    <span>{app.name}</span>
+                                </span>
+                            ))}{' '}
+                            Workflow Automation Templates {selectedDepartments.length > 0 && 'for '}
+                            {selectedDepartments.map((department, index) => (
+                                <span key={department}>
+                                    {index > 0 && ', '}
+                                    <span>{department}</span>
+                                </span>
+                            ))}{' '}
+                            {selectedIndustries.length > 0 && 'in '}
+                            {selectedIndustries.map((industry, index) => (
+                                <span key={industry}>
+                                    {index > 0 && ', '}
+                                    <span>{industry}</span>
+                                </span>
+                            ))}
+                        </h2>
+                    )}
 
                     {loadingTemplates ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
@@ -681,48 +687,40 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                 <TemplateCard key={template.id} index={index} template={template} />
                             ))}
                         </div>
-                    ) : (
-                        <div className="text-center py-12">
-                            <p className="h3">No templates found for the selected apps.</p>
-                            <p className="text-lg">
-                                Try selecting different apps or{' '}
-                                <Link href="/templates" className="border-b-2 custom-border">
-                                    browse all templates
-                                </Link>
-                            </p>
-                        </div>
-                    )}
+                    ) : null}
                 </div>
             )}
 
             {/* Video Results Section */}
-            {showVideos && (
+            {showVideos && (loadingVideos || videos.length > 0) && (
                 <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-center">
-                        Videos for{' '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
-                            selectedApps.length > 0 &&
-                            ' in '}
-                        {selectedIndustries.map((industry, index) => (
-                            <span key={industry}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{industry}</span>
-                            </span>
-                        ))}
-                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
-                        {selectedDepartments.map((department, index) => (
-                            <span key={department}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{department}</span>
-                            </span>
-                        ))}
-                    </h2>
+                    {(loadingVideos || videos.length > 0) && (
+                        <h2 className="h2 mb-8 text-left">
+                            Videos for{' '}
+                            {selectedApps.map((app, index) => (
+                                <span key={app.appslugname}>
+                                    {index > 0 && ', '}
+                                    <span>{app.name}</span>
+                                </span>
+                            ))}
+                            {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                                selectedApps.length > 0 &&
+                                ' in '}
+                            {selectedIndustries.map((industry, index) => (
+                                <span key={industry}>
+                                    {index > 0 && ', '}
+                                    <span>{industry}</span>
+                                </span>
+                            ))}
+                            {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                            {selectedDepartments.map((department, index) => (
+                                <span key={department}>
+                                    {index > 0 && ', '}
+                                    <span>{department}</span>
+                                </span>
+                            ))}
+                        </h2>
+                    )}
 
                     {loadingVideos ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
@@ -731,44 +729,41 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                             ))}
                         </div>
                     ) : videos.length > 0 ? (
-                        <VideoGrid videoData={videos} />
-                    ) : (
-                        <div className="text-center py-12">
-                            <p className="h3">No videos found for the selected criteria.</p>
-                            <p className="text-lg">Try selecting different apps or industries.</p>
-                        </div>
-                    )}
+                        <VideoGrid videoData={videos} showHeading={false} />
+                    ) : null}
                 </div>
             )}
 
             {/* Blog Results Section */}
-            {showBlogs && (
+            {showBlogs && (loadingBlogs || blogs.length > 0) && (
                 <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-center">
-                        Blogs for{' '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
-                            selectedApps.length > 0 &&
-                            ' in '}
-                        {selectedIndustries.map((industry, index) => (
-                            <span key={industry}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{industry}</span>
-                            </span>
-                        ))}
-                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
-                        {selectedDepartments.map((department, index) => (
-                            <span key={department}>
-                                {index > 0 && ', '}
-                                <span className="text-accent">{department}</span>
-                            </span>
-                        ))}
-                    </h2>
+                    {(loadingBlogs || blogs.length > 0) && (
+                        <h2 className="h2 mb-8 text-left">
+                            Blogs for{' '}
+                            {selectedApps.map((app, index) => (
+                                <span key={app.appslugname}>
+                                    {index > 0 && ', '}
+                                    <span>{app.name}</span>
+                                </span>
+                            ))}
+                            {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                                selectedApps.length > 0 &&
+                                ' in '}
+                            {selectedIndustries.map((industry, index) => (
+                                <span key={industry}>
+                                    {index > 0 && ', '}
+                                    <span>{industry}</span>
+                                </span>
+                            ))}
+                            {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                            {selectedDepartments.map((department, index) => (
+                                <span key={department}>
+                                    {index > 0 && ', '}
+                                    <span>{department}</span>
+                                </span>
+                            ))}
+                        </h2>
+                    )}
 
                     {loadingBlogs ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
@@ -777,13 +772,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                             ))}
                         </div>
                     ) : blogs.length > 0 ? (
-                        <BlogGrid posts={blogs} />
-                    ) : (
-                        <div className="text-center py-12">
-                            <p className="h3">No blogs found for the selected criteria.</p>
-                            <p className="text-lg">Try selecting different apps or industries.</p>
-                        </div>
-                    )}
+                        <BlogGrid posts={blogs} showHeading={false} />
+                    ) : null}
                 </div>
             )}
 
