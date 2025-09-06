@@ -426,7 +426,11 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                         </span>
                         <span>
                             around{' '}
-                            <Link href="https://viasocket.com/integrations" target="_blank" className="underline">
+                            <Link
+                                href="https://viasocket.com/integrations"
+                                target="_blank"
+                                className="border-b-2 custom-border border-dotted"
+                            >
                                 1500+ apps
                             </Link>{' '}
                             and AI
@@ -436,6 +440,8 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
                         <div className="relative">
                             <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-[#FAF9F6] border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2">
+                                <IoMdSearch />
+
                                 {selectedApps?.map((app) => (
                                     <div
                                         key={app?.appslugname}
@@ -528,7 +534,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                     handleSearchBlogs();
                                 }}
                             >
-                                <IoMdSearch size={20} />
+                                Search
                             </button>
 
                             {showDropdown && (
@@ -638,7 +644,11 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 
                     <p className="text-xl mb-12 max-w-2xl mx-auto">
                         or{' '}
-                        <Link href="https://viasocket.com/signup" target="_blank" className="underline ">
+                        <Link
+                            href="https://viasocket.com/signup"
+                            target="_blank"
+                            className="border-b-2 custom-border border-dotted "
+                        >
                             build from scratch
                         </Link>{' '}
                         with AI + human experts
@@ -781,7 +791,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             <div className="text-center pb-8 mt-auto">
                 <h2 className="h2">
                     AI agents, Human intervention, IF and{' '}
-                    <Link href="/features" target="_blank" className="underline ">
+                    <Link href="/features" target="_blank" className="border-b-2 custom-border border-dotted ">
                         100+ Features
                     </Link>
                 </h2>
