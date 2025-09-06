@@ -53,7 +53,7 @@ export default function Navbar({ utm, footerData }) {
     return (
         <>
             <div
-                className={`sticky top-0 z-[100] transition-transform duration-300 ${
+                className={`sticky top-0 z-[100] transition-transform duration-300 w-full ${
                     hide ? '-translate-y-full' : 'translate-y-0'
                 }`}
             >
