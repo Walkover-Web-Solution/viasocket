@@ -507,7 +507,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                             setTimeout(() => setShowDropdown(false), 200);
                                         }}
                                         onKeyDown={handleKeyPress}
-                                        placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
+                                        // placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
                                     />
                                 </div>
                             </div>
