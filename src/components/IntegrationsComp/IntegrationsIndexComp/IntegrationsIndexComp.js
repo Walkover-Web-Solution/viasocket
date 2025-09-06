@@ -11,7 +11,7 @@ import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 import ErrorComp from '@/components/404/404Comp';
-import Cta from '@/components/CTA/Cta';
+import { GoArrowUpRight } from 'react-icons/go';
 import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 
@@ -91,16 +91,22 @@ export default function IntegrationsIndexComp({
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             <Navbar footerData={footerData} utm={'/index'} />
 
-            <div className="container flex items-center">
-                <div className="cont text-left">
+            <div className="container integrations-page-hero">
+                <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
                     <h1 className="h1">
                         <span className="text-accent">Automate</span> Anything. Anywhere.
                     </h1>
-                    {/* <h2 className="sub__h1">
-                        Connect with {''}
-                        <span className="font-semibold">{+appCount + 300}+ ready-made integrations</span>
-                        {''} - CRM | Marketing | E-Commerce | Helpdesk | Payments | Forms - and more.
-                    </h2> */}
+
+                    <p className="min-w-fit">
+                        <span className="text-base">Want to list your app?</span>
+                        <Link
+                            href="https://viasocket.com/faq/plugin-builder"
+                            target="_blank"
+                            className="text-accent text-xs flex items-center gap-1"
+                        >
+                            Build viaSocket integration <GoArrowUpRight />
+                        </Link>
+                    </p>
                 </div>
             </div>
             <div className="container cont gap-3">
@@ -249,16 +255,6 @@ export default function IntegrationsIndexComp({
                         )}
                     </div>
                 )}
-            </div>
-
-            <Cta
-                title="List your app on the viaSocket marketplace"
-                description="viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps. Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on the viaSocket Marketplace."
-                buttonLabel="Build viaSocket integration"
-                buttonLink="https://viasocket.com/faq/developer-hub"
-            />
-            <div className="container">
-                <RequestIntegrationPopupOpener />
             </div>
 
             <div className="container my-6">
