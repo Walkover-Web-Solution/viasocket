@@ -310,5 +310,19 @@
 }
 /* Style to apply on hover (mouseenter) */
 .my-element:hover {
-  transform: scale(1.5);
+    transform: scale(1.5);
+}
+
+/** Using for ai agent response markdown */
+.ai-agent-response {
+    h3 {
+        @apply md:text-2xl text-xl font-semibold mb-3;
+    }
+    h4 {
+        @apply text-lg font-semibold;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
 }
