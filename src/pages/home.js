@@ -713,31 +713,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
             {/* AI Response Section */}
             {showAiResponse && (
                 <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-left">
-                        AI Automation Ideas for{' '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
-                            selectedApps.length > 0 &&
-                            ' in '}
-                        {selectedIndustries.map((industry, index) => (
-                            <span key={industry}>
-                                {index > 0 && ', '}
-                                <span>{industry}</span>
-                            </span>
-                        ))}
-                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
-                        {selectedDepartments.map((department, index) => (
-                            <span key={department}>
-                                {index > 0 && ', '}
-                                <span>{department}</span>
-                            </span>
-                        ))}
-                    </h2>
+                    <h2 className="h2 mb-8 text-left">Here are some automation ideas you can explore</h2>
 
                     <div className="w-full">
                         {loadingAiResponse ? (
