@@ -23,7 +23,7 @@ import VideoGrid from '@/components/videoGrid/videoGrid';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 export const runtime = 'experimental-edge';
 
-const Home = ({ metaData, faqData, footerData, securityGridData }) => {
+const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => {
     const [selectedApps, setSelectedApps] = useState([]);
     const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -45,11 +45,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     const [videos, setVideos] = useState([]);
     const [showVideos, setShowVideos] = useState(false);
     const [loadingVideos, setLoadingVideos] = useState(false);
-    // const [filteredVideos, setFilteredVideos] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [showBlogs, setShowBlogs] = useState(false);
     const [loadingBlogs, setLoadingBlogs] = useState(false);
-    // const [filteredBlogs, setFilteredBlogs] = useState([]);
 
     // Use template filters hook for template functionality
     const {
@@ -406,7 +404,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
             <MetaHeadComp metaData={metaData} page={'/'} />
             <Navbar footerData={footerData} utm={'/index'} />
             <div
-                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-128px)] flex flex-col justify-center'} px-4 mx-auto relative`}
+                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
             >
                 <div className="absolute top-0 right-0 p-12">
                     <p className="text-base">Want professional help?</p>
@@ -424,22 +422,24 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                         <span>
                             Find <span className="text-accent">automation ideas</span>
                         </span>
-                        <span>
+                        <span className="lowercase">
                             around{' '}
                             <Link
                                 href="https://viasocket.com/integrations"
                                 target="_blank"
-                                className="border-b-2 custom-border border-dotted"
+                                className="border-b-2 custom-border border-dotted lowercase"
                             >
-                                1500+ apps
+                                <span>{+appCount + 300}+</span> Apps
                             </Link>{' '}
-                            and AI
+                            and <span className="uppercase">AI</span>
                         </span>
                     </h1>
 
                     <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
                         <div className="relative">
-                            <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-[#FAF9F6] border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2">
+                            <div
+                                className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2"          
+                            >
                                 <IoMdSearch />
 
                                 {selectedApps?.map((app) => (
@@ -789,7 +789,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
 
             {/* AI Agents Section - Positioned at bottom of viewport */}
             <div className="text-center pb-8 mt-auto">
-                <h2 className="h2">
+                <h2 className="text-3xl text-black">
                     AI agents, Human intervention, IF and{' '}
                     <Link href="/features" target="_blank" className="border-b-2 custom-border border-dotted ">
                         100+ Features
@@ -900,6 +900,7 @@ export async function getServerSideProps(context) {
             faqData: faqData || [],
             footerData: footerData || [],
             securityGridData: securityGridData,
+            appCount: appCount || 0,
         },
     };
 }

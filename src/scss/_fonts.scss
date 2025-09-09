@@ -27,6 +27,7 @@ body {
     background:
     radial-gradient(circle, rgba(220, 216, 210, 0.7) 20%, transparent 20%) center/10px 10px,
     #FAF9F6;
+    background-color: white;
 }
 
 .h1 {
@@ -34,7 +35,7 @@ body {
     font-family: 'Inter Tight';
     line-height: 1.1em;
     font-weight: 500;
-    text-transform: uppercase;
+    text-transform: capitalize;
     color: #222222;
 
     &__b {
