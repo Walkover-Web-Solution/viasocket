@@ -21,6 +21,9 @@ import Link from 'next/link';
 import { GoArrowUpRight } from 'react-icons/go';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import BlogGrid from '@/components/blogGrid/blogGrid';
+import ReactMarkdown from 'react-markdown';
+import axios from 'axios';
+
 export const runtime = 'experimental-edge';
 
 const Home = ({ metaData, faqData, footerData, securityGridData }) => {
@@ -50,6 +53,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
     const [showBlogs, setShowBlogs] = useState(false);
     const [loadingBlogs, setLoadingBlogs] = useState(false);
     // const [filteredBlogs, setFilteredBlogs] = useState([]);
+    const [aiResponse, setAiResponse] = useState('');
+    const [showAiResponse, setShowAiResponse] = useState(false);
+    const [loadingAiResponse, setLoadingAiResponse] = useState(false);
 
     // Use template filters hook for template functionality
     const {
@@ -189,6 +195,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                    getAiResponse();
                 }
             }, 100);
 
@@ -213,6 +220,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                    getAiResponse();
                 }
             }, 100);
 
@@ -237,6 +245,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                    getAiResponse();
                 }
             }, 100);
 
@@ -312,6 +321,50 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
         }
     };
 
+    const getAiResponse = async () => {
+        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+            return;
+        }
+
+        setLoadingAiResponse(true);
+        setShowAiResponse(true);
+
+        try {
+            // Prepare query parameters
+            const params = new URLSearchParams();
+            
+            // Add selected apps
+            if (selectedApps.length > 0) {
+                params.append('apps', selectedApps.map(app => app.name).join(','));
+            }
+            
+            // Add selected departments
+            if (selectedDepartments.length > 0) {
+                params.append('departments', selectedDepartments.join(','));
+            }
+            
+            // Add selected industries (categories)
+            if (selectedIndustries.length > 0) {
+                params.append('categories', selectedIndustries.join(','));
+            }
+
+            const response = await axios.post(`https://flow.sokt.io/func/scrifJcjUubA?${params.toString()}`, {});
+            const responseData = await response?.data;
+            
+            if (responseData) {
+                setAiResponse(responseData);
+            }
+            
+            return responseData;
+        } catch (error) {
+            console.error('Error fetching AI response:', error);
+            setAiResponse('Sorry, there was an error generating the response. Please try again.');
+            return null;
+        } finally {
+            setLoadingAiResponse(false);
+        }
+    };
+
     const handleKeyPress = (e) => {
         if (e.key === 'Tab' && currentSuggestion) {
             e.preventDefault();
@@ -365,6 +418,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                         handleSearchTemplates();
                                         handleSearchVideos();
                                         handleSearchBlogs();
+                                        getAiResponse();
                                     }
                                 }, 100);
                             }
@@ -375,6 +429,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                 handleSearchTemplates();
                 handleSearchVideos();
                 handleSearchBlogs();
+                getAiResponse();
             }
         } else if (e.key === 'Backspace' && searchTerm === '') {
             // Remove the last selected element when backspace is pressed and input is empty
@@ -520,6 +575,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                                     handleSearchTemplates();
                                     handleSearchVideos();
                                     handleSearchBlogs();
+                                    getAiResponse();
                                 }}
                             >
                                 <IoMdSearch size={20} />
@@ -639,6 +695,51 @@ const Home = ({ metaData, faqData, footerData, securityGridData }) => {
                     </p>
                 </div>
             </div>
+
+            {/* AI Response Section */}
+            {showAiResponse && (
+                <div className="container mx-auto px-4 py-12">
+                    <h2 className="h2 mb-8 text-center">
+                        AI Automation Ideas for{' '}
+                        {selectedApps.map((app, index) => (
+                            <span key={app.appslugname}>
+                                {index > 0 && ', '}
+                                <span>{app.name}</span>
+                            </span>
+                        ))}
+                        {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                            selectedApps.length > 0 &&
+                            ' in '}
+                        {selectedIndustries.map((industry, index) => (
+                            <span key={industry}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{industry}</span>
+                            </span>
+                        ))}
+                        {selectedDepartments.length > 0 && selectedIndustries.length > 0 && ', '}
+                        {selectedDepartments.map((department, index) => (
+                            <span key={department}>
+                                {index > 0 && ', '}
+                                <span className="text-accent">{department}</span>
+                            </span>
+                        ))}
+                    </h2>
+
+                    <div className="max-w-4xl mx-auto">
+                        {loadingAiResponse ? (
+                            <div className="bg-white border custom-border p-8 rounded-lg">
+                                <div className="space-y-4">
+                                    loading...
+                                </div>
+                            </div>
+                        ) : aiResponse ? (
+                            <div className="bg-white border custom-border p-8 rounded-lg prose prose-lg max-w-none">
+                                <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                            </div>
+                        ) : null}
+                    </div>
+                </div>
+            )}
 
             {/* Template Results Section */}
             {showTemplates && (
