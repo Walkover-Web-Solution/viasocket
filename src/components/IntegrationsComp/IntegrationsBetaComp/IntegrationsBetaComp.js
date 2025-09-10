@@ -6,7 +6,7 @@ export default function IntegrationsBetaComp({ appOneDetails }) {
             <div className="cont gap-2 ">
                 <h1 className="h1 ">
                     Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                    <span className="text-accent">your favorite App</span>
+                    <span className="text-accent">your favorite Apps</span>
                 </h1>
                         <h2 className="h2">
                             The app you are looking for is in beta, and we are awaiting verification from the app
