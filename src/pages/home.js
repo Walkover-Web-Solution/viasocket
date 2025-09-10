@@ -461,7 +461,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
             <div
                 className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
             >
-                <div className="absolute top-0 right-0 p-12">
+                <div className="absolute top-0 right-0 p-12 z-index-1">
                     <p className="text-base">Want professional help?</p>
                     <Link
                         href="https://viasocket.com/experts"
@@ -473,7 +473,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 </div>
 
                 <div className="text-center">
-                    <h1 className="h1 flex flex-col gap-1">
+                    <h1 className="h1 flex flex-col gap-1 relative z-index-1">
                         <span>
                             Find <span className="text-accent">automation ideas</span>
                         </span>
@@ -492,7 +492,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
 
                     <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
                         <div className="relative">
-                            <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2">
+                            <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative">
                                 <IoMdSearch />
 
                                 {selectedApps?.map((app) => (
@@ -577,7 +577,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                 </div>
                             </div>
                             <button
-                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1"
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1 z-index-1"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     e.stopPropagation();
@@ -592,11 +592,11 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                             </button>
 
                             {showDropdown && (
-                                <div className="absolute top-full left-0 right-0 mt-1 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto max-w-[400px]">
-                                    <div className="apps-content">
-                                        <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left">
+                                <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto">
+                                    <div className="apps-section border-b custom-border">
+                                        {/* <h3 className="h3 px-4 py-3 border-b custom-border font-medium text-left">
                                             Apps
-                                        </h3>
+                                        </h3> */}
                                         {searchData?.length > 0 ? (
                                             searchData.map((app, index) => (
                                                 <div
@@ -626,10 +626,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                             </div>
                                         )}
                                     </div>
-                                    <div className="departments-content">
-                                        <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
+                                    <div className="departments-section border-b custom-border">
+                                        {/* <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
                                             Departments
-                                        </h3>
+                                        </h3> */}
                                         {(searchTerm ? filteredDepartments : departments)?.length > 0 ? (
                                             (searchTerm ? filteredDepartments : departments).map(
                                                 (department, index) => (
@@ -660,9 +660,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                     </div>
 
                                     <div className="industries-section">
-                                        <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
+                                        {/* <h3 className="h3 px-4 py-3 border-y custom-border font-medium text-left">
                                             Industries
-                                        </h3>
+                                        </h3> */}
                                         {(searchTerm ? filteredIndustries : industries)?.length > 0 ? (
                                             <div className="py-3">
                                                 {(searchTerm ? filteredIndustries : industries).map(
@@ -696,7 +696,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                         </div>
                     </div>
 
-                    <p className="text-xl mb-12 max-w-2xl mx-auto">
+                    <p className="text-xl mb-12 max-w-2xl mx-auto relative z-index-1">
                         or{' '}
                         <Link
                             href="https://viasocket.com/signup"
@@ -710,154 +710,157 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 </div>
             </div>
 
-            {/* AI Response Section */}
-            {showAiResponse && (
-                <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-left">Here are some automation ideas you can explore</h2>
+            <div className="custom-background-home-page"></div>
+            <div className="bg-[#faf9f6]">
+                {/* AI Response Section */}
+                {showAiResponse && (
+                    <div className="container mx-auto px-4 py-12 relative">
+                        <h2 className="h2 mb-8 text-left">Here are some automation ideas you can explore</h2>
 
-                    <div className="w-full">
-                        {loadingAiResponse ? (
-                            <div className="bg-white border custom-border p-8">
-                                <div className="space-y-4">Creating ideas for you...</div>
+                        <div className="w-full">
+                            {loadingAiResponse ? (
+                                <div className="bg-white border custom-border p-8">
+                                    <div className="space-y-4">Creating ideas for you...</div>
+                                </div>
+                            ) : aiResponse ? (
+                                <div className="bg-white border custom-border p-8 ai-agent-response">
+                                    <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                )}
+
+                {/* Template Results Section */}
+                {showTemplates && (loadingTemplates || hasTemplateResults) && (
+                    <div className="container mx-auto px-4 py-12 relative">
+                        {(loadingTemplates || hasTemplateResults) && (
+                            <h2 className="h2 mb-8 text-left">
+                                Top{' '}
+                                {selectedApps.map((app, index) => (
+                                    <span key={app.appslugname}>
+                                        {index > 0 && ', '}
+                                        <span>{app.name}</span>
+                                    </span>
+                                ))}{' '}
+                                Workflow Automation Templates {selectedDepartments.length > 0 && 'for '}
+                                {selectedDepartments.map((department, index) => (
+                                    <span key={department}>
+                                        {index > 0 && ', '}
+                                        <span>{department}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedIndustries.length > 0 && 'in '}
+                                {selectedIndustries.map((industry, index) => (
+                                    <span key={industry}>
+                                        {index > 0 && ', '}
+                                        <span>{industry}</span>
+                                    </span>
+                                ))}
+                            </h2>
+                        )}
+
+                        {loadingTemplates ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {[...Array(6)].map((_, index) => (
+                                    <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
+                                ))}
                             </div>
-                        ) : aiResponse ? (
-                            <div className="bg-white border custom-border p-8 ai-agent-response">
-                                <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                        ) : hasTemplateResults ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {filteredTemplates.slice(0, 6).map((template, index) => (
+                                    <TemplateCard key={template.id} index={index} template={template} />
+                                ))}
                             </div>
                         ) : null}
                     </div>
-                </div>
-            )}
+                )}
 
-            {/* Template Results Section */}
-            {showTemplates && (loadingTemplates || hasTemplateResults) && (
-                <div className="container mx-auto px-4 py-12">
-                    {(loadingTemplates || hasTemplateResults) && (
-                        <h2 className="h2 mb-8 text-left">
-                            Top{' '}
-                            {selectedApps.map((app, index) => (
-                                <span key={app.appslugname}>
-                                    {index > 0 && ', '}
-                                    <span>{app.name}</span>
-                                </span>
-                            ))}{' '}
-                            Workflow Automation Templates {selectedDepartments.length > 0 && 'for '}
-                            {selectedDepartments.map((department, index) => (
-                                <span key={department}>
-                                    {index > 0 && ', '}
-                                    <span>{department}</span>
-                                </span>
-                            ))}{' '}
-                            {selectedIndustries.length > 0 && 'in '}
-                            {selectedIndustries.map((industry, index) => (
-                                <span key={industry}>
-                                    {index > 0 && ', '}
-                                    <span>{industry}</span>
-                                </span>
-                            ))}
-                        </h2>
-                    )}
+                {/* Video Results Section */}
+                {showVideos && (loadingVideos || videos.length > 0) && (
+                    <div className="container mx-auto px-4 py-12 relative">
+                        {(loadingVideos || videos.length > 0) && (
+                            <h2 className="h2 mb-8 text-left">
+                                Watch Videos to Automate{' '}
+                                {selectedApps.map((app, index) => (
+                                    <span key={app.appslugname}>
+                                        {index > 0 && ', '}
+                                        <span>{app.name}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedDepartments.length > 0 && 'for '}
+                                {selectedDepartments.map((department, index) => (
+                                    <span key={department}>
+                                        {index > 0 && ', '}
+                                        <span>{department}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedIndustries.length > 0 && 'in '}
+                                {selectedIndustries.map((industry, index) => (
+                                    <span key={industry}>
+                                        {index > 0 && ', '}
+                                        <span>{industry}</span>
+                                    </span>
+                                ))}
+                            </h2>
+                        )}
 
-                    {loadingTemplates ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                            {[...Array(6)].map((_, index) => (
-                                <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
-                            ))}
-                        </div>
-                    ) : hasTemplateResults ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                            {filteredTemplates.slice(0, 6).map((template, index) => (
-                                <TemplateCard key={template.id} index={index} template={template} />
-                            ))}
-                        </div>
-                    ) : null}
-                </div>
-            )}
+                        {loadingVideos ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {[...Array(6)].map((_, index) => (
+                                    <div key={index} className="skeleton bg-gray-100 h-[300px] rounded-none"></div>
+                                ))}
+                            </div>
+                        ) : videos.length > 0 ? (
+                            <VideoGrid videoData={videos} showHeading={false} />
+                        ) : null}
+                    </div>
+                )}
 
-            {/* Video Results Section */}
-            {showVideos && (loadingVideos || videos.length > 0) && (
-                <div className="container mx-auto px-4 py-12">
-                    {(loadingVideos || videos.length > 0) && (
-                        <h2 className="h2 mb-8 text-left">
-                            Watch Videos to Automate{' '}
-                            {selectedApps.map((app, index) => (
-                                <span key={app.appslugname}>
-                                    {index > 0 && ', '}
-                                    <span>{app.name}</span>
-                                </span>
-                            ))}{' '}
-                            {selectedDepartments.length > 0 && 'for '}
-                            {selectedDepartments.map((department, index) => (
-                                <span key={department}>
-                                    {index > 0 && ', '}
-                                    <span>{department}</span>
-                                </span>
-                            ))}{' '}
-                            {selectedIndustries.length > 0 && 'in '}
-                            {selectedIndustries.map((industry, index) => (
-                                <span key={industry}>
-                                    {index > 0 && ', '}
-                                    <span>{industry}</span>
-                                </span>
-                            ))}
-                        </h2>
-                    )}
+                {/* Blog Results Section */}
+                {showBlogs && (loadingBlogs || blogs.length > 0) && (
+                    <div className="container mx-auto px-4 py-12 relative">
+                        {(loadingBlogs || blogs.length > 0) && (
+                            <h2 className="h2 mb-8 text-left">
+                                Learn How to Automate{' '}
+                                {selectedApps.map((app, index) => (
+                                    <span key={app.appslugname}>
+                                        {index > 0 && ', '}
+                                        <span>{app.name}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedDepartments.length > 0 && 'for '}
+                                {selectedDepartments.map((department, index) => (
+                                    <span key={department}>
+                                        {index > 0 && ', '}
+                                        <span>{department}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedIndustries.length > 0 && 'in '}
+                                {selectedIndustries.map((industry, index) => (
+                                    <span key={industry}>
+                                        {index > 0 && ', '}
+                                        <span>{industry}</span>
+                                    </span>
+                                ))}
+                            </h2>
+                        )}
 
-                    {loadingVideos ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                            {[...Array(6)].map((_, index) => (
-                                <div key={index} className="skeleton bg-gray-100 h-[300px] rounded-none"></div>
-                            ))}
-                        </div>
-                    ) : videos.length > 0 ? (
-                        <VideoGrid videoData={videos} showHeading={false} />
-                    ) : null}
-                </div>
-            )}
-
-            {/* Blog Results Section */}
-            {showBlogs && (loadingBlogs || blogs.length > 0) && (
-                <div className="container mx-auto px-4 py-12">
-                    {(loadingBlogs || blogs.length > 0) && (
-                        <h2 className="h2 mb-8 text-left">
-                            Learn How to Automate{' '}
-                            {selectedApps.map((app, index) => (
-                                <span key={app.appslugname}>
-                                    {index > 0 && ', '}
-                                    <span>{app.name}</span>
-                                </span>
-                            ))}{' '}
-                            {selectedDepartments.length > 0 && 'for '}
-                            {selectedDepartments.map((department, index) => (
-                                <span key={department}>
-                                    {index > 0 && ', '}
-                                    <span>{department}</span>
-                                </span>
-                            ))}{' '}
-                            {selectedIndustries.length > 0 && 'in '}
-                            {selectedIndustries.map((industry, index) => (
-                                <span key={industry}>
-                                    {index > 0 && ', '}
-                                    <span>{industry}</span>
-                                </span>
-                            ))}
-                        </h2>
-                    )}
-
-                    {loadingBlogs ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                            {[...Array(6)].map((_, index) => (
-                                <div key={index} className="skeleton bg-gray-100 h-[400px] rounded-none"></div>
-                            ))}
-                        </div>
-                    ) : blogs.length > 0 ? (
-                        <BlogGrid posts={blogs} showHeading={false} />
-                    ) : null}
-                </div>
-            )}
+                        {loadingBlogs ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                {[...Array(6)].map((_, index) => (
+                                    <div key={index} className="skeleton bg-gray-100 h-[400px] rounded-none"></div>
+                                ))}
+                            </div>
+                        ) : blogs.length > 0 ? (
+                            <BlogGrid posts={blogs} showHeading={false} />
+                        ) : null}
+                    </div>
+                )}
+            </div>
 
             {/* AI Agents Section - Positioned at bottom of viewport */}
-            <div className="text-center pb-8 mt-auto">
+            <div className="text-center pb-8 mt-auto relative bg-[#faf9f6]">
                 <h2 className="text-3xl text-black">
                     AI agents, Human intervention, IF and{' '}
                     <Link href="/features" target="_blank" className="border-b-2 custom-border border-dotted ">
@@ -866,7 +869,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 </h2>
             </div>
 
-            <div className="py-12">
+            <div className="py-12 bg-[#faf9f6]">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />
