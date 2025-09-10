@@ -90,10 +90,12 @@ export default function IntegrationsAppOneComp({
                 </div>
             </div>
 
-            <h1 className="h1 container">
-                Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite
-                Apps
-            </h1>
+            {/* Only show main heading if not showing beta component */}
+            {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
+                <h1 className="h1 container">
+                    Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite Apps
+                </h1>
+            )}
 
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
@@ -107,7 +109,7 @@ export default function IntegrationsAppOneComp({
                                 height={36}
                                 alt={appOneDetails?.name}
                             />
-                            <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
+                            <div className="text-4xl font-semibold">{appOneDetails?.name}</div>
                         </div>
                         <MdAdd fontSize={36} />
                     </div>
@@ -177,23 +179,25 @@ export default function IntegrationsAppOneComp({
                     </>
                 )}
 
-                {!combosData?.combinations?.length > 0 && !appOneDetails?.events.length > 0 && (
-                    <IntegrationsBetaComp appOneDetails={appOneDetails} />
-                )}
-                {!combosData?.combinations?.length > 0 && appOneDetails?.events.length > 0 && (
-                    <div className="cont gap-4">
-                        <div className="cont gap-2">
-                            <h1 className="h1  ">
-                                Create integrations between <span className="text-accent">{appOneDetails?.name}</span>{' '}
-                                and your favorite App
-                            </h1>
-                            <p className="sub__h1">
-                                {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
-                            </p>
-                        </div>
+                {!combosData?.combinations?.length > 0 && (
+                    <>
+                        {!appOneDetails?.events.length > 0 ? (
+                            <IntegrationsBetaComp appOneDetails={appOneDetails} />
+                        ) : (
+                            <div className="cont gap-4">
+                                <div className="cont gap-2">
+                                    <h2 className="h2">
+                                        Available Events and Actions
+                                    </h2>
+                                    <p className="sub__h1">
+                                        {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
+                                    </p>
+                                </div>
 
-                        <IntegrationsEventsComp appOneDetails={appOneDetails} />
-                    </div>
+                                <IntegrationsEventsComp appOneDetails={appOneDetails} />
+                            </div>
+                        )}
+                    </>
                 )}
             </div>
 

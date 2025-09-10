@@ -193,7 +193,17 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                }
+                // Check AI response condition separately
+                const shouldShowAiResponse =
+                    (newSelectedApps.length >= 2 &&
+                        (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                    (selectedIndustries.length >= 1 && newSelectedApps.length >= 1) ||
+                    (selectedDepartments.length >= 1 && newSelectedApps.length >= 1);
+                if (shouldShowAiResponse) {
                     getAiResponse();
+                } else {
+                    setShowAiResponse(false);
                 }
             }, 100);
 
@@ -218,7 +228,17 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                }
+                // Check AI response condition separately
+                const shouldShowAiResponse =
+                    (selectedApps.length >= 2 &&
+                        (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                    (newSelectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                if (shouldShowAiResponse) {
                     getAiResponse();
+                } else {
+                    setShowAiResponse(false);
                 }
             }, 100);
 
@@ -243,7 +263,17 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                     handleSearchTemplates();
                     handleSearchVideos();
                     handleSearchBlogs();
+                }
+                // Check AI response condition separately
+                const shouldShowAiResponse =
+                    (selectedApps.length >= 2 &&
+                        (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
+                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+                    (newSelectedDepartments.length >= 1 && selectedApps.length >= 1);
+                if (shouldShowAiResponse) {
                     getAiResponse();
+                } else {
+                    setShowAiResponse(false);
                 }
             }, 100);
 
@@ -326,7 +356,18 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
     };
 
     const getAiResponse = async () => {
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+        // Only show AI response if:
+        // - 2+ apps + 1 industry, OR
+        // - 2+ apps + 1 department, OR
+        // - 1 industry + 1+ apps, OR
+        // - 1 department + 1+ apps
+        const shouldShowAiResponse =
+            (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+            (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+            (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+
+        if (!shouldShowAiResponse) {
+            setShowAiResponse(false);
             return;
         }
 
@@ -422,7 +463,17 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                         handleSearchTemplates();
                                         handleSearchVideos();
                                         handleSearchBlogs();
+                                    }
+                                    // Check AI response condition separately
+                                    const shouldShowAiResponse =
+                                        (selectedApps.length >= 2 &&
+                                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                                        (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+                                        (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                                    if (shouldShowAiResponse) {
                                         getAiResponse();
+                                    } else {
+                                        setShowAiResponse(false);
                                     }
                                 }, 100);
                             }
@@ -433,7 +484,16 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 handleSearchTemplates();
                 handleSearchVideos();
                 handleSearchBlogs();
-                getAiResponse();
+                // Check AI response condition
+                const shouldShowAiResponse =
+                    (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                if (shouldShowAiResponse) {
+                    getAiResponse();
+                } else {
+                    setShowAiResponse(false);
+                }
             }
         } else if (e.key === 'Backspace' && searchTerm === '') {
             // Remove the last selected element when backspace is pressed and input is empty
@@ -585,7 +645,17 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                     handleSearchTemplates();
                                     handleSearchVideos();
                                     handleSearchBlogs();
-                                    getAiResponse();
+                                    // Check AI response condition
+                                    const shouldShowAiResponse =
+                                        (selectedApps.length >= 2 &&
+                                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                                        (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
+                                        (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                                    if (shouldShowAiResponse) {
+                                        getAiResponse();
+                                    } else {
+                                        setShowAiResponse(false);
+                                    }
                                 }}
                             >
                                 Search
@@ -712,25 +782,6 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
 
             <div className="custom-background-home-page"></div>
             <div className="bg-[#faf9f6]">
-                {/* AI Response Section */}
-                {showAiResponse && (
-                    <div className="container mx-auto px-4 py-12 relative">
-                        <h2 className="h2 mb-8 text-left">Here are some automation ideas you can explore</h2>
-
-                        <div className="w-full">
-                            {loadingAiResponse ? (
-                                <div className="bg-white border custom-border p-8">
-                                    <div className="space-y-4">Creating ideas for you...</div>
-                                </div>
-                            ) : aiResponse ? (
-                                <div className="bg-white border custom-border p-8 ai-agent-response">
-                                    <ReactMarkdown>{aiResponse}</ReactMarkdown>
-                                </div>
-                            ) : null}
-                        </div>
-                    </div>
-                )}
-
                 {/* Template Results Section */}
                 {showTemplates && (loadingTemplates || hasTemplateResults) && (
                     <div className="container mx-auto px-4 py-12 relative">
@@ -743,7 +794,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                         <span>{app.name}</span>
                                     </span>
                                 ))}{' '}
-                                Workflow Automation Templates {selectedDepartments.length > 0 && 'for '}
+                                ready to use templates {selectedDepartments.length > 0 && 'for '}
                                 {selectedDepartments.map((department, index) => (
                                     <span key={department}>
                                         {index > 0 && ', '}
@@ -776,19 +827,88 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                     </div>
                 )}
 
+                {/* AI Response Section */}
+                {showAiResponse && (
+                    <div className="container mx-auto px-4 py-12 relative">
+                        <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
+
+                        <div className="w-full">
+                            {loadingAiResponse ? (
+                                <div className="bg-white border custom-border p-8">
+                                    <div className="space-y-4">Creating ideas for you...</div>
+                                </div>
+                            ) : aiResponse ? (
+                                <div className="bg-white border custom-border p-8 ai-agent-response">
+                                    <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                                </div>
+                            ) : null}
+                        </div>
+                    </div>
+                )}
+
+                {/* AI Ideas Note Section - Show when incomplete selections */}
+                {(selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                    !showAiResponse && (
+                        <div className="container mx-auto px-4 py-12 relative">
+                            <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
+
+                            <div className="w-full">
+                                <div className="border custom-border p-8 bg-white">
+                                    <div className="flex items-start gap-3">
+                                        <div className="cont">
+                                            <div className="ai-agent-note">
+                                                {selectedApps.length > 0 &&
+                                                    selectedIndustries.length === 0 &&
+                                                    selectedDepartments.length === 0 && (
+                                                        <p>
+                                                            Give more details about your business, department you want
+                                                            to automate and your industry to receive more personalized
+                                                            automation ideas.
+                                                        </p>
+                                                    )}
+                                                {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                                                    selectedApps.length === 0 && (
+                                                        <p>
+                                                            {selectedIndustries.length > 0 && selectedDepartments.length === 0 && (
+                                                                <>Give more details about your business, apps you use and your department to receive more personalized automation ideas.</>
+                                                            )}
+                                                            {selectedDepartments.length > 0 && selectedIndustries.length === 0 && (
+                                                                <>Give more details about your business, apps you use and your industry to receive more personalized automation ideas.</>
+                                                            )}
+                                                            {selectedIndustries.length > 0 && selectedDepartments.length > 0 && (
+                                                                <>Give more details about your business and apps you use to receive more personalized automation ideas.</>
+                                                            )}
+                                                        </p>
+                                                    )}
+                                                {selectedApps.length === 1 &&
+                                                    (selectedIndustries.length > 0 ||
+                                                        selectedDepartments.length > 0) && (
+                                                        <p>
+                                                            Great start! Select one more <strong>app</strong> to unlock
+                                                            AI-powered automation ideas.
+                                                        </p>
+                                                    )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 {/* Video Results Section */}
                 {showVideos && (loadingVideos || videos.length > 0) && (
                     <div className="container mx-auto px-4 py-12 relative">
                         {(loadingVideos || videos.length > 0) && (
                             <h2 className="h2 mb-8 text-left">
-                                Watch Videos to Automate{' '}
-                                {selectedApps.map((app, index) => (
+                                Quick step-by-step tutorials{' '}
+                                {/* {selectedApps.map((app, index) => (
                                     <span key={app.appslugname}>
                                         {index > 0 && ', '}
                                         <span>{app.name}</span>
                                     </span>
-                                ))}{' '}
-                                {selectedDepartments.length > 0 && 'for '}
+                                ))}{' '} */}
+                                {/* {selectedDepartments.length > 0 && 'for '}
                                 {selectedDepartments.map((department, index) => (
                                     <span key={department}>
                                         {index > 0 && ', '}
@@ -801,7 +921,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                         {index > 0 && ', '}
                                         <span>{industry}</span>
                                     </span>
-                                ))}
+                                ))} */}
                             </h2>
                         )}
 
@@ -822,14 +942,14 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                     <div className="container mx-auto px-4 py-12 relative">
                         {(loadingBlogs || blogs.length > 0) && (
                             <h2 className="h2 mb-8 text-left">
-                                Learn How to Automate{' '}
-                                {selectedApps.map((app, index) => (
+                                Automation insights & tips {' '}
+                                {/* {selectedApps.map((app, index) => (
                                     <span key={app.appslugname}>
                                         {index > 0 && ', '}
                                         <span>{app.name}</span>
                                     </span>
-                                ))}{' '}
-                                {selectedDepartments.length > 0 && 'for '}
+                                ))}{' '} */}
+                                {/* {selectedDepartments.length > 0 && 'for '}
                                 {selectedDepartments.map((department, index) => (
                                     <span key={department}>
                                         {index > 0 && ', '}
@@ -842,7 +962,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                                         {index > 0 && ', '}
                                         <span>{industry}</span>
                                     </span>
-                                ))}
+                                ))} */}
                             </h2>
                         )}
 
