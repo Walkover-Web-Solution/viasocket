@@ -145,7 +145,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                                         clicks. Explore the possibilities and watch your chatbot evolve.
                                     </p>
                                 </div>
-                                <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call/">
+                                <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call">
                                     <button className="btn btn-accent">Read More</button>
                                 </Link>
                             </div>

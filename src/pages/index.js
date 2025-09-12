@@ -314,42 +314,42 @@ export async function getServerSideProps(context) {
             iconName: 'chart-line',
             description:
                 'Automatically qualify leads, schedule follow-ups, and update your CRM. Convert prospects to customers while your team focuses on relationship building instead of data entry.',
-            link: 'https://viasocket.com/blog/easy-ways-to-automate-sales/',
+            link: 'https://viasocket.com/blog/easy-ways-to-automate-sales',
         },
         {
             title: 'Marketing',
             iconName: 'bullhorn',
             description:
                 'Synchronize campaign data, trigger personalized messaging based on customer actions, and maintain consistent cross-channel communication without manual intervention.',
-            link: 'https://viasocket.com/blog/unlock-business-growth-through-marketing-automation/',
+            link: 'https://viasocket.com/blog/unlock-business-growth-through-marketing-automation',
         },
         {
             title: 'Finance',
             iconName: 'coins',
             description:
                 'Automate invoice generation, payment reminders, expense approvals, and financial reporting. Ensure accuracy while reducing the time spent on routine financial processes.',
-            link: 'https://viasocket.com/blog/accounting-automation-guide/',
+            link: 'https://viasocket.com/blog/accounting-automation-guide',
         },
         {
             title: 'HR',
             iconName: 'user-friends',
             description:
                 'Streamline employee onboarding, automate time-off requests, collect feedback, and manage document approvals. Create a seamless experience for your team.',
-            link: 'https://viasocket.com/blog/9-important-automations-for-hr-2025/',
+            link: 'https://viasocket.com/blog/9-important-automations-for-hr-2025',
         },
         {
             title: 'IT',
             iconName: 'server',
             description:
                 'Automate ticket routing, system monitoring alerts, access management, and recurring maintenance tasks. Reduce resolution time and prevent system issues.',
-            link: 'https://viasocket.com/blog/boost-team-productivity-and-simplify-it-with-powerful-automation/',
+            link: 'https://viasocket.com/blog/boost-team-productivity-and-simplify-it-with-powerful-automation',
         },
         {
             title: 'Operations',
             iconName: 'cogs',
             description:
                 'Coordinate inventory updates, manage supply chain communications, automate order processing, and streamline project handoffs across departments.',
-            link: 'https://viasocket.com/blog/ways-to-automate-your-business/',
+            link: 'https://viasocket.com/blog/ways-to-automate-your-business',
         },
     ];
 
