@@ -16,6 +16,7 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
+import SmartLink from '@/components/SmartLink/SmartLink';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -253,13 +254,11 @@ export default function IntegrationsAppTwoComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white ">
-                                            {cat}
-                                        </span>
+                                        <span className="btn btn-accent">{cat}</span>
                                     </Link>
                                 ))}
                             </div>
-                            <Link
+                            <SmartLink
                                 href={
                                     appOneDetails?.domain?.startsWith('http')
                                         ? appOneDetails?.domain
@@ -267,7 +266,7 @@ export default function IntegrationsAppTwoComp({
                                 }
                             >
                                 <LinkText children={'Learn More'} />
-                            </Link>
+                            </SmartLink>
                         </div>
                         <div className="cont w-full gap-4 p-12 border-x md:border-l-0 custom-border">
                             <div className="cont gap-2">
@@ -290,13 +289,11 @@ export default function IntegrationsAppTwoComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
-                                            {cat}
-                                        </span>
+                                        <span className="btn btn-accent">{cat}</span>
                                     </Link>
                                 ))}
                             </div>
-                            <Link
+                            <SmartLink
                                 href={
                                     appTwoDetails?.domain?.startsWith('http')
                                         ? appTwoDetails?.domain
@@ -304,7 +301,7 @@ export default function IntegrationsAppTwoComp({
                                 }
                             >
                                 <LinkText children={'Learn More'} />
-                            </Link>
+                            </SmartLink>
                         </div>
                     </div>
 

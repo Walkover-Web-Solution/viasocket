@@ -17,6 +17,7 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
+import SmartLink from '@/components/SmartLink/SmartLink';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -93,7 +94,8 @@ export default function IntegrationsAppOneComp({
             {/* Only show main heading if not showing beta component */}
             {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
                 <h1 className="h1 container">
-                    Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite Apps
+                    Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your
+                    favorite Apps
                 </h1>
             )}
 
@@ -186,9 +188,7 @@ export default function IntegrationsAppOneComp({
                         ) : (
                             <div className="cont gap-4">
                                 <div className="cont gap-2">
-                                    <h2 className="h2">
-                                        Available Events and Actions
-                                    </h2>
+                                    <h2 className="h2">Available Events and Actions</h2>
                                     <p className="sub__h1">
                                         {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
                                     </p>
@@ -249,11 +249,11 @@ export default function IntegrationsAppOneComp({
                                     href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">{cat}</span>
+                                    <span className="btn btn-accent">{cat}</span>
                                 </Link>
                             ))}
                         </div>
-                        <Link
+                        <SmartLink
                             target="_blank"
                             href={
                                 appOneDetails?.domain.startsWith('http')
@@ -262,7 +262,7 @@ export default function IntegrationsAppOneComp({
                             }
                         >
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </SmartLink>
                     </div>
                     <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
@@ -281,19 +281,19 @@ export default function IntegrationsAppOneComp({
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link href="/" className="mb-2">
-                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                <span className="btn btn-accent">
                                     Workflow Automation
                                 </span>
                             </Link>
                             <Link href="/integrations" className="mb-2">
-                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                <span className="btn btn-accent">
                                     Integration
                                 </span>
                             </Link>
                         </div>
-                        <Link href={'/'}>
+                        <SmartLink href={'/'}>
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </SmartLink>
                     </div>
                 </div>
 

@@ -478,7 +478,7 @@ export default function McpAppComp({
                                             href={createURL(`/mcp/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                             className="mb-2"
                                         >
-                                            <span className="px-3 text-sm py-2 text-white hover-bg-grey-100-text-black bg-accent ">
+                                            <span className="btn btn-accent">
                                                 {cat}
                                             </span>
                                         </Link>
@@ -503,12 +503,10 @@ export default function McpAppComp({
                                 </p>
                                 <div className="flex flex-wrap gap-3">
                                     <Link href="/mcp" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
-                                            viaSocket MCP
-                                        </span>
+                                        <span className="btn btn-accent">viaSocket MCP</span>
                                     </Link>
                                     <Link href="/integrations" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
+                                        <span className="btn btn-accent">
                                             Integration
                                         </span>
                                     </Link>

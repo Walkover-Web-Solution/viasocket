@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { MdChevronRight } from 'react-icons/md';
+import SmartLink from '@/components/SmartLink/SmartLink';
 
 const arrowIcon = (
     <svg viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="arrow-icon">
@@ -12,14 +13,14 @@ const arrowIcon = (
     </svg>
 );
 
-//Link button
+//Link button with automatic dofollow/nofollow handling
 export function LinkButton({ href, content, customClasses }) {
     return (
         <>
-            <Link href={href || '/'} className={`link-btn ${customClasses || ''}`}>
+            <SmartLink href={href || '/'} className={`link-btn ${customClasses || ''}`}>
                 {content}
                 {arrowIcon}
-            </Link>
+            </SmartLink>
         </>
     );
 }
@@ -38,7 +39,7 @@ export function BtnContWithIcon({ title }) {
 export function LinkText({ children, customClasses }) {
     return (
         <>
-            <span className={`link-btn ${customClasses || ''}`}>
+            <span className={`link-btn raginii ${customClasses || ''}`}>
                 {children}
                 {arrowIcon}
             </span>
