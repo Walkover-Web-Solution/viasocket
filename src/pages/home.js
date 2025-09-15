@@ -93,7 +93,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 <div className="absolute top-0 right-0 p-12 z-index-1">
                     <p className="text-base">Want professional help?</p>
                     <Link
-                        href="https://viasocket.com/experts"
+                        href="https://tally.so/r/wzVdKZ"
                         target="_blank"
                         className="text-xs flex items-center gap-1 text-accent"
                     >
@@ -104,7 +104,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
                 <div className="text-center">
                     <h1 className="h1 flex flex-col gap-1 relative z-index-1">
                         <span>
-                            Find <span className="text-accent">automation ideas</span>
+                            automation <span className="text-accent">templates</span>
                         </span>
                         <span className="lowercase">
                             around{' '}

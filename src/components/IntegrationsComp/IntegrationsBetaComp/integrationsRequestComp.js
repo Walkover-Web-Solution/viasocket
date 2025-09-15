@@ -238,7 +238,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             {!type && (
                                 <label className="form-control w-full">
                                     <div className="label">
-                                        <span className="label-text">Plugin Name:</span>
+                                        <span className="label-text">Request a new app integration:</span>
                                     </div>
                                     <input
                                         required

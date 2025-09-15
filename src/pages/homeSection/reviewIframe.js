@@ -46,7 +46,7 @@ const ReviewIframe = () => {
                 </div>
                 <div
                     className="iframe-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
-                    style={{ gridAutoRows: '352px' }}
+                    style={{ gridAutoRows: '365px' }}
                 >
                     <div className="border custom-border p-3" style={{ gridRow: 'span 2' }}>
                         <iframe
@@ -120,16 +120,16 @@ const ReviewIframe = () => {
                         <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-1.svg" alt="review-1" width="100%" className="h-full object-cover" />
+                        <img src="review-image/review-1.svg" alt="review-1" width="100%" className="h-full object-contain" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-2.svg" alt="review-2" width="100%" className="h-full object-cover" />
+                        <img src="review-image/review-2.svg" alt="review-2" width="100%" className="h-full object-contain" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-3.svg" alt="review-3" width="100%" className="h-full object-cover" />
+                        <img src="review-image/review-3.svg" alt="review-3" width="100%" className="h-full object-contain" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-4.svg" alt="review-4" width="100%" className="h-full object-cover" />
+                        <img src="review-image/review-4.svg" alt="review-4" width="100%" className="h-full object-contain" />
                     </div>
                 </div>
             </div>
