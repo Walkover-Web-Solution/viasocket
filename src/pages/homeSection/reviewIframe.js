@@ -46,7 +46,7 @@ const ReviewIframe = () => {
                 </div>
                 <div
                     className="iframe-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
-                    style={{ gridAutoRows: '350px' }}
+                    style={{ gridAutoRows: '352px' }}
                 >
                     <div className="border custom-border p-3" style={{ gridRow: 'span 2' }}>
                         <iframe
@@ -60,7 +60,7 @@ const ReviewIframe = () => {
                     </div>
                     <div className="border custom-border p-3" style={{ gridRow: 'span 2' }}>
                         <iframe
-                            src="https://www.linkedin.com/embed/feed/update/urn:li:share:7361377529519075341?collapsed=1"
+                            src="https://www.linkedin.com/embed/feed/update/urn:li:share:7361377529519075341"
                             height="100%"
                             width="100%"
                             frameborder="0"
@@ -87,46 +87,49 @@ const ReviewIframe = () => {
                         ></iframe>
                     </div>
                     <div className="border custom-border p-3">
+                        <blockquote class="twitter-tweet">
+                            <p lang="en" dir="ltr">
+                                Shoutout to <a href="https://twitter.com/viasocket?ref_src=twsrc%5Etfw">@viaSocket</a>{' '}
+                                for making automation feel like magic. One integration at a time, they’re changing the
+                                game! 🎩🔮If you haven’t tried the platform yet, you’re missing out on the simplest way
+                                to power your apps with realtime events. Go check them out! ⚡️
+                            </p>
+                            &mdash; Disha Sheth (@Disha6392){' '}
+                            <a href="https://twitter.com/Disha6392/status/1939048672664465437?ref_src=twsrc%5Etfw">
+                                June 28, 2025
+                            </a>
+                        </blockquote>{' '}
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                    </div>
+                    <div className="border custom-border p-3">
                         <blockquote className="twitter-tweet">
                             <p lang="en" dir="ltr">
-                                After 1000s members joined our twitter Product Hunt community we are thrilled to launch
-                                a close what's app group for a PH launch related discussions.
-                                <br />
-                                Join if you are PH fan.
-                                <a href="https://t.co/FJlaT2qXF9">https://t.co/FJlaT2qXF9</a>
+                                1000+ MCP servers | AI-powered{' '}
+                                <a href="https://twitter.com/hashtag/workflowautomation?src=hash&amp;ref_src=twsrc%5Etfw">
+                                    #workflowautomation
+                                </a>{' '}
+                                Automation using{' '}
+                                <a href="https://twitter.com/viasocket?ref_src=twsrc%5Etfw">@viasocket</a> cannot beat
+                                it
                             </p>
-                            &mdash; Ravi Paliwal (@rpaliwal71)
-                            <a href="https://twitter.com/rpaliwal71/status/1813443783415009460?ref_src=twsrc%5Etfw">
-                                July 17, 2024
+                            &mdash; Jatinder Grewal (@JGrewalB2B){' '}
+                            <a href="https://twitter.com/JGrewalB2B/status/1937905322187805095?ref_src=twsrc%5Etfw">
+                                June 25, 2025
                             </a>
-                        </blockquote>
+                        </blockquote>{' '}
+                        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                     <div className="border custom-border p-3">
-                        <blockquote className="twitter-tweet">
-                            <p lang="en" dir="ltr">
-                                After 1000s members joined our twitter Product Hunt community we are thrilled to launch
-                                a close what's app group for a PH launch related discussions.
-                                <br />
-                                Join if you are PH fan.
-                                <a href="https://t.co/FJlaT2qXF9">https://t.co/FJlaT2qXF9</a>
-                            </p>
-                            &mdash; Ravi Paliwal (@rpaliwal71)
-                            <a href="https://twitter.com/rpaliwal71/status/1813443783415009460?ref_src=twsrc%5Etfw">
-                                July 17, 2024
-                            </a>
-                        </blockquote>
+                        <img src="review-image/review-1.svg" alt="review-1" width="100%" className="h-full object-cover" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-5.png" alt="review-5" width="100%" className="h-full" />
+                        <img src="review-image/review-2.svg" alt="review-2" width="100%" className="h-full object-cover" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-6.png" alt="review-6" width="100%" className="h-full" />
+                        <img src="review-image/review-3.svg" alt="review-3" width="100%" className="h-full object-cover" />
                     </div>
                     <div className="border custom-border p-3">
-                        <img src="review-image/review-7.png" alt="review-7" width="100%" className="h-full" />
-                    </div>
-                    <div className="border custom-border p-3">
-                        <img src="review-image/review-8.png" alt="review-8" width="100%" className="h-full" />
+                        <img src="review-image/review-4.svg" alt="review-4" width="100%" className="h-full object-cover" />
                     </div>
                 </div>
             </div>

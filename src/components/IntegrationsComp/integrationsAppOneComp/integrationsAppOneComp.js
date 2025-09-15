@@ -92,9 +92,17 @@ export default function IntegrationsAppOneComp({
 
             {/* Only show main heading if not showing beta component */}
             {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                <h1 className="h1 container">
-                    Create integrations between <span className="text-accent">{appOneDetails?.name}</span> and your favorite Apps
-                </h1>
+                <div className="container flex flex-col gap-2">
+                    <h1 className="h1">
+                        Connect <span className="text-accent">{appOneDetails?.name}</span> Integrations with your
+                        favorite Apps
+                    </h1>
+                    <p className="sub__h1">
+                        Easily connect Slack with the apps you use every day. Build and manage Slack automations to
+                        simplify work and streamline communication. <br /> Pick from thousands of available Slack integrations
+                        or customize new ones through our no-code platform.
+                    </p>
+                </div>
             )}
 
             {appOneDetails?.events.length > 0 && (
@@ -186,9 +194,7 @@ export default function IntegrationsAppOneComp({
                         ) : (
                             <div className="cont gap-4">
                                 <div className="cont gap-2">
-                                    <h2 className="h2">
-                                        Available Events and Actions
-                                    </h2>
+                                    <h2 className="h2">Available Events and Actions</h2>
                                     <p className="sub__h1">
                                         {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
                                     </p>
