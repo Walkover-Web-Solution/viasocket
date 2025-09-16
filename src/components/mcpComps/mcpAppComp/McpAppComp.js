@@ -145,7 +145,7 @@ export default function McpAppComp({
                             </div>
                             <div className="cont justify-center gap-2">
                                 <div className="cont gap-1">
-                                    <h1 className="h1">{appOneDetails?.name} MCP Server</h1>
+                                    <h1 className="h1"> MCP Server for {appOneDetails?.name}</h1>
                                     <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
                                         Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and
                                         Cursor using the viaSocket MCP Server.

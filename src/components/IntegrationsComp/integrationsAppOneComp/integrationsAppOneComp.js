@@ -98,9 +98,10 @@ export default function IntegrationsAppOneComp({
                         favorite Apps
                     </h1>
                     <p className="sub__h1">
-                        Easily connect Slack with the apps you use every day. Build and manage Slack automations to
-                        simplify work and streamline communication. <br /> Pick from thousands of available Slack integrations
-                        or customize new ones through our no-code platform.
+                        Easily connect <span>{appOneDetails?.name}</span> with the apps you use every day. Build and
+                        manage <span>{appOneDetails?.name}</span> automations to simplify work and streamline
+                        communication. <br /> Pick from thousands of available <span>{appOneDetails?.name}</span>{' '}
+                        integrations or customize new ones through our automation platform.
                     </p>
                 </div>
             )}
@@ -255,7 +256,7 @@ export default function IntegrationsAppOneComp({
                                     href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white">{cat}</span>
+                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">{cat}</span>
                                 </Link>
                             ))}
                         </div>
@@ -281,18 +282,21 @@ export default function IntegrationsAppOneComp({
                             />
                             <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                         </div>
-                        <p className="text-sm sm:text-lg text-black h-full font-medium">
-                            viasocket is an innovative and versatile workflow automation platform designed to streamline
-                            and simplify the integration of your favorite applications and to
+                        <p className="text-sm sm:text-lg text-black h-full">
+                            viaSocket is an AI-powered, workflow automation platform that helps people and businesses
+                            connect apps and automate repetitive tasks. With thousands of integrations, anyone can build
+                            workflows to move data, cut manual work, and save time. Whether for simple tasks or
+                            large-scale processes, viaSocket makes automation easy and helps teams focus on what matters
+                            most.
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link href="/" className="mb-2">
-                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                <span className="btn px-3 py-2 text-sm hover:bg-accent bg-black text-white">
                                     Workflow Automation
                                 </span>
                             </Link>
                             <Link href="/integrations" className="mb-2">
-                                <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                <span className="btn px-3 py-2 text-sm hover:bg-accent bg-black text-white">
                                     Integration
                                 </span>
                             </Link>
