@@ -38,7 +38,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                     </h1>
                     <p className="sub__h1 ">
                         We are truly grateful for the overwhelming response to our offer. To ensure more people can
-                        benefit, we have extended the deadline until 15 September 2025—sign up now and get lifetime free
+                        benefit, we have extended the deadline until 22th September 2025—sign up now and get lifetime free
                         access to the intelligent and most powerful automation platform.
                     </p>
 
@@ -49,7 +49,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                         <div>
                             <p className="text-sm font-semibold text-gray-500">Offer expires in</p>
                             <Countdown
-                                date={new Date('2025-09-17')}
+                                date={new Date('2025-09-24')}
                                 renderer={({ days, hours, minutes, seconds }) => (
                                     <div className="flex space-x-4 flex-wrap">
                                         <div className="flex items-center space-x-2">
@@ -90,7 +90,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                 </p>
                                 <p>
                                     <span>
-                                        Sign up before 15th September and keep using the viasocket forever under
+                                        Sign up before 22th September and keep using the viasocket forever under
                                     </span>{' '}
                                     <a
                                         target="_blank"
@@ -140,7 +140,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                             <h2 className="h2">Paid Plan</h2>
                             <p className="text-3xl text-accent">$50/month</p>
                             <p>
-                                For new users starting 16th September, pricing will apply. Existing users who sign up
+                                For new users starting 23th September, pricing will apply. Existing users who sign up
                                 before the deadline will continue with their Lifetime Free Access.
                             </p>
                         </div>
