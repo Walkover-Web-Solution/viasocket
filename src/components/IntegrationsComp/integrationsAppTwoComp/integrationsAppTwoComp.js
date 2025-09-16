@@ -253,7 +253,7 @@ export default function IntegrationsAppTwoComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white ">
+                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">
                                             {cat}
                                         </span>
                                     </Link>

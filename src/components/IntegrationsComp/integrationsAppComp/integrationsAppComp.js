@@ -187,15 +187,13 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                             className={`${style.app} hover-bg-grey-100-text-black justify-center`}
                                         >
                                             <div className="flex items-center gap-2">
-                                      
-                                                    <Image
-                                                        src={app?.iconurl || 'https://placehold.co/40x40'}
-                                                        width={40}
-                                                        height={40}
-                                                        alt={app?.name}
-                                         
-                                                    />
-                                               
+                                                <Image
+                                                    src={app?.iconurl || 'https://placehold.co/40x40'}
+                                                    width={40}
+                                                    height={40}
+                                                    alt={app?.name}
+                                                />
+
                                                 <h2 className="font-bold">{app?.name}</h2>
                                             </div>
                                             {/* <p className={style?.app__des}>{app?.description}</p> */}
