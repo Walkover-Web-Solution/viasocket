@@ -169,7 +169,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                     />
                                 )}
                                 <h3 className="h3 font-bold">
-                                    Request a new {type ? `${type} for ${formData?.plug?.name}` : 'Plugin'}
+                                    Request a new app {type ? `${type} for ${formData?.plug?.name}` : 'Integration'}
                                 </h3>
                             </div>
                             <p className="flex items-center gap-1">
@@ -238,7 +238,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             {!type && (
                                 <label className="form-control w-full">
                                     <div className="label">
-                                        <span className="label-text">Request a new app integration:</span>
+                                        <span className="label-text">Plugin Name:</span>
                                     </div>
                                     <input
                                         required
