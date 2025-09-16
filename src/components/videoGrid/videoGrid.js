@@ -1,4 +1,4 @@
-const VideoGrid = ({ videoData }) => {
+const VideoGrid = ({ videoData, showHeading = true }) => {
     const getGridClass = () => {
         switch (videoData.length) {
             case 1:
@@ -10,13 +10,13 @@ const VideoGrid = ({ videoData }) => {
         }
     };
     return (
-        <div className="flex flex-col gap-8">
-            <h2 className="h2">Watch Integrations In Action</h2>
+        <div className="flex flex-col gap-8 border custom-border p-12 bg-white">
+            {showHeading && <h2 className="h2">Watch Integrations In Action</h2>}
             <div className={`grid ${getGridClass()} gap-4`}>
                 {videoData.map((video, index) => (
-                    <div key={index} className={`w-full ${videoData.length === 1 ? 'col-span-1' : ''}`}>
+                    <div key={index} className={`w-full border custom-border ${videoData.length === 1 ? 'col-span-1' : ''}`}>
                         <iframe
-                            className="w-full aspect-video"
+                            className="w-full aspect-video border"
                             src={video.links}
                             title={`YouTube video player ${index + 1}`}
                             frameBorder="0"

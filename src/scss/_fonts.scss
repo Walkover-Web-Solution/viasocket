@@ -24,17 +24,18 @@
 body {
     font-family: 'Inter Tight', serif;
     color: #252525;
-    background:
-    radial-gradient(circle, rgba(220, 216, 210, 0.7) 20%, transparent 20%) center/10px 10px,
-    #FAF9F6;
+    // background:
+    //     radial-gradient(circle, rgba(220, 216, 210, 0.7) 20%, transparent 20%) center/10px 10px,
+    //     #faf9f6;
+    background: #faf9f6 !important;
 }
 
 .h1 {
     @apply md:text-6xl text-4xl;
     font-family: 'Inter Tight';
     line-height: 1.1em;
-    font-weight: 500;
-    text-transform: uppercase;
+    font-weight: 400;
+    text-transform: capitalize;
     color: #222222;
 
     &__b {
@@ -52,7 +53,7 @@ body {
 .h3 {
     @apply md:text-2xl text-xl;
     font-family: 'Inter Tight';
-    font-weight: 500;
+    font-weight: 400;
     // font-size: clamp(16px, -3.0704225352px + 9.014084507vw, 20px) !important;
 }
 

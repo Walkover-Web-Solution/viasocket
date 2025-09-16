@@ -1,6 +1,6 @@
 import { getBlogs } from './axiosCalls';
 
-export async function getBlogData({ tag1, tag2 }, pageUrl) {
+export async function getBlogData(tags, pageUrl) {
     const MIN_BLOGS = 3;
     const MAX_BLOGS = 6;
     const DEFAULT_TAG = 'index';
@@ -10,20 +10,40 @@ export async function getBlogData({ tag1, tag2 }, pageUrl) {
     const matchTag = (blog, tag) => Array.isArray(blog?.tags) && blog?.tags?.includes(tag);
 
     let blogs = [];
+    const processedIds = new Set();
 
-    if (tag1 && tag2) {
-        const tag1Blogs = allBlogs?.filter((blog) => matchTag(blog, tag1));
-        const tag1Ids = new Set(tag1Blogs?.map((blog) => blog.rowid));
-        const tag2Blogs = allBlogs?.filter((blog) => matchTag(blog, tag2) && !tag1Ids?.has(blog.rowid));
-        blogs = [...tag1Blogs, ...tag2Blogs];
-    } else if (tag1 || tag2) {
-        const tag = tag1 || tag2;
-        blogs = allBlogs?.filter((blog) => matchTag(blog, tag));
+    // Handle both array and object formats for backward compatibility
+    let tagArray = [];
+    if (Array.isArray(tags)) {
+        tagArray = tags.filter(tag => tag); // Remove falsy values
+    } else if (tags && typeof tags === 'object') {
+        // Support legacy { tag1, tag2 } format
+        const { tag1, tag2 } = tags;
+        tagArray = [tag1, tag2].filter(tag => tag);
+    } else if (tags) {
+        // Single tag as string
+        tagArray = [tags];
     }
 
+    // Process each tag and collect blogs without duplicates
+    for (const tag of tagArray) {
+        if (tag) {
+            const tagBlogs = allBlogs?.filter((blog) => 
+                matchTag(blog, tag) && !processedIds.has(blog.rowid)
+            );
+            
+            tagBlogs?.forEach(blog => {
+                blogs.push(blog);
+                processedIds.add(blog.rowid);
+            });
+        }
+    }
+
+    // If we don't have enough blogs, add some from the default tag
     if (blogs.length < MIN_BLOGS) {
-        const blogIds = new Set(blogs?.map((blog) => blog.rowid));
-        const defaultTagBlogs = allBlogs?.filter((blog) => matchTag(blog, DEFAULT_TAG) && !blogIds?.has(blog.rowid));
+        const defaultTagBlogs = allBlogs?.filter((blog) => 
+            matchTag(blog, DEFAULT_TAG) && !processedIds.has(blog.rowid)
+        );
         blogs = blogs?.concat(defaultTagBlogs?.slice(0, MIN_BLOGS - blogs.length));
     }
 

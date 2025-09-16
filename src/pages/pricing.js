@@ -95,7 +95,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <a
                                         target="_blank"
                                         className="hover:underline text-accent"
-                                        href="https://viasocket.com/faq/viasocket-mcp/fair-usage-policy"
+                                        href="https://viasocket.com/faq/pricing/fair-usage-policy"
                                     >
                                         fair usage policy
                                     </a>

@@ -69,7 +69,7 @@ const Terms = ({ footerData, metaData }) => {
                                 We operate <bdt className="block-component" />
                                 the website{' '}
                                 <bdt className="question">
-                                    <a href="https://viasocket.com/" target="_blank" data-custom-class="link">
+                                    <a href="https://viasocket.com" target="_blank" data-custom-class="link">
                                         https://viasocket.com/
                                     </a>
                                 </bdt>{' '}
@@ -6637,7 +6637,7 @@ const Terms = ({ footerData, metaData }) => {
                         These terms of use were created using Termly's{' '}
                         <a
                             style={{ color: 'rgb(48, 48, 241) !important' }}
-                            href="https://termly.io/products/terms-and-conditions-generator/"
+                            href="https://termly.io/products/terms-and-conditions-generator"
                             aria-label="privacy"
                         >
                             Terms and Conditions Generator

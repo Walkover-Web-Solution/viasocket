@@ -27,7 +27,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
             <Navbar footerData={footerData} utm={'/embed'} />
 
             <div className="cont lg:gap-20 md:gap-16 gap-12">
-                <div className="w-full min-h-fit py-12 border-b custom-border">
+                <div className="w-full min-h-fit py-12">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full justify-center items-center">
                             <div className="h-full w-full lg:w-2/3 flex flex-col justify-center gap-8 px-4 lg:px-0 py-8 lg:py-0 ">
@@ -145,7 +145,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                                         clicks. Explore the possibilities and watch your chatbot evolve.
                                     </p>
                                 </div>
-                                <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call/">
+                                <Link href="https://viasocket.com/blog/give-power-to-your-llm-or-chatbot-of-5-000-apps-via-tool-call">
                                     <button className="btn btn-accent">Read More</button>
                                 </Link>
                             </div>
@@ -158,66 +158,99 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
 
                 <div className="container">
                     <div className="cont border custom-border p-12 gap-6 bg-white">
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-8">
                             <h2 className="h2">Embed Pricing</h2>
-                            <p className="h3">Get Started for Free</p>
-                            <p>
-                                viaSocket Embed is available at no base cost for the first 2 years or until your
-                                customer count exceeds 1,000 — whichever comes first
-                            </p>
-                            <p>
-                                You get full access to core features during this period to help you build and scale
-                                without upfront commitments
-                            </p>
-                        </div>
 
-                        <div>
-                            <h3 className="h3">Pricing After the Free Period</h3>
-                            <p>Once the free usage period ends, pricing starts at $500/month, which includes:</p>
+                            <div className="flex flex-col gap-3">
+                                <p className="h3">Find the right plan for your SaaS</p>
+                                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                                    <div className="flex flex-col border p-6 custom-border shadow-lg justify-between">
+                                        <h3 className="text-xl font-semibold mb-2">Starter Plan</h3>
+                                        <p className="text-gray-500 mb-4">Free forever</p>
+                                        <p className="text-2xl font-bold mb-4">$0</p>
+                                        <ul className="mb-6 text-gray-700">
+                                            <li className="mb-2">Ideal for startups</li>
+                                            <li className="mb-2">Includes 5 apps</li>
+                                            <li className="mb-2">200K invocations/month</li>
+                                            <li className="mb-2">100 active users</li>
+                                        </ul>
+                                        <Link href="/signup?utm_source=/embed" className="btn btn-outline w-full">
+                                            Get Started
+                                        </Link>
+                                    </div>
 
-                            <ul
-                                style={{ listStyleType: 'disc', listStylePosition: 'inside' }}
-                                className="flex flex-col gap-1"
-                            >
-                                <li>
-                                    Full access to all apps available in our{' '}
+                                    <div className="flex flex-col border p-6 custom-border shadow-lg justify-between">
+                                        <h3 className="text-xl font-semibold mb-2">Pro Plan</h3>
+                                        <p className="text-gray-500 mb-4">For established SaaS</p>
+                                        <p className="text-2xl font-bold mb-4">$499/month</p>
+                                        <ul className="mb-6 text-gray-700">
+                                            <li className="mb-2">Includes 50 apps</li>
+                                            <li className="mb-2"> 500K invocations/month</li>
+                                            <li className="mb-2">100 active users</li>
+                                            <li className="mb-2">Free support</li>
+                                        </ul>
+                                        <Link href="/signup?utm_source=/embed" className="btn btn-outline w-full">
+                                            Get Started
+                                        </Link>
+                                    </div>
+
+                                    <div className="flex flex-col border p-6 custom-border shadow-lg justify-between">
+                                        <h3 className="text-xl font-semibold mb-2">Enterprise Plan</h3>
+                                        <p className="text-gray-500 mb-4">For enterprise SaaS</p>
+                                        <p className="text-2xl font-bold mb-4">$1999/month</p>
+                                        <ul className="mb-6 text-gray-700">
+                                            <li className="mb-2"> Includes unlimited apps,</li>
+                                            <li className="mb-2">2M invocations/month</li>
+                                            <li className="mb-2">10K active users</li>
+                                            <li className="mb-2">Free priority support</li>
+                                        </ul>
+                                        <Link href="/signup?utm_source=/embed" className="btn btn-outline w-full">
+                                            Get Started
+                                        </Link>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className="flex items-center justify-between gap-4 border custom-border p-6 flex-wrap">
+                                <div className="1">
+                                    <h3 className="text-3xl font-semibold">One-Time Setup Fee</h3>
+                                    <p>
+                                        Each plan comes with a one-time setup fee of $499, which applies to all plans,
+                                        including the Free Plan, ensuring a seamless start for everyone.
+                                    </p>
+                                </div>
+                                <span className="text-[56px] font-semibold">$499</span>
+                            </div>
+
+                            <div className="flex flex-col border custom-border p-6">
+                                <h3 className="text-3xl font-semibold">Keep Going Beyond Limits</h3>
+
+                                <div className="flex text-lg flex-col">
+                                    <p>• $0.0004 per extra invocation over the monthly limit</p>
+                                    <p>• $1/user for any additional active users beyond tier</p>
+                                </div>
+                            </div>
+
+                            <div className="flex flex-col border custom-border p-6">
+                                <h3 className="text-3xl font-semibold">Need Something Extra? We’ve Got You!</h3>
+                                <p>
+                                    If the app you need isn't in our directory, our team can add it for you. Pricing
+                                    ranges from $79 to $399 one-time, based on complexity.
+                                </p>
+
+                                <div className="flex flex-col sm:flex-row gap-4 mt-8">
+                                    <Link href="/signup?utm_source=/embed" className="btn btn-accent text-nowrap">
+                                        Start Growing Now
+                                    </Link>
                                     <a
-                                        href="https://viasocket.com/integrations"
-                                        className="text-accent hover:underline"
+                                        href="https://cal.id/team/viasocket/embed"
+                                        target="_blank"
+                                        className="btn btn-outline text-nowrap"
                                     >
-                                        marketplace
+                                        Book a Demo
                                     </a>
-                                </li>
-                                <li>Instant upgrades as new apps from our pipeline go live</li>
-                                <li>
-                                    Need an app we haven’t planned for yet? You can request it. Most popular apps are
-                                    already in our roadmap, but if it’s outside our pipeline, custom development charges
-                                    may apply
-                                </li>
-                                <li>
-                                    Comes with 2,00,000 free{' '}
-                                    <a
-                                        href="https://viasocket.com/faq/pricing/invocations"
-                                        className="text-accent hover:underline"
-                                    >
-                                        invocations
-                                    </a>{' '}
-                                    every month
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div>
-                            <h3 className="h3">Beyond the included quota:</h3>
-                            <p>$0.0005 per invocation — simple, usage-based pricing with no hidden fees.</p>
-                        </div>
-                        <div className="flex flex-col sm:flex-row gap-4 mt-8">
-                            <Link href="/signup?utm_source=/embed">
-                                <button className="btn btn-accent text-nowrap">START GROWING NOW</button>
-                            </Link>
-                            <Link href="/support">
-                                <button className="btn btn-outline text-nowrap">Contact Sales</button>
-                            </Link>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
