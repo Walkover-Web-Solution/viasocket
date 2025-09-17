@@ -4,8 +4,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexTemplateData } from '@/utils/getData';
+import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -16,6 +16,7 @@ import AiAgentFeature from '@/pages/homeSection/aiAgentFeature';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
+import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 
 export const runtime = 'experimental-edge';
 
@@ -28,7 +29,7 @@ async function fetchApps(category) {
     return rawData?.data;
 }
 
-const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => {
+const Home = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -171,6 +172,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount }) => 
             {/* AI Agents Section - Positioned at bottom of viewport */}
             <AiAgentFeature />
 
+            {/* Template Section */}
+            <IndexTemplateComp categories={indexTemplateData} />
+
             {/* Review Section */}
             <ReviewIframe />
 
@@ -233,6 +237,7 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
+    const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
 
     const securityGridData = [
         {
@@ -278,6 +283,7 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             securityGridData: securityGridData,
             appCount: appCount || 0,
+            indexTemplateData: indexTemplateData || [],
         },
     };
 }
