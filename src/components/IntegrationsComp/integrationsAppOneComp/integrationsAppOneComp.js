@@ -256,7 +256,9 @@ export default function IntegrationsAppOneComp({
                                     href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">{cat}</span>
+                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">
+                                        {cat}
+                                    </span>
                                 </Link>
                             ))}
                         </div>
@@ -267,6 +269,7 @@ export default function IntegrationsAppOneComp({
                                     ? appOneDetails?.domain
                                     : 'http://' + appOneDetails?.domain
                             }
+                            rel="noopener noreferrer nofollow"
                         >
                             <LinkText children={'Learn More'} />
                         </Link>
@@ -301,7 +304,7 @@ export default function IntegrationsAppOneComp({
                                 </span>
                             </Link>
                         </div>
-                        <Link href={'/'}>
+                        <Link href={'/'} rel="noopener noreferrer nofollow">
                             <LinkText children={'Learn More'} />
                         </Link>
                     </div>
