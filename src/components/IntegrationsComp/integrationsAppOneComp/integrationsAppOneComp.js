@@ -17,6 +17,8 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
+import SmartLink from '@/components/SmartLink/SmartLink';
+import useDynamicRel from '@/hooks/useDynamicRel';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -35,6 +37,8 @@ export default function IntegrationsAppOneComp({
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
+    const connectHref = `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`;
+    const relConnect = useDynamicRel(connectHref);
 
     return (
         <div
@@ -66,15 +70,14 @@ export default function IntegrationsAppOneComp({
                         />
                         <h2 className="text-4xl font-semibold">{appOneDetails?.name}</h2>
                     </div>
-                    <button
-                        onClick={(e) =>
-                            handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
-                        }
+                    <a
+                        href={connectHref}
+                        onClick={(e) => handleRedirect(e, connectHref)}
                         className="btn btn-outline"
-                        rel="nofollow"
+                        rel={relConnect}
                     >
                         Connect to {appOneDetails?.name} <MdOpenInNew />
-                    </button>
+                    </a>
                 </div>
                 <div className="flex items-center gap-2 text-base mt-1">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
@@ -256,11 +259,13 @@ export default function IntegrationsAppOneComp({
                                     href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">{cat}</span>
+                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">
+                                        {cat}
+                                    </span>
                                 </Link>
                             ))}
                         </div>
-                        <Link
+                        <SmartLink
                             target="_blank"
                             href={
                                 appOneDetails?.domain.startsWith('http')
@@ -269,7 +274,7 @@ export default function IntegrationsAppOneComp({
                             }
                         >
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </SmartLink>
                     </div>
                     <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
@@ -301,9 +306,9 @@ export default function IntegrationsAppOneComp({
                                 </span>
                             </Link>
                         </div>
-                        <Link href={'/'}>
+                        <SmartLink href={'/'}>
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </SmartLink>
                     </div>
                 </div>
 

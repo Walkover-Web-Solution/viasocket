@@ -286,3 +286,30 @@ export async function getAppCount(pageUrl) {
         sendErrorMessage({ error, pageUrl, source: apiUrl });
     }
 }
+
+export async function getDoFollowUrl(pageUrl) {
+    const apiUrl = `https://table-api.viasocket.com/65d2ed33fa9d1a94a5224235/tblxpnrit`;
+
+    try {
+        const response = await axiosWithCache.get(apiUrl, {
+            headers: {
+                'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY}`,
+                'Content-Type': 'application/json',
+            },
+            cache: {
+                ttl: 1000 * 60 * 5, // Cache for 5 minutes (dofollow config should refresh quickly)
+                interpretHeader: false,
+            },
+        });
+        // Some tables return { data: { rows } }, others may return { rows }
+        return (
+            response?.data?.data?.rows ||
+            response?.data?.rows ||
+            []
+        );
+    } catch (error) {
+        console.log(error?.response?.data || error.message, 'getDoFollowUrl error');
+        sendErrorMessage({ error, pageUrl, source: apiUrl });
+        return [];
+    }
+}
