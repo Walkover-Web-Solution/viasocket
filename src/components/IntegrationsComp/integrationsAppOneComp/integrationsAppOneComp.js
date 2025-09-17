@@ -8,7 +8,7 @@ import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
@@ -17,8 +17,7 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
-import SmartLink from '@/components/SmartLink/SmartLink';
-import useDynamicRel from '@/hooks/useDynamicRel';
+import { useDoFollowSlug } from '@/hooks/useDoFollowSlug';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -38,7 +37,10 @@ export default function IntegrationsAppOneComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const connectHref = `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`;
-    const relConnect = useDynamicRel(connectHref);
+
+    const currentSlug = useMemo(() => appOneDetails?.appslugname || '', [appOneDetails?.appslugname]);
+    // Use reusable hook to get dofollow state and rel attributes
+    const { relInternal, relExternal, relConnect } = useDoFollowSlug(currentSlug, '/integrations/appone');
 
     return (
         <div
@@ -80,7 +82,10 @@ export default function IntegrationsAppOneComp({
                     </a>
                 </div>
                 <div className="flex items-center gap-2 text-base mt-1">
-                    <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
+                    <Link
+                        href={createURL(`/integrations`)}
+                        className="flex items-center gap-0 underline"
+                    >
                         Integrations{' '}
                     </Link>
                     <MdChevronRight fontSize={22} />
@@ -265,16 +270,17 @@ export default function IntegrationsAppOneComp({
                                 </Link>
                             ))}
                         </div>
-                        <SmartLink
+                        <Link
                             target="_blank"
                             href={
                                 appOneDetails?.domain.startsWith('http')
                                     ? appOneDetails?.domain
                                     : 'http://' + appOneDetails?.domain
                             }
+                            rel={relExternal}
                         >
                             <LinkText children={'Learn More'} />
-                        </SmartLink>
+                        </Link>
                     </div>
                     <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
@@ -306,9 +312,9 @@ export default function IntegrationsAppOneComp({
                                 </span>
                             </Link>
                         </div>
-                        <SmartLink href={'/'}>
+                        <Link href={'/'} rel={relInternal}>
                             <LinkText children={'Learn More'} />
-                        </SmartLink>
+                        </Link>
                     </div>
                 </div>
 
