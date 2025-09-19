@@ -304,7 +304,7 @@ export default function IntegrationsAppOneComp({
                                 </span>
                             </Link>
                         </div>
-                        <Link href={'/'} rel="noopener noreferrer nofollow">
+                        <Link href={'/'}>
                             <LinkText children={'Learn More'} />
                         </Link>
                     </div>
