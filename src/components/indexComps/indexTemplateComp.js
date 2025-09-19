@@ -66,7 +66,7 @@ const IndexTemplateComp = ({ categories }) => {
     };
 
     return (
-        <div className="cont gap-4 container">
+        <div className="cont gap-4 container mt-12 relative">
             <div className="cont gap-1">
                 <h2 className="h2">Get started with ready-made templates</h2>
             </div>
