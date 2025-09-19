@@ -19,6 +19,7 @@ import {
     PRICINGFEATURE,
     INDEXTEMPLATE,
     FOOTER,
+    DOFOLLOWLINK,
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -140,5 +141,10 @@ export async function getPricingFeatureData(fields, filter, pageUrl) {
 
 export async function getIndexTemplateData(fields, filter, pageUrl) {
     const data = await getDataFromTable(INDEXTEMPLATE, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getDoFollowStatus(fields, filter, pageUrl){
+    const data = await getDataFromTable(DOFOLLOWLINK, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }

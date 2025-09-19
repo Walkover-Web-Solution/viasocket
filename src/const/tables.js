@@ -19,3 +19,4 @@ export const TEMPLATES = 'tblz2bm2n';
 export const MCP = 'tblctk342';
 export const PRICINGFEATURE = 'tbl76iei5';
 export const INDEXTEMPLATE = 'tbllsxcvm';
+export const DOFOLLOWLINK = 'tblxpnrit';

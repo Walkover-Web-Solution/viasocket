@@ -9,6 +9,7 @@ import createURL from '@/utils/createURL';
 import IntegrationsHeadComp from '../../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsEventsComp from '../../integrationsEventsComp/integrationsEventsComp';
 import Navbar from '@/components/navbar/navbar';
+import ExternalLink from '@/utils/ExternalLink';
 
 export default function IntegrationsDisconnectedComp({
     appOneDetails,
@@ -18,6 +19,7 @@ export default function IntegrationsDisconnectedComp({
     footerData,
     blogsData,
     metaData,
+    getDoFollowUrlStatusArray
 }) {
     return (
         <div
@@ -113,16 +115,17 @@ export default function IntegrationsDisconnectedComp({
                             <h3>About {appOneDetails?.name}</h3>
                         </div>
                         <p>{appOneDetails?.description}</p>
-                        <Link
-                            target="_blank"
+                        <ExternalLink
                             href={
                                 appOneDetails?.domain.startsWith('http')
                                     ? appOneDetails?.domain
                                     : 'http://' + appOneDetails?.domain
                             }
+                            appSlugName={appOneDetails?.appslugname}
+                            doFollowArray={getDoFollowUrlStatusArray}
                         >
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </ExternalLink>
                     </div>
                     <div className="w-full border-r border-l md:border-l-0 custom-border cont gap-4 p-12">
                         <div>

@@ -1,4 +1,4 @@
-import { getCategoryData, getFooterData, getUsecasesData } from '@/utils/getData';
+import { getCategoryData, getDoFollowStatus, getFooterData, getUsecasesData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
@@ -8,7 +8,7 @@ import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAp
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS } from '@/const/fields';
+import { DOFOLLOWLINK_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
 import { getCombos, getApps, getAppCount } from '@/utils/axiosCalls';
@@ -34,6 +34,7 @@ export default function Integrations({
     useCaseData,
     videoData,
     appCount,
+    getDoFollowUrlStatusArray
 }) {
     if (noData) {
         return (
@@ -61,6 +62,7 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     videoData={videoData}
+                    getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 />
             </div>
         );
@@ -76,6 +78,7 @@ export default function Integrations({
                     appOneDetails={appOneDetails}
                     faqData={faqData}
                     footerData={footerData}
+                    getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 />
             );
         } else {
@@ -94,6 +97,7 @@ export default function Integrations({
                         useCaseData={useCaseData}
                         videoData={videoData}
                         appCount={appCount}
+                        getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                     />
                 </div>
             );
@@ -126,6 +130,7 @@ export async function getServerSideProps(context) {
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
+    const getDoFollowUrlStatusArray = await getDoFollowStatus(DOFOLLOWLINK_FIELDS, '', pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
         const metadata = await getMetaData('/integrations/AppOne/AppTwo', pageUrl);
@@ -153,6 +158,7 @@ export async function getServerSideProps(context) {
                     blogData: blogData || [],
                     videoData: videoData || [],
                     appCount: appCount || 0,
+                    getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                 },
             };
         } else {
@@ -201,6 +207,7 @@ export async function getServerSideProps(context) {
                     useCaseData: useCaseData || [],
                     videoData: videoData || [],
                     appCount: appCount || 0,
+                    getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                 },
             };
         } else {
@@ -238,6 +245,7 @@ export async function getServerSideProps(context) {
                 categories: categories || [],
                 blogData: blogData || [],
                 appCount: appCount || 0,
+                getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
             },
         };
     }
