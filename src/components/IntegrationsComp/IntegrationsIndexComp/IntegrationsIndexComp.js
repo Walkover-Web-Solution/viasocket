@@ -14,6 +14,7 @@ import ErrorComp from '@/components/404/404Comp';
 import { GoArrowUpRight } from 'react-icons/go';
 import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
+import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -266,6 +267,9 @@ export default function IntegrationsIndexComp({
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
+                <div className="container cont">
+                    <AlphabeticalComponent />
+                </div>
                 <div className="container">
                     <Footer footerData={footerData} />
                 </div>

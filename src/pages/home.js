@@ -3,7 +3,6 @@ import { useState, useCallback } from 'react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import { getFooterData, getIndexTemplateData } from '@/utils/getData';
 import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
@@ -11,7 +10,6 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getAppCount } from '@/utils/axiosCalls';
 import Link from 'next/link';
-import { GoArrowUpRight } from 'react-icons/go';
 import AiAgentFeature from '@/pages/homeSection/aiAgentFeature';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
@@ -91,35 +89,24 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             <div
                 className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
             >
-                <div className="absolute top-0 right-0 p-12 z-index-1">
-                    <p className="text-base">Want professional help?</p>
-                    <Link
-                        href="https://tally.so/r/wzVdKZ"
-                        target="_blank"
-                        className="text-xs flex items-center gap-1 text-accent"
-                    >
-                        Ask an Expert <GoArrowUpRight />
-                    </Link>
-                </div>
+                <div className="text-center container">
+                    <p className="text-3xl text-black mb-12 relative z-index-1">
+                        Automate Anything with{' '}
+                        <Link
+                            href="https://viasocket.com/integrations"
+                            target="_blank"
+                            className="border-b-2 custom-border border-dotted"
+                        >
+                            <span>AI + {+appCount + 300}</span> Apps
+                        </Link>{' '}
+                    </p>
 
-                <div className="text-center">
                     <h1 className="h1 flex flex-col gap-1 relative z-index-1">
                         <span>
-                            automation <span className="text-accent">templates</span>
+                            Search ready-made <span className="text-accent">templates</span>
                         </span>
-                        <span className="lowercase">
-                            around{' '}
-                            <Link
-                                href="https://viasocket.com/integrations"
-                                target="_blank"
-                                className="border-b-2 custom-border border-dotted lowercase"
-                            >
-                                <span>{+appCount + 300}+</span> Apps
-                            </Link>{' '}
-                            and <span className="uppercase">AI</span>
-                        </span>
+                        <span className="lowercase">to get started fast</span>
                     </h1>
-
                     <SearchInputHome
                         onTemplatesChange={handleTemplatesChange}
                         onVideosChange={handleVideosChange}
@@ -135,11 +122,18 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         <Link
                             href="https://viasocket.com/signup"
                             target="_blank"
-                            className="border-b-2 custom-border border-dotted "
+                            className="border-b-2 custom-border border-dotted"
                         >
                             build from scratch
                         </Link>{' '}
-                        with AI + human experts
+                        or{' '}
+                        <Link
+                            href="https://tally.so/r/wzVdKZ"
+                            target="_blank"
+                            className="border-b-2 custom-border border-dotted"
+                        >
+                            Ask an Expert
+                        </Link>
                     </p>
                 </div>
             </div>
@@ -185,9 +179,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         <FAQSection faqData={faqData} faqName={'/index'} />
                     </div>
                 )}
-                <div className="container cont">
-                    <AlphabeticalComponent />
-                </div>
+
                 <SecuritySection securityGridData={securityGridData} />
                 <div className="container">
                     <Footer footerData={footerData} />
