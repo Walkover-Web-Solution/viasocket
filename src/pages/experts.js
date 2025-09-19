@@ -122,7 +122,7 @@ const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, m
                                         {expertsHelpBlog?.link && (
                                             <Link
                                                 target="_blank"
-                                                href="https://viasocket.com/faq/partners/automation-experts"
+                                                href="https://viasocket.com/faq/partners/experts-partner-program"
                                                 className="flex items-center mt-auto text-[#4485F2]"
                                             >
                                                 Learn More <MdChevronRight fontSize={22} />
