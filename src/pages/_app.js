@@ -1,4 +1,5 @@
 import '@/scss/global.scss';
+import 'aos/dist/aos.css';
 
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';

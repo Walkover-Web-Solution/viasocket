@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import AOS from 'aos';
 
 const tweets = [
     {
@@ -74,20 +75,35 @@ const ReviewIframe = () => {
             document.body.appendChild(script);
         }
 
+        // Initialize AOS for scroll animations
+        AOS.init({
+            duration: 700,
+            easing: 'ease-out-quart',
+            once: true,
+            offset: 60,
+        });
+
+        // Refresh after mount to account for iframes/images sizing
+        const refreshTimeout = setTimeout(() => AOS.refresh(), 600);
+
         return () => {
             // Cleanup Twitter script on unmount
             const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
             if (existingScript) {
                 document.body.removeChild(existingScript);
             }
+            clearTimeout(refreshTimeout);
         };
     }, []);
 
     return (
         <div className="container">
-            <div className="iframe-main-wrapper bg-white px-12 pb-12 pt-8 border custom-border relative mt-12">
+            <div
+                className="iframe-main-wrapper bg-white px-12 pb-12 pt-8 border custom-border relative mt-12"
+                data-aos="fade-in"
+            >
                 <div className="flex items-center justify-between gap-2">
-                    <h2 className="h2">Our users adore us ❤️</h2>
+                    <h2 className="h2" data-aos="fade-right">Our users adore us ❤️</h2>
                     <div className="flex items-center gap-2">
                         <a href="https://www.capterra.com/p/10020406/viaSocket/reviews/">
                             <img
@@ -95,6 +111,7 @@ const ReviewIframe = () => {
                                 border="0"
                                 src="https://brand-assets.capterra.com/badge/3b902cef-5889-4a4e-afaa-855d73a3d238.svg"
                                 alt="Capterra Badge"
+                                data-aos="zoom-in"
                             />
                         </a>
                         <a
@@ -105,6 +122,7 @@ const ReviewIframe = () => {
                                 alt="Users Love Us"
                                 className="w-[100px]"
                                 src="https://www.g2.com/shared-assets/product-badges/users-love-us.svg"
+                                data-aos="zoom-in"
                             />
                         </a>
                     </div>
@@ -114,9 +132,22 @@ const ReviewIframe = () => {
                     style={{ gridAutoRows: '365px' }}
                 >
                     {iframes.map(({ src, style, key, isImage }, index) => (
-                        <div key={key} className="border custom-border p-3" style={style}>
+                        <div
+                            key={key}
+                            className="border custom-border p-3"
+                            style={style}
+                            data-aos="fade-up"
+                            data-aos-delay={index === 0 ? 0 : 800 + (index - 1) * 140}
+                        >
                             {isImage ? (
-                                <img src={src} alt={`review-${index}`} width="100%" className="h-full object-contain" />
+                                <img
+                                    src={src}
+                                    alt={`review-${index}`}
+                                    width="100%"
+                                    className="h-full object-contain"
+                                    data-aos="zoom-in"
+                                    data-aos-delay={index === 0 ? 100 : 900 + (index - 1) * 140}
+                                />
                             ) : (
                                 <iframe
                                     src={src}
@@ -125,13 +156,20 @@ const ReviewIframe = () => {
                                     frameBorder="0"
                                     allowFullScreen=""
                                     title={`Embedded post ${key}`}
+                                    data-aos="fade-up"
+                                    data-aos-delay={index === 0 ? 100 : 900 + (index - 1) * 140}
                                 />
                             )}
                         </div>
                     ))}
 
                     {tweets.map(({ content, author, timestamp, tweetLink }, index) => (
-                        <div key={`tweet-${index}`} className="border custom-border p-3">
+                        <div
+                            key={`tweet-${index}`}
+                            className="border custom-border p-3"
+                            data-aos="fade-up"
+                            data-aos-delay={1600 + index * 160}
+                        >
                             <blockquote className="twitter-tweet">
                                 <p lang="en" dir="ltr">
                                     {content}
