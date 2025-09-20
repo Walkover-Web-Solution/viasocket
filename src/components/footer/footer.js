@@ -71,43 +71,63 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             2 * Math.ceil(renderedGroups?.length / 3)
                         )}
 
-                        <div className="flex gap-2 md:gap-4 mt-auto">
-                            <Link
-                                href={`https://www.instagram.com/walkover.inc/?igsh=MWEyZnptZmw3Z3phOQ%3D%3D`}
-                                target="_blank"
-                                className=""
-                                aria-label="instagram"
-                            >
-                                <FaInstagram size={24} />
-                            </Link>
-                            <Link
-                                href={`https://www.linkedin.com/company/viasocket-walkover/`}
-                                target="_blank"
-                                className=""
-                                aria-label="facebook"
-                            >
-                                <FiLinkedin size={24} />
-                            </Link>
+                        <div className="flex flex-col gap-6 mt-auto p-4">
+                            <div className="flex gap-2 justify-center items-center">
+                                <img
+                                    src="https://brand-assets.capterra.com/badge/3b902cef-5889-4a4e-afaa-855d73a3d238.svg"
+                                    alt="capterra"
+                                    style={{ width: '100px', height: '100px', objectFit: 'contain' }}
+                                />
+                                <img
+                                    src="https://www.g2.com/shared-assets/product-badges/users-love-us.svg"
+                                    alt="g2"
+                                    style={{ width: '100px', height: '60px', objectFit: 'contain' }}
+                                />
+                            </div>
 
-                            <Link href={`https://x.com/viasocket`} target="_blank" className="" aria-label="twitter">
-                                <FaXTwitter size={24} />
-                            </Link>
-                            <Link
-                                href={`https://www.youtube.com/@viasocket`}
-                                target="_blank"
-                                className=""
-                                aria-label="youtube"
-                            >
-                                <FiYoutube size={24} />
-                            </Link>
-                            <Link
-                                href={`https://discord.com/invite/wqsSsMAkkz`}
-                                target="_blank"
-                                className=""
-                                aria-label="discord"
-                            >
-                                <RxDiscordLogo size={24} />
-                            </Link>
+                            <div className="flex gap-2 justify-center items-center md:gap-6">
+                                <Link
+                                    href={`https://www.instagram.com/walkover.inc/?igsh=MWEyZnptZmw3Z3phOQ%3D%3D`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="instagram"
+                                >
+                                    <FaInstagram size={24} />
+                                </Link>
+                                <Link
+                                    href={`https://www.linkedin.com/company/viasocket-walkover/`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="facebook"
+                                >
+                                    <FiLinkedin size={24} />
+                                </Link>
+
+                                <Link
+                                    href={`https://x.com/viasocket`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="twitter"
+                                >
+                                    <FaXTwitter size={24} />
+                                </Link>
+                                <Link
+                                    href={`https://www.youtube.com/@viasocket`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="youtube"
+                                >
+                                    <FiYoutube size={24} />
+                                </Link>
+                                <Link
+                                    href={`https://discord.com/invite/wqsSsMAkkz`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="discord"
+                                >
+                                    <RxDiscordLogo size={24} />
+                                </Link>
+                            </div>
                         </div>
                     </div>
 
