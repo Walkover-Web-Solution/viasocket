@@ -29,3 +29,4 @@ export const TEMPLATES_FIELDS = ['name'];
 export const MCP_FIELDS = ['action', 'description', 'name', 'prompt', 'slug_names'];
 export const PRICINGFEATURE_FIELDS = ['featurename'];
 export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId'];
+export const REVIEWDATA_FIELDS = ['platform_type', 'review_type', 'iframe_code'];

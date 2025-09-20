@@ -250,14 +250,13 @@
     }
 }
 
-
 .grecaptcha-badge {
     position: fixed !important;
     bottom: 80px !important;
     right: -200px !important;
     left: auto !important;
     z-index: 9999 !important;
-    &:hover{
+    &:hover {
         right: 0px !important;
     }
 }
@@ -306,7 +305,7 @@
 }
 
 .my-element {
-  transition: transform .2s; /* Animation */
+    transition: transform 0.2s; /* Animation */
 }
 /* Style to apply on hover (mouseenter) */
 .my-element:hover {
@@ -327,7 +326,6 @@
     }
 }
 
-
 /**Using for reviewIframe.js component */
 .twitter-tweet.twitter-tweet-rendered {
     margin-bottom: 0 !important;
@@ -339,5 +337,14 @@
     #twitter-widget-1 {
         max-width: 100% !important;
         max-height: 100% !important;
+    }
+}
+
+.iframe-card-container {
+    iframe {
+        min-height: 100% !important;
+        min-width: 100% !important;
+        height: 100% !important;
+        width: 100% !important;
     }
 }
