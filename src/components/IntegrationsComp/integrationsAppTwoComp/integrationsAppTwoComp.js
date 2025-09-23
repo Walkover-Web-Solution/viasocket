@@ -16,6 +16,7 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
+import ExternalLink from '@/utils/ExternalLink';
 
 export default function IntegrationsAppTwoComp({
     combosData,
@@ -27,6 +28,7 @@ export default function IntegrationsAppTwoComp({
     blogsData,
     metaData,
     videoData,
+    getDoFollowUrlStatusArray
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -259,15 +261,17 @@ export default function IntegrationsAppTwoComp({
                                     </Link>
                                 ))}
                             </div>
-                            <Link
+                            <ExternalLink
                                 href={
                                     appOneDetails?.domain?.startsWith('http')
                                         ? appOneDetails?.domain
                                         : 'http://' + appOneDetails?.domain
                                 }
+                                appSlugName={appOneDetails?.appslugname}
+                                doFollowArray={getDoFollowUrlStatusArray}
                             >
                                 <LinkText children={'Learn More'} />
-                            </Link>
+                            </ExternalLink>
                         </div>
                         <div className="cont w-full gap-4 p-12 border-x md:border-l-0 custom-border">
                             <div className="cont gap-2">
@@ -296,15 +300,17 @@ export default function IntegrationsAppTwoComp({
                                     </Link>
                                 ))}
                             </div>
-                            <Link
+                            <ExternalLink
                                 href={
                                     appTwoDetails?.domain?.startsWith('http')
                                         ? appTwoDetails?.domain
                                         : 'http://' + appTwoDetails?.domain
                                 }
+                                appSlugName={appTwoDetails?.appslugname}
+                                doFollowArray={getDoFollowUrlStatusArray}
                             >
                                 <LinkText children={'Learn More'} />
-                            </Link>
+                            </ExternalLink>
                         </div>
                     </div>
 

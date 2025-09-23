@@ -17,6 +17,7 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
+import ExternalLink from '@/utils/ExternalLink';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -32,6 +33,7 @@ export default function IntegrationsAppOneComp({
     useCaseData,
     videoData,
     appCount,
+    getDoFollowUrlStatusArray
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -262,17 +264,17 @@ export default function IntegrationsAppOneComp({
                                 </Link>
                             ))}
                         </div>
-                        <Link
-                            target="_blank"
+                        <ExternalLink
                             href={
                                 appOneDetails?.domain.startsWith('http')
                                     ? appOneDetails?.domain
                                     : 'http://' + appOneDetails?.domain
                             }
-                            rel="noopener noreferrer nofollow"
+                            appSlugName={appOneDetails?.appslugname}
+                            doFollowArray={getDoFollowUrlStatusArray}
                         >
                             <LinkText children={'Learn More'} />
-                        </Link>
+                        </ExternalLink>
                     </div>
                     <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
