@@ -79,7 +79,7 @@ const Index = ({
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="border custom-border border-t-0 px-4 py-2 bg-white"
-                            ></Link>
+                            >See All Case Studies</Link>
                         </div>
                     </div>
 
