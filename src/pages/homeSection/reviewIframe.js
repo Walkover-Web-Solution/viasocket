@@ -39,25 +39,25 @@ const iframes = [
     },
     {
         src: '/review-image/review-1.svg',
-        style: {},
+        style: { gridColumn: 'span 2' },
         key: 'review-image-1',
         isImage: true,
     },
     {
         src: '/review-image/review-2.svg',
-        style: {},
+        style: { gridColumn: 'span 2' },
         key: 'review-image-2',
         isImage: true,
     },
     {
         src: '/review-image/review-3.svg',
-        style: {},
+        style: { gridColumn: 'span 2' },
         key: 'review-image-3',
         isImage: true,
     },
     {
         src: '/review-image/review-4.svg',
-        style: {},
+        style: { gridColumn: 'span 2' },
         key: 'review-image-4',
         isImage: true,
     },
@@ -110,7 +110,7 @@ const ReviewIframe = () => {
                     </div>
                 </div>
                 <div
-                    className="iframe-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
+                    className="iframe-container grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
                     style={{ gridAutoRows: '365px' }}
                 >
                     {iframes.map(({ src, style, key, isImage }, index) => (
