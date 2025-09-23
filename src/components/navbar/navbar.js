@@ -53,9 +53,10 @@ export default function Navbar({ utm, footerData }) {
     return (
         <>
             <div
-                className={`sticky top-0 z-[100] transition-transform duration-300 w-full ${
-                    hide ? '-translate-y-full' : 'translate-y-0'
-                }`}
+                // className={`sticky top-0 z-[100] transition-transform duration-300 w-full ${
+                //     hide ? '-translate-y-full' : 'translate-y-0'
+                // }`}
+                className="sticky top-0 z-[100] transition-transform duration-300 w-full translate-y-0"
             >
                 <div className="border-y custom-border">
                     <div className="justify-between flex bg-[#FAF9F6] px-4 h-[44px]">

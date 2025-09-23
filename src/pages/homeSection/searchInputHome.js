@@ -696,7 +696,7 @@ const SearchInputHome = ({
                         }
                     }}
                 >
-                    Search
+                 
                 </button>
 
                 {showDropdown && (
