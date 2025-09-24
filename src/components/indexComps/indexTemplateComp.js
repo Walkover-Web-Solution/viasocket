@@ -6,6 +6,7 @@ import { RiSearchLine } from 'react-icons/ri';
 import { HiCurrencyRupee } from 'react-icons/hi2';
 import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
+import FlowRenderer from '../flowComp/flowRenderer';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({
@@ -133,28 +134,20 @@ const IndexTemplateComp = ({ categories }) => {
                                     </div>
                                 </div>
                             ) : (
-                                <>
-                                    <div className="cont gap-1">
+                                <div className='cont p-4'>
+                                    <div className="cont gap-1 mb-4">
                                         <h1 className="h3">{currentTemplate?.title}</h1>
                                         <h2 className="h6 leading-none">
                                             {currentTemplate?.metadata?.description || currentTemplate?.description}
                                         </h2>
                                     </div>
-                                    <div className="w-full h-[70vh] relative">
-                                        <Image
-                                            src={
-                                                currentTemplate?.metadata?.templateUrl ||
-                                                currentTemplate?.templateUrl ||
-                                                'https://placehold.co/600x400'
-                                            }
-                                            alt={currentTemplate?.title}
-                                            className="w-full h-full object-contain"
-                                            objectFit="contain"
-                                            layout="fill"
-                                            loading="eager"
-                                        />
+                                    <div className="w-full h-[70vh] relative overflow-hidden">
+                                        <FlowRenderer 
+                                            flowJson={currentTemplate?.metadata?.flowJson ||
+                                            currentTemplate?.flowJson || 
+                                            'https://placehold.co/600x400'}/>
                                     </div>
-                                </>
+                                </div>
                             )}
                         </div>
                     </div>
@@ -183,19 +176,11 @@ const IndexTemplateComp = ({ categories }) => {
                                     {currentTemplate?.metadata?.description || currentTemplate?.description}
                                 </h2>
                             </div>
-                            <div className="w-full h-[40vh] relative">
-                                <Image
-                                    src={
-                                        currentTemplate?.metadata?.templateUrl ||
-                                        currentTemplate?.templateUrl ||
-                                        'https://placehold.co/600x400'
-                                    }
-                                    alt={currentTemplate?.title}
-                                    className="w-full h-full object-contain"
-                                    objectFit="contain"
-                                    layout="fill"
-                                    loading="eager"
-                                />
+                            <div className="w-full h-[40vh] relative overflow-hidden">
+                                <FlowRenderer 
+                                    flowJson={currentTemplate?.metadata?.flowJson ||
+                                    currentTemplate?.flowJson || 
+                                    'https://placehold.co/600x400'}/>
                             </div>
                         </div>
                     </div>

@@ -20,6 +20,7 @@ import AutocompleteFilter from '@/components/templateCard/automcompleteFilter';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import { Webhook, Timer } from 'lucide-react';
+import FlowRenderer from '@/components/flowComp/flowRenderer';
 
 export const runtime = 'experimental-edge';
 
@@ -51,7 +52,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         if (templateToShow.length === 0) return;
 
         const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % templateToShow.length);
+            setCurrentIndex((prev) => (prev) % templateToShow.length);
         }, 5000);
 
         return () => clearInterval(interval);
@@ -131,14 +132,18 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     <div className="h-[400px] relative">
                         <div className="flex lg:flex-row gap-9 h-full items-stretch">
                             {/* Left side - Template Image */}
-                            <div className="flex-1 min-h-0">
-                                {templateToShow[currentIndex]?.templateUrl && (
-                                    <img
-                                        src={templateToShow[currentIndex].templateUrl}
-                                        alt={templateToShow[currentIndex]?.title}
-                                        className="w-full h-[400px] object-contain bg-white border custom-border"
-                                    />
-                                )}
+                            <div className="flex-1 min-h-0 overflow-hidden ">
+                                <div className="h-[400px] w-full overflow-hidden flex justify-center bg-white border custom-border relative">
+                                    <div className="block m-0 max-h-full max-w-full object-contain">
+                                        <FlowRenderer 
+                                            flowJson={templateToShow[currentIndex]?.flowJson ||
+                                            templateToShow[currentIndex]?.flowJson || 
+                                            'https://placehold.co/600x400'}
+                                            scale={'80'}
+                                        />
+                                    </div>
+                                    <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
+                                </div>
                             </div>
 
                             {/* Right side - AutocompleteFilter */}

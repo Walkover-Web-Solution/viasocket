@@ -12,4 +12,22 @@
     /** Text Colors*/
     --text-color-black: #000000;
     --text-color-white: #ffffff;
+
+    /** primary*/
+    --col-primary: #5f5e5b;
+    --col-border-light: var(--col-primary);
+    --col-black-light: var(--col-primary);
+
+    /** advances flow borders*/
+    --advance-flow-border-width: 2px;
+    --saved-step-border: var(--advance-flow-border-width) solid var(--col-primary);
+    --draft-step-border: var(--advance-flow-border-width) dashed var(--col-primary);
+    
+    /** utility*/
+    --u-base: 4px;
+
+    /** icon sizes */
+    --size-flow-icon: 30px;
+
+    
 }
