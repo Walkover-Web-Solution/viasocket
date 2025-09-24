@@ -208,20 +208,24 @@ export async function calculatePricing(currency, symbol, isYearly = false) {
     return {
       monthly: '$79',
       yearly: '$758.40',
+      yearlyMonthly: '$63.20',
       oneTime: '$99'
     };
   }
   
   const monthlyPrice = await convertCurrency(BASE_PRICE_USD, 'USD', currency);
   const yearlyPrice = monthlyPrice * 12 * 0.8; // 20% discount for yearly
+  const yearlyMonthlyPrice = monthlyPrice * 0.8; // Monthly equivalent with 20% discount
   const oneTimePrice = await convertCurrency(99, 'USD', currency); // Convert $99 one-time fee
   
   return {
     monthly: await formatCurrency(monthlyPrice, currency, symbol),
     yearly: await formatCurrency(yearlyPrice, currency, symbol),
+    yearlyMonthly: await formatCurrency(yearlyMonthlyPrice, currency, symbol),
     oneTime: await formatCurrency(oneTimePrice, currency, symbol),
     monthlyAmount: monthlyPrice,
     yearlyAmount: yearlyPrice,
+    yearlyMonthlyAmount: yearlyMonthlyPrice,
     oneTimeAmount: oneTimePrice
   };
 }

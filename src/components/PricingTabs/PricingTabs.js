@@ -21,7 +21,7 @@ export default function PricingTabsClient({countries}) {
   const [selectedCountryData, setSelectedCountryData] = useState(null);
 //   const [discount, setDiscount] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [pricing, setPricing] = useState({ monthly: '$79', yearly: '$758.40', oneTime: '$99' });
+  const [pricing, setPricing] = useState({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99' });
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
 
   // Auto-detect user location on component mount
@@ -78,7 +78,7 @@ export default function PricingTabsClient({countries}) {
     } else {
       setSelectedCountryData(null);
     //   setDiscount(null);
-      setPricing({ monthly: '$79', yearly: '$758.40', oneTime: '$99' });
+      setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99' });
     }
   }, [selectedCountry, countries]);
 
@@ -102,7 +102,8 @@ export default function PricingTabsClient({countries}) {
 
   return (
     <div className="flex flex-col items-center gap-8">
-        <div className="flex justify-end w-full">
+        <div className="flex items-end w-full flex-col gap-2">
+        <p className="text-lg text-gray-600 w-[300px]">50% off for developing countries</p>
           <div className="flex items-center bg-white">
             <div className="relative custom-dropdown">
               <button
@@ -147,10 +148,9 @@ export default function PricingTabsClient({countries}) {
                 </ul>
               )}
             </div>
-            <div className="border text-lg custom-border p-1 border-l-0 w-[70px] text-center">
-              {/* {discount !== null ? `${discount}%` : "0%"} */}
-              50%
-            </div>
+            {/* <div className="border text-lg custom-border p-1 border-l-0 w-[70px] text-center">
+              {discount !== null ? `${discount}%` : "0%"}
+            </div> */}
           </div>
         </div>
         <div className="flex items-center bg-white">
@@ -178,7 +178,7 @@ export default function PricingTabsClient({countries}) {
                         <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
                         <h3 className="h2">Premium</h3>
                         <div className="cont gap-1 flex flex-col flex-1 pb-4">
-                            <p className="h3 text-accent">{activeTab === "monthly" ? `${pricing.monthly} / month` : `${pricing.yearly} / year`}</p>
+                            <p className="h3 text-accent">{activeTab === "monthly" ? `${pricing.monthly} / month` : `${pricing.yearlyMonthly} / month`}</p>
                             <p className="text-lg font-semibold">15k tasks/month</p>
                             <p className="text-lg font-semibold">5k Credits/month</p>
                             <p className="h6 text-gray-600">
