@@ -410,7 +410,7 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
 
 async function fetchApps(category) {
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
     );
     const rawData = await response.json();
     return rawData?.data;
@@ -418,7 +418,7 @@ async function fetchApps(category) {
 
 async function fetchCombos(pathArray, industry, domain, useCase) {
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/recommend/services?${pathArray.map((service) => `service=${service}`).join('&')}&industry=${industry && industry.toLowerCase()}&domain=${domain && domain.toLowerCase()}&usecase=${useCase && encodeURIComponent(useCase)}`,
+        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/recommend/services?${pathArray.map((service) => `service=${service}`).join('&')}&industry=${industry && industry.toLowerCase()}&domain=${domain && domain.toLowerCase()}&usecase=${useCase && encodeURIComponent(useCase)}`,
         {
             cache: 'no-cache',
         }
