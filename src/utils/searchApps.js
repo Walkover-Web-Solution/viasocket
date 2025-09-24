@@ -14,3 +14,4 @@ export default async function searchApps(query) {
         sendErrorMessage({ error, source: url });
     }
 }
+
