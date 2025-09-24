@@ -24,10 +24,10 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className=" cont flex flex-col text-left gap-2">
                     <h1 className="h1 text-center">
-                        Pay-As-You-Go Pricing 
+                        <span className="text-accent">Pay-As-You-Go </span> Pricing
                     </h1>
                     <h1 className="h1 text-center">
-                        for Growing <span className="text-accent">Businesses</span>
+                        for Growing Businesses
                     </h1>
                     <p className="sub__h1 text-center">
                         Build powerful automations with pricing that adapts to your business size and needs.
@@ -72,7 +72,6 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                 </div>
 
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
-                    <BlogGrid posts={blogData} />
                     <div className="cont">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                         <Footer footerData={footerData} />
