@@ -110,11 +110,15 @@ const ReviewIframe = () => {
                     </div>
                 </div>
                 <div
-                    className="iframe-container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
+                    className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
                     style={{ gridAutoRows: '365px' }}
                 >
                     {iframes.map(({ src, style, key, isImage }, index) => (
-                        <div key={key} className="border custom-border p-3" style={style}>
+                        <div
+                            key={key}
+                            className={`border custom-border p-3 ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
+                            style={style}
+                        >
                             {isImage ? (
                                 <img src={src} alt={`review-${index}`} width="100%" className="h-full object-contain" />
                             ) : (
