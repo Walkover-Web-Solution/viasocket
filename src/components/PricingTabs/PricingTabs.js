@@ -1,39 +1,23 @@
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { calculatePricing } from "@/utils/currencyConverter";
 import { detectUserCountry } from "@/utils/locationDetector";
-
-const arrowIcon = (
-    <svg viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="arrow-icon">
-        <g className="arrow-head">
-            <path d="M1 1C4.5 4 5 4.38484 5 4.5C5 4.61516 4.5 5 1 8" stroke="currentColor" strokeWidth="1.5" />
-        </g>
-        <g className="arrow-body">
-            <path d="M3.5 4.5H0" stroke="currentColor" strokeWidth="1.5" />
-        </g>
-    </svg>
-);
 
 export default function PricingTabsClient({countries}) {
   const [activeTab, setActiveTab] = useState("monthly");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCountryData, setSelectedCountryData] = useState(null);
-//   const [discount, setDiscount] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [pricing, setPricing] = useState({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99' });
   const [isDetectingLocation, setIsDetectingLocation] = useState(false);
 
-  // Auto-detect user location on component mount
   useEffect(() => {
     const autoDetectLocation = async () => {
       if (countries && countries.length > 0 && !selectedCountry) {
         setIsDetectingLocation(true);
         try {
           const detectedCountry = await detectUserCountry();
-          console.log('Detected country:', detectedCountry);
-          
-          // Find matching country in the countries list
           const matchingCountry = countries.find(c => 
             c.country.toLowerCase() === detectedCountry.toLowerCase() ||
             c.country.toLowerCase().includes(detectedCountry.toLowerCase()) ||
@@ -42,7 +26,6 @@ export default function PricingTabsClient({countries}) {
           
           if (matchingCountry) {
             setSelectedCountry(matchingCountry.country);
-            console.log('Auto-selected country:', matchingCountry.country);
           }
         } catch (error) {
           console.log('Location detection failed:', error.message);
@@ -60,24 +43,18 @@ export default function PricingTabsClient({countries}) {
     if (selectedCountry) {
       const country = countries.find(c => c.country === selectedCountry);
       setSelectedCountryData(country);
-    //   if (country && country.discount) {
-    //     setDiscount(parseFloat(country.discount));
-    //   } else {
-    //     setDiscount(null);
-    //   }
       
       // Calculate pricing based on selected country's currency
       if (country && country.currency && country.symbol) {
-        calculatePricing(country.currency, country.symbol).then(newPricing => {
+        const isDeveloping = country.isdeveloping === true;
+        calculatePricing(country.currency, country.symbol, isDeveloping).then(newPricing => {
           setPricing(newPricing);
         }).catch(error => {
           console.error('Error calculating pricing:', error);
-          // Keep default pricing on error
         });
       }
     } else {
       setSelectedCountryData(null);
-    //   setDiscount(null);
       setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99' });
     }
   }, [selectedCountry, countries]);
@@ -148,19 +125,16 @@ export default function PricingTabsClient({countries}) {
                 </ul>
               )}
             </div>
-            {/* <div className="border text-lg custom-border p-1 border-l-0 w-[70px] text-center">
-              {discount !== null ? `${discount}%` : "0%"}
-            </div> */}
           </div>
         </div>
         <div className="flex items-center bg-white">
             <button onClick={() => setActiveTab("monthly")} 
-          className={`border text-xl custom-border p-4 w-[200px] ${activeTab === "monthly" ? "font-semibold" : ""}`}>Monthly</button>
-            <button onClick={() => setActiveTab("yearly")}  className={`border text-xl custom-border p-4 border-l-0 w-[200px] ${activeTab === "yearly" ? "font-semibold" : ""}`}>Yearly  <span className="text-accent font-normal">(20% off)</span> </button>
+          className={`border text-xl custom-border p-4 w-[200px] ${activeTab === "monthly" ? " bg-black text-white" : ""}`}>Monthly</button>
+            <button onClick={() => setActiveTab("yearly")}  className={`border text-xl custom-border p-4 border-l-0 w-[200px] ${activeTab === "yearly" ? " bg-black text-white" : ""}`}>Yearly  <span className={`font-normal ${activeTab === "yearly" ? "text-white" : "text-accent"}`}>(20% off)</span> </button>
         </div>
         <div className="flex flex-col items-center mt-4 w-full">
-                <div className="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
+                <div className="w-full grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between transition-transform transform hover:scale-110">
                         <h3 className="h2">Starter</h3>
                         <div className="cont gap-1 flex flex-col flex-1 py-4">
                             <p className="h3 text-accent">Free</p>
@@ -175,7 +149,7 @@ export default function PricingTabsClient({countries}) {
                         </Link>
                     </div>
                     <div>
-                        <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
+                        <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between transition-transform transform hover:scale-110">
                         <h3 className="h2">Premium</h3>
                         <div className="cont gap-1 flex flex-col flex-1 pb-4">
                             <p className="h3 text-accent">{activeTab === "monthly" ? `${pricing.monthly} / month` : `${pricing.yearlyMonthly} / month`}</p>
@@ -194,7 +168,7 @@ export default function PricingTabsClient({countries}) {
                         </Link>
                     </div>
                     </div>
-                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between">
+                    <div className="border custom-border bg-white p-12 flex flex-col gap-2 justify-between transition-transform transform hover:scale-110">
                         <h3 className="h2">Enterprise</h3>
                         <div className="cont gap-1 flex flex-col flex-1 pb-4">
                             <p className="h3 text-accent">Contact for pricing</p>
