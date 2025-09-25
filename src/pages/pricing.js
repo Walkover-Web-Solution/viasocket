@@ -5,8 +5,6 @@ import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData, getPricingFeatureData } from '@/utils/getData';
 import { FOOTER_FIELDS, PRICINGFEATURE_FIELDS, COUNTRIES_FIELDS } from '@/const/fields';
-import BlogGrid from '@/components/blogGrid/blogGrid';
-import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -15,8 +13,9 @@ import getCountries from '@/utils/getCountries';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, blogData, features, countries }) {
-    const visibleCountries = countries.filter(country => country.to_show === true); 
+export default function pricing({ footerData, faqData, metaData, features, countries }) {
+    const visibleCountries = countries.filter(country => country.isdeveloping === true); 
+    
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
@@ -90,8 +89,6 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/pricing', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/pricing', pageUrl);
-    const blogTags = 'pricing';
-    const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
     const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS, '', pageUrl);
     const countries = await getCountries(COUNTRIES_FIELDS, '', pageUrl);
     return {
@@ -99,7 +96,6 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             footerData: footerData || [],
             faqData: faqData || [],
-            blogData: blogData || [],
             features: features || [],
             countries: countries || [],
         },

@@ -164,11 +164,9 @@ export async function getCurrentRates() {
 
 export async function convertCurrency(amount, fromCurrency = 'USD', toCurrency) {
   const rates = await getCurrentRates();
-  
   if (!toCurrency || !rates[toCurrency]) {
     return amount;
   }
-  
   if (fromCurrency === toCurrency) {
     return amount;
   }
@@ -186,24 +184,26 @@ export async function formatCurrency(amount, currency, symbol) {
   if (!amount || !currency) return '';
   
   const rates = await getCurrentRates();
-  
+  let roundedAmount = Math.round(amount);
+
+  if (roundedAmount > 10000) {
+    roundedAmount = Math.round(roundedAmount / 100) * 100; // Round to nearest 100
+  }
+  else if (roundedAmount > 5000) {
+    roundedAmount = Math.round(roundedAmount / 5) * 5; // Round to nearest 5
+  }
+
   // Format based on currency
   const options = {
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+    maximumFractionDigits: 0, 
   };
   
-  // For currencies with large values, show no decimals
-  if (rates[currency] && rates[currency] > 100) {
-    options.maximumFractionDigits = 0;
-  }
-  
-  const formattedAmount = amount.toLocaleString('en-US', options);
-  
+  const formattedAmount = roundedAmount.toLocaleString('en-US', options);
   return `${symbol}${formattedAmount}`;
 }
 
-export async function calculatePricing(currency, symbol, isYearly = false) {
+export async function calculatePricing(currency, symbol, isDeveloping = false) {
   if (!currency || !symbol) {
     return {
       monthly: '$79',
@@ -213,9 +213,12 @@ export async function calculatePricing(currency, symbol, isYearly = false) {
     };
   }
   
-  const monthlyPrice = await convertCurrency(BASE_PRICE_USD, 'USD', currency);
-  const yearlyPrice = monthlyPrice * 12 * 0.8; // 20% discount for yearly
-  const yearlyMonthlyPrice = monthlyPrice * 0.8; // Monthly equivalent with 20% discount
+  let monthlyPrice = await convertCurrency(BASE_PRICE_USD, 'USD', currency);
+  if (isDeveloping) {
+    monthlyPrice = monthlyPrice * 0.5;
+  }
+  const yearlyPrice = monthlyPrice * 12 * 0.8; 
+  const yearlyMonthlyPrice = monthlyPrice * 0.8; 
   const oneTimePrice = await convertCurrency(99, 'USD', currency); // Convert $99 one-time fee
   
   return {
