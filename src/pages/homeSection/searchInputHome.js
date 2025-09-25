@@ -322,7 +322,6 @@ const SearchInputHome = ({
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
     const handleSelectApp = (app) => {
-        console.log('handleSelectApp', app);
         setSelectedApps((prev) => {
             const exists = prev.some((selected) => selected.appslugname === app.appslugname);
             let newSelectedApps;
@@ -333,9 +332,9 @@ const SearchInputHome = ({
             }
             setTimeout(() => {
                 if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
+                    handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
+                    handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
                 }
                 // Updated AI response condition - show AI response for single app selection too
                 const shouldShowAiResponse =
@@ -370,9 +369,9 @@ const SearchInputHome = ({
 
             setTimeout(() => {
                 if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
+                    handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
+                    handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
@@ -407,9 +406,9 @@ const SearchInputHome = ({
 
             setTimeout(() => {
                 if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(selectedApps, selectedIndustries, newSelectedDepartments);
+                    handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
+                    handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
@@ -431,8 +430,8 @@ const SearchInputHome = ({
         setIsInputFocused(false);
     };
 
-    const handleSearchTemplates = async () => {
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+    const handleSearchTemplates = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
@@ -449,12 +448,12 @@ const SearchInputHome = ({
             setTemplates(validTemplateData);
 
             // Filter templates based on selected apps, industries and departments
-            const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
+            const selectedAppSlugs = apps.map((app) => app.appslugname);
             handleTemplateFilterChange({
                 searchTerm: '',
-                selectedIndustries: selectedIndustries,
+                selectedIndustries: industries,
                 selectedApps: selectedAppSlugs,
-                selectedDepartments: selectedDepartments,
+                selectedDepartments: departments,
             });
 
             onTemplatesChange &&
@@ -472,24 +471,20 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchVideos = async () => {
-        console.log('handleSearchVideos called', { selectedApps, selectedIndustries, selectedDepartments });
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
-            console.log('No selections, returning early');
+    const handleSearchVideos = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
-        console.log('Starting video search...');
         setLoadingVideos(true);
         setShowVideos(true);
         onLoadingChange && onLoadingChange({ videos: true });
 
         try {
             const videoData = await getVideoData(
-                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                apps.map((app) => app.appslugname).filter(Boolean),
                 window?.location?.href
             );
-            console.log('Video data received:', videoData);
             setVideos(videoData);
             onVideosChange &&
                 onVideosChange({
@@ -504,24 +499,20 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchBlogs = async () => {
-        console.log('handleSearchBlogs called', { selectedApps, selectedIndustries, selectedDepartments });
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
-            console.log('No selections, returning early');
+    const handleSearchBlogs = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
-        console.log('Starting blog search...');
         setLoadingBlogs(true);
         setShowBlogs(true);
         onLoadingChange && onLoadingChange({ blogs: true });
 
         try {
             const blogData = await getBlogData(
-                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                apps.map((app) => app.appslugname).filter(Boolean),
                 window?.location?.href
             );
-            console.log('Blog data received:', blogData);
             setBlogs(blogData);
             onBlogsChange &&
                 onBlogsChange({
@@ -705,7 +696,7 @@ const SearchInputHome = ({
                         )}
                     </div>
                 </div>
-                <button
+                {/* <button
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1 z-index-1"
                     onClick={(e) => {
                         e.preventDefault();
@@ -725,7 +716,7 @@ const SearchInputHome = ({
                             setShowAiResponse(false);
                         }
                     }}
-                ></button>
+                ></button> */}
 
                 {showDropdown && (
                     <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto">
