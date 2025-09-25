@@ -121,10 +121,9 @@ const SearchInputHome = ({
                                     }
                                     // Check AI response condition separately
                                     const shouldShowAiResponse =
-                                        (selectedApps.length >= 2 &&
+                                        (selectedApps.length >= 1 &&
                                             (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                                        (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                                        (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                                        (selectedApps.length >= 1);
                                     if (shouldShowAiResponse) {
                                         getAiResponse();
                                     } else {
@@ -141,9 +140,8 @@ const SearchInputHome = ({
                 handleSearchBlogs();
                 // Check AI response condition
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -339,12 +337,11 @@ const SearchInputHome = ({
                     handleSearchVideos();
                     handleSearchBlogs();
                 }
-                // Check AI response condition separately
+                // Updated AI response condition - show AI response for single app selection too
                 const shouldShowAiResponse =
-                    (newSelectedApps.length >= 2 &&
+                    (newSelectedApps.length >= 1 && 
                         (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && newSelectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && newSelectedApps.length >= 1);
+                    (newSelectedApps.length >= 1); // Show AI response for any app selection
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -379,10 +376,9 @@ const SearchInputHome = ({
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 &&
+                    (selectedApps.length >= 1 &&
                         (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (newSelectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -417,10 +413,9 @@ const SearchInputHome = ({
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 &&
+                    (selectedApps.length >= 1 &&
                         (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (newSelectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -543,9 +538,8 @@ const SearchInputHome = ({
 
     const getAiResponse = async () => {
         const shouldShowAiResponse =
-            (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-            (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-            (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+            (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+            (selectedApps.length >= 1); // Show AI response for any app selection
 
         if (!shouldShowAiResponse) {
             setShowAiResponse(false);
@@ -722,10 +716,9 @@ const SearchInputHome = ({
                         handleSearchBlogs();
                         // Check AI response condition
                         const shouldShowAiResponse =
-                            (selectedApps.length >= 2 &&
+                            (selectedApps.length >= 1 &&
                                 (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                            (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                            (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                            (selectedApps.length >= 1);
                         if (shouldShowAiResponse) {
                             getAiResponse();
                         } else {
