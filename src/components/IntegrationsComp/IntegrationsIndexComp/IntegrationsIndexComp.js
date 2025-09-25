@@ -331,7 +331,8 @@ export function RequestIntegrationPopupOpener({
         setModalData((prev) => ({ ...prev, isOpen: false }));
     };
 
-    const label = title || `Request App Integration`;
+
+    const label = title || `Request ${type == 'trigger' ? 'a Trigger' : 'an Action'}`;
 
     const showButton = (
         <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>
