@@ -332,7 +332,7 @@ export function RequestIntegrationPopupOpener({
     };
 
 
-    const label = title || `Request ${type == 'trigger' ? 'a Trigger' : 'an Action'}`;
+    const label = title || `Request a new ${type ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${appInfo?.name}` : 'Integration'}`;
 
     const showButton = (
         <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>
