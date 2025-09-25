@@ -91,7 +91,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             >
                 <div className="text-center container">
                     <p className="text-3xl text-black mb-12 relative z-index-1">
-                        Automate Anything with{' '}
+                        Automate Anything around{' '}
                         <Link
                             href="https://viasocket.com/integrations"
                             target="_blank"
@@ -105,7 +105,6 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         <span>
                             Search ready-made <span className="text-accent">templates</span>
                         </span>
-                        <span className="lowercase">to get started fast</span>
                     </h1>
                     <SearchInputHome
                         onTemplatesChange={handleTemplatesChange}
@@ -117,7 +116,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         fetchApps={fetchApps}
                     />
 
-                    <p className="text-xl mb-12 max-w-2xl mx-auto relative z-index-1">
+                    <p className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
                         or{' '}
                         <Link
                             href="https://viasocket.com/signup"
@@ -125,15 +124,24 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                             className="border-b-2 custom-border border-dotted"
                         >
                             build from scratch
-                        </Link>{' '}
-                        or{' '}
-                        <Link
-                            href="https://tally.so/r/wzVdKZ"
-                            target="_blank"
-                            className="border-b-2 custom-border border-dotted"
-                        >
-                            Ask an Expert
                         </Link>
+                        or
+                        <div className="flex items-center flex-wrap gap-4">
+                            {' '}
+                            <Link
+                                href="https://tally.so/r/wzVdKZ"
+                                target="_blank"
+                                className="border-b-2 custom-border border-dotted"
+                            >
+                                take help from human experts
+                            </Link>
+                            <div className="flex items-center mx-auto">
+                                <img src="/review-image/1.svg" alt="review" className="rounded-[50px] relative" width={40} height={40} />
+                                <img src="/review-image/2.svg" alt="review" className="rounded-[50px] relative right-[10px]" width={40} height={40} />
+                                <img src="/review-image/3.svg" alt="review" className="rounded-[50px] relative right-[20px]" width={40} height={40} />
+                                <img src="/review-image/4.svg" alt="review" className="rounded-[50px] relative right-[30px]" width={40} height={40} />
+                            </div>
+                        </div>
                     </p>
                 </div>
             </div>

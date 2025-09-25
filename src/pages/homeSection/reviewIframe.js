@@ -110,13 +110,13 @@ const ReviewIframe = () => {
                     </div>
                 </div>
                 <div
-                    className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8"
+                    className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 border-b-0 mt-8 border custom-border border-r-0"
                     style={{ gridAutoRows: '365px' }}
                 >
                     {iframes.map(({ src, style, key, isImage }, index) => (
                         <div
                             key={key}
-                            className={`border custom-border p-3 ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
+                            className={`border-r border-b custom-border p-3 ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
                             style={style}
                         >
                             {isImage ? (
@@ -135,7 +135,7 @@ const ReviewIframe = () => {
                     ))}
 
                     {tweets.map(({ content, author, timestamp, tweetLink }, index) => (
-                        <div key={`tweet-${index}`} className="border custom-border p-3">
+                        <div key={`tweet-${index}`} className="border-r border-b custom-border p-3">
                             <blockquote className="twitter-tweet">
                                 <p lang="en" dir="ltr">
                                     {content}
