@@ -172,6 +172,10 @@ const SearchInputHome = ({
 
     const handleSearch = async (value) => {
         setSearchTerm(value);
+        // Open dropdown when user starts typing
+        setShowDropdown(true);
+        setIsInputFocused(true);
+        
         if (value) {
             try {
                 const result = await searchApps(value);
@@ -351,6 +355,9 @@ const SearchInputHome = ({
             return newSelectedApps;
         });
         setSearchTerm('');
+        // Close dropdown after selecting an app
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
     const handleSelectIndustry = (industry) => {
@@ -386,6 +393,9 @@ const SearchInputHome = ({
             return newSelectedIndustries;
         });
         setSearchTerm('');
+        // Close dropdown after selecting an industry
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
     const handleSelectDepartment = (department) => {
@@ -421,6 +431,9 @@ const SearchInputHome = ({
             return newSelectedDepartments;
         });
         setSearchTerm('');
+        // Close dropdown after selecting a department
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
     const handleSearchTemplates = async () => {
