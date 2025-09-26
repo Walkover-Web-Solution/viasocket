@@ -136,10 +136,34 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                                 take help from human experts
                             </Link>
                             <div className="flex items-center mx-auto">
-                                <img src="/review-image/1.svg" alt="review" className="rounded-[50px] relative" width={40} height={40} />
-                                <img src="/review-image/2.svg" alt="review" className="rounded-[50px] relative right-[10px]" width={40} height={40} />
-                                <img src="/review-image/3.svg" alt="review" className="rounded-[50px] relative right-[20px]" width={40} height={40} />
-                                <img src="/review-image/4.svg" alt="review" className="rounded-[50px] relative right-[30px]" width={40} height={40} />
+                                <img
+                                    src="/review-image/1.svg"
+                                    alt="review"
+                                    className="rounded-[50px] relative"
+                                    width={40}
+                                    height={40}
+                                />
+                                <img
+                                    src="/review-image/2.svg"
+                                    alt="review"
+                                    className="rounded-[50px] relative right-[10px]"
+                                    width={40}
+                                    height={40}
+                                />
+                                <img
+                                    src="/review-image/3.svg"
+                                    alt="review"
+                                    className="rounded-[50px] relative right-[20px]"
+                                    width={40}
+                                    height={40}
+                                />
+                                <img
+                                    src="/review-image/4.svg"
+                                    alt="review"
+                                    className="rounded-[50px] relative right-[30px]"
+                                    width={40}
+                                    height={40}
+                                />
                             </div>
                         </div>
                     </p>
@@ -174,8 +198,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             {/* AI Agents Section - Positioned at bottom of viewport */}
             <AiAgentFeature />
 
-            {/* Template Section */}
-            <IndexTemplateComp categories={indexTemplateData} />
+            {/* Template Section - Only show when user is not searching or has no search results */}
+            {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
+                <IndexTemplateComp categories={indexTemplateData} />
+            )}
 
             {/* Review Section */}
             <ReviewIframe />
