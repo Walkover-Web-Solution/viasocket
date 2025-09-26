@@ -32,7 +32,7 @@ export default function IntegrateAppsComp() {
                         Connect <span className="text-accent">your apps</span> and automate workflows in just a few
                         clicks
                     </h2>
-                    <p className="text-lg text-gray-400">
+                    <p className="text-lg text-gray-400 mt-2">
                         Connect your favorite apps and watch them work like a dream team. No coding, no headaches, just
                         smooth integrations that actually make sense.
                     </p>
