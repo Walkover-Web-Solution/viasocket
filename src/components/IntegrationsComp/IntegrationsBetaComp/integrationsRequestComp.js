@@ -169,12 +169,12 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                     />
                                 )}
                                 <h3 className="h3 font-bold">
-                                    Request a new app {type ? `${type} for ${formData?.plug?.name}` : 'Integration'}
+                                    Request a new {type ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${formData?.plug?.name}` : 'Integration'}
                                 </h3>
                             </div>
                             <p className="flex items-center gap-1">
                                 <span className="text-lg font-medium">
-                                    Sit back and relax — we'll build your app integration in only 48 hours! 🚀
+                                    Sit back and relax — we'll build your {type ? `${type}` : 'app'} in only 48 hours! 🚀
                                 </span>{' '}
                             </p>
                         </div>
