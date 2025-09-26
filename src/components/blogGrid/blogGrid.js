@@ -8,7 +8,11 @@ const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
     const router = useRouter();
     const heading = router.pathname.startsWith('/mcp')
         ? 'Know More About MCP'
-        : 'Know More About viaSocket Integrations';
+        : router.asPath.split('/').length === 4
+            ? `Know More About ${formatSegment(router.asPath.split('/')[2])} and ${formatSegment(router.asPath.split('/')[3])} Integrations`
+            : router.asPath.split('/').length === 3
+                ? `Know More About ${formatSegment(router.asPath.split('/')[2])} Integrations`
+                : 'Know More About viaSocket Integrations';
 
     if (posts?.length > 0) {
         return (
@@ -45,13 +49,13 @@ const CardComponent = ({ card, isBlack = false }) => {
         >
             {' '}
             <div className="flex flex-col gap-4 h-full">
-                <div className="w-full h-[400px] relative flex-shrink-0">
+                <div className="w-full h-[300px] relative flex-shrink-0">
                     <Image
                         src={card?.image || 'https://placehold.co/40x40'}
                         alt={card?.title}
                         width={300}
                         height={200}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-fit"
                     />
                 </div>
                 <div className="card-body flex flex-col gap-2 flex-grow p-4 border-b custom-border">
@@ -68,3 +72,11 @@ const CardComponent = ({ card, isBlack = false }) => {
     );
 };
 export default BlogGrid;
+
+function formatSegment(segment) {
+    if (!segment) return '';
+    return segment
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+}

@@ -149,8 +149,7 @@ const IndexTemplateComp = ({ categories }) => {
                                             }
                                             alt={currentTemplate?.title}
                                             className="w-full h-full object-contain"
-                                            objectFit="contain"
-                                            layout="fill"
+                                            fill
                                             loading="eager"
                                         />
                                     </div>
@@ -192,8 +191,7 @@ const IndexTemplateComp = ({ categories }) => {
                                     }
                                     alt={currentTemplate?.title}
                                     className="w-full h-full object-contain"
-                                    objectFit="contain"
-                                    layout="fill"
+                                    fill
                                     loading="eager"
                                 />
                             </div>

@@ -2,11 +2,11 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
 import { FiArrowUpRight, FiExternalLink } from 'react-icons/fi';
 
-export default function CombinationCardComp({ trigger, action, description, link }) {
+export default function CombinationCardComp({ trigger, action, description, link, showTopBorder }) {
     return (
         <button
             onClick={(e) => handleRedirect(e, link)}
-            className="border custom-border border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group relative"
+            className={`border custom-border border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
         >
             <div className="cont w-full">
                 <div className="flex gap-8"></div>

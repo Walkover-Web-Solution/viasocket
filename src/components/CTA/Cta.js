@@ -24,14 +24,14 @@ const Cta = ({
 }) => {
     return (
         <div className="container">
-            <div className={`cont border custom-border gap-2 p-12 ${theme === 'white' ? 'bg-white' : 'bg-black'}`}>
+            <div className={`cont border custom-border gap-2 p-6 md:p-12 ${theme === 'white' ? 'bg-white' : 'bg-black'}`}>
                 <div className="cont gap-1">
                     <h2 className={`h2 text-left ${theme === 'white' ? 'text-black' : 'text-white'}`}>{title}</h2>
 
                     {subDescription && <p className={`text-2xl font-semibold text-accent`}>{subDescription}</p>}
 
                     {description && (
-                        <h3 className={`sub__h1 ${theme === 'white' ? 'text-black' : 'text-white'}`}>{description}</h3>
+                        <h2 className={`sub__h1 ${theme === 'white' ? 'text-black' : 'text-white'} mt-2 text-gray-700`}>{description}</h2>
                     )}
                 </div>
                 <Link href={buttonLink} target={newTab ? '_blank' : '_self'} className="w-fit mt-8">
