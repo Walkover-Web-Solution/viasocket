@@ -204,7 +204,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             )}
 
             {/* Review Section */}
-            <ReviewIframe />
+            <div className="container mt-12" >
+                <ReviewIframe />
+            </div>
 
             {/* FAQ Section */}
             <div className="py-12 bg-[#faf9f6]">
