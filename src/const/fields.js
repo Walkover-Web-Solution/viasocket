@@ -30,3 +30,4 @@ export const MCP_FIELDS = ['action', 'description', 'name', 'prompt', 'slug_name
 export const PRICINGFEATURE_FIELDS = ['featurename'];
 export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId'];
 export const DOFOLLOWLINK_FIELDS = ['appslugname'];
+export const REVIEWSECTION_FIELDS = ['platform_name', 'iframe_code', 'image_g2'];

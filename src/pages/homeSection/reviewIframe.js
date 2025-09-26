@@ -1,5 +1,5 @@
 import Testimonials from './testimonials';
-const ReviewIframe = () => {
+const ReviewIframe = ({reviewData}) => {
     return (
         <div className="container">
             <div className="iframe-main-wrapper bg-white px-12 pb-12 pt-8 border custom-border relative mt-12">
@@ -26,7 +26,7 @@ const ReviewIframe = () => {
                         </a>
                     </div>
                 </div>
-                <Testimonials />
+                <Testimonials reviewData={reviewData} />
             </div>
         </div>
     );
