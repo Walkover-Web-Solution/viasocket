@@ -11,12 +11,12 @@ export default function CombinationCardComp({ trigger, action, description, link
             <div className="cont w-full">
                 <div className="flex gap-8"></div>
                 <div className="flex items-center">
-                    <div className="border custom-border p-2 cont items-center group-hover:border-white">
-                        <Image alt='trigger icon' src={trigger?.iconurl} width={40} height={40} />
+                    <div className="border custom-border p-2 cont items-center bg-white w-[60px] h-[60px] relative">
+                        <Image className="object-contain p-1.5" alt='trigger icon' src={trigger?.iconurl} fill/>
                     </div>
-                    <div className="w-16 border-t-2 custom-border group-hover:border-white" />
-                    <div className="border custom-border p-2 cont items-center group-hover:border-white">
-                        <Image alt='action icon' src={action?.iconurl} width={40} height={40} />
+                    <div className="w-16 border-t-2 custom-border bg-white" />
+                    <div className="border custom-border p-2 cont items-center bg-white w-[60px] h-[60px] relative">
+                        <Image className="object-contain p-1.5" alt='action icon' src={action?.iconurl} fill/>
                     </div>
                 </div>
             </div>
