@@ -2,6 +2,7 @@ import { Timer, Webhook } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FiExternalLink } from 'react-icons/fi';
+import FlowRenderer from '../flowComp/flowRenderer';
 
 const TemplateCard = ({ template, index }) => {
     return (
@@ -85,12 +86,14 @@ const TemplateCard = ({ template, index }) => {
                 </div>
             </div>
 
-            <div className="h-[400px] w-full overflow-hidden flex justify-center items-center relative bg-white">
-                <img
-                    src={template?.templateUrl || 'https://placehold.co/600x400'}
-                    alt={template?.title}
-                    className="block m-0 max-h-full max-w-full object-contain"
-                />
+            <div className="h-[400px] w-full overflow-hidden flex justify-center relative bg-white">
+                <div className="block m-0 max-h-full max-w-full object-contain">
+                    <FlowRenderer 
+                        flowJson={template?.metadata?.flowJson ||
+                        template?.flowJson || 
+                        'https://placehold.co/600x400'}
+                    />
+                </div>
                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
             </div>
             <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />

@@ -130,7 +130,11 @@ export async function getTemplates(pageUrl) {
                 interpretHeader: false,
             },
         });
-        return response.data.data.templates;
+        const templates = (response?.data?.data?.templates).filter(
+            t => t?.flowJson?.order?.root && Array.isArray(t?.flowJson?.order?.root) && t?.flowJson?.order?.root?.length > 0
+        )
+        console.log("templates : " , templates);
+        return templates;
     } catch (error) {
         sendErrorMessage({
             error,
