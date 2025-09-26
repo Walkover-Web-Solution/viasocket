@@ -70,7 +70,7 @@ const iframes = iframesData?.map((item, index) => {
         key: index,
         isImage: item?.platform_name === 'G2',
     };  
-});
+}) || [];
 
     useEffect(() => {
         // Load Twitter widgets script only once
