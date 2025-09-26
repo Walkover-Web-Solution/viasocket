@@ -6,6 +6,7 @@ import { MdStar } from 'react-icons/md';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { getMetaData } from '@/utils/getMetaData';
+import Testimonials from '@/pages/homeSection/testimonials';
 
 export const runtime = 'experimental-edge';
 
@@ -22,7 +23,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             footerData: footerData || [],
-            metaData: metaData|| {},
+            metaData: metaData || {},
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
             testimonials: testimonials || [],
@@ -33,77 +34,81 @@ export async function getServerSideProps(context) {
 const Login = ({ testimonials, redirect_to }) => {
     return (
         <>
-            <div className="min-h-screen">
-                <div className="flex items-center flex-col md:flex-row gap-10 h-full">
-                    <div className="bg-gray-100 w-full md:w-[40vw] border-right-color flex flex-col h-[calc(100vh-45px)]">
-                        <Link href="/">
-                            <Image
-                                src="/assets/brand/logo.svg"
-                                className="h-[48px] w-auto p-3 cursor-pointer"
-                                width={60}
-                                height={60}
-                                alt="viasocket"
-                            />
-                        </Link>
-                        <div className="flex-1 flex items-center justify-center">
-                            <div className="flex flex-col gap-4 p-6">
-                                <div className="cont gap-2">
-                                    <h2 className="h2">Sign up for viaSocket</h2>
-                                    <p className="text-sm">
-                                        create a free account or{' '}
-                                        <button
-                                            className="active-link text-link"
-                                            onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                            rel="nofollow"
-                                        >
-                                            Log in
-                                        </button>
-                                    </p>
-                                </div>
-                                <div className="cont gap-8">
-                                    <CustomLogin redirect_to={redirect_to} />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="cont gap-4 bg-white p-6 border custom-border m-auto md:w-[34vw]">
-                        <div className="flex flex-col gap-2">
-                            <div className="cont gap-2">
-                                <div className="flex gap-1">
-                                    {[...Array(5)].map((_, index) => (
-                                        <MdStar key={index} fontSize={24} color="#FDE047" />
-                                    ))}
-                                </div>
-                                <p className="text-md">{testimonials[0]?.testimonial}</p>
-                            </div>
-                            <div className="flex gap-3">
-                                <Image
-                                    className="rounded-full h-11 w-fit"
-                                    src={testimonials[0]?.client_img[0] || 'https://placehold.co/40x40'}
-                                    width={36}
-                                    height={36}
-                                    alt="testimonial image"
-                                />
-                                <div className="cont">
-                                    <p className="font-semibold">{testimonials[0]?.given_by}</p>
-                                    <p className="text-sm">{testimonials[0]?.giver_title}</p>
-                                </div>
-                            </div>
+            <div className="relative min-h-screen overflow-hidden">
+                {/* Background Testimonials Layer with Blur and Animation */}
+                <div className="absolute inset-0 w-full h-full">
+                    <div className="testimonials-background blur-[2px] scale-110 opacity-90 px-12 md:px-24">
+                        <div className="animate-slow-scroll">
+                            <Testimonials />
                         </div>
                     </div>
                 </div>
 
-                <p className="bg-gray-100 md:w-[40vw] border-right-color text-sm p-3 flex gap-2 items-center">
-                    <span>© 2025 viaSocket. All rights reserved.</span>
-                    <Link href="/privacy" className="active-link text-link">
-                        Privacy
-                    </Link>
-                    <span>and</span>
-                    <Link href="/terms" className="active-link text-link">
-                        Terms.
-                    </Link>
-                </p>
+                {/* Floating Signup Form */}
+                <div className="relative z-20 min-h-screen flex items-center justify-center p-4">
+                    <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-white/20 p-8 w-full max-w-md mx-4">
+                        <div className="flex flex-col gap-6">
+                            <div className="text-center">
+                                <h2 className="text-3xl font-bold text-gray-900 mb-2">Sign up for viaSocket</h2>
+                                <p className="text-gray-600">
+                                    Create a free account or{' '}
+                                    <button
+                                        className="text-blue-600 hover:text-blue-800 font-medium transition-colors"
+                                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                        rel="nofollow"
+                                    >
+                                        Log in
+                                    </button>
+                                </p>
+                            </div>
+                            <div className="w-full">
+                                <CustomLogin redirect_to={redirect_to} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            {/* Custom Styles for Animation */}
+            <style jsx>{`
+                .testimonials-background {
+                    height: 120vh;
+                    width: 100%;
+                }
+                
+                .animate-slow-scroll {
+                    animation: slowScroll 60s linear infinite;
+                }
+                
+                @keyframes slowScroll {
+                    0% {
+                        transform: translateY(0);
+                    }
+                    100% {
+                        transform: translateY(-20%);
+                    }
+                }
+                
+                /* Responsive adjustments */
+                @media (max-width: 768px) {
+                    .testimonials-background {
+                        height: 150vh;
+                    }
+                    
+                    .animate-slow-scroll {
+                        animation: slowScrollMobile 45s linear infinite;
+                    }
+                    
+                    @keyframes slowScrollMobile {
+                        0% {
+                            transform: translateY(0);
+                        }
+                        100% {
+                            transform: translateY(-15%);
+                        }
+                    }
+                }
+            `}</style>
         </>
     );
 };
