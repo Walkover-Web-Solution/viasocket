@@ -1,7 +1,7 @@
 import Testimonials from './testimonials';
 const ReviewIframe = ({reviewData}) => {
     return (
-        <div className="iframe-main-wrapper bg-white px-12 pb-12 pt-8 border custom-border relative">
+        <div className="iframe-main-wrapper pb-12 pt-8 relative">
             <div className="flex items-center justify-between gap-2">
                 <h2 className="h2">Our users adore us ❤️</h2>
                 <div className="flex items-center gap-2">

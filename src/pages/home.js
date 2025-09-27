@@ -209,7 +209,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             </div>
 
             {/* FAQ Section */}
-            <div className="py-12 bg-[#faf9f6]">
+            <div className="py-12">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />

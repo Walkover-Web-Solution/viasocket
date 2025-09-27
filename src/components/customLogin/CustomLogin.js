@@ -65,7 +65,7 @@ const CustomLogin = ({ redirect_to }) => {
                     <div className="h-10 bg-gray-300 skeleton rounded mb-2 w-[230px]"></div>
                 </div>
             )}
-            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2" />
+            <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2 bg-white" />
         </div>
     );
 };

@@ -11,23 +11,23 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 gridClass = 'row-span-4';
                 break;
             case 1:
-                gridClass = 'row-span-5';
+                gridClass = 'row-span-5 lg:row-span-6';
                 break;
             case 2:
                 gridClass = 'row-span-4';
                 break;
             case 3:
-                gridClass = 'row-span-5';
+                gridClass = 'row-span-5 lg:row-span-6';
                 break;
             case 4:
-                gridClass = 'row-span-5';
+                gridClass = 'row-span-4';
                 break;
             default:
                 gridClass = '';
                 break;
         }
         return (
-            'lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
+            'bg-white lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
             gridClass
         );
     }
@@ -37,7 +37,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
     if (features && features.length > 0) {
         return (
             <div className="container">
-                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 border custom-border border-b-0 border-r-0">
+                <div className=" grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 auto-row-[110px] border custom-border border-b-0 border-r-0">
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (

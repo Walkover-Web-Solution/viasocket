@@ -110,7 +110,7 @@ export default function PricingTabsClient({countries}) {
               </button>
 
               {isDropdownOpen && (
-                <ul className="absolute top-full left-0 w-full bg-white border custom-border border-t-0 max-h-60 overflow-y-auto z-50 shadow-lg">
+                <ul className="absolute top-full left-0 w-full bg-white border custom-border border-t-0 max-h-60 overflow-y-auto scrollbar-none z-50 shadow-lg">
                   {countries.map((country, index) => (
                     <li
                       key={index}
