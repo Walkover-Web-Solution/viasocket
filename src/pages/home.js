@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getIndexTemplateData } from '@/utils/getData';
-import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexTemplateData, getReviewSectionData } from '@/utils/getData';
+import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -27,7 +27,7 @@ async function fetchApps(category) {
     return rawData?.data;
 }
 
-const Home = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData }) => {
+const Home = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -205,7 +205,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
 
             {/* Review Section */}
             <div className="container mt-12" >
-                <ReviewIframe />
+                <ReviewIframe reviewData={reviewData} />
             </div>
 
             {/* FAQ Section */}
@@ -266,6 +266,7 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
+    const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
 
     const securityGridData = [
         {
@@ -312,6 +313,7 @@ export async function getServerSideProps(context) {
             securityGridData: securityGridData,
             appCount: appCount || 0,
             indexTemplateData: indexTemplateData || [],
+            reviewData: reviewData || [],
         },
     };
 }

@@ -20,6 +20,7 @@ import {
     INDEXTEMPLATE,
     FOOTER,
     DOFOLLOWLINK,
+    REVIEWSECTION,
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -146,5 +147,10 @@ export async function getIndexTemplateData(fields, filter, pageUrl) {
 
 export async function getDoFollowStatus(fields, filter, pageUrl){
     const data = await getDataFromTable(DOFOLLOWLINK, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getReviewSectionData(fields, filter, pageUrl){
+    const data = await getDataFromTable(REVIEWSECTION, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
