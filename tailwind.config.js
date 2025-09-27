@@ -52,7 +52,7 @@ module.exports = {
             // => @media (min-width: 1536px) { ... }
         },
     },
-    plugins: [require('daisyui')],
+    plugins: [require('daisyui'), require('tailwind-scrollbar')({ nocompatible: true })],
     daisyui: {
         themes: [
             {
