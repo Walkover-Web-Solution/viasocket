@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getFooterData, getTestimonialData } from '@/utils/getData';
-import { FOOTER_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
+import { getFooterData, getReviewSectionData } from '@/utils/getData';
+import { FOOTER_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import { MdStar } from 'react-icons/md';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -16,29 +16,28 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/signup', pageUrl);
-    const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
+    const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
             redirect_to: redirect_to || '',
             utm_source: utm_source || 'website',
-            testimonials: testimonials || [],
+            reviewData: reviewData || [],
         },
     };
 }
 
-const Login = ({ testimonials, redirect_to }) => {
+const Login = ({ reviewData, redirect_to }) => {
     return (
         <>
             <div className="min-h-screen bg-gray-100">
                 <div className="flex items-center flex-col md:flex-row h-full">
-                    <div className="cont md:w-[60vw] h-0 md:h-[100vh] overflow-y-scroll bg-white">
+                    <div className="cont md:w-[60vw] h-0 md:h-[100vh] overflow-y-scroll px-3 border-r custom-border">
                         <div className="signup-review-section">
-                            <ReviewIframe />
+                            <ReviewIframe reviewData={reviewData} />
                         </div>
                     </div>
                     <div className="bg-gray-100 w-full h-screen md:h-auto md:w-[40vw] border-right-color flex flex-col items-center justify-center">
