@@ -13,7 +13,7 @@ const Login = ({ redirect_to, reviewData }) => {
         <>
             <div className="min-h-screen ">
                 <div className="flex items-center flex-col md:flex-row h-full">
-                    <div id='__next' className="cont md:w-[60vw] h-0 md:h-[100vh] border-left overflow-y-scroll scrollbar-none">
+                    <div id='__next' className="cont md:w-[60vw] h-0 md:h-[100vh] border-left overflow-y-scroll">
                         <div className="signup-review-section px-12">
                             <ReviewIframe reviewData={reviewData} />
                         </div>
