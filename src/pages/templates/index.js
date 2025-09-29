@@ -134,11 +134,10 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             {/* Left side - Template Image */}
                             <div className="flex-1 min-h-0 overflow-hidden ">
                                 <div className="h-[400px] w-full overflow-hidden flex justify-center bg-white border custom-border relative">
-                                    <div className="block m-0 max-h-full max-w-full object-contain">
+                                    <div className="block m-0 max-h-full max-w-full object-contain pt-4">
                                         <FlowRenderer
-                                            flowJson={templateToShow[currentIndex]?.flowJson ||
-                                                templateToShow[currentIndex]?.flowJson}
-                                            scale={'80'}
+                                            flowJson={templateToShow[currentIndex]?.flowJson}
+                                            scale={'70'}
                                         />
                                     </div>
                                     <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
@@ -321,7 +320,7 @@ export async function getServerSideProps(context) {
     const validStatuses = ['verified_by_ai', 'verified'];
 
     const templateData = (templates).filter(
-        t => t?.flowJson?.order?.root && Array.isArray(t?.flowJson?.order?.root) && t?.flowJson?.order?.root?.length > 0
+        t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
     )
 
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
