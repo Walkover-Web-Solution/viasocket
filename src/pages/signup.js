@@ -1,12 +1,15 @@
 import Link from 'next/link';
 import { getFooterData, getReviewSectionData, getTestimonialData } from '@/utils/getData';
 import { FOOTER_FIELDS, REVIEWSECTION_FIELDS, TESTIMONIALS_FIELDS } from '@/const/fields';
+import { getFooterData, getReviewSectionData } from '@/utils/getData';
+import { FOOTER_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import CustomLogin from '@/components/customLogin/CustomLogin';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { getMetaData } from '@/utils/getMetaData';
 import ReviewIframe from './homeSection/reviewIframe';
 
 export const runtime = 'experimental-edge';
+
 
 const Login = ({ redirect_to, reviewData }) => {
     return (

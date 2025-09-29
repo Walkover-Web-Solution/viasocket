@@ -140,29 +140,29 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                                     src="/review-image/1.svg"
                                     alt="review"
                                     className="rounded-[50px] relative"
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                 />
                                 <img
                                     src="/review-image/2.svg"
                                     alt="review"
                                     className="rounded-[50px] relative right-[10px]"
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                 />
                                 <img
                                     src="/review-image/3.svg"
                                     alt="review"
                                     className="rounded-[50px] relative right-[20px]"
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                 />
                                 <img
                                     src="/review-image/4.svg"
                                     alt="review"
                                     className="rounded-[50px] relative right-[30px]"
-                                    width={40}
-                                    height={40}
+                                    width={35}
+                                    height={35}
                                 />
                             </div>
                         </div>

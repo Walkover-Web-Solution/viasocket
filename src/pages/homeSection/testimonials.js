@@ -99,7 +99,7 @@ const iframes = iframesData?.map((item, index) => {
            {iframes.map(({ src, style, key, isImage }, index) => (
                 <div
                     key={`iframe-${key}`}
-                    className={`border-r border-b custom-border p-3 ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
+                    className={`border-r border-b custom-border p-3 bg-white ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
                     style={style}
                 >
                     {isImage ? (
@@ -118,7 +118,7 @@ const iframes = iframesData?.map((item, index) => {
             ))}
 
             {tweets.map(({ content, author, timestamp, tweetLink }, index) => (
-                <div key={`tweet-${index}`} className="border-r border-b custom-border p-3">
+                <div key={`tweet-${index}`} className="border-r border-b custom-border p-3 bg-white">
                     <blockquote className="twitter-tweet">
                         <p lang="en" dir="ltr">
                             {content}
