@@ -130,11 +130,7 @@ export async function getTemplates(pageUrl) {
                 interpretHeader: false,
             },
         });
-        const templates = (response?.data?.data?.templates).filter(
-            t => t?.flowJson?.order?.root && Array.isArray(t?.flowJson?.order?.root) && t?.flowJson?.order?.root?.length > 0
-        )
-        console.log("templates : " , templates);
-        return templates;
+        return response?.data?.data?.templates || [];
     } catch (error) {
         sendErrorMessage({
             error,

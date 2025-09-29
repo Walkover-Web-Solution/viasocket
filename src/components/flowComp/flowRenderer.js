@@ -1,5 +1,4 @@
 import IconWrapper from './iconWrapper.js';
-import { IconOfBlock } from './iconOfBlock.js';
 import { MdApi, MdAutoAwesome, MdOutlineWebhook } from 'react-icons/md';
 import { LuAlarmClock } from "react-icons/lu";
 import { FaJs } from 'react-icons/fa';
@@ -95,8 +94,9 @@ function FlowHeader({ trigger }) {
                                 ) : trigger?.triggerType === 'cron' ? (
                                     <LuAlarmClock size={32} />
                                 ) : (
-                                    <IconOfBlock
+                                    <IconWrapper
                                         iconUrl={trigger?.iconUrl || 'https://cdn-icons-png.flaticon.com/512/380/380127.png'}
+                                        size="40px"
                                     />
                                 )
                             }

@@ -52,7 +52,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         if (templateToShow.length === 0) return;
 
         const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev) % templateToShow.length);
+            setCurrentIndex((prev) => (prev + 1) % templateToShow.length);
         }, 5000);
 
         return () => clearInterval(interval);
@@ -135,10 +135,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             <div className="flex-1 min-h-0 overflow-hidden ">
                                 <div className="h-[400px] w-full overflow-hidden flex justify-center bg-white border custom-border relative">
                                     <div className="block m-0 max-h-full max-w-full object-contain">
-                                        <FlowRenderer 
+                                        <FlowRenderer
                                             flowJson={templateToShow[currentIndex]?.flowJson ||
-                                            templateToShow[currentIndex]?.flowJson || 
-                                            'https://placehold.co/600x400'}
+                                                templateToShow[currentIndex]?.flowJson}
                                             scale={'80'}
                                         />
                                     </div>
@@ -186,8 +185,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         appSlug === 'webhook'
                                             ? 'Webhook'
                                             : appSlug === 'cron'
-                                              ? 'Cron'
-                                              : appData?.pluginname || appSlug;
+                                                ? 'Cron'
+                                                : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -313,13 +312,17 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const templateData = await getTemplates(pageUrl);
+    const templates = await getTemplates(pageUrl);
     const metaData = await getMetaData('/templates', pageUrl);
     const faqData = await getFaqData('/templates', pageUrl);
     const blogTags = 'templates';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
 
     const validStatuses = ['verified_by_ai', 'verified'];
+
+    const templateData = (templates).filter(
+        t => t?.flowJson?.order?.root && Array.isArray(t?.flowJson?.order?.root) && t?.flowJson?.order?.root?.length > 0
+    )
 
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
 
