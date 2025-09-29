@@ -101,7 +101,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         </Link>{' '}
                     </p>
 
-                    <h1 className="h1 flex flex-col gap-1 relative z-index-1">
+                    <h1 className="h1 !normal-case flex flex-col gap-1 relative z-index-1">
                         <span>
                             Search ready-made <span className="text-accent">templates</span>
                         </span>
@@ -123,7 +123,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                             target="_blank"
                             className="border-b-2 custom-border border-dotted"
                         >
-                            build from scratch
+                            build from scratch<sup>*</sup>
                         </Link>
                         or
                         <div className="flex items-center flex-wrap gap-4">
@@ -209,7 +209,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             </div>
 
             {/* FAQ Section */}
-            <div className="py-12 bg-[#faf9f6]">
+            <div className="py-12">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />

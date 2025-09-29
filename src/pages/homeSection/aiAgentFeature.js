@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 const AiAgentFeature = () => {
     return (
-        <div className="text-center pb-8 mt-auto relative bg-[#faf9f6]">
+        <div className="text-center pb-8 mt-auto relative">
             <h2 className="text-3xl text-black">
                 <Link
                     href="https://viasocket.com/features/ai-agent"
