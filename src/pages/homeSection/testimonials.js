@@ -93,7 +93,7 @@ const iframes = iframesData?.map((item, index) => {
 
     return (
         <div
-            className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 border-b-0 mt-8 border custom-border border-r-0"
+            className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 border-b-0 mt-8 border custom-border border-r-0 bg-white"
             style={{ gridAutoRows: '365px' }}
         >
            {iframes.map(({ src, style, key, isImage }, index) => (
