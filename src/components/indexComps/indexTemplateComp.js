@@ -67,12 +67,20 @@ const IndexTemplateComp = ({ categories }) => {
     };
 
     return (
-        <div className="cont gap-4 container mt-12 relative">
-            <div className="cont gap-1">
-                <h2 className="h2">Get started with ready-made templates</h2>
-            </div>
+        <div className="pt-20 pb-6 border-b custom-border bg-[#F2F2F2]">
+            <div className="cont gap-8 container relative">
+                <div className="flex justify-between items-center gap-1">
+                    <h2 className="h2 text-black font-bold">Must use template department wise.</h2>
+                    <Link
+                        href="/templates"
+                        target="_blank"
+                        className="text-accent hover:underline flex items-center gap-1"
+                    >
+                        <span>Explore all templates</span>
+                    </Link>
+                </div>
 
-            <div className="cont gap-4 border custom-border bg-[#F2F2F2]">
+                <div className="cont gap-4 border custom-border dotted-background">
                     <div className="hidden md:flex flex-col gap-8 w-full">
                         <div className="w-full flex flex-col md:flex-row">
                             {categories?.slice(0, 5)?.map((cat, i) => (
@@ -189,12 +197,9 @@ const IndexTemplateComp = ({ categories }) => {
                         <Link href={getTemplateLink()} className="btn btn-accent">
                             Use this template
                         </Link>
-
-                        <Link href="/templates" className="btn btn-outline">
-                            See All Templates
-                        </Link>
                     </div>
                 </div>
+            </div>
         </div>
     );
 };
