@@ -1,6 +1,6 @@
 export default function FAQSection({ faqData, isBlack = false }) {
     return (
-        <div className={`border custom-border border-b-0 p-12 bg-white ${isBlack ? 'text-white' : ''}`}>
+        <div className={`border custom-border border-b-0 p-6 md:p-12 bg-white ${isBlack ? 'text-white' : ''}`}>
             {faqData?.length > 0 && (
                 <div className="flex flex-col gap-6">
                     <h2 className={`h2 ${isBlack ? 'text-white' : ''}`}>Frequently asked questions</h2>
