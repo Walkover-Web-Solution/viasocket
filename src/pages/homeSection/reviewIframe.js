@@ -1,5 +1,5 @@
 import Testimonials from './testimonials';
-const ReviewIframe = ({reviewData}) => {
+const ReviewIframe = ({reviewData, showless}) => {
     return (
         <div className="iframe-main-wrapper pb-12 pt-8 relative">
             <div className="flex items-center justify-between gap-2">
@@ -25,7 +25,7 @@ const ReviewIframe = ({reviewData}) => {
                     </a>
                 </div>
             </div>
-            <Testimonials reviewData={reviewData} />
+            <Testimonials reviewData={reviewData} showless={showless} />
         </div>
     );
 };

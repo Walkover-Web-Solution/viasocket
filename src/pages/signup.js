@@ -15,10 +15,10 @@ const Login = ({ reviewData, redirect_to }) => {
                 <div className="flex items-center flex-col md:flex-row h-full">
                     <div className="cont md:w-[60vw] h-0 md:h-[100vh] border-r custom-border overflow-y-scroll">
                         <div className="signup-review-section px-12">
-                            <ReviewIframe reviewData={reviewData} />
+                            <ReviewIframe reviewData={reviewData} showless={true}/>
                         </div>
                     </div>
-                    <div className="w-full h-screen md:h-auto md:w-[40vw] flex flex-col justify-between">
+                    <div className="w-full h-screen bg-white md:w-[40vw] flex flex-col justify-between">
                         <div className="flex-1 flex items-center justify-center">
                             <div className="flex flex-col gap-4 px-8 py-10 items-center text-center">
                                 <div className="gap-3 flex flex-col">

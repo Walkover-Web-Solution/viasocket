@@ -15,6 +15,7 @@ import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
+import { BsStars } from "react-icons/bs";
 
 export const runtime = 'experimental-edge';
 
@@ -121,9 +122,10 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         <Link
                             href="https://viasocket.com/signup"
                             target="_blank"
-                            className="border-b-2 custom-border border-dotted"
+                            className="border-b-2 custom-border border-dotted flex"
                         >
-                            build from scratch<sup>*</sup>
+                            build from scratch
+                            <BsStars/>
                         </Link>
                         or
                         <div className="flex items-center flex-wrap gap-4">
@@ -205,7 +207,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
 
             {/* Review Section */}
             <div className="container mt-12" >
-                <ReviewIframe reviewData={reviewData} />
+                <ReviewIframe reviewData={reviewData} showless={false}/>
             </div>
 
             {/* FAQ Section */}
