@@ -11,7 +11,6 @@ import { getFaqData } from '@/utils/getFaqData';
 import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { FaLeaf } from 'react-icons/fa';
-import { BsCoin } from 'react-icons/bs';
 import { RiCoinsFill } from 'react-icons/ri';
 
 export const runtime = 'experimental-edge';
@@ -25,9 +24,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <h1 className="h1">
-                        Start <span className='text-accent'>free</span>  and
-                        <br />
-                        <span className="">Pay As You Go</span>
+                        Start <span className='text-accent'>free</span> and Pay As You Go
                     </h1>
                     <p className="sub__h1">
                         Build powerful automations without upfront costs. Upgrade only when you’re ready.
