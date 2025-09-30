@@ -11,6 +11,8 @@ import { getFaqData } from '@/utils/getFaqData';
 import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { FaLeaf } from 'react-icons/fa';
+import { BsCoin } from 'react-icons/bs';
+import { RiCoinsFill } from 'react-icons/ri';
 
 export const runtime = 'experimental-edge';
 
@@ -66,7 +68,10 @@ export default function pricing({ footerData, faqData, metaData, features, count
                         </ul>
                     </div>
                     <div className="cont gap-4 border custom-border p-6 lg:p-8 bg-white">
-                        <h3 className="h3">Pay As You Go with Credits</h3>
+                        <div className='flex gap-4'>
+                            <div className="text-accent text-4xl mt-1"><RiCoinsFill /></div>
+                            <h3 className="h2">Pay As You Go with Credits</h3>
+                        </div>
                         <p className="text-lg">
                             Top up with credits anytime you need to use advanced features or go beyond your plan's limits.
                         </p>
@@ -104,7 +109,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
                         <Footer footerData={footerData} />
                     </div>
                 </div>
-            </div >
+            </div>
         </>
     );
 }
