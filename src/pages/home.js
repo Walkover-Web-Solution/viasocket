@@ -15,7 +15,7 @@ import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
-import { BsStars } from "react-icons/bs";
+import { BsStars } from 'react-icons/bs';
 
 export const runtime = 'experimental-edge';
 
@@ -117,7 +117,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                         fetchApps={fetchApps}
                     />
 
-                    <p className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
+                    <div className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
                         or{' '}
                         <Link
                             href="https://viasocket.com/signup"
@@ -125,7 +125,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                             className="border-b-2 custom-border border-dotted flex"
                         >
                             build from scratch
-                            <BsStars/>
+                            <BsStars />
                         </Link>
                         or
                         <div className="flex items-center flex-wrap gap-4">
@@ -168,7 +168,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                                 />
                             </div>
                         </div>
-                    </p>
+                    </div>
                 </div>
             </div>
 
@@ -202,12 +202,14 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
 
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
-                <IndexTemplateComp categories={indexTemplateData} />
+                <div className="border-b custom-border pt-20 pb-6 bg-[#F2F2F2]">
+                    <IndexTemplateComp categories={indexTemplateData} />
+                </div>
             )}
 
             {/* Review Section */}
-            <div className="container mt-12" >
-                <ReviewIframe reviewData={reviewData} showless={false}/>
+            <div className="container mt-12">
+                <ReviewIframe reviewData={reviewData} showless={false} />
             </div>
 
             {/* FAQ Section */}
