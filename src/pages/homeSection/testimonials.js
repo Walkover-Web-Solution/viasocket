@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const Testimonials = ({reviewData}) => {
+const Testimonials = ({reviewData, showless}) => {
     const [tweets, setTweets] = useState([]);
     const iframesData = reviewData?.filter((item) => item?.platform_name !== 'Twitter');
 
@@ -91,12 +91,18 @@ const iframes = iframesData?.map((item, index) => {
         };
     }, []);
 
+    // Determine how many cards to show when showless is enabled
+    const maxCards = showless ? 4 : Number.MAX_SAFE_INTEGER;
+    const iframeToShow = iframes.slice(0, Math.min(iframes.length, maxCards));
+    const remaining = Math.max(0, maxCards - iframeToShow.length);
+    const tweetsToShow = tweets.slice(0, remaining);
+
     return (
         <div
             className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 border-b-0 mt-8 border custom-border border-r-0 bg-white"
             style={{ gridAutoRows: '365px' }}
         >
-           {iframes.map(({ src, style, key, isImage }, index) => (
+           {iframeToShow.map(({ src, style, key, isImage }, index) => (
                 <div
                     key={`iframe-${key}`}
                     className={`border-r border-b custom-border p-3 bg-white ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
@@ -117,7 +123,7 @@ const iframes = iframesData?.map((item, index) => {
                 </div>
             ))}
 
-            {tweets.map(({ content, author, timestamp, tweetLink }, index) => (
+            {tweetsToShow.map(({ content, author, timestamp, tweetLink }, index) => (
                 <div key={`tweet-${index}`} className="border-r border-b custom-border p-3 bg-white">
                     <blockquote className="twitter-tweet">
                         <p lang="en" dir="ltr">
