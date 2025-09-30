@@ -202,7 +202,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
 
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
-                <IndexTemplateComp categories={indexTemplateData} />
+                <div className="border-b custom-border pt-20 pb-6 bg-[#F2F2F2]">
+                    <IndexTemplateComp categories={indexTemplateData} />
+                </div>
             )}
 
             {/* Review Section */}
