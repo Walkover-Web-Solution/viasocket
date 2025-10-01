@@ -10,12 +10,11 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
-import { FaLeaf } from 'react-icons/fa';
-import { RiCoinsFill } from 'react-icons/ri';
+import { getAppCount } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, features, countries }) {
+export default function pricing({ footerData, faqData, metaData, features, countries, appCount }) {
 
     return (
         <>
@@ -23,12 +22,23 @@ export default function pricing({ footerData, faqData, metaData, features, count
             <Navbar footerData={footerData} utm={'/pricing'} />
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="cont flex flex-col items-center text-center gap-6">
-                    <h1 className="h1">
-                        Start <span className='text-accent'>free</span> and Pay As You Go
+                    <h1 className="text-6xl">
+                        Start <span className='text-accent'>free</span> and Pay as you go
                     </h1>
-                    <p className="sub__h1">
-                        Build powerful automations without upfront costs. Upgrade only when you’re ready.
-                    </p>
+                    <div className="flex gap-12 justify-center items-center text-2xl mt-2 w-full">
+                        <div className="flex items-center gap-4">
+                            <div className="h-5 w-5 bg-accent" />
+                            2,000 tasks/month
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="h-5 w-5 bg-accent" />
+                            500 credits/month
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <div className="h-5 w-5 bg-accent" />
+                            Pay as you go with credit
+                        </div>
+                    </div>
                     <div className="cont lg:flex-row items-center gap-2 mt-4">
                         <Link href="/signup?utm_source=pricing/hero" className="w-full">
                             <button className="btn btn-accent">
@@ -44,37 +54,6 @@ export default function pricing({ footerData, faqData, metaData, features, count
                         </Link>
                     </div>
                 </div>
-                <div className="grid lg:grid-cols-2 gap-8">
-                    <div className="cont gap-4 border custom-border p-6 lg:p-8 bg-white">
-                        <div className='flex gap-4'>
-                            <div className="text-accent text-3xl mt-1"><FaLeaf /></div>
-                            <h3 className="h2">Forever Free</h3>
-                        </div>
-                        <p className="text-lg">
-                            Every user gets a powerful free plan to start building automations immediately.
-                        </p>
-                        <ul className="flex flex-col gap-2 text-md mt-2">
-                            <li className="flex items-center gap-2">
-                                <div className="h-3 w-3 bg-accent" />
-                                2,000 tasks/month
-                            </li>
-                            <li className="flex items-center gap-2">
-                                <div className="h-3 w-3 bg-accent" />
-                                500 credits/month
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="cont gap-4 border custom-border p-6 lg:p-8 bg-white">
-                        <div className='flex gap-4'>
-                            <div className="text-accent text-4xl mt-1"><RiCoinsFill /></div>
-                            <h3 className="h2">Pay As You Go with Credits</h3>
-                        </div>
-                        <p className="text-lg">
-                            Top up with credits anytime you need to use advanced features or go beyond your plan's limits.
-                        </p>
-                        <p><span className="text-lg text-accent">$25 = 10,000 credits</span><br /> Available in multiple slabs so you can scale as needed.</p>
-                    </div>
-                </div>
 
                 <div>
                     <h2 className="h2">
@@ -83,10 +62,17 @@ export default function pricing({ footerData, faqData, metaData, features, count
                     <div className="cont gap-8 border custom-border p-6 md:p-12 bg-white mt-4">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                             {features.map((feature, index) => (
-                                <div key={index} className="flex items-center gap-2">
-                                    <div className="h-3 w-3 bg-accent" />
-                                    <p className="text-lg leading-tight">{feature.featurename}</p>
-                                </div>
+                                index === 0 ? (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <div className="h-3 w-3 bg-accent" />
+                                        <p className="text-lg leading-tight">Connect to {+appCount + 300}+ apps</p>
+                                    </div>
+                                ) : (
+                                    <div key={index} className="flex items-center gap-2">
+                                        <div className="h-3 w-3 bg-accent" />
+                                        <p className="text-lg leading-tight">{feature.featurename}</p>
+                                    </div>
+                                )
                             ))}
                             <div className="flex items-start gap-1">
                                 <p className="text-accent">+</p>
@@ -99,7 +85,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
                 </div>
 
                 <PricingTabsClient countries={countries} />
-                
+
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <div className="cont">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
@@ -121,6 +107,8 @@ export async function getServerSideProps(context) {
     const faqData = await getFaqData('/pricing', pageUrl);
     const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS, '', pageUrl);
     const countries = await getCountries(COUNTRIES_FIELDS, '', pageUrl);
+    const appCount = await getAppCount(pageUrl);
+
     return {
         props: {
             metaData: metaData || {},
@@ -128,6 +116,7 @@ export async function getServerSideProps(context) {
             faqData: faqData || [],
             features: features || [],
             countries: countries || [],
+            appCount: appCount || 0
         },
     };
 }
