@@ -11,10 +11,10 @@ const ExternalLink = ({
   const determineRel = () => {
     if (doFollowArray && Array.isArray(doFollowArray) && appSlugName) {
       const isDoFollow = doFollowArray.some(item => item.appslugname === appSlugName);
-      return isDoFollow ? "noopener noreferrer" : "noopener noreferrer nofollow";
+      return isDoFollow ? "noopener" : "noopener nofollow";
     }
     
-    return "noopener noreferrer nofollow"; // Default fallback
+    return "noopener nofollow";
   };
 
   return (
