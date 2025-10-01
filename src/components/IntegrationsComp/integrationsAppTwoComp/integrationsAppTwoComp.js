@@ -76,12 +76,12 @@ export default function IntegrationsAppTwoComp({
                         </div>
                     </div>
 
-                    <div className="flex flex-col gap-4">
+                    <div className="flex flex-col justify-between gap-2 md:min-w-max ">
                         <button
                             onClick={(e) =>
                                 handleRedirect(e, `https://flow.viasocket.com/connect/${appTwoDetails?.rowid}?`)
                             }
-                            className="btn btn-outline min-w-max w-full justify-start"
+                            className="btn btn-outline md:w-full justify-start"
                         >
                             Connect to {appTwoDetails?.name}
                         </button>
@@ -89,7 +89,7 @@ export default function IntegrationsAppTwoComp({
                             onClick={(e) =>
                                 handleRedirect(e, `https://flow.viasocket.com/connect/${appTwoDetails?.rowid}?`)
                             }
-                            className="btn btn-outline min-w-max w-full justify-start"
+                            className="btn btn-outline md:w-full justify-start"
                         >
                             Connect to {appOneDetails?.name}
                         </button>
@@ -128,8 +128,10 @@ export default function IntegrationsAppTwoComp({
                         </div>
 
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t custom-border">
+                            <div className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''}`}>
+                                
                                 {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
+                                    const isSingle = combosData?.combinations?.length === 1;
                                     const integrations =
                                         combosData?.plugins[combo?.trigger?.name]?.rowid +
                                         ',' +
@@ -142,6 +144,8 @@ export default function IntegrationsAppTwoComp({
                                     )?.name;
                                     return (
                                         <CombinationCardComp
+                                            key={index}
+                                            showTopBorder={isSingle}
                                             trigger={{
                                                 name: triggerName,
                                                 iconurl:

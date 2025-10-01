@@ -11,6 +11,7 @@ import style from '@/components/templateCard/template.module.scss';
 import SharePopup from '@/components/templateCard/sharePopup';
 import TemplateDetails from '@/components/templateCard/templateDetails';
 import TemplateIcons from '@/components/templateCard/templateIcons';
+import FlowRenderer from '@/components/flowComp/flowRenderer';
 
 export const runtime = 'experimental-edge';
 
@@ -83,7 +84,11 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                             <div
                                 className={`md:w-3/5 w-full h-[500px] overflow-hidden flex justify-center items-center relative border custom-border ${style.templateImageBg}`}
                             >
-                                <img src={template?.templateUrl} alt={template?.title} className="block m-0 max-h-full max-w-full object-contain" />
+                                <FlowRenderer 
+                                    flowJson={template?.flowJson || 
+                                    'https://placehold.co/600x400'}
+                                    scale={'100'}
+                                />
                                 <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
                             </div>
                         </div>

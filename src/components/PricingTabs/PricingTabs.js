@@ -1,0 +1,342 @@
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { calculatePricing } from "@/utils/currencyConverter";
+import { detectUserCountry } from "@/utils/locationDetector";
+import { FaCrown, FaGem } from "react-icons/fa";
+import { IoMdSearch } from "react-icons/io";
+
+export default function PricingTabsClient({ countries }) {
+  const [activeTab, setActiveTab] = useState("yearly");
+  const [selectedCountry, setSelectedCountry] = useState("United States");
+  const [selectedCountryData, setSelectedCountryData] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [pricing, setPricing] = useState({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', originalMonthly: '$79', originalYearlyMonthly: '$63.20' });
+  const [isDetectingLocation, setIsDetectingLocation] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    const autoDetectLocation = async () => {
+      if (countries && countries.length > 0 && !selectedCountry) {
+        setIsDetectingLocation(true);
+        try {
+          const detectedCountry = await detectUserCountry();
+          let matchingCountry = null;
+          matchingCountry = countries.find(c =>
+            c.country.toLowerCase() === detectedCountry.toLowerCase()
+          );
+          if (!matchingCountry) {
+            matchingCountry = countries.find(c =>
+              c.country.toLowerCase().includes(detectedCountry.toLowerCase())
+            );
+            if (!matchingCountry && detectedCountry.length > 4) {
+              matchingCountry = countries.find(c =>
+                detectedCountry.toLowerCase().includes(c.country.toLowerCase())
+              );
+            }
+          }
+          if (matchingCountry) {
+            setSelectedCountry(matchingCountry.country);
+            setSearchTerm(matchingCountry.country);
+          }
+        } catch (error) {
+          console.log('Location detection failed:', error.message);
+        } finally {
+          setIsDetectingLocation(false);
+        }
+      }
+    };
+    autoDetectLocation();
+  }, [countries, selectedCountry]);
+
+  useEffect(() => {
+    if (selectedCountry) {
+      const country = countries.find(c => c.country === selectedCountry);
+      setSelectedCountryData(country);
+      if (country && country.currency && country.symbol && country.codes) {
+        const isDeveloping = country.isdeveloping === true;
+        calculatePricing(country.symbol, isDeveloping, country.codes).then(newPricing => {
+          setPricing(newPricing);
+        }).catch(error => {
+          console.error('Error calculating pricing:', error);
+          setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', isDeveloping: false, originalMonthly: '$79', originalYearlyMonthly: '$63.20' });
+        });
+      }
+    } else {
+      setSelectedCountryData(null);
+      setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', isDeveloping: false });
+    }
+  }, [selectedCountry, countries]);
+
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.custom-dropdown')) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleCountrySelect = (country) => {
+    setSelectedCountry(country);
+    setIsDropdownOpen(false);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (!countries || !searchTerm.trim()) return;
+    const matchingCountry = countries.find(c =>
+      c.country.toLowerCase() === searchTerm.toLowerCase() ||
+      c.currency === searchTerm.toUpperCase()
+    );
+    if (matchingCountry) {
+      setSelectedCountry(matchingCountry.country);
+      setSearchTerm("");
+    }
+  };
+
+  return (
+    <div className="flex flex-col items-center gap-8">
+      <div className="w-full cont lg:flex-row items-center gap-4 justify-between">
+        <div className="cont items-start gap-2">
+          <h2 className="h2 w-full" >Do more with viaSocket</h2>
+          <h3 className="h3" >Upgrade to access advanced features designed for growing businesses</h3>
+        </div>
+        <div className="flex items-end flex-col gap-2">
+          {
+            selectedCountryData &&
+            selectedCountryData.isdeveloping === true &&
+            <p className="text-lg w-full">50% off for developing nations</p>
+          }
+          <form
+            onSubmit={handleSearchSubmit}
+            className="relative w-full lg:w-[350px] custom-dropdown"
+          >
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <IoMdSearch className="h-5 w-5" />
+            </span>
+            <input
+              type="text"
+              placeholder="Search country or currency..."
+              value={searchTerm || (isDetectingLocation ? "Detecting location..." : "")}
+              onChange={handleSearchChange}
+              onFocus={() => setIsDropdownOpen(true)}
+              className="focus:outline-none text-lg pl-10 pr-4 py-2 w-full border custom-border bg-white"
+            />
+            <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+              <svg
+                className={`w-5 h-5 text-black transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+
+            {isDropdownOpen && countries && countries.length > 0 && (
+              <ul className="absolute top-full left-0 w-full bg-white border custom-border max-h-60 overflow-y-auto scrollbar-none z-50 shadow-lg">
+                {countries
+                  .filter((c) =>
+                    c.country.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    c.currency.toLowerCase().includes(searchTerm.toLowerCase())
+                  )
+                  .map((country, index) => (
+                    <li
+                      key={index}
+                      onClick={() => {
+                        handleCountrySelect(country.country);
+                        setSearchTerm(country.country);
+                      }}
+                      className="px-4 py-2 text-lg cursor-pointer hover:bg-gray-100 flex items-center gap-2"
+                    >
+                      <img
+                        src={country.img}
+                        alt={country.country}
+                        className="w-6 h-4"
+                      />
+                      <span>{country.country}</span>
+                      <span className="text-gray-600">{country.currency}</span>
+                    </li>
+                  ))}
+              </ul>
+            )}
+          </form>
+        </div>
+      </div>
+      <div className="flex flex-col items-center mt-4 w-full">
+        <div className="w-full flex flex-col lg:flex-row gap-8">
+          <div className="lg:w-[60%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
+            <div className="cont flex flex-col lg:flex-row items-center gap-2 justify-between">
+              <div className="flex gap-4">
+                <div className="text-accent text-3xl mt-1"><FaGem /></div>
+                <h3 className="h2">Premium</h3>
+              </div>
+              <div>
+                <div className="flex items-center border custom-border ">
+                  <button
+                    onClick={() => setActiveTab("monthly")}
+                    className={`text-sm py-4 px-2 w-[150px] border-r custom-border transition-all duration-200
+                      ${activeTab === "monthly"
+                        ? "bg-black text-white"
+                        : "bg-white"
+                      }`}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("yearly")}
+                    className={`text-sm py-4 px-2 w-[150px] transition-all duration-200
+                      ${activeTab === "yearly"
+                        ? "bg-black text-white"
+                        : "bg-white"
+                      }`}
+                  >
+                    Yearly{" "}
+                    <span
+                      className={`ml-1 font-normal text-accent ${activeTab === "yearly" ? "text-white" : "text-accent"
+                        }`}
+                    >
+                      (20% off)
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {pricing.isDeveloping ? (
+                <div className="flex flex-col">
+                  <div className="flex items-center gap-2">
+                    <p className="h3 text-accent">{activeTab === "monthly" ? `${pricing.monthly}/month` : `${pricing.yearlyMonthly}/month`}</p>
+                    <span className="bg-black text-white text-xs px-2 py-1 rounded-full font-semibold">50% OFF</span>
+                  </div>
+                  <p className="text-lg text-gray-500 line-through">{activeTab === "monthly" ? `${pricing.originalMonthly}/month` : `${pricing.originalYearlyMonthly}/month`}</p>
+                </div>
+              ) : (
+                <div>
+                  <p className="h3 text-accent">{activeTab === "monthly" ? `${pricing.monthly}/month` : `${pricing.yearlyMonthly}/month`}</p>
+                  {activeTab === "yearly" && <p className="text-lg text-gray-500 line-through">{`${pricing.originalMonthly}/month`}</p>}
+                </div>
+              )}
+            </div>
+
+            <Link href="/signup?utm_source=pricing/premium" className="w-[30%]">
+              <button className="w-full border custom-border py-3 font-semibold bg-accent text-white hover:bg-black transition">
+                Get Started
+              </button>
+            </Link>
+
+            <div className="border-t-2 border-dotted border-gray-400 my-2"></div>
+
+            <div className="flex flex-col justify-between gap-3">
+              <div>
+                <h4 className="text-base font-semibold mb-3">Premium plan includes:</h4>
+                <ul className="flex flex-col gap-2 text-md">
+                  <li className="flex items-center gap-2">
+                    <div className="h-3 w-3 bg-accent" />
+                    15k tasks/month
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-3 w-3 bg-accent" />
+                    5k Credits/month
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-3 w-3 bg-accent" />
+                    50% extra credit when buying additional credits
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <div className="h-3 w-3 bg-accent" />
+                    Priority support
+                  </li>
+                </ul>
+              </div>
+              <div className="cont border custom-border gap-6 p-6 lg:flex-row bg-gradient-to-r from-[#faf9f6] to-white items-center">
+                <div className="cont gap-3">
+                  <span className="px-3 py-1 text-xs font-semibold text-white bg-black rounded-full w-fit">
+                    🎁  <span className="ml-2">One Time Bonus</span>
+                  </span>
+                  <p className="h3 text-accent font-bold">{`${pricing.oneTime} Bonus`}</p>
+                  <p className="text-gray-700 text-md">Use this to take help from experts</p>
+                </div>
+                <div className="flex items-center justify-center flex-1 overflow-hidden">
+                  <div className="flex -space-x-5">
+                    <img
+                      src="/review-image/1.svg"
+                      alt="Expert 1"
+                      className="w-20 h-20"
+                    />
+                    <img
+                      src="/review-image/2.svg"
+                      alt="Expert 2"
+                      className="w-20 h-20"
+                    />
+                    <img
+                      src="/review-image/3.svg"
+                      alt="Expert 3"
+                      className="w-20 h-20"
+                    />
+                    <img
+                      src="/review-image/4.svg"
+                      alt="Expert 4"
+                      className="w-20 h-20"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="lg:w-[40%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
+
+            <div className="flex items-center gap-4">
+              <div className="text-accent text-3xl mt-1"><FaCrown /></div>
+              <h3 className="h2">Enterprise</h3>
+            </div>
+            <p className="h3 text-accent">Custom</p>
+
+
+            <Link href="/signup?utm_source=pricing/enterprise" className="w-[50%]">
+              <button className="w-full border custom-border py-3 font-semibold bg-accent text-white hover:bg-black transition">
+                Contact Sales
+              </button>
+            </Link>
+
+
+            <div className="border-t-2 border-dotted border-gray-400 my-2"></div>
+
+
+            <div className="flex flex-col gap-3">
+              <h4 className="text-base font-semibold">Enterprise plan includes:</h4>
+              <ul className="flex flex-col gap-2 text-md">
+                <li className="flex items-center gap-2">
+                  <div className="h-3 w-3 bg-accent" />
+                  Unlimited tasks & credits
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-3 w-3 bg-accent" />
+                  Dedicated account manager
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-3 w-3 bg-accent" />
+                  SLA-backed priority support
+                </li>
+                <li className="flex items-center gap-2">
+                  <div className="h-3 w-3 bg-accent" />
+                  Custom integrations & onboarding
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div >
+  );
+}

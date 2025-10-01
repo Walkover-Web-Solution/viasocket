@@ -13,7 +13,7 @@ import { getBlogData } from '@/utils/getBlogData';
 import IndexBannerComp from '@/components/indexComps/indexBannerComp/indexBannerComp';
 import Navbar from '@/components/navbar/navbar';
 import FeatureGrid from '@/components/featureGrid/featureGrid';
-import Link from 'next/link';
+// import Link from 'next/link';
 import { FaBug, FaCertificate, FaClock, FaEye, FaRegClock, FaUserShield } from 'react-icons/fa6';
 import { FaShieldAlt } from 'react-icons/fa';
 import Cta from '@/components/CTA/Cta';
@@ -74,12 +74,15 @@ const Index = ({
                     <div className="container cont">
                         <CaseStudiesSection caseStudies={caseStudies} />
                         <div className="flex justify-end">
-                            <Link
+                            <a
                                 href="https://viasocket.com/blog/tag/client-story"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="border custom-border border-t-0 px-4 py-2 bg-white"
-                            >See All Case Studies</Link>
+                            >
+                                <LinkText children="Read more case studies"
+                                    customClasses={'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white custom-border'}
+                                />
+                            </a>
                         </div>
                     </div>
 
@@ -89,7 +92,7 @@ const Index = ({
                         description="Create intelligent workflows that handle your business processes automatically without
                                 coding. Simply describe what you need in plain language, and our platform builds custom
                                 AI agents that connect your apps, make smart decisions, and improve over time."
-                        buttonLabel="Explore AI"
+                        buttonLabel="Explore AI Agents"
                         buttonLink="/integrations/category/ai-tools"
                     />
 

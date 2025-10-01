@@ -9,14 +9,14 @@ import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import axios from 'axios';
 
-const SearchInputHome = ({ 
-    onTemplatesChange, 
-    onVideosChange, 
-    onBlogsChange, 
+const SearchInputHome = ({
+    onTemplatesChange,
+    onVideosChange,
+    onBlogsChange,
     onAiResponseChange,
     onLoadingChange,
     onSelectionChange,
-    fetchApps
+    fetchApps,
 }) => {
     const dropdownRef = useRef(null);
     const [selectedApps, setSelectedApps] = useState([]);
@@ -45,7 +45,7 @@ const SearchInputHome = ({
     const [aiResponse, setAiResponse] = useState('');
     const [showAiResponse, setShowAiResponse] = useState(false);
     const [loadingAiResponse, setLoadingAiResponse] = useState(false);
-    
+    const [isInputFocused, setIsInputFocused] = useState(false);
 
     // Use template filters hook for template functionality
     const {
@@ -121,10 +121,9 @@ const SearchInputHome = ({
                                     }
                                     // Check AI response condition separately
                                     const shouldShowAiResponse =
-                                        (selectedApps.length >= 2 &&
+                                        (selectedApps.length >= 1 &&
                                             (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                                        (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                                        (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                                        (selectedApps.length >= 1);
                                     if (shouldShowAiResponse) {
                                         getAiResponse();
                                     } else {
@@ -141,9 +140,8 @@ const SearchInputHome = ({
                 handleSearchBlogs();
                 // Check AI response condition
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -172,6 +170,10 @@ const SearchInputHome = ({
 
     const handleSearch = async (value) => {
         setSearchTerm(value);
+        // Open dropdown when user starts typing
+        setShowDropdown(true);
+        setIsInputFocused(true);
+        
         if (value) {
             try {
                 const result = await searchApps(value);
@@ -277,46 +279,49 @@ const SearchInputHome = ({
 
     // Notify parent of state changes
     useEffect(() => {
-        onTemplatesChange && onTemplatesChange({
-            templates,
-            filteredTemplates,
-            showTemplates,
-            hasResults: hasTemplateResults
-        });
+        onTemplatesChange &&
+            onTemplatesChange({
+                templates,
+                filteredTemplates,
+                showTemplates,
+                hasResults: hasTemplateResults,
+            });
     }, [templates, filteredTemplates, showTemplates, hasTemplateResults, onTemplatesChange]);
 
     useEffect(() => {
-        onVideosChange && onVideosChange({
-            videos,
-            showVideos
-        });
+        onVideosChange &&
+            onVideosChange({
+                videos,
+                showVideos,
+            });
     }, [videos, showVideos, onVideosChange]);
 
     useEffect(() => {
-        onBlogsChange && onBlogsChange({
-            blogs,
-            showBlogs
-        });
+        onBlogsChange &&
+            onBlogsChange({
+                blogs,
+                showBlogs,
+            });
     }, [blogs, showBlogs, onBlogsChange]);
 
     useEffect(() => {
-        onAiResponseChange && onAiResponseChange({
-            aiResponse,
-            showAiResponse
-        });
+        onAiResponseChange &&
+            onAiResponseChange({
+                aiResponse,
+                showAiResponse,
+            });
     }, [aiResponse, showAiResponse, onAiResponseChange]);
 
     useEffect(() => {
-        onSelectionChange && onSelectionChange({
-            selectedApps,
-            selectedIndustries,
-            selectedDepartments
-        });
+        onSelectionChange &&
+            onSelectionChange({
+                selectedApps,
+                selectedIndustries,
+                selectedDepartments,
+            });
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
-
     const handleSelectApp = (app) => {
-        console.log('handleSelectApp', app);
         setSelectedApps((prev) => {
             const exists = prev.some((selected) => selected.appslugname === app.appslugname);
             let newSelectedApps;
@@ -327,16 +332,15 @@ const SearchInputHome = ({
             }
             setTimeout(() => {
                 if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
+                    handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
+                    handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
                 }
-                // Check AI response condition separately
+                // Updated AI response condition - show AI response for single app selection too
                 const shouldShowAiResponse =
-                    (newSelectedApps.length >= 2 &&
+                    (newSelectedApps.length >= 1 && 
                         (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && newSelectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && newSelectedApps.length >= 1);
+                    (newSelectedApps.length >= 1); // Show AI response for any app selection
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -347,6 +351,9 @@ const SearchInputHome = ({
             return newSelectedApps;
         });
         setSearchTerm('');
+        // Close dropdown after selecting an app
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
     const handleSelectIndustry = (industry) => {
@@ -362,16 +369,15 @@ const SearchInputHome = ({
 
             setTimeout(() => {
                 if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
+                    handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
+                    handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 &&
+                    (selectedApps.length >= 1 &&
                         (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (newSelectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -382,6 +388,9 @@ const SearchInputHome = ({
             return newSelectedIndustries;
         });
         setSearchTerm('');
+        // Close dropdown after selecting an industry
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
     const handleSelectDepartment = (department) => {
@@ -397,16 +406,15 @@ const SearchInputHome = ({
 
             setTimeout(() => {
                 if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
-                    handleSearchTemplates();
-                    handleSearchVideos();
-                    handleSearchBlogs();
+                    handleSearchTemplates(selectedApps, selectedIndustries, newSelectedDepartments);
+                    handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
+                    handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
                 }
                 // Check AI response condition separately
                 const shouldShowAiResponse =
-                    (selectedApps.length >= 2 &&
+                    (selectedApps.length >= 1 &&
                         (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
-                    (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                    (newSelectedDepartments.length >= 1 && selectedApps.length >= 1);
+                    (selectedApps.length >= 1);
                 if (shouldShowAiResponse) {
                     getAiResponse();
                 } else {
@@ -417,10 +425,13 @@ const SearchInputHome = ({
             return newSelectedDepartments;
         });
         setSearchTerm('');
+        // Close dropdown after selecting a department
+        setShowDropdown(false);
+        setIsInputFocused(false);
     };
 
-    const handleSearchTemplates = async () => {
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
+    const handleSearchTemplates = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
@@ -437,20 +448,21 @@ const SearchInputHome = ({
             setTemplates(validTemplateData);
 
             // Filter templates based on selected apps, industries and departments
-            const selectedAppSlugs = selectedApps.map((app) => app.appslugname);
+            const selectedAppSlugs = apps.map((app) => app.appslugname);
             handleTemplateFilterChange({
                 searchTerm: '',
-                selectedIndustries: selectedIndustries,
+                selectedIndustries: industries,
                 selectedApps: selectedAppSlugs,
-                selectedDepartments: selectedDepartments,
+                selectedDepartments: departments,
             });
 
-            onTemplatesChange && onTemplatesChange({
-                templates: validTemplateData,
-                filteredTemplates,
-                showTemplates: true,
-                hasResults: hasTemplateResults
-            });
+            onTemplatesChange &&
+                onTemplatesChange({
+                    templates: validTemplateData,
+                    filteredTemplates,
+                    showTemplates: true,
+                    hasResults: hasTemplateResults,
+                });
         } catch (error) {
             console.error('Error fetching templates:', error);
         } finally {
@@ -459,29 +471,26 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchVideos = async () => {
-        console.log('handleSearchVideos called', { selectedApps, selectedIndustries, selectedDepartments });
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
-            console.log('No selections, returning early');
+    const handleSearchVideos = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
-        console.log('Starting video search...');
         setLoadingVideos(true);
         setShowVideos(true);
         onLoadingChange && onLoadingChange({ videos: true });
 
         try {
             const videoData = await getVideoData(
-                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                apps.map((app) => app.appslugname).filter(Boolean),
                 window?.location?.href
             );
-            console.log('Video data received:', videoData);
             setVideos(videoData);
-            onVideosChange && onVideosChange({
-                videos: videoData,
-                showVideos: true
-            });
+            onVideosChange &&
+                onVideosChange({
+                    videos: videoData,
+                    showVideos: true,
+                });
         } catch (error) {
             console.error('Error fetching videos:', error);
         } finally {
@@ -490,29 +499,26 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchBlogs = async () => {
-        console.log('handleSearchBlogs called', { selectedApps, selectedIndustries, selectedDepartments });
-        if (selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0) {
-            console.log('No selections, returning early');
+    const handleSearchBlogs = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
-        console.log('Starting blog search...');
         setLoadingBlogs(true);
         setShowBlogs(true);
         onLoadingChange && onLoadingChange({ blogs: true });
 
         try {
             const blogData = await getBlogData(
-                selectedApps.map((app) => app.appslugname).filter(Boolean),
+                apps.map((app) => app.appslugname).filter(Boolean),
                 window?.location?.href
             );
-            console.log('Blog data received:', blogData);
             setBlogs(blogData);
-            onBlogsChange && onBlogsChange({
-                blogs: blogData,
-                showBlogs: true
-            });
+            onBlogsChange &&
+                onBlogsChange({
+                    blogs: blogData,
+                    showBlogs: true,
+                });
         } catch (error) {
             console.error('Error fetching blogs:', error);
         } finally {
@@ -523,16 +529,16 @@ const SearchInputHome = ({
 
     const getAiResponse = async () => {
         const shouldShowAiResponse =
-            (selectedApps.length >= 2 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-            (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-            (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+            (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+            (selectedApps.length >= 1); // Show AI response for any app selection
 
         if (!shouldShowAiResponse) {
             setShowAiResponse(false);
-            onAiResponseChange && onAiResponseChange({
-                aiResponse: '',
-                showAiResponse: false
-            });
+            onAiResponseChange &&
+                onAiResponseChange({
+                    aiResponse: '',
+                    showAiResponse: false,
+                });
             return;
         }
 
@@ -564,10 +570,11 @@ const SearchInputHome = ({
 
             if (responseData) {
                 setAiResponse(responseData);
-                onAiResponseChange && onAiResponseChange({
-                    aiResponse: responseData,
-                    showAiResponse: true
-                });
+                onAiResponseChange &&
+                    onAiResponseChange({
+                        aiResponse: responseData,
+                        showAiResponse: true,
+                    });
             }
 
             return responseData;
@@ -575,17 +582,17 @@ const SearchInputHome = ({
             console.error('Error fetching AI response:', error);
             const errorMessage = 'Sorry, there was an error generating the response. Please try again.';
             setAiResponse(errorMessage);
-            onAiResponseChange && onAiResponseChange({
-                aiResponse: errorMessage,
-                showAiResponse: true
-            });
+            onAiResponseChange &&
+                onAiResponseChange({
+                    aiResponse: errorMessage,
+                    showAiResponse: true,
+                });
             return null;
         } finally {
             setLoadingAiResponse(false);
             onLoadingChange && onLoadingChange({ aiResponse: false });
         }
     };
-
 
     return (
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
@@ -664,17 +671,32 @@ const SearchInputHome = ({
                             className="w-full bg-transparent outline-none text-lg relative z-10"
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
-                            onFocus={() => setShowDropdown(true)}
-                            onClick={() => setShowDropdown(true)}
+                            onFocus={() => {
+                                setShowDropdown(true);
+                                setIsInputFocused(true);
+                            }}
+                            onClick={() => {
+                                setShowDropdown(true);
+                                setIsInputFocused(true);
+                            }}
                             onBlur={() => {
-                                setTimeout(() => setShowDropdown(false), 200);
+                                setTimeout(() => {
+                                    setShowDropdown(false);
+                                    setIsInputFocused(false);
+                                }, 200);
                             }}
                             onKeyDown={handleKeyPress}
                             // placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
                         />
+                        {/* Custom caret for when input is not focused */}
+                        {!isInputFocused && searchTerm === '' && (
+                            <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                <div className="w-px h-5 bg-gray-800 animate-blink"></div>
+                            </div>
+                        )}
                     </div>
                 </div>
-                <button
+                {/* <button
                     className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1 z-index-1"
                     onClick={(e) => {
                         e.preventDefault();
@@ -685,19 +707,16 @@ const SearchInputHome = ({
                         handleSearchBlogs();
                         // Check AI response condition
                         const shouldShowAiResponse =
-                            (selectedApps.length >= 2 &&
+                            (selectedApps.length >= 1 &&
                                 (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                            (selectedIndustries.length >= 1 && selectedApps.length >= 1) ||
-                            (selectedDepartments.length >= 1 && selectedApps.length >= 1);
+                            (selectedApps.length >= 1);
                         if (shouldShowAiResponse) {
                             getAiResponse();
                         } else {
                             setShowAiResponse(false);
                         }
                     }}
-                >
-                 
-                </button>
+                ></button> */}
 
                 {showDropdown && (
                     <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto">
