@@ -8,12 +8,17 @@ export async function convertCurrency(countryCode) {
     if (data && data[0] && data[0].pricing && data[0].one_time_price) {
       const basePricing = data[0].pricing;
       const oneTimePrice = data[0].one_time_price;
-      return {basePricing, oneTimePrice};
+      console.log(data[2]);
+      if (data[2] && data[2].pricing) {
+        const creditPricing = data[2].pricing;
+        return { basePricing, oneTimePrice, creditPricing };
+      }
+      return { basePricing, oneTimePrice };
     }
-    return {basePricing: 0, oneTimePrice: 0};
+    return { basePricing: 0, oneTimePrice: 0, creditPricing: 0 };
   } catch (error) {
     console.error('Currency conversion failed:', error);
-    return {basePricing: 0, oneTimePrice: 0};
+    return { basePricing: 0, oneTimePrice: 0, creditPricing: 0 };
   }
 }
 
@@ -35,7 +40,7 @@ export async function formatCurrency(amount, symbol) {
 }
 
 export async function calculatePricing(symbol, isDeveloping = false, countryCode = 'US') {
-  const {basePricing: originalMonthlyPrice, oneTimePrice: originalOneTimePrice} = await convertCurrency(countryCode);
+  const { basePricing: originalMonthlyPrice, oneTimePrice: originalOneTimePrice } = await convertCurrency(countryCode);
   // console.log(originalMonthlyPrice, originalOneTimePrice);
   const originalYearlyPrice = originalMonthlyPrice * 12 * 0.8;
   const originalYearlyMonthlyPrice = originalMonthlyPrice * 0.8;

@@ -4,6 +4,7 @@ import { calculatePricing } from "@/utils/currencyConverter";
 import { detectUserCountry } from "@/utils/locationDetector";
 import { FaCrown, FaGem } from "react-icons/fa";
 import { IoMdSearch } from "react-icons/io";
+import MoreCreditComp from "./moreCreditComp";
 
 export default function PricingTabsClient({ countries }) {
   const [activeTab, setActiveTab] = useState("yearly");
@@ -111,7 +112,7 @@ export default function PricingTabsClient({ countries }) {
           <h2 className="h2 w-full" >Do more with viaSocket</h2>
           <h3 className="h3" >Upgrade to access advanced features designed for growing businesses</h3>
         </div>
-        <div className="flex items-end flex-col gap-2">
+        <div className="flex items-end flex-col gap-2 w-full md:w-[350px]">
           {
             selectedCountryData &&
             selectedCountryData.isdeveloping === true &&
@@ -119,7 +120,7 @@ export default function PricingTabsClient({ countries }) {
           }
           <form
             onSubmit={handleSearchSubmit}
-            className="relative w-full lg:w-[350px] custom-dropdown"
+            className="relative w-full custom-dropdown"
           >
             <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <IoMdSearch className="h-5 w-5" />
@@ -229,8 +230,8 @@ export default function PricingTabsClient({ countries }) {
               )}
             </div>
 
-            <Link href="/signup?utm_source=pricing/premium" className="w-[30%]">
-              <button className="w-full border custom-border py-3 font-semibold bg-accent text-white hover:bg-black transition">
+            <Link href="/signup?utm_source=pricing/premium" className="w-[50%] md:w-[30%]">
+              <button className="btn btn-accent w-full">
                 Get Started
               </button>
             </Link>
@@ -304,7 +305,7 @@ export default function PricingTabsClient({ countries }) {
 
 
             <Link href="/signup?utm_source=pricing/enterprise" className="w-[50%]">
-              <button className="w-full border custom-border py-3 font-semibold bg-accent text-white hover:bg-black transition">
+              <button className="w-full btn btn-accent">
                 Contact Sales
               </button>
             </Link>
@@ -337,6 +338,7 @@ export default function PricingTabsClient({ countries }) {
           </div>
         </div>
       </div>
+      <MoreCreditComp selectedCountryData={selectedCountryData} />
     </div >
   );
 }
