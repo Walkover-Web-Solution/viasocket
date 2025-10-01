@@ -8,7 +8,7 @@ import MoreCreditComp from "./moreCreditComp";
 
 export default function PricingTabsClient({ countries }) {
   const [activeTab, setActiveTab] = useState("yearly");
-  const [selectedCountry, setSelectedCountry] = useState("United States");
+  const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCountryData, setSelectedCountryData] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [pricing, setPricing] = useState({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', originalMonthly: '$79', originalYearlyMonthly: '$63.20' });
