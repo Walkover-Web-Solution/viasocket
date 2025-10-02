@@ -1,11 +1,17 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import style from './getStarted.module.scss';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function GetStarted() {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.2 });
+
     return (
         <>
-            <div className="grid gap-2 bg-white border custom-border p-12 custom-border">
+            <div
+                ref={ref}
+                className={`grid gap-2 bg-white border custom-border p-12 custom-border scroll-animate-scale ${inView ? 'in-view' : ''}`}
+            >
                 <div className="flex justify-between flex-col md:flex-row">
                     <div className="flex flex-col gap-2 w-fit h-full">
                         <h2 className="h2">We'll help you get started</h2>

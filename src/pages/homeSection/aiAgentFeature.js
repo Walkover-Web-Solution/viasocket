@@ -1,8 +1,14 @@
 import Link from 'next/link';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const AiAgentFeature = () => {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.3 });
+
     return (
-        <div className="text-center pb-8 mt-auto relative">
+        <div
+            ref={ref}
+            className={`text-center pb-8 mt-auto relative scroll-animate ${inView ? 'in-view' : ''}`}
+        >
             <h2 className="text-3xl text-black">
                 <Link
                     href="https://viasocket.com/features/ai-agent"

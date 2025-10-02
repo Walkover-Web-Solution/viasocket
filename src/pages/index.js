@@ -21,6 +21,7 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import { getAppCount } from '@/utils/axiosCalls';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 export const runtime = 'experimental-edge';
 
 const Index = ({
@@ -51,75 +52,97 @@ const Index = ({
                         indexTemplateData={indexTemplateData}
                     />
 
-                    <IndexTemplateComp categories={indexTemplateData} />
+                    <AnimatedSection>
+                        <IndexTemplateComp categories={indexTemplateData} />
+                    </AnimatedSection>
 
-                    <IntegrateAppsComp />
+                    <AnimatedSection>
+                        <IntegrateAppsComp />
+                    </AnimatedSection>
 
-                    <FeatureGrid featuresData={featuresData} />
+                    <AnimatedSection>
+                        <FeatureGrid featuresData={featuresData} />
+                    </AnimatedSection>
 
-                    <div className="container">
-                        <TestimonialsSection testimonials={testimonials} />
-                    </div>
-
-                    <Cta
-                        title="List your app on the viaSocket marketplace"
-                        description="viaSocket’s Free Developer Hub Platform connects your API to the web’s leading apps.
-                        Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
-                        the viaSocket Marketplace."
-                        buttonLabel="Build viaSocket integration"
-                        buttonLink="https://viasocket.com/faq/developer-hub"
-                        newTab={true}
-                    />
-
-                    <div className="container cont">
-                        <CaseStudiesSection caseStudies={caseStudies} />
-                        <div className="flex justify-end">
-                            <a
-                                href="https://viasocket.com/blog/tag/client-story"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <LinkText children="Read more case studies"
-                                    customClasses={'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white custom-border'}
-                                />
-                            </a>
+                    <AnimatedSection>
+                        <div className="container">
+                            <TestimonialsSection testimonials={testimonials} />
                         </div>
-                    </div>
+                    </AnimatedSection>
 
-                    <Cta
-                        title="AI agents that work for you"
-                        subDescription="Build, deploy, and automate with intelligent agents"
-                        description="Create intelligent workflows that handle your business processes automatically without
-                                coding. Simply describe what you need in plain language, and our platform builds custom
-                                AI agents that connect your apps, make smart decisions, and improve over time."
-                        buttonLabel="Explore AI Agents"
-                        buttonLink="/integrations/category/ai-tools"
-                    />
+                    <AnimatedSection>
+                        <Cta
+                            title="List your app on the viaSocket marketplace"
+                            description="viaSocket's Free Developer Hub Platform connects your API to the web's leading apps.
+                            Follow a step-by-step walkthrough in the Developer Hub to seamlessly list your app on
+                            the viaSocket Marketplace."
+                            buttonLabel="Build viaSocket integration"
+                            buttonLink="https://viasocket.com/faq/developer-hub"
+                            newTab={true}
+                        />
+                    </AnimatedSection>
 
-                    <Cta
-                        title="Be first in line: mobile app early access"
-                        subDescription="Edit workflows with AI, anywhere, anytime"
-                        description="Create and modify automation workflows from your smartphone with AI assistance.
-                                    Build new workflows, make quick edits, and stay in control of your business no
-                                    matter where you are."
-                        buttonLabel="Apply For Early Access"
-                        buttonLink="https://walkover.typeform.com/to/U33OiMgy"
-                        newTab={true}
-                    />
+                    <AnimatedSection>
+                        <div className="container cont">
+                            <CaseStudiesSection caseStudies={caseStudies} />
+                            <div className="flex justify-end">
+                                <a
+                                    href="https://viasocket.com/blog/tag/client-story"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <LinkText children="Read more case studies"
+                                        customClasses={'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white custom-border'}
+                                    />
+                                </a>
+                            </div>
+                        </div>
+                    </AnimatedSection>
 
-                    <div className="container">
-                        <BlogGrid posts={blogData} />
-                    </div>
+                    <AnimatedSection>
+                        <Cta
+                            title="AI agents that work for you"
+                            subDescription="Build, deploy, and automate with intelligent agents"
+                            description="Create intelligent workflows that handle your business processes automatically without
+                                    coding. Simply describe what you need in plain language, and our platform builds custom
+                                    AI agents that connect your apps, make smart decisions, and improve over time."
+                            buttonLabel="Explore AI Agents"
+                            buttonLink="/integrations/category/ai-tools"
+                        />
+                    </AnimatedSection>
+
+                    <AnimatedSection>
+                        <Cta
+                            title="Be first in line: mobile app early access"
+                            subDescription="Edit workflows with AI, anywhere, anytime"
+                            description="Create and modify automation workflows from your smartphone with AI assistance.
+                                        Build new workflows, make quick edits, and stay in control of your business no
+                                        matter where you are."
+                            buttonLabel="Apply For Early Access"
+                            buttonLink="https://walkover.typeform.com/to/U33OiMgy"
+                            newTab={true}
+                        />
+                    </AnimatedSection>
+
+                    <AnimatedSection>
+                        <div className="container">
+                            <BlogGrid posts={blogData} />
+                        </div>
+                    </AnimatedSection>
 
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container cont">
-                                <FAQSection faqData={faqData} faqName={'/index'} />
-                            </div>
+                            <AnimatedSection>
+                                <div className="container cont">
+                                    <FAQSection faqData={faqData} faqName={'/index'} />
+                                </div>
+                            </AnimatedSection>
                         )}
-                        <div className="container cont">
-                            <AlphabeticalComponent />
-                        </div>
+                        <AnimatedSection>
+                            <div className="container cont">
+                                <AlphabeticalComponent />
+                            </div>
+                        </AnimatedSection>
                         <SecuritySection securityGridData={securityGridData} />
                         <div className="container">
                             <Footer footerData={footerData} />
@@ -131,51 +154,106 @@ const Index = ({
     );
 };
 
-const TestimonialsSection = ({ testimonials }) => (
-    <div className="flex flex-col gap-9">
-        <h2 className="h2 flex gap-2 flex-wrap">
-            What clients says <MdOutlineAutoAwesome />
-        </h2>
-        <div className="border custom-border border-r-0 sm:grid-cols-1 lg:grid-cols-3 grid bg-white sm:border-b-0 lg:border-b">
-            {testimonials.map((testimonial, index) => (
-                <div
-                    className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border"
-                    key={index}
-                >
-                    <div className="flex flex-col  gap-2 ">
-                        <Image
-                            className="border custom-border"
-                            src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
-                            width={50}
-                            height={50}
-                            alt={testimonial?.given_by}
-                        />
-                        <div className="flex flex-col">
-                            <p className="text-sm tracking-wider  font-bold ">{testimonial?.given_by}</p>
-                            <p className="text-sm  text-grey">{testimonial?.giver_title}</p>
-                        </div>
-                    </div>
-                    <p className="text-[#373737]">{testimonial?.testimonial}</p>
-                </div>
-            ))}
-        </div>
-    </div>
-);
+const AnimatedSection = ({ children }) => {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.1 });
 
-const CaseStudiesSection = ({ caseStudies }) => (
-    <div className="flex flex-col gap-9">
-        <h2 className="h2">Trusted by hundreds of businesses like yours</h2>
-        <div className="flex flex-col gap-8 w-full border custom-border p-8 bg-white">
-            {caseStudies.map((caseStudy, index) => (
-                <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} />
-            ))}
-        </div>
-    </div>
-);
-
-const CaseStudyItem = ({ caseStudy, isEven }) => {
     return (
-        <div className="flex flex-col md:flex-row">
+        <div
+            ref={ref}
+            className={`transition-all duration-700 ${
+                inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+        >
+            {children}
+        </div>
+    );
+};
+
+const TestimonialsSection = ({ testimonials }) => {
+    const [headingRef, headingInView] = useScrollAnimation({ threshold: 0.2 });
+    const [gridRef, gridInView] = useScrollAnimation({ threshold: 0.1 });
+
+    return (
+        <div className="flex flex-col gap-9">
+            <h2
+                ref={headingRef}
+                className={`h2 flex gap-2 flex-wrap transition-all duration-700 ${
+                    headingInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+            >
+                What clients says <MdOutlineAutoAwesome />
+            </h2>
+            <div
+                ref={gridRef}
+                className={`border custom-border border-r-0 sm:grid-cols-1 lg:grid-cols-3 grid bg-white sm:border-b-0 lg:border-b transition-all duration-700 ${
+                    gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+            >
+                {testimonials.map((testimonial, index) => (
+                    <div
+                        className="flex flex-col sm:p-12 p-6 gap-4 border-b lg:border-b-0 border-r custom-border"
+                        key={index}
+                    >
+                        <div className="flex flex-col  gap-2 ">
+                            <Image
+                                className="border custom-border"
+                                src={testimonial?.client_img[0] || 'https://placehold.co/40x40'}
+                                width={50}
+                                height={50}
+                                alt={testimonial?.given_by}
+                            />
+                            <div className="flex flex-col">
+                                <p className="text-sm tracking-wider  font-bold ">{testimonial?.given_by}</p>
+                                <p className="text-sm  text-grey">{testimonial?.giver_title}</p>
+                            </div>
+                        </div>
+                        <p className="text-[#373737]">{testimonial?.testimonial}</p>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const CaseStudiesSection = ({ caseStudies }) => {
+    const [headingRef, headingInView] = useScrollAnimation({ threshold: 0.2 });
+    const [containerRef, containerInView] = useScrollAnimation({ threshold: 0.1 });
+
+    return (
+        <div className="flex flex-col gap-9">
+            <h2
+                ref={headingRef}
+                className={`h2 transition-all duration-700 ${
+                    headingInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+            >
+                Trusted by hundreds of businesses like yours
+            </h2>
+            <div
+                ref={containerRef}
+                className={`flex flex-col gap-8 w-full border custom-border p-8 bg-white transition-all duration-700 ${
+                    containerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+            >
+                {caseStudies.map((caseStudy, index) => (
+                    <CaseStudyItem key={index} caseStudy={caseStudy} isEven={index % 2 !== 0} index={index} />
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const CaseStudyItem = ({ caseStudy, isEven, index }) => {
+    const [itemRef, itemInView] = useScrollAnimation({ threshold: 0.2 });
+
+    return (
+        <div
+            ref={itemRef}
+            className={`flex flex-col md:flex-row transition-all duration-700 ${
+                itemInView ? 'opacity-100 translate-x-0' : `opacity-0 ${isEven ? 'translate-x-8' : '-translate-x-8'}`
+            }`}
+            style={{ transitionDelay: `${index * 100}ms` }}
+        >
             <div className="md:hidden w-full">
                 <div className="casestudy_img overflow-hidden w-full px-4">
                     <Image
@@ -213,6 +291,10 @@ const CaseStudyItem = ({ caseStudy, isEven }) => {
 };
 
 const SecuritySection = ({ securityGridData }) => {
+    const [headerRef, headerInView] = useScrollAnimation({ threshold: 0.2 });
+    const [badgesRef, badgesInView] = useScrollAnimation({ threshold: 0.2 });
+    const [gridRef, gridInView] = useScrollAnimation({ threshold: 0.1 });
+
     const getIconComponent = (iconName) => {
         switch (iconName) {
             case 'shield-alt':
@@ -235,21 +317,43 @@ const SecuritySection = ({ securityGridData }) => {
         <div className="container">
             <div className="border custom-border p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
                 <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
-                    <div className="cont gap-1">
+                    <div
+                        ref={headerRef}
+                        className={`cont gap-1 transition-all duration-700 ${
+                            headerInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                        }`}
+                    >
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
                         <h3 className="sub__h1">
                             Your data is safe with us—compliant, secure, and built with privacy in mind at every step,
                             so you can run workflows with confidence.
                         </h3>
                     </div>
-                    <div className="flex gap-4 mr-12">
+                    <div
+                        ref={badgesRef}
+                        className={`flex gap-4 mr-12 transition-all duration-700 ${
+                            badgesInView ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+                        }`}
+                    >
                         <Image src="assets/img/aicpa-soc-badge.webp" alt="aicpa soc badge" width={100} height={100} />
                         <Image src="assets/img/iso-certified.webp" alt="iso certified badge" width={100} height={100} />
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">
+                <div
+                    ref={gridRef}
+                    className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0 transition-all duration-700 ${
+                        gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    }`}
+                >
                     {securityGridData.map((item, index) => (
-                        <div key={index} className="cont gap-1 py-12 px-8 border border-white border-b-0 border-l-0 ">
+                        <div
+                            key={index}
+                            className="cont gap-1 py-12 px-8 border border-white border-b-0 border-l-0"
+                            style={{
+                                transitionDelay: `${index * 100}ms`,
+                                transition: 'all 0.7s ease-in-out'
+                            }}
+                        >
                             {getIconComponent(item.iconName)}
                             <h4 className="h3">{item.title}</h4>
                             <p className="sub__h2 text-gray-300">{item.description}</p>

@@ -3,9 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 import { LinkText } from '../uiComponents/buttons';
 import Image from 'next/image';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
     const router = useRouter();
+    const [ref, inView] = useScrollAnimation({ threshold: 0.1 });
     const heading = router.pathname.startsWith('/mcp')
         ? 'Know More About MCP'
         : router.asPath.split('/').length === 4
@@ -16,7 +18,10 @@ const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
 
     if (posts?.length > 0) {
         return (
-            <div className="flex flex-col gap-9">
+            <div
+                ref={ref}
+                className={`flex flex-col gap-9 scroll-animate ${inView ? 'in-view' : ''}`}
+            >
                 {showHeading && <h2 className="h2">{heading}</h2>}
                 <div className="w-full cont">
                     <div className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid border custom-border border-r-0 border-b-0">

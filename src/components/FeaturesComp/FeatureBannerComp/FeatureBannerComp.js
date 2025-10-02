@@ -1,8 +1,15 @@
 import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export default function FeatureBannerComp({ featureData, footerData, pageInfo }) {
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(() => {
+        setLoaded(true);
+    }, []);
+
     return (
         <>
             <Navbar footerData={footerData} utm={pageInfo?.url} />
@@ -10,7 +17,7 @@ export default function FeatureBannerComp({ featureData, footerData, pageInfo })
             <div className="container">
                 <div className="h-fit ">
                     <div className="py-20 cont gap-16 h-full flex justify-center ">
-                        <div className="cont gap-4">
+                        <div className={`cont gap-4 ${loaded ? 'animate-fade-in-up' : ''}`}>
                             <div className="cont gap-1">
                                 <h1 className="h1 ">
                                     {featureData?.name || 'Explore Hundreds of Features, Available on Every Plan'}
@@ -27,7 +34,7 @@ export default function FeatureBannerComp({ featureData, footerData, pageInfo })
                             )}
                         </div>
                         {featureData?.image && (
-                            <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center border custom-border">
+                            <div className={`lg:p-20 p-4 bg-neutral flex flex-col items-center border custom-border ${loaded ? 'animate-fade-in-scale animation-delay-200' : ''}`}>
                                 <Image
                                     className="max-w-[2000px] border custom-border w-full"
                                     src={featureData?.image[0] || 'https://placehold.co/40x40'}

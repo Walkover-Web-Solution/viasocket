@@ -3,6 +3,7 @@ import TemplateCard from '@/components/templateCard/templateCard';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import ReactMarkdown from 'react-markdown';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const ResultSection = ({
     // Template props
@@ -29,11 +30,19 @@ const ResultSection = ({
     loadingBlogs,
     blogs = []
 }) => {
+    const [templatesRef, templatesInView] = useScrollAnimation({ threshold: 0.1 });
+    const [aiRef, aiInView] = useScrollAnimation({ threshold: 0.1 });
+    const [videosRef, videosInView] = useScrollAnimation({ threshold: 0.1 });
+    const [blogsRef, blogsInView] = useScrollAnimation({ threshold: 0.1 });
+
     return (
         <div className="bg-[#faf9f6] result-section">
             {/* Template Results Section */}
             {showTemplates && (loadingTemplates || hasTemplateResults) && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div
+                    ref={templatesRef}
+                    className={`container mx-auto px-4 py-12 relative scroll-animate ${templatesInView ? 'in-view' : ''}`}
+                >
                     {(loadingTemplates || hasTemplateResults) && (
                         <h2 className="h2 mb-8 text-left">
                             Top{' '}
@@ -78,7 +87,10 @@ const ResultSection = ({
 
             {/* AI Response Section */}
             {showAiResponse && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div
+                    ref={aiRef}
+                    className={`container mx-auto px-4 py-12 relative scroll-animate ${aiInView ? 'in-view' : ''}`}
+                >
                     <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
 
                     <div className="w-full">
@@ -162,7 +174,10 @@ const ResultSection = ({
 
             {/* Video Results Section */}
             {showVideos && (loadingVideos || videos.length > 0) && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div
+                    ref={videosRef}
+                    className={`container mx-auto px-4 py-12 relative scroll-animate ${videosInView ? 'in-view' : ''}`}
+                >
                     {(loadingVideos || videos.length > 0) && (
                         <h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2>
                     )}
@@ -181,7 +196,10 @@ const ResultSection = ({
 
             {/* Blog Results Section */}
             {showBlogs && (loadingBlogs || blogs.length > 0) && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div
+                    ref={blogsRef}
+                    className={`container mx-auto px-4 py-12 relative scroll-animate ${blogsInView ? 'in-view' : ''}`}
+                >
                     {(loadingBlogs || blogs.length > 0) && (
                         <h2 className="h2 mb-8 text-left">Automation insights & tips </h2>
                     )}

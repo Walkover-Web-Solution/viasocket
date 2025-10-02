@@ -4,7 +4,11 @@ import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
+
 export default function Footer({ footerData, borderClass, isBlack = false }) {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.1 });
+
     const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
         const groupName = obj?.group_name;
@@ -47,7 +51,8 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
     return (
         <>
             <div
-                className={`viasocket-footer-wrapper bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass}`}
+                ref={ref}
+                className={`viasocket-footer-wrapper bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass} scroll-animate ${inView ? 'in-view' : ''}`}
             >
                 <div
                     className={`row-span-1 justify-center col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}

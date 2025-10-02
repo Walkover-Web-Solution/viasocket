@@ -3,16 +3,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FiExternalLink } from 'react-icons/fi';
 import FlowRenderer from '../flowComp/flowRenderer';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const TemplateCard = ({ template, index }) => {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.1 });
+
     return (
         <Link
+            ref={ref}
             href={`/templates/${template?.title
                 ?.trim()
                 .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
                 .replace(/\s+/g, '-') // replace spaces with '-'
                 .toLowerCase()}/${template?.id}`}
-            className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
+            className={`group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative scroll-animate ${inView ? 'in-view' : ''}`}
         >
             <div className="cont gap-2 px-8 py-4">
                 <div className="cont gap-1">

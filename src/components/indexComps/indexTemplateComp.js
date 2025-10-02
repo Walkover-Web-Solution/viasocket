@@ -7,6 +7,7 @@ import { HiCurrencyRupee } from 'react-icons/hi2';
 import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 import FlowRenderer from '../flowComp/flowRenderer';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({
@@ -16,6 +17,8 @@ const IndexTemplateComp = ({ categories }) => {
     const [templates, setTemplates] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState(null);
+    const [titleRef, titleInView] = useScrollAnimation({ threshold: 0.2 });
+    const [contentRef, contentInView] = useScrollAnimation({ threshold: 0.1 });
 
     // Fetch templates once
     useEffect(() => {
@@ -68,14 +71,20 @@ const IndexTemplateComp = ({ categories }) => {
 
     return (
         <div className="cont gap-8 container relative">
-            <div className="flex justify-between items-center gap-1">
+            <div
+                ref={titleRef}
+                className={`flex justify-between items-center gap-1 scroll-animate ${titleInView ? 'in-view' : ''}`}
+            >
                 <h2 className="h2 text-black font-bold">Must use template department wise.</h2>
                 <Link href="/templates" target="_blank" className="text-accent hover:underline flex items-center gap-1">
                     <span>Explore all templates</span>
                 </Link>
             </div>
 
-            <div className="cont gap-4 border custom-border dotted-background">
+            <div
+                ref={contentRef}
+                className={`cont gap-4 border custom-border dotted-background scroll-animate-scale ${contentInView ? 'in-view' : ''}`}
+            >
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="w-full flex flex-col md:flex-row">
                         {categories?.slice(0, 5)?.map((cat, i) => (

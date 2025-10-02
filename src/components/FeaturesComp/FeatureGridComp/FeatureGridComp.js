@@ -2,8 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { MdFace } from 'react-icons/md';
 import style from './FeatureGridComp.module.scss';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export default function FeatureGridComp({ features, pageInfo }) {
+    const [ref, inView] = useScrollAnimation({ threshold: 0.05 });
     function handleGridLayout(blockIndex) {
         let gridClass;
         switch (blockIndex % 5) {
@@ -37,7 +39,10 @@ export default function FeatureGridComp({ features, pageInfo }) {
     if (features && features.length > 0) {
         return (
             <div className="container">
-                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 auto-row-[110px] border custom-border border-b-0 border-r-0">
+                <div
+                    ref={ref}
+                    className={`bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 auto-row-[110px] border custom-border border-b-0 border-r-0 scroll-animate ${inView ? 'in-view' : ''}`}
+                >
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (

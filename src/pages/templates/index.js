@@ -21,6 +21,7 @@ import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import { Webhook, Timer } from 'lucide-react';
 import FlowRenderer from '@/components/flowComp/flowRenderer';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export const runtime = 'experimental-edge';
 
@@ -30,6 +31,12 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [heroLoaded, setHeroLoaded] = useState(false);
+    const [carouselRef, carouselInView] = useScrollAnimation({ threshold: 0.2 });
+    const [chipsRef, chipsInView] = useScrollAnimation({ threshold: 0.2 });
+    const [templatesRef, templatesInView] = useScrollAnimation({ threshold: 0.1 });
+    const [blogRef, blogInView] = useScrollAnimation({ threshold: 0.1 });
+    const [faqRef, faqInView] = useScrollAnimation({ threshold: 0.1 });
 
     // Use the custom hook for all filter-related logic
     const {
@@ -60,6 +67,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
     useEffect(() => {
         setLoading(false);
+        setHeroLoaded(true);
     }, [templateToShow]);
 
     const handlePrev = () => {
@@ -113,7 +121,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
             <div className="w-full cont gap-12 overflow-x-hidden">
                 <div className="container pt-20 pb-10">
-                    <div className="cont">
+                    <div className={`cont ${heroLoaded ? 'animate-fade-in-up' : ''}`}>
                         {templateToShow.length > 0 ? (
                             <TitleWithButtons
                                 title={templateToShow[currentIndex]?.title}
@@ -129,7 +137,11 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     </div>
                 </div>
                 <div className="container">
-                    <div className="h-[400px] relative">
+                    <div
+                        ref={carouselRef}
+                        className={`h-[400px] relative transition-all duration-1000 ${carouselInView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                            }`}
+                    >
                         <div className="flex lg:flex-row gap-9 h-full items-stretch">
                             {/* Left side - Template Image */}
                             <div className="flex-1 min-h-0 overflow-hidden ">
@@ -160,7 +172,11 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         </div>
                     </div>
 
-                    <div>
+                    <div
+                        ref={chipsRef}
+                        className={`transition-all duration-700 ${chipsInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                            }`}
+                    >
                         {(selectedCategories.length > 0 || selectedApps.length > 0) && (
                             <div className="flex flex-row flex-wrap gap-2 mt-2">
                                 {selectedCategories.map((category) => (
@@ -253,13 +269,17 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             {displayTemplates.length > 0 && (
                                 <>
                                     {/* <h2 className="h2 mb-4 mt-3">All Templates</h2> */}
-                                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                    <div
+                                        ref={templatesRef}
+                                        className={`mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 transition-all duration-700 ${templatesInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                                            }`}
+                                    >
                                         {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />
                                         ))}
                                     </div>
                                     {hasMoreToShow && (
-                                        <div className="flex justify-end w-full mt-4">
+                                        <div className="flex justify-end w-full mt-4 animate-fade-in-up animation-delay-200">
                                             <button
                                                 onClick={handleLoadMore}
                                                 className="btn btn-outline border custom-border bg-white"
@@ -285,12 +305,20 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                 </div>
 
                 <div className="cont gap-12 md:gap-16 lg:gap-20">
-                    <div className="container">
+                    <div
+                        ref={blogRef}
+                        className={`container transition-all duration-700 ${blogInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                            }`}
+                    >
                         <BlogGrid posts={blogData} />
                     </div>
                     <div className="pb-4">
                         {faqData?.length > 0 && (
-                            <div className="container">
+                            <div
+                                ref={faqRef}
+                                className={`container transition-all duration-700 ${faqInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                                    }`}
+                            >
                                 <FAQSection faqData={faqData} faqName={'/templates'} />
                             </div>
                         )}

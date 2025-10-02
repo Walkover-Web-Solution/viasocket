@@ -2,16 +2,27 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import { GoArrowUpRight } from 'react-icons/go';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 export default function IndexBannerComp() {
     const router = useRouter();
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        setIsVisible(true);
+    }, []);
+
     return (
         <div className="container min-h-fit pt-12">
             <div className="flex flex-col md:flex-row md:items-center h-full cont__gap">
                 <div className="w-full flex flex-col items-center justify-center md:items-start gap-12">
                     <div className="flex gap-12 flex-col items-center">
                         <div className="flex flex-col gap-4">
-                            <div className="flex flex-col">
+                            <div
+                                className={`flex flex-col transition-all duration-1000 ${
+                                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+                                }`}
+                            >
                                 <h1 className="h1 text-black text-start ">
                                     Build<span className="text-accent"> Intelligent</span> automations
                                 </h1>
@@ -20,7 +31,11 @@ export default function IndexBannerComp() {
                                     Writing a Single Line of Code!
                                 </p>
                             </div>
-                            <div className="cont gap-2 w-full">
+                            <div
+                                className={`cont gap-2 w-full transition-all duration-1000 delay-200 ${
+                                    isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                                }`}
+                            >
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <button
                                         className="btn btn-accent"
@@ -50,7 +65,11 @@ export default function IndexBannerComp() {
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-4 min-w-fit">
+                <div
+                    className={`flex flex-col gap-4 min-w-fit transition-all duration-1000 delay-300 ${
+                        isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'
+                    }`}
+                >
                     <div className="flex flex-col">
                         <span className="text-base">Need automation ideas?</span>
                         <Link

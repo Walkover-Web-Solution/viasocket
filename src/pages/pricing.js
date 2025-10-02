@@ -1,5 +1,5 @@
 import FAQSection from '@/components/faqSection/faqSection';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -11,10 +11,18 @@ import { getFaqData } from '@/utils/getFaqData';
 import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { getAppCount } from '@/utils/axiosCalls';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 export const runtime = 'experimental-edge';
 
 export default function pricing({ footerData, faqData, metaData, features, countries, appCount }) {
+    const [heroLoaded, setHeroLoaded] = useState(false);
+    const [featuresRef, featuresInView] = useScrollAnimation({ threshold: 0.1 });
+    const [pricingRef, pricingInView] = useScrollAnimation({ threshold: 0.1 });
+
+    useEffect(() => {
+        setHeroLoaded(true);
+    }, []);
 
     return (
         <>
@@ -22,10 +30,10 @@ export default function pricing({ footerData, faqData, metaData, features, count
             <Navbar footerData={footerData} utm={'/pricing'} />
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="cont flex flex-col items-center text-center gap-6">
-                    <h1 className="text-6xl">
+                    <h1 className={`text-6xl ${heroLoaded ? 'animate-fade-in-up' : ''}`}>
                         Start <span className='text-accent'>free</span> and Pay as you go
                     </h1>
-                    <div className="flex gap-12 justify-center items-center text-2xl mt-2 w-full">
+                    <div className={`flex gap-12 justify-center items-center text-2xl mt-2 w-full ${heroLoaded ? 'animate-fade-in-up animation-delay-200' : ''}`}>
                         <div className="flex items-center gap-4">
                             <div className="h-5 w-5 bg-accent" />
                             2,000 tasks/month
@@ -39,7 +47,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
                             Pay as you go with credit
                         </div>
                     </div>
-                    <div className="cont lg:flex-row items-center gap-2 mt-4">
+                    <div className={`cont lg:flex-row items-center gap-2 mt-4 ${heroLoaded ? 'animate-fade-in-scale animation-delay-400' : ''}`}>
                         <Link href="/signup?utm_source=pricing/hero" className="w-full">
                             <button className="btn btn-accent">
                                 Start for free
@@ -55,7 +63,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
                     </div>
                 </div>
 
-                <div>
+                <div ref={featuresRef} className={`scroll-animate ${featuresInView ? 'in-view' : ''}`}>
                     <h2 className="h2">
                         With Access to all our features
                     </h2>
@@ -84,7 +92,9 @@ export default function pricing({ footerData, faqData, metaData, features, count
                     </div>
                 </div>
 
-                <PricingTabsClient countries={countries} />
+                <div ref={pricingRef} className={`scroll-animate-scale ${pricingInView ? 'in-view' : ''}`}>
+                    <PricingTabsClient countries={countries} />
+                </div>
 
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <div className="cont">
