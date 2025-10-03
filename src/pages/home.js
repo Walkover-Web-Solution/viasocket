@@ -203,9 +203,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
                 <div
-                    className="border-b custom-border py-20"
+                    className="py-20"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/nevada.jpg')`,
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/pexels-fotios.jpg')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundAttachment: 'fixed',
@@ -221,7 +221,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             </div>
 
             {/* FAQ Section */}
-            <div className="py-12 bg-[#faf9f6]">
+            <div className="py-12 bg-[#FAF9F6]">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />
