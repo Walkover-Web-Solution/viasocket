@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { formatCurrency, convertCurrency } from '@/utils/currencyConverter';
+import { FiMinus } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
+import Link from 'next/link';
 
 const MoreCreditComp = ({ selectedCountryData}) => {
     const [credits, setCredits] = useState(40000); // initial credits
@@ -48,67 +51,43 @@ const MoreCreditComp = ({ selectedCountryData}) => {
     }, [credits, selectedCountryData]);
 
     return (
-        <div className="cont border custom-border p-10 bg-white w-full">
+        <div className="cont  w-full">
             {/* HEADER */}
             <div className="flex items-center justify-between mb-6">
                 <h2 className="h2">Buy More Credits</h2>
             </div>
-
+        <div className='border custom-border p-10 bg-white w-full'>
             <div className="grid md:grid-cols-2 gap-10 items-center">
                 {/* LEFT: Credit Selector */}
-                <div className="flex flex-col items-center gap-6">
-                    <p className="text-lg text-gray-600">Select your credits</p>
+                <div className="flex flex-col items-center gap-1">
 
-                    <div className="flex items-center gap-6">
+                    <div className="flex items-center h-14">
                         <button
-                            className="btn h-14 w-14 text-2xl font-bold bg-gray-100 hover:bg-gray-200 transition"
+                            className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
                             onClick={handleDecrement}
                         >
-                            -
+                            <FiMinus />
                         </button>
 
-                        <div className="px-8 py-4 border custom-border text-3xl font-semibold text-center w-[200px] bg-gray-50">
+                        <div className="px-8 h-11 flex items-center justify-center border custom-border text-2xl font-semibold text-center w-[200px]">
                             {credits.toLocaleString()}
                         </div>
 
                         <button
-                            className="btn h-14 w-14 text-2xl font-bold bg-gray-100 hover:bg-gray-200 transition"
+                            className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
                             onClick={handleIncrement}
                         >
-                            +
+                            <FiPlus />
                         </button>
                     </div>
+                    <p className="text-lg text-gray-600">Select your credits</p>
                 </div>
-
-                {/* RIGHT: Price + Features */}
                 <div className="flex flex-col gap-6">
                     <div className="flex items-center gap-3">
-                        {selectedCountryData?.isdeveloping && (
-                            <p className="text-lg line-through text-gray-400">{formattedPrice}</p>
-                        )}
                         <p className="text-3xl font-bold text-accent">
-                            {selectedCountryData?.isdeveloping ? discountedPrice : formattedPrice}
+                            {formattedPrice}
                         </p>
-                        {selectedCountryData?.isdeveloping && (
-                            <span className="bg-black text-white text-xs px-2 py-1 rounded-full font-semibold">
-                                50% OFF
-                            </span>
-                        )}
                     </div>
-
-                    <div className="flex flex-col sm:flex-row gap-4">
-                        <button className="btn btn-accent px-6 py-3 text-lg font-medium transition">
-                            Buy Credits
-                        </button>
-                        <button className="btn btn-outline px-6 py-3 text-lg font-medium">
-                            Start Free
-                        </button>
-                    </div>
-
-                    <p className="text-gray-600 text-sm">
-                        Buy credits now or start with our free plan and top up later.
-                    </p>
-
                     <ul className="space-y-3 text-md text-gray-700">
                         <li className="flex items-center gap-3">
                             <div className="h-2.5 w-2.5 bg-accent" />
@@ -118,13 +97,19 @@ const MoreCreditComp = ({ selectedCountryData}) => {
                             <div className="h-2.5 w-2.5 bg-accent" />
                             1 credit = 2 tasks
                         </li>
+                        <li className="flex items-center gap-3 ml-6">
+                            Use credits as tasks, When your tasks are consumed
+                        </li>
                         <li className="flex items-center gap-3">
                             <div className="h-2.5 w-2.5 bg-accent" />
-                            Use credits as tasks, When your tasks are consumed
+                            <Link href="https://viasocket.com/faq/plans-and-pricing/what-are-credits" target='_blank' className="text-accent hover:underline w-fit">
+                                Know more
+                            </Link>
                         </li>
                     </ul>
                 </div>
             </div>
+        </div>
         </div>
     );
 };

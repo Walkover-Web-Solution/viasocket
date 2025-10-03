@@ -3,7 +3,7 @@ import Link from "next/link";
 import { calculatePricing } from "@/utils/currencyConverter";
 import { detectUserCountry } from "@/utils/locationDetector";
 import { FaCrown, FaGem } from "react-icons/fa";
-import { IoMdSearch } from "react-icons/io";
+import { IoMdSearch, IoMdInformationCircleOutline } from "react-icons/io";
 import MoreCreditComp from "./moreCreditComp";
 
 export default function PricingTabsClient({ countries }) {
@@ -106,10 +106,12 @@ export default function PricingTabsClient({ countries }) {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center  lg:gap-20 md:gap-16 gap-12">
+      <MoreCreditComp selectedCountryData={selectedCountryData} />
+      <div className="cont w-full">
       <div className="w-full cont lg:flex-row items-center gap-4 justify-between">
         <div className="cont items-start gap-2">
-          <h2 className="h2 w-full" >Do more with viaSocket</h2>
+          <h2 className="h2 w-full" >Do more with viaSocket.</h2>
           <h3 className="h3" >Upgrade to access advanced features designed for growing businesses</h3>
         </div>
         <div className="flex items-end flex-col gap-2 w-full md:w-[350px]">
@@ -174,6 +176,7 @@ export default function PricingTabsClient({ countries }) {
           </form>
         </div>
       </div>
+    
       <div className="flex flex-col items-center mt-4 w-full">
         <div className="w-full flex flex-col lg:flex-row gap-8">
           <div className="lg:w-[60%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
@@ -245,10 +248,32 @@ export default function PricingTabsClient({ countries }) {
                   <li className="flex items-center gap-2">
                     <div className="h-3 w-3 bg-accent" />
                     15k tasks/month
+                    <div className="relative group inline-flex items-center">
+                      <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-50 w-[220px]">
+                        <div className="relative">
+                          <div className="rounded bg-black text-white text-sm px-3 py-2 shadow">
+                          A single action your workflow completes, like sending an email or updating a sheet.
+                          </div>
+                          <div className="w-2 h-2 bg-black rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="h-3 w-3 bg-accent" />
                     5k Credits/month
+                    <div className="relative group inline-flex items-center">
+                      <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
+                      <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-50 w-[220px]">
+                        <div className="relative">
+                          <div className="rounded bg-black text-white text-sm px-3 py-2 shadow">
+                          Credits are used to run paid built-in plugs like SMS, WhatsApp, or AI agents, and can also extend your workflow by converting to tasks when needed.
+                          </div>
+                          <div className="w-2 h-2 bg-black rotate-45 absolute -bottom-1 left-1/2 -translate-x-1/2"></div>
+                        </div>
+                      </div>
+                    </div>
                   </li>
                   <li className="flex items-center gap-2">
                     <div className="h-3 w-3 bg-accent" />
@@ -319,10 +344,6 @@ export default function PricingTabsClient({ countries }) {
               <ul className="flex flex-col gap-2 text-md">
                 <li className="flex items-center gap-2">
                   <div className="h-3 w-3 bg-accent" />
-                  Unlimited tasks & credits
-                </li>
-                <li className="flex items-center gap-2">
-                  <div className="h-3 w-3 bg-accent" />
                   Dedicated account manager
                 </li>
                 <li className="flex items-center gap-2">
@@ -338,7 +359,7 @@ export default function PricingTabsClient({ countries }) {
           </div>
         </div>
       </div>
-      <MoreCreditComp selectedCountryData={selectedCountryData} />
+      </div>
     </div >
   );
 }
