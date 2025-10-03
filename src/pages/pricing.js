@@ -22,22 +22,21 @@ export default function pricing({ footerData, faqData, metaData, features, count
             <Navbar footerData={footerData} utm={'/pricing'} />
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="cont flex flex-col items-center text-center gap-6">
-                    <h1 className="text-6xl">
-                        Start <span className='text-accent'>free</span> and Pay as you go
-                    </h1>
-                    <div className="flex gap-12 justify-center items-center text-2xl mt-2 w-full">
-                        <div className="flex items-center gap-4">
-                            <div className="h-5 w-5 bg-accent" />
-                            2,000 tasks/month
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="h-5 w-5 bg-accent" />
-                            500 credits/month
-                        </div>
-                        <div className="flex items-center gap-4">
-                            <div className="h-5 w-5 bg-accent" />
-                            Pay as you go with credit
-                        </div>
+                    <div className='flex flex-col items-center'>
+                        <h1 className="text-6xl">
+                            Start <span className='text-accent'>free</span> and pay as you go
+                        </h1>
+                        <h2 className="text-2xl max-w-[650px]">
+                            Top up with {' '}
+                            <Link
+                                href="#pricingTabs"
+
+                                className="border-b-2 custom-border border-dotted"
+                            >
+                                <span>credits</span>
+                            </Link>{' '}
+                            anytime. Use them for paid built-in plugs or extra tasks to keep your automations running.
+                        </h2>
                     </div>
                     <div className="cont lg:flex-row items-center gap-2 mt-4">
                         <Link href="/signup?utm_source=pricing/hero" className="w-full">
@@ -55,12 +54,9 @@ export default function pricing({ footerData, faqData, metaData, features, count
                     </div>
                 </div>
 
-                <div>
-                    <h2 className="h2">
-                        With Access to all our features
-                    </h2>
-                    <div className="cont gap-8 border custom-border p-6 md:p-12 bg-white mt-4">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                <div className="flex items-center justify-center">
+                    <div className="gap-8 border custom-border p-6 md:p-12 bg-[#faf9f6] mt-4 max-w-[1000px]">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-[max-content_max-content_max-content] gap-4 gap-x-20">
                             {features.map((feature, index) => (
                                 index === 0 ? (
                                     <div key={index} className="flex items-center gap-2">
@@ -84,7 +80,23 @@ export default function pricing({ footerData, faqData, metaData, features, count
                     </div>
                 </div>
 
-                <PricingTabsClient countries={countries} />
+                <div id="pricingTabs"><PricingTabsClient countries={countries} /></div>
+
+                <div className="cont flex items-center justify-center w-full">
+                    <div className='cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center'>
+                        <div className="flex items-center justify-center">
+                            <h2 className="h2 w-full" >Free Services for Impactful Organizations</h2>
+                        </div>
+                        <div className="sub__h2 text-center">
+                            We support organizations driving change with free access to our automation solutions
+                        </div>
+                        <div className="flex justify-center">
+                            <a href="/free-access-programs" target="_blank" className="btn btn-accent">
+                                Get Free Access
+                            </a>
+                        </div>
+                    </div>
+                </div>
 
                 <div className="cont lg:gap-20 md:gap-16 gap-12">
                     <div className="cont">

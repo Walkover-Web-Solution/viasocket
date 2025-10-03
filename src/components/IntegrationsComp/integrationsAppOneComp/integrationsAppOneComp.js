@@ -212,7 +212,12 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                    <h2 className="h2 ">Actions and Triggers</h2>
+                   <div className="cont gap-2 pb-4">
+                   <h2 className="h2">Triggers and Actions in {appOneDetails?.name} Automations</h2>
+                    <p className="sub__h1">
+                    viaSocket makes it simple to connect {appOneDetails?.name}  integrations and automate repetitive tasks. A trigger is the event that starts a workflow, while an action is the task that follows automatically within your {appOneDetails?.name} app integrations.
+                    </p>
+                    </div>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
             )}
