@@ -1,7 +1,7 @@
 import Testimonials from './testimonials';
 const ReviewIframe = ({reviewData, showless}) => {
     return (
-        <div className="iframe-main-wrapper pb-12 pt-8 relative">
+        <div className="iframe-main-wrapper pb-12 pt-8 relative container">
             <div className="flex items-center justify-between gap-2">
                 <h2 className="h2">Reviews ❤️</h2>
                 <div className="flex items-center gap-2">
