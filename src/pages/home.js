@@ -202,18 +202,26 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
 
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
-                <div className="border-b custom-border pt-20 pb-6 bg-[#F2F2F2]">
+                <div
+                    className="border-b custom-border py-20"
+                    style={{
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/nevada.jpg')`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        backgroundAttachment: 'fixed',
+                    }}
+                >
                     <IndexTemplateComp categories={indexTemplateData} />
                 </div>
             )}
 
             {/* Review Section */}
-            <div className="container mt-12">
+            <div className="bg-[#f9f6f1]">
                 <ReviewIframe reviewData={reviewData} showless={false} />
             </div>
 
             {/* FAQ Section */}
-            <div className="py-12">
+            <div className="py-12 bg-[#faf9f6]">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />

@@ -69,8 +69,8 @@ const IndexTemplateComp = ({ categories }) => {
     return (
         <div className="cont gap-8 container relative">
             <div className="flex justify-between items-center gap-1">
-                <h2 className="h2 text-black font-bold">Must use template department wise.</h2>
-                <Link href="/templates" target="_blank" className="text-accent hover:underline flex items-center gap-1">
+                <h2 className="h2 text-white font-bold">Must use template department wise.</h2>
+                <Link href="/templates" target="_blank" className="btn btn-outline">
                     <span>Explore all templates</span>
                 </Link>
             </div>
