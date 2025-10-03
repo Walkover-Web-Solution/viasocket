@@ -16,6 +16,7 @@ import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import { BsStars } from 'react-icons/bs';
+import FloatingAppIcons from '@/components/FloatingAppIcons/FloatingAppIcons';
 
 export const runtime = 'experimental-edge';
 
@@ -172,7 +173,14 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
                 </div>
             </div>
 
-            <div className="custom-background-home-page"></div>
+            <div className="custom-background-home-page">
+                <FloatingAppIcons 
+                    density="medium"
+                    size="medium"
+                    blur="none"
+                    opacity={1.0}
+                />
+            </div>
 
             <ResultSection
                 // Template props
@@ -203,9 +211,9 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
                 <div
-                    className="border-b custom-border py-20"
+                    className="py-20"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/nevada.jpg')`,
+                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/pexels-fotios.jpg')`,
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                         backgroundAttachment: 'fixed',
@@ -221,7 +229,7 @@ const Home = ({ metaData, faqData, footerData, securityGridData, appCount, index
             </div>
 
             {/* FAQ Section */}
-            <div className="py-12 bg-[#faf9f6]">
+            <div className="py-12 bg-[#FAF9F6]">
                 {faqData?.length > 0 && (
                     <div className="container cont">
                         <FAQSection faqData={faqData} faqName={'/index'} />
