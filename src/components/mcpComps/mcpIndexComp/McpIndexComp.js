@@ -336,8 +336,7 @@ export default function McpIndexComp({
                 <div className="container cont">
                     <div className="cont__py p-12 h-fit border gap-12 flex flex-col  bg-black text-white">
                         <h2 className="h2 py-2">Ready, Set, MCP in 3 Simple Steps</h2>
-
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                             {mcpSteps.map((step, index) => (
                                 <div
                                     key={index}
@@ -353,7 +352,7 @@ export default function McpIndexComp({
                 </div>
 
                 <div className="container cont">
-                    <div className="flex gap-12 flex-col text-black p-12 border custom-border bg-white">
+                    <div className="flex gap-12 flex-col text-black md:p-12 p-6 border custom-border bg-white">
                         <div className="flex flex-col gap-2 justify-center">
                             <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
                             <p className="sub__h1">
@@ -362,7 +361,7 @@ export default function McpIndexComp({
                             </p>
                         </div>
                         <div className="flex flex-col md:flex-row gap-8 text-black">
-                            <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border custom-border">
+                            <div className="w-full md:w-1/2 md:py-12 py-6 px-8  flex flex-col justify-between gap-6 border custom-border">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                                     <h3 className="text-xl">
@@ -382,7 +381,7 @@ export default function McpIndexComp({
                                     </button>
                                 </Link>
                             </div>
-                            <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border custom-border">
+                            <div className="w-full md:w-1/2 md:py-12 py-6 px-8 cont justify-between gap-6 border custom-border">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">For Enterprises</h2>
                                     <h3 className="text-xl">

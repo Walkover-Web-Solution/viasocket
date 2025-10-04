@@ -138,7 +138,7 @@ export default function IntegrationsIndexComp({
                             </>
                         )}
                     </div>
-                    <label className="input border min-w-[345px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
+                    <label className="input border lg:min-w-[345px] lg:max-w-[400px] w-full  custom-border flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
                         <input
                             value={searchTerm}
