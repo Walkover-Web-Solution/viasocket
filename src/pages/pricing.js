@@ -72,7 +72,7 @@ export default function pricing({ footerData, faqData, metaData, features, count
                             ))}
                             <div className="flex items-start gap-1">
                                 <p className="text-accent">+</p>
-                                <Link href="/features" className="text-lg text-accent hover:underline w-fit">
+                                <Link href="/features" target='_blank' className="text-lg text-accent hover:underline w-fit">
                                     See all features
                                 </Link>
                             </div>
@@ -83,12 +83,12 @@ export default function pricing({ footerData, faqData, metaData, features, count
                 <div id="pricingTabs"><PricingTabsClient countries={countries} /></div>
 
                 <div className="cont flex items-center justify-center w-full">
-                    <div className='cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center'>
+                    <div className='cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center access-program text-white'>
                         <div className="flex items-center justify-center">
                             <h2 className="h2 w-full" >We Empower Impactful Organizations</h2>
                         </div>
                         <div className="sub__h2 text-center">
-                            We support organizations driving change with <span className='text-accent'>3x more</span> access to our automation solutions
+                            We support organizations driving change with 3x more access to our automation solutions
                         </div>
                         <div className="flex justify-center">
                             <a href="/free-access-programs" target="_blank" className="btn btn-accent">

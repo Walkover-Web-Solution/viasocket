@@ -71,10 +71,17 @@ export async function detectUserCountry() {
     const country = await detectUserLocation();
     return country;
   } catch (geoError) {
-    console.warn('Geolocation failed, trying IP-based detection:', geoError.message);
-    
+    // If user explicitly denied permission, respect that and do NOT fallback to IP-based detection
+    // GeolocationPositionError.PERMISSION_DENIED === 1
+    if (typeof geoError === 'object' && geoError && geoError.code === 1) {
+      console.warn('Geolocation permission denied by user; skipping IP-based detection.');
+      return null; // Signal to callers that location is unavailable due to denied permission
+    }
+
+    console.warn('Geolocation failed (not due to permission), trying IP-based detection:', geoError?.message || geoError);
+
     try {
-      // Fallback to IP-based location
+      // Fallback to IP-based location for other errors (e.g., timeout, position unavailable)
       const country = await detectLocationByIP();
       return country;
     } catch (ipError) {
