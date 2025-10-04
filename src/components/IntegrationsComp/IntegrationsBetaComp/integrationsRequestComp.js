@@ -44,12 +44,11 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
     };
 
     const handleDone = async () => {
-        await submitForm();
         setShowSuccessPopup(false);
         handleClose();
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (!formData.userEmail) {
@@ -70,6 +69,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             return;
         }
 
+        await submitForm();
         setShowSuccessPopup(true);
     };
 
@@ -79,9 +79,9 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         });
 
         const formDataToSend = formData;
-        delete formData.plug;
-        formDataToSend.userNeed = `New ${type || 'App'}`;
-        formDataToSend.category = appInfo?.category?.join(', ');
+        const { plug, ...cleanedPayload } = formDataToSend;
+        cleanedPayload.userNeed = `New ${type || 'App'}`;
+        cleanedPayload.category = appInfo?.category?.join(', ');
 
         try {
             setIsLoading(true);
@@ -91,7 +91,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                     'Content-Type': 'application/json',
                 },
 
-                body: JSON.stringify(formDataToSend),
+                body: JSON.stringify(cleanedPayload),
             });
 
             const pluginData = await pluginResponse.json();
@@ -275,7 +275,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                             <button disabled={isLoading} className="btn btn-md btn-accent" onClick={handleSubmit}>
                                 {isLoading ? 'Submitting...' : 'Submit'}
                             </button>
-                            <button className="btn btn-primary btn-outline" onClick={handleClose}>
+                            <button disabled={isLoading} className="btn btn-primary btn-outline" onClick={handleClose}>
                                 Cancel
                             </button>
                         </div>
