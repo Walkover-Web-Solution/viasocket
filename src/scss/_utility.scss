@@ -50,6 +50,7 @@
     // border-bottom: 1px solid var(--custom-border);
 }
 
+/** Globally used for dotted background */
 .dotted-background {
     background-image: radial-gradient(circle, #d3d3d3 1px, transparent 1px);
     background-size: 16px 16px; /* Adjust the size of the dots */
