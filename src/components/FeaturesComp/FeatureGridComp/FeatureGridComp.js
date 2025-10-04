@@ -37,7 +37,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
     if (features && features.length > 0) {
         return (
             <div className="container">
-                <div className="bg-white grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 auto-row-[110px] border custom-border border-b-0 border-r-0">
+                <div className="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 auto-row-[110px] border custom-border border-b-0 border-r-0">
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (
