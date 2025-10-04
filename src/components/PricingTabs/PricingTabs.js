@@ -21,17 +21,23 @@ export default function PricingTabsClient({ countries }) {
         setIsDetectingLocation(true);
         try {
           const detectedCountry = await detectUserCountry();
+          // If user denied permission, detectUserCountry returns null. Respect that and skip auto-selection.
+          if (typeof detectedCountry !== 'string' || !detectedCountry.trim()) {
+            return;
+          }
+
+          const dc = detectedCountry.trim();
           let matchingCountry = null;
           matchingCountry = countries.find(c =>
-            c.country.toLowerCase() === detectedCountry.toLowerCase()
+            c.country.toLowerCase() === dc.toLowerCase()
           );
           if (!matchingCountry) {
             matchingCountry = countries.find(c =>
-              c.country.toLowerCase().includes(detectedCountry.toLowerCase())
+              c.country.toLowerCase().includes(dc.toLowerCase())
             );
-            if (!matchingCountry && detectedCountry.length > 4) {
+            if (!matchingCountry && dc.length > 4) {
               matchingCountry = countries.find(c =>
-                detectedCountry.toLowerCase().includes(c.country.toLowerCase())
+                dc.toLowerCase().includes(c.country.toLowerCase())
               );
             }
           }
@@ -64,7 +70,7 @@ export default function PricingTabsClient({ countries }) {
       }
     } else {
       setSelectedCountryData(null);
-      setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', isDeveloping: false });
+      setPricing({ monthly: '$79', yearly: '$758.40', yearlyMonthly: '$63.20', oneTime: '$99', isDeveloping: false, originalMonthly: '$79', originalYearlyMonthly: '$63.20' });
     }
   }, [selectedCountry, countries]);
 
