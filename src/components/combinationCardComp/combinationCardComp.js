@@ -2,21 +2,21 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
 import { FiArrowUpRight, FiExternalLink } from 'react-icons/fi';
 
-export default function CombinationCardComp({ trigger, action, description, link }) {
+export default function CombinationCardComp({ trigger, action, description, link, showTopBorder }) {
     return (
         <button
             onClick={(e) => handleRedirect(e, link)}
-            className="border custom-border border-t-0 border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group relative"
+            className={`border custom-border border-l-0 px-12 pt-8 pb-2 cont gap-4 bg-white cursor-pointer hover-bg-grey-100-text-black hover:border-white group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
         >
             <div className="cont w-full">
                 <div className="flex gap-8"></div>
                 <div className="flex items-center">
-                    <div className="border custom-border p-2 cont items-center group-hover:border-white">
-                        <Image alt='trigger icon' src={trigger?.iconurl} width={40} height={40} />
+                    <div className="border custom-border p-2 cont items-center bg-white w-[60px] h-[60px] relative">
+                        <Image className="object-contain p-1.5" alt='trigger icon' src={trigger?.iconurl} fill/>
                     </div>
-                    <div className="w-16 border-t-2 custom-border group-hover:border-white" />
-                    <div className="border custom-border p-2 cont items-center group-hover:border-white">
-                        <Image alt='action icon' src={action?.iconurl} width={40} height={40} />
+                    <div className="w-16 border-t-2 custom-border bg-white" />
+                    <div className="border custom-border p-2 cont items-center bg-white w-[60px] h-[60px] relative">
+                        <Image className="object-contain p-1.5" alt='action icon' src={action?.iconurl} fill/>
                     </div>
                 </div>
             </div>

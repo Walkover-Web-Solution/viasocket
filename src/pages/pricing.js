@@ -89,9 +89,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, featu
                                     <span>$0</span>
                                 </p>
                                 <p>
-                                    <span>
-                                        Sign up before 7th October and keep using the viasocket forever under
-                                    </span>{' '}
+                                    <span>Sign up before 7th October and keep using the viasocket forever under</span>{' '}
                                     <a
                                         target="_blank"
                                         className="hover:underline text-accent"

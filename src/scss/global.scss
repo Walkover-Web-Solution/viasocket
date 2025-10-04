@@ -22,6 +22,26 @@
     border: 0.5px solid #252525 !important;
 }
 
+.custom-flow-border {
+  position: relative;
+}
+
+.custom-flow-border::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--col-black-light) 0px,
+    var(--col-black-light) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
 .font-family-times-now {
     font-family: 'Inter Tight';
 }
@@ -339,5 +359,17 @@
     #twitter-widget-1 {
         max-width: 100% !important;
         max-height: 100% !important;
+    }
+}
+
+// Responsive styling for signup page review section
+body {
+    &:has(.signup-review-section) {
+        .iframe-container {
+            grid-template-columns: 1fr 1fr;
+            @media screen and (width <= 1200px) {
+                grid-template-columns: 1fr;
+            }
+        }
     }
 }

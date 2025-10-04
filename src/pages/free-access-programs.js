@@ -17,10 +17,13 @@ export default function Programs({ footerData, metaData, programs }) {
             <div className="container cont py-12 cont__gap">
                 <div className="cont gap-2">
                     <h1 className="h1 ">
-                        <span className="text-accent"> Free services </span> for impactful organisations
+                        <span className="text-accent"> 3x more </span> for impactful organisations
                     </h1>
                     <h2 className="sub__h1">
                         So, you can focus on meaningful work, driving innovation and creating lasting impact.
+                    </h2>
+                    <h2 className="sub__h1 pt-4">
+                        6000 tasks/month, 1500 credits/month, access to all <Link href="/features" target='_blank' className='text-accent hover:underline'>features</Link>.
                     </h2>
                 </div>
                 {/* <button className="btn btn-rg btn-primary">Click here</button> */}
@@ -37,7 +40,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`md:col-span-1 col-span-2 row-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -48,7 +51,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`md:col-span-1 col-span-2 md:row-span-2 row-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -59,7 +62,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`md:col-span-1 col-span-2 md:row-span-2 row-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -70,7 +73,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`md:col-span-1 col-span-2 row-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -82,7 +85,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`col-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -94,7 +97,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                     return (
                                         <Link
                                             key={index}
-                                            href={`/signup?utm_source=programs`}
+                                            href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                             className={`col-span-1 flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                         >
                                             <h2 className="text-white h2">{item?.name}</h2>
@@ -107,7 +110,7 @@ export default function Programs({ footerData, metaData, programs }) {
                                 return (
                                     <Link
                                         key={index}
-                                        href={`/signup?utm_source=programs`}
+                                        href={`/signup?utm_source=programs&utm_medium=${item?.name}`}
                                         className={`${index % 5 === 0 ? 'md:col-span-1 col-span-2 row-span-1' : index % 5 === 1 ? 'md:col-span-1 col-span-2 md:row-span-2 row-span-1' : index % 5 === 2 ? 'md:col-span-1 col-span-2 md:row-span-2 row-sapn-1' : index % 5 === 3 ? 'md:col-span-1 col-span-2 row-span-1' : 'col-span-2 row-span-1'} flex flex-col gap-1 items-center justify-center p-5 text-center grid-block`}
                                     >
                                         <h2 className="text-white h2">{item?.name}</h2>

@@ -130,7 +130,7 @@ export async function getTemplates(pageUrl) {
                 interpretHeader: false,
             },
         });
-        return response.data.data.templates;
+        return response?.data?.data?.templates || [];
     } catch (error) {
         sendErrorMessage({
             error,
