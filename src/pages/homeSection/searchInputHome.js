@@ -173,7 +173,7 @@ const SearchInputHome = ({
         // Open dropdown when user starts typing
         setShowDropdown(true);
         setIsInputFocused(true);
-        
+
         if (value) {
             try {
                 const result = await searchApps(value);
@@ -338,7 +338,7 @@ const SearchInputHome = ({
                 }
                 // Updated AI response condition - show AI response for single app selection too
                 const shouldShowAiResponse =
-                    (newSelectedApps.length >= 1 && 
+                    (newSelectedApps.length >= 1 &&
                         (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
                     (newSelectedApps.length >= 1); // Show AI response for any app selection
                 if (shouldShowAiResponse) {
@@ -430,7 +430,11 @@ const SearchInputHome = ({
         setIsInputFocused(false);
     };
 
-    const handleSearchTemplates = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+    const handleSearchTemplates = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
         if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
@@ -471,7 +475,11 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchVideos = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+    const handleSearchVideos = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
         if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
@@ -499,7 +507,11 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearchBlogs = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+    const handleSearchBlogs = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
         if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
@@ -696,33 +708,12 @@ const SearchInputHome = ({
                         )}
                     </div>
                 </div>
-                {/* <button
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer p-1 z-index-1"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setShowDropdown(false);
-                        handleSearchTemplates();
-                        handleSearchVideos();
-                        handleSearchBlogs();
-                        // Check AI response condition
-                        const shouldShowAiResponse =
-                            (selectedApps.length >= 1 &&
-                                (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                            (selectedApps.length >= 1);
-                        if (shouldShowAiResponse) {
-                            getAiResponse();
-                        } else {
-                            setShowAiResponse(false);
-                        }
-                    }}
-                ></button> */}
 
                 {showDropdown && (
-                    <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-80 overflow-y-auto">
+                    <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-90 overflow-y-auto">
                         <div className="apps-section border-b custom-border">
                             {searchData?.length > 0 ? (
-                                searchData.map((app, index) => (
+                                searchData.slice(0, 3).map((app, index) => (
                                     <div
                                         key={index}
                                         className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
@@ -751,21 +742,28 @@ const SearchInputHome = ({
                             )}
                         </div>
                         <div className="departments-section border-b custom-border">
+                            <div className="px-4 py-2 border-b custom-border text-left">
+                                <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Departments
+                                </h4>
+                            </div>
                             {(searchTerm ? filteredDepartments : departments)?.length > 0 ? (
-                                (searchTerm ? filteredDepartments : departments).map((department, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 px-4 py-3"
-                                        onMouseDown={(e) => {
-                                            e.preventDefault();
-                                            handleSelectDepartment(department);
-                                        }}
-                                    >
-                                        <span className="text-sm">
-                                            {department?.name || department?.department_name || department}
-                                        </span>
-                                    </div>
-                                ))
+                                (searchTerm ? filteredDepartments : departments)
+                                    .slice(0, 2)
+                                    .map((department, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                            onMouseDown={(e) => {
+                                                e.preventDefault();
+                                                handleSelectDepartment(department);
+                                            }}
+                                        >
+                                            <span className="text-sm">
+                                                {department?.name || department?.department_name || department}
+                                            </span>
+                                        </div>
+                                    ))
                             ) : (
                                 <div className="px-4 py-6 text-center text-gray-500">
                                     <p className="text-sm">
@@ -777,23 +775,30 @@ const SearchInputHome = ({
                         </div>
 
                         <div className="industries-section">
+                            <div className="px-4 py-2 border-b custom-border text-left">
+                                <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                                    Industries
+                                </h4>
+                            </div>
                             {(searchTerm ? filteredIndustries : industries)?.length > 0 ? (
-                                <div className="py-3">
-                                    {(searchTerm ? filteredIndustries : industries).map((industry, index) => (
-                                        <div
-                                            key={index}
-                                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
-                                            onMouseDown={(e) => {
-                                                e.preventDefault();
-                                                handleSelectIndustry(industry);
-                                            }}
-                                        >
-                                            <span className="text-sm">
-                                                {industry?.name || industry?.industry_name || industry}
-                                            </span>
-                                        </div>
-                                    ))}
-                                </div>
+                                <>
+                                    {(searchTerm ? filteredIndustries : industries)
+                                        .slice(0, 2)
+                                        .map((industry, index) => (
+                                            <div
+                                                key={index}
+                                                className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    handleSelectIndustry(industry);
+                                                }}
+                                            >
+                                                <span className="text-sm">
+                                                    {industry?.name || industry?.industry_name || industry}
+                                                </span>
+                                            </div>
+                                        ))}
+                                </>
                             ) : (
                                 <div className="px-4 py-6 text-center text-gray-500">
                                     <p className="text-sm">
