@@ -18,7 +18,7 @@ const Login = ({ reviewData, redirect_to }) => {
                             <ReviewIframe reviewData={reviewData} showless={true}/>
                         </div>
                     </div>
-                    <div className="w-full h-screen bg-white md:w-[40vw] flex flex-col justify-between">
+                    <div className="w-full h-screen md:w-[40vw] flex flex-col justify-between dotted-background">
                         <div className="flex-1 flex items-center justify-center">
                             <div className="flex flex-col gap-4 px-8 py-10 items-center text-center">
                                 <div className="gap-3 flex flex-col">
