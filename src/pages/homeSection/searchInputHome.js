@@ -19,6 +19,7 @@ const SearchInputHome = ({
     fetchApps,
 }) => {
     const dropdownRef = useRef(null);
+    const inputRef = useRef(null);
     const [selectedApps, setSelectedApps] = useState([]);
     const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -276,6 +277,13 @@ const SearchInputHome = ({
         fetchInitialIndustries();
         fetchInitialDepartments();
     }, [fetchAppsData, filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
+
+    // Auto-focus the search input when component mounts
+    useEffect(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     // Notify parent of state changes
     useEffect(() => {
@@ -679,17 +687,24 @@ const SearchInputHome = ({
                             </div>
                         )}
                         <input
+                            ref={inputRef}
                             type="text"
                             className="w-full bg-transparent outline-none text-lg relative z-10"
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {
-                                setShowDropdown(true);
                                 setIsInputFocused(true);
+                                // Only show dropdown if there's content or existing selections
+                                if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                                    setShowDropdown(true);
+                                }
                             }}
                             onClick={() => {
-                                setShowDropdown(true);
                                 setIsInputFocused(true);
+                                // Only show dropdown if there's content or existing selections
+                                if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                                    setShowDropdown(true);
+                                }
                             }}
                             onBlur={() => {
                                 setTimeout(() => {
