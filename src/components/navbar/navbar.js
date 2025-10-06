@@ -95,8 +95,10 @@ export default function Navbar({ utm, footerData }) {
                                     >
                                         {router.pathname === '/'
                                             ? 'Home'
+                                            : (router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
+                                                ? 'MCP'
                                             : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                              router.pathname.split('/')[1].slice(1).toLowerCase()}
+                                                    router.pathname.split('/')[1].slice(1).toLowerCase())}
                                     </Link>
                                 )}
                             <Link

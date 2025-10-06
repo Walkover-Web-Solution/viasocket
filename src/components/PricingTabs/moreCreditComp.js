@@ -23,7 +23,6 @@ const MoreCreditComp = ({ selectedCountryData}) => {
                 if (selectedCountryData) {
                     // Fetch base price per 10k credits for the selected country
                     const { creditPricing } = await convertCurrency(selectedCountryData.codes);
-                    console.log(creditPricing)
                     // Calculate current price based on credits
                     const currentPrice = (credits / 10000) * creditPricing;
 

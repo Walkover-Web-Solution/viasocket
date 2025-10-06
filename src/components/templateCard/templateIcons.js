@@ -17,15 +17,17 @@ export default function TemplateIcons({ template }) {
         elements.push(
             <div
                 key="trigger-webhook"
-                className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                className="flex items-center gap-2 px-3 h-10 border custom-border bg-white"
             >
                 <Webhook size={24} />
+                <span className="text-sm md:text-base font-medium">Webhook</span>
             </div>
         );
     } else if (triggerType === 'cron') {
         elements.push(
-            <div key="trigger-cron" className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
+            <div key="trigger-cron" className="flex items-center gap-2 px-3 h-10 border custom-border bg-white">
                 <Timer size={24} />
+                <span className="text-sm md:text-base font-medium">Cron</span>
             </div>
         );
     } else if (triggerIcon && !shownIcons.has(triggerIcon)) {
@@ -37,7 +39,7 @@ export default function TemplateIcons({ template }) {
                 <Link
                     key={`trigger-plugin-${triggerPlugin.pluginrecordid}`}
                     href={`/integrations/${triggerPlugin.pluginslugname}`}
-                    className="flex items-center justify-center w-8 h-8 border custom-border bg-white hover:bg-gray-50"
+                    className="flex items-center gap-2 px-3 h-10 border custom-border bg-white hover:bg-gray-50"
                 >
                     <Image
                         src={triggerIcon}
@@ -46,13 +48,14 @@ export default function TemplateIcons({ template }) {
                         height={36}
                         className="h-5 w-fit"
                     />
+                    <span className="text-lg">{triggerPlugin.pluginname}</span>
                 </Link>
             );
         } else {
             elements.push(
                 <div
                     key="trigger-icon"
-                    className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                    className="flex items-center gap-2 px-3 h-10 border custom-border bg-white"
                 >
                     <Image src={triggerIcon} alt="trigger icon" width={36} height={36} className="h-5 w-fit" />
                 </div>
@@ -73,7 +76,7 @@ export default function TemplateIcons({ template }) {
                 <Link
                     key={`plugin-${plugin.pluginrecordid}`}
                     href={href}
-                    className="flex items-center justify-center w-8 h-8 border custom-border bg-white hover:bg-gray-50"
+                    className="flex items-center gap-2 px-3 h-10 border custom-border bg-white hover:bg-gray-50"
                 >
                     <Image
                         src={icon}
@@ -82,13 +85,14 @@ export default function TemplateIcons({ template }) {
                         height={36}
                         className="h-5 w-fit"
                     />
+                    <span className="text-lg">{plugin.pluginname}</span>
                 </Link>
             );
         } else {
             elements.push(
                 <div
                     key={`plugin-${plugin.pluginrecordid}`}
-                    className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                    className="flex items-center gap-2 px-3 h-10 border custom-border bg-white"
                 >
                     <Image
                         src={icon}
@@ -97,6 +101,7 @@ export default function TemplateIcons({ template }) {
                         height={36}
                         className="h-5 w-fit"
                     />
+                    <span className="text-lg">{plugin.pluginname}</span>
                 </div>
             );
         }
@@ -110,12 +115,13 @@ export default function TemplateIcons({ template }) {
         elements.push(
             <div
                 key={`app-icon-fallback-${i}`}
-                className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                className="flex items-center gap-2 px-3 h-10 border custom-border bg-white"
             >
                 <Image src={icon} alt={`app icon ${i}`} width={36} height={36} className="h-5 w-fit" />
+                <span className="text-lg">App Icon</span>
             </div>
         );
     });
 
-    return <div className="flex gap-4 items-center">{elements}</div>;
+    return <div className="flex gap-4 items-center flex-wrap">{elements}</div>;
 }
