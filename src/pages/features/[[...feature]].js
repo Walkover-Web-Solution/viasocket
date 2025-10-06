@@ -51,7 +51,7 @@ export async function getServerSideProps(context) {
     if (!feature) {
         features = await getAllFeatures(ALLFEATURES_FIELDS, '', pageUrl);
     } else {
-        featureData = await getFeatureData([], `filter=slug='${feature}'`, pageUrl);
+        featureData = await getFeatureData(ALLFEATURES_FIELDS, `filter=slug='${feature}'`, pageUrl);
     }
     const blogTags = 'feature';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
