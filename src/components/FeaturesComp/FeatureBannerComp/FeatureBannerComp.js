@@ -26,15 +26,37 @@ export default function FeatureBannerComp({ featureData, footerData, pageInfo })
                                 </Link>
                             )}
                         </div>
-                        {featureData?.image && (
-                            <div className=" lg:p-20 p-4 bg-neutral flex flex-col items-center border custom-border">
-                                <Image
-                                    className="max-w-[2000px] border custom-border w-full"
-                                    src={featureData?.image[0] || 'https://placehold.co/40x40'}
-                                    alt={featureData?.name}
-                                    width={1080}
-                                    height={1080}
-                                />
+                        {(featureData?.image || featureData?.bgimage) && (
+                            <div
+                                className={`lg:p-20 p-4 flex flex-col items-center relative ${
+                                    featureData?.bgimage 
+                                        ? 'bg-[#ede8de]' 
+                                        : 'bg-white border custom-border'
+                                }`}
+                                style={{
+                                    backgroundImage: featureData?.bgimage ? `url("${featureData.bgimage}")` : undefined,
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
+                                    minHeight: featureData?.bgimage ? '500px' : 'auto',
+                                }}
+                            >
+                                {featureData?.image && (
+                                    <Image
+                                        className={`max-w-[2000px] w-full ${!featureData?.bgimage ? 'border custom-border' : ''}`}
+                                        src={featureData?.image[0] || 'https://placehold.co/40x40'}
+                                        alt={featureData?.name}
+                                        width={1080}
+                                        height={1080}
+                                    />
+                                )}
+                                {!featureData?.image && featureData?.bgimage && (
+                                    <div className="w-full h-64 flex items-center justify-center">
+                                        <p className="text-white text-lg font-semibold bg-black bg-opacity-50 px-4 py-2 rounded">
+                                            {featureData?.name}
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         )}
                     </div>
