@@ -9,13 +9,14 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
 import SharePopup from '@/components/templateCard/sharePopup';
-import TemplateDetails from '@/components/templateCard/templateDetails';
 import TemplateIcons from '@/components/templateCard/templateIcons';
 import FlowRenderer from '@/components/flowComp/flowRenderer';
+import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates';
+import Link from 'next/link';
 
 export const runtime = 'experimental-edge';
 
-const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }) => {
+const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
     return (
         <>
             <Head>
@@ -38,7 +39,28 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                 <meta name="twitter:image" content={metaData?.image} />
             </Head>
             <Navbar footerData={footerData} utm={'/template'} />
-
+            {isCategory ? (
+                <div className='container cont lg:gap-20 md:gap-16 gap-12'>
+                    <CategoryTemplates 
+                        categoryName={categoryName} 
+                        templates={relatedTemplates} 
+                    />
+                    <div className="pb-4">
+                        <Footer footerData={footerData} />
+                    </div>
+                </div>
+            ) : !template ? (
+                <div className="container cont lg:gap-20 md:gap-16 gap-12">
+                    <div className="cont gap-4 pt-20 text-center">
+                        <h1 className="h1">Template Not Found</h1>
+                        <p className="text-gray-600">The template you're looking for doesn't exist or has been removed.</p>
+                        <a href="/templates" className="btn btn-accent">Browse All Templates</a>
+                    </div>
+                    <div className="pb-4">
+                        <Footer footerData={footerData} />
+                    </div>
+                </div>
+            ) : (
             <div className="container cont lg:gap-20 md:gap-16 gap-12">
                 <div className="cont gap-4 pt-20">
                     <div className="flex flex-col gap-4 bg-[#f2f2f2] border custom-border shadow-lg p-8">
@@ -48,8 +70,26 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                                 <div className="cont gap-4">
                                     <h2 className="h3">{template?.description}</h2>
                                     <TemplateIcons template={template} />
+                                    {template?.category?.length > 0 && (
+                                        <div className="cont gap-2">
+                                            <h2 className="h3">Categories</h2>
+                                            <div className="flex flex-wrap gap-2">
+                                                {template?.category?.map((cat, idx) => (
+                                                    <Link
+                                                        key={idx}
+                                                        href={`/templates/${encodeURIComponent(
+                                                            cat.toLowerCase().replace(/\s+/g, '-')
+                                                        )}`}
+                                                        className="cursor-pointer px-2 py-1 border custom-border hover:bg-gray-100"
+                                                    >
+                                                        {cat}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                     <button
-                                        className="btn btn-accent"
+                                        className="btn btn-accent my-4"
                                         onClick={(e) =>
                                             handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
                                         }
@@ -98,7 +138,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                     <div className="w-full md:w-2/5 cont gap-4">
                         <SharePopup title={template?.title} />
                         {template?.instructions && (
-                            <div className="w-full border custom-border p-4 h-64 cont gap-2 bg-white">
+                            <div className="w-full border custom-border p-4 h-full cont gap-2 bg-white">
                                 <h3 className="h3">Instructions</h3>
                                 <textarea
                                     readOnly
@@ -107,9 +147,6 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                                 />
                             </div>
                         )}
-                        <div className="w-full border custom-border p-4 h-fit bg-white">
-                            <TemplateDetails template={template} />
-                        </div>
                     </div>
                     {template?.content && (
                         <div className=" w-full md:w-3/5 flex justify-center">
@@ -133,47 +170,81 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates }
                     <Footer footerData={footerData} />
                 </div>
             </div>
+            )}
         </>
     );
 };
 
 export async function getServerSideProps(context) {
     const { req, query } = context;
-    const [templateName, templateId] = query.slug || [];
+    const [firstSlug, secondSlug] = query.slug || [];
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-
+    
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templateData = await getTemplates(pageUrl);
-
-    const selectedTemplate = templateData.find((t) => String(t.id) === String(templateId));
-
-    const selectedCategories = Array.isArray(selectedTemplate?.category) ? selectedTemplate.category : [];
-
-    const relatedTemplates = templateData
-        .filter(
-            (template) =>
-                template.id !== selectedTemplate?.id &&
-                Array.isArray(template.category) &&
-                template.category.some((cat) => selectedCategories.includes(cat))
-        )
-        .slice(0, 3);
-
-    const metaData = {
-        title: selectedTemplate?.title,
-        description: selectedTemplate?.description,
-        keywords: selectedTemplate?.tags?.join(', '),
-        image: selectedTemplate?.templateUrl,
-        url: pageUrl,
-    };
-    return {
-        props: {
-            footerData: footerData || [],
-            metaData: metaData || {},
-            template: selectedTemplate || null,
-            relatedTemplates: relatedTemplates || [],
-        },
-    };
+    // Check if this is a category page (single slug) or template page (two slugs)
+    const isCategory = firstSlug && !secondSlug;
+    
+    if (isCategory) {
+        // Handle category filtering
+        const categoryName = firstSlug.replace(/-/g, ' ');
+        const categoryTemplates = templateData.filter((template) =>
+            Array.isArray(template.category) &&
+            template.category.some((cat) => 
+                cat.toLowerCase().replace(/\s+/g, '-') === firstSlug ||
+                cat.toLowerCase() === categoryName.toLowerCase()
+            )
+        );
+        const metaData = {
+            title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - ViaSocket`,
+            description: `Discover ${categoryName} automation templates on ViaSocket. Streamline your workflows with pre-built integrations.`,
+            keywords: `${categoryName}, automation, integration, workflow, templates`,
+            image: '/assets/img/viasocket-og-image.png',
+            url: pageUrl,
+        };
+        return {
+            props: {
+                footerData: footerData || [],
+                metaData: metaData,
+                template: null,
+                relatedTemplates: categoryTemplates || [],
+                isCategory: true,
+                categoryName: categoryName,
+            },
+        };
+    } else {
+        // Handle individual template page
+        const selectedTemplate = templateData.find((t) => String(t.id) === String(secondSlug));
+        
+        const selectedCategories = Array.isArray(selectedTemplate?.category) ? selectedTemplate.category : [];
+        
+        const relatedTemplates = templateData
+            .filter(
+                (template) =>
+                    template.id !== selectedTemplate?.id &&
+                    Array.isArray(template.category) &&
+                    template.category.some((cat) => selectedCategories.includes(cat))
+            )
+            .slice(0, 3);
+        
+            const metaData = {
+            title: selectedTemplate?.title || 'ViaSocket Template',
+            description: selectedTemplate?.description || 'Discover powerful automation templates on ViaSocket',
+            keywords: selectedTemplate?.tags?.join(', ') || 'automation, integration, workflow',
+            image: selectedTemplate?.templateUrl || '/assets/img/viasocket-og-image.png',
+            url: pageUrl,
+        };
+        return {
+            props: {
+                footerData: footerData || [],
+                metaData: metaData,
+                template: selectedTemplate || null,
+                relatedTemplates: relatedTemplates || [],
+                isCategory: false,
+                categoryName: null,
+            },
+        };
+    }
 }
-
 export default TemplateDetailPage;

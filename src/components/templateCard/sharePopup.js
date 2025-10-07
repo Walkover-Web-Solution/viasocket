@@ -13,22 +13,22 @@ const SharePopup = ({ title }) => {
     const shareLinks = [
         {
             name: 'Twitter',
-            icon: <FaTwitter size={20} className="text-[#1DA1F2]" />,
+            icon: <FaTwitter size={20}/>,
             url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
         },
         {
             name: 'Facebook',
-            icon: <FaFacebookF size={20} className="text-[#1877F2]" />,
+            icon: <FaFacebookF size={20}/>,
             url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         },
         {
             name: 'LinkedIn',
-            icon: <FaLinkedinIn size={20} className="text-[#0A66C2]" />,
+            icon: <FaLinkedinIn size={20}/>,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
         },
         {
             name: 'WhatsApp',
-            icon: <FaWhatsapp size={20} className="text-[#25D366]" />,
+            icon: <FaWhatsapp size={20}/>,
             url: `https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`,
         },
     ];
@@ -70,7 +70,7 @@ const SharePopup = ({ title }) => {
                             onClick={() => {
                                 window.open(link.url, '_blank', 'noopener,noreferrer');
                             }}
-                            className="border custom-border p-2 hover:bg-gray-100 transition flex items-center justify-center cursor-pointer"
+                            className="border custom-border p-2 transition flex items-center justify-center cursor-pointer bg-white"
                         >
                             {link.icon}
                         </div>
