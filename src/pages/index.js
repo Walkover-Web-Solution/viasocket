@@ -104,7 +104,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
 
                     <h1 className="h1 !normal-case flex flex-col gap-1 relative z-index-1">
                         <span>
-                            Search ready-made <span className="text-accent">templates</span>
+                            Search ready-made <span className="text-accent">automations</span>
                         </span>
                     </h1>
                     <SearchInputHome

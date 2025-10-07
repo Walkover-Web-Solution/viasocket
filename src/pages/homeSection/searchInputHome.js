@@ -46,7 +46,9 @@ const SearchInputHome = ({
     const [aiResponse, setAiResponse] = useState('');
     const [showAiResponse, setShowAiResponse] = useState(false);
     const [loadingAiResponse, setLoadingAiResponse] = useState(false);
-    const [isInputFocused, setIsInputFocused] = useState(false);
+    const [isInputFocused, setIsInputFocused] = useState(true);
+    const [hasBrowserFocus, setHasBrowserFocus] = useState(false);
+    const [shouldShowCaret, setShouldShowCaret] = useState(true);
 
     // Use template filters hook for template functionality
     const {
@@ -282,6 +284,8 @@ const SearchInputHome = ({
     useEffect(() => {
         if (inputRef.current) {
             inputRef.current.focus();
+            setHasBrowserFocus(true);
+            setShouldShowCaret(true);
         }
     }, []);
 
@@ -361,7 +365,7 @@ const SearchInputHome = ({
         setSearchTerm('');
         // Close dropdown after selecting an app
         setShowDropdown(false);
-        setIsInputFocused(false);
+        // Keep isInputFocused true to maintain caret visibility
     };
 
     const handleSelectIndustry = (industry) => {
@@ -398,7 +402,7 @@ const SearchInputHome = ({
         setSearchTerm('');
         // Close dropdown after selecting an industry
         setShowDropdown(false);
-        setIsInputFocused(false);
+        // Keep isInputFocused true to maintain caret visibility
     };
 
     const handleSelectDepartment = (department) => {
@@ -435,7 +439,7 @@ const SearchInputHome = ({
         setSearchTerm('');
         // Close dropdown after selecting a department
         setShowDropdown(false);
-        setIsInputFocused(false);
+        // Keep isInputFocused true to maintain caret visibility
     };
 
     const handleSearchTemplates = async (
@@ -617,7 +621,17 @@ const SearchInputHome = ({
     return (
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
-                <div className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative">
+                <div 
+                    className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text"
+                    onClick={() => {
+                        if (inputRef.current) {
+                            inputRef.current.focus();
+                            setIsInputFocused(true);
+                            setHasBrowserFocus(true);
+                            setShouldShowCaret(true);
+                        }
+                    }}
+                >
                     <IoMdSearch />
 
                     {selectedApps?.map((app) => (
@@ -694,29 +708,39 @@ const SearchInputHome = ({
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {
                                 setIsInputFocused(true);
-                                // Only show dropdown if there's content or existing selections
+                                setHasBrowserFocus(true);
+                                setShouldShowCaret(true);
+                                // Show dropdown when focused if there's any content
                                 if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
                                     setShowDropdown(true);
                                 }
                             }}
                             onClick={() => {
                                 setIsInputFocused(true);
-                                // Only show dropdown if there's content or existing selections
+                                setHasBrowserFocus(true);
+                                setShouldShowCaret(true);
+                                // Focus the input when clicked
+                                if (inputRef.current) {
+                                    inputRef.current.focus();
+                                }
+                                // Show dropdown when clicked if there's any content
                                 if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
                                     setShowDropdown(true);
                                 }
                             }}
                             onBlur={() => {
+                                setHasBrowserFocus(false);
+                                setIsInputFocused(false);
+                                setShouldShowCaret(false); // Stop blinking when user clicks outside
                                 setTimeout(() => {
                                     setShowDropdown(false);
-                                    setIsInputFocused(false);
                                 }, 200);
                             }}
                             onKeyDown={handleKeyPress}
                             // placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
                         />
-                        {/* Custom caret for when input is not focused */}
-                        {!isInputFocused && searchTerm === '' && (
+                        {/* Custom blinking caret - shows when input doesn't have browser focus and should show caret */}
+                        {!hasBrowserFocus && searchTerm === '' && shouldShowCaret && (
                             <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
                                 <div className="w-px h-5 bg-gray-800 animate-blink"></div>
                             </div>

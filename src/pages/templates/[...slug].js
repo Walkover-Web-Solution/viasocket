@@ -197,8 +197,8 @@ export async function getServerSideProps(context) {
             )
         );
         const metaData = {
-            title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - ViaSocket`,
-            description: `Discover ${categoryName} automation templates on ViaSocket. Streamline your workflows with pre-built integrations.`,
+            title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - viaSocket`,
+            description: `Discover ${categoryName} automation templates on viaSocket. Streamline your workflows with pre-built integrations.`,
             keywords: `${categoryName}, automation, integration, workflow, templates`,
             image: '/assets/img/viasocket-og-image.png',
             url: pageUrl,
@@ -229,8 +229,8 @@ export async function getServerSideProps(context) {
             .slice(0, 3);
         
             const metaData = {
-            title: selectedTemplate?.title || 'ViaSocket Template',
-            description: selectedTemplate?.description || 'Discover powerful automation templates on ViaSocket',
+            title: selectedTemplate?.title || 'viaSocket Template',
+            description: selectedTemplate?.description || 'Discover powerful automation templates on viaSocket',
             keywords: selectedTemplate?.tags?.join(', ') || 'automation, integration, workflow',
             image: selectedTemplate?.templateUrl || '/assets/img/viasocket-og-image.png',
             url: pageUrl,

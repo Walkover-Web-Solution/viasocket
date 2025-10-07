@@ -51,7 +51,7 @@ const Privacy = ({ footerData, metaData }) => {
                                 <span data-custom-class="body_text">
                                     This privacy notice for{' '}
                                     <bdt className="question">
-                                        Viasocket
+                                        viaSocket
                                         <bdt className="block-component" />
                                     </bdt>{' '}
                                     (<bdt className="block-component" />"<strong>we</strong>," "<strong>us</strong>," or
@@ -11128,7 +11128,7 @@ const Privacy = ({ footerData, metaData }) => {
                                                                                                                                                                                                         >
                                                                                                                                                                                                             <span data-custom-class="body_text">
                                                                                                                                                                                                                 <bdt className="question">
-                                                                                                                                                                                                                    Viasocket
+                                                                                                                                                                                                                    viaSocket
                                                                                                                                                                                                                 </bdt>
                                                                                                                                                                                                             </span>
                                                                                                                                                                                                         </span>
