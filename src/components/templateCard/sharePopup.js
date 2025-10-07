@@ -13,22 +13,22 @@ const SharePopup = ({ title }) => {
     const shareLinks = [
         {
             name: 'Twitter',
-            icon: <FaTwitter size={20} className="text-[#000000]" />,
+            icon: <FaTwitter size={20}/>,
             url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
         },
         {
             name: 'Facebook',
-            icon: <FaFacebookF size={20} className="text-[#000000]" />,
+            icon: <FaFacebookF size={20}/>,
             url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         },
         {
             name: 'LinkedIn',
-            icon: <FaLinkedinIn size={20} className="text-[#000000]" />,
+            icon: <FaLinkedinIn size={20}/>,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
         },
         {
             name: 'WhatsApp',
-            icon: <FaWhatsapp size={20} className="text-[#000000]" />,
+            icon: <FaWhatsapp size={20}/>,
             url: `https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`,
         },
     ];
