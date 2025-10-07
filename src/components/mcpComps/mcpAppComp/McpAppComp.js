@@ -130,18 +130,35 @@ export default function McpAppComp({
                     <div className="container flex flex-col lg:flex-row gap-4">
                         <div className="cont gap-12 w-full lg:w-2/3">
                             <div className="flex gap-4 items-center">
-                                <div className="border custom-border p-3 bg-gray-200">
-                                    <Image
-                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
-                                        alt={appOneDetails?.name}
-                                        width={30}
-                                        height={30}
-                                    />
+                                <div className="border custom-border p-3 bg-white">
+                                    {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
+                                        <Image
+                                            src="/assets/brand/favicon-96x96.png"
+                                            alt={appOneDetails?.name}
+                                            width={30}
+                                            height={30}
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
+                                            alt={appOneDetails?.name}
+                                            width={30}
+                                            height={30}
+                                        />
+                                    )}
                                 </div>
-                                <div className="cont">
-                                    <h2 className="h3">MCP for {appOneDetails?.name}</h2>
-                                    <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
-                                </div>
+
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
+                                    <div className="cont">
+                                        <h2 className="h3">viaSocket MCP for {appOneDetails?.name}</h2>
+                                        <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
+                                    </div>
+                                ) : (
+                                    <div className="cont">
+                                        <h2 className="h3">MCP for {appOneDetails?.name}</h2>
+                                        <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
+                                    </div>
+                                )}
                             </div>
                             <div className="cont justify-center gap-2">
                                 <div className="cont gap-1">
@@ -459,18 +476,19 @@ export default function McpAppComp({
                     <div className=" container cont">
                         {faqData && <FAQSection faqData={faqData} />}
                         <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
-                            <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
+                            <div className="cont gap-4 p-12 justify-between border-x custom-border w-full md:border-b-0 border-b">
+                                <Image
+                                    className="h-10 w-fit"
+                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                    width={36}
+                                    height={36}
+                                    alt={appOneDetails?.name}
+                                />
+
                                 <div>
-                                    <Image
-                                        className="h-10 w-fit"
-                                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                        width={36}
-                                        height={36}
-                                        alt={appOneDetails?.name}
-                                    />
-                                    <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                    <h3 className="h3 font-bold mb-2">About {appOneDetails?.name}</h3>
+                                    <p className="text-sm sm:text-lg">{appOneDetails?.description}</p>
                                 </div>
-                                <p className="text-sm sm:text-lg h-full">{appOneDetails?.description}</p>
                                 <div className="flex flex-wrap gap-2">
                                     {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
                                         <Link
@@ -478,39 +496,40 @@ export default function McpAppComp({
                                             href={createURL(`/mcp/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                             className="mb-2"
                                         >
-                                            <span className="px-3 text-sm py-2 text-white hover-bg-grey-100-text-black bg-accent ">
-                                                {cat}
-                                            </span>
+                                            <span className="btn btn-outline">{cat}</span>
                                         </Link>
                                     ))}
                                 </div>
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
+                                    <p className="text-sm text-gray-500">
+                                        viaSocket is not affiliated with Adobe. Adobe and its trademarks are the
+                                        property of Adobe Inc.
+                                    </p>
+                                ) : null}
                             </div>
-                            <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
+                            <div className="w-full cont gap-4 justify-between p-12 border-x md:border-l-0 custom-border">
+                                <Image
+                                    className="border border-white"
+                                    src="/assets/brand/favicon-96x96.png"
+                                    width={46}
+                                    height={46}
+                                    alt="viaSocket MCP"
+                                />
+
                                 <div>
-                                    <Image
-                                        className="border border-white"
-                                        src="/assets/brand/smiley_white.svg"
-                                        width={46}
-                                        height={46}
-                                        alt="viaSocket MCP"
-                                    />
-                                    <h3 className="h3 font-bold pt-5">About viaSocket MCP server</h3>
+                                    <h3 className="h3 font-bold mb-2">About viaSocket MCP server</h3>
+                                    <p className="text-sm sm:text-lg font-medium">
+                                        viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps
+                                        through viaSocket's platform, enabling seamless communication, data exchange,
+                                        and enhanced automation.
+                                    </p>
                                 </div>
-                                <p className="text-sm sm:text-lg h-full font-medium">
-                                    viaSocket MCP (Model Context Protocol) lets AI connect with thousands of apps
-                                    through viaSocket's platform, enabling seamless communication, data exchange, and
-                                    enhanced automation.
-                                </p>
                                 <div className="flex flex-wrap gap-3">
                                     <Link href="/mcp" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
-                                            viaSocket MCP
-                                        </span>
+                                        <span className="btn btn-outline">viaSocket MCP</span>
                                     </Link>
                                     <Link href="/integrations" className="mb-2">
-                                        <span className="px-3 py-2 text-sm text-white hover-bg-grey-100-text-black bg-accent">
-                                            Integration
-                                        </span>
+                                        <span className="btn btn-outline">Integration</span>
                                     </Link>
                                 </div>
                             </div>
