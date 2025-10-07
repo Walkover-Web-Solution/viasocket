@@ -158,9 +158,6 @@ export default function McpIndexComp({
                                     Get Your MCP URL
                                 </button>
                             </div>
-                            {/* <div className="flex justify-center items-center relative w-full md:w-3/5 h-full min-h-[300px] mx-auto">
-                            <Image src="/assets/img/mcpHero.svg" layout="fill" alt="Selected Embed Image" />
-                        </div> */}
                         </div>
 
                         <div className="flex flex-wrap gap-6">
@@ -228,33 +225,6 @@ export default function McpIndexComp({
                             </div>
                         </div>
                         <div className="mcp-page-apps">
-                            {/* <div className="p-4 md:p-8 cont gap-2">
-                                {integrationsInfo?.category && integrationsInfo?.category != 'all' ? (
-                                    <>
-                                        <h2 className="h1 text-accent">
-                                            <span className="text-black italic">{categoryData?.appcount || 300}+</span>{' '}
-                                            {integrationsInfo?.category === 'all'
-                                                ? 'Apps'
-                                                : decodeURIComponent(categoryData?.name)}
-                                        </h2>
-                                        <p>{categoryData?.subheading}</p>
-                                    </>
-                                ) : (
-                                    <>
-                                        <h2 className="h2 text-accent italic">
-                                            {' '}
-                                            {+appCount + 300}+
-                                            <span className="text-black not-italic"> MCP Servers</span>
-                                        </h2>
-                                        <p>
-                                            Viasocket is your all-in-one solution, seamlessly integrating CRM,
-                                            Marketing, E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and
-                                            more for streamlined business success.
-                                        </p>
-                                    </>
-                                )}
-                            </div> */}
-
                             <div
                                 className="custom-border grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 border-t border-l lg:border-l-0 w-full"
                                 style={{ gridAutoRows: '75px' }}

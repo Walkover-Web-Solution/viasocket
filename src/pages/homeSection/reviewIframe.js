@@ -1,9 +1,13 @@
 import Testimonials from './testimonials';
-const ReviewIframe = ({reviewData, showless}) => {
+import { IoMdHeart } from 'react-icons/io';
+
+const ReviewIframe = ({ reviewData, showless }) => {
     return (
         <div className="iframe-main-wrapper pb-12 pt-8 relative container">
             <div className="flex items-center justify-between gap-2">
-                <h2 className="h2">Reviews ❤️</h2>
+                <h2 className="h2 flex items-center gap-1">
+                    <span>Reviews</span> <IoMdHeart className='text-red-700' />
+                </h2>
                 <div className="flex items-center gap-2">
                     <a href="https://www.capterra.com/p/10020406/viaSocket/reviews/">
                         <img
