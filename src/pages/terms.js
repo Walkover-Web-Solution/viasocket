@@ -150,7 +150,7 @@ const Terms = ({ footerData, metaData }) => {
                                 <bdt className="block-component" />'<strong>y</strong>
                                 <strong>ou</strong>'
                                 <bdt className="else-block" />
-                                ), and <bdt className="question">Viasocket</bdt>
+                                ), and <bdt className="question">viaSocket</bdt>
                                 , concerning your access to and use of the Services. You agree that by accessing the
                                 Services, you have read, understood, and agreed to be bound by all of these Legal Terms.
                                 IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS, THEN YOU ARE EXPRESSLY PROHIBITED
@@ -5478,7 +5478,7 @@ const Terms = ({ footerData, metaData }) => {
                                 >
                                     <bdt className="statement-end-if-in-editor" />
                                 </span>
-                                . <bdt className="question">Viasocket</bdt> and yourself irrevocably consent that the
+                                . <bdt className="question">viaSocket</bdt> and yourself irrevocably consent that the
                                 courts of{' '}
                                 <span
                                     style={{
@@ -6532,7 +6532,7 @@ const Terms = ({ footerData, metaData }) => {
                             <span style={{ fontSize: '15px' }}>
                                 <span style={{ color: 'rgb(89, 89, 89)' }}>
                                     <bdt className="question">
-                                        <strong>Viasocket</strong>
+                                        <strong>viaSocket</strong>
                                     </bdt>
                                     <strong>
                                         <bdt className="block-component" />

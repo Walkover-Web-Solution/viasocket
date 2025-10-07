@@ -165,7 +165,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                 )}
 
                                 <p>
-                                    Viasocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
+                                    viaSocket is your all-in-one solution, seamlessly integrating CRM, Marketing,
                                     E-Commerce, Helpdesk, Payments, Web forms, Collaboration, and more for streamlined
                                     business success.
                                 </p>
