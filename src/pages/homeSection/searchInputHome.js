@@ -17,6 +17,9 @@ const SearchInputHome = ({
     onLoadingChange,
     onSelectionChange,
     fetchApps,
+    enableVideos = true,
+    enableBlogs = true,
+    enableAi = true,
 }) => {
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
@@ -119,18 +122,20 @@ const SearchInputHome = ({
                                         selectedDepartments.length > 0
                                     ) {
                                         handleSearchTemplates();
-                                        handleSearchVideos();
-                                        handleSearchBlogs();
+                                        if (enableVideos) handleSearchVideos();
+                                        if (enableBlogs) handleSearchBlogs();
                                     }
                                     // Check AI response condition separately
-                                    const shouldShowAiResponse =
-                                        (selectedApps.length >= 1 &&
-                                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                                        (selectedApps.length >= 1);
-                                    if (shouldShowAiResponse) {
-                                        getAiResponse();
-                                    } else {
-                                        setShowAiResponse(false);
+                                    if (enableAi) {
+                                        const shouldShowAiResponse =
+                                            (selectedApps.length >= 1 &&
+                                                (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                                            (selectedApps.length >= 1);
+                                        if (shouldShowAiResponse) {
+                                            getAiResponse();
+                                        } else {
+                                            setShowAiResponse(false);
+                                        }
                                     }
                                 }, 100);
                             }
@@ -139,16 +144,18 @@ const SearchInputHome = ({
                 }
             } else {
                 handleSearchTemplates();
-                handleSearchVideos();
-                handleSearchBlogs();
+                if (enableVideos) handleSearchVideos();
+                if (enableBlogs) handleSearchBlogs();
                 // Check AI response condition
-                const shouldShowAiResponse =
-                    (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedApps.length >= 1);
-                if (shouldShowAiResponse) {
-                    getAiResponse();
-                } else {
-                    setShowAiResponse(false);
+                if (enableAi) {
+                    const shouldShowAiResponse =
+                        (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                        (selectedApps.length >= 1);
+                    if (shouldShowAiResponse) {
+                        getAiResponse();
+                    } else {
+                        setShowAiResponse(false);
+                    }
                 }
             }
         } else if (e.key === 'Backspace' && searchTerm === '') {
@@ -345,18 +352,20 @@ const SearchInputHome = ({
             setTimeout(() => {
                 if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
                     handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
-                    handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
-                    handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
+                    if (enableVideos) handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
+                    if (enableBlogs) handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
                 }
                 // Updated AI response condition - show AI response for single app selection too
-                const shouldShowAiResponse =
-                    (newSelectedApps.length >= 1 &&
-                        (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (newSelectedApps.length >= 1); // Show AI response for any app selection
-                if (shouldShowAiResponse) {
-                    getAiResponse();
-                } else {
-                    setShowAiResponse(false);
+                if (enableAi) {
+                    const shouldShowAiResponse =
+                        (newSelectedApps.length >= 1 &&
+                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                        (newSelectedApps.length >= 1); // Show AI response for any app selection
+                    if (shouldShowAiResponse) {
+                        getAiResponse();
+                    } else {
+                        setShowAiResponse(false);
+                    }
                 }
             }, 100);
 
@@ -382,18 +391,20 @@ const SearchInputHome = ({
             setTimeout(() => {
                 if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
                     handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
-                    handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
-                    handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
+                    if (enableVideos) handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
+                    if (enableBlogs) handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
                 }
                 // Check AI response condition separately
-                const shouldShowAiResponse =
-                    (selectedApps.length >= 1 &&
-                        (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                    (selectedApps.length >= 1);
-                if (shouldShowAiResponse) {
-                    getAiResponse();
-                } else {
-                    setShowAiResponse(false);
+                if (enableAi) {
+                    const shouldShowAiResponse =
+                        (selectedApps.length >= 1 &&
+                            (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                        (selectedApps.length >= 1);
+                    if (shouldShowAiResponse) {
+                        getAiResponse();
+                    } else {
+                        setShowAiResponse(false);
+                    }
                 }
             }, 100);
 
@@ -419,18 +430,20 @@ const SearchInputHome = ({
             setTimeout(() => {
                 if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
                     handleSearchTemplates(selectedApps, selectedIndustries, newSelectedDepartments);
-                    handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
-                    handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
+                    if (enableVideos) handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
+                    if (enableBlogs) handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
                 }
                 // Check AI response condition separately
-                const shouldShowAiResponse =
-                    (selectedApps.length >= 1 &&
-                        (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
-                    (selectedApps.length >= 1);
-                if (shouldShowAiResponse) {
-                    getAiResponse();
-                } else {
-                    setShowAiResponse(false);
+                if (enableAi) {
+                    const shouldShowAiResponse =
+                        (selectedApps.length >= 1 &&
+                            (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
+                        (selectedApps.length >= 1);
+                    if (shouldShowAiResponse) {
+                        getAiResponse();
+                    } else {
+                        setShowAiResponse(false);
+                    }
                 }
             }, 100);
 

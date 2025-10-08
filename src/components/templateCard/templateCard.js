@@ -7,7 +7,7 @@ import FlowRenderer from '../flowComp/flowRenderer';
 const TemplateCard = ({ template, index }) => {
     return (
         <Link
-            href={`/templates/${template?.title
+            href={`/automations/${template?.title
                 ?.trim()
                 .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
                 .replace(/\s+/g, '-') // replace spaces with '-'

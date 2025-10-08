@@ -58,7 +58,7 @@ const IndexTemplateComp = ({ categories }) => {
     const getTemplateLink = () => {
         const template = templateMap[selected?.scriptid];
         return template
-            ? `/templates/${template?.title
+            ? `/automations/${template?.title
                   ?.trim()
                   .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
                   .replace(/\s+/g, '-') // replace spaces with '-'
@@ -70,7 +70,7 @@ const IndexTemplateComp = ({ categories }) => {
         <div className="cont gap-8 container relative">
             <div className="flex justify-between items-center gap-1">
                 <h2 className="h2 text-white font-bold">Must use template department wise.</h2>
-                <Link href="/templates" target="_blank" className="btn btn-outline">
+                <Link href="/automations" target="_blank" className="btn btn-outline">
                     <span>Explore all templates</span>
                 </Link>
             </div>
