@@ -40,7 +40,7 @@ export default function CategoryTemplates({ categoryName, templates }) {
                 ) : (
                     <div className="text-center cont gap-8 flex items-center">
                         <p className="text-gray-600">No templates found for this category.</p>
-                        <a href="/templates" className="btn btn-accent">
+                        <a href="/automations" className="btn btn-accent">
                             Browse All Templates
                         </a>
                     </div>

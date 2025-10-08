@@ -87,7 +87,7 @@ export default function Navbar({ utm, footerData }) {
 
                         <div className="flex">
                             {router.pathname !== '/pricing' &&
-                                !router.pathname.startsWith('/templates') &&
+                                !router.pathname.startsWith('/automations') &&
                                 !router.pathname.startsWith('/integrations') && (
                                     <Link
                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
@@ -102,10 +102,10 @@ export default function Navbar({ utm, footerData }) {
                                     </Link>
                                 )}
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/templates')}`}
-                                href={`/templates`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/automations')}`}
+                                href={`/automations`}
                             >
-                                Templates
+                                Automations
                             </Link>
                             <Link
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}

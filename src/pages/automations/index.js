@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
@@ -15,12 +15,10 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { useRouter } from 'next/router';
 import AutomationSuggestions from '../workflow-automation-ideas';
-import TitleWithButtons from '@/components/templateCard/titleWithButtons';
-import AutocompleteFilter from '@/components/templateCard/automcompleteFilter';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import { Webhook, Timer } from 'lucide-react';
-import FlowRenderer from '@/components/flowComp/flowRenderer';
+import SearchInputHome from '@/pages/homeSection/searchInputHome';
 
 export const runtime = 'experimental-edge';
 
@@ -30,6 +28,13 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
+    // SearchInputHome integration (templates-only mode)
+    const [filteredSearchTemplates, setFilteredSearchTemplates] = useState([]);
+    const [showSearchTemplates, setShowSearchTemplates] = useState(false);
+    const [hasSearchResults, setHasSearchResults] = useState(false);
+    const [selectedAppsFromSearch, setSelectedAppsFromSearch] = useState([]);
+    const [selectedDepartmentsFromSearch, setSelectedDepartmentsFromSearch] = useState([]);
+    const [selectedIndustriesFromSearch, setSelectedIndustriesFromSearch] = useState([]);
 
     // Use the custom hook for all filter-related logic
     const {
@@ -47,6 +52,15 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         handleLoadMore,
         clearAllFilters,
     } = useTemplateFilters(templateToShow);
+
+    // fetchApps function for SearchInputHome
+    const fetchApps = useCallback(async (category) => {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+        );
+        const rawData = await response.json();
+        return rawData?.data;
+    }, []);
 
     useEffect(() => {
         if (templateToShow.length === 0) return;
@@ -74,7 +88,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         const currentTemplate = templateToShow[currentIndex];
         if (currentTemplate) {
             router.push(
-                `/templates/${currentTemplate?.title
+                `/automations/${currentTemplate?.title
                     ?.trim()
                     .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
                     .replace(/\s+/g, '-') // replace spaces with '-'
@@ -82,6 +96,23 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
             );
         }
     };
+
+    // Handlers for SearchInputHome (templates only)
+    const handleTemplatesChange = useCallback((data) => {
+        setFilteredSearchTemplates(data.filteredTemplates || []);
+        setShowSearchTemplates(data.showTemplates || false);
+        setHasSearchResults(data.hasResults || false);
+    }, []);
+
+    const handleLoadingChange = useCallback(() => {
+        // templates-only mode: no-op for external loading state
+    }, []);
+
+    const handleSelectionChange = useCallback((data) => {
+        setSelectedAppsFromSearch(data.selectedApps || []);
+        setSelectedDepartmentsFromSearch(data.selectedDepartments || []);
+        setSelectedIndustriesFromSearch(data.selectedIndustries || []);
+    }, []);
 
     // helpers to remove a selected category/app from the page-level chips
     const removeCategory = (category) => {
@@ -102,64 +133,32 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         });
     };
 
-    // Choose which list to display: if there are items beyond the "latest" slice, use them; otherwise use all filtered
-    const displayTemplates = remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates;
+    // Choose which list to display
+    // If search bar is showing template results, prefer those. Otherwise fall back to page filters.
+    const templatesFromSearchActive = showSearchTemplates && (filteredSearchTemplates.length > 0 || hasSearchResults);
+    const displayTemplates = templatesFromSearchActive
+        ? filteredSearchTemplates
+        : (remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates);
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/templates'} />
-            <Navbar footerData={footerData} utm={'/template'} />
+            <MetaHeadComp metaData={metaData} page={'/automations'} />
+            <Navbar footerData={footerData} utm={'/automations'} />
 
-            <div className="w-full cont gap-12 overflow-x-hidden">
-                <div className="container pt-20 pb-10">
-                    <div className="cont">
-                        {templateToShow.length > 0 ? (
-                            <TitleWithButtons
-                                title={templateToShow[currentIndex]?.title}
-                                onInstall={handleInstall}
-                                onPrev={handlePrev}
-                                onNext={handleNext}
-                            />
-                        ) : (
-                            <h1 className="h1">
-                                Workflow <span className="text-accent">Automation</span> Templates
-                            </h1>
-                        )}
-                    </div>
-                </div>
+            <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background">
                 <div className="container">
-                    <div className="h-[400px] relative">
-                        <div className="flex lg:flex-row gap-9 h-full items-stretch">
-                            {/* Left side - Template Image */}
-                            <div className="flex-1 min-h-0 overflow-hidden ">
-                                <div className="h-[400px] w-full overflow-hidden flex justify-center bg-white border custom-border relative">
-                                    <div className="block m-0 max-h-full max-w-full object-contain pt-4">
-                                        <FlowRenderer
-                                            flowJson={templateToShow[currentIndex]?.flowJson}
-                                            scale={'70'}
-                                        />
-                                    </div>
-                                    <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
-                                </div>
-                            </div>
-
-                            {/* Right side - AutocompleteFilter */}
-                            <div className="flex-1 min-h-0">
-                                <AutocompleteFilter
-                                    categories={categories}
-                                    apps={apps}
-                                    searchTerm={searchTerm}
-                                    selectedCategories={selectedCategories}
-                                    selectedApps={selectedApps}
-                                    totalFilters={totalFilters}
-                                    onFilterChange={handleFilterChange}
-                                    onClearAll={clearAllFilters}
-                                />
-                            </div>
-                        </div>
-                    </div>
-
+                    <h1 className='h1 text-center'><span className='text-accent'>Search</span> automation templates</h1>
+                    <SearchInputHome
+                        onTemplatesChange={handleTemplatesChange}
+                        onLoadingChange={handleLoadingChange}
+                        onSelectionChange={handleSelectionChange}
+                        fetchApps={fetchApps}
+                        enableVideos={false}
+                        enableBlogs={false}
+                        enableAi={false}
+                    />
+                     
                     <div>
                         {(selectedCategories.length > 0 || selectedApps.length > 0) && (
                             <div className="flex flex-row flex-wrap gap-2 mt-2">
@@ -235,6 +234,47 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                 <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
                             ))}
                         </div>
+                    ) : (templatesFromSearchActive ? (
+                        <>
+                            {(selectedAppsFromSearch.length > 0 || selectedDepartmentsFromSearch.length > 0 || selectedIndustriesFromSearch.length > 0) && (
+                                <h2 className="h2 my-8 text-left">
+                                    Top{' '}
+                                    {selectedAppsFromSearch.map((app, index) => (
+                                        <span key={app.appslugname}>
+                                            {index > 0 && ', '}
+                                            <span>{app.name}</span>
+                                        </span>
+                                    ))}{' '}
+                                    ready to use templates {selectedDepartmentsFromSearch.length > 0 && 'for '}
+                                    {selectedDepartmentsFromSearch.map((department, index) => (
+                                        <span key={department}>
+                                            {index > 0 && ', '}
+                                            <span>{department}</span>
+                                        </span>
+                                    ))}{' '}
+                                    {selectedIndustriesFromSearch.length > 0 && 'in '}
+                                    {selectedIndustriesFromSearch.map((industry, index) => (
+                                        <span key={industry}>
+                                            {index > 0 && ', '}
+                                            <span>{industry}</span>
+                                        </span>
+                                    ))}
+                                </h2>
+                            )}
+                            {displayTemplates.length > 0 ? (
+                                <>
+                                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                        {displayTemplates.slice(0, visibleCount).map((template, index) => (
+                                            <TemplateCard key={template.id} index={index} template={template} />
+                                        ))}
+                                    </div>
+                                </>
+                            ) : (
+                                <div className="cont gap-4">
+                                    <p className="h3 mt-20">No templates found for current selection.</p>
+                                </div>
+                            )}
+                        </>
                     ) : hasResults ? (
                         <>
                             {/* Newly Published Section */}
@@ -281,7 +321,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             </p>
                             <AutomationSuggestions />
                         </div>
-                    )}
+                    ))}
                 </div>
 
                 <div className="cont gap-12 md:gap-16 lg:gap-20">
@@ -291,7 +331,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     <div className="pb-4">
                         {faqData?.length > 0 && (
                             <div className="container">
-                                <FAQSection faqData={faqData} faqName={'/templates'} />
+                                <FAQSection faqData={faqData} faqName={'/automations'} />
                             </div>
                         )}
                         <div className="container">
@@ -312,7 +352,7 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templates = await getTemplates(pageUrl);
-    const metaData = await getMetaData('/templates', pageUrl);
+    const metaData = await getMetaData('/automations', pageUrl);
     const faqData = await getFaqData('/templates', pageUrl);
     const blogTags = 'templates';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
