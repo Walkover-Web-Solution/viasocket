@@ -20,37 +20,6 @@ import { MdCenterFocusStrong } from "react-icons/md";
 
 export const runtime = 'experimental-edge';
 
-export function updateClassScaleOnly(className, newScaleValue) {
-    let styleElement = document.getElementById('drag-scale-rules');
-
-    if (!styleElement) {
-        styleElement = document.createElement('style');
-        styleElement.id = 'drag-scale-rules';
-        document.head.appendChild(styleElement);
-    }
-
-    const cssRules = `
-    /* Base scaling for all drag elements */
-    .${className} {
-      transform: scale(${newScaleValue}) !important;
-      transition: none !important;
-      will-change: transform !important;
-    }
-    /* Center origin for if condition elements */
-    .${className}:has(.ifBlock),
-    .${className}.ifBlock {
-      transform-origin: center !important;
-    }
-    /* Top-left origin for regular elements (fallback) */
-    .${className}:not(:has(.ifBlock)):not(.ifBlock) {
-      transform-origin: top left !important;
-    }
-  `;
-
-    styleElement.textContent = cssRules;
-    return true;
-}
-
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
     const [scale, setScale] = useState(1);
 
@@ -160,30 +129,11 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                                 </div>
                                                 <h3 className="sub font-semibold">
                                                     {template?.userName}
-                                                    {/* <span className="!font-normal"> at </span>
-                                                {template?.updatedAt
-                                                    ? new Date(template.updatedAt).toLocaleDateString('en-GB', {
-                                                        day: '2-digit',
-                                                        month: 'short',
-                                                        year: 'numeric',
-                                                        timeZone: 'UTC',
-                                                    })
-                                                    : ''} */}
                                                 </h3>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {/* <div
-                                    className={`lg:w-1/2 ml-auto w-full h-[600px] overflow-hidden flex justify-center items-center relative border custom-border dotted-background`}
-                                >
-                                    <FlowRenderer
-                                        flowJson={template?.flowJson ||
-                                            'https://placehold.co/600x400'}
-                                        scale={100}
-                                    />
-                                    <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
-                                </div> */}
                                 <div
                                     onWheel={handleWheel}
                                     className="lg:w-1/2 ml-auto w-full h-[600px] overflow-hidden flex justify-center items-start pt-10 relative border custom-border dotted-background"
@@ -210,7 +160,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                     </div>
 
                                     <FlowRenderer flowJson={template?.flowJson ||
-                                            'https://placehold.co/600x400'} scale={scale * 100} />
+                                        'https://placehold.co/600x400'} scale={scale * 100} />
                                 </div>
                             </div>
                         </div>
