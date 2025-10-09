@@ -13,7 +13,7 @@ import TemplateIcons from '@/components/templateCard/templateIcons';
 import FlowRenderer from '@/components/flowComp/flowRenderer';
 import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { FiMinus } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
 import { MdCenterFocusStrong } from 'react-icons/md';
@@ -22,7 +22,14 @@ export const runtime = 'experimental-edge';
 
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
     const [scale, setScale] = useState(1);
+    const contentRef = useRef(null);
+    const [flowRendererHeight, setFlowRendererHeight] = useState('600px');
 
+    useEffect(() => {
+        if (contentRef.current) {
+            setFlowRendererHeight(`${contentRef.current.offsetHeight}px`);
+        }
+    }, [template]);
     const handleWheel = (e) => {
         e.preventDefault();
         const delta = e.deltaY > 0 ? -0.05 : 0.05;
@@ -81,7 +88,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                 <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
                     <div className="flex flex-col gap-4 border custom-border">
                         <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 gap-8">
-                            <div className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
+                            <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
                                 <div className="cont gap-4">
                                     <h1 className="h1">{template?.title}</h1>
                                     <h2 className="h3">{template?.description}</h2>
@@ -135,7 +142,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                             </div>
                             <div
                                 onWheel={handleWheel}
-                                className="lg:w-1/2 ml-auto w-full h-[600px] overflow-hidden flex justify-center items-start p-6 relative dotted-background"
+                                className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start p-6 relative dotted-background"
+                                style={{ height: flowRendererHeight }}
                             >
                                 <div className="absolute top-2 right-2 flex z-10">
                                     <button onClick={zoomIn} className="px-2 py-1 text-xl">
