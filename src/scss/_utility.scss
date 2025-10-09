@@ -20,6 +20,30 @@
     }
 }
 
+.custom-styles {
+    &:hover {
+        // background-color: inherit !important;
+        color: var(--text-color-black) !important;
+        border: 1px solid var(--custom-border) !important;
+    }
+}
+
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+.hover-bg-black {
+    &:hover {
+        background-color: #000000 !important;
+        color: white !important;
+    }
+}
+
+.border-color {
+    border: 1px solid #e3e2e2 !important;
+    transition: all 0.3s ease-in-out;
+}
+
 /** Globally used for scrollbar width */
 .scrollbar-thin {
     scrollbar-width: thin !important;

@@ -14,48 +14,59 @@ const UseCaseList = ({ useCaseData, appname }) => {
 
     return (
         <div className="container">
-            <div className="cont gap-8 bg-white border custom-border p-12">
-                <div className="cont gap-2">
-                    <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
-                    <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>
-                </div>
+            <div className="cont gap-8 bg-white border custom-border">
                 <div className="flex flex-col md:flex-row gap-4 ">
-                    {/* Sidebar with hover and active effect */}
-                    <div className="w-full h-fit flex flex-col justify-center items-center ">
-                        {allUseCases.map((uc, index) => (
-                            <div
-                                key={index}
-                                className={`px-4 py-6 w-full cursor-pointer transition-all  group ${
-                                    activeIndex === index ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'
-                                }`}
-                                onMouseEnter={() => {
-                                    setActiveUseCases(uc?.content);
-                                    setActiveIndex(index);
-                                }}
-                            >
+                    <div className="w-full p-8 h-fit flex flex-col">
+                        <div className="cont gap-2">
+                            <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
+                            <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>
+                        </div>
+                        <div className="flex flex-col mt-5">
+                            {allUseCases.map((uc, index) => (
                                 <div
-                                    className={`${
-                                        activeIndex === index ? 'text-white' : 'text-gray-400 group-hover:text-white'
+                                    key={index}
+                                    className={`p-4 w-full cursor-pointer transition-all  group ${
+                                        activeIndex === index ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'
                                     }`}
+                                    onMouseEnter={() => {
+                                        setActiveUseCases(uc?.content);
+                                        setActiveIndex(index);
+                                    }}
                                 >
-                                    <div className="flex items-center gap-2">
-                                        <div
-                                            className={`font-semibold ${
-                                                activeIndex === index
-                                                    ? 'text-white'
-                                                    : 'text-black group-hover:text-white'
-                                            }`}
-                                        >
-                                            {uc?.heading}
+                                    <div
+                                        className={`${
+                                            activeIndex === index
+                                                ? 'text-white'
+                                                : 'text-gray-400 group-hover:text-white'
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <div
+                                                className={`font-semibold ${
+                                                    activeIndex === index
+                                                        ? 'text-white'
+                                                        : 'text-black group-hover:text-white'
+                                                }`}
+                                            >
+                                                {uc?.heading}
+                                            </div>
                                         </div>
+                                        {uc?.description}
                                     </div>
-                                    {uc?.description}
                                 </div>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
-                    <div className="w-full flex justify-center items-center border custom-border p-8 sm:p-16">
-                        <ul className="list-disc">
+
+                    <div
+                        className="px-8 py-16 w-full flex justify-center items-center border-l custom-border"
+                        style={{
+                            backgroundImage: 'url("/review-image/pexels-ironic.jpg")',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                        }}
+                    >
+                        <ul className="list-disc bg-white m-12 h-full p-8 flex flex-col justify-center">
                             {activeUseCases?.map((item, j) => (
                                 <li key={j} className="text-xl mb-4">
                                     {item}

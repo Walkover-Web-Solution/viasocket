@@ -14,9 +14,9 @@ import FlowRenderer from '@/components/flowComp/flowRenderer';
 import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates';
 import Link from 'next/link';
 import { useState } from 'react';
-import { FiMinus } from "react-icons/fi";
-import { FiPlus } from "react-icons/fi";
-import { MdCenterFocusStrong } from "react-icons/md";
+import { FiMinus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
+import { MdCenterFocusStrong } from 'react-icons/md';
 
 export const runtime = 'experimental-edge';
 
@@ -33,9 +33,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
     const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));
     const resetZoom = () => setScale(1);
 
-
     return (
-        <div className='dotted-background'>
+        <div className="dotted-background">
             <Head>
                 <title>{metaData?.title}</title>
                 <meta name="description" content={metaData?.description} />
@@ -57,11 +56,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
             </Head>
             <Navbar footerData={footerData} utm={'/automations'} />
             {isCategory ? (
-                <div className='container cont lg:gap-20 md:gap-16 gap-12'>
-                    <CategoryTemplates
-                        categoryName={categoryName}
-                        templates={relatedTemplates}
-                    />
+                <div className="container cont lg:gap-20 md:gap-16 gap-12">
+                    <CategoryTemplates categoryName={categoryName} templates={relatedTemplates} />
                     <div className="pb-4">
                         <Footer footerData={footerData} />
                     </div>
@@ -70,98 +66,93 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                 <div className="container cont lg:gap-20 md:gap-16 gap-12">
                     <div className="cont gap-4 pt-20 text-center">
                         <h1 className="h1">Template Not Found</h1>
-                        <p className="text-gray-600">The template you're looking for doesn't exist or has been removed.</p>
-                        <a href="/automations" className="btn btn-accent">Browse All Templates</a>
+                        <p className="text-gray-600">
+                            The template you're looking for doesn't exist or has been removed.
+                        </p>
+                        <a href="/automations" className="btn btn-accent">
+                            Browse All Templates
+                        </a>
                     </div>
                     <div className="pb-4">
                         <Footer footerData={footerData} />
                     </div>
                 </div>
             ) : (
-                <div className="container cont lg:gap-20 md:gap-16 gap-12">
-                    <div className="cont gap-4 pt-20">
-                        <div className="flex flex-col gap-4 bg-[#faf9f6] border custom-border p-8">
-                            <div className="flex flex-col lg:flex-row lg:gap-1 gap-8">
-                                <div className="w-full lg:w-[45%] cont justify-center gap-16">
-                                    <div className="cont gap-4">
-                                        <h1 className="h1">{template?.title}</h1>
-                                        <h2 className="h3">{template?.description}</h2>
-                                        <TemplateIcons template={template} />
-                                        {template?.category?.length > 0 && (
-                                            <div className="cont gap-2 mt-4">
-                                                <h2 className="h3">Categories</h2>
-                                                <div className="flex flex-wrap gap-3">
-                                                    {template?.category?.map((cat, idx) => (
-                                                        <Link
-                                                            key={idx}
-                                                            href={`/automations/${encodeURIComponent(
-                                                                cat.toLowerCase().replace(/\s+/g, '-')
-                                                            )}`}
-                                                            className="cursor-pointer px-2 py-1 bg-white text-sm border"
-                                                        >
-                                                            {cat}
-                                                        </Link>
-                                                    ))}
-                                                </div>
+                <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
+                    <div className="flex flex-col gap-4 border custom-border">
+                        <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 gap-8">
+                            <div className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
+                                <div className="cont gap-4">
+                                    <h1 className="h1">{template?.title}</h1>
+                                    <h2 className="h3">{template?.description}</h2>
+                                    <TemplateIcons template={template} />
+                                    {template?.category?.length > 0 && (
+                                        <div className="cont gap-2 mt-4">
+                                            <h2 className="h3">Categories</h2>
+                                            <div className="flex flex-wrap gap-3">
+                                                {template?.category?.map((cat, idx) => (
+                                                    <Link
+                                                        key={idx}
+                                                        href={`/automations/${encodeURIComponent(
+                                                            cat.toLowerCase().replace(/\s+/g, '-')
+                                                        )}`}
+                                                        className="cursor-pointer px-2 py-1 bg-white text-sm border"
+                                                    >
+                                                        {cat}
+                                                    </Link>
+                                                ))}
                                             </div>
-                                        )}
-
-                                    </div>
-                                    <div className=" flex items-center gap-16 lg:gap-28">
-                                        <div>
-                                            <button
-                                                className="btn btn-accent my-4"
-                                                onClick={(e) =>
-                                                    handleRedirect(e, `https://flow.viasocket.com/automations/${template?.id}?`)
-                                                }
-                                            >
-                                                Install Template
-                                            </button>
                                         </div>
-                                        <div className='flex gap-2 flex-col'>
-                                            <h3 className="h4">Created by</h3>
-                                            <div className="flex gap-2 items-center">
-                                                <div className="bg-gray-200 p-1 flex items-center justify-center text-sm">
-                                                    {template?.userName &&
-                                                        template?.userName
-                                                            .split(' ')
-                                                            .map((name, index) => <span key={index}>{name[0]}</span>)}
-                                                </div>
-                                                <h3 className="sub font-semibold">
-                                                    {template?.userName}
-                                                </h3>
+                                    )}
+                                </div>
+                                <div className=" flex items-center gap-16 lg:gap-28">
+                                    <div>
+                                        <button
+                                            className="btn btn-accent my-4"
+                                            onClick={(e) =>
+                                                handleRedirect(
+                                                    e,
+                                                    `https://flow.viasocket.com/automations/${template?.id}?`
+                                                )
+                                            }
+                                        >
+                                            Install Template
+                                        </button>
+                                    </div>
+                                    <div className="flex gap-2 flex-col">
+                                        <h3 className="h4">Created by</h3>
+                                        <div className="flex gap-2 items-center">
+                                            <div className="bg-gray-200 p-1 flex items-center justify-center text-sm">
+                                                {template?.userName &&
+                                                    template?.userName
+                                                        .split(' ')
+                                                        .map((name, index) => <span key={index}>{name[0]}</span>)}
                                             </div>
+                                            <h3 className="sub font-semibold">{template?.userName}</h3>
                                         </div>
                                     </div>
                                 </div>
-                                <div
-                                    onWheel={handleWheel}
-                                    className="lg:w-1/2 ml-auto w-full h-[600px] overflow-hidden flex justify-center items-start pt-10 relative border custom-border dotted-background"
-                                >
-                                    <div className="absolute top-2 right-2 flex z-10">
-                                        <button
-                                            onClick={zoomIn}
-                                            className="px-2 py-1 text-xl"
-                                        >
-                                            <FiPlus />
-                                        </button>
-                                        <button
-                                            onClick={zoomOut}
-                                            className="px-2 py-1 text-xl"
-                                        >
-                                            <FiMinus />
-                                        </button>
-                                        <button
-                                            onClick={resetZoom}
-                                            className="px-2 py-1 text-xl"
-                                        >
-                                            <MdCenterFocusStrong />
-                                        </button>
-                                    </div>
-
-                                    <FlowRenderer flowJson={template?.flowJson ||
-                                        'https://placehold.co/600x400'} scale={scale * 100} />
+                            </div>
+                            <div
+                                onWheel={handleWheel}
+                                className="lg:w-1/2 ml-auto w-full h-[600px] overflow-hidden flex justify-center items-start p-6 relative dotted-background"
+                            >
+                                <div className="absolute top-2 right-2 flex z-10">
+                                    <button onClick={zoomIn} className="px-2 py-1 text-xl">
+                                        <FiPlus />
+                                    </button>
+                                    <button onClick={zoomOut} className="px-2 py-1 text-xl">
+                                        <FiMinus />
+                                    </button>
+                                    <button onClick={resetZoom} className="px-2 py-1 text-xl">
+                                        <MdCenterFocusStrong />
+                                    </button>
                                 </div>
+
+                                <FlowRenderer
+                                    flowJson={template?.flowJson || 'https://placehold.co/600x400'}
+                                    scale={scale * 100}
+                                />
                             </div>
                         </div>
                     </div>
@@ -185,10 +176,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                     <ReactMarkdown
                                         components={{
                                             h1: ({ node, ...props }) => (
-                                                <h1
-                                                    {...props}
-                                                    className="text-3xl font-bold mb-4 text-black-900"
-                                                />
+                                                <h1 {...props} className="text-3xl font-bold mb-4 text-black-900" />
                                             ),
                                             h2: ({ node, ...props }) => (
                                                 <h2
@@ -225,7 +213,11 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                                     {...props}
                                                     className="text-accent hover:border-b-2 border-b-accent"
                                                     target={props.href?.startsWith('http') ? '_blank' : undefined}
-                                                    rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
+                                                    rel={
+                                                        props.href?.startsWith('http')
+                                                            ? 'noopener noreferrer'
+                                                            : undefined
+                                                    }
                                                 />
                                             ),
                                             hr: ({ node, ...props }) => (
@@ -290,12 +282,14 @@ export async function getServerSideProps(context) {
     if (isCategory) {
         // Handle category filtering
         const categoryName = firstSlug.replace(/-/g, ' ');
-        const categoryTemplates = templateData.filter((template) =>
-            Array.isArray(template.category) &&
-            template.category.some((cat) =>
-                cat.toLowerCase().replace(/\s+/g, '-') === firstSlug ||
-                cat.toLowerCase() === categoryName.toLowerCase()
-            )
+        const categoryTemplates = templateData.filter(
+            (template) =>
+                Array.isArray(template.category) &&
+                template.category.some(
+                    (cat) =>
+                        cat.toLowerCase().replace(/\s+/g, '-') === firstSlug ||
+                        cat.toLowerCase() === categoryName.toLowerCase()
+                )
         );
         const metaData = {
             title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - ViaSocket`,
