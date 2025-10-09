@@ -5,6 +5,7 @@ import { detectUserCountry } from "@/utils/locationDetector";
 import { FaCrown, FaGem } from "react-icons/fa";
 import { IoMdSearch, IoMdInformationCircleOutline } from "react-icons/io";
 import MoreCreditComp from "./moreCreditComp";
+import { GiCheckMark } from "react-icons/gi";
 
 export default function PricingTabsClient({ countries }) {
   const [activeTab, setActiveTab] = useState("yearly");
@@ -252,7 +253,7 @@ export default function PricingTabsClient({ countries }) {
                   <h4 className="text-base font-semibold mb-3">Premium plan includes:</h4>
                   <ul className="flex flex-col gap-2 text-md">
                     <li className="flex items-center gap-2">
-                      <div className="h-3 w-3 bg-accent" />
+                      <GiCheckMark className="text-accent"/>
                       15k tasks/month
                       <div className="relative group inline-flex items-center">
                         <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
@@ -267,7 +268,7 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <div className="h-3 w-3 bg-accent" />
+                      <GiCheckMark className="text-accent"/>
                       5k Credits/month
                       <div className="relative group inline-flex items-center">
                         <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
@@ -282,11 +283,11 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <div className="h-3 w-3 bg-accent" />
+                      <GiCheckMark className="text-accent"/>
                       50% extra credit when buying additional credits
                     </li>
                     <li className="flex items-center gap-2">
-                      <div className="h-3 w-3 bg-accent" />
+                      <GiCheckMark className="text-accent"/>
                       Priority support
                     </li>
                   </ul>
@@ -349,15 +350,15 @@ export default function PricingTabsClient({ countries }) {
                 <h4 className="text-base font-semibold">Enterprise plan includes:</h4>
                 <ul className="flex flex-col gap-2 text-md">
                   <li className="flex items-center gap-2">
-                    <div className="h-3 w-3 bg-accent" />
+                    <GiCheckMark className="text-accent"/>
                     Dedicated account manager
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="h-3 w-3 bg-accent" />
+                    <GiCheckMark className="text-accent"/>
                     SLA-backed priority support
                   </li>
                   <li className="flex items-center gap-2">
-                    <div className="h-3 w-3 bg-accent" />
+                    <GiCheckMark className="text-accent"/>
                     Custom integrations & onboarding
                   </li>
                 </ul>
