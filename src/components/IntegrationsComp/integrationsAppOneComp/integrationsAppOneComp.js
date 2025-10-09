@@ -18,6 +18,7 @@ import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
+import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -29,14 +30,30 @@ export default function IntegrationsAppOneComp({
     footerData,
     blogsData,
     metaData,
-    integrations,
     useCaseData,
     videoData,
     appCount,
-    getDoFollowUrlStatusArray
+    getDoFollowUrlStatusArray,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [searchedApps, setSearchedApps] = useState([]);
+    const [searchedCategories, setSearchedCategories] = useState(null);
+    const [debounceValue, setDebounceValue] = useState('');
+
+    // Search callbacks - IntegrationSearchApps will handle all the logic
+    const handleSearchResults = (results) => {
+        setSearchedApps(results);
+    };
+
+    const handleCategoriesResults = (categories) => {
+        setSearchedCategories(categories);
+    };
+
+    const handleDebounceValueChange = (value) => {
+        setDebounceValue(value);
+    };
 
     return (
         <div
@@ -44,7 +61,7 @@ export default function IntegrationsAppOneComp({
                 borderLeftColor: appOneDetails?.brandcolor,
                 borderLeftWidth: '10px',
             }}
-            className="cont gap-12 md:gap-16 lg:gap-20"
+            className="cont gap-12 md:gap-16"
         >
             <Navbar footerData={footerData} utm={'/integrations/appone'} />
 
@@ -57,7 +74,19 @@ export default function IntegrationsAppOneComp({
                 integrationsInfo={integrationsInfo}
             />
             <div className="container">
-                <div className="flex justify-between gap-1 flex-wrap">
+                <div className="flex items-center gap-2 text-base mb-2">
+                    <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
+                        Integrations{' '}
+                    </Link>
+                    <MdChevronRight fontSize={22} />
+                    <Link
+                        href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
+                        className="flex items-center gap-0 underline"
+                    >
+                        {appOneDetails?.name}
+                    </Link>
+                </div>
+                <div className="flex justify-between gap-1 flex-wrap items-center">
                     <div className="flex md:h-28 items-center gap-4 px-5 py-3 bg-white max-w-auto border custom-border">
                         <Image
                             className="h-8 md:h-[72px] w-fit"
@@ -78,58 +107,63 @@ export default function IntegrationsAppOneComp({
                         Connect to {appOneDetails?.name} <MdOpenInNew />
                     </button>
                 </div>
-                <div className="flex items-center gap-2 text-base mt-1">
-                    <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
-                        Integrations{' '}
-                    </Link>
-                    <MdChevronRight fontSize={22} />
-                    <Link
-                        href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
-                        className="flex items-center gap-0 underline"
-                    >
-                        {appOneDetails?.name}
-                    </Link>
-                </div>
             </div>
 
             {/* Only show main heading if not showing beta component */}
             {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                <div className="container flex flex-col gap-2">
-                    <h1 className="h1">
-                        Connect <span className="text-accent">{appOneDetails?.name}</span> Integrations with your
-                        favorite Apps
+                <div className="container flex flex-col justify-center items-center gap-2">
+                    <h1 className="h1 text-center">
+                        Connect <span className="text-accent">{appOneDetails?.name}</span> integrations <br /> with your
+                        favorite apps
                     </h1>
-                    <p className="sub__h1">
+                    <p className="sub__h1 text-center">
                         Easily connect <span>{appOneDetails?.name}</span> with the apps you use every day. Build and
-                        manage <span>{appOneDetails?.name}</span> automations to simplify work and streamline
-                        communication. <br /> Pick from thousands of available <span>{appOneDetails?.name}</span>{' '}
-                        integrations or customize new ones through our automation platform.
+                        manage <span>{appOneDetails?.name}</span> automations <br /> to simplify work and streamline
+                        communication. Pick from thousands of available <span>{appOneDetails?.name}</span> integrations{' '}
+                        <br /> or customize new ones through our automation platform.
                     </p>
                 </div>
             )}
 
+            <div className="text-xl gap-4 justify-center flex-wrap flex items-center">
+                <Link href="https://viasocket.com/signup" target="_blank" className="btn btn-accent">
+                    Build from scratch
+                </Link>
+                <Link href="https://tally.so/r/wzVdKZ" target="_blank" className="btn btn-outline">
+                    Take help from human experts
+                </Link>
+            </div>
+
             {appOneDetails?.events.length > 0 && (
-                <div className="cont cont__gap container bg-[#FAF9F6] p-12 border custom-border">
-                    <div className="container cont gap-6">
+                <div className="cont cont__gap container bg-[#FAF9F6] p-6 border custom-border">
+                    <div className="container cont gap-10">
                         <h2 className="h2">{`Select Any App to connect with ${appOneDetails?.name}`}</h2>
-                        <div className="flex items-center gap-4 border custom-border p-6 w-fit">
+                        <div className="flex items-center gap-4">
                             <Image
-                                className="h-10 w-fit"
+                                className="h-16 w-fit border bg-white p-2"
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                width={36}
-                                height={36}
+                                width={20}
+                                height={20}
                                 alt={appOneDetails?.name}
                             />
-                            <div className="text-4xl font-semibold">{appOneDetails?.name}</div>
+                            <MdAdd fontSize={60} />
+                            <IntegrationSearchApps
+                                searchTerm={searchTerm}
+                                setSearchTerm={setSearchTerm}
+                                onSearchResults={handleSearchResults}
+                                onCategoriesResults={handleCategoriesResults}
+                                onDebounceValueChange={handleDebounceValueChange}
+                            />
                         </div>
-                        <MdAdd fontSize={36} />
                     </div>
                     <IntegrationsAppComp
                         pageInfo={pageInfo}
                         integrationsInfo={integrationsInfo}
-                        apps={apps}
+                        apps={debounceValue ? searchedApps : apps}
                         appCategories={appOneDetails?.category}
                         appCount={appCount}
+                        searchTerm={debounceValue}
+                        searchedCategories={searchedCategories}
                     />
                 </div>
             )}
@@ -181,7 +215,7 @@ export default function IntegrationsAppOneComp({
                                             setShowMore(false);
                                         }
                                     }}
-                                    className="btn btn-outline border-t-0 bg-white"
+                                    className="btn btn-outline border-t-0"
                                 >
                                     Load More
                                 </button>
@@ -212,11 +246,13 @@ export default function IntegrationsAppOneComp({
 
             {combosData?.combinations?.length > 0 && (
                 <div className="container cont gap-4">
-                   <div className="cont gap-2 pb-4">
-                   <h2 className="h2">Triggers and Actions in {appOneDetails?.name} Automations</h2>
-                    <p className="sub__h1">
-                    viaSocket makes it simple to connect {appOneDetails?.name}  integrations and automate repetitive tasks. A trigger is the event that starts a workflow, while an action is the task that follows automatically within your {appOneDetails?.name} app integrations.
-                    </p>
+                    <div className="cont gap-2 pb-4">
+                        <h2 className="h2">Triggers and Actions in {appOneDetails?.name} Automations</h2>
+                        <p className="sub__h1">
+                            viaSocket makes it simple to connect {appOneDetails?.name} integrations and automate
+                            repetitive tasks. A trigger is the event that starts a workflow, while an action is the task
+                            that follows automatically within your {appOneDetails?.name} app integrations.
+                        </p>
                     </div>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
                 </div>
