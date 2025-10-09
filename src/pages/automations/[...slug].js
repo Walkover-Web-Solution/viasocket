@@ -80,7 +80,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
             ) : (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12">
                     <div className="cont gap-4 pt-20">
-                        <div className="flex flex-col gap-4 bg-[#f2f2f2] border custom-border p-8">
+                        <div className="flex flex-col gap-4 bg-[#faf9f6] border custom-border p-8">
                             <div className="flex flex-col lg:flex-row lg:gap-1 gap-8">
                                 <div className="w-full lg:w-[45%] cont justify-center gap-16">
                                     <div className="cont gap-4">

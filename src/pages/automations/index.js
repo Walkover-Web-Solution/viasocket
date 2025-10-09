@@ -19,6 +19,7 @@ import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
+import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 
 export const runtime = 'experimental-edge';
 
@@ -28,7 +29,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
-    // SearchInputHome integration (templates-only mode)
+    // SearchInputHome integration
     const [filteredSearchTemplates, setFilteredSearchTemplates] = useState([]);
     const [showSearchTemplates, setShowSearchTemplates] = useState(false);
     const [hasSearchResults, setHasSearchResults] = useState(false);
@@ -75,27 +76,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     useEffect(() => {
         setLoading(false);
     }, [templateToShow]);
-
-    const handlePrev = () => {
-        setCurrentIndex((prev) => (prev === 0 ? templateToShow.length - 1 : prev - 1));
-    };
-
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % templateToShow.length);
-    };
-
-    const handleInstall = () => {
-        const currentTemplate = templateToShow[currentIndex];
-        if (currentTemplate) {
-            router.push(
-                `/automations/${currentTemplate?.title
-                    ?.trim()
-                    .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
-                    .replace(/\s+/g, '-') // replace spaces with '-'
-                    .toLowerCase()}/${currentTemplate?.id}`
-            );
-        }
-    };
 
     // Handlers for SearchInputHome (templates only)
     const handleTemplatesChange = useCallback((data) => {
@@ -158,7 +138,13 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         enableBlogs={false}
                         enableAi={false}
                     />
-                     
+                    <MarqueeComponent 
+                        onTemplatesChange={handleTemplatesChange}
+                        onLoadingChange={handleLoadingChange}
+                        onSelectionChange={handleSelectionChange}
+                        categories={categories}
+                        initialTemplates={templateToShow}
+                    />
                     <div>
                         {(selectedCategories.length > 0 || selectedApps.length > 0) && (
                             <div className="flex flex-row flex-wrap gap-2 mt-2">

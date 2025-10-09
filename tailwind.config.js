@@ -33,6 +33,18 @@ module.exports = {
                     '0%, 50%': { opacity: '1' },
                     '51%, 100%': { opacity: '0' },
                 },
+                marqueeLeft: {
+                    '0%': { transform: 'translateX(0)' },
+                    '100%': { transform: 'translateX(-50%)' }, // only half, because two copies
+                },
+                marqueeRight: {
+                    '0%': { transform: 'translateX(-50%)' },
+                    '100%': { transform: 'translateX(0)' },
+                },
+            },
+            animation: {
+                marqueeLeft: 'marqueeLeft 40s linear infinite',
+                marqueeRight: 'marqueeRight 40s linear infinite',
             },
         },
         screens: {
