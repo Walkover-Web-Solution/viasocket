@@ -40,6 +40,23 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
     const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));
     const resetZoom = () => setScale(1);
 
+    const triggerRef = useRef(null);
+    const [isSticky, setIsSticky] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                // When trigger component is NOT visible, activate sticky
+                setIsSticky(!entry.isIntersecting);
+            },
+            { threshold: 0 }
+        );
+
+        if (triggerRef.current) observer.observe(triggerRef.current);
+        return () => observer.disconnect();
+    }, []);
+
+
     return (
         <div className="dotted-background">
             <Head>
@@ -86,7 +103,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                 </div>
             ) : (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
-                    <div className="flex flex-col gap-4 border custom-border">
+                    <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
                         <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 gap-8">
                             <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
                                 <div className="cont gap-4">
@@ -164,6 +181,23 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                             </div>
                         </div>
                     </div>
+
+                    <div
+                        className={`fixed top-[44px] gap-24 left-1/2 transform -translate-x-1/2 bg-[#faf9f6] border custom-border bt-0 transition-all duration-300 flex items-center justify-between container px-12 m-autotransition-all duration-500 ease-in-out
+              ${isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
+                        style={{ zIndex: 50 }}
+                    >
+                        <h2 className="h3">{template?.title}</h2>
+                        <button
+                            className="btn btn-accent my-4"
+                            onClick={(e) =>
+                                handleRedirect(e, `https://flow.viasocket.com/automations/${template?.id}?`)
+                            }
+                        >
+                            Install Template
+                        </button>
+                    </div>
+
                     <div className="flex flex-col md:flex-row gap-4">
                         <div className="w-full md:w-2/5 cont gap-4">
                             <SharePopup title={template?.title} />
