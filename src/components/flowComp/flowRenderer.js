@@ -69,9 +69,12 @@ function generatePrettyColor(level, siblingIndex) {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-function FlowRenderer({ flowJson, scale = '100' }) {
+function FlowRenderer({ flowJson, scale = 100 }) {
     return (
-        <div className={`flex flex-col items-center gap-4 origin-top transform scale-${scale} `} >
+        <div
+            className="flex flex-col items-center gap-4 origin-top transform"
+            style={{ transform: `scale(${scale / 100})` }}
+        >
             <FlowHeader trigger={flowJson?.trigger} />
             <div className="font-semibold text-base">Do</div>
             <FlowSteps block={flowJson?.blocks} order={flowJson?.order} />
