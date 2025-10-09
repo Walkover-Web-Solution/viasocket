@@ -11,6 +11,7 @@ import { getFaqData } from '@/utils/getFaqData';
 import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { getAppCount } from '@/utils/axiosCalls';
+import { GiCheckMark } from 'react-icons/gi';
 
 export const runtime = 'experimental-edge';
 
@@ -53,12 +54,12 @@ export default function pricing({ footerData, faqData, metaData, features, count
                             {features.map((feature, index) =>
                                 index === 0 ? (
                                     <div key={index} className="flex items-center gap-2">
-                                        <div className="h-3 w-3 bg-accent" />
+                                        <GiCheckMark className="text-accent"/>
                                         <p className="text-lg leading-tight">Connect to {+appCount + 300}+ apps</p>
                                     </div>
                                 ) : (
                                     <div key={index} className="flex items-center gap-2">
-                                        <div className="h-3 w-3 bg-accent" />
+                                        <GiCheckMark className="text-accent"/>
                                         <p className="text-lg leading-tight">{feature.featurename}</p>
                                     </div>
                                 )

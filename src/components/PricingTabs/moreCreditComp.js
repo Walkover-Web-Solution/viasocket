@@ -3,6 +3,7 @@ import { formatCurrency, convertCurrency } from '@/utils/currencyConverter';
 import { FiMinus } from "react-icons/fi";
 import { FiPlus } from "react-icons/fi";
 import Link from 'next/link';
+import { GiCheckMark } from 'react-icons/gi';
 
 const MoreCreditComp = ({ selectedCountryData}) => {
     const [credits, setCredits] = useState(40000); // initial credits
@@ -89,18 +90,18 @@ const MoreCreditComp = ({ selectedCountryData}) => {
                     </div>
                     <ul className="space-y-3 text-md text-gray-700">
                         <li className="flex items-center gap-3">
-                            <div className="h-2.5 w-2.5 bg-accent" />
+                            <GiCheckMark className="text-accent"/>
                             Used in paid built-in plugs
                         </li>
                         <li className="flex items-center gap-3">
-                            <div className="h-2.5 w-2.5 bg-accent" />
+                            <GiCheckMark className="text-accent"/>
                             1 credit = 2 tasks
                         </li>
                         <li className="flex items-center gap-3 ml-6">
                             Use credits as tasks, When your tasks are consumed
                         </li>
                         <li className="flex items-center gap-3">
-                            <div className="h-2.5 w-2.5 bg-accent" />
+                            <GiCheckMark className="text-accent"/>
                             <Link href="https://viasocket.com/faq/plans-and-pricing/what-are-credits" target='_blank' className="text-accent hover:underline w-fit">
                                 Know more
                             </Link>
