@@ -128,7 +128,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
             <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background">
                 <div className="container">
-                    <h1 className='h1 text-center'><span className='text-accent'>Search</span> automation templates</h1>
+                    <h1 className='h1 text-center'><span className='text-accent'>Search</span> ready to use automations</h1>
                     <SearchInputHome
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}

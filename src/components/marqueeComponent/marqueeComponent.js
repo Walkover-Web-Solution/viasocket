@@ -3,6 +3,7 @@ import Image from "next/image";
 import { getTemplates } from "@/utils/axiosCalls";
 import { useTemplateFilters } from "@/hooks/useTemplateFilters";
 import { validateTemplateData } from "@/utils/validateTemplateData";
+import Marquee from "react-fast-marquee";
 
 const MarqueeComponent = ({ onTemplatesChange, onLoadingChange, onSelectionChange, categories, initialTemplates = [] }) => {
     const [templates, setTemplates] = useState(Array.isArray(initialTemplates) ? initialTemplates : []);
@@ -96,63 +97,53 @@ const MarqueeComponent = ({ onTemplatesChange, onLoadingChange, onSelectionChang
     const handleClickApp = (app) => updateParentWithFilters({ selectedApps: [app], selectedIndustries: [] });
     const handleClickChip = (name) => updateParentWithFilters({ selectedApps: [], selectedIndustries: [name] });
 
-    // Reusable marquee row to avoid markup duplication
-    const MarqueeRow = ({ items, directionClass, renderPrimary, renderDuplicate }) => (
-        <div className="overflow-hidden text-gray-900 py-3 group">
-            <div className={`flex min-w-[200%] ${directionClass} group-hover:[animation-play-state:paused]`}>
-                <div className="flex min-w-full shrink-0 items-center whitespace-nowrap">
-                    {items.map(renderPrimary)}
-                </div>
-                <div className="flex min-w-full shrink-0 items-center whitespace-nowrap" aria-hidden="true">
-                    {items.map(renderDuplicate)}
-                </div>
-            </div>
-        </div>
-    );
-
     return (
         <div className="my-12">
             {/* Top row: 20 Apps with logos, scroll left */}
-            <MarqueeRow
-                items={topApps}
-                directionClass="animate-marqueeLeft"
-                renderPrimary={(app, idx) => (
-                    <button
-                        key={`${app.slug}-${idx}`}
-                        onClick={() => handleClickApp(app)}
-                        className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
-                    >
-                        {app.icon && <Image src={app.icon} alt={app.name} width={22} height={22} />}
-                        <span>{app.name}</span>
-                    </button>
-                )}
-                renderDuplicate={(app, idx) => (
-                    <span key={`${app.slug}-dup-${idx}`} className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border">
-                        {app.icon && <Image src={app.icon} alt={app.name} width={22} height={22} />}
-                        <span>{app.name}</span>
-                    </span>
-                )}
-            />
+            <Marquee
+                speed={40}
+                autoFill
+                gradient
+                gradientColor={[250, 249, 246]}
+                gradientWidth={96}
+                pauseOnHover={true}
+            >
+                <div className="inline-flex py-4">
+                    {topApps.map((app, idx) => (
+                        <button
+                            key={`${app.slug}-${idx}`}
+                            onClick={() => handleClickApp(app)}
+                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                        >
+                            {app.icon && <Image src={app.icon} alt={app.name} width={22} height={22} />}
+                            <span>{app.name}</span>
+                        </button>
+                    ))}
+                </div>
+            </Marquee>
 
             {/* Bottom row: 20 Template categories, scroll right */}
-            <MarqueeRow
-                items={fewCategories}
-                directionClass="animate-marqueeRight"
-                renderPrimary={(name, idx) => (
-                    <button
-                        key={`${name}-${idx}`}
-                        onClick={() => handleClickChip(name)}
-                        className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
-                    >
-                        <span>{name}</span>
-                    </button>
-                )}
-                renderDuplicate={(name, idx) => (
-                    <span key={`${name}-dup-${idx}`} className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border">
-                        <span>{name}</span>
-                    </span>
-                )}
-            />
+            <Marquee
+                direction="right"
+                speed={40}
+                autoFill
+                gradient
+                gradientColor={[250, 249, 246]}
+                gradientWidth={96}
+                pauseOnHover={true}
+            >
+                <div className="inline-flex py-4">
+                    {fewCategories.map((name, idx) => (
+                        <button
+                            key={`${name}-${idx}`}
+                            onClick={() => handleClickChip(name)}
+                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                        >
+                            <span>{name}</span>
+                        </button>
+                    ))}
+                </div>
+            </Marquee>
         </div>
     );
 };
