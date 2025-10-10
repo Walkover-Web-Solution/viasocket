@@ -30,7 +30,7 @@ const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
                             customClasses={
                                 isBlack
                                     ? 'btn border-white border-t-0'
-                                    : 'btn btn-primary btn-outline btn-md w-fit border-t-0 bg-white custom-border'
+                                    : 'btn btn-outline btn-md w-fit border-t-0 custom-border'
                             }
                         />
                     </Link>
