@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import style from './FeatureGridComp.module.scss';
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 export default function FeatureGridComp({ features, pageInfo }) {
     function handleGridLayout(blockIndex) {
@@ -65,21 +66,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     </div>
                                     
                                     <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <svg
-                                            xmlns="http://www.w3.org/2000/svg"
-                                            width="36"
-                                            height="36"
-                                            viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="#ffffff"
-                                            stroke-width="2"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            class="lucide lucide-move-right-icon lucide-move-right"
-                                        >
-                                            <path d="M18 8L22 12L18 16" />
-                                            <path d="M2 12H22" />
-                                        </svg>
+                                        <FaLongArrowAltRight className="text-2xl" style={{ transform: 'scaleX(2)' }}/>
                                     </div>
                                 </Link>
                             );
