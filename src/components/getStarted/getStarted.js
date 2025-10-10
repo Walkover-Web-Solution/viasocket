@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function GetStarted() {
     return (
@@ -33,24 +34,32 @@ export default function GetStarted() {
 
                 <div className="flex items-center justify-center overflow-hidden w-fit lg:pr-4 xl:pr-24 md:p-0">
                   <div className="flex -space-x-5">
-                    <img
+                    <Image
                       src="/review-image/1.svg"
-                      alt="Expert 1"
+                      alt="Customer support expert avatar"
+                      width={112}
+                      height={112}
                       className="w-28 h-28"
                     />
-                    <img
+                    <Image
                       src="/review-image/2.svg"
-                      alt="Expert 2"
+                      alt="Technical support expert avatar"
+                      width={112}
+                      height={112}
                       className="w-28 h-28"
                     />
-                    <img
+                    <Image
                       src="/review-image/3.svg"
-                      alt="Expert 3"
+                      alt="Automation specialist expert avatar"
+                      width={112}
+                      height={112}
                       className="w-28 h-28"
                     />
-                    <img
+                    <Image
                       src="/review-image/4.svg"
-                      alt="Expert 4"
+                      alt="Integration expert avatar"
+                      width={112}
+                      height={112}
                       className="w-28 h-28"
                     />
                   </div>
