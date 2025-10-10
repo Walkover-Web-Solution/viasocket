@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowRightLong } from "react-icons/fa6";
 import style from './FeatureGridComp.module.scss';
 
 export default function FeatureGridComp({ features, pageInfo }) {
