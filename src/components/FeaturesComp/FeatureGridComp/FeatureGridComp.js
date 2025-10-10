@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdFace } from 'react-icons/md';
+import { FaArrowRightLong } from "react-icons/fa6";
 import style from './FeatureGridComp.module.scss';
 
 export default function FeatureGridComp({ features, pageInfo }) {
@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            'bg-white lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
+            `bg-white lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-10 h-full hover-bg-black-text-white justify-center transition-all duration-300 group ${style.featurecard} ` +
             gridClass
         );
     }
@@ -41,14 +41,21 @@ export default function FeatureGridComp({ features, pageInfo }) {
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (
-                                <Link 
+                                <Link
                                     href={`/features/${feature?.slug}`}
                                     key={index}
                                     className={handleGridLayout(index)}
                                 >
                                     <Image
-                                        className="icon__dark"
+                                        className="block group-hover:hidden"
                                         src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
+                                        width={36}
+                                        height={36}
+                                        alt={feature.name}
+                                    />
+                                    <Image
+                                        className="hidden group-hover:block"
+                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}
@@ -57,6 +64,22 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     <div className="flex flex-col gap-2">
                                         <h2 className="text-lg font-semibold">{feature?.name}</h2>
                                         <p>{feature?.description}</p>
+                                    </div>
+                                    <div className="absolute flex items-center justify-center gap-4 bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="36"
+                                            height="36"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="#ffffff"
+                                            stroke-width="2"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            class="lucide lucide-move-right-icon lucide-move-right">
+                                            <path d="M18 8L22 12L18 16" />
+                                            <path d="M2 12H22" />
+                                        </svg>
                                     </div>
                                 </Link>
                             );
