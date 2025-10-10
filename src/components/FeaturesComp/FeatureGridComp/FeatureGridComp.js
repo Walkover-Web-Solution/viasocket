@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdFace } from 'react-icons/md';
 import style from './FeatureGridComp.module.scss';
+import { FaLongArrowAltRight } from "react-icons/fa";
 
 export default function FeatureGridComp({ features, pageInfo }) {
     function handleGridLayout(blockIndex) {
@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            'bg-white lg:p-10 p-4 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center gap-8 h-full justify-center  hover-bg-grey-100-text-black featurecard ' +
+            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-black-text-white justify-center transition-all duration-300 group ${style.featurecard} ` +
             gridClass
         );
     }
@@ -41,22 +41,32 @@ export default function FeatureGridComp({ features, pageInfo }) {
                     {filteredFeatures?.map((feature, index) => {
                         if (feature?.hidden != true) {
                             return (
-                                <Link 
+                                <Link
                                     href={`/features/${feature?.slug}`}
                                     key={index}
                                     className={handleGridLayout(index)}
-                                >
+                                >                                    
                                     <Image
-                                        className="icon__dark"
+                                        className="block group-hover:hidden"
                                         src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}
                                     />
-
-                                    <div className="flex flex-col gap-2">
+                                    <Image
+                                        className="hidden group-hover:block"
+                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
+                                        width={36}
+                                        height={36}
+                                        alt={feature.name}
+                                    />
+                                    <div className="flex flex-col gap-2 mt-8">
                                         <h2 className="text-lg font-semibold">{feature?.name}</h2>
                                         <p>{feature?.description}</p>
+                                    </div>
+                                    
+                                    <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <FaLongArrowAltRight className="text-2xl" style={{ transform: 'scaleX(2)' }}/>
                                     </div>
                                 </Link>
                             );
