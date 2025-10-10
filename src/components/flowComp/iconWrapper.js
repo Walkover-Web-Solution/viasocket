@@ -1,4 +1,5 @@
 const { de } = require("date-fns/locale");
+import Image from 'next/image';
 
 function IconWrapper({
   hideBorder = true,
@@ -8,8 +9,8 @@ function IconWrapper({
   className = '',
   onClick = () => { }
 }) {
-  // If no component is provided, use default <img>
-  component = component || <img src={iconUrl} alt='' onClick={onClick} className={`w-full h-full object-contain ${className}`} />
+  // If no component is provided, use default <Image>
+  component = component || <Image src={iconUrl} alt='Default app icon' onClick={onClick} className={`w-full h-full object-contain ${className}`} width={40} height={40} />
 
   return (
     <div

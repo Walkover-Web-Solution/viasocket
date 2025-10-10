@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 const Testimonials = ({reviewData, showless}) => {
     const [tweets, setTweets] = useState([]);
@@ -105,11 +106,16 @@ const iframes = iframesData?.map((item, index) => {
            {iframeToShow.map(({ src, style, key, isImage }, index) => (
                 <div
                     key={`iframe-${key}`}
-                    className={`border-r border-b custom-border p-3 bg-white ${isImage ? 'lg:col-span-2 xl:col-span-2' : ''}`}
+                    className={`border-r border-b custom-border p-3 bg-white ${isImage ? 'lg:col-span-2 xl:col-span-2 relative' : ''}`}
                     style={style}
                 >
                     {isImage ? (
-                        <img src={src} alt={`review-${index}`} width="100%" className="h-full object-contain" />
+                        <Image 
+                            src={src} 
+                            alt={`Customer review screenshot ${index + 1}`} 
+                            fill 
+                            className="object-contain w-full h-full"
+                        />
                     ) : (
                         <iframe
                             src={src}

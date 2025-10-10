@@ -1,5 +1,6 @@
 import IconWrapper from './iconWrapper.js';
 import { MdApi, MdAutoAwesome, MdOutlineWebhook } from 'react-icons/md';
+import Image from 'next/image';
 import { LuAlarmClock } from "react-icons/lu";
 import { FaJs } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
@@ -154,7 +155,7 @@ function FlowSteps({ block, order, root = 'root' }) {
             {stepOrder.map((step, index) => {
                 const iconOfBlock = () => {
                     if (block?.[step]?.iconUrl) {
-                        return <IconWrapper component={<img alt="" src={block[step].iconUrl} className="w-full h-full object-contain" />} size="var(--size-flow-icon)" />;
+                        return <IconWrapper component={<Image alt={`${block[step]?.name || 'Workflow step'} icon`} src={block[step].iconUrl} className="w-full h-full object-contain" width={40} height={40} />} size="var(--size-flow-icon)" />;
                     } else if (block?.[step]?.type === 'api') {
                         return <IconWrapper component={<MdApi className="w-full h-full text-blue-500" />} size="var(--size-flow-icon)" />;
                     } else if (block?.[step]?.aistep) {

@@ -138,30 +138,30 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                                 take help from human experts
                             </Link>
                             <div className="flex items-center mx-auto">
-                                <img
+                                <Image
                                     src="/review-image/1.svg"
-                                    alt="review"
+                                    alt="Customer support expert avatar"
                                     className="rounded-[50px] relative"
                                     width={35}
                                     height={35}
                                 />
-                                <img
+                                <Image
                                     src="/review-image/2.svg"
-                                    alt="review"
+                                    alt="Technical support expert avatar"
                                     className="rounded-[50px] relative right-[10px]"
                                     width={35}
                                     height={35}
                                 />
-                                <img
+                                <Image
                                     src="/review-image/3.svg"
-                                    alt="review"
+                                    alt="Automation specialist expert avatar"
                                     className="rounded-[50px] relative right-[20px]"
                                     width={35}
                                     height={35}
                                 />
-                                <img
+                                <Image
                                     src="/review-image/4.svg"
-                                    alt="review"
+                                    alt="Integration expert avatar"
                                     className="rounded-[50px] relative right-[30px]"
                                     width={35}
                                     height={35}

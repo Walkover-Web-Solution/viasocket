@@ -150,13 +150,13 @@ export default function AutomationSuggestions() {
                         <div className="h-full flex flex-col lg:flex-row">
                             <div className="h-full w-full lg:w-1/2 flex flex-col gap-4 p-8 bg-gradient-to-l from-[#def9f0] to-[#def9f0]">
                                 <div className="flex flex-col gap-2">
-                                    <h2 className="h2">
+                                    <h1 className="h2">
                                         Need Workflow Automation <span className="text-accent">Ideas?</span>
-                                    </h2>
+                                    </h1>
                                     <p className="sub__h1">Find Your Inspiration Here</p>
                                 </div>
                                 <div className="flex items-center w-full group mt-12">
-                                    <h1 className="h2 text-nowrap">I use</h1>
+                                    <h2 className="h2 text-nowrap">I use</h2>
 
                                     <div className="ml-2 flex items-center gap-3">
                                         {selectedApps?.map((app) => (
@@ -227,7 +227,7 @@ export default function AutomationSuggestions() {
                                 </div>
 
                                 <div className="flex items-center">
-                                    <h1 className="h2 text-nowrap ">We're in the </h1>
+                                    <h3 className="h2 text-nowrap ">We're in the </h3>
                                     <input
                                         type="text"
                                         className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
@@ -250,7 +250,7 @@ export default function AutomationSuggestions() {
                                 </div>
 
                                 <div className="flex items-center">
-                                    <h1 className="h2 text-nowrap">I run </h1>
+                                    <h3 className="h2 text-nowrap">I run </h3>
                                     <input
                                         type="text"
                                         className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
@@ -271,26 +271,6 @@ export default function AutomationSuggestions() {
                                         onChange={(e) => setSelectedIndustry(e.target.value)}
                                     />
                                 </div>
-
-                                {/* <div className="mt-8">
-                                    {renderCombos?.app_suggestions?.filter(
-                                        (app) => !excludedApps?.includes(app?.toLowerCase())
-                                    )?.length > 0 && (
-                                        <>
-                                            <h1 className="h2 text-nowrap">App Suggestions: </h1>
-                                            <div className="flex items-center flex-wrap mt-3 gap-2"> 
-                                                {renderCombos?.app_suggestions
-                                                    ?.filter((app) => !excludedApps?.includes(app.toLowerCase()))
-                                                    .map((app, index, filteredApps) => (
-                                                        <span key={index} className="border custom-border p-2 flex items-center">
-                                                            {app}
-                                                            {index !== filteredApps?.length - 1 && <span> &nbsp;</span>}
-                                                        </span>
-                                                    ))}
-                                            </div>
-                                        </>
-                                    )}
-                                </div> */}
                                 <textarea
                                     className="mt-6 p-4 w-full h-[150px] input input-bordered"
                                     placeholder="eg: I run an eCommerce website and manage sales on Shopify and use Notion for database."
@@ -357,8 +337,8 @@ export default function AutomationSuggestions() {
                                                             )}&integrations=${integrations}&action&utm_source=${utm}`}
                                                         className="px-4 py-6 flex items-center gap-4 border-b custom-border hover-bg-grey-100-text-black flex-shrink-0"
                                                     >
-                                                        <img src={triggerIcon} alt="Trigger Icon" className="w-6 h-6" />
-                                                        <img src={actionIcon} alt="Action Icon" className="w-6 h-6" />
+                                                        <Image src={triggerIcon} alt={`${triggerName} Trigger icon`} className="w-6 h-6" width={24} height={24} />
+                                                        <Image src={actionIcon} alt={`${actionName} Action icon`} className="w-6 h-6" width={24} height={24} />
                                                         <div className="flex gap-4 items-center justify-between w-full">
                                                             <p className="text-lg flex items-center gap-2">
                                                                 {/* {triggerName} → {actionName} */}
@@ -403,7 +383,7 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
             onClick={(e) => e.stopPropagation()}
             onChange={() => handleSelect(app)}
         />
-        <Image src={app?.iconurl || 'https://placehold.co/36x36'} width={16} height={16} alt="ico" />
+        <Image src={app?.iconurl || 'https://placehold.co/36x36'} width={16} height={16} alt={`${app?.name} app icon`} />
         <span>{app?.name}</span>
     </div>
 );
