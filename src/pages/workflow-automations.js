@@ -121,7 +121,7 @@ const automations = ({
                     </Link>
                 </section>
 
-                <section className="bg-black text-white p-12 flex flex-col gap-10">
+                <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
                     <div className="flex md:flex-row flex-col gap-8">
                         <div className="w-full md:w-3/5 cont gap-8 justify-between">
                             {/* <div> */}
@@ -177,7 +177,7 @@ const automations = ({
                 </section>
 
                 {/* How it Works - White */}
-                <section className="bg-[#FAF9F6] p-12 border custom-border">
+                <section className="bg-[#FAF9F6] p-6 md:p-12 border custom-border">
                     <div className="text-left mb-10">
                         <h2 className="h2 mb-1">How does workflow automation work?</h2>
                         <p className="text-lg text-gray-600">Automation follows a simple process:</p>
@@ -205,7 +205,7 @@ const automations = ({
                 </section>
 
                 {/* Why Important - Black */}
-                <section className="bg-white border custom-border text-black p-12">
+                <section className="bg-white border custom-border text-black p-6 md:p-12">
                     <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
                         <p className="text-lg">
@@ -228,7 +228,7 @@ const automations = ({
                 </section>
 
                 {/* Examples - White */}
-                <section className="bg-black p-12 border custom-border">
+                <section className="bg-black p-6 md:p-12 border custom-border">
                     <div className="text-left mb-10">
                         <h2 className="h2 font-bold text-white mb-1">Examples of workflow automation</h2>
                         <p className="text-lg text-white">
@@ -256,7 +256,7 @@ const automations = ({
                     </div>
                 </section>
 
-                <section className="border custom-border p-12 bg-[#F2F2F2] flex flex-col gap-10">
+                <section className="border custom-border p-6 md:p-12 bg-[#F2F2F2] flex flex-col gap-10">
                     <h2 className="h2 font-bold">What are the features to look for in workflow automation tools?</h2>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
                         {workflowAutomationTools.map((tool, index) => (
@@ -272,7 +272,7 @@ const automations = ({
                 </section>
 
                 {/* Getting Started - Black */}
-                <section className="bg-black text-white p-12">
+                <section className="bg-black text-white p-6 md:p-12">
                     <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">How to start with workflow automation</h2>
                         <p className="text-lg text-gray-300">If you are new to automation, follow these steps:</p>
@@ -298,7 +298,7 @@ const automations = ({
                     </div>
                 </section>
 
-                <div className="border custom-border bg-white cont gap-4 text-black p-12">
+                <div className="border custom-border bg-white cont gap-4 text-black p-6 md:p-12">
                     <div className="cont gap-1">
                         <h2 className="h2">Ready to work smarter, not harder?</h2>
                         <p className="text-lg">

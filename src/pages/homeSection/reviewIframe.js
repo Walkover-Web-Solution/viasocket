@@ -9,8 +9,13 @@ const ReviewIframe = ({ reviewData, showless }) => {
                 <h2 className="h2 flex items-center gap-1">
                     <span>Reviews</span> <IoMdHeart className="text-red-700" />
                 </h2>
-                <div className="flex items-center gap-2">
-                    <a href="https://www.capterra.com/p/10020406/viaSocket/reviews/" className="relative block w-32 h-12">
+                <div className="flex items-center gap-1 md:gap-2">
+                    <a
+                        href="https://www.capterra.com/p/10020406/viaSocket/reviews/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="relative w-28 h-10 md:w-40 md:h-14"
+                    >
                         <Image
                             src="https://brand-assets.capterra.com/badge/3b902cef-5889-4a4e-afaa-855d73a3d238.svg"
                             alt="Capterra software reviews badge"
@@ -19,15 +24,17 @@ const ReviewIframe = ({ reviewData, showless }) => {
                         />
                     </a>
                     <a
-                        title="Users love viaSocket on G2"
                         href="https://www.g2.com/products/viasocket/reviews?utm_source=rewards-medal"
-                        className="relative block w-32 h-12"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title="Users love viaSocket on G2"
+                        className="relative w-20 h-20 md:w-40 md:h-28"
                     >
                         <Image
-                            alt="G2 Users Love Us badge"
                             src="https://www.g2.com/shared-assets/product-badges/users-love-us.svg"
+                            alt="G2 Users Love Us badge"
                             fill
-                            className="object-fill"
+                            className="object-contain"
                         />
                     </a>
                 </div>
