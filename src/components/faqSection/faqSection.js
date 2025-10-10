@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { LinkButton } from "../uiComponents/buttons";
+import { FaPlus, FaMinus } from "react-icons/fa6";
 
 export default function FAQSection({ faqData = [], faqName }) {
     const [openIndex, setOpenIndex] = useState(null);
@@ -42,36 +43,14 @@ export default function FAQSection({ faqData = [], faqName }) {
                                 className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 `}
                             >
                                 {openIndex === index ? (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                    >
-                                        <path d="M5 12h14" />
-                                    </svg>
+                                    <FaMinus />
                                 ) : (
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="black"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                    >
-                                        <path d="M12 5v14M5 12h14" />
-                                    </svg>
+                                    <FaPlus />
                                 )}
                             </div>
                         </div>
 
-                        <div className="collapse-content pl-[60px] sm:pl-[80px] pr-[40px] pb-3 ">
+                        <div className="collapse-content pl-14 sm:pl-20 pr-10 pb-3">
                             <p className="leading-relaxed">{faq?.ans}</p>
                             {faq?.link && (
                                 <div className="mt-3">
