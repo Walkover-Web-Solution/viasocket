@@ -107,7 +107,7 @@ export default function IntegrationsAppComp({
                         )}
 
                         <div
-                            className="border grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
+                            className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
                             style={{ gridAutoRows: '75px' }}
                         >
                             {searchTerm ? (
@@ -118,7 +118,7 @@ export default function IntegrationsAppComp({
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={`${style.app} custom-styles justify-center`}
+                                            className={`${style.app} custom-styles justify-center bg-white border-color`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
@@ -130,7 +130,6 @@ export default function IntegrationsAppComp({
 
                                                 <h2 className="font-bold">{app?.name}</h2>
                                             </div>
-                                            {/* <p className={style?.app__des}>{app?.description}</p> */}
                                         </Link>
                                     ))
                                 ) : (
