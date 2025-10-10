@@ -12,11 +12,11 @@ const TemplateCard = ({ template, index }) => {
                 .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
                 .replace(/\s+/g, '-') // replace spaces with '-'
                 .toLowerCase()}/${template?.id}`}
-            className="group cont justify-between bg-white border custom-border cursor-pointer hover:bg-gray-100 group relative"
+            className="group cont justify-between bg-white border custom-border cursor-pointer group relative"
         >
             <div className="cont gap-2 px-8 py-4">
                 <div className="cont gap-1">
-                    <h1 className="h3">{template?.title}</h1>
+                    <h1 className="h3 mr-2">{template?.title}</h1>
 
                     {/* Template description */}
                     {/* <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2> */}
@@ -87,7 +87,7 @@ const TemplateCard = ({ template, index }) => {
             </div>
 
             <div className="h-[400px] w-full overflow-hidden flex justify-center relative bg-white">
-                <div className="block m-0 max-h-full max-w-full object-contain">
+                <div className="block m-0 max-h-full max-w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:brightness-80">
                     <FlowRenderer 
                         flowJson={template?.metadata?.flowJson ||
                         template?.flowJson || 

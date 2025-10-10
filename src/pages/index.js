@@ -15,7 +15,7 @@ import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
-import { BsStars } from 'react-icons/bs';
+import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 
 export const runtime = 'experimental-edge';
 
@@ -117,58 +117,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                         fetchApps={fetchApps}
                     />
 
-                    <div className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
-                        or{' '}
-                        <Link
-                            href="https://viasocket.com/signup"
-                            target="_blank"
-                            className="border-b-2 custom-border border-dotted flex"
-                        >
-                            build from scratch
-                            <BsStars />
-                        </Link>
-                        or
-                        <div className="flex items-center flex-wrap gap-4">
-                            {' '}
-                            <Link
-                                href="https://tally.so/r/wzVdKZ"
-                                target="_blank"
-                                className="border-b-2 custom-border border-dotted"
-                            >
-                                take help from human experts
-                            </Link>
-                            <div className="flex items-center mx-auto">
-                                <Image
-                                    src="/review-image/1.svg"
-                                    alt="Customer support expert avatar"
-                                    className="rounded-[50px] relative"
-                                    width={35}
-                                    height={35}
-                                />
-                                <Image
-                                    src="/review-image/2.svg"
-                                    alt="Technical support expert avatar"
-                                    className="rounded-[50px] relative right-[10px]"
-                                    width={35}
-                                    height={35}
-                                />
-                                <Image
-                                    src="/review-image/3.svg"
-                                    alt="Automation specialist expert avatar"
-                                    className="rounded-[50px] relative right-[20px]"
-                                    width={35}
-                                    height={35}
-                                />
-                                <Image
-                                    src="/review-image/4.svg"
-                                    alt="Integration expert avatar"
-                                    className="rounded-[50px] relative right-[30px]"
-                                    width={35}
-                                    height={35}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <BuildOptionsCTA />
                 </div>
             </div>
 

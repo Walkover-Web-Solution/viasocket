@@ -20,6 +20,7 @@ import { validateTemplateData } from '@/utils/validateTemplateData';
 import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
+import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 
 export const runtime = 'experimental-edge';
 
@@ -138,6 +139,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         enableBlogs={false}
                         enableAi={false}
                     />
+                    <BuildOptionsCTA />
                     <MarqueeComponent 
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
@@ -339,7 +341,7 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templates = await getTemplates(pageUrl);
     const metaData = await getMetaData('/automations', pageUrl);
-    const faqData = await getFaqData('/templates', pageUrl);
+    const faqData = await getFaqData('/automations', pageUrl);
     const blogTags = 'templates';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
 

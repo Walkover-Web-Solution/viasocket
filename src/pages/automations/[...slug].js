@@ -136,7 +136,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                             onClick={(e) =>
                                                 handleRedirect(
                                                     e,
-                                                    `https://flow.viasocket.com/automations/${template?.id}?`
+                                                    `https://flow.viasocket.com/template/${template?.id}?`
                                                 )
                                             }
                                         >
@@ -191,7 +191,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                         <button
                             className="btn btn-accent my-4"
                             onClick={(e) =>
-                                handleRedirect(e, `https://flow.viasocket.com/automations/${template?.id}?`)
+                                handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
                             }
                         >
                             Install Template
