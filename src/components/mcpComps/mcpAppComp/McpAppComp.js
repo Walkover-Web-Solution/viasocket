@@ -119,7 +119,7 @@ export default function McpAppComp({
                                 <MdChevronRight fontSize={22} />
                                 <Link
                                     href={createURL(`/mcp/${appOneDetails?.appslugname}`)}
-                                    className="flex items-center gap-0 underline"
+                                    className="flex items-center gap-0 underline capitalize"
                                 >
                                     {appOneDetails?.name}
                                 </Link>
@@ -150,7 +150,7 @@ export default function McpAppComp({
 
                                 {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
                                     <div className="cont">
-                                        <h2 className="h3">viaSocket MCP for {appOneDetails?.name}</h2>
+                                        <h2 className="h3 capitalize">viaSocket MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
                                     </div>
                                 ) : (
@@ -161,13 +161,23 @@ export default function McpAppComp({
                                 )}
                             </div>
                             <div className="cont justify-center gap-2">
-                                <div className="cont gap-1">
-                                    <h1 className="h1"> MCP Server for {appOneDetails?.name}</h1>
-                                    <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
-                                        Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and
-                                        Cursor using the viaSocket MCP Server.
-                                    </p>
-                                </div>
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
+                                    <div className="cont gap-1">
+                                        <h1 className="h1 capitalize"> MCP Server for {appOneDetails?.name}</h1>
+                                        <p className="text-base font-medium sm:text-lg md:text-xl text-black text-start">
+                                            Connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools like ChatGPT, Claude,
+                                            and Cursor using the viaSocket MCP Server.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="cont gap-1">
+                                        <h1 className="h1"> MCP Server for {appOneDetails?.name}</h1>
+                                        <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
+                                            Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude,
+                                            and Cursor using the viaSocket MCP Server.
+                                        </p>
+                                    </div>
+                                )}
 
                                 {mcpPromptData[0]?.prompt || appOneDetails.events.length > 0 ? (
                                     <button
@@ -201,8 +211,8 @@ export default function McpAppComp({
                                 <div className="">
                                     <h2 className="font-semibold">You</h2>
                                     <h3 className="text-gray-500">
-                                        {mcpPromptData[0]?.prompt ||
-                                            `I want to perform an action in ${appOneDetails?.name}`}
+                                        {mcpPromptData[0]?.prompt || <>
+                                            I want to perform an action in <span className='capitalize'>{appOneDetails?.name}</span></>}
                                     </h3>
                                 </div>
                             </div>
@@ -251,9 +261,11 @@ export default function McpAppComp({
                 <div className="container">
                     <div className="cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
-                            <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
+                            <h2 className="h2">
+                                Connect <span className='capitalize'>{appOneDetails?.name}</span> to Any AI Assistant in 3 Easy Steps
+                            </h2>
                             <h3 className="sub__h1">
-                                viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
+                                viaSocket MCP Server lets you easily connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools
                                 like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
                                 integrations or deal with a bulky setup.
                             </h3>
@@ -410,7 +422,7 @@ export default function McpAppComp({
                                     </h3>
                                 </div>
                                 <Link href="/signup?utm_source=mcp">
-                                    <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group active:scale-95 transition-transform duration-75">
+                                    <button className="btn btn-accent">
                                         Get Your MCP URL for Free
                                     </button>
                                 </Link>
@@ -425,7 +437,7 @@ export default function McpAppComp({
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                                     <Link href="/support">
-                                        <button className="px-4 py-2 bg-accent text-lg text-white hover:bg-white hover:text-black border-none group w-48 active:scale-95 transition-transform duration-75">
+                                        <button className="btn btn-accent">
                                             Self-Hosted MCP
                                         </button>
                                     </Link>
@@ -486,7 +498,7 @@ export default function McpAppComp({
                                 />
 
                                 <div>
-                                    <h3 className="h3 font-bold mb-2">About {appOneDetails?.name}</h3>
+                                    <h3 className="h3 font-bold mb-2 capitalize">About {appOneDetails?.name}</h3>
                                     <p className="text-sm sm:text-lg">{appOneDetails?.description}</p>
                                 </div>
                                 <div className="flex flex-wrap gap-2">

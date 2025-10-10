@@ -346,7 +346,7 @@ export default function McpIndexComp({
                                     </h3>
                                 </div>
                                 <Link href="/signup?utm_source=mcp">
-                                    <button className="px-4 py-2 bg-accent text-lg text-white hover-bg-grey-100-text-black border-none group active:scale-95 transition-transform duration-75">
+                                    <button className="btn btn-accent">
                                         Get Your MCP URL for Free
                                     </button>
                                 </Link>
@@ -361,7 +361,7 @@ export default function McpIndexComp({
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                                     <Link href="/support">
-                                        <button className="px-4 py-2 bg-accent text-lg text-white hover-bg-grey-100-text-black border-none group w-48 active:scale-95 transition-transform duration-75">
+                                        <button className="btn btn-accent">
                                             Self-Hosted MCP
                                         </button>
                                     </Link>

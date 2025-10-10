@@ -15,7 +15,7 @@ import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
-import { BsStars } from 'react-icons/bs';
+import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 
 export const runtime = 'experimental-edge';
 
@@ -117,58 +117,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                         fetchApps={fetchApps}
                     />
 
-                    <div className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
-                        or{' '}
-                        <Link
-                            href="https://viasocket.com/signup"
-                            target="_blank"
-                            className="border-b-2 custom-border border-dotted flex"
-                        >
-                            build from scratch
-                            <BsStars />
-                        </Link>
-                        or
-                        <div className="flex items-center flex-wrap gap-4">
-                            {' '}
-                            <Link
-                                href="https://tally.so/r/wzVdKZ"
-                                target="_blank"
-                                className="border-b-2 custom-border border-dotted"
-                            >
-                                take help from human experts
-                            </Link>
-                            <div className="flex items-center mx-auto">
-                                <img
-                                    src="/review-image/1.svg"
-                                    alt="review"
-                                    className="rounded-[50px] relative"
-                                    width={35}
-                                    height={35}
-                                />
-                                <img
-                                    src="/review-image/2.svg"
-                                    alt="review"
-                                    className="rounded-[50px] relative right-[10px]"
-                                    width={35}
-                                    height={35}
-                                />
-                                <img
-                                    src="/review-image/3.svg"
-                                    alt="review"
-                                    className="rounded-[50px] relative right-[20px]"
-                                    width={35}
-                                    height={35}
-                                />
-                                <img
-                                    src="/review-image/4.svg"
-                                    alt="review"
-                                    className="rounded-[50px] relative right-[30px]"
-                                    width={35}
-                                    height={35}
-                                />
-                            </div>
-                        </div>
-                    </div>
+                    <BuildOptionsCTA />
                 </div>
             </div>
 
@@ -240,7 +189,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
 const SecuritySection = ({ securityGridData }) => {
     return (
         <div className="container">
-            <div className="border custom-border p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
+            <div className="border custom-border p-6 md:p-12 border-b-0 bg-[#376F5B] cont gap-8 text-white">
                 <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>

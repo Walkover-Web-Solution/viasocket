@@ -1,74 +1,20 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdSearch } from 'react-icons/md';
 import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
-import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
-import searchApps from '@/utils/searchApps';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
 
-export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, appCategories }) {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [debounceValue, setDebounceValue] = useState('');
-    const [searchedApps, setSearchedApps] = useState([]);
-    const [searchedCategoies, setSearchedCategoies] = useState();
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebounceValue(searchTerm);
-        }, 500);
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [searchTerm]);
-
-    useEffect(() => {
-        const search = async () => {
-            if (!debounceValue) {
-                setSearchedApps([]);
-                setSearchedCategoies();
-                return;
-            }
-
-            const searchTerm = debounceValue.toLowerCase();
-
-            const filteredCategories = categories?.categories?.filter((category) =>
-                category?.toLowerCase()?.includes(searchTerm)
-            );
-            setSearchedCategoies(filteredCategories);
-
-            const fetchedApps = await searchApps(debounceValue);
-            if (!fetchedApps) {
-                setSearchedApps([]);
-                return;
-            }
-
-            const sortedApps = fetchedApps.sort((a, b) => {
-                const aName = a?.name?.toLowerCase() || '';
-                const bName = b?.name?.toLowerCase() || '';
-
-                const aStarts = aName.startsWith(searchTerm);
-                const bStarts = bName.startsWith(searchTerm);
-
-                if (aStarts !== bStarts) return aStarts ? -1 : 1;
-
-                const aContains = aName.includes(searchTerm);
-                const bContains = bName.includes(searchTerm);
-
-                if (aContains !== bContains) return aContains ? -1 : 1;
-
-                return aName.localeCompare(bName);
-            });
-
-            setSearchedApps(sortedApps);
-        };
-
-        search();
-    }, [debounceValue]);
-
+export default function IntegrationsAppComp({
+    pageInfo,
+    integrationsInfo,
+    apps,
+    appCategories,
+    appCount,
+    searchTerm,
+    searchedCategories,
+}) {
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
 
     const goToNext = () => {
@@ -97,30 +43,18 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
     };
     return (
         <>
-            <div className="container cont gap-4">
-                <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
-                    <MdSearch fontSize={20} />
-                    <input
-                        value={searchTerm}
-                        onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                        }}
-                        type="text"
-                        className={`${style.input} grow`}
-                        placeholder="Search your favorite tools "
-                    />
-                </label>
+            <div className="container gap-4 flex flex-col">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
                         <div className=" border custom-border border-t-0 lg:block hidden bg-white">
                             <div className="cont max-w-[252px] min-w-[252px] ">
-                                {debounceValue ? (
-                                    searchedCategoies ? (
-                                        searchedCategoies?.map((category, index) => {
+                                {searchTerm ? (
+                                    searchedCategories ? (
+                                        searchedCategories?.map((category, index) => {
                                             return (
                                                 <Link
                                                     key={index}
-                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:custom-border'}`}
+                                                    className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 custom-styles ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:custom-border'}`}
                                                     href={`/integrations/category/${category}`}
                                                 >
                                                     {category}
@@ -137,7 +71,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                         return (
                                             <Link
                                                 key={index}
-                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 hover-bg-grey-100-text-black ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:custom-border'}`}
+                                                className={`border-r-0 border-y-0 border-8  text-sm font-medium tracking-wider px-3 py-2 custom-styles ${category === decodeURIComponent(integrationsInfo?.category) ? 'border-accent' : 'border-white hover:custom-border'}`}
                                                 href={`/integrations/category/${category}`}
                                             >
                                                 {category}
@@ -173,18 +107,18 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                         )}
 
                         <div
-                            className="border-t custom-border border-l grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
+                            className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
                             style={{ gridAutoRows: '75px' }}
                         >
-                            {debounceValue ? (
-                                searchedApps?.length > 0 ? (
-                                    searchedApps?.map((app, index) => (
+                            {searchTerm ? (
+                                apps?.length > 0 ? (
+                                    apps?.map((app, index) => (
                                         <Link
                                             key={index}
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={`${style.app} hover-bg-grey-100-text-black justify-center`}
+                                            className={`${style.app} custom-styles justify-center bg-white border-color`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
@@ -196,7 +130,6 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
 
                                                 <h2 className="font-bold">{app?.name}</h2>
                                             </div>
-                                            {/* <p className={style?.app__des}>{app?.description}</p> */}
                                         </Link>
                                     ))
                                 ) : (
@@ -219,7 +152,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} hover-bg-grey-100-text-black custom-border bg-white flex justify-center`}
+                                                    className={`${style.app} custom-styles bg-white flex border-color justify-center`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <Image
@@ -240,7 +173,7 @@ export default function IntegrationsAppComp({ pageInfo, integrationsInfo, apps, 
                         </div>
                     </div>
                 </div>
-                {!debounceValue && (
+                {!searchTerm && (
                     <div className="flex justify-end items-end w-full">
                         {integrationsInfo?.page > 0 && (
                             <Link className="btn btn-outline !px-5" href={createURL(goToPrev())}>

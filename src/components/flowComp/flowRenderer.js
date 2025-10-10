@@ -1,5 +1,6 @@
 import IconWrapper from './iconWrapper.js';
 import { MdApi, MdAutoAwesome, MdOutlineWebhook } from 'react-icons/md';
+import Image from 'next/image';
 import { LuAlarmClock } from "react-icons/lu";
 import { FaJs } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
@@ -69,9 +70,12 @@ function generatePrettyColor(level, siblingIndex) {
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-function FlowRenderer({ flowJson, scale = '100' }) {
+function FlowRenderer({ flowJson, scale = 100 }) {
     return (
-        <div className={`flex flex-col items-center gap-4 origin-top transform scale-${scale} `} >
+        <div
+            className="flex flex-col items-center gap-4 origin-top transform"
+            style={{ transform: `scale(${scale / 100})` }}
+        >
             <FlowHeader trigger={flowJson?.trigger} />
             <div className="font-semibold text-base">Do</div>
             <FlowSteps block={flowJson?.blocks} order={flowJson?.order} />
@@ -85,7 +89,7 @@ function FlowHeader({ trigger }) {
             <div className="font-semibold text-base">When</div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="py-1 px-2 flex w-full max-w-[300px] border show-block border-[2px] border-[#5f5e5b]">
+                <div className="py-1 px-2 flex w-full max-w-[300px] border show-block border-[2px] border-[#5f5e5b] bg-white">
                     <div className="py-1">
                         <IconWrapper
                             component={
@@ -151,7 +155,7 @@ function FlowSteps({ block, order, root = 'root' }) {
             {stepOrder.map((step, index) => {
                 const iconOfBlock = () => {
                     if (block?.[step]?.iconUrl) {
-                        return <IconWrapper component={<img alt="" src={block[step].iconUrl} className="w-full h-full object-contain" />} size="var(--size-flow-icon)" />;
+                        return <IconWrapper component={<Image alt={`${block[step]?.name || 'Workflow step'} icon`} src={block[step].iconUrl} className="w-full h-full object-contain" width={40} height={40} />} size="var(--size-flow-icon)" />;
                     } else if (block?.[step]?.type === 'api') {
                         return <IconWrapper component={<MdApi className="w-full h-full text-blue-500" />} size="var(--size-flow-icon)" />;
                     } else if (block?.[step]?.aistep) {
@@ -169,7 +173,7 @@ function FlowSteps({ block, order, root = 'root' }) {
                             <>
                                 {index > 0 && <VerticalStick />}
                                 {/* <div className="flex items-center p-2 w-full max-w-[300px] border border-[2px] border-[#5f5e5b] show-block"> */}
-                                <div className="flex items-center p-2 w-auto inline-flex border border-[2px] border-[#5f5e5b] show-block">
+                                <div className="flex items-center p-2 w-auto inline-flex border border-[2px] border-[#5f5e5b] show-block bg-white">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
                                         <span className="font-400">
@@ -186,12 +190,12 @@ function FlowSteps({ block, order, root = 'root' }) {
             {root === 'root' ? (
                 <div className="flex flex-col items-center ">
                     <VerticalStick />
-                    <div className="p-1 w-full flex justify-center border show-block border-[2px] border-[#5f5e5b]">
+                    <div className="p-1 w-full flex justify-center border show-block border-[2px] border-[#5f5e5b] bg-white">
                         <IoMdAdd className="w-6 h-6 text-gray-500" />
                     </div>
                 </div>
             ) : (
-                <div className="w-full flex items-center justify-center mt-2 gap-2 border show-block border-[2px] border-[#5f5e5b]">
+                <div className="w-full flex items-center justify-center mt-2 gap-2 border show-block border-[2px] border-[#5f5e5b] bg-white">
                     <IoMdAdd className="w-4 h-4 text-gray-500" />
                     <span className="whitespace-nowrap text-sm">Add Step</span>
                 </div>
