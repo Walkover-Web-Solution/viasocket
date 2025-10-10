@@ -23,18 +23,27 @@ export const runtime = 'experimental-edge';
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
+    const flowContainerRef = useRef(null);
     const [flowRendererHeight, setFlowRendererHeight] = useState('600px');
 
     useEffect(() => {
         if (contentRef.current) {
             setFlowRendererHeight(`${contentRef.current.offsetHeight}px`);
         }
-    }, [template]);
-    const handleWheel = (e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.05 : 0.05;
-        setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
-    };
+
+        const handleWheel = (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.05 : 0.05;
+            setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
+        };
+
+        const flowContainer = flowContainerRef.current;
+        flowContainer?.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            flowContainer?.removeEventListener('wheel', handleWheel);
+        };
+    }, [template, flowRendererHeight]);
 
     const zoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
     const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));
@@ -158,7 +167,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                 </div>
                             </div>
                             <div
-                                onWheel={handleWheel}
+                                ref={flowContainerRef}
                                 className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start p-6 relative dotted-background"
                                 style={{ height: flowRendererHeight }}
                             >
