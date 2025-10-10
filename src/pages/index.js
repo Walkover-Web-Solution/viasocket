@@ -189,7 +189,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
 const SecuritySection = ({ securityGridData }) => {
     return (
         <div className="container">
-            <div className="border custom-border p-20 border-b-0 bg-[#376F5B] cont gap-8 text-white">
+            <div className="border custom-border p-6 md:p-12 border-b-0 bg-[#376F5B] cont gap-8 text-white">
                 <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
