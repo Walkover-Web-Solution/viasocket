@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { calculatePricing } from "@/utils/currencyConverter";
 import { detectUserCountry } from "@/utils/locationDetector";
 import { FaCrown, FaGem } from "react-icons/fa";
@@ -169,9 +170,11 @@ export default function PricingTabsClient({ countries }) {
                         }}
                         className="px-4 py-2 text-lg cursor-pointer hover:bg-gray-100 flex items-center gap-2"
                       >
-                        <img
+                        <Image
                           src={country.img}
                           alt={country.country}
+                          width={24}
+                          height={16}
                           className="w-6 h-4"
                         />
                         <span>{country.country}</span>
@@ -303,24 +306,32 @@ export default function PricingTabsClient({ countries }) {
                 </div>
                 <div className="flex items-center md:justify-center flex-1 overflow-hidden">
                   <div className="flex -space-x-5">
-                    <img
+                    <Image
                       src="/review-image/1.svg"
-                      alt="Expert 1"
+                      alt="Customer support expert avatar"
+                      width={80}
+                      height={80}
                       className="w-20 h-20"
                     />
-                    <img
+                    <Image
                       src="/review-image/2.svg"
-                      alt="Expert 2"
+                      alt="Technical support expert avatar"
+                      width={80}
+                      height={80}
                       className="w-20 h-20"
                     />
-                    <img
+                    <Image
                       src="/review-image/3.svg"
-                      alt="Expert 3"
+                      alt="Automation specialist expert avatar"
+                      width={80}
+                      height={80}
                       className="w-20 h-20"
                     />
-                    <img
+                    <Image
                       src="/review-image/4.svg"
-                      alt="Expert 4"
+                      alt="Integration expert avatar"
+                      width={80}
+                      height={80}
                       className="w-20 h-20"
                     />
                   </div>

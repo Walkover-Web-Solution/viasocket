@@ -1,5 +1,6 @@
 import createURL from '@/utils/createURL';
 import Link from 'next/link';
+import Image from 'next/image';
 import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
@@ -73,15 +74,20 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
 
                         <div className="flex flex-col gap-6 mt-auto p-4">
                             <div className="flex gap-2 justify-center items-center">
-                                <img
+                                <Image
                                     src="https://brand-assets.capterra.com/badge/3b902cef-5889-4a4e-afaa-855d73a3d238.svg"
-                                    alt="capterra"
-                                    style={{ width: '100px', height: '100px', objectFit: 'contain' }}
+                                    alt="Capterra software reviews badge"
+                                    width={100}
+                                    height={100}
+                                    className="object-contain"
                                 />
-                                <img
+                                <Image
                                     src="https://www.g2.com/shared-assets/product-badges/users-love-us.svg"
-                                    alt="g2"
-                                    style={{ width: '100px', height: '60px', objectFit: 'contain' }}
+                                    alt="G2 Users Love Us badge"
+                                    width={100}
+                                    height={60}
+                                    className="object-contain"
+                                    style={{ height: '60px' }}
                                 />
                             </div>
 

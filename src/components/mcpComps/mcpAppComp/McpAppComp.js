@@ -150,7 +150,7 @@ export default function McpAppComp({
 
                                 {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
                                     <div className="cont">
-                                        <h2 className="h3">viaSocket MCP for {appOneDetails?.name}</h2>
+                                        <h2 className="h3 capitalize">viaSocket MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
                                     </div>
                                 ) : (
@@ -161,13 +161,23 @@ export default function McpAppComp({
                                 )}
                             </div>
                             <div className="cont justify-center gap-2">
-                                <div className="cont gap-1">
-                                    <h1 className="h1"> MCP Server for {appOneDetails?.name}</h1>
-                                    <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
-                                        Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude, and
-                                        Cursor using the viaSocket MCP Server.
-                                    </p>
-                                </div>
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ? (
+                                    <div className="cont gap-1">
+                                        <h1 className="h1 capitalize"> MCP Server for {appOneDetails?.name}</h1>
+                                        <p className="text-base font-medium sm:text-lg md:text-xl capitalize text-black text-start">
+                                            Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude,
+                                            and Cursor using the viaSocket MCP Server.
+                                        </p>
+                                    </div>
+                                ) : (
+                                    <div className="cont gap-1">
+                                        <h1 className="h1"> MCP Server for {appOneDetails?.name}</h1>
+                                        <p className="text-base font-medium sm:text-lg md:text-xl  text-black text-start">
+                                            Connect {appOneDetails?.name} actions with AI tools like ChatGPT, Claude,
+                                            and Cursor using the viaSocket MCP Server.
+                                        </p>
+                                    </div>
+                                )}
 
                                 {mcpPromptData[0]?.prompt || appOneDetails.events.length > 0 ? (
                                     <button
@@ -251,7 +261,9 @@ export default function McpAppComp({
                 <div className="container">
                     <div className="cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
-                            <h2 className="h2">Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps</h2>
+                            <h2 className="h2 capitalize">
+                                Connect {appOneDetails?.name} to Any AI Assistant in 3 Easy Steps
+                            </h2>
                             <h3 className="sub__h1">
                                 viaSocket MCP Server lets you easily connect {appOneDetails?.name} actions with AI tools
                                 like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
