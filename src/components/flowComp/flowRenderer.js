@@ -1,23 +1,21 @@
 import IconWrapper from './iconWrapper.js';
 import { MdApi, MdAutoAwesome, MdOutlineWebhook } from 'react-icons/md';
 import Image from 'next/image';
-import { LuAlarmClock } from "react-icons/lu";
+import { LuAlarmClock } from 'react-icons/lu';
 import { FaJs } from 'react-icons/fa';
 import { IoMdAdd } from 'react-icons/io';
 import { FaArrowDownLong } from 'react-icons/fa6';
 import { BlockTypes } from '@/enums.js';
 
 const Fab = ({ children }) => (
-    <div className="bg-[#5f5e5b] text-white rounded-full shadow-lg px-5 py-3">
-        {children}
-    </div>
+    <div className="bg-[#5f5e5b] text-white rounded-full shadow-lg px-5 py-3">{children}</div>
 );
 
-const Chip = ({ label }) => (
-    <div className="bg-gray-200 text-gray-700 px-2 py-0.5 text-xs">
-        {label}
-    </div>
-);
+// const Chip = ({ label }) => (
+//     <div className="bg-gray-200 text-gray-700 px-2 py-0.5 text-xs">
+//         {label}
+//     </div>
+// );
 
 function replaceUnderscoreWithSpace(str) {
     if (!str) return '';
@@ -72,10 +70,7 @@ function generatePrettyColor(level, siblingIndex) {
 
 function FlowRenderer({ flowJson, scale = 100 }) {
     return (
-        <div
-            className="flex flex-col items-center gap-4 origin-top transform"
-            style={{ transform: `scale(${scale / 100})` }}
-        >
+        <div className="flex flex-col items-center gap-4 overflow-hidden origin-top h-full transform">
             <FlowHeader trigger={flowJson?.trigger} />
             <div className="font-semibold text-base">Do</div>
             <FlowSteps block={flowJson?.blocks} order={flowJson?.order} />
@@ -89,22 +84,23 @@ function FlowHeader({ trigger }) {
             <div className="font-semibold text-base">When</div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="py-1 px-2 flex w-full max-w-[300px] border show-block border-[2px] border-[#5f5e5b] bg-white">
+                <div className="py-1 px-2 flex w-full max-w-[300px] border show-block] bg-white">
                     <div className="py-1">
                         <IconWrapper
                             component={
                                 trigger?.triggerType === 'webhook' ? (
-                                    <MdOutlineWebhook size={32} />
+                                    <MdOutlineWebhook size={20} />
                                 ) : trigger?.triggerType === 'cron' ? (
-                                    <LuAlarmClock size={32} />
+                                    <LuAlarmClock size={20} />
                                 ) : (
                                     <IconWrapper
-                                        iconUrl={trigger?.iconUrl || 'https://cdn-icons-png.flaticon.com/512/380/380127.png'}
-                                        size="40px"
+                                        iconUrl={
+                                            trigger?.iconUrl || 'https://cdn-icons-png.flaticon.com/512/380/380127.png'
+                                        }
+                                        size={24}
                                     />
                                 )
                             }
-                            size="var(--size-flow-icon)"
                         />
                     </div>
 
@@ -114,15 +110,15 @@ function FlowHeader({ trigger }) {
                                 {trigger?.triggerType === 'webhook'
                                     ? 'Webhook'
                                     : trigger?.triggerType === 'email'
-                                        ? 'Email To Flow'
-                                        : trigger?.serviceName}
+                                      ? 'Email To Flow'
+                                      : trigger?.serviceName}
                             </div>
                         ) : trigger?.triggerType === 'cron' ? (
                             <div className="text-base">{trigger?.meaning}</div>
                         ) : (
                             <div className="flex flex-col gap-1">
-                                <div className="text-base">{trigger?.serviceName}</div>
-                                <Chip
+                                <div className="text-base">{trigger?.serviceName} ragini</div>
+                                {/* <Chip
                                     label={
                                         trigger?.triggerType === 'hook'
                                             ? 'Instant Trigger'
@@ -130,7 +126,7 @@ function FlowHeader({ trigger }) {
                                                 ? 'Manual Trigger'
                                                 : `Runs Every ${trigger?.selectedValues?.inputData?.scheduledTime || '15'} Minutes`
                                     }
-                                />
+                                /> */}
                             </div>
                         )}
                     </div>
@@ -155,13 +151,25 @@ function FlowSteps({ block, order, root = 'root' }) {
             {stepOrder.map((step, index) => {
                 const iconOfBlock = () => {
                     if (block?.[step]?.iconUrl) {
-                        return <IconWrapper component={<Image alt={`${block[step]?.name || 'Workflow step'} icon`} src={block[step].iconUrl} className="w-full h-full object-contain" width={40} height={40} />} size="var(--size-flow-icon)" />;
+                        return (
+                            <IconWrapper
+                                component={
+                                    <Image
+                                        alt={`${block[step]?.name || 'Workflow step'} icon`}
+                                        src={block[step].iconUrl}
+                                        className="h-6 w-6 object-contain"
+                                        width={24}
+                                        height={24}
+                                    />
+                                }
+                            />
+                        );
                     } else if (block?.[step]?.type === 'api') {
-                        return <IconWrapper component={<MdApi className="w-full h-full text-blue-500" />} size="var(--size-flow-icon)" />;
+                        return <IconWrapper component={<MdApi className="h-6 w-6 text-blue-500" />} />;
                     } else if (block?.[step]?.aistep) {
-                        return <IconWrapper component={<MdAutoAwesome className="w-full h-full text-green-500" />} size="var(--size-flow-icon)" />;
+                        return <IconWrapper component={<MdAutoAwesome className="h-6 w-6 text-green-500" />} />;
                     } else {
-                        return <IconWrapper component={<FaJs className="w-full h-full text-yellow-500" />} size="var(--size-flow-icon)" />;
+                        return <IconWrapper component={<FaJs className="h-6 w-6 text-yellow-500" />} />;
                     }
                 };
 
@@ -172,12 +180,14 @@ function FlowSteps({ block, order, root = 'root' }) {
                         ) : (
                             <>
                                 {index > 0 && <VerticalStick />}
-                                {/* <div className="flex items-center p-2 w-full max-w-[300px] border border-[2px] border-[#5f5e5b] show-block"> */}
-                                <div className="flex items-center p-2 w-auto inline-flex border border-[2px] border-[#5f5e5b] show-block bg-white">
+                                {/* <div className="flex items-center p-2 w-full max-w-[300px] border border-[2px] show-block"> */}
+                                <div className="flex items-center p-2 w-auto border show-block bg-white">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
                                         <span className="font-400">
-                                            {block[step]?.type === BlockTypes.PLUG ? replaceUnderscoreWithSpace(step) : step}
+                                            {block[step]?.type === BlockTypes.PLUG
+                                                ? replaceUnderscoreWithSpace(step)
+                                                : step}
                                         </span>
                                     </div>
                                 </div>
@@ -190,12 +200,12 @@ function FlowSteps({ block, order, root = 'root' }) {
             {root === 'root' ? (
                 <div className="flex flex-col items-center ">
                     <VerticalStick />
-                    <div className="p-1 w-full flex justify-center border show-block border-[2px] border-[#5f5e5b] bg-white">
+                    <div className="p-1 w-full flex justify-center border show-block bg-white">
                         <IoMdAdd className="w-6 h-6 text-gray-500" />
                     </div>
                 </div>
             ) : (
-                <div className="w-full flex items-center justify-center mt-2 gap-2 border show-block border-[2px] border-[#5f5e5b] bg-white">
+                <div className="w-full flex items-center justify-center mt-2 gap-2 border show-block bg-white">
                     <IoMdAdd className="w-4 h-4 text-gray-500" />
                     <span className="whitespace-nowrap text-sm">Add Step</span>
                 </div>
@@ -221,12 +231,15 @@ function IfGroup({ block, order, step, index = 0 }) {
                                 return (
                                     <li key={child}>
                                         <div
-                                            className="py-2 w-full border show-block border-[2px] border-[#5f5e5b]"
-                                            style={{ backgroundColor: generatePrettyColor(depthandindex?.depth, depthandindex?.index) }}
+                                            className="py-2 w-full border show-block"
+                                            style={{
+                                                backgroundColor: generatePrettyColor(
+                                                    depthandindex?.depth,
+                                                    depthandindex?.index
+                                                ),
+                                            }}
                                         >
-                                            <div className="p-2" style={{ borderBottom: "var(--saved-step-border)" }}>
-                                                {replaceUnderscoreWithSpace(child)}
-                                            </div>
+                                            <div className="p-2 border-b">{replaceUnderscoreWithSpace(child)}</div>
                                             <div className="p-2 w-full">
                                                 <FlowSteps block={block} order={order} root={child} />
                                             </div>
@@ -238,15 +251,13 @@ function IfGroup({ block, order, step, index = 0 }) {
                     </li>
                 </ul>
             </div>
-            <div className="custom-flow-border mt-4 w-full text-center">
-                Continue from here
-            </div>
+            <div className="custom-flow-border mt-4 w-full text-center">Continue from here</div>
         </div>
     );
 }
 
 function VerticalStick() {
-    return <div style={{ height: "calc(5 * var(--u-base))", borderLeft: "var(--saved-step-border)" }} />;
+    return <div className="border-l" style={{ height: 'calc(5 * var(--u-base))' }} />;
 }
 
 export default FlowRenderer;
