@@ -5,6 +5,10 @@
     border-color: var(--custom-border) !important;
 }
 
+.flow-border-color {
+    border-color: var(--flow-border-color) !important;
+}
+
 /** Hover effext for mcp or integrations apps */
 .hover-bg-grey-100-text-black {
     &:hover {
