@@ -161,7 +161,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url('/review-image/nevada.jpg')`,
+                            backgroundImage: `url('/review-image/nevada.svg')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundAttachment: 'fixed',
