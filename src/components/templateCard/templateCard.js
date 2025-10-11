@@ -7,6 +7,7 @@ import FlowRenderer from '../flowComp/flowRenderer';
 const TemplateCard = ({ template, index }) => {
     return (
         <Link
+            key={template?.id}
             href={`/automations/${template?.title
                 ?.trim()
                 .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
@@ -34,7 +35,10 @@ const TemplateCard = ({ template, index }) => {
                         if (triggerIcon && !shownIcons.has(triggerIcon)) {
                             shownIcons.add(triggerIcon);
                             elements.push(
-                                <div className="flex items-center justify-center w-8 h-8 border custom-border">
+                                <div
+                                    key="trigger"
+                                    className="flex items-center justify-center w-8 h-8 border custom-border"
+                                >
                                     <Image
                                         key="trigger-icon"
                                         src={triggerIcon}
@@ -48,13 +52,19 @@ const TemplateCard = ({ template, index }) => {
                         } else if (!triggerIcon) {
                             if (triggerType === 'webhook') {
                                 elements.push(
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
+                                    <div
+                                        key="trigger-webhook"
+                                        className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                                    >
                                         <Webhook size={24} />
                                     </div>
                                 );
                             } else if (triggerType === 'cron') {
                                 elements.push(
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border bg-white">
+                                    <div
+                                        key="trigger-cron"
+                                        className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                                    >
                                         <Timer size={24} />
                                     </div>
                                 );
@@ -67,7 +77,10 @@ const TemplateCard = ({ template, index }) => {
                             if (icon && !shownIcons.has(icon)) {
                                 shownIcons.add(icon);
                                 elements.push(
-                                    <div className="flex items-center justify-center w-8 h-8 border custom-border">
+                                    <div
+                                        key={`app-icon-wrapper-${i}`}
+                                        className="flex items-center justify-center w-8 h-8 border custom-border"
+                                    >
                                         <Image
                                             key={`app-icon-${i}`}
                                             src={icon}
