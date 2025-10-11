@@ -47,6 +47,9 @@ export default function Navbar({ utm, footerData }) {
     }
 
     const isActive = (path) => {
+        if (path === '/') {
+            return router.pathname === path ? 'text-accent !font-semibold' : '';
+        }
         return router.pathname.startsWith(path) ? 'text-accent !font-semibold' : '';
     };
 
@@ -86,19 +89,24 @@ export default function Navbar({ utm, footerData }) {
                         </Link>
 
                         <div className="flex">
-                            {router.pathname !== '/pricing' &&
+                            <Link
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/')}`}
+                                href={`/`}
+                            >
+                                Home
+                            </Link>
+                            {router.pathname !== '/' &&
+                                router.pathname !== '/pricing' &&
                                 !router.pathname.startsWith('/automations') &&
                                 !router.pathname.startsWith('/integrations') && (
                                     <Link
                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
                                         href={router.pathname}
                                     >
-                                        {router.pathname === '/'
-                                            ? 'Home'
-                                            : (router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
+                                        {(router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
                                                 ? 'MCP'
-                                            : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                                    router.pathname.split('/')[1].slice(1).toLowerCase())}
+                                                : router.pathname.split('/')[1].charAt(0).toUpperCase() +
+                                                router.pathname.split('/')[1].slice(1).toLowerCase())}
                                     </Link>
                                 )}
                             <Link
