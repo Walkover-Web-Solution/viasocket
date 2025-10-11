@@ -113,7 +113,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
             ) : (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
                     <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
-                        <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 gap-8">
+                        <div className="dotted-background flex flex-col lg:flex-row lg:gap-1">
                             <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
                                 <div className="cont gap-4">
                                     <h1 className="h1">{template?.title}</h1>
@@ -168,7 +168,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                             </div>
                             <div
                                 ref={flowContainerRef}
-                                className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start p-6 relative dotted-background"
+                                className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start border-t lg:border-t-0 lg:border-l custom-border p-6 relative dotted-background"
                                 style={{ height: flowRendererHeight }}
                             >
                                 <div className="absolute top-2 right-2 flex z-10">
