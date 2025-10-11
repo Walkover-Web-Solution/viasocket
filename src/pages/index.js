@@ -165,18 +165,10 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundAttachment: 'fixed',
-                            filter: 'blur(4px)',
+                            filter: 'blur(2px)',
                             // transform: 'scale(1.1)', // Prevents blur edge artifacts
                         }}
                     ></div>
-                    {/* Dark overlay */}
-                    {/* <div
-                        className="absolute inset-0"
-                        style={{
-                            background: 'linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3))',
-                        }}
-                    ></div> */}
-                    {/* Content layer */}
                     <div className="relative z-10">
                         <IndexTemplateComp categories={indexTemplateData} />
                     </div>

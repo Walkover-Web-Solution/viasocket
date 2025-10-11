@@ -1,133 +1,157 @@
-.tree > ul > li > .family > ul {
-  display: flex;
-  flex-wrap: nowrap;
+// SCSS Variables
+$tree-padding: 20px 5px 0 5px;
+$tree-connector-height: 20px;
+$tree-border-radius: 5px;
+$tree-connector-width: 1px;
+$mobile-breakpoint: 768px;
+$mobile-connector-height: 16px;
+$dashed-line-segment: 10px;
+$dashed-line-gap: 20px;
+
+// Mixins
+@mixin border-radius($radius) {
+    border-radius: $radius;
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
 }
 
-/* Tree */
-.tree ul {
-  position: relative;
-  width: 100%;
-  flex-wrap: nowrap;
-  display: flex;
+@mixin tree-connector($border-side: top) {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: $tree-connector-height;
+
+    @if $border-side == top {
+        border-top: $tree-connector-width solid var(--flow-border-color);
+    } @else if $border-side == left {
+        border-left: $tree-connector-width solid var(--flow-border-color);
+    }
 }
 
-.tree li {
-  display: inline-block; /* instead of table-cell */
-  vertical-align: top;
-  text-align: center;
-  list-style-type: none;
-  position: relative;
-  padding: 20px 5px 0 5px;
+@mixin hide-connectors {
+    &::before,
+    &::after {
+        display: none;
+    }
 }
 
-/*We will use ::before and ::after to draw the connectors*/
-.tree li::before,
-.tree li::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 50%;
-  border-top: 1px solid #e5e7eb;
-  width: 50%;
-  height: 20px;
+// Tree Component Styles
+.tree {
+    // Family container
+    > ul > li > .family > ul {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+
+    // Base ul styles
+    ul {
+        position: relative;
+        width: 100%;
+        flex-wrap: nowrap;
+        display: flex;
+    }
+
+    // Base li styles
+    li {
+        display: inline-block;
+        vertical-align: top;
+        text-align: center;
+        list-style-type: none;
+        position: relative;
+        padding: $tree-padding;
+
+        // Connector lines using pseudo-elements
+        &::before,
+        &::after {
+            @include tree-connector(top);
+            right: 50%;
+        }
+
+        &::after {
+            right: auto;
+            left: 50%;
+            @include tree-connector(left);
+        }
+
+        // Single child handling
+        &:only-child {
+            padding-top: 0;
+
+            @include hide-connectors;
+        }
+
+        // First and last child connector adjustments
+        &:first-child {
+            &::before {
+                border: 0 none;
+            }
+
+            &::after {
+                @include border-radius($tree-border-radius 0 0 0);
+            }
+        }
+
+        &:last-child {
+            &::after {
+                border: 0 none;
+            }
+
+            &::before {
+                border-right: $tree-connector-width solid var(--flow-border-color);
+                @include border-radius(0 $tree-border-radius 0 0);
+            }
+        }
+    }
+
+    // Mobile responsive styles
+    @media (max-width: $mobile-breakpoint) {
+        ul {
+            flex-direction: column;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        li {
+            display: block;
+            width: 100%;
+            padding: 0;
+            text-align: center;
+
+            @include hide-connectors;
+        }
+
+        // Vertical connectors for mobile
+        ul {
+            &::before,
+            &::after {
+                left: 50%;
+                border-left: $tree-connector-width solid var(--flow-border-color);
+                height: $mobile-connector-height;
+                width: 0;
+                display: block;
+            }
+        }
+    }
 }
 
-.tree li::after {
-  right: auto;
-  left: 50%;
-  border-left: 1px solid #e5e7eb;
-}
-
-/*We need to remove left-right connectors from elements without 
-  any siblings*/
-.tree li:only-child::after,
-.tree li:only-child::before {
-  display: none;
-}
-
-/*Remove space from the top of single children*/
-.tree li:only-child {
-  padding-top: 0;
-}
-
-/*Remove left connector from first child and 
-  right connector from last child*/
-.tree li:first-child::before,
-.tree li:last-child::after {
-  border: 0 none;
-}
-/*Adding back the vertical connector to the last nodes*/
-.tree li:last-child::before {
-  border-right: 1px solid #e5e7eb;
-  border-radius: 0 5px 0 0;
-  -webkit-border-radius: 0 5px 0 0;
-  -moz-border-radius: 0 5px 0 0;
-}
-
-.tree li:first-child::after {
-  border-radius: 5px 0 0 0;
-  -webkit-border-radius: 5px 0 0 0;
-  -moz-border-radius: 5px 0 0 0;
-}
-
-/*Time to add downward connectors from parents*/
-// .tree ul ul::before {
-//   content: '';
-//   position: absolute;
-//   top: 0;
-//   left: 50%;
-//   width: 0;
-//   height: 20px;
-// }
-
-
-@media (max-width: 768px) {
-  .tree ul {
-    flex-direction: column;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
-  
-  .tree li {
-    display: block;
-    width: 100%;
-    padding: 0;
-    text-align: center;
-  }
-  
-  /* Hide horizontal connectors */
-  .tree li::before,
-  .tree li::after {
-    display: none;
-  }
-  
-  /* Show only vertical connector */
-  .tree ul ul::before,
-  .tree ul ul::after {
-    left: 50%;
-    border-left: 1px solid #e5e7eb;
-    height: 16px;
-    width: 0;
-    display: block;
-  }
-}
-
+// Custom flow border component
 .custom-flow-border {
-  position: relative;
-}
+    position: relative;
 
-.custom-flow-border::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background-image: repeating-linear-gradient(
-    to right,
-    #e5e7eb 0px,
-    #e5e7eb 10px,
-    transparent 10px,
-    transparent 20px
-  );
+    &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background-image: repeating-linear-gradient(
+            to right,
+            var(--flow-border-color) 0px,
+            var(--flow-border-color) $dashed-line-segment,
+            transparent $dashed-line-segment,
+            transparent $dashed-line-gap
+        );
+    }
 }

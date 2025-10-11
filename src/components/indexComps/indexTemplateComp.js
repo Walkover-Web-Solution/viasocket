@@ -8,7 +8,7 @@ import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 import FlowRenderer from '../flowComp/flowRenderer';
 import { FaInternetExplorer } from 'react-icons/fa';
-import { RiImageEditFill } from 'react-icons/ri';
+import { TbTemplate } from "react-icons/tb";
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({
@@ -83,7 +83,7 @@ const IndexTemplateComp = ({ categories }) => {
                         {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex text-xs lg:text-sm flex-col py-2 px-4 font-medium border custom-border ${
+                                className={`flex text-xs lg:text-sm py-2 px-4 font-medium border custom-border ${
                                     selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-white text-black'
                                 }`}
                                 onClick={() => handleSelectCategory(cat)}
@@ -126,7 +126,7 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
 
                     <div
-                        className="cont p-6 border custom-border overflow-hidden dotted-background m-auto xl:w-[60vw] w-full"
+                        className="cont p-6 overflow-hidden dotted-background m-auto xl:w-[60vw] w-full"
                         style={{ height: '80vh' }}
                     >
                         <div className="border custom-border h-full flex flex-col justify-between">
@@ -141,7 +141,7 @@ const IndexTemplateComp = ({ categories }) => {
                                     </div>
                                 </div>
                             ) : (
-                                <div className="cont p-4 ragini max-h-[64vh] overflow-hidden">
+                                <div className="cont p-4 max-h-[64vh] overflow-hidden">
                                     <div className="cont gap-1 mb-4">
                                         <h1 className="h3">{currentTemplate?.title}</h1>
                                         <h2 className="h6 leading-none">
@@ -171,16 +171,15 @@ const IndexTemplateComp = ({ categories }) => {
                     </div>
                 </div>
 
-                <div className="md:hidden flex gap-4">
-                    <div className="flex justify-center gap-4 mb-4 flex-col">
+                <div className="md:hidden flex flex-col gap-4">
+                    <div className="flex justify-center gap-4 mb-4 flex-wrap">
                         {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex flex-col items-center gap-2 p-3 border custom-border ${
+                                className={`flex text-xs w-fit items-center gap-2 py-2 px-4 font-medium border custom-border ${
                                     selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-white text-black'
                                 }`}
                                 onClick={() => handleSelectCategory(cat)}
-                                style={{ width: '103px' }}
                             >
                                 <span className="flex items-center">
                                     {cat?.name === 'HR' ? (
@@ -221,7 +220,7 @@ const IndexTemplateComp = ({ categories }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="hidden md:flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
+                            <div className="flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
                                 <Link href={getTemplateLink()} className="btn btn-accent">
                                     Use this template
                                 </Link>
@@ -229,14 +228,14 @@ const IndexTemplateComp = ({ categories }) => {
                                     Explore all templates
                                 </Link>
                             </div>
-                            <div className="md:hidden flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
+                            {/* <div className="hidden sm:flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
                                 <Link href={getTemplateLink()} className="btn btn-accent">
-                                    <RiImageEditFill />
+                                    <TbTemplate />
                                 </Link>
                                 <Link href={getTemplateLink()} className="btn btn-outline">
                                     <FaInternetExplorer />
                                 </Link>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
