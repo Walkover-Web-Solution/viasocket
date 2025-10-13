@@ -122,7 +122,7 @@ export async function getVideos(pageUrl) {
 }
 
 export async function getTemplates(pageUrl) {
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}utility/templates/all`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}templates/all`;
     try {
         const response = await axiosWithCache.get(url, {
             cache: {
@@ -194,7 +194,7 @@ export async function getCombos(pageInfo, pageUrl) {
 
 export async function fetchPluginData(slug, pageUrl) {
     let data = null;
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}utility/plugins/search?prefix=${slug[0]}`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}`;
     try {
         const response = await axiosWithCache.get(url, {
             cache: {
@@ -254,7 +254,7 @@ export async function getFaq(pageUrl) {
 }
 
 export async function getAppCount(pageUrl) {
-    const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}utility/get-apps-count`;
+    const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}get-apps-count`;
 
     try {
         const response = await axiosWithCache.get(apiUrl, {
