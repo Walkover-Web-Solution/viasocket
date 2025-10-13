@@ -255,7 +255,7 @@ export default function IntegrationsAppTwoComp({
                                 />
                                 <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
                             </div>
-                            <p className="text-sm sm:text-lg text-black h-full f">{appOneDetails?.description}</p>
+                            <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
                             <div className="flex flex-wrap gap-2">
                                 {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
                                     <Link
@@ -265,7 +265,7 @@ export default function IntegrationsAppTwoComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">
+                                        <span className="btn btn-outline">
                                             {cat}
                                         </span>
                                     </Link>
@@ -304,7 +304,7 @@ export default function IntegrationsAppTwoComp({
                                         )}
                                         className="mb-2"
                                     >
-                                        <span className="px-3 py-2 text-sm hover:bg-accent bg-black text-white">
+                                        <span className="btn btn-outline">
                                             {cat}
                                         </span>
                                     </Link>

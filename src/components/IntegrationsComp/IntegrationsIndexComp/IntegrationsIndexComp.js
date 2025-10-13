@@ -15,6 +15,7 @@ import { GoArrowUpRight } from 'react-icons/go';
 import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
+import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -206,8 +207,8 @@ export default function IntegrationsIndexComp({
                                                 href={createURL(`/integrations/${app?.appslugname}`)}
                                                 className={`${style.app} flex justify-center hover-bg-grey-100-text-black`}
                                             >
-                                                <div className="flex items-center gap-2" >
-                                                    <div className='w-[40px] h-[40px] relative'>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-[40px] h-[40px] relative border">
                                                         <Image
                                                             className="object-contain"
                                                             src={app?.iconurl || 'https://placehold.co/36x36'}
@@ -221,7 +222,9 @@ export default function IntegrationsIndexComp({
                                             </Link>
                                         );
                                     })}
-                                    <div className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}>
+                                    <div
+                                        className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}
+                                    >
                                         <div className="flex items-center gap-2 justify-between">
                                             <h2 className="flex items-center gap-2">
                                                 <span className="text-xl">💡</span>
@@ -230,7 +233,8 @@ export default function IntegrationsIndexComp({
                                             <RequestIntegrationPopupOpener showType="button" title="Request" />
                                         </div>
                                         <p className={`${style?.app__des}`}>
-                                            Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours
+                                            Can’t find the App you’re looking for? We’ll try to build it for you within
+                                            48 hours
                                         </p>
                                     </div>
                                 </>
@@ -260,13 +264,13 @@ export default function IntegrationsIndexComp({
                 {!debounceValue && (
                     <div className="flex justify-end items-end w-full">
                         {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-outline !px-5" href={createURL(goToPrev())}>
-                                Prev
+                            <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToPrev())}>
+                                <GrFormPreviousLink size={20} /> Prev
                             </Link>
                         )}
                         {showNext && (
-                            <Link className="btn btn-outline !px-5" href={createURL(goToNext())}>
-                                Next
+                            <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToNext())}>
+                                Next <GrFormNextLink size={20} />
                             </Link>
                         )}
                     </div>
@@ -302,12 +306,16 @@ export function AppVisual({ app, index, redirectPart }) {
             className={`${style.app} hover-bg-grey-100-text-black custom-border flex align-center justify-center`}
         >
             <div className="flex items-center gap-2">
-                <div className='w-[40px] h-[40px] relative'>
-                    <Image className="object-contain" src={app?.iconurl || 'https://placehold.co/36x36'} alt={app?.name} fill/>
+                <div className="h-8 w-8 relative border">
+                    <Image
+                        className="object-contain p-1"
+                        src={app?.iconurl || 'https://placehold.co/36x36'}
+                        alt={app?.name}
+                        fill
+                    />
                 </div>
                 <h2>{app?.name}</h2>
             </div>
-            {/* <p className={style?.app__des}>{app?.description}</p> */}
         </Link>
     ) : (
         <div
@@ -324,7 +332,6 @@ export function AppVisual({ app, index, redirectPart }) {
             <p className={`${style?.app__des}`}>
                 Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours
             </p>
-            {/* <RequestIntegrationPopupOpener showType="button" title="Request Now" /> */}
         </div>
     );
 }
@@ -347,7 +354,9 @@ export function RequestIntegrationPopupOpener({
         setModalData((prev) => ({ ...prev, isOpen: false }));
     };
 
-    const label = title || `Request a new ${type ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${appInfo?.name}` : 'Integration'}`;
+    const label =
+        title ||
+        `Request a new ${type ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${appInfo?.name}` : 'Integration'}`;
 
     const showButton = (
         <button onClick={openModal} className={`btn text-nowrap btn-accent ${className}`}>

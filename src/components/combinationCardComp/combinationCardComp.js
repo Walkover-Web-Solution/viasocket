@@ -6,27 +6,20 @@ export default function CombinationCardComp({ trigger, action, description, link
     return (
         <button
             onClick={(e) => handleRedirect(e, link)}
-            className={`border custom-border border-l-0 px-12 pt-8 bg-white pb-2 cont gap-4 hover-bg-black transition-all cursor-pointer group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
+            className={`border custom-border border-l-0 p-4 bg-white flex gap-4 items-center transition-all cursor-pointer group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
         >
-            <div className="cont w-full">
-                <div className="flex gap-8"></div>
-                <div className="flex items-center">
-                    <div className="p-2 cont items-center bg-white w-[60px] h-[60px] relative">
-                        <Image className="object-contain p-1.5" alt="trigger icon" src={trigger?.iconurl} fill />
-                    </div>
-                    <div className="w-16 border-t-2 custom-border bg-white" />
-                    <div className="p-2 cont items-center bg-white w-[60px] h-[60px] relative">
-                        <Image className="object-contain p-1.5" alt="action icon" src={action?.iconurl} fill />
-                    </div>
+            <div className="flex items-center">
+                <div className="p-2 cont items-center bg-white w-[40px] border h-[40px] relative">
+                    <Image className="object-contain p-1.5" alt="trigger icon" src={trigger?.iconurl} fill />
+                </div>
+                <div className="w-8 border-t-2" />
+                <div className="p-2 cont items-center bg-white w-[40px] border h-[40px] relative">
+                    <Image className="object-contain p-1.5" alt="action icon" src={action?.iconurl} fill />
                 </div>
             </div>
-            <div className="flex gap-4 items-start h-full text-start">
-                <p className="h3">{description}</p>
-            </div>
+            <p className="text-start">{description}</p>
 
-            <div className="hover:text-white font-semibold flex gap-1 justify-end items-center opacity-0 group-hover:opacity-100 transition-opacity">
-                Try it <FiArrowUpRight size={20} />
-            </div>
+            <FiExternalLink className="ml-auto invisible group-hover:visible" />
         </button>
     );
 }
