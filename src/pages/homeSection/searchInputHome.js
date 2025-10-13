@@ -469,8 +469,11 @@ const SearchInputHome = ({
         onLoadingChange && onLoadingChange({ templates: true });
 
         try {
-            const templateData = await getTemplates();
+            const templates = await getTemplates();
             const validStatuses = ['verified_by_ai', 'verified'];
+            const templateData = (templates).filter(
+                t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+            )
             const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
             const validTemplateData = validateTemplateData(verifiedTemplates);
 
@@ -634,7 +637,7 @@ const SearchInputHome = ({
     return (
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
-                <div 
+                <div
                     className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text"
                     onClick={() => {
                         if (inputRef.current) {
@@ -750,7 +753,7 @@ const SearchInputHome = ({
                                 }, 200);
                             }}
                             onKeyDown={handleKeyPress}
-                            // placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
+                        // placeholder={selectedApps.length === 0 && selectedIndustries.length === 0 && selectedDepartments.length === 0 ? "Search apps, industries, or departments..." : ""}
                         />
                         {/* Custom blinking caret - shows when input doesn't have browser focus and should show caret */}
                         {!hasBrowserFocus && searchTerm === '' && shouldShowCaret && (

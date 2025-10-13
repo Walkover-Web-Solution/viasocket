@@ -176,36 +176,49 @@ export default function IntegrationsAppOneComp({
                         </p>
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
-                                {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
-                                    const integrations =
-                                        combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                        ',' +
-                                        combosData?.plugins[combo?.actions[0]?.name]?.rowid;
-                                    const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.trigger?.id
-                                    )?.name;
-                                    const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.actions[0]?.id
-                                    )?.name;
-                                    return (
-                                        <CombinationCardComp
-                                            trigger={{
-                                                name: triggerName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            action={{
-                                                name: actionName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
-                                        />
-                                    );
-                                })}
+                                {combosData?.combinations
+                                    ?.filter(
+                                        (combo) =>
+                                            combo?.description &&
+                                            !/^(List|Get)\b/i.test(combo.description.trim())
+                                    )
+                                    ?.slice(0, visibleCombos)
+                                    ?.map((combo, index) => {
+                                        const integrations =
+                                            combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                            ',' +
+                                            combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+
+                                        const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
+                                            (event) => event?.rowid === combo?.trigger?.id
+                                        )?.name;
+
+                                        const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
+                                            (event) => event?.rowid === combo?.actions[0]?.id
+                                        )?.name;
+
+                                        return (
+                                            <CombinationCardComp
+                                                key={index}
+                                                trigger={{
+                                                    name: triggerName,
+                                                    iconurl:
+                                                        combosData?.plugins[combo?.trigger?.name]?.iconurl ||
+                                                        'https://placehold.co/40x40',
+                                                }}
+                                                action={{
+                                                    name: actionName,
+                                                    iconurl:
+                                                        combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
+                                                        'https://placehold.co/40x40',
+                                                }}
+                                                description={combo?.description}
+                                                link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
+                                                    ?.map((action) => action?.id)
+                                                    .join(',')}&integrations=${integrations}&action&`}
+                                            />
+                                        );
+                                    })}
                             </div>
                             {showMore && (
                                 <button
