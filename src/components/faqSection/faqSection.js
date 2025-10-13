@@ -1,66 +1,56 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { LinkButton } from "../uiComponents/buttons";
-import { FaPlus, FaMinus } from "react-icons/fa6";
 
-export default function FAQSection({ faqData = [], faqName }) {
+const FAQSection = ({ faqData = [], faqName }) => {
     const [openIndex, setOpenIndex] = useState(null);
 
+    if (!faqData.length) return null;
+
     const toggleAccordion = (index) => {
-        setOpenIndex(openIndex === index ? null : index);
+        setOpenIndex((prev) => (prev === index ? null : index));
     };
 
-    if (faqData.length === 0) return null;
-
     return (
-        <section className="flex flex-col gap-8">
-            <h2 className="h1">
-                Frequently Asked Questions
-            </h2>
+        <div className="cont md:mx-24 md:mb-20">
+            <section className="flex flex-col gap-8">
+                <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
 
-            <div className="flex flex-col">
-                {faqData.map((faq, index) => (
-                    <div
-                        key={index}
-                        className={`collapse border bg-white mb-3 transition-all duration-300 rounded-none linkButtonCard ${openIndex === index ? "custom-border" : "border-gray-200"
-                            }`}
-                    >
-                        <input
-                            type="checkbox"
-                            checked={openIndex === index}
-                            onChange={() => toggleAccordion(index)}
-                          className="peer"
-                        />
+                <div className="flex flex-col">
+                    {faqData.map(({ que, ans, link }, index) => {
+                        const isLast = index === faqData.length - 1;
+                        const isOpen = openIndex === index;
 
-                        <div className="collapse-title text-lg sm:text-xl font-semibold flex items-center justify-between gap-4">
-                            <div className="flex items-center gap-4">
-                                <span className="text-3xl font-semibold text-gray-300 w-10 sm:w-12 text-right">
-                                    {String(index + 1).padStart(2, "0")}
-                                </span>
-                                <span className="text-gray-800">{faq?.que}</span>
-                            </div>
-
+                        return (
                             <div
-                                className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center transition-colors duration-300 `}
+                                key={index}
+                                className={`collapse collapse-arrow pt-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${!isLast ? "border-b" : ""
+                                    }`}
                             >
-                                {openIndex === index ? (
-                                    <FaMinus />
-                                ) : (
-                                    <FaPlus />
-                                )}
-                            </div>
-                        </div>
-
-                        <div className="collapse-content pl-14 sm:pl-20 pr-10 pb-3">
-                            <p className="leading-relaxed">{faq?.ans}</p>
-                            {faq?.link && (
-                                <div className="mt-3">
-                                    <LinkButton content="Learn More" href={faq.link} />
+                                <input
+                                    id={`faq-toggle-${index}`}
+                                    type="checkbox"
+                                    checked={isOpen}
+                                    onChange={() => toggleAccordion(index)}
+                                    className="peer"
+                                />
+                                <div className="collapse-title font-semibold text-xl">
+                                    {que}
                                 </div>
-                            )}
-                        </div>
-                    </div>
-                ))}
-            </div>
-        </section>
+                                <div className="collapse-content pr-10 pb-3">
+                                    <p className="leading-relaxed -mt-2 text-gray-800 md:pr-10">{ans}</p>
+                                    {link && (
+                                        <div className="mt-3">
+                                            <LinkButton content="Learn More" href={link} />
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+            </section>
+        </div>
     );
-}
+};
+
+export default memo(FAQSection);
