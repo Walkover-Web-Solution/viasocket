@@ -17,10 +17,8 @@ const TemplateCard = ({ template, index }) => {
         >
             <div className="cont gap-2 px-8 py-4">
                 <div className="cont gap-1">
-                    <h1 className="h3 mr-2">{template?.title}</h1>
+                    <p className="text-xl mr-2">{template?.title}</p>
 
-                    {/* Template description */}
-                    {/* <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2> */}
                 </div>
                 <div className="flex gap-4 items-center">
                     {(() => {
@@ -37,7 +35,7 @@ const TemplateCard = ({ template, index }) => {
                             elements.push(
                                 <div
                                     key="trigger"
-                                    className="flex items-center justify-center w-8 h-8 border custom-border"
+                                    className="flex items-center justify-center w-10 h-10 border bg-white p-2"
                                 >
                                     <Image
                                         key="trigger-icon"
@@ -54,7 +52,7 @@ const TemplateCard = ({ template, index }) => {
                                 elements.push(
                                     <div
                                         key="trigger-webhook"
-                                        className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                                        className="flex items-center justify-center w-10 h-10 border bg-white p-2"
                                     >
                                         <Webhook size={24} />
                                     </div>
@@ -63,7 +61,7 @@ const TemplateCard = ({ template, index }) => {
                                 elements.push(
                                     <div
                                         key="trigger-cron"
-                                        className="flex items-center justify-center w-8 h-8 border custom-border bg-white"
+                                        className="flex items-center justify-center w-10 h-10 border bg-white p-2"
                                     >
                                         <Timer size={24} />
                                     </div>
@@ -79,7 +77,7 @@ const TemplateCard = ({ template, index }) => {
                                 elements.push(
                                     <div
                                         key={`app-icon-wrapper-${i}`}
-                                        className="flex items-center justify-center w-8 h-8 border custom-border"
+                                        className="flex items-center justify-center w-10 h-10 border bg-white p-2"
                                     >
                                         <Image
                                             key={`app-icon-${i}`}
@@ -100,16 +98,20 @@ const TemplateCard = ({ template, index }) => {
             </div>
 
             <div className="h-[400px] w-full overflow-hidden flex justify-center relative bg-white">
-                <div className="block m-0 max-h-full max-w-full object-contain transition-transform duration-500 ease-out group-hover:scale-110 group-hover:brightness-80">
-                    <FlowRenderer 
+                <div className="block m-0 max-h-full max-w-full object-contain transition-transform duration-500 ease-out group-hover:scale-90">
+                    <FlowRenderer
                         flowJson={template?.metadata?.flowJson ||
-                        template?.flowJson || 
-                        'https://placehold.co/600x400'}
+                            template?.flowJson ||
+                            'https://placehold.co/600x400'}
                     />
                 </div>
-                <div className="absolute bottom-0 left-0 w-full h-12 pointer-events-none bg-gradient-to-t from-white to-transparent" />
+                <div className="absolute bottom-0 left-0 w-full h-24 flex justify-center items-center  opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out">
+                    <button className="btn btn-primary">
+                        <span>View Template</span>
+                        <FiExternalLink className="text-xl" /> 
+                    </button>
+                </div>
             </div>
-            <FiExternalLink className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute top-4 right-4 text-xl" />
         </Link>
     );
 };

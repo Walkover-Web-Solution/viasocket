@@ -11,7 +11,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
     };
 
     return (
-        <div className="cont md:mx-24 md:mb-20">
+        <div className="cont md:mb-20">
             <section className="flex flex-col gap-8">
                 <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
 
