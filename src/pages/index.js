@@ -22,7 +22,7 @@ export const runtime = 'experimental-edge';
 // Move fetchApps function to the top level
 async function fetchApps(category) {
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
     );
     const rawData = await response.json();
     return rawData?.data;

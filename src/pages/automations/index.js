@@ -58,7 +58,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     // fetchApps function for SearchInputHome
     const fetchApps = useCallback(async (category) => {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
         );
         const rawData = await response.json();
         return rawData?.data;
@@ -119,7 +119,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const templatesFromSearchActive = showSearchTemplates && (filteredSearchTemplates.length > 0 || hasSearchResults);
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
-        : (remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates);
+        : remainingTemplates.length > 0
+          ? remainingTemplates
+          : filteredTemplates;
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -129,7 +131,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
             <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background">
                 <div className="container">
-                    <h1 className='h1 text-center'><span className='text-accent'>Search</span> ready to use automations</h1>
+                    <h1 className="h1 text-center">
+                        <span className="text-accent">Search</span> ready to use automations
+                    </h1>
                     <SearchInputHome
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
@@ -140,7 +144,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         enableAi={false}
                     />
                     <BuildOptionsCTA />
-                    <MarqueeComponent 
+                    <MarqueeComponent
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
                         onSelectionChange={handleSelectionChange}
@@ -171,8 +175,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         appSlug === 'webhook'
                                             ? 'Webhook'
                                             : appSlug === 'cron'
-                                                ? 'Cron'
-                                                : appData?.pluginname || appSlug;
+                                              ? 'Cron'
+                                              : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -222,9 +226,11 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                 <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
                             ))}
                         </div>
-                    ) : (templatesFromSearchActive ? (
+                    ) : templatesFromSearchActive ? (
                         <>
-                            {(selectedAppsFromSearch.length > 0 || selectedDepartmentsFromSearch.length > 0 || selectedIndustriesFromSearch.length > 0) && (
+                            {(selectedAppsFromSearch.length > 0 ||
+                                selectedDepartmentsFromSearch.length > 0 ||
+                                selectedIndustriesFromSearch.length > 0) && (
                                 <h2 className="h2 my-8 text-left">
                                     Top{' '}
                                     {selectedAppsFromSearch.map((app, index) => (
@@ -309,7 +315,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             </p>
                             <AutomationSuggestions />
                         </div>
-                    ))}
+                    )}
                 </div>
 
                 <div className="cont gap-12 md:gap-16 lg:gap-20">
@@ -347,9 +353,7 @@ export async function getServerSideProps(context) {
 
     const validStatuses = ['verified_by_ai', 'verified'];
 
-    const templateData = (templates).filter(
-        t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
-    )
+    const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
 
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
 
