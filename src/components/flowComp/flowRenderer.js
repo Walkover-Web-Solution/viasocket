@@ -80,7 +80,7 @@ function FlowHeader({ trigger }) {
             <div className="font-semibold text-base">When</div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="py-1 px-2 flex w-full max-w-[300px] border flow-border-color bg-white">
+                <div className="py-1 px-2 flex w-full max-w-[300px] border-2 flow-border-color bg-white">
                     <div className="py-1">
                         <IconWrapper
                             component={
@@ -153,9 +153,9 @@ function FlowSteps({ block, order, root = 'root' }) {
                                     <Image
                                         alt={`${block[step]?.name || 'Workflow step'} icon`}
                                         src={block[step].iconUrl}
-                                        className="h-6 w-6 object-contain"
-                                        width={24}
-                                        height={24}
+                                        className="h-6 w-6 border p-1 object-contain"
+                                        width={20}
+                                        height={20}
                                     />
                                 }
                             />
@@ -176,7 +176,7 @@ function FlowSteps({ block, order, root = 'root' }) {
                         ) : (
                             <>
                                 {index > 0 && <VerticalStick />}
-                                <div className="flex items-center p-2 w-auto border flow-border-color bg-white">
+                                <div className="flex items-center p-2 w-auto border-2 flow-border-color bg-white">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
                                         <span className="font-400">
@@ -195,12 +195,12 @@ function FlowSteps({ block, order, root = 'root' }) {
             {root === 'root' ? (
                 <div className="flex flex-col items-center ">
                     <VerticalStick />
-                    <div className="p-1 w-full flex justify-center border flow-border-color bg-white">
+                    <div className="p-1 w-full flex justify-center border-2 flow-border-color bg-white">
                         <IoMdAdd className="w-6 h-6 text-gray-500" />
                     </div>
                 </div>
             ) : (
-                <div className="w-full flex items-center justify-center mt-2 gap-2 border flow-border-color bg-white">
+                <div className="w-full flex items-center justify-center mt-2 gap-2 border-2 flow-border-color bg-white">
                     <IoMdAdd className="w-4 h-4 text-gray-500" />
                     <span className="whitespace-nowrap text-sm">Add Step</span>
                 </div>
@@ -226,7 +226,7 @@ function IfGroup({ block, order, step, index = 0 }) {
                                 return (
                                     <li key={child}>
                                         <div
-                                            className="py-2 w-full border flow-border-color"
+                                            className="py-2 w-full border-2 flow-border-color"
                                             style={{
                                                 backgroundColor: generatePrettyColor(
                                                     depthandindex?.depth,
@@ -234,7 +234,7 @@ function IfGroup({ block, order, step, index = 0 }) {
                                                 ),
                                             }}
                                         >
-                                            <div className="p-2 border-b flow-border-color">
+                                            <div className="p-2 border-b-2 flow-border-color">
                                                 {replaceUnderscoreWithSpace(child)}
                                             </div>
                                             <div className="p-2 w-full">
@@ -254,7 +254,7 @@ function IfGroup({ block, order, step, index = 0 }) {
 }
 
 function VerticalStick() {
-    return <div className="border-l flow-border-color" style={{ height: 'calc(5 * var(--u-base))' }} />;
+    return <div className="border-l-2 flow-border-color" style={{ height: 'calc(5 * var(--u-base))' }} />;
 }
 
 export default FlowRenderer;

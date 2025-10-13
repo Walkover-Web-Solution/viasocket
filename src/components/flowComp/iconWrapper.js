@@ -15,7 +15,7 @@ function IconWrapper({
             src={iconUrl}
             alt="Default app icon"
             onClick={onClick}
-            className={`h-6 w-6 object-contain ${className}`}
+            className={`h-full w-full border p-1 object-contain ${className}`}
             width={30}
             height={30}
         />

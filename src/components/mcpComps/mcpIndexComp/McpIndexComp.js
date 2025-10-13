@@ -22,6 +22,7 @@ import {
     AppVisual,
     RequestIntegrationPopupOpener,
 } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function McpIndexComp({
     pageInfo,
@@ -243,7 +244,8 @@ export default function McpIndexComp({
                                                             src={app?.iconurl || 'https://placehold.co/36x36'}
                                                             width={40}
                                                             height={40}
-                                                            alt={app?.name}                                                        />
+                                                            alt={app?.name}
+                                                        />
 
                                                         <h2>{app?.name}</h2>
                                                     </div>
@@ -278,13 +280,13 @@ export default function McpIndexComp({
                     {!debounceValue && (
                         <div className="flex justify-end items-end w-full">
                             {integrationsInfo?.page > 0 && (
-                                <Link className="btn btn-outline !px-5" href={createURL(goToPrev())}>
-                                    Prev
+                                <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToPrev())}>
+                                    <GrFormPreviousLink size={20} /> Prev
                                 </Link>
                             )}
                             {showNext && (
-                                <Link className="btn btn-outline !px-5" href={createURL(goToNext())}>
-                                    Next
+                                <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToNext())}>
+                                    Next <GrFormNextLink size={20} />
                                 </Link>
                             )}
                         </div>
@@ -346,9 +348,7 @@ export default function McpIndexComp({
                                     </h3>
                                 </div>
                                 <Link href="/signup?utm_source=mcp">
-                                    <button className="btn btn-accent">
-                                        Get Your MCP URL for Free
-                                    </button>
+                                    <button className="btn btn-accent">Get Your MCP URL for Free</button>
                                 </Link>
                             </div>
                             <div className="w-full md:w-1/2 md:py-12 py-6 px-8 cont justify-between gap-6 border custom-border">
@@ -361,9 +361,7 @@ export default function McpIndexComp({
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                                     <Link href="/support">
-                                        <button className="btn btn-accent">
-                                            Self-Hosted MCP
-                                        </button>
+                                        <button className="btn btn-accent">Self-Hosted MCP</button>
                                     </Link>
                                 </div>
                             </div>

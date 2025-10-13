@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { getTemplates } from '@/utils/axiosCalls';
 import { RiSearchLine } from 'react-icons/ri';
@@ -7,8 +6,6 @@ import { HiCurrencyRupee } from 'react-icons/hi2';
 import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 import FlowRenderer from '../flowComp/flowRenderer';
-import { FaInternetExplorer } from 'react-icons/fa';
-import { TbTemplate } from "react-icons/tb";
 
 const IndexTemplateComp = ({ categories }) => {
     const [selected, setSelected] = useState({
@@ -70,13 +67,6 @@ const IndexTemplateComp = ({ categories }) => {
 
     return (
         <div className="cont gap-8 container relative">
-            {/* <div className="flex justify-between items-center gap-1">
-                <h2 className="h2 text-white font-bold">Must use template department wise.</h2>
-                <Link href="/automations" target="_blank" className="btn btn-outline">
-                    <span>Explore all templates</span>
-                </Link>
-            </div> */}
-
             <div className="cont gap-4">
                 <div className="hidden md:flex flex-col gap-8 w-full">
                     <div className="flex gap-4 justify-center">
@@ -106,30 +96,15 @@ const IndexTemplateComp = ({ categories }) => {
                                     </span>
                                     <span className="block">{cat?.name}</span>
                                 </div>
-                                {/* <div className="flex-1">
-                                    <span className="block text-sm">
-                                        {cat?.name === 'HR'
-                                            ? 'On-board new employees'
-                                            : cat?.name === 'Marketing'
-                                              ? 'Boost social media engagement'
-                                              : cat?.name === 'Support'
-                                                ? 'Efficiently manage support tickets'
-                                                : cat?.name === 'Finance'
-                                                  ? 'Quick and simple expense approval'
-                                                  : cat?.name === 'Project Management'
-                                                    ? 'Instant bug alerts on slack'
-                                                    : 'Discover powerful automation workflows'}
-                                    </span>
-                                </div> */}
                             </button>
                         ))}
                     </div>
 
                     <div
-                        className="cont p-6 overflow-hidden dotted-background m-auto xl:w-[60vw] w-full"
+                        className="cont p-6 overflow-hidden m-auto bg-[#faf9f6] xl:w-[60vw] w-full"
                         style={{ height: '80vh' }}
                     >
-                        <div className="border custom-border h-full flex flex-col justify-between">
+                        <div className="border dotted-background custom-border h-full flex flex-col justify-between">
                             {isLoading || !currentTemplate ? (
                                 <div className="space-y-4">
                                     <div className="skeleton">
@@ -228,14 +203,6 @@ const IndexTemplateComp = ({ categories }) => {
                                     Explore all templates
                                 </Link>
                             </div>
-                            {/* <div className="hidden sm:flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
-                                <Link href={getTemplateLink()} className="btn btn-accent">
-                                    <TbTemplate />
-                                </Link>
-                                <Link href={getTemplateLink()} className="btn btn-outline">
-                                    <FaInternetExplorer />
-                                </Link>
-                            </div> */}
                         </div>
                     </div>
                 </div>
