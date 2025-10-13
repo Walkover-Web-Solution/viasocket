@@ -58,7 +58,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     // fetchApps function for SearchInputHome
     const fetchApps = useCallback(async (category) => {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}/api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
         );
         const rawData = await response.json();
         return rawData?.data;
