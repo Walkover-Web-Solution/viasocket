@@ -139,7 +139,7 @@ export default function IntegrationsDisconnectedComp({
                             <h3>About viaSocket</h3>
                         </div>
                         <p>
-                            viasocket is an innovative and versatile workflow automation platform designed to streamline
+                            viaSocket is an innovative and versatile workflow automation platform designed to streamline
                             and simplify the integration of your favorite applications and to
                         </p>
                         <Link href={'/'}>

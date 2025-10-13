@@ -75,7 +75,7 @@ export default function Navbar({ utm, footerData }) {
                                     className="h-[24px] w-auto "
                                     width={40}
                                     height={40}
-                                    alt="viasocket"
+                                    alt="viaSocket"
                                 />
                             ) : (
                                 <Image
@@ -83,7 +83,7 @@ export default function Navbar({ utm, footerData }) {
                                     className="h-[24px] w-auto "
                                     width={40}
                                     height={40}
-                                    alt="viasocket"
+                                    alt="viaSocket"
                                 />
                             )}
                         </Link>

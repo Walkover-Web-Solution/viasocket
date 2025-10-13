@@ -53,7 +53,7 @@ export default function Integrations({
                 <IntegrationsAppTwoComp
                     pageInfo={pageInfo}
                     integrationsInfo={integrationsInfo}
-                    metadata={metadata}
+                    metaData={metadata}
                     apps={apps}
                     blogsData={blogData}
                     appOneDetails={appOneDetails}

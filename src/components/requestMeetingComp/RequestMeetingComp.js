@@ -94,7 +94,7 @@ const RequestMeeting = ({ agencyName }) => {
                         src="/assets/brand/logo.svg"
                         width={1080}
                         height={1080}
-                        alt="viasocket"
+                        alt="viaSocket"
                         className="h-[36px] w-fit"
                     />
                     <div>
