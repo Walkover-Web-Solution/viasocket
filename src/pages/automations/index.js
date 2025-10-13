@@ -404,7 +404,6 @@ export async function getServerSideProps(context) {
             templateToShow: validTemplateData || [],
             faqData: faqData || [],
             blogData: blogData || [],
-            templateData: templateData || [],
             categories: categories || [],
             apps: apps || [],
         },
