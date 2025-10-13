@@ -739,11 +739,11 @@ const SearchInputHome = ({
                                 if (inputRef.current) {
                                     inputRef.current.focus();
                                 }
-                                setShowDropdown(true);
+
                                 // Show dropdown when clicked if there's any content
-                                // if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                                //     setShowDropdown(true);
-                                // }
+                                if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                                    setShowDropdown(true);
+                                }
                             }}
                             onBlur={() => {
                                 setHasBrowserFocus(false);

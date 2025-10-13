@@ -19,8 +19,6 @@ const TemplateCard = ({ template, index }) => {
                 <div className="cont gap-1">
                     <p className="text-xl mr-2">{template?.title}</p>
 
-                    {/* Template description */}
-                    {/* <h2 className="h6 leading-none">{template?.metadata?.description || template?.description}</h2> */}
                 </div>
                 <div className="flex gap-4 items-center">
                     {(() => {
