@@ -384,14 +384,14 @@ export function RequestIntegrationPopupOpener({
         </div>
     );
     const SearchView = (
-        <div className={`w-full bg-white custom-border md:border grid grid-cols-1 md:grid-cols-2 ${className}`}>
-            <div className=" custom-border border-r p-12 cont gap-8">
+        <div className={`w-full bg-white grid grid-cols-1 gap-2 md:grid-cols-2 ${className}`}>
+            <div className="cont gap-2 border custom-border p-2 justify-between">
                 <h2 className="h3">
                     💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
                 </h2>
-                <div>{showButton}</div>
+               {showButton}
             </div>
-            <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
+            <div className="cont border custom-border p-2 gap-2 justify-between">
                 <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
                 <Link href="https://viasocket.com/faq/developer-hub" target="_blank" className="max-w-max">
                     <button className="btn text-nowrap btn-accent">Read our playbook</button>

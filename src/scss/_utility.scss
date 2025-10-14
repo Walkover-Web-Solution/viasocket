@@ -24,6 +24,16 @@
     }
 }
 
+.IntegrationsAppComp_app__FN5HL {
+    border: 1px solid #e5e7eb !important;
+
+    &:hover {
+        color: var(--text-color-black) !important;
+        border: 1px solid var(--custom-border) !important;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
 .custom-styles {
     &:hover {
         // background-color: inherit !important;
