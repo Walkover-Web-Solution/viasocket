@@ -2,8 +2,8 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS } from '@/const/fields';
-import { getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
+import { getFooterData,getNavbarData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
@@ -100,13 +100,14 @@ const automations = ({
     automationExamples,
     gettingStartedSteps,
     workflowAutomationTools,
+    navbarData,
 }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/workflow-automations'} />
-            <Navbar footerData={footerData} utm={'/workflow-automations'} />
+            <Navbar navbarData={navbarData} utm={'/workflow-automations'} />
 
-            <div className="container cont gap-12">
+            <div className="container cont gap-12 global-top-space">
                 <section className="py-12">
                     <h1 className="h1">
                         Your Business, Automated
@@ -332,6 +333,7 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/workflow-automations', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/workflow-automations', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     const automationSteps = [
         {
@@ -480,6 +482,7 @@ export async function getServerSideProps(context) {
             automationExamples: automationExamples,
             gettingStartedSteps: gettingStartedSteps,
             workflowAutomationTools: workflowAutomationTools,
+            navbarData: navbarData || [],
         },
     };
 }

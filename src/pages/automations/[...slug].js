@@ -2,9 +2,9 @@ import Footer from '@/components/footer/footer';
 import Head from 'next/head';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
 import { getTemplates } from '@/utils/axiosCalls';
-import { getFooterData } from '@/utils/getData';
+import { getFooterData, getNavbarData } from '@/utils/getData';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
@@ -20,7 +20,7 @@ import { MdCenterFocusStrong } from 'react-icons/md';
 
 export const runtime = 'experimental-edge';
 
-const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
+const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName, navbarData }) => {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
@@ -67,7 +67,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
 
 
     return (
-        <div className="dotted-background">
+        <div className="dotted-background global-top-space">
             <Head>
                 <title>{metaData?.title}</title>
                 <meta name="description" content={metaData?.description} />
@@ -87,7 +87,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                 <meta name="twitter:description" content={metaData?.description} />
                 <meta name="twitter:image" content={metaData?.image} />
             </Head>
-            <Navbar footerData={footerData} utm={'/automations'} />
+            <Navbar navbarData={navbarData} utm={'/automations'} />
             {isCategory ? (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12">
                     <CategoryTemplates categoryName={categoryName} templates={relatedTemplates} />
@@ -317,6 +317,7 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const templates = await getTemplates(pageUrl);
     const templateData = (templates).filter(
         t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
@@ -383,6 +384,7 @@ export async function getServerSideProps(context) {
                 relatedTemplates: relatedTemplates || [],
                 isCategory: false,
                 categoryName: null,
+                navbarData: navbarData || [],
             },
         };
     }

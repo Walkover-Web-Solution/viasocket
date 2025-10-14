@@ -2,10 +2,10 @@ import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function FeatureBannerComp({ featureData, footerData, pageInfo }) {
+export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
     return (
         <>
-            <Navbar footerData={footerData} utm={pageInfo?.url} />
+            <Navbar navbarData={navbarData} utm={pageInfo?.url} />
 
             <div className="container">
                 <div className="h-fit ">

@@ -1,4 +1,4 @@
-import { getCategoryData, getDoFollowStatus, getFooterData, getUsecasesData } from '@/utils/getData';
+import { getCategoryData, getDoFollowStatus, getFooterData, getUsecasesData, getNavbarData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
@@ -8,7 +8,7 @@ import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAp
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import { DOFOLLOWLINK_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS } from '@/const/fields';
+import { DOFOLLOWLINK_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
 import { getCombos, getApps, getAppCount } from '@/utils/axiosCalls';
@@ -34,7 +34,8 @@ export default function Integrations({
     useCaseData,
     videoData,
     appCount,
-    getDoFollowUrlStatusArray
+    getDoFollowUrlStatusArray,
+    navbarData
 }) {
     if (noData) {
         return (
@@ -63,6 +64,7 @@ export default function Integrations({
                     footerData={footerData}
                     videoData={videoData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    navbarData={navbarData}
                 />
             </div>
         );
@@ -79,6 +81,7 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    navbarData={navbarData}
                 />
             );
         } else {
@@ -98,6 +101,7 @@ export default function Integrations({
                         videoData={videoData}
                         appCount={appCount}
                         getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                        navbarData={navbarData}
                     />
                 </div>
             );
@@ -115,6 +119,7 @@ export default function Integrations({
                     categories={categories}
                     faqData={faqData}
                     appCount={appCount}
+                    navbarData={navbarData}
                 />
             </div>
         );
@@ -131,6 +136,7 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
     const getDoFollowUrlStatusArray = await getDoFollowStatus(DOFOLLOWLINK_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     if (integrationsInfo?.appone && integrationsInfo?.apptwo) {
         const metadata = await getMetaData('/integrations/AppOne/AppTwo', pageUrl);
@@ -159,6 +165,7 @@ export async function getServerSideProps(context) {
                     videoData: videoData || [],
                     appCount: appCount || 0,
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
+                    navbarData: navbarData || {},
                 },
             };
         } else {
@@ -166,6 +173,7 @@ export async function getServerSideProps(context) {
                 props: {
                     noData: true,
                     footerData: footerData || {},
+                    navbarData: navbarData || {},
                 },
             };
         }
@@ -208,6 +216,7 @@ export async function getServerSideProps(context) {
                     videoData: videoData || [],
                     appCount: appCount || 0,
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
+                    navbarData: navbarData || {},
                 },
             };
         } else {
@@ -215,6 +224,7 @@ export async function getServerSideProps(context) {
                 props: {
                     noData: true,
                     footerData: footerData || {},
+                    navbarData: navbarData || {},
                 },
             };
         }
@@ -246,6 +256,7 @@ export async function getServerSideProps(context) {
                 blogData: blogData || [],
                 appCount: appCount || 0,
                 getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
+                navbarData: navbarData || {},
             },
         };
     }

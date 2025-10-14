@@ -5,8 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
-import { getAgencies, getExpertBlogs, getFooterData, getPageData } from '@/utils/getData';
-import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
+import { getAgencies, getExpertBlogs, getFooterData, getPageData, getNavbarData } from '@/utils/getData';
+import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, PAGEDATA_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
 export async function getServerSideProps(context) {
@@ -20,6 +20,7 @@ export async function getServerSideProps(context) {
     const verifiedAgencies = await getAgencies(AGENCIES_FIELDS, 'filter=verified=true', pageUrl);
     const notVerifiesAgencies = await getAgencies(AGENCIES_FIELDS, 'filter=verified IS NULL', pageUrl);
     const expertsBlog = await getExpertBlogs(EXPERTBLOGS_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             verifiedAgencies: verifiedAgencies || [],
@@ -28,18 +29,19 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             expertsHelp: expertsBlog || [],
             footerData: footerData || [],
+            navbarData: navbarData || [],
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData }) => {
+const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData, navbarData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <Navbar footerData={footerData} utm={'/experts'} />
+            <Navbar navbarData={navbarData} utm={'/experts'} />
 
-            <div className="">
+            <div className="global-top-space">
                 <div className="pt-12 container">
                     <div className="flex flex-col">
                         {pageData?.h1 && (

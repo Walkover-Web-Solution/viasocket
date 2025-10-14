@@ -1,8 +1,8 @@
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
 export async function getServerSideProps(context) {
@@ -12,23 +12,25 @@ export async function getServerSideProps(context) {
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/privacy', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
+            navbarData: navbarData || [],
         },
     };
 }
 
 export const runtime = 'experimental-edge';
 
-const Privacy = ({ footerData, metaData }) => {
+const Privacy = ({ footerData, metaData, navbarData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
-            <Navbar footerData={footerData} utm={'/privacy'} />
+            <Navbar navbarData={navbarData} utm={'/privacy'} />
 
-            <div className="container mb-4 mt-12 flex flex-col gap-16">
+            <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <style
                     dangerouslySetInnerHTML={{
                         __html: "\n [data-custom-class='body'], [data-custom-class='body'] * {\n background: transparent !important;\n }\n[data-custom-class='title'], [data-custom-class='title'] * {\nfont-size: 26px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\ncolor: #fffff!important;\nfont-size: 14px !important;\n }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\nfont-size: 19px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\nfont-size: 17px !important;\ncolor: #fffff !important;\n }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\ncolor: #fffff!important;\nfont-size: 14px !important;\n\n }\n[data-custom-class='link'], [data-custom-class='link'] * {\ncolor: #0000ff !important;\nfont-size: 14px !important;\n\nword-break: break-word !important;\n }\n",
