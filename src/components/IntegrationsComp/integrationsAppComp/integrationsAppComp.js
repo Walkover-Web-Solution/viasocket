@@ -44,7 +44,7 @@ export default function IntegrationsAppComp({
     };
     return (
         <>
-            <div className="container gap-4 flex flex-col">
+            <div className="gap-4 flex flex-col">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
                         <div className=" border custom-border border-t-0 lg:block hidden bg-white">
@@ -119,7 +119,7 @@ export default function IntegrationsAppComp({
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={`${style.app} custom-styles justify-center bg-white border-color`}
+                                            className={`${style.app} custom-styles bg-white border-color justify-center`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
@@ -153,7 +153,7 @@ export default function IntegrationsAppComp({
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} custom-styles bg-white flex border-color justify-center`}
+                                                    className={`${style.app} bg-white flex justify-center`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <Image
