@@ -157,7 +157,7 @@ export default function Support({ open, onClose, footerData }) {
                     open ? 'translate-x-0' : 'translate-x-full'
                 }`}
                 role="dialog"
-                aria-modal="true"
+                aria-modal="true" aria-label="Support Widget"
             >
                 <div className="md:hidden flex justify-end p-4">
                     <X className="h-8 w-8" onClick={onClose} />

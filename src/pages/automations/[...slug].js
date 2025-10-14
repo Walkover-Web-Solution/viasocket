@@ -23,18 +23,27 @@ export const runtime = 'experimental-edge';
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
+    const flowContainerRef = useRef(null);
     const [flowRendererHeight, setFlowRendererHeight] = useState('600px');
 
     useEffect(() => {
         if (contentRef.current) {
             setFlowRendererHeight(`${contentRef.current.offsetHeight}px`);
         }
-    }, [template]);
-    const handleWheel = (e) => {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? -0.05 : 0.05;
-        setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
-    };
+
+        const handleWheel = (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.05 : 0.05;
+            setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
+        };
+
+        const flowContainer = flowContainerRef.current;
+        flowContainer?.addEventListener('wheel', handleWheel, { passive: false });
+
+        return () => {
+            flowContainer?.removeEventListener('wheel', handleWheel);
+        };
+    }, [template, flowRendererHeight]);
 
     const zoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
     const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));
@@ -104,11 +113,12 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
             ) : (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
                     <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
-                        <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 gap-8">
-                            <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] cont justify-center gap-16 p-8">
+                        <div className="dotted-background flex flex-col lg:flex-row lg:gap-1">
+                            <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] flex flex-col  justify-between gap-6 p-6">
                                 <div className="cont gap-4">
                                     <h1 className="h1">{template?.title}</h1>
                                     <h2 className="h3">{template?.description}</h2>
+                                    <h2 className="h3">Apps used</h2>
                                     <TemplateIcons template={template} />
                                     {template?.category?.length > 0 && (
                                         <div className="cont gap-2 mt-4">
@@ -129,10 +139,9 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                         </div>
                                     )}
                                 </div>
-                                <div className=" flex items-center gap-16 lg:gap-28">
-                                    <div>
+                                <div className=" flex items-center gap-12 justify-between">
                                         <button
-                                            className="btn btn-accent my-4"
+                                            className="btn btn-accent"
                                             onClick={(e) =>
                                                 handleRedirect(
                                                     e,
@@ -142,24 +151,15 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                         >
                                             Install Template
                                         </button>
-                                    </div>
-                                    <div className="flex gap-2 flex-col">
-                                        <h3 className="h4">Created by</h3>
-                                        <div className="flex gap-2 items-center">
-                                            <div className="bg-gray-200 p-1 flex items-center justify-center text-sm">
-                                                {template?.userName &&
-                                                    template?.userName
-                                                        .split(' ')
-                                                        .map((name, index) => <span key={index}>{name[0]}</span>)}
-                                            </div>
-                                            <h3 className="sub font-semibold">{template?.userName}</h3>
-                                        </div>
+                                    <div className="flex gap-1 flex-col">
+                                        <h3 className="text-sm">Created by {template?.userName}</h3>
+                                        <h3 className="text-xs ml-auto">Installed by {template?.usedCount} users</h3>
                                     </div>
                                 </div>
                             </div>
                             <div
-                                onWheel={handleWheel}
-                                className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start p-6 relative dotted-background"
+                                ref={flowContainerRef}
+                                className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start border-t lg:border-t-0 lg:border-l custom-border p-6 relative dotted-background"
                                 style={{ height: flowRendererHeight }}
                             >
                                 <div className="absolute top-2 right-2 flex z-10">
@@ -183,13 +183,13 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                     </div>
 
                     <div
-                        className={`fixed top-[44px] gap-24 left-1/2 transform -translate-x-1/2 bg-[#faf9f6] border custom-border bt-0 transition-all duration-300 flex items-center justify-between container px-12 m-autotransition-all duration-500 ease-in-out
+                        className={`fixed top-[44px] md:gap-24 gap-4 left-1/2 transform -translate-x-1/2 bg-[#faf9f6] border custom-border bt-0 transition-all duration-300 flex flex-col md:flex-row items-center justify-between container p-4 md:px-12 md:py-0  m-autotransition-all duration-500 ease-in-out
               ${isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
                         style={{ zIndex: 50 }}
                     >
                         <h2 className="h3">{template?.title}</h2>
                         <button
-                            className="btn btn-accent my-4"
+                            className="btn btn-accent md:my-4"
                             onClick={(e) =>
                                 handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
                             }
@@ -317,7 +317,10 @@ export async function getServerSideProps(context) {
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-    const templateData = await getTemplates(pageUrl);
+    const templates = await getTemplates(pageUrl);
+    const templateData = (templates).filter(
+        t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+    )
     // Check if this is a category page (single slug) or template page (two slugs)
     const isCategory = firstSlug && !secondSlug;
 
@@ -334,8 +337,8 @@ export async function getServerSideProps(context) {
                 )
         );
         const metaData = {
-            title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - ViaSocket`,
-            description: `Discover ${categoryName} automation templates on ViaSocket. Streamline your workflows with pre-built integrations.`,
+            title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - viaSocket`,
+            description: `Discover ${categoryName} automation templates on viaSocket. Streamline your workflows with pre-built integrations.`,
             keywords: `${categoryName}, automation, integration, workflow, templates`,
             image: '/assets/img/viasocket-og-image.png',
             url: pageUrl,
@@ -366,8 +369,8 @@ export async function getServerSideProps(context) {
             .slice(0, 3);
 
         const metaData = {
-            title: selectedTemplate?.title || 'ViaSocket Template',
-            description: selectedTemplate?.description || 'Discover powerful automation templates on ViaSocket',
+            title: selectedTemplate?.title || 'viaSocket Template',
+            description: selectedTemplate?.description || 'Discover powerful automation templates on viaSocket',
             keywords: selectedTemplate?.tags?.join(', ') || 'automation, integration, workflow',
             image: selectedTemplate?.templateUrl || '/assets/img/viasocket-og-image.png',
             url: pageUrl,

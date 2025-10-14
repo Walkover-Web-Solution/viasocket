@@ -5,6 +5,7 @@ import style from './IntegrationsAppComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import createURL from '@/utils/createURL';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
+import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function IntegrationsAppComp({
     pageInfo,
@@ -160,6 +161,7 @@ export default function IntegrationsAppComp({
                                                             width={40}
                                                             height={40}
                                                             alt={app?.name}
+                                                            className="border h-10 p-1"
                                                         />
 
                                                         <h2>{app?.name}</h2>
@@ -174,15 +176,15 @@ export default function IntegrationsAppComp({
                     </div>
                 </div>
                 {!searchTerm && (
-                    <div className="flex justify-end items-end w-full">
+                    <div className="flex justify-end items-end gap-2 w-full">
                         {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-outline !px-5" href={createURL(goToPrev())}>
-                                Prev
+                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
+                                <GrFormPreviousLink size={20} /> Prev
                             </Link>
                         )}
                         {showNext && (
-                            <Link className="btn btn-outline !px-5" href={createURL(goToNext())}>
-                                Next
+                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
+                                Next <GrFormNextLink size={20} />
                             </Link>
                         )}
                     </div>

@@ -64,7 +64,7 @@ const MoreCreditComp = ({ selectedCountryData}) => {
                     <div className="flex items-center h-14">
                         <button
                             className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
-                            onClick={handleDecrement}
+                            onClick={handleDecrement} aria-label="Decrement credits"
                         >
                             <FiMinus />
                         </button>
@@ -75,7 +75,7 @@ const MoreCreditComp = ({ selectedCountryData}) => {
 
                         <button
                             className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
-                            onClick={handleIncrement}
+                            onClick={handleIncrement} aria-label="Increment credits"
                         >
                             <FiPlus />
                         </button>

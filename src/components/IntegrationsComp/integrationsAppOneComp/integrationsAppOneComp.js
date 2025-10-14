@@ -125,14 +125,16 @@ export default function IntegrationsAppOneComp({
                 </div>
             )}
 
-            <div className="text-xl gap-4 justify-center flex-wrap flex items-center">
-                <Link href="https://viasocket.com/signup" target="_blank" className="btn btn-accent">
-                    Build from scratch
-                </Link>
-                <Link href="https://tally.so/r/wzVdKZ" target="_blank" className="btn btn-outline">
-                    Take help from human experts
-                </Link>
-            </div>
+            {combosData?.combinations?.length > 0 && (
+                <div className="text-xl gap-4 justify-center flex-wrap flex items-center">
+                    <Link href="https://viasocket.com/signup" target="_blank" className="btn btn-accent">
+                        Build from scratch
+                    </Link>
+                    <Link href="https://tally.so/r/wzVdKZ" target="_blank" className="btn btn-outline">
+                        Take help from human experts
+                    </Link>
+                </div>
+            )}
 
             {appOneDetails?.events.length > 0 && (
                 <div className="cont cont__gap container bg-[#FAF9F6] p-6 border custom-border">
@@ -171,41 +173,51 @@ export default function IntegrationsAppOneComp({
             <div className="container cont cont__gap">
                 {combosData?.combinations?.length > 0 && (
                     <>
-                        <p className="h2">
-                            {`  Create effective ${appOneDetails?.name} automations in minutes by using pre-made templates that are customized for your needs`}
-                        </p>
+                        <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
-                                {combosData?.combinations?.slice(0, visibleCombos).map((combo, index) => {
-                                    const integrations =
-                                        combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                        ',' +
-                                        combosData?.plugins[combo?.actions[0]?.name]?.rowid;
-                                    const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.trigger?.id
-                                    )?.name;
-                                    const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.actions[0]?.id
-                                    )?.name;
-                                    return (
-                                        <CombinationCardComp
-                                            trigger={{
-                                                name: triggerName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            action={{
-                                                name: actionName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
-                                        />
-                                    );
-                                })}
+                                {combosData?.combinations
+                                    ?.filter(
+                                        (combo) =>
+                                            combo?.description && !/^(List|Get)\b/i.test(combo.description.trim())
+                                    )
+                                    ?.slice(0, visibleCombos)
+                                    ?.map((combo, index) => {
+                                        const integrations =
+                                            combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                            ',' +
+                                            combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+
+                                        const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
+                                            (event) => event?.rowid === combo?.trigger?.id
+                                        )?.name;
+
+                                        const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
+                                            (event) => event?.rowid === combo?.actions[0]?.id
+                                        )?.name;
+
+                                        return (
+                                            <CombinationCardComp
+                                                key={index}
+                                                trigger={{
+                                                    name: triggerName,
+                                                    iconurl:
+                                                        combosData?.plugins[combo?.trigger?.name]?.iconurl ||
+                                                        'https://placehold.co/40x40',
+                                                }}
+                                                action={{
+                                                    name: actionName,
+                                                    iconurl:
+                                                        combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
+                                                        'https://placehold.co/40x40',
+                                                }}
+                                                description={combo?.description}
+                                                link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
+                                                    ?.map((action) => action?.id)
+                                                    .join(',')}&integrations=${integrations}&action&`}
+                                            />
+                                        );
+                                    })}
                             </div>
                             {showMore && (
                                 <button
@@ -215,7 +227,7 @@ export default function IntegrationsAppOneComp({
                                             setShowMore(false);
                                         }
                                     }}
-                                    className="btn btn-outline border-t-0"
+                                    className="btn btn-outline border-t-0 flex ml-auto"
                                 >
                                     Load More
                                 </button>
@@ -245,13 +257,15 @@ export default function IntegrationsAppOneComp({
             </div>
 
             {combosData?.combinations?.length > 0 && (
-                <div className="container cont gap-4">
-                    <div className="cont gap-2 pb-4">
-                        <h2 className="h2">Triggers and Actions in {appOneDetails?.name} Automations</h2>
+                <div className="container cont gap-8">
+                    <div className="cont gap-2">
+                        <h2 className="h2">
+                            Triggers and Actions in <span className="text-accent">{appOneDetails?.name} </span>
+                            Automations
+                        </h2>
                         <p className="sub__h1">
-                            viaSocket makes it simple to connect {appOneDetails?.name} integrations and automate
-                            repetitive tasks. A trigger is the event that starts a workflow, while an action is the task
-                            that follows automatically within your {appOneDetails?.name} app integrations.
+                            viaSocket makes it simple to connect{appOneDetails?.name} integrations and automate
+                            repetitive tasks.
                         </p>
                     </div>
                     <IntegrationsEventsComp appOneDetails={appOneDetails} />
@@ -283,7 +297,7 @@ export default function IntegrationsAppOneComp({
                     <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
                         <div>
                             <Image
-                                className="h-10 w-fit"
+                                className="h-10 w-fit border p-1"
                                 src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                 width={36}
                                 height={36}
@@ -299,9 +313,7 @@ export default function IntegrationsAppOneComp({
                                     href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
-                                    <span className="px-3 text-sm py-2 hover:bg-accent bg-black text-white btn">
-                                        {cat}
-                                    </span>
+                                    <span className="btn btn-outline">{cat}</span>
                                 </Link>
                             ))}
                         </div>
@@ -320,7 +332,7 @@ export default function IntegrationsAppOneComp({
                     <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
                         <div>
                             <Image
-                                className="h-10 w-fit"
+                                className="h-10 w-fit border p-1"
                                 src={'/assets/brand/fav_ico.svg'}
                                 width={36}
                                 height={36}
@@ -337,14 +349,10 @@ export default function IntegrationsAppOneComp({
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link href="/" className="mb-2">
-                                <span className="btn px-3 py-2 text-sm hover:bg-accent bg-black text-white">
-                                    Workflow Automation
-                                </span>
+                                <span className="btn btn-outline">Workflow Automation</span>
                             </Link>
                             <Link href="/integrations" className="mb-2">
-                                <span className="btn px-3 py-2 text-sm hover:bg-accent bg-black text-white">
-                                    Integration
-                                </span>
+                                <span className="btn btn-outline">Integration</span>
                             </Link>
                         </div>
                         <Link href={'/'}>

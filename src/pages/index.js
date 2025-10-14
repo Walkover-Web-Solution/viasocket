@@ -152,15 +152,26 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
                 <div
-                    className="py-20"
+                    className="py-20 relative overflow-hidden"
                     style={{
-                        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('/review-image/nevada.jpg')`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        backgroundAttachment: 'fixed',
+                        position: 'relative',
                     }}
                 >
-                    <IndexTemplateComp categories={indexTemplateData} />
+                    {/* Blurred background */}
+                    <div
+                        className="absolute inset-0"
+                        style={{
+                            backgroundImage: `url('/review-image/nevada.svg')`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
+                            backgroundAttachment: 'fixed',
+                            filter: 'blur(2px)',
+                            // transform: 'scale(1.1)', // Prevents blur edge artifacts
+                        }}
+                    ></div>
+                    <div className="relative z-10">
+                        <IndexTemplateComp categories={indexTemplateData} />
+                    </div>
                 </div>
             )}
 

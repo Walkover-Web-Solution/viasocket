@@ -77,7 +77,7 @@ const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, m
                                     </h2>
                                     <ul className="list-disc flex flex-col gap-3 ps-4">
                                         <li>
-                                            Lifetime free access To viasocket’s Team Plan with all advanced features
+                                            Lifetime free access To viaSocket’s Team Plan with all advanced features
                                         </li>
                                         <li>Assistance in creating and troubleshooting complex workflows</li>
                                         <li>

@@ -78,7 +78,12 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             Load More <MdKeyboardArrowDown fontSize={20} />
                                         </button>
                                     ) : (
-                                        <RequestIntegrationPopupOpener appInfo={appOneDetails} secondAppInfo = {appTwoDetails} showType="dotted" type="trigger" />
+                                        <RequestIntegrationPopupOpener
+                                            appInfo={appOneDetails}
+                                            secondAppInfo={appTwoDetails}
+                                            showType="dotted"
+                                            type="trigger"
+                                        />
                                     )}
                                 </div>
                             )}
@@ -118,7 +123,13 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             Load More <MdKeyboardArrowDown fontSize={20} />
                                         </button>
                                     ) : (
-                                        <RequestIntegrationPopupOpener appInfo={appOneDetails} secondAppInfo = {appTwoDetails} className='lg:ml-auto' showType="dotted" type="action" />
+                                        <RequestIntegrationPopupOpener
+                                            appInfo={appOneDetails}
+                                            secondAppInfo={appTwoDetails}
+                                            className="lg:ml-auto"
+                                            showType="dotted"
+                                            type="action"
+                                        />
                                     )}
                                 </div>
                             )}
@@ -207,31 +218,37 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                     >
                         {trigger?.length > 0 ? (
                             <div className="cont gap-2 w-full">
-                                <h3 className="h3 flex items-center gap-2">
-                                    <MdAdsClick fontSize={20} />
-                                    When this happens
-                                    <span className="bg-red-100 text-red-700 text-sm px-2 py-0.5 inline-flex items-center">
-                                        Triggers
-                                    </span>
+                                <h3 className="h3 flex flex-col gap-1">
+                                    <p className="flex items-center gap-1">
+                                        <MdAdsClick fontSize={20} />
+                                        When this happens
+                                        <span className="bg-red-100 text-red-700 text-sm px-2 py-0.5 inline-flex items-center">
+                                            Triggers
+                                        </span>
+                                    </p>
+                                    <p className="text-sm">A trigger is an event that starts a workflow.</p>
                                 </h3>
-                                {trigger.slice(0, visibleTriggers).map((event, index) => (
-                                    <div
-                                        key={index}
-                                        className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
-                                    >
-                                        <Image
-                                            src={getIcons(event?.pluginslugname)}
-                                            width={36}
-                                            height={36}
-                                            alt={event?.name}
-                                            className="h-8 w-fit"
-                                        />
-                                        <div className="cont gap-1">
-                                            <h3 className="font-semibold">{event?.name}</h3>
-                                            <p className="text-sm">{event?.description}</p>
+
+                                <div className="flex flex-col gap-2 mt-4">
+                                    {trigger.slice(0, visibleTriggers).map((event, index) => (
+                                        <div
+                                            key={index}
+                                            className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
+                                        >
+                                            <Image
+                                                src={getIcons(event?.pluginslugname)}
+                                                width={36}
+                                                height={36}
+                                                alt={event?.name}
+                                                className="h-10 w-fit border p-1"
+                                            />
+                                            <div className="cont gap-1">
+                                                <h3 className="font-semibold">{event?.name}</h3>
+                                                <p className="text-sm">{event?.description}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    ))}
+                                </div>
                                 {trigger.length > visibleTriggers ? (
                                     <button
                                         onClick={() => setVisibleTriggers(visibleTriggers + 6)}
@@ -252,31 +269,40 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                         )}
                         {actions?.length > 0 ? (
                             <div className="cont gap-2 w-full">
-                                <h3 className="h3 flex items-center gap-2">
-                                    <IoMdCheckmarkCircleOutline fontSize={20} />
-                                    Do this
-                                    <span className="bg-blue-100 text-blue-700 text-sm px-2 py-0.5 inline-flex items-center">
-                                        Actions
-                                    </span>
-                                </h3>
-                                {actions.slice(0, visibleActions).map((event, index) => (
-                                    <div
-                                        key={index}
-                                        className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
-                                    >
-                                        <Image
-                                            src={getIcons(event?.pluginslugname)}
-                                            width={36}
-                                            height={36}
-                                            alt={event?.name}
-                                            className="h-8 w-fit"
-                                        />
-                                        <div className="cont gap-1">
-                                            <h3 className="font-semibold">{event?.name}</h3>
-                                            <p className="text-sm">{event?.description}</p>
-                                        </div>
+                                <h3 className="h3 flex flex-col gap-1">
+                                    <div className="flex items-center gap-2">
+                                        <IoMdCheckmarkCircleOutline fontSize={20} />
+                                        Do this
+                                        <span className="bg-blue-100 text-blue-700 text-sm px-2 py-0.5 inline-flex items-center">
+                                            Actions
+                                        </span>
                                     </div>
-                                ))}
+                                    <p className="text-sm">
+                                        Action is the task that follows automatically within your {appOneDetails?.name}{' '}
+                                        app integrations.
+                                    </p>
+                                </h3>
+
+                                <div className="flex flex-col gap-2 mt-4">
+                                    {actions.slice(0, visibleActions).map((event, index) => (
+                                        <div
+                                            key={index}
+                                            className="p-4 border max-w-[800px] custom-border flex gap-3 flex-col sm:flex-row items-start bg-white"
+                                        >
+                                            <Image
+                                                src={getIcons(event?.pluginslugname)}
+                                                width={36}
+                                                height={36}
+                                                alt={event?.name}
+                                                className="h-10 w-fit border p-1"
+                                            />
+                                            <div className="cont gap-1">
+                                                <h3 className="font-semibold">{event?.name}</h3>
+                                                <p className="text-sm">{event?.description}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                                 {actions.length > visibleActions ? (
                                     <button
                                         onClick={() => setVisibleActions(visibleActions + 6)}
@@ -285,12 +311,12 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         Load More <MdKeyboardArrowDown fontSize={20} />
                                     </button>
                                 ) : (
-                                        <RequestIntegrationPopupOpener
-                                            showType="dotted"
-                                            type="action"
-                                            className="lg:ml-auto"
-                                            appInfo={appOneDetails}
-                                        />
+                                    <RequestIntegrationPopupOpener
+                                        showType="dotted"
+                                        type="action"
+                                        className="lg:ml-auto"
+                                        appInfo={appOneDetails}
+                                    />
                                 )}
                             </div>
                         ) : (
