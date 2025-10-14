@@ -1,32 +1,14 @@
-import { MdMenu } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import Support from '@/components/chat-widget/support';
+import { useState } from 'react';
 
-export default function Navbar({ utm, footerData }) {
+export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
-    const [hide, setHide] = useState(false);
-    const [supportOpen, setSupportOpen] = useState(false);
-    let lastScrollY = 0;
-
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY && currentScrollY > 50) {
-            setHide(true);
-        } else {
-            setHide(false);
-        }
-        lastScrollY = currentScrollY;
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const [openSecondNavbar, setOpenSecondNavbar] = useState(false);
+    const [groupName, setGroupName] = useState('');
 
     let mode = 'light';
     let borderClass;
@@ -41,118 +23,138 @@ export default function Navbar({ utm, footerData }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = '!text-xs !capitalize';
+        backgroundClass = '!capitalize';
     } else {
-        backgroundClass = textClass + '!text-xs !capitalize';
+        backgroundClass = textClass + '!capitalize';
     }
 
+    // Normalize a path: remove query/hash, ensure leading slash, drop trailing slash (except root)
+    const normalizePath = (p) => {
+        if (!p) return '/';
+        const noQuery = p.split('?')[0].split('#')[0];
+        let out = noQuery.trim();
+        if (!out.startsWith('/')) out = '/' + out;
+        if (out.length > 1 && out.endsWith('/')) out = out.slice(0, -1);
+        return out;
+    };
+
     const isActive = (path) => {
-        if (path === '/') {
-            return router.pathname === path ? 'text-accent !font-semibold' : '';
-        }
-        return router.pathname.startsWith(path) ? 'text-accent !font-semibold' : '';
+        const link = path || '';
+        if (link.startsWith('http')) return '';
+        const current = normalizePath(router.asPath);
+        const target = normalizePath(link);
+        const active = current === target || current.startsWith(target + '/');
+        return active ? '!text-accent !font-semibold' : '';
+    };
+
+    const isGroupActive = (groupName) => {
+        if (!navbarData?.length) return false;
+
+        const current = normalizePath(router.asPath);
+        const groupItems = navbarData.filter((item) => item.group_name === groupName);
+
+        // Mark group active if any item's link equals current or is a prefix of current (sub-route)
+        // Ignore external links
+        return groupItems.some((item) => {
+            const link = item?.link || '';
+            if (!link || link.startsWith('http')) return false;
+            const target = normalizePath(link);
+            return current === target || current.startsWith(target + '/');
+        });
     };
 
     return (
         <>
             <div
-                // className={`sticky top-0 z-[100] transition-transform duration-300 w-full ${
-                //     hide ? '-translate-y-full' : 'translate-y-0'
-                // }`}
-                className="sticky top-0 z-[100] transition-transform duration-300 w-full translate-y-0"
+                className="fixed top-0 z-[100] transition-transform duration-300 w-full translate-y-0 bg-[#FAF9F6]"
             >
-                <div className="border-y custom-border">
-                    <div className="justify-between flex bg-[#FAF9F6] px-4 h-[44px]">
-                        <Link
-                            href="/"
-                            aria-label="logo"
-                            className={`${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass} flex !justify-start bg-[#FFFFFF10]`}
-                            style={{ backgroundColor: '#FFFFFF10' }}
-                        >
-                            {mode === 'dark' ? (
-                                <Image
-                                    src="/assets/brand/socketWhitesvg.png"
-                                    className="h-[24px] w-auto "
-                                    width={40}
-                                    height={40}
-                                    alt="viaSocket"
-                                />
-                            ) : (
-                                <Image
-                                    src="/assets/brand/logo.svg"
-                                    className="h-[24px] w-auto "
-                                    width={40}
-                                    height={40}
-                                    alt="viaSocket"
-                                />
-                            )}
-                        </Link>
-
+                <div className="custom-border border-b">
+                    <div className="container justify-between items-center flex bg-[#FAF9F6] px-4 h-[54px]">
                         <div className="flex">
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/')}`}
-                                href={`/`}
+                                href="/"
+                                aria-label="logo"
+                                className={`${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass} flex !justify-start bg-[#FFFFFF10]`}
+                                style={{ backgroundColor: '#FFFFFF10' }}
                             >
-                                Home
-                            </Link>
-                            {router.pathname !== '/' &&
-                                router.pathname !== '/pricing' &&
-                                !router.pathname.startsWith('/automations') &&
-                                !router.pathname.startsWith('/integrations') && (
-                                    <Link
-                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
-                                        href={router.pathname}
-                                    >
-                                        {(router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
-                                                ? 'MCP'
-                                                : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                                router.pathname.split('/')[1].slice(1).toLowerCase())}
-                                    </Link>
+                                {mode === 'dark' ? (
+                                    <Image
+                                        src="/assets/brand/socketWhitesvg.png"
+                                        className="h-[24px] w-auto "
+                                        width={40}
+                                        height={40}
+                                        alt="viaSocket"
+                                    />
+                                ) : (
+                                    <Image
+                                        src="/assets/brand/logo.svg"
+                                        className="h-[24px] w-auto "
+                                        width={40}
+                                        height={40}
+                                        alt="viaSocket"
+                                    />
                                 )}
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/automations')}`}
-                                href={`/automations`}
-                            >
-                                Automations
                             </Link>
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
-                                href={`/integrations`}
-                            >
-                                Explore Apps
-                            </Link>
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
-                                href={`/pricing`}
-                            >
-                                Pricing
-                            </Link>
+
+                            {navbarData?.length > 0 && (
+                                [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] bg-[#FFFFFF10] items-center justify-center text-sm ${
+                                            isGroupActive(item.group_name) ? '!text-accent !font-semibold' : ''
+                                          }`} 
+                                        onMouseEnter={() => {
+                                            setOpenSecondNavbar(true);
+                                            setGroupName(item.group_name);
+                                        }}
+                                        onMouseLeave={() => setOpenSecondNavbar(false)}
+                                    >
+                                        {item.group_name}
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                        <div className="flex gap-4 items-center">
                             <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass}  hidden sm:flex   px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px]  bg-[#FFFFFF10] items-center justify-center`}
                                 onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                 rel="nofollow"
                             >
                                 Login
                             </button>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
+                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border !h-[44px] bg-accent items-center justify-center text-sm`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Sign Up
                             </button>
-                            <div
-                                onMouseEnter={() => setSupportOpen(true)}
-                                className={`${borderClass} hover-bg-grey-100-text-black items-center outline-none bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 custom-border`}
-                                aria-label="Menu"
-                            >
-                                <MdMenu size={24} />
-                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className={`border-b custom-border transition-all duration-300 ease-in-out overflow-hidden ${openSecondNavbar
+                        ? ' opacity-100 -translate-y-0 h-[54px]'
+                        : ' opacity-0 h-0'}`}
+                    onMouseEnter={() => setOpenSecondNavbar(true)}
+                    onMouseLeave={() => setOpenSecondNavbar(false)}
+                >
+                    <div className="container justify-start items-center flex bg-[#FAF9F6] px-4 h-[54px]">
+                        <div className="flex">
+                            {navbarData?.length > 0 && (
+                                navbarData.filter((item) => item.group_name === groupName).map((item, index) => (
+                                    <Link
+                                        key={index}
+                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] px-4  bg-[#FFFFFF10] text-sm items-center justify-center ${isActive(`${item.link}`)}`}
+                                        href={`${item.link}`}
+                                    >
+                                        {item.name}
+                                    </Link>
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
             </div>
-
-            <Support open={supportOpen} onClose={() => setSupportOpen(false)} footerData={footerData} />
         </>
     );
 }

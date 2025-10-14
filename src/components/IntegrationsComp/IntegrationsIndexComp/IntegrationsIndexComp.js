@@ -27,6 +27,7 @@ export default function IntegrationsIndexComp({
     categories,
     faqData,
     appCount,
+    navbarData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -91,9 +92,9 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar navbarData={navbarData} utm={'/index'} />
 
-            <div className="container integrations-page-hero">
+            <div className="container integrations-page-hero global-top-space pt-12">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
                     <h1 className="h1">
                         <span className="text-accent">Automate</span> Anything. Anywhere.

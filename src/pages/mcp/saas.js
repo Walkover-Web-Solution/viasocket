@@ -3,8 +3,8 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
@@ -14,13 +14,13 @@ import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, blogData }) {
+export default function pricing({ footerData, faqData, metaData, blogData, navbarData }) {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <Navbar footerData={footerData} utm={'/mcp'} />
+            <Navbar navbarData={navbarData} utm={'/mcp'} />
 
-            <div className="cont gap-8">
+            <div className="cont gap-8 global-top-space pt-12">
                 <McpSwitchComp />
                 <div className="container ">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
@@ -161,12 +161,14 @@ export async function getServerSideProps(context) {
     const blogTags1 = 'mcp';
     const blogTags2 = 'saas';
     const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             metaData: metaData || {},
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],
+            navbarData: navbarData || [],
         },
     };
 }
