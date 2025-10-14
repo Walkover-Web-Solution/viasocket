@@ -44,7 +44,7 @@ export default function Navbar({ utm, navbarData }) {
         const current = normalizePath(router.asPath);
         const target = normalizePath(link);
         const active = current === target || current.startsWith(target + '/');
-        return active ? '!text-accent !font-semibold' : '';
+        return active ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : '';
     };
 
     const isGroupActive = (groupName) => {
@@ -70,7 +70,7 @@ export default function Navbar({ utm, navbarData }) {
                 >
                     <div className="custom-border border-b">
                         <div className="container justify-between items-center flex px-4 h-[64px] ">
-                            <div className="flex">
+                            <div className="flex items-center justify-center">
                                 <Link
                                     href="/"
                                     aria-label="logo"
@@ -100,7 +100,7 @@ export default function Navbar({ utm, navbarData }) {
                                     [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
                                         <div
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] items-center justify-center text-sm cursor-pointer text-gray-500 hover:text-black ${isGroupActive(item.group_name) ? '!text-accent !font-semibold' : ''
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex w-fit px-4 mx-4 !h-[63px] items-center justify-center text-sm cursor-pointer text-gray-500 hover:text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
                                                 }`}
                                             onMouseEnter={() => {
                                                 setOpenSecondNavbar(true);
@@ -143,7 +143,7 @@ export default function Navbar({ utm, navbarData }) {
                                     navbarData.filter((item) => item.group_name === groupName).map((item, index) => (
                                         <Link
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] px-4   text-sm items-center justify-center text-gray-500 hover:text-black ${isActive(`${item.link}`)}`}
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden sm:flex w-fit !h-[52px] px-4 mx-4 hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent text-sm items-center justify-center text-gray-500 hover:text-black ${isActive(`${item.link}`)}`}
                                             href={`${item.link}`}
                                         >
                                             {item.name}
