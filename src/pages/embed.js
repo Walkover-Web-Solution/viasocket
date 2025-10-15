@@ -47,7 +47,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                                     </Link>
                                     <p className="text-gray-500 text-center">Or</p>
                                     <Link href="login?utm_source=/embed">
-                                        <button className="btn btn-outline bg-white">Self Embed</button>
+                                        <button className="btn btn-outline">Self Embed</button>
                                     </Link>
                                 </div>
                             </div>

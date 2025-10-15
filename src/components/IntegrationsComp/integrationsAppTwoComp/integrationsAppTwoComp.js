@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import { LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
@@ -32,11 +32,18 @@ function TriggerOrActionCard({
     onToggle,
     onSelect,
     type,
-    appInfo
+    resetEvent
 }) {
 
     const [search, setSearch] = useState("");
     const [selectedEvent, setSelectedEvent] = useState(null);
+    
+    useEffect(() => {
+        if (resetEvent) {
+            setSelectedEvent(null);
+        }
+    }, [resetEvent]);
+
     const filteredList = list?.filter((item) =>
         item?.name?.toLowerCase().includes(search.toLowerCase())
     );
@@ -56,7 +63,10 @@ function TriggerOrActionCard({
 
             <div
                 className="w-full border custom-border flex bg-white cursor-pointer relative"
-                onClick={onToggle}
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onToggle();
+                }}
             >
                 <div className="custom-border border-r flex items-center justify-center p-2">
                     <Image
@@ -99,6 +109,7 @@ function TriggerOrActionCard({
             <div
                 className={`absolute top-full left-0 mt-2 w-full border custom-border bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-20
                 ${isOpen ? "opacity-100 visible max-h-72" : "opacity-0 invisible max-h-0"}`}
+                onClick={(e) => e.stopPropagation()}
             >
                 <div className="sticky top-0 bg-white border-b flex items-center gap-2 p-2 z-30">
                     <IoMdSearch className="text-gray-500" />
@@ -135,14 +146,6 @@ function TriggerOrActionCard({
                     ) : (
                         <li className="p-3 text-center">
                             <div className='flex flex-row items-center gap-2'>
-                                <div className="border flex items-center justify-center p-2">
-                                    <Image
-                                        src={appDetails?.iconurl || "https://placehold.co/36x36"}
-                                        width={20}
-                                        height={20}
-                                        alt={appDetails?.name || "App"}
-                                    />
-                                </div>
                                 <RequestIntegrationPopupOpener
                                     type={type}
                                     showType="dotted"
@@ -175,6 +178,7 @@ export default function IntegrationsAppTwoComp({
     const [openDropdown, setOpenDropdown] = useState(null);
     const [selectedTrigger, setSelectedTrigger] = useState(null);
     const [selectedAction, setSelectedAction] = useState(null);
+    const [resetTrigger, setResetTrigger] = useState(false);
     const faqData = generateIntegrationFAQ(appOneDetails?.name, appTwoDetails?.name);
 
     const categorizeEvents = (events = []) => {
@@ -195,14 +199,25 @@ export default function IntegrationsAppTwoComp({
     const [appOneEvents, setAppOneEvents] = useState(categorizeEvents(currentAppOne?.events));
     const [appTwoEvents, setAppTwoEvents] = useState(categorizeEvents(currentAppTwo?.events));
 
+    useEffect(() => {
+        const handleClickOutside = () => {
+            if (openDropdown) {
+                setOpenDropdown(null);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => document.removeEventListener('click', handleClickOutside);
+    }, [openDropdown]);
+
     const handleSwapApps = () => {
         const tempApp = currentAppOne;
         setCurrentAppOne(currentAppTwo);
         setCurrentAppTwo(tempApp);
 
-        const tempTrigger = selectedTrigger;
-        setSelectedTrigger(selectedAction);
-        setSelectedAction(tempTrigger);
+        setSelectedTrigger(null);
+        setSelectedAction(null);
+        setResetTrigger(!resetTrigger);
 
         setAppOneEvents(categorizeEvents(currentAppTwo?.events));
         setAppTwoEvents(categorizeEvents(currentAppOne?.events));
@@ -279,6 +294,7 @@ export default function IntegrationsAppTwoComp({
                                 }
                                 onSelect={(event) => setSelectedTrigger(event)}
                                 type="trigger"
+                                resetEvent={resetTrigger}
                             />
 
                             <div className="flex flex-col items-center justify-center py-4 md:py-0">
@@ -311,6 +327,7 @@ export default function IntegrationsAppTwoComp({
                                 }
                                 onSelect={(event) => setSelectedAction(event)}
                                 type="action"
+                                resetEvent={resetTrigger}
                             />
                         </div>
                         <div className="flex flex-col items-center">
@@ -327,14 +344,14 @@ export default function IntegrationsAppTwoComp({
                                 }}
                                 className="btn btn-accent mt-10 px-8 py-3"
                             >
-                                Connect these apps
+                                {selectedTrigger && selectedAction ? 'Connect these apps' : 'Get Started'}
                             </button>
 
-                            {!selectedTrigger || !selectedAction ? (
+                            {/* {!selectedTrigger || !selectedAction ? (
                                 <p className="text-sm text-gray-500 mt-2">
-                                    Please select a trigger and an action before continuing.
+                                    Select both trigger and action above, or get start to explore all integrations
                                 </p>
-                            ) : null}
+                            ) : null} */}
                         </div>
                     </div>
                 </div>
