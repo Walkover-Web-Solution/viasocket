@@ -79,7 +79,7 @@ const IntegrationSearchApps = ({
 
     return (
         <>
-            <label className="input border min-w-[500px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
+            <label className="input border md:min-w-[500px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                 <MdSearch fontSize={20} />
                 <input
                     value={searchTerm}

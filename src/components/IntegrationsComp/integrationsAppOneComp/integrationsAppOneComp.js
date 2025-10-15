@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdChevronRight, MdOpenInNew } from 'react-icons/md';
+import { MdAdd, MdChevronRight, MdKeyboardArrowDown, MdOpenInNew } from 'react-icons/md';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -175,8 +175,8 @@ export default function IntegrationsAppOneComp({
                     )}
                 </div>
 
-                <div className="md:py-12 py-6 bg-[#FAF9F6] ">
-                    <div className="flex flex-col gap-8 container">
+                <div className="container">
+                    <div className="flex flex-col gap-8">
                         {combosData?.combinations?.length > 0 && (
                             <>
                                 <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
@@ -238,7 +238,7 @@ export default function IntegrationsAppOneComp({
                                             }}
                                             className="btn btn-outline border-t-0 flex ml-auto"
                                         >
-                                            Load More
+                                            Load More <MdKeyboardArrowDown fontSize={20} />
                                         </button>
                                     )}
                                 </div>
@@ -265,10 +265,10 @@ export default function IntegrationsAppOneComp({
                         )}
                     </div>
                 </div>
-                <div className="md:py-16 py-6 bg-[#f9f6f1]">
-                    <div className="container">
+                <div className="container">
+                    <div className="cont">
                         {combosData?.combinations?.length > 0 && (
-                            <div className=" cont gap-8">
+                            <div className="cont gap-8">
                                 <div className="cont gap-2">
                                     <h2 className="h2">
                                         Triggers and Actions in{' '}
@@ -284,6 +284,8 @@ export default function IntegrationsAppOneComp({
                             </div>
                         )}
                     </div>
+                </div>
+                <div className="container">
                     {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
                 </div>
 
@@ -303,9 +305,14 @@ export default function IntegrationsAppOneComp({
                         <BlogGrid posts={blogsData} />
                     </div>
                 )}
-                <div className="container pb-4 cont">
-                    {faqData && <FAQSection faqData={faqData} />}
 
+                {faqData &&
+                    <div className="container">
+                        <FAQSection faqData={faqData} />
+                    </div>
+                }
+
+                <div className="container pb-4 cont">
                     <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
                         <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
                             <div>
