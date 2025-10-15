@@ -19,6 +19,8 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
 import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
+import { APPERPAGE } from '@/const/integrations';
+import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -43,6 +45,33 @@ export default function IntegrationsAppOneComp({
     const [searchedCategories, setSearchedCategories] = useState(null);
     const [debounceValue, setDebounceValue] = useState('');
 
+    const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
+
+    const goToNext = () => {
+        if (integrationsInfo?.appone) {
+            const url = `/integrations/${integrationsInfo?.appone}/page/${Number(integrationsInfo?.page) + 1}`;
+            return url;
+        } else {
+            if (integrationsInfo?.category && !integrationsInfo?.page) {
+                const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
+                return url;
+            } else {
+                const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
+                return url;
+            }
+        }
+    };
+
+    const goToPrev = () => {
+        if (integrationsInfo?.category && !integrationsInfo?.page) {
+            const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            return url;
+        } else {
+            const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            return url;
+        }
+    };
+
     // Search callbacks - IntegrationSearchApps will handle all the logic
     const handleSearchResults = (results) => {
         setSearchedApps(results);
@@ -57,12 +86,7 @@ export default function IntegrationsAppOneComp({
     };
 
     return (
-        <div
-            style={{
-                borderLeftColor: appOneDetails?.brandcolor,
-                borderLeftWidth: '10px',
-            }}
-        >
+        <div>
             <Navbar navbarData={navbarData} utm={'/integrations/appone'} />
 
             <IntegrationsHeadComp
@@ -74,78 +98,58 @@ export default function IntegrationsAppOneComp({
                 integrationsInfo={integrationsInfo}
             />
             <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
-                {/* <div className="flex flex-col gap-8 md:gap-16">     */}
-                <div className="container flex flex-col gap-8 md:gap-16">
-                    {/* <div className=""> */}
-                    <div className="flex items-center gap-2 text-base p-6">
-                        <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
-                            Integrations{' '}
-                        </Link>
-                        <MdChevronRight fontSize={22} />
-                        <Link
-                            href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
-                            className="flex items-center gap-0 underline"
-                        >
-                            {appOneDetails?.name}
-                        </Link>
+                <div className="container flex flex-col justify-between gap-12">
+                    <div className="flex items-center gap-2 justify-between text-base py-4">
+                        <div className="flex items-center gap-2">
+                            <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
+                                Integrations{' '}
+                            </Link>
+                            <MdChevronRight fontSize={22} />
+                            <Link
+                                href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
+                                className="flex items-center gap-0 underline"
+                            >
+                                {appOneDetails?.name}
+                            </Link>
+                        </div>
+
+                        {combosData?.combinations?.length > 0 && (
+                            <div className="text-xl gap-4 justify-center flex-wrap flex items-center">
+                                <button
+                                    onClick={(e) =>
+                                        handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
+                                    }
+                                    className="btn btn-outline"
+                                    rel="nofollow"
+                                >
+                                    Connect to {appOneDetails?.name} <MdOpenInNew />
+                                </button>
+                            </div>
+                        )}
                     </div>
-                    {/* </div> */}
 
                     {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                        <div className="flex flex-col">
-                            <div className=" flex flex-col justify-center items-center gap-2">
-                                <h1 className="h1 text-center">
-                                    Connect <span className="text-accent">{appOneDetails?.name}</span> integrations{' '}
-                                    <br /> with your favorite apps
-                                </h1>
-                                <p className="sub__h1 text-center">
-                                    Easily connect <span>{appOneDetails?.name}</span> with the apps you use every day.
-                                    Build and manage <span>{appOneDetails?.name}</span> automations <br /> to simplify
-                                    work and streamline communication. Pick from thousands of available{' '}
-                                    <span>{appOneDetails?.name}</span> integrations <br /> or customize new ones through
-                                    our automation platform.
+                        <div className="flex flex-col gap-12">
+                            <div className=" flex flex-col gap-2">
+                                <h1 className="h1">Integrate {appOneDetails?.name} with your favorite apps</h1>
+                                <p className="sub__h1">
+                                    Easily connect {appOneDetails?.name} with the apps you use every day. Build and
+                                    manage {appOneDetails?.name} automations to simplify work and streamline
+                                    communication. Pick from thousands of available {appOneDetails?.name} integrations{' '}
+                                    or customize new ones through our automation platform.
                                 </p>
                             </div>
-
-                            {combosData?.combinations?.length > 0 && (
-                                <div className="text-xl gap-4 justify-center flex-wrap flex items-center p-6">
-                                    <button
-                                        onClick={(e) =>
-                                            handleRedirect(
-                                                e,
-                                                `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`
-                                            )
-                                        }
-                                        className="btn btn-accent"
-                                        rel="nofollow"
-                                    >
-                                        Connect to {appOneDetails?.name} <MdOpenInNew />
-                                    </button>
-                                </div>
-                            )}
                         </div>
                     )}
-
-                    {/* {combosData?.combinations?.length > 0 && (
-                        <div className="text-xl gap-4 justify-center flex-wrap flex items-center p-6">
-                            <button
-                                onClick={(e) =>
-                                    handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
-                                }
-                                className="btn btn-outline"
-                                rel="nofollow"
-                            >
-                                Connect to {appOneDetails?.name} <MdOpenInNew />
-                            </button>
-                        </div>
-                    )} */}
                 </div>
-                <div className="container">
+                <div className="container flex flex-col gap-8">
                     {appOneDetails?.events.length > 0 && (
-                        <div className="cont gap-12">
+                        <div
+                            className="cont gap-10 pt-12 border custom-border"
+                            style={{ backgroundColor: appOneDetails?.brandcolor }}
+                        >
                             <div className="cont gap-10">
-                                {/* <h2 className="h2">{`Select Any App to connect with ${appOneDetails?.name}`}</h2> */}
-                                <div className="flex items-center gap-4 justify-center">
+                                <div className="flex items-center gap-4 pl-6">
                                     <Image
                                         className="h-12 w-fit border bg-white p-1"
                                         src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
@@ -153,7 +157,7 @@ export default function IntegrationsAppOneComp({
                                         height={20}
                                         alt={appOneDetails?.name}
                                     />
-                                    <MdAdd fontSize={30} />
+                                    <MdAdd fontSize={30} color="white" />
                                     <IntegrationSearchApps
                                         searchTerm={searchTerm}
                                         setSearchTerm={setSearchTerm}
@@ -172,6 +176,21 @@ export default function IntegrationsAppOneComp({
                                 searchTerm={debounceValue}
                                 searchedCategories={searchedCategories}
                             />
+                        </div>
+                    )}
+
+                    {!searchTerm && (combosData?.combinations?.length > 0 || appOneDetails?.events?.length > 0) && (
+                        <div className="flex justify-end items-end gap-2 w-full">
+                            {integrationsInfo?.page > 0 && (
+                                <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
+                                    <GrFormPreviousLink size={20} /> Prev
+                                </Link>
+                            )}
+                            {showNext && (
+                                <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
+                                    Next <GrFormNextLink size={20} />
+                                </Link>
+                            )}
                         </div>
                     )}
                 </div>
@@ -307,11 +326,11 @@ export default function IntegrationsAppOneComp({
                     </div>
                 )}
 
-                {faqData &&
+                {faqData && (
                     <div className="container">
                         <FAQSection faqData={faqData} />
                     </div>
-                }
+                )}
 
                 <div className="container pb-4 cont">
                     <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
@@ -387,7 +406,6 @@ export default function IntegrationsAppOneComp({
                     <Footer footerData={footerData} />
                 </div>
             </div>
-            {/* </div> */}
         </div>
     );
 }

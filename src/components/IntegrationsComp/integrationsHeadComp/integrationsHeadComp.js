@@ -21,7 +21,6 @@ export default function IntegrationsHeadComp({ pageInfo, metaData, integrationsI
                     <meta property="og:description" content={description} />
                     <meta property="og:image" content="https://files.msg91.com/342616/wnitwkyk" />
                     {keywords && <meta name="keywords" content={keywords} />}
-                    {/* <link rel="canonical" href={`https://viasocket.com${pageInfo?.url || '/'}`} /> */}
                 </Head>
             </>
         );
@@ -41,7 +40,6 @@ export default function IntegrationsHeadComp({ pageInfo, metaData, integrationsI
                     <meta property="og:description" content={description} />
                     <meta property="og:image" content="https://files.msg91.com/342616/wnitwkyk" />
                     {keywords && <meta name="keywords" content={keywords} />}
-                    {/* <link rel="canonical" href={`https://viasocket.com${pageInfo?.url || '/'}`} /> */}
 
                     {integrationsInfo?.page && integrationsInfo?.page > 1 && (
                         <>
@@ -85,7 +83,6 @@ export default function IntegrationsHeadComp({ pageInfo, metaData, integrationsI
                         content={`${metaData?.description && metaData?.description} ${integrationsInfo?.page ? '| Page ' + integrationsInfo?.page : ''}`}
                     />
                     <meta property="og:image" content="https://files.msg91.com/342616/wnitwkyk" />
-                    {/* <link rel="canonical" href={`https://viasocket.com${pageInfo?.url || '/'}`} /> */}
                     {keywords && <meta name="keywords" content={keywords} />}
                     {integrationsInfo?.page && integrationsInfo?.page > 1 && (
                         <>

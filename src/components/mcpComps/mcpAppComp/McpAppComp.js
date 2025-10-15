@@ -329,9 +329,6 @@ export default function McpAppComp({
 
                                                 <h2>{app?.name}</h2>
                                             </div>
-                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                {app?.description}
-                                            </p> */}
                                         </Link>
                                     );
                                 })
@@ -363,9 +360,6 @@ export default function McpAppComp({
 
                                                 <h2>{app?.name}</h2>
                                             </div>
-                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                {app?.description}
-                                            </p> */}
                                         </Link>
                                     );
                                 })
@@ -459,7 +453,6 @@ export default function McpAppComp({
                             width={600}
                             height={600}
                         />
-                        {/* </div> */}
                         <div className="cont gap-4 justify-center w-full lg:w-1/2">
                             {mcpAIIntegrationData.map((steps, index) => (
                                 <div key={index} className="flex items-center gap-4">

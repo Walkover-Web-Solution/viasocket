@@ -26,7 +26,6 @@ export default function Programs({ footerData, metaData, programs, navbarData })
                         6000 tasks/month, 1500 credits/month, access to all <Link href="/features" target='_blank' className='text-accent hover:underline'>features</Link>.
                     </h2>
                 </div>
-                {/* <button className="btn btn-rg btn-primary">Click here</button> */}
             </div>
             <div className="container">
                 <div

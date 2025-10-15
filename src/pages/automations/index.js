@@ -265,22 +265,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         </>
                     ) : hasResults ? (
                         <>
-                            {/* Newly Published Section */}
-                            {/* {latestTemplates.length > 0 && (
-                                <div className="mb-10">
-                                    <h2 className="h2 mb-4">Newly Published</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                        {latestTemplates.map((template, index) => (
-                                            <TemplateCard key={template.id} index={index} template={template} />
-                                        ))}
-                                    </div>
-                                </div>
-                            )} */}
-
                             {/* Rest of the Templates */}
                             {displayTemplates.length > 0 && (
                                 <>
-                                    {/* <h2 className="h2 mb-4 mt-3">All Templates</h2> */}
                                     <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                                         {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />

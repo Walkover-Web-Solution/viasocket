@@ -2,10 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
-import { APPERPAGE } from '@/const/integrations';
 import createURL from '@/utils/createURL';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function IntegrationsAppComp({
     pageInfo,
@@ -16,35 +14,10 @@ export default function IntegrationsAppComp({
     searchTerm,
     searchedCategories,
 }) {
-    const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
 
-    const goToNext = () => {
-        if (integrationsInfo?.appone) {
-            const url = `/integrations/${integrationsInfo?.appone}/page/${Number(integrationsInfo?.page) + 1}`;
-            return url;
-        } else {
-            if (integrationsInfo?.category && !integrationsInfo?.page) {
-                const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
-                return url;
-            } else {
-                const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
-                return url;
-            }
-        }
-    };
-
-    const goToPrev = () => {
-        if (integrationsInfo?.category && !integrationsInfo?.page) {
-            const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
-            return url;
-        } else {
-            const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
-            return url;
-        }
-    };
     return (
         <>
-            <div className="gap-4 flex flex-col">
+            <div className="flex flex-col border-t custom-border">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
                         <div className=" border custom-border border-t-0 lg:block hidden bg-white">
@@ -166,7 +139,6 @@ export default function IntegrationsAppComp({
 
                                                         <h2>{app?.name}</h2>
                                                     </div>
-                                                    {/* <p className={style?.app__des}>{app?.description}</p> */}
                                                 </Link>
                                             );
                                         }
@@ -175,20 +147,6 @@ export default function IntegrationsAppComp({
                         </div>
                     </div>
                 </div>
-                {!searchTerm && (
-                    <div className="flex justify-end items-end gap-2 w-full">
-                        {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
-                                <GrFormPreviousLink size={20} /> Prev
-                            </Link>
-                        )}
-                        {showNext && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
-                                Next <GrFormNextLink size={20} />
-                            </Link>
-                        )}
-                    </div>
-                )}
             </div>
         </>
     );
