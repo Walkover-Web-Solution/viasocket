@@ -10,7 +10,7 @@ const VideoGrid = ({ videoData, showHeading = true }) => {
         }
     };
     return (
-        <div className="flex flex-col gap-8 border custom-border p-12 bg-white">
+        <div className="flex flex-col gap-8 border custom-border p-6 md:p-12 bg-white">
             {showHeading && <h2 className="h2">Watch Integrations In Action</h2>}
             <div className={`grid ${getGridClass()} gap-4`}>
                 {videoData.map((video, index) => (
