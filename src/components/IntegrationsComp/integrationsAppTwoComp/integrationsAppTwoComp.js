@@ -21,6 +21,7 @@ import { MdChevronRight, MdKeyboardArrowDown } from 'react-icons/md';
 import { GoArrowSwitch } from "react-icons/go";
 import { IoMdSearch } from "react-icons/io";
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
+import generateIntegrationFAQ from './generateIntegrationFAQ';
 
 function TriggerOrActionCard({
     title,
@@ -159,7 +160,6 @@ function TriggerOrActionCard({
 export default function IntegrationsAppTwoComp({
     combosData,
     pageInfo,
-    faqData,
     footerData,
     appOneDetails,
     appTwoDetails,
@@ -174,6 +174,7 @@ export default function IntegrationsAppTwoComp({
     const [openDropdown, setOpenDropdown] = useState(null);
     const [selectedTrigger, setSelectedTrigger] = useState(null);
     const [selectedAction, setSelectedAction] = useState(null);
+    const faqData = generateIntegrationFAQ(appOneDetails?.name, appTwoDetails?.name);
 
     const categorizeEvents = (events = []) => {
         const triggers = [];
