@@ -59,7 +59,7 @@ export default function Integrations({
                     appOneDetails={appOneDetails}
                     appTwoDetails={appTwoDetails}
                     combosData={combosData}
-                    faqData={faqData}
+                    // faqData={faqData}
                     footerData={footerData}
                     videoData={videoData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
