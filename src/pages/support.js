@@ -105,7 +105,7 @@ export default function Support({ footerData, metaData, testimonials, navbarData
             <MetaHeadComp metaData={metaData} page={'/support'} />
             <Navbar navbarData={navbarData} utm={'/support'} />
 
-            <div className="container mt-12 global-top-space">
+            <div className="container mt-12 global-top-space pt-12">
                 <div className="support-page-heading">
                     <h1 className="h1">
                         We're here to help, <span className="text-accent">now!</span>

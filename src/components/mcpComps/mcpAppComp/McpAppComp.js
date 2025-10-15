@@ -111,7 +111,7 @@ export default function McpAppComp({
                 <div className="cont gap-8">
                     <Navbar navbarData={navbarData} utm={'/mcp'} />
 
-                    <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-8 global-top-space pt-12">
                         <div className="container cont cont__gap">
                             <div className="flex items-center gap-2 text-lg">
                                 <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
