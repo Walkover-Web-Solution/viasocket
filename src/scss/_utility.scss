@@ -5,7 +5,7 @@
     border-color: var(--custom-border) !important;
 }
 
-.border-black{
+.border-black {
     border-color: black !important;
 }
 
@@ -33,16 +33,13 @@
 
     &:hover {
         color: var(--text-color-black) !important;
-        border: 1px solid var(--custom-border) !important;
-        transition: all 0.3s ease-in-out;
+        border-color: var(--custom-border) !important;
     }
 }
 
 .custom-styles {
     &:hover {
-        // background-color: inherit !important;
         color: var(--text-color-black) !important;
-        border: 1px solid var(--custom-border) !important;
     }
 }
 

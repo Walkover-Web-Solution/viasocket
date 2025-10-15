@@ -125,7 +125,6 @@ const automations = ({
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
                     <div className="flex md:flex-row flex-col gap-8">
                         <div className="w-full md:w-3/5 cont gap-8 justify-between">
-                            {/* <div> */}
                             <div className="flex flex-col gap-2">
                                 <h2 className="h2 font-bold">What is workflow automation?</h2>
                                 <p>
