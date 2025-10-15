@@ -2,19 +2,19 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
 import Link from 'next/link';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getProgramsData } from '@/utils/getData';
-import { FOOTER_FIELDS, PROGRAMS_FIELDS } from '@/const/fields';
+import { getFooterData, getProgramsData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, PROGRAMS_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
 
-export default function Programs({ footerData, metaData, programs }) {
+export default function Programs({ footerData, metaData, programs, navbarData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <Navbar footerData={footerData} utm={'/free-access-programs'} />
+            <Navbar navbarData={navbarData} utm={'/free-access-programs'} />
 
-            <div className="container cont py-12 cont__gap">
+            <div className="container cont py-12 cont__gap global-top-space">
                 <div className="cont gap-2">
                     <h1 className="h1 ">
                         <span className="text-accent"> 3x more </span> for impactful organisations
@@ -135,11 +135,13 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/free-access-programs', pageUrl);
     const programs = await getProgramsData(PROGRAMS_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
             programs: programs || [],
+            navbarData: navbarData || [],
         },
     };
 }

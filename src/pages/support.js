@@ -5,8 +5,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Image from 'next/image';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { FaHeadset } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
@@ -25,17 +25,19 @@ export async function getServerSideProps(context) {
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/support', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
             testimonials: testimonials || [],
+            navbarData: navbarData || [],
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-export default function Support({ footerData, metaData, testimonials }) {
+export default function Support({ footerData, metaData, testimonials, navbarData }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
@@ -101,9 +103,9 @@ export default function Support({ footerData, metaData, testimonials }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <Navbar footerData={footerData} utm={'/support'} />
+            <Navbar navbarData={navbarData} utm={'/support'} />
 
-            <div className="container mt-12">
+            <div className="container mt-12 global-top-space pt-12">
                 <div className="support-page-heading">
                     <h1 className="h1">
                         We're here to help, <span className="text-accent">now!</span>

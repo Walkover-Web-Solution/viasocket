@@ -1,10 +1,10 @@
-import { getCategoryData, getFooterData, getMCPPromptData } from '@/utils/getData';
+import { getCategoryData, getFooterData, getMCPPromptData, getNavbarData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
 import getMcpInfo from '@/utils/getMcpInfo';
 import getAppDetails from '@/utils/getAppDetail';
 import ErrorComp from '@/components/404/404Comp';
 import Head from 'next/head';
-import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, MCP_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
@@ -34,6 +34,7 @@ export default function Mcp({
     mcpPromptData,
     mcpAIIntegrationData,
     appCount,
+    navbarData,
 }) {
     if (noData) {
         return (
@@ -60,6 +61,7 @@ export default function Mcp({
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
+                    navbarData={navbarData}
                 />
             </div>
         );
@@ -81,6 +83,7 @@ export default function Mcp({
                     keyPointData={keyPointData}
                     metaData={metaData}
                     appCount={appCount}
+                    navbarData={navbarData}
                 />
             </div>
         );
@@ -95,6 +98,7 @@ export async function getServerSideProps(context) {
     const pageInfo = getPageInfo(context);
     const mcpInfo = getMcpInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     if (mcpInfo?.appone) {
         const metaData = await getMetaData('/mcp/appName', pageUrl);
@@ -155,6 +159,7 @@ export async function getServerSideProps(context) {
                     mcpAppSteps: mcpAppSteps || [],
                     mcpPromptData: mcpPromptData || [],
                     mcpAIIntegrationData: mcpAIIntegrationData || [],
+                    navbarData: navbarData || {},
                 },
             };
         } else {
@@ -162,6 +167,7 @@ export async function getServerSideProps(context) {
                 props: {
                     noData: true,
                     footerData: footerData || {},
+                    navbarData: navbarData || {},
                 },
             };
         }
@@ -274,6 +280,7 @@ export async function getServerSideProps(context) {
                 featuresData: featuresData || [],
                 keyPointData: keyPointData || [],
                 appCount: appCount || 0,
+                navbarData: navbarData || {},
             },
         };
     }

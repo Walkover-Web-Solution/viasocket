@@ -166,7 +166,8 @@ export default function IntegrationsAppTwoComp({
     blogsData,
     metaData,
     videoData,
-    getDoFollowUrlStatusArray
+    getDoFollowUrlStatusArray,
+    navbarData,
 }) {
     const router = useRouter();
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -215,7 +216,7 @@ export default function IntegrationsAppTwoComp({
             style={{ borderLeftColor: appOneDetails?.brandcolor, borderLeftWidth: '10px' }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <Navbar footerData={footerData} utm={'/integrations/apptwo'} />
+            <Navbar navbarData={navbarData} utm={'/integrations/apptwo'} />
 
             <IntegrationsHeadComp
                 metaData={metaData}
@@ -224,7 +225,7 @@ export default function IntegrationsAppTwoComp({
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
-            <div className="container cont -mt-10">
+            <div className="container cont -mt-10 global-top-space pt-12">
                 <div className="flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
                     <Link
                         href={createURL(`/integrations`)}

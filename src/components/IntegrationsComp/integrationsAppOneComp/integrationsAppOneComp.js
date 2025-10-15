@@ -34,6 +34,7 @@ export default function IntegrationsAppOneComp({
     videoData,
     appCount,
     getDoFollowUrlStatusArray,
+    navbarData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -62,7 +63,7 @@ export default function IntegrationsAppOneComp({
                 borderLeftWidth: '10px',
             }}
         >
-            <Navbar footerData={footerData} utm={'/integrations/appone'} />
+            <Navbar navbarData={navbarData} utm={'/integrations/appone'} />
 
             <IntegrationsHeadComp
                 metaData={metaData}
@@ -72,7 +73,7 @@ export default function IntegrationsAppOneComp({
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}
             />
-            <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16">
+            <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
                 {/* <div className="flex flex-col gap-8 md:gap-16">     */}
                 <div className="container flex flex-col gap-8 md:gap-16">
                     {/* <div className=""> */}

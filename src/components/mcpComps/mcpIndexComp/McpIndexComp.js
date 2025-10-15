@@ -39,6 +39,7 @@ export default function McpIndexComp({
     keyPointData,
     metaData,
     appCount,
+    navbarData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -134,9 +135,9 @@ export default function McpIndexComp({
                     `}
                 </Script>
 
-                <Navbar footerData={footerData} utm={'/index'} />
+                <Navbar navbarData={navbarData} utm={'/index'} />
 
-                <div className="cont gap-8">
+                <div className="cont gap-8 global-top-space pt-12">
                     <McpSwitchComp />
 
                     <div className="container cont gap-2">
