@@ -2,7 +2,7 @@ import Footer from '@/components/footer/footer';
 import Head from 'next/head';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getTemplates } from '@/utils/axiosCalls';
 import { getFooterData, getNavbarData } from '@/utils/getData';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -140,17 +140,17 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                     )}
                                 </div>
                                 <div className=" flex items-center gap-12 justify-between">
-                                        <button
-                                            className="btn btn-accent"
-                                            onClick={(e) =>
-                                                handleRedirect(
-                                                    e,
-                                                    `https://flow.viasocket.com/template/${template?.id}?`
-                                                )
-                                            }
-                                        >
-                                            Install Template
-                                        </button>
+                                    <button
+                                        className="btn btn-accent"
+                                        onClick={(e) =>
+                                            handleRedirect(
+                                                e,
+                                                `https://flow.viasocket.com/template/${template?.id}?`
+                                            )
+                                        }
+                                    >
+                                        Install Template
+                                    </button>
                                     <div className="flex gap-1 flex-col">
                                         <h3 className="text-sm">Created by {template?.userName}</h3>
                                         <h3 className="text-xs ml-auto">Installed by {template?.usedCount} users</h3>
@@ -183,19 +183,21 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                     </div>
 
                     <div
-                        className={`fixed top-[44px] md:gap-24 gap-4 left-1/2 transform -translate-x-1/2 bg-[#faf9f6] border custom-border bt-0 transition-all duration-300 flex flex-col md:flex-row items-center justify-between container p-4 md:px-12 md:py-0  m-autotransition-all duration-500 ease-in-out
+                        className={`fixed top-[64px] left-1/2 transform -translate-x-1/2  bt-0 transition-all duration-300   m-autotransition-all duration-500 ease-in-out container
               ${isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
                         style={{ zIndex: 50 }}
                     >
-                        <h2 className="h3">{template?.title}</h2>
-                        <button
-                            className="btn btn-accent md:my-4"
-                            onClick={(e) =>
-                                handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
-                            }
-                        >
-                            Install Template
-                        </button>
+                        <div className="container border custom-border bg-[#faf9f6] md:gap-24 gap-4 flex flex-col md:flex-row items-center justify-between p-4 md:px-12 md:py-0">
+                            <h2 className="h3">{template?.title}</h2>
+                            <button
+                                className="btn btn-accent md:my-4"
+                                onClick={(e) =>
+                                    handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
+                                }
+                            >
+                                Install Template
+                            </button>
+                        </div>
                     </div>
 
                     <div className="flex flex-col md:flex-row gap-4">
