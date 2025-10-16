@@ -105,12 +105,9 @@ export default function IntegrationsAppOneComp({
                                 Integrations{' '}
                             </Link>
                             <MdChevronRight fontSize={22} />
-                            <Link
-                                href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
-                                className="flex items-center gap-0 underline"
-                            >
+                            <div className="flex items-center gap-0">
                                 {appOneDetails?.name}
-                            </Link>
+                            </div>
                         </div>
 
                         {combosData?.combinations?.length > 0 && (

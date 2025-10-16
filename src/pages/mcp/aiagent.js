@@ -8,7 +8,6 @@ import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
-import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
@@ -21,7 +20,6 @@ export default function aiagent({ footerData, faqData, metaData, blogData, navba
             <Navbar navbarData={navbarData} utm={'/mcp'} />
 
             <div className="cont gap-8 global-top-space pt-12">
-                <McpSwitchComp />
                 <div className="container cont">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                         <div className="cont gap-4 w-full text-left">

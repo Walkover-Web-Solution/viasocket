@@ -55,14 +55,14 @@ const UseCaseList = ({ useCaseData, appname }) => {
                 </div>
 
                 <div
-                    className="px-8 py-16 w-full flex justify-center items-center border-l custom-border"
+                    className="px-2 lg:px-8 py-12 md:py-24 lg:py-16  w-full flex justify-center items-center border-l custom-border"
                     style={{
                         backgroundImage: 'url("/review-image/pexels-ironic.svg")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
                 >
-                    <ul className="list-disc bg-white m-12 h-full p-8 flex flex-col justify-center">
+                    <ul className="list-disc bg-white m-4 lg:m-12 h-full p-8 flex flex-col justify-center">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
                                 {item}
