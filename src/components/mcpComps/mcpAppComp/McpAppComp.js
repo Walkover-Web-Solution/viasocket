@@ -118,12 +118,9 @@ export default function McpAppComp({
                                     MCP{' '}
                                 </Link>
                                 <MdChevronRight fontSize={22} />
-                                <Link
-                                    href={createURL(`/mcp/${appOneDetails?.appslugname}`)}
-                                    className="flex items-center gap-0 underline capitalize"
-                                >
+                                <div className="flex items-center gap-0 capitalize">
                                     {appOneDetails?.name}
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -204,7 +204,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                         <div className="w-full md:w-2/5 cont gap-4">
                             <SharePopup title={template?.title} />
                             {template?.instructions && (
-                                <div className="w-full border custom-border p-4 h-full cont gap-2 bg-white">
+                                <div className="w-full border custom-border p-4 h-[400px] lg:h-full cont gap-2 bg-white">
                                     <h3 className="h3">Instructions</h3>
                                     <textarea
                                         readOnly
