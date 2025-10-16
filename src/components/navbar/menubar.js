@@ -67,7 +67,7 @@ export default function Menubar({ open, onClose, navbarData }) {
                 role="dialog"
                 aria-modal="true" aria-label="Menubar"
             >
-                <div className="md:hidden flex justify-end p-4">
+                <div className="md:hidden flex justify-end p-4 border-b mb-4">
                     <X className="h-8 w-8" onClick={onClose} />
                 </div>
                 <div className="cont justify-between h-full pt-0 md:pt-8">
