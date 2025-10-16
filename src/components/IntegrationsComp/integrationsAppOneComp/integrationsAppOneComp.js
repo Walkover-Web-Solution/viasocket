@@ -8,7 +8,7 @@ import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
@@ -73,17 +73,17 @@ export default function IntegrationsAppOneComp({
     };
 
     // Search callbacks - IntegrationSearchApps will handle all the logic
-    const handleSearchResults = (results) => {
+    const handleSearchResults = useCallback((results) => {
         setSearchedApps(results);
-    };
+    }, []);
 
-    const handleCategoriesResults = (categories) => {
+    const handleCategoriesResults = useCallback((categories) => {
         setSearchedCategories(categories);
-    };
+    }, []);
 
-    const handleDebounceValueChange = (value) => {
+    const handleDebounceValueChange = useCallback((value) => {
         setDebounceValue(value);
-    };
+    }, []);
 
     return (
         <div>
@@ -105,9 +105,7 @@ export default function IntegrationsAppOneComp({
                                 Integrations{' '}
                             </Link>
                             <MdChevronRight fontSize={22} />
-                            <div className="flex items-center gap-0">
-                                {appOneDetails?.name}
-                            </div>
+                            <div className="flex items-center gap-0">{appOneDetails?.name}</div>
                         </div>
 
                         {combosData?.combinations?.length > 0 && (
