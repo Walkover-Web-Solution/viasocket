@@ -20,7 +20,7 @@ export default function IntegrationsAppComp({
             <div className="flex flex-col border-t custom-border">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
-                        <div className=" border custom-border border-t-0 lg:block hidden bg-white">
+                        <div className="border custom-border border-t-0 lg:block hidden bg-white overflow-hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {searchTerm ? (
                                     searchedCategories ? (
@@ -36,7 +36,7 @@ export default function IntegrationsAppComp({
                                             );
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
+                                        <span className="p-4 sm:p-8 text-lg sm:text-2xl lg:text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 break-words">
                                             No Apps found for Searched name{' '}
                                         </span>
                                     )
@@ -82,7 +82,7 @@ export default function IntegrationsAppComp({
 
                         <div
                             className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
-                            style={{ gridAutoRows: '75px' }}
+                            style={{ gridAutoRows: (searchTerm && !apps?.length  )  ? 'minmax(80px, auto)' : '75px' }}
                         >
                             {searchTerm ? (
                                 apps?.length > 0 ? (
@@ -92,7 +92,7 @@ export default function IntegrationsAppComp({
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={`${style.app} custom-styles bg-white border-color justify-center`}
+                                            className={`${style.app} bg-white border custom-border flex justify-center`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
@@ -100,14 +100,15 @@ export default function IntegrationsAppComp({
                                                     width={40}
                                                     height={40}
                                                     alt={app?.name}
+                                                    className="border h-10 p-1"
                                                 />
 
-                                                <h2 className="font-bold">{app?.name}</h2>
+                                                <h2 className="text-sm sm:text-base break-words">{app?.name}</h2>
                                             </div>
                                         </Link>
                                     ))
                                 ) : (
-                                    <div className="col-span-full">
+                                    <div className="col-span-full row-span-1 md:row-span-2 min-h-[200px] md:min-h-[150px]">
                                         <RequestIntegrationPopupOpener
                                             showType="searchView"
                                             className="md:border-t-0 md:border-l-0"
@@ -126,7 +127,7 @@ export default function IntegrationsAppComp({
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} bg-white flex justify-center`}
+                                                    className={`${style.app} bg-white border custom-border flex justify-center`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <Image
@@ -137,7 +138,7 @@ export default function IntegrationsAppComp({
                                                             className="border h-10 p-1"
                                                         />
 
-                                                        <h2>{app?.name}</h2>
+                                                        <h2 className="text-sm sm:text-base break-words">{app?.name}</h2>
                                                     </div>
                                                 </Link>
                                             );

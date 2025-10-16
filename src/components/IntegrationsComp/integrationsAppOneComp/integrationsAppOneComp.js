@@ -99,7 +99,7 @@ export default function IntegrationsAppOneComp({
             />
             <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
                 <div className="container flex flex-col justify-between gap-12">
-                    <div className="flex items-center gap-2 justify-between text-base py-4">
+                    <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                         <div className="flex items-center gap-2">
                             <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                                 Integrations{' '}
@@ -109,7 +109,7 @@ export default function IntegrationsAppOneComp({
                         </div>
 
                         {combosData?.combinations?.length > 0 && (
-                            <div className="text-xl gap-4 justify-center flex-wrap flex items-center">
+                            <div className="text-xl gap-4 flex-wrap flex items-center">
                                 <button
                                     onClick={(e) =>
                                         handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
@@ -129,7 +129,7 @@ export default function IntegrationsAppOneComp({
                                 <h1 className="h1">Integrate {appOneDetails?.name} with your favorite apps</h1>
                                 <p className="sub__h1">
                                     Easily connect {appOneDetails?.name} with the apps you use every day. Build and
-                                    manage {appOneDetails?.name} automations to simplify work and streamline
+                                    manage {appOneDetails?.name} automations to simplify work and streamline <br className='hidden xl:block'/>
                                     communication. Pick from thousands of available {appOneDetails?.name} integrations{' '}
                                     or customize new ones through our automation platform.
                                 </p>
