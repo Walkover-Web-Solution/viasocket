@@ -144,15 +144,17 @@ export default function IntegrationsAppOneComp({
                             style={{ backgroundColor: appOneDetails?.brandcolor }}
                         >
                             <div className="cont gap-10">
-                                <div className="flex items-center gap-4 pl-6">
-                                    <Image
-                                        className="h-12 w-fit border bg-white p-1"
-                                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                        width={20}
-                                        height={20}
-                                        alt={appOneDetails?.name}
-                                    />
-                                    <MdAdd fontSize={30} color="white" />
+                                <div className="flex sm:flex-row flex-col items-start sm:items-center gap-4 pl-4 sm:pl-6 pr-4 sm:pr-0">
+                                    <div className='flex items-center gap-4'>
+                                        <Image
+                                            className="h-12 w-fit border bg-white p-1"
+                                            src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                            width={20}
+                                            height={20}
+                                            alt={appOneDetails?.name}
+                                        />
+                                        <MdAdd fontSize={30} color="white" />
+                                    </div>
                                     <IntegrationSearchApps
                                         searchTerm={searchTerm}
                                         setSearchTerm={setSearchTerm}

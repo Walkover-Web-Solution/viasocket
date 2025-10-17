@@ -187,9 +187,9 @@ const automations = ({
                         {automationSteps.map((step, index) => (
                             <div
                                 key={index}
-                                className="p-8 w-full border-r border-b custom-border bg-white flex items-center gap-8"
+                                className="p-8 w-full border-r border-b custom-border bg-white flex flex-col items-start sm:flex-row sm:items-center gap-8"
                             >
-                                <div className="min-w-12 min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
+                                <div className="min-w-8 min-h-8 sm:min-w-12 sm:min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-sm sm:text-xl font-bold">
                                     {index + 1}
                                 </div>
                                 <div className="automation-work-step">
