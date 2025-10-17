@@ -17,7 +17,7 @@ export default function IntegrationsAppComp({
 
     return (
         <>
-            <div className="flex flex-col border-t custom-border">
+            <div className="bg-white flex flex-col border-t custom-border">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
                         <div className="border custom-border border-t-0 lg:block hidden bg-white overflow-hidden">
@@ -82,7 +82,7 @@ export default function IntegrationsAppComp({
 
                         <div
                             className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
-                            style={{ gridAutoRows: (searchTerm && !apps?.length  )  ? 'minmax(80px, auto)' : '75px' }}
+                            style={{ gridAutoRows: (searchTerm && !apps?.length) ? 'minmax(80px, auto)' : '75px' }}
                         >
                             {searchTerm ? (
                                 apps?.length > 0 ? (
