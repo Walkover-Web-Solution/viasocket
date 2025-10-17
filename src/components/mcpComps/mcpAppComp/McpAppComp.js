@@ -257,7 +257,7 @@ export default function McpAppComp({
                 )}
 
                 <div className="container">
-                    <div className="cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
+                    <div className="cont sm:cont__py gap-12 p-6 md:p-12  h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
                             <h2 className="h2">
                                 Connect <span className='capitalize'>{appOneDetails?.name}</span> to Any AI Assistant in 3 Easy Steps
@@ -390,7 +390,7 @@ export default function McpAppComp({
                 </div>
 
                 <div className="container">
-                    <div className="cont gap-12 py-20 px-12 bg-black text-white">
+                    <div className="cont gap-12 p-6 md:p-12 bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center">
                             <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
                             <p className="sub__h1">
@@ -399,7 +399,7 @@ export default function McpAppComp({
                             </p>
                         </div>
                         <div className="flex flex-col md:flex-row gap-8 ">
-                            <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-white">
+                            <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-between gap-6 border border-white">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                                     <h3 className="text-xl">
@@ -419,7 +419,7 @@ export default function McpAppComp({
                                     </button>
                                 </Link>
                             </div>
-                            <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-white">
+                            <div className="w-full md:w-1/2 p-6 md:p-12 cont justify-between gap-6 border border-white">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">For Enterprises</h2>
                                     <h3 className="text-xl">
