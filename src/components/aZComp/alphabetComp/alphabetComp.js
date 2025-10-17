@@ -9,14 +9,6 @@ export default function AlphabetComp({ alphabet, appDetails, step }) {
             {step === 2 && <h3 className="h3 font-semibold text-center">Select an app to integrate with</h3>}
 
             <div className="flex flex-row flex-wrap justify-center gap-2">
-                {/* <Link
-                    key={9}
-                    className="text-lg py-1 px-2 hover-bg-grey-100-text-black transition-all duration-150 "
-                    href={`/find-apps/0-9`}
-                    aria-label="alphabet"
-                >
-                    0-9
-                </Link> */}
                 {alphabets.map((letter) => (
                     <Link
                         className={`text-lg py-1 px-2 hover-bg-grey-100-text-black transition-all  duration-150 ${letter === alphabet ? 'font-bold' : ''}`}

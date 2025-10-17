@@ -21,6 +21,7 @@ import {
     FOOTER,
     DOFOLLOWLINK,
     REVIEWSECTION,
+    NAVBAR,
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -42,6 +43,10 @@ const handleFieldsFilter = (fields, filter) => {
 
 export async function getFooterData(fields, filter, pageUrl) {
     const data = await getDataFromTable(FOOTER, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+export async function getNavbarData(fields, filter, pageUrl) {
+    const data = await getDataFromTable(NAVBAR, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
 

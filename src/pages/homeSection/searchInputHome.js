@@ -9,6 +9,32 @@ import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import axios from 'axios';
 
+const filterListByName = (list, search) => {
+    if (!search) return list;
+    const lower = search.trim().toLowerCase();
+
+    return list.filter((item) => {
+        const name = (item?.name || '').trim().toLowerCase();
+        return name.startsWith(lower);
+    });
+};
+
+const getFirstSuggestion = (apps, industries, departments, search) => {
+    const lower = search.toLowerCase();
+
+    const checkStartsWith = (list, type) => {
+        if (!list || list.length === 0) return null;
+        const item = list[0];
+        const name = item?.name || item?.industry_name || item?.department_name || item;
+        return name.toLowerCase().startsWith(lower) ? { suggestion: name, type } : null;
+    };
+
+    return checkStartsWith(apps, 'app') ||
+        checkStartsWith(industries, 'industry') ||
+        checkStartsWith(departments, 'department');
+};
+
+
 const SearchInputHome = ({
     onTemplatesChange,
     onVideosChange,
@@ -23,6 +49,7 @@ const SearchInputHome = ({
 }) => {
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
+    const allAppsCache = useRef(null);
     const [selectedApps, setSelectedApps] = useState([]);
     const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -38,38 +65,259 @@ const SearchInputHome = ({
     const [currentSuggestion, setCurrentSuggestion] = useState('');
     const [suggestionText, setSuggestionText] = useState('');
     const [templates, setTemplates] = useState([]);
-    const [showTemplates, setShowTemplates] = useState(false);
-    const [loadingTemplates, setLoadingTemplates] = useState(false);
     const [videos, setVideos] = useState([]);
-    const [showVideos, setShowVideos] = useState(false);
-    const [loadingVideos, setLoadingVideos] = useState(false);
     const [blogs, setBlogs] = useState([]);
-    const [showBlogs, setShowBlogs] = useState(false);
-    const [loadingBlogs, setLoadingBlogs] = useState(false);
     const [aiResponse, setAiResponse] = useState('');
+    const [showTemplates, setShowTemplates] = useState(false);
+    const [showVideos, setShowVideos] = useState(false);
+    const [showBlogs, setShowBlogs] = useState(false);
     const [showAiResponse, setShowAiResponse] = useState(false);
-    const [loadingAiResponse, setLoadingAiResponse] = useState(false);
-    const [isInputFocused, setIsInputFocused] = useState(true);
     const [hasBrowserFocus, setHasBrowserFocus] = useState(false);
     const [shouldShowCaret, setShouldShowCaret] = useState(true);
-
-    // Use template filters hook for template functionality
     const {
         filteredTemplates,
         hasResults: hasTemplateResults,
         handleFilterChange: handleTemplateFilterChange,
     } = useTemplateFilters(templates);
 
+    const resetToInitialState = () => {
+        setShowTemplates(false);
+        setShowVideos(false);
+        setShowBlogs(false);
+        setShowAiResponse(false);
+        onTemplatesChange?.({ templates: [], filteredTemplates: [], showTemplates: false, hasResults: false });
+        onVideosChange?.({ videos: [], showVideos: false });
+        onBlogsChange?.({ blogs: [], showBlogs: false });
+        onAiResponseChange?.({ aiResponse: '', showAiResponse: false });
+    };
+
     const fetchAppsData = useCallback(async () => await fetchApps(), [fetchApps]);
     const fetchIndustriesData = useCallback(async () => await getIndustries(window?.location?.href), []);
     const fetchDepartmentsData = useCallback(async () => await getDepartments(window?.location?.href), []);
 
-    const filterSelectedApps = useCallback(
-        (apps) =>
-            apps?.filter((app) => !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname)) ||
-            [],
+    const filterSelectedApps = useCallback((apps) =>
+        apps?.filter((app) => !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname)) || [],
         [selectedApps]
     );
+    const handleSelectApp = (app) => {
+        setSelectedApps((prev) => {
+            const exists = prev.some((selected) => selected.appslugname === app.appslugname);
+            let newSelectedApps = exists ? prev.filter((item) => item.appslugname !== app.appslugname) : [...prev, app];
+
+            // setTimeout(() => {
+            if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
+                if (enableVideos) handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
+                if (enableBlogs) handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
+            } else {
+                resetToInitialState();
+            }
+            if (enableAi) getAiResponse(newSelectedApps, selectedIndustries, selectedDepartments);
+            // }, 100);
+
+            return newSelectedApps;
+        });
+        setSearchTerm('');
+        setCurrentSuggestion('');
+        setSuggestionText('');
+        setShowDropdown(false);
+    };
+
+    const handleSelectIndustry = (industry) => {
+        const industryName = industry?.name || industry?.industry_name || industry;
+        setSelectedIndustries((prev) => {
+            const exists = prev.some((selected) => selected === industryName);
+            const newSelectedIndustries = exists ? [] : [industryName];
+
+            setTimeout(() => {
+                if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                    handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
+                    if (enableVideos) handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
+                    if (enableBlogs) handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
+                } else {
+                    resetToInitialState();
+                }
+                // Check AI response condition separately
+                if (enableAi) getAiResponse(selectedApps, newSelectedIndustries, selectedDepartments);
+            }, 100);
+
+            return newSelectedIndustries;
+        });
+        setSearchTerm('');
+        setCurrentSuggestion('');
+        setSuggestionText('');
+        setShowDropdown(false);
+    };
+
+    const handleSelectDepartment = (department) => {
+        const departmentName = department?.name || department?.department_name || department;
+        setSelectedDepartments((prev) => {
+            const exists = prev.some((selected) => selected === departmentName);
+            const newSelectedDepartments = exists ? [] : [departmentName];
+
+            setTimeout(() => {
+                if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
+                    handleSearchTemplates(selectedApps, selectedIndustries, newSelectedDepartments);
+                    if (enableVideos) handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
+                    if (enableBlogs) handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
+                } else {
+                    resetToInitialState();
+                }
+                if (enableAi) {
+                    getAiResponse(selectedApps, selectedIndustries, newSelectedDepartments);
+                }
+            }, 100);
+
+            return newSelectedDepartments;
+        });
+        setSearchTerm('');
+        setCurrentSuggestion('');
+        setSuggestionText('');
+        setShowDropdown(false);
+    };
+
+    const handleSearchTemplates = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
+            return;
+        }
+
+        setShowTemplates(true);
+        onLoadingChange && onLoadingChange({ templates: true });
+
+        try {
+            const templates = await getTemplates();
+            const validStatuses = ['verified_by_ai', 'verified'];
+            const templateData = (templates).filter(
+                t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+            )
+            const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
+            const validTemplateData = validateTemplateData(verifiedTemplates);
+            setTemplates(validTemplateData);
+
+            // Filter templates based on selected apps, industries and departments
+            const selectedAppSlugs = apps.map((app) => app.appslugname);
+
+            handleTemplateFilterChange({
+                searchTerm: '',
+                selectedIndustries: industries,
+                selectedApps: selectedAppSlugs,
+                selectedDepartments: departments,
+            });
+
+            onTemplatesChange &&
+                onTemplatesChange({
+                    templates: validTemplateData,
+                    filteredTemplates,
+                    showTemplates: true,
+                    hasResults: hasTemplateResults,
+                });
+        } catch (error) {
+            console.error('Error fetching templates:', error);
+        } finally {
+            onLoadingChange && onLoadingChange({ templates: false });
+        }
+    };
+
+    const handleSearchVideos = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
+            return;
+        }
+
+        setShowVideos(true);
+        onLoadingChange && onLoadingChange({ videos: true });
+
+        try {
+            const videoData = await getVideoData(
+                apps.map((app) => app.appslugname).filter(Boolean),
+                window?.location?.href
+            );
+            setVideos(videoData);
+            onVideosChange &&
+                onVideosChange({
+                    videos: videoData,
+                    showVideos: true,
+                });
+        } catch (error) {
+            console.error('Error fetching videos:', error);
+        } finally {
+            onLoadingChange && onLoadingChange({ videos: false });
+        }
+    };
+
+    const handleSearchBlogs = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
+        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
+            return;
+        }
+
+        setShowBlogs(true);
+        onLoadingChange && onLoadingChange({ blogs: true });
+
+        try {
+            const blogData = await getBlogData(
+                apps.map((app) => app.appslugname).filter(Boolean),
+                window?.location?.href
+            );
+            setBlogs(blogData);
+            onBlogsChange &&
+                onBlogsChange({
+                    blogs: blogData,
+                    showBlogs: true,
+                });
+        } catch (error) {
+            console.error('Error fetching blogs:', error);
+        } finally {
+            onLoadingChange && onLoadingChange({ blogs: false });
+        }
+    };
+
+    const getAiResponse = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+        const shouldShowAiResponse =
+            (apps.length >= 1 && (industries.length >= 1 || departments.length >= 1)) ||
+            (apps.length >= 1);
+
+        if (!shouldShowAiResponse) {
+            setShowAiResponse(false);
+            onAiResponseChange?.({ aiResponse: '', showAiResponse: false });
+            return;
+        }
+
+        setShowAiResponse(true);
+        onLoadingChange?.({ aiResponse: true });
+
+        try {
+            const params = new URLSearchParams();
+            if (apps.length > 0) params.append('apps', apps.map((app) => app.name).join(','));
+            if (departments.length > 0) params.append('departments', departments.join(','));
+            if (industries.length > 0) params.append('categories', industries.join(','));
+
+            const response = await axios.post(`https://flow.sokt.io/func/scrifJcjUubA?${params.toString()}`, {});
+            const responseData = response?.data;
+
+            setAiResponse(responseData);
+            onAiResponseChange?.({ aiResponse: responseData, showAiResponse: true });
+            return responseData;
+        } catch (error) {
+            console.error('Error fetching AI response:', error);
+            const errorMessage = 'Sorry, there was an error generating the response. Please try again.';
+            setAiResponse(errorMessage);
+            onAiResponseChange?.({ aiResponse: errorMessage, showAiResponse: true });
+            return null;
+        } finally {
+            onLoadingChange?.({ aiResponse: false });
+        }
+    };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Tab' && currentSuggestion) {
@@ -83,6 +331,8 @@ const SearchInputHome = ({
         } else if (e.key === 'Enter') {
             e.preventDefault();
             setShowDropdown(false);
+            setCurrentSuggestion('');
+            setSuggestionText('');
 
             // If there's a search term, try to create a chip from it
             if (searchTerm.trim()) {
@@ -161,7 +411,8 @@ const SearchInputHome = ({
         } else if (e.key === 'Backspace' && searchTerm === '') {
             // Remove the last selected element when backspace is pressed and input is empty
             e.preventDefault();
-
+            setSuggestionText('');
+            setCurrentSuggestion('');
             if (selectedDepartments.length > 0) {
                 // Remove last department
                 const lastDepartment = selectedDepartments[selectedDepartments.length - 1];
@@ -178,78 +429,43 @@ const SearchInputHome = ({
         }
     };
 
-    const handleSearch = async (value) => {
+    const handleSearch = useCallback(async (value) => {
         setSearchTerm(value);
-        // Open dropdown when user starts typing
         setShowDropdown(true);
-        setIsInputFocused(true);
+        setCurrentSuggestion('');
+        setSuggestionText('');
 
-        if (value) {
-            try {
-                const result = await searchApps(value);
-                const filteredApps = filterSelectedApps(result);
-                setSearchData(filteredApps);
-
-                // Filter industries based on search term from the full list
-                const searchLower = value.toLowerCase();
-                const matchingIndustries = allIndustries.filter((industry) => {
-                    const industryName = industry?.name || industry?.industry_name || industry;
-                    return industryName?.toLowerCase().includes(searchLower);
-                });
-                setFilteredIndustries(matchingIndustries);
-
-                // Filter departments based on search term from the full list
-                const matchingDepartments = allDepartments.filter((department) => {
-                    const departmentName = department?.name || department?.department_name || department;
-                    return departmentName?.toLowerCase().includes(searchLower);
-                });
-                setFilteredDepartments(matchingDepartments);
-
-                // Find first matching suggestion for autocomplete
-                let suggestion = '';
-                let suggestionType = '';
-
-                if (filteredApps.length > 0) {
-                    const firstApp = filteredApps[0];
-                    if (firstApp.name.toLowerCase().startsWith(searchLower)) {
-                        suggestion = firstApp.name;
-                        suggestionType = 'app';
-                    }
-                } else if (matchingIndustries.length > 0) {
-                    const firstIndustry = matchingIndustries[0];
-                    const industryName = firstIndustry?.name || firstIndustry?.industry_name || firstIndustry;
-                    if (industryName.toLowerCase().startsWith(searchLower)) {
-                        suggestion = industryName;
-                        suggestionType = 'industry';
-                    }
-                } else if (matchingDepartments.length > 0) {
-                    const firstDepartment = matchingDepartments[0];
-                    const departmentName = firstDepartment?.name || firstDepartment?.department_name || firstDepartment;
-                    if (departmentName.toLowerCase().startsWith(searchLower)) {
-                        suggestion = departmentName;
-                        suggestionType = 'department';
-                    }
-                }
-
-                if (suggestion && suggestion.toLowerCase() !== value.toLowerCase()) {
-                    setCurrentSuggestion(suggestion);
-                    setSuggestionText(suggestion.slice(value.length));
-                } else {
-                    setCurrentSuggestion('');
-                    setSuggestionText('');
-                }
-            } catch (error) {
-                console.error(error);
+        if (!value.trim()) {
+            if (!allAppsCache.current) {
+                const apps = await fetchAppsData();
+                allAppsCache.current = apps;
             }
-        } else {
-            const apps = await fetchAppsData();
-            setSearchData(filterSelectedApps(apps));
+            setSearchData(filterSelectedApps(allAppsCache.current));
             setFilteredIndustries(allIndustries);
             setFilteredDepartments(allDepartments);
-            setCurrentSuggestion('');
-            setSuggestionText('');
+            return;
         }
-    };
+
+        try {
+            const result = await searchApps(value);
+            const filteredApps = filterSelectedApps(result);
+            setSearchData(filteredApps);
+
+            const matchingIndustries = filterListByName(allIndustries, value);
+            const matchingDepartments = filterListByName(allDepartments, value);
+
+            setFilteredIndustries(matchingIndustries);
+            setFilteredDepartments(matchingDepartments);
+
+            const firstSuggestion = getFirstSuggestion(filteredApps, matchingIndustries, matchingDepartments, value);
+            if (firstSuggestion && firstSuggestion.suggestion.toLowerCase() !== value.toLowerCase()) {
+                setCurrentSuggestion(firstSuggestion.suggestion);
+                setSuggestionText(firstSuggestion.suggestion.slice(value.length));
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }, [allIndustries, allDepartments, filterSelectedApps, fetchAppsData]);
 
     useEffect(() => {
         const fetchInitialApps = async () => {
@@ -286,7 +502,6 @@ const SearchInputHome = ({
         fetchInitialIndustries();
         fetchInitialDepartments();
     }, [fetchAppsData, filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
-
     // Auto-focus the search input when component mounts
     useEffect(() => {
         if (inputRef.current) {
@@ -295,7 +510,6 @@ const SearchInputHome = ({
             setShouldShowCaret(true);
         }
     }, []);
-
     // Notify parent of state changes
     useEffect(() => {
         onTemplatesChange &&
@@ -340,300 +554,6 @@ const SearchInputHome = ({
             });
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
-    const handleSelectApp = (app) => {
-        setSelectedApps((prev) => {
-            const exists = prev.some((selected) => selected.appslugname === app.appslugname);
-            let newSelectedApps;
-            if (exists) {
-                newSelectedApps = prev.filter((item) => item.appslugname !== app.appslugname);
-            } else {
-                newSelectedApps = [...prev, { ...app }];
-            }
-            setTimeout(() => {
-                if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
-                    if (enableVideos) handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
-                    if (enableBlogs) handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
-                }
-                // Updated AI response condition - show AI response for single app selection too
-                if (enableAi) {
-                    const shouldShowAiResponse =
-                        (newSelectedApps.length >= 1 &&
-                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                        (newSelectedApps.length >= 1); // Show AI response for any app selection
-                    if (shouldShowAiResponse) {
-                        getAiResponse();
-                    } else {
-                        setShowAiResponse(false);
-                    }
-                }
-            }, 100);
-
-            return newSelectedApps;
-        });
-        setSearchTerm('');
-        // Close dropdown after selecting an app
-        setShowDropdown(false);
-        // Keep isInputFocused true to maintain caret visibility
-    };
-
-    const handleSelectIndustry = (industry) => {
-        const industryName = industry?.name || industry?.industry_name || industry;
-        setSelectedIndustries((prev) => {
-            const exists = prev.some((selected) => selected === industryName);
-            let newSelectedIndustries;
-            if (exists) {
-                newSelectedIndustries = [];
-            } else {
-                newSelectedIndustries = [industryName];
-            }
-
-            setTimeout(() => {
-                if (selectedApps.length > 0 || newSelectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                    handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
-                    if (enableVideos) handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
-                    if (enableBlogs) handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
-                }
-                // Check AI response condition separately
-                if (enableAi) {
-                    const shouldShowAiResponse =
-                        (selectedApps.length >= 1 &&
-                            (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                        (selectedApps.length >= 1);
-                    if (shouldShowAiResponse) {
-                        getAiResponse();
-                    } else {
-                        setShowAiResponse(false);
-                    }
-                }
-            }, 100);
-
-            return newSelectedIndustries;
-        });
-        setSearchTerm('');
-        // Close dropdown after selecting an industry
-        setShowDropdown(false);
-        // Keep isInputFocused true to maintain caret visibility
-    };
-
-    const handleSelectDepartment = (department) => {
-        const departmentName = department?.name || department?.department_name || department;
-        setSelectedDepartments((prev) => {
-            const exists = prev.some((selected) => selected === departmentName);
-            let newSelectedDepartments;
-            if (exists) {
-                newSelectedDepartments = [];
-            } else {
-                newSelectedDepartments = [departmentName];
-            }
-
-            setTimeout(() => {
-                if (selectedApps.length > 0 || selectedIndustries.length > 0 || newSelectedDepartments.length > 0) {
-                    handleSearchTemplates(selectedApps, selectedIndustries, newSelectedDepartments);
-                    if (enableVideos) handleSearchVideos(selectedApps, selectedIndustries, newSelectedDepartments);
-                    if (enableBlogs) handleSearchBlogs(selectedApps, selectedIndustries, newSelectedDepartments);
-                }
-                // Check AI response condition separately
-                if (enableAi) {
-                    const shouldShowAiResponse =
-                        (selectedApps.length >= 1 &&
-                            (selectedIndustries.length >= 1 || newSelectedDepartments.length >= 1)) ||
-                        (selectedApps.length >= 1);
-                    if (shouldShowAiResponse) {
-                        getAiResponse();
-                    } else {
-                        setShowAiResponse(false);
-                    }
-                }
-            }, 100);
-
-            return newSelectedDepartments;
-        });
-        setSearchTerm('');
-        // Close dropdown after selecting a department
-        setShowDropdown(false);
-        // Keep isInputFocused true to maintain caret visibility
-    };
-
-    const handleSearchTemplates = async (
-        apps = selectedApps,
-        industries = selectedIndustries,
-        departments = selectedDepartments
-    ) => {
-        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
-            return;
-        }
-
-        setLoadingTemplates(true);
-        setShowTemplates(true);
-        onLoadingChange && onLoadingChange({ templates: true });
-
-        try {
-            const templates = await getTemplates();
-            const validStatuses = ['verified_by_ai', 'verified'];
-            const templateData = (templates).filter(
-                t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
-            )
-            const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
-            const validTemplateData = validateTemplateData(verifiedTemplates);
-
-            setTemplates(validTemplateData);
-
-            // Filter templates based on selected apps, industries and departments
-            const selectedAppSlugs = apps.map((app) => app.appslugname);
-            handleTemplateFilterChange({
-                searchTerm: '',
-                selectedIndustries: industries,
-                selectedApps: selectedAppSlugs,
-                selectedDepartments: departments,
-            });
-
-            onTemplatesChange &&
-                onTemplatesChange({
-                    templates: validTemplateData,
-                    filteredTemplates,
-                    showTemplates: true,
-                    hasResults: hasTemplateResults,
-                });
-        } catch (error) {
-            console.error('Error fetching templates:', error);
-        } finally {
-            setLoadingTemplates(false);
-            onLoadingChange && onLoadingChange({ templates: false });
-        }
-    };
-
-    const handleSearchVideos = async (
-        apps = selectedApps,
-        industries = selectedIndustries,
-        departments = selectedDepartments
-    ) => {
-        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
-            return;
-        }
-
-        setLoadingVideos(true);
-        setShowVideos(true);
-        onLoadingChange && onLoadingChange({ videos: true });
-
-        try {
-            const videoData = await getVideoData(
-                apps.map((app) => app.appslugname).filter(Boolean),
-                window?.location?.href
-            );
-            setVideos(videoData);
-            onVideosChange &&
-                onVideosChange({
-                    videos: videoData,
-                    showVideos: true,
-                });
-        } catch (error) {
-            console.error('Error fetching videos:', error);
-        } finally {
-            setLoadingVideos(false);
-            onLoadingChange && onLoadingChange({ videos: false });
-        }
-    };
-
-    const handleSearchBlogs = async (
-        apps = selectedApps,
-        industries = selectedIndustries,
-        departments = selectedDepartments
-    ) => {
-        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
-            return;
-        }
-
-        setLoadingBlogs(true);
-        setShowBlogs(true);
-        onLoadingChange && onLoadingChange({ blogs: true });
-
-        try {
-            const blogData = await getBlogData(
-                apps.map((app) => app.appslugname).filter(Boolean),
-                window?.location?.href
-            );
-            setBlogs(blogData);
-            onBlogsChange &&
-                onBlogsChange({
-                    blogs: blogData,
-                    showBlogs: true,
-                });
-        } catch (error) {
-            console.error('Error fetching blogs:', error);
-        } finally {
-            setLoadingBlogs(false);
-            onLoadingChange && onLoadingChange({ blogs: false });
-        }
-    };
-
-    const getAiResponse = async () => {
-        const shouldShowAiResponse =
-            (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-            (selectedApps.length >= 1); // Show AI response for any app selection
-
-        if (!shouldShowAiResponse) {
-            setShowAiResponse(false);
-            onAiResponseChange &&
-                onAiResponseChange({
-                    aiResponse: '',
-                    showAiResponse: false,
-                });
-            return;
-        }
-
-        setLoadingAiResponse(true);
-        setShowAiResponse(true);
-        onLoadingChange && onLoadingChange({ aiResponse: true });
-
-        try {
-            // Prepare query parameters
-            const params = new URLSearchParams();
-
-            // Add selected apps
-            if (selectedApps.length > 0) {
-                params.append('apps', selectedApps.map((app) => app.name).join(','));
-            }
-
-            // Add selected departments
-            if (selectedDepartments.length > 0) {
-                params.append('departments', selectedDepartments.join(','));
-            }
-
-            // Add selected industries (categories)
-            if (selectedIndustries.length > 0) {
-                params.append('categories', selectedIndustries.join(','));
-            }
-
-            const response = await axios.post(`https://flow.sokt.io/func/scrifJcjUubA?${params.toString()}`, {});
-            const responseData = await response?.data;
-
-            if (responseData) {
-                setAiResponse(responseData);
-                onAiResponseChange &&
-                    onAiResponseChange({
-                        aiResponse: responseData,
-                        showAiResponse: true,
-                    });
-            }
-
-            return responseData;
-        } catch (error) {
-            console.error('Error fetching AI response:', error);
-            const errorMessage = 'Sorry, there was an error generating the response. Please try again.';
-            setAiResponse(errorMessage);
-            onAiResponseChange &&
-                onAiResponseChange({
-                    aiResponse: errorMessage,
-                    showAiResponse: true,
-                });
-            return null;
-        } finally {
-            setLoadingAiResponse(false);
-            onLoadingChange && onLoadingChange({ aiResponse: false });
-        }
-    };
-
     return (
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
@@ -642,7 +562,6 @@ const SearchInputHome = ({
                     onClick={() => {
                         if (inputRef.current) {
                             inputRef.current.focus();
-                            setIsInputFocused(true);
                             setHasBrowserFocus(true);
                             setShouldShowCaret(true);
                         }
@@ -709,7 +628,6 @@ const SearchInputHome = ({
                         </div>
                     ))}
                     <div className="relative flex-1 min-w-[200px]">
-                        {/* Suggestion overlay */}
                         {suggestionText && (
                             <div className="absolute inset-0 pointer-events-none text-lg text-gray-400 flex items-center whitespace-pre">
                                 <span style={{ color: 'transparent' }}>{searchTerm}</span>
@@ -723,31 +641,22 @@ const SearchInputHome = ({
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {
-                                setIsInputFocused(true);
                                 setHasBrowserFocus(true);
                                 setShouldShowCaret(true);
-                                // Show dropdown when focused if there's any content
                                 if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
                                     setShowDropdown(true);
                                 }
                             }}
                             onClick={() => {
-                                setIsInputFocused(true);
                                 setHasBrowserFocus(true);
                                 setShouldShowCaret(true);
-                                // Focus the input when clicked
+                                setShowDropdown(true);
                                 if (inputRef.current) {
                                     inputRef.current.focus();
-                                }
-
-                                // Show dropdown when clicked if there's any content
-                                if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                                    setShowDropdown(true);
                                 }
                             }}
                             onBlur={() => {
                                 setHasBrowserFocus(false);
-                                setIsInputFocused(false);
                                 setShouldShowCaret(false); // Stop blinking when user clicks outside
                                 setTimeout(() => {
                                     setShowDropdown(false);

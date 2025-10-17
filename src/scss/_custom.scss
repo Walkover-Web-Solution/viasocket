@@ -4,14 +4,14 @@
         width: 100% !important;
     }
     &.btn-outline {
-        @apply bg-white hover:bg-black hover:text-white custom-border;
+        @apply bg-white hover:bg-black hover:text-white border-black;
     }
     &.btn-primary {
         @apply hover:bg-accent;
     }
 
     &.btn-accent {
-        @apply text-white custom-border;
+        @apply text-white border-black;
         &:hover {
             @apply bg-black;
         }

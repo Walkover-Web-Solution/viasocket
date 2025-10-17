@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getIndexTemplateData, getReviewSectionData } from '@/utils/getData';
-import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexTemplateData, getReviewSectionData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -28,7 +28,7 @@ async function fetchApps(category) {
     return rawData?.data;
 }
 
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData }) => {
+const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -86,9 +86,9 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar navbarData={navbarData} utm={'/index'} />
             <div
-                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
+                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative global-top-space`}
             >
                 <div className="text-center container">
                     <p className="text-3xl text-black mb-12 relative z-index-1">
@@ -239,6 +239,7 @@ export async function getServerSideProps(context) {
     const appCount = await getAppCount(pageUrl);
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     const securityGridData = [
         {
@@ -286,6 +287,7 @@ export async function getServerSideProps(context) {
             appCount: appCount || 0,
             indexTemplateData: indexTemplateData || [],
             reviewData: reviewData || [],
+            navbarData: navbarData || [],
         },
     };
 }

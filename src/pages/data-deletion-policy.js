@@ -1,8 +1,8 @@
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
 export const runtime = 'experimental-edge';
@@ -14,21 +14,23 @@ export async function getServerSideProps(context) {
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/data-deletion-policy', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
+            navbarData: navbarData || [],
         },
     };
 }
 
-export default function DataDeletionPolicy({ footerData, metaData }) {
+export default function DataDeletionPolicy({ footerData, metaData, navbarData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/data-deletion-policy'} />
-            <Navbar footerData={footerData} utm={'/data-deletion-policy'} />
+            <Navbar navbarData={navbarData} utm={'/data-deletion-policy'} />
 
-            <div className="container mb-4 mt-12 flex flex-col gap-16">
+            <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <h1 className="h1">
                     <span className="text-accent">Data</span> Retention and Deletion Policy
                 </h1>

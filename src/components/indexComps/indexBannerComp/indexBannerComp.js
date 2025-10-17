@@ -37,14 +37,6 @@ export default function IndexBannerComp() {
                                         Free call with automation experts
                                     </Link>
                                 </div>
-                                {/* <div className="flex gap-6 flex-wrap">
-                                    {signupFeatures.map((point, index) => (
-                                        <div key={index} className="flex gap-2 h6 items-center">
-                                            <div className="h-3 w-3 bg-accent" />
-                                            <p className="text-nowrap">{point}</p>
-                                        </div>
-                                    ))}
-                                </div> */}
                             </div>
                         </div>
                     </div>

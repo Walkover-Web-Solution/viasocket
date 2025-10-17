@@ -4,18 +4,18 @@ import FeatureContentComp from '@/components/FeaturesComp/FeatureContentComp/Fea
 import FeatureGridComp from '@/components/FeaturesComp/FeatureGridComp/FeatureGridComp';
 import FeaturesFooterComp from '@/components/FeaturesComp/FeaturesFooterComp/FeaturesFooterComp';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { ALLFEATURES_FIELDS, FOOTER_FIELDS } from '@/const/fields';
+import { ALLFEATURES_FIELDS, FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getAllFeatures, getFeatureData, getFooterData } from '@/utils/getData';
+import { getAllFeatures, getFeatureData, getFooterData, getNavbarData } from '@/utils/getData';
 import { getMetaData } from '@/utils/getMetaData';
 import GetPageInfo from '@/utils/getPageInfo';
 
-export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData }) {
+export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData, navbarData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={pathArray?.join('/')} pathArray={pathArray} />
-            <div className="cont ">
-                <FeatureBannerComp featureData={featureData} footerData={footerData} pageInfo={pageInfo} />
+            <div className="cont global-top-space ">
+                <FeatureBannerComp featureData={featureData} pageInfo={pageInfo} navbarData={navbarData} />
                 <FeatureGridComp features={features} pageInfo={pageInfo} />
                 <FeatureContentComp featureData={featureData?.faqs} pageInfo={pageInfo} />
                 <div className="container cont cont__py">
@@ -40,6 +40,7 @@ export async function getServerSideProps(context) {
 
     const pageInfo = GetPageInfo(context);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const metaData = await getMetaData(pageInfo?.url, pageUrl);
     let feature = null;
     let features = [];
@@ -63,6 +64,7 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             pageInfo: pageInfo || {},
             blogData: blogData || [],
+            navbarData: navbarData || [],
         },
     };
 }

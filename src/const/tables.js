@@ -21,3 +21,4 @@ export const PRICINGFEATURE = 'tbl76iei5';
 export const INDEXTEMPLATE = 'tbllsxcvm';
 export const DOFOLLOWLINK = 'tblxpnrit';
 export const REVIEWSECTION = 'tblf98lf1';
+export const NAVBAR = 'tbl6sqnav';

@@ -132,15 +132,6 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                 <Skeleton />
             ) : (
                 <>
-                    {/* {!isSignupPage && showMCPBanner && !show404Banner && (
-                        <Link href="/pricing">
-                            <div className="w-full p-2 text-center gradient-background relative z-index-1">
-                                <p className="!text-xs text-black hover:underline">
-                                    Avail Lifetime Free Access - Limited Time Period Offer
-                                </p>
-                            </div>
-                        </Link>
-                    )} */}
                     <Component {...pageProps} pathArray={pathArray} rawpathArray={rawpathArray} />
                 </>
             )}

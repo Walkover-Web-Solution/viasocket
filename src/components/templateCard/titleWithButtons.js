@@ -24,10 +24,10 @@ export default function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
                 <button onClick={onInstall} className="btn btn-accent">
                     Install Template
                 </button>
-                <button onClick={onPrev} className="btn btn-outline bg-white">
+                <button onClick={onPrev} className="btn btn-outline">
                     <MdKeyboardArrowLeft size={32} />
                 </button>
-                <button onClick={onNext} className="btn btn-outline bg-white">
+                <button onClick={onNext} className="btn btn-outline">
                     <MdKeyboardArrowRight size={32} />
                 </button>
             </div>
@@ -41,10 +41,10 @@ export default function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
                 <button onClick={onInstall} className="btn btn-accent">
                     Install Template
                 </button>
-                <button onClick={onPrev} className="btn btn-outline bg-white">
+                <button onClick={onPrev} className="btn btn-outline">
                     <MdKeyboardArrowLeft size={32} />
                 </button>
-                <button onClick={onNext} className="btn btn-outline bg-white">
+                <button onClick={onNext} className="btn btn-outline">
                     <MdKeyboardArrowRight size={32} />
                 </button>
             </div>

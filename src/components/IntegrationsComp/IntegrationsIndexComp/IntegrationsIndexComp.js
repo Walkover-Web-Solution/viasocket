@@ -27,6 +27,7 @@ export default function IntegrationsIndexComp({
     categories,
     faqData,
     appCount,
+    navbarData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -91,9 +92,9 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar navbarData={navbarData} utm={'/index'} />
 
-            <div className="container integrations-page-hero">
+            <div className="container integrations-page-hero global-top-space pt-12">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
                     <h1 className="h1">
                         <span className="text-accent">Automate</span> Anything. Anywhere.
@@ -227,7 +228,7 @@ export default function IntegrationsIndexComp({
                                     >
                                         <div className="flex items-center gap-2 justify-between">
                                             <h2 className="flex items-center gap-2">
-                                                <span className="text-xl">💡</span>
+                                                <span className="text-xl"><span aria-label="lightbulb">💡</span></span>
                                                 <span>Request an App</span>
                                             </h2>
                                             <RequestIntegrationPopupOpener showType="button" title="Request" />
@@ -323,7 +324,7 @@ export function AppVisual({ app, index, redirectPart }) {
         >
             <div className="flex items-center gap-2 justify-between">
                 <h2 className="flex items-center gap-2">
-                    <span className="text-xl">💡</span>
+                    <span className="text-xl"><span aria-label="lightbulb">💡</span></span>
                     <span>Request an App</span>
                 </h2>
 
@@ -377,25 +378,50 @@ export function RequestIntegrationPopupOpener({
         <div className={`bg-white border custom-border p-12 cont gap-2 w-full ${className}`}>
             <div className="cont gap-1">
                 <h2 className="h2">
-                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
+                    <span aria-label="lightbulb">💡</span> Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
                 </h2>
             </div>
             <div className="mt-8">{showButton}</div>
         </div>
     );
     const SearchView = (
-        <div className={`w-full bg-white custom-border md:border grid grid-cols-1 md:grid-cols-2 ${className}`}>
-            <div className=" custom-border border-r p-12 cont gap-8">
-                <h2 className="h3">
-                    💡 Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
-                </h2>
-                <div>{showButton}</div>
+        <div className={`w-full bg-white grid grid-cols-1 lg:grid-cols-2 ${className}`}>
+            {/* Left Section */}
+            <div className="cont gap-4 custom-border lg:border-r p-4 justify-between">
+                <div className="flex items-start gap-3">
+                    <span className="text-2xl">💡</span>
+                    <h2 className="h3">
+                        Can’t find the <span className="text-primary-600">{type || 'App'}</span> you’re looking for?
+                        <br/>
+                        We’ll build it for you within <span className="font-bold text-primary-700">48 hours</span>.
+                    </h2>
+                </div>
+                <div className='ml-8'>
+                    {showButton}
+                </div>
             </div>
-            <div className="p-12 cont gap-8 border custom-border md:border-none border-l-0">
-                <h2 className="h3">🚀 Do you own this app? Why not build its plug and make it live today?</h2>
-                <Link href="https://viasocket.com/faq/developer-hub" target="_blank" className="max-w-max">
-                    <button className="btn text-nowrap btn-accent">Read our playbook</button>
-                </Link>
+
+            {/* Right Section */}
+            <div className="cont custom-border border-t lg:border-t-0 p-4 gap-4 justify-between">
+                <div className="flex flex-col jusitfy-between gap-6">
+                    <div className="flex items-start gap-3">
+                        <span className="text-2xl">🚀</span>
+                        <h2 className="h3">
+                            Own this app? 
+                            <br/>
+                            Build its plug and make it live today!
+                        </h2>
+                    </div>
+                    <Link
+                        href="https://viasocket.com/faq/developer-hub"
+                        target="_blank"
+                        className="max-w-max"
+                    >
+                        <button className="ml-8 btn text-xs sm:text-sm text-wrap btn-accent">
+                            Read our playbook
+                        </button>
+                    </Link>
+                </div>
             </div>
         </div>
     );
