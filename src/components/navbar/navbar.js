@@ -11,6 +11,7 @@ export default function Navbar({ utm, footerData }) {
     const router = useRouter();
     const [hide, setHide] = useState(false);
     const [supportOpen, setSupportOpen] = useState(false);
+    const [hasToken, setHasToken] = useState(false);
     let lastScrollY = 0;
 
     const handleScroll = () => {
@@ -26,6 +27,27 @@ export default function Navbar({ utm, footerData }) {
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    useEffect(() => {
+        // Check for prod token in cookies
+        const checkToken = () => {
+            if (typeof window !== 'undefined') {
+                const getCookie = (name) => {
+                    const value = `; ${document.cookie}`;
+                    const parts = value.split(`; ${name}=`);
+                    if (parts.length === 2) return parts.pop().split(';').shift();
+                    return null;
+                };
+                
+                const token = getCookie('prod');
+                // Check if token exists and has valid environment values
+                // Local environment has 'testing' value, production has 'prod' value
+                setHasToken(!!token && (token === 'prod'));
+            }
+        };
+        
+        checkToken();
     }, []);
 
     let mode = 'light';
@@ -127,19 +149,31 @@ export default function Navbar({ utm, footerData }) {
                             >
                                 Pricing
                             </Link>
-                            <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                rel="nofollow"
-                            >
-                                Login
-                            </button>
-                            <button
-                                className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
-                                onClick={(e) => handleRedirect(e, '/signup?', router)}
-                            >
-                                Sign Up
-                            </button>
+                            {hasToken ? (
+                                <button
+                                    className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
+                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                    rel="nofollow"
+                                >
+                                    Go to Panel
+                                </button>
+                            ) : (
+                                <>
+                                    <button
+                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
+                                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                        rel="nofollow"
+                                    >
+                                        Login
+                                    </button>
+                                    <button
+                                        className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
+                                        onClick={(e) => handleRedirect(e, '/signup?', router)}
+                                    >
+                                        Sign Up
+                                    </button>
+                                </>
+                            )}
                             <div
                                 onMouseEnter={() => setSupportOpen(true)}
                                 className={`${borderClass} hover-bg-grey-100-text-black items-center outline-none bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 custom-border`}
