@@ -34,6 +34,7 @@ export default function Navbar({ utm, footerData }) {
         const checkToken = () => {
             if (typeof window !== 'undefined') {
                 const getCookie = (name) => {
+                    console.log(document.cookie, 'cookie');
                     const value = `; ${document.cookie}`;
                     const parts = value.split(`; ${name}=`);
                     if (parts.length === 2) return parts.pop().split(';').shift();
@@ -41,6 +42,7 @@ export default function Navbar({ utm, footerData }) {
                 };
 
                 const token = getCookie('prod');
+                console.log(token, 'token');
                 // Check if token exists and has valid environment values
                 // Local environment has 'testing' value, production has 'prod' value
                 setHasToken(!!token);
@@ -50,6 +52,7 @@ export default function Navbar({ utm, footerData }) {
         checkToken();
     }, []);
 
+    console.log(hasToken, 'hasToken');
     let mode = 'light';
     let borderClass;
     let backgroundClass;
