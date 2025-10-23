@@ -39,14 +39,14 @@ export default function Navbar({ utm, footerData }) {
                     if (parts.length === 2) return parts.pop().split(';').shift();
                     return null;
                 };
-                
+
                 const token = getCookie('prod');
                 // Check if token exists and has valid environment values
                 // Local environment has 'testing' value, production has 'prod' value
-                setHasToken(!!token && (token === 'prod'));
+                setHasToken(!!token);
             }
         };
-        
+
         checkToken();
     }, []);
 
@@ -125,10 +125,10 @@ export default function Navbar({ utm, footerData }) {
                                         className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
                                         href={router.pathname}
                                     >
-                                        {(router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
-                                                ? 'MCP'
-                                                : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                                router.pathname.split('/')[1].slice(1).toLowerCase())}
+                                        {router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
+                                            ? 'MCP'
+                                            : router.pathname.split('/')[1].charAt(0).toUpperCase() +
+                                              router.pathname.split('/')[1].slice(1).toLowerCase()}
                                     </Link>
                                 )}
                             <Link
