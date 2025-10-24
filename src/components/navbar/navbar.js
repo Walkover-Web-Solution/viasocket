@@ -4,7 +4,7 @@ import Image from 'next/image';
 import style from './navbar.module.scss';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Support from '@/components/chat-widget/support';
 
 export default function Navbar({ utm, footerData }) {
@@ -29,7 +29,7 @@ export default function Navbar({ utm, footerData }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         // Check for prod token in cookies
         const checkToken = () => {
             if (typeof window !== 'undefined') {
