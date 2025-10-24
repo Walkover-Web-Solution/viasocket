@@ -8,16 +8,11 @@ import Navbar from '@/components/navbar/navbar';
 import { getAgencies, getExpertBlogs, getFooterData, getPageData } from '@/utils/getData';
 import { AGENCIES_FIELDS, EXPERTBLOGS_FIELDS, FOOTER_FIELDS, PAGEDATA_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
-import { parse } from 'cookie';
 
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    // Parse cookies to check for prod environment
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-    const hasProd = Boolean(cookies.prod);
 
     const metaData = await getMetaData('/experts', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -33,17 +28,16 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             expertsHelp: expertsBlog || [],
             footerData: footerData || [],
-            hasProd,
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData, hasProd }) => {
+const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} pathArray={pathArray} />
-            <Navbar footerData={footerData} utm={'/experts'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/experts'} />
 
             <div className="">
                 <div className="pt-12 container">

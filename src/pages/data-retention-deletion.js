@@ -4,7 +4,6 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getFooterData } from '@/utils/getData';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
-import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
@@ -12,10 +11,6 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    // Parse cookies to check for prod environment
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-    const hasProd = Boolean(cookies.prod);
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/data-retention-deletion-policy', pageUrl);
@@ -23,16 +18,15 @@ export async function getServerSideProps(context) {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
-            hasProd,
         },
     };
 }
 
-export default function DataRetentionDeletionPolicy({ footerData, metaData, hasProd }) {
+export default function DataRetentionDeletionPolicy({ footerData, metaData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/data-retention-deletion-policy'} />
-            <Navbar footerData={footerData} utm={'/data-retention-deletion-policy'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/data-retention-deletion-policy'} />
 
             <div className="container mb-4 mt-12 flex flex-col gap-16">
                 <h1 className="h1">

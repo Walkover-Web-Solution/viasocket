@@ -33,7 +33,6 @@ export default function McpAppComp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
-    hasProd,
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -109,7 +108,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <Navbar footerData={footerData} utm={'/mcp'} hasProd={hasProd} />
+                    <Navbar footerData={footerData} utm={'/mcp'} />
 
                     <div className="flex flex-col gap-8">
                         <div className="container cont cont__gap">

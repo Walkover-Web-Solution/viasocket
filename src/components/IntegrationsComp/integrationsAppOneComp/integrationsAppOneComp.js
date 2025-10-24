@@ -34,7 +34,6 @@ export default function IntegrationsAppOneComp({
     videoData,
     appCount,
     getDoFollowUrlStatusArray,
-    hasProd,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -64,7 +63,7 @@ export default function IntegrationsAppOneComp({
             }}
             className="cont gap-12 md:gap-16"
         >
-            <Navbar footerData={footerData} utm={'/integrations/appone'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/integrations/appone'} />
 
             <IntegrationsHeadComp
                 metaData={metaData}

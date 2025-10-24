@@ -28,8 +28,7 @@ export default function IntegrationsAppTwoComp({
     blogsData,
     metaData,
     videoData,
-    getDoFollowUrlStatusArray,
-    hasProd
+    getDoFollowUrlStatusArray
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -39,7 +38,7 @@ export default function IntegrationsAppTwoComp({
             style={{ borderLeftColor: appOneDetails?.brandcolor, borderLeftWidth: '10px' }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <Navbar footerData={footerData} utm={'/integrations/apptwo'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/integrations/apptwo'} />
 
             <IntegrationsHeadComp
                 metaData={metaData}
