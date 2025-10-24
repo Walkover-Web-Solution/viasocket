@@ -11,14 +11,15 @@ import Link from 'next/link';
 import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, blogData }) {
+export default function pricing({ footerData, faqData, metaData, blogData, hasProd }) {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <Navbar footerData={footerData} utm={'/mcp'} />
+            <Navbar footerData={footerData} utm={'/mcp'} hasProd={hasProd} />
 
             <div className="cont gap-8">
                 <McpSwitchComp />
@@ -154,6 +155,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const metaData = await getMetaData('/mcp', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -167,6 +172,7 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],
+            hasProd,
         },
     };
 }

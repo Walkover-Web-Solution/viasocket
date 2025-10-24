@@ -17,10 +17,11 @@ import { useState, useRef, useEffect } from 'react';
 import { FiMinus } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
 import { MdCenterFocusStrong } from 'react-icons/md';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
-const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName }) => {
+const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName, hasProd }) => {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
@@ -87,7 +88,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                 <meta name="twitter:description" content={metaData?.description} />
                 <meta name="twitter:image" content={metaData?.image} />
             </Head>
-            <Navbar footerData={footerData} utm={'/automations'} />
+            <Navbar footerData={footerData} utm={'/automations'} hasProd={hasProd} />
             {isCategory ? (
                 <div className="container cont lg:gap-20 md:gap-16 gap-12">
                     <CategoryTemplates categoryName={categoryName} templates={relatedTemplates} />
@@ -315,6 +316,10 @@ export async function getServerSideProps(context) {
     const [firstSlug, secondSlug] = query.slug || [];
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templates = await getTemplates(pageUrl);
@@ -351,6 +356,7 @@ export async function getServerSideProps(context) {
                 relatedTemplates: categoryTemplates || [],
                 isCategory: true,
                 categoryName: categoryName,
+                hasProd,
             },
         };
     } else {
@@ -383,6 +389,7 @@ export async function getServerSideProps(context) {
                 relatedTemplates: relatedTemplates || [],
                 isCategory: false,
                 categoryName: null,
+                hasProd,
             },
         };
     }

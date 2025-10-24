@@ -11,6 +11,7 @@ import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getAppCount, getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { parse } from 'cookie';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({
@@ -34,6 +35,7 @@ export default function Mcp({
     mcpPromptData,
     mcpAIIntegrationData,
     appCount,
+    hasProd,
 }) {
     if (noData) {
         return (
@@ -60,6 +62,7 @@ export default function Mcp({
                     mcpAppSteps={mcpAppSteps}
                     mcpPromptData={mcpPromptData}
                     mcpAIIntegrationData={mcpAIIntegrationData}
+                    hasProd={hasProd}
                 />
             </div>
         );
@@ -81,6 +84,7 @@ export default function Mcp({
                     keyPointData={keyPointData}
                     metaData={metaData}
                     appCount={appCount}
+                    hasProd={hasProd}
                 />
             </div>
         );
@@ -91,6 +95,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const pageInfo = getPageInfo(context);
     const mcpInfo = getMcpInfo(pageInfo?.pathArray);
@@ -155,6 +163,7 @@ export async function getServerSideProps(context) {
                     mcpAppSteps: mcpAppSteps || [],
                     mcpPromptData: mcpPromptData || [],
                     mcpAIIntegrationData: mcpAIIntegrationData || [],
+                    hasProd,
                 },
             };
         } else {
@@ -162,6 +171,7 @@ export async function getServerSideProps(context) {
                 props: {
                     noData: true,
                     footerData: footerData || {},
+                    hasProd,
                 },
             };
         }
@@ -274,6 +284,7 @@ export async function getServerSideProps(context) {
                 featuresData: featuresData || [],
                 keyPointData: keyPointData || [],
                 appCount: appCount || 0,
+                hasProd,
             },
         };
     }

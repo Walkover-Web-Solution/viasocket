@@ -7,11 +7,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Support from '@/components/chat-widget/support';
 
-export default function Navbar({ utm, footerData }) {
+export default function Navbar({ utm, footerData, hasProd }) {
     const router = useRouter();
     const [hide, setHide] = useState(false);
     const [supportOpen, setSupportOpen] = useState(false);
-    const [hasToken, setHasToken] = useState(false);
+  
     let lastScrollY = 0;
 
     const handleScroll = () => {
@@ -29,30 +29,7 @@ export default function Navbar({ utm, footerData }) {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    useEffect(() => {
-        // Check for prod token in cookies
-        const checkToken = () => {
-            if (typeof window !== 'undefined') {
-                const getCookie = (name) => {
-                    console.log(document.cookie, 'cookie');
-                    const value = `; ${document.cookie}`;
-                    const parts = value.split(`; ${name}=`);
-                    if (parts.length === 2) return parts.pop().split(';').shift();
-                    return null;
-                };
-
-                const token = getCookie('prod');
-                console.log(token, 'token');
-                // Check if token exists and has valid environment values
-                // Local environment has 'testing' value, production has 'prod' value
-                setHasToken(!!token);
-            }
-        };
-
-        checkToken();
-    }, []);
-
-    console.log(hasToken, 'hasToken');
+    
     let mode = 'light';
     let borderClass;
     let backgroundClass;
@@ -152,7 +129,7 @@ export default function Navbar({ utm, footerData }) {
                             >
                                 Pricing
                             </Link>
-                            {hasToken ? (
+                            {hasProd ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}

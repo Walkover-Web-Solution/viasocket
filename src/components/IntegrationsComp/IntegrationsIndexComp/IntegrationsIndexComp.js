@@ -27,6 +27,7 @@ export default function IntegrationsIndexComp({
     categories,
     faqData,
     appCount,
+    hasProd,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -91,7 +92,7 @@ export default function IntegrationsIndexComp({
     return (
         <>
             <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar footerData={footerData} utm={'/index'} hasProd={hasProd} />
 
             <div className="container integrations-page-hero">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">

@@ -15,16 +15,17 @@ import Cta from '@/components/CTA/Cta';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getAppCount } from '@/utils/axiosCalls';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData, appCount }) => {
+const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData, appCount, hasProd }) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <Navbar footerData={footerData} utm={'/embed'} />
+            <Navbar footerData={footerData} utm={'/embed'} hasProd={hasProd} />
 
             <div className="cont lg:gap-20 md:gap-16 gap-12">
                 <div className="w-full min-h-fit py-12">
@@ -325,6 +326,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const metaData = await getMetaData('/embed', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -368,6 +373,7 @@ export async function getServerSideProps(context) {
             howItWorksData: howItWorksData,
             metaData: metaData || {},
             appCount: appCount,
+            hasProd,
         },
     };
 }
