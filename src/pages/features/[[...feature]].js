@@ -9,14 +9,13 @@ import { getBlogData } from '@/utils/getBlogData';
 import { getAllFeatures, getFeatureData, getFooterData } from '@/utils/getData';
 import { getMetaData } from '@/utils/getMetaData';
 import GetPageInfo from '@/utils/getPageInfo';
-import { parse } from 'cookie';
 
-export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData, hasProd }) {
+export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={pathArray?.join('/')} pathArray={pathArray} />
             <div className="cont ">
-                <FeatureBannerComp featureData={featureData} footerData={footerData} pageInfo={pageInfo} hasProd={hasProd} />
+                <FeatureBannerComp featureData={featureData} footerData={footerData} pageInfo={pageInfo} />
                 <FeatureGridComp features={features} pageInfo={pageInfo} />
                 <FeatureContentComp featureData={featureData?.faqs} pageInfo={pageInfo} />
                 <div className="container cont cont__py">
@@ -38,10 +37,6 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    // Parse cookies to check for prod environment
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-    const hasProd = Boolean(cookies.prod);
 
     const pageInfo = GetPageInfo(context);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -68,7 +63,6 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             pageInfo: pageInfo || {},
             blogData: blogData || [],
-            hasProd,
         },
     };
 }

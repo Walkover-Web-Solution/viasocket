@@ -4,16 +4,11 @@ import Navbar from '@/components/navbar/navbar';
 import { getFooterData } from '@/utils/getData';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
-import { parse } from 'cookie';
 
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    // Parse cookies to check for prod environment
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-    const hasProd = Boolean(cookies.prod);
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/terms', pageUrl);
@@ -21,17 +16,16 @@ export async function getServerSideProps(context) {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
-            hasProd,
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-const Terms = ({ footerData, metaData, hasProd }) => {
+const Terms = ({ footerData, metaData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <Navbar footerData={footerData} utm={'/terms'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/terms'} />
 
             <div className="container mt-12 flex gap-16 flex-col">
                 <style

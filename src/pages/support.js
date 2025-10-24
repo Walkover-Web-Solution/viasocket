@@ -17,16 +17,11 @@ import { FaCalendarCheck } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { getTestimonialData } from '@/utils/getData';
 import { TESTIMONIALS_FIELDS } from '@/const/fields';
-import { parse } from 'cookie';
 
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    
-    // Parse cookies to check for prod environment
-    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
-    const hasProd = Boolean(cookies.prod);
     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/support', pageUrl);
@@ -35,13 +30,12 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             metaData: metaData || {},
             testimonials: testimonials || [],
-            hasProd,
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-export default function Support({ footerData, metaData, testimonials, hasProd }) {
+export default function Support({ footerData, metaData, testimonials }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
@@ -107,7 +101,7 @@ export default function Support({ footerData, metaData, testimonials, hasProd })
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <Navbar footerData={footerData} utm={'/support'} hasProd={hasProd} />
+            <Navbar footerData={footerData} utm={'/support'} />
 
             <div className="container mt-12">
                 <div className="support-page-heading">
