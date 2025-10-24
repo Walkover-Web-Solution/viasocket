@@ -10,6 +10,7 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getAppCount } from '@/utils/axiosCalls';
 import Link from 'next/link';
+import { parse } from 'cookie';
 import AiAgentFeature from '@/pages/homeSection/aiAgentFeature';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import ResultSection from '@/pages/homeSection/resultSection';
@@ -28,7 +29,7 @@ async function fetchApps(category) {
     return rawData?.data;
 }
 
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData }) => {
+const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, hasProd }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -86,7 +87,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar footerData={footerData} utm={'/index'} hasProd={hasProd} />
             <div
                 className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
             >
@@ -233,6 +234,11 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
+    
     const faqData = await getFaqData('/index', pageUrl);
     const metaData = await getMetaData('/', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -286,6 +292,7 @@ export async function getServerSideProps(context) {
             appCount: appCount || 0,
             indexTemplateData: indexTemplateData || [],
             reviewData: reviewData || [],
+            hasProd,
         },
     };
 }

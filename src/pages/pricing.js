@@ -12,14 +12,15 @@ import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { getAppCount } from '@/utils/axiosCalls';
 import { GiCheckMark } from 'react-icons/gi';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, features, countries, appCount }) {
+export default function pricing({ footerData, faqData, metaData, features, countries, appCount, hasProd }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <Navbar footerData={footerData} utm={'/pricing'} />
+            <Navbar footerData={footerData} utm={'/pricing'} hasProd={hasProd} />
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <div className="flex flex-col items-center">
@@ -113,6 +114,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const metaData = await getMetaData('/pricing', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -129,6 +134,7 @@ export async function getServerSideProps(context) {
             features: features || [],
             countries: countries || [],
             appCount: appCount || 0,
+            hasProd,
         },
     };
 }

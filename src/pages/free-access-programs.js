@@ -5,14 +5,15 @@ import Footer from '@/components/footer/footer';
 import { getFooterData, getProgramsData } from '@/utils/getData';
 import { FOOTER_FIELDS, PROGRAMS_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
-export default function Programs({ footerData, metaData, programs }) {
+export default function Programs({ footerData, metaData, programs, hasProd }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <Navbar footerData={footerData} utm={'/free-access-programs'} />
+            <Navbar footerData={footerData} utm={'/free-access-programs'} hasProd={hasProd} />
 
             <div className="container cont py-12 cont__gap">
                 <div className="cont gap-2">
@@ -131,6 +132,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/free-access-programs', pageUrl);
@@ -140,6 +145,7 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             metaData: metaData || {},
             programs: programs || [],
+            hasProd,
         },
     };
 }

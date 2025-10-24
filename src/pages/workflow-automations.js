@@ -22,6 +22,7 @@ import { GrTrigger } from 'react-icons/gr';
 import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
@@ -100,11 +101,12 @@ const automations = ({
     automationExamples,
     gettingStartedSteps,
     workflowAutomationTools,
+    hasProd,
 }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/workflow-automations'} />
-            <Navbar footerData={footerData} utm={'/workflow-automations'} />
+            <Navbar footerData={footerData} utm={'/workflow-automations'} hasProd={hasProd} />
 
             <div className="container cont gap-12">
                 <section className="py-12">
@@ -328,6 +330,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const metaData = await getMetaData('/workflow-automations', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
@@ -480,6 +486,7 @@ export async function getServerSideProps(context) {
             automationExamples: automationExamples,
             gettingStartedSteps: gettingStartedSteps,
             workflowAutomationTools: workflowAutomationTools,
+            hasProd,
         },
     };
 }

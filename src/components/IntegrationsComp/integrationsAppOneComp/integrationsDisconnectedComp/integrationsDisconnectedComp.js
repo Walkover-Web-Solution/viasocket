@@ -19,7 +19,8 @@ export default function IntegrationsDisconnectedComp({
     footerData,
     blogsData,
     metaData,
-    getDoFollowUrlStatusArray
+    getDoFollowUrlStatusArray,
+    hasProd
 }) {
     return (
         <div
@@ -29,7 +30,7 @@ export default function IntegrationsDisconnectedComp({
             }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <Navbar footerData={footerData} utm={'/integrations/appone'} />
+            <Navbar footerData={footerData} utm={'/integrations/appone'} hasProd={hasProd} />
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}

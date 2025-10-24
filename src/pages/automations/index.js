@@ -21,12 +21,13 @@ import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps }) => {
+const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps, hasProd }) => {
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -127,7 +128,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/automations'} />
-            <Navbar footerData={footerData} utm={'/automations'} />
+            <Navbar footerData={footerData} utm={'/automations'} hasProd={hasProd} />
 
             <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background">
                 <div className="container">
@@ -344,6 +345,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const templates = await getTemplates(pageUrl);
     const metaData = await getMetaData('/automations', pageUrl);
@@ -410,6 +415,7 @@ export async function getServerSideProps(context) {
             blogData: blogData || [],
             categories: categories || [],
             apps: apps || [],
+            hasProd,
         },
     };
 }

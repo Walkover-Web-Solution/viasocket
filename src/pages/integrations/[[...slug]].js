@@ -14,6 +14,7 @@ import { getVideoData } from '@/utils/getVideoData';
 import { getCombos, getApps, getAppCount } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
+import { parse } from 'cookie';
 
 export const runtime = 'experimental-edge';
 
@@ -34,7 +35,8 @@ export default function Integrations({
     useCaseData,
     videoData,
     appCount,
-    getDoFollowUrlStatusArray
+    getDoFollowUrlStatusArray,
+    hasProd
 }) {
     if (noData) {
         return (
@@ -63,6 +65,7 @@ export default function Integrations({
                     footerData={footerData}
                     videoData={videoData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    hasProd={hasProd}
                 />
             </div>
         );
@@ -79,6 +82,7 @@ export default function Integrations({
                     faqData={faqData}
                     footerData={footerData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    hasProd={hasProd}
                 />
             );
         } else {
@@ -98,6 +102,7 @@ export default function Integrations({
                         videoData={videoData}
                         appCount={appCount}
                         getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                        hasProd={hasProd}
                     />
                 </div>
             );
@@ -115,6 +120,7 @@ export default function Integrations({
                     categories={categories}
                     faqData={faqData}
                     appCount={appCount}
+                    hasProd={hasProd}
                 />
             </div>
         );
@@ -125,6 +131,10 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    
+    // Parse cookies to check for prod environment
+    const cookies = req.headers.cookie ? parse(req.headers.cookie) : {};
+    const hasProd = Boolean(cookies.prod);
 
     const pageInfo = getPageInfo(context);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
@@ -246,6 +256,7 @@ export async function getServerSideProps(context) {
                 blogData: blogData || [],
                 appCount: appCount || 0,
                 getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
+                hasProd,
             },
         };
     }
