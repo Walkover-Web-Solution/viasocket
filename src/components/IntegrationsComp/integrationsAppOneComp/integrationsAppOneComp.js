@@ -21,6 +21,7 @@ import ExternalLink from '@/utils/ExternalLink';
 import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
 import { APPERPAGE } from '@/const/integrations';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import TemplateContainer from '../templateContainer/templateContainer';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -129,7 +130,7 @@ export default function IntegrationsAppOneComp({
                                 <h1 className="h1">Integrate {appOneDetails?.name} with your favorite apps</h1>
                                 <p className="sub__h1">
                                     Easily connect {appOneDetails?.name} with the apps you use every day. Build and
-                                    manage {appOneDetails?.name} automations to simplify work and streamline <br className='hidden xl:block'/>
+                                    manage {appOneDetails?.name} automations to simplify work and streamline <br className='hidden xl:block' />
                                     communication. Pick from thousands of available {appOneDetails?.name} integrations{' '}
                                     or customize new ones through our automation platform.
                                 </p>
@@ -191,97 +192,104 @@ export default function IntegrationsAppOneComp({
                         </div>
                     )}
                 </div>
+                <div className="container dotted-background cont md:gap-20 sm:gap-16 gap-12 pt-8 -mt-4 md:-mt-8">
+                    <div className="cont">
+                        <div className="flex flex-col gap-8">
+                            {combosData?.combinations?.length > 0 && (
+                                <>
+                                    <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
+                                    <div>
+                                        <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
+                                            {combosData?.combinations
+                                                ?.filter(
+                                                    (combo) =>
+                                                        combo?.description &&
+                                                        !/^(List|Get)\b/i.test(combo.description.trim())
+                                                )
+                                                ?.slice(0, visibleCombos)
+                                                ?.map((combo, index) => {
+                                                    const integrations =
+                                                        combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                                        ',' +
+                                                        combosData?.plugins[combo?.actions[0]?.name]?.rowid;
 
-                <div className="container">
-                    <div className="flex flex-col gap-8">
-                        {combosData?.combinations?.length > 0 && (
-                            <>
-                                <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
-                                <div>
-                                    <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
-                                        {combosData?.combinations
-                                            ?.filter(
-                                                (combo) =>
-                                                    combo?.description &&
-                                                    !/^(List|Get)\b/i.test(combo.description.trim())
-                                            )
-                                            ?.slice(0, visibleCombos)
-                                            ?.map((combo, index) => {
-                                                const integrations =
-                                                    combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                                    ',' +
-                                                    combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+                                                    const triggerName = combosData?.plugins[
+                                                        combo?.trigger?.name
+                                                    ]?.events?.find((event) => event?.rowid === combo?.trigger?.id)?.name;
 
-                                                const triggerName = combosData?.plugins[
-                                                    combo?.trigger?.name
-                                                ]?.events?.find((event) => event?.rowid === combo?.trigger?.id)?.name;
+                                                    const actionName = combosData?.plugins[
+                                                        combo?.actions[0]?.name
+                                                    ]?.events?.find(
+                                                        (event) => event?.rowid === combo?.actions[0]?.id
+                                                    )?.name;
 
-                                                const actionName = combosData?.plugins[
-                                                    combo?.actions[0]?.name
-                                                ]?.events?.find(
-                                                    (event) => event?.rowid === combo?.actions[0]?.id
-                                                )?.name;
-
-                                                return (
-                                                    <CombinationCardComp
-                                                        key={index}
-                                                        trigger={{
-                                                            name: triggerName,
-                                                            iconurl:
-                                                                combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                                'https://placehold.co/40x40',
-                                                        }}
-                                                        action={{
-                                                            name: actionName,
-                                                            iconurl:
-                                                                combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                                'https://placehold.co/40x40',
-                                                        }}
-                                                        description={combo?.description}
-                                                        link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
-                                                            ?.map((action) => action?.id)
-                                                            .join(',')}&integrations=${integrations}&action&`}
-                                                    />
-                                                );
-                                            })}
-                                    </div>
-                                    {showMore && (
-                                        <button
-                                            onClick={() => {
-                                                setVisibleCombos(visibleCombos + 8);
-                                                if (combosData?.combinations?.length <= visibleCombos) {
-                                                    setShowMore(false);
-                                                }
-                                            }}
-                                            className="btn btn-outline border-t-0 flex ml-auto"
-                                        >
-                                            Load More <MdKeyboardArrowDown fontSize={20} />
-                                        </button>
-                                    )}
-                                </div>
-                            </>
-                        )}
-
-                        {!combosData?.combinations?.length > 0 && (
-                            <>
-                                {!appOneDetails?.events.length > 0 ? (
-                                    <IntegrationsBetaComp appOneDetails={appOneDetails} />
-                                ) : (
-                                    <div className="cont gap-4">
-                                        <div className="cont gap-2">
-                                            <h2 className="h2">Available Events and Actions</h2>
-                                            <p className="sub__h1">
-                                                {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
-                                            </p>
+                                                    return (
+                                                        <CombinationCardComp
+                                                            key={index}
+                                                            trigger={{
+                                                                name: triggerName,
+                                                                iconurl:
+                                                                    combosData?.plugins[combo?.trigger?.name]?.iconurl ||
+                                                                    'https://placehold.co/40x40',
+                                                            }}
+                                                            action={{
+                                                                name: actionName,
+                                                                iconurl:
+                                                                    combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
+                                                                    'https://placehold.co/40x40',
+                                                            }}
+                                                            description={combo?.description}
+                                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
+                                                                ?.map((action) => action?.id)
+                                                                .join(',')}&integrations=${integrations}&action&`}
+                                                        />
+                                                    );
+                                                })}
                                         </div>
-
-                                        <IntegrationsEventsComp appOneDetails={appOneDetails} />
+                                        {showMore && (
+                                            <button
+                                                onClick={() => {
+                                                    setVisibleCombos(visibleCombos + 8);
+                                                    if (combosData?.combinations?.length <= visibleCombos) {
+                                                        setShowMore(false);
+                                                    }
+                                                }}
+                                                className="btn btn-outline border-t-0 flex ml-auto"
+                                            >
+                                                Load More <MdKeyboardArrowDown fontSize={20} />
+                                            </button>
+                                        )}
                                     </div>
-                                )}
-                            </>
-                        )}
+                                </>
+                            )}
+
+                            {!combosData?.combinations?.length > 0 && (
+                                <>
+                                    {!appOneDetails?.events.length > 0 ? (
+                                        <IntegrationsBetaComp appOneDetails={appOneDetails} />
+                                    ) : (
+                                        <div className="cont gap-4">
+                                            <div className="cont gap-2">
+                                                <h2 className="h2">Available Events and Actions</h2>
+                                                <p className="sub__h1">
+                                                    {`Enable Integrations or automations with these events of ${appOneDetails?.name}`}
+                                                </p>
+                                            </div>
+
+                                            <IntegrationsEventsComp appOneDetails={appOneDetails} />
+                                        </div>
+                                    )}
+                                </>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Template Container */}
+                    <div className="cont">
+                        <TemplateContainer selectedApps={[appOneDetails]} />
                     </div>
                 </div>
+
                 <div className="container">
                     <div className="cont">
                         {combosData?.combinations?.length > 0 && (
@@ -293,7 +301,7 @@ export default function IntegrationsAppOneComp({
                                         Automations
                                     </h2>
                                     <p className="sub__h1">
-                                        viaSocket makes it simple to connect{appOneDetails?.name} integrations and
+                                        viaSocket makes it simple to connect {appOneDetails?.name} and
                                         automate repetitive tasks.
                                     </p>
                                 </div>

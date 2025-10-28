@@ -21,11 +21,22 @@ export const runtime = 'experimental-edge';
 
 // Move fetchApps function to the top level
 async function fetchApps(category) {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
-    );
-    const rawData = await response.json();
-    return rawData?.data;
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''
+            }`
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const rawData = await response.json();
+        return rawData?.data;
+    } catch (error) {
+        console.error('Error fetching apps:', error);
+        return [];
+    }
 }
 
 const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData }) => {
@@ -201,7 +212,7 @@ const SecuritySection = ({ securityGridData }) => {
     return (
         <div className="container">
             <div className="border custom-border p-6 md:p-12 border-b-0 bg-[#376F5B] cont gap-8 text-white">
-                <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
+                <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20 mr-8">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
                         <h3 className="sub__h1">
@@ -209,7 +220,7 @@ const SecuritySection = ({ securityGridData }) => {
                             so you can run workflows with confidence.
                         </h3>
                     </div>
-                    <div className="flex gap-4 mr-12">
+                    <div className="flex gap-4">
                         <Image src="assets/img/aicpa-soc-badge.webp" alt="aicpa soc badge" width={100} height={100} />
                         <Image src="assets/img/iso-certified.webp" alt="iso certified badge" width={100} height={100} />
                     </div>

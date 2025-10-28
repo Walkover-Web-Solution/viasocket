@@ -22,6 +22,7 @@ import { GoArrowSwitch } from "react-icons/go";
 import { IoMdSearch } from "react-icons/io";
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
+import TemplateContainer from '../templateContainer/templateContainer';
 
 function TriggerOrActionCard({
     title,
@@ -37,7 +38,7 @@ function TriggerOrActionCard({
 
     const [search, setSearch] = useState("");
     const [selectedEvent, setSelectedEvent] = useState(null);
-    
+
     useEffect(() => {
         if (resetEvent) {
             setSelectedEvent(null);
@@ -240,8 +241,8 @@ export default function IntegrationsAppTwoComp({
                 type={'appTwo'}
                 pageInfo={pageInfo}
             />
-            <div className="container cont -mt-10 global-top-space pt-12">
-                <div className="flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
+            <div className="cont -mt-10 global-top-space pt-12 gap-12 md:gap-16 lg:gap-20">
+                <div className="container flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
                     <Link
                         href={createURL(`/integrations`)}
                         className="flex items-center gap-1 hover:text-accent transition-colors duration-200"
@@ -274,7 +275,7 @@ export default function IntegrationsAppTwoComp({
                     </div>
 
                 </div>
-                <div>
+                <div className="container">
                     <div className="cont flex justify-center items-center p-4 mt-8">
                         <h1 className="h1 items-center text-center md:w-2/3">
                             Connect <span className="text-accent">{appOneDetails?.name}</span> and{' '}
@@ -355,94 +356,102 @@ export default function IntegrationsAppTwoComp({
                         </div>
                     </div>
                 </div>
-                {combosData?.combinations?.length > 0 && (
-                    <div className='cont gap-4'>
-                        <h2 className="h2">
-                            Use the Built-in Integrations
-                        </h2>
-                        <div className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''}`}>
-                            {combosData?.combinations
-                                ?.filter(
-                                    (combo) =>
-                                        combo?.description &&
-                                        !/^(List|Get)\b/i.test(combo.description.trim())
-                                )
-                                ?.slice(0, visibleCombos)
-                                ?.map((combo, index) => {
-                                    const isSingle = combosData?.combinations?.length === 1;
-                                    const integrations =
-                                        combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                        ',' +
-                                        combosData?.plugins[combo?.actions[0]?.name]?.rowid;
-                                    const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.trigger?.id
-                                    )?.name;
-                                    const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                        (event) => event?.rowid === combo?.actions[0]?.id
-                                    )?.name;
-                                    return (
-                                        <CombinationCardComp
-                                            key={index}
-                                            showTopBorder={isSingle}
-                                            trigger={{
-                                                name: triggerName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            action={{
-                                                name: actionName,
-                                                iconurl:
-                                                    combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                    'https://placehold.co/40x40',
-                                            }}
-                                            description={combo?.description}
-                                            link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
-                                        />
-                                    );
-                                })}
-                        </div>
-                        {showMore && (
-                            <button
-                                onClick={() => {
-                                    setVisibleCombos(visibleCombos + 8);
-                                    if (combosData?.combinations?.length <= visibleCombos) {
-                                        setShowMore(false);
-                                    }
-                                }}
-                                className="btn btn-outline border-t-0 border-2 border-gray-400 "
-                            >
-                                Load More <MdKeyboardArrowDown fontSize={20} /> 
-                            </button>
-                        )}
-                    </div>
-                )}
-
-                {!combosData?.combinations?.length > 0 &&
-                    !appOneDetails?.events?.length > 0 &&
-                    !appTwoDetails?.events?.length > 0 && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
-
-                {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
-                    (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
-                        <div className="cont gap-4">
-                            <div className="cont cont__w gap-2">
-                                <h2 className="h2  ">
-                                    Enable Integrations or automations with these events of{' '}
-                                    <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                    <span className="text-accent">{appTwoDetails?.name}</span>
+                <div className="container dotted-background cont md:gap-20 sm:gap-16 gap-12 pt-8 -mt-4 md:-mt-8">
+                    <div>
+                        {combosData?.combinations?.length > 0 && (
+                            <div className="cont gap-4">
+                                <h2 className="h2">
+                                    Use the Built-in Integrations
                                 </h2>
-                                <p className="sub__h1">
-                                    {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                                </p>
+                                <div className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''}`}>
+                                    {combosData?.combinations
+                                        ?.filter(
+                                            (combo) =>
+                                                combo?.description &&
+                                                !/^(List|Get)\b/i.test(combo.description.trim())
+                                        )
+                                        ?.slice(0, visibleCombos)
+                                        ?.map((combo, index) => {
+                                            const isSingle = combosData?.combinations?.length === 1;
+                                            const integrations =
+                                                combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                                ',' +
+                                                combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+                                            const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
+                                                (event) => event?.rowid === combo?.trigger?.id
+                                            )?.name;
+                                            const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
+                                                (event) => event?.rowid === combo?.actions[0]?.id
+                                            )?.name;
+                                            return (
+                                                <CombinationCardComp
+                                                    key={index}
+                                                    showTopBorder={isSingle}
+                                                    trigger={{
+                                                        name: triggerName,
+                                                        iconurl:
+                                                            combosData?.plugins[combo?.trigger?.name]?.iconurl ||
+                                                            'https://placehold.co/40x40',
+                                                    }}
+                                                    action={{
+                                                        name: actionName,
+                                                        iconurl:
+                                                            combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
+                                                            'https://placehold.co/40x40',
+                                                    }}
+                                                    description={combo?.description}
+                                                    link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions?.map((action) => action?.id).join(',')}&integrations=${integrations}&action&`}
+                                                />
+                                            );
+                                        })}
+                                </div>
+                                {showMore && (
+                                    <button
+                                        onClick={() => {
+                                            setVisibleCombos(visibleCombos + 8);
+                                            if (combosData?.combinations?.length <= visibleCombos) {
+                                                setShowMore(false);
+                                            }
+                                        }}
+                                        className="btn btn-outline border-t-0 border-2 border-gray-400 "
+                                    >
+                                        Load More <MdKeyboardArrowDown fontSize={20} />
+                                    </button>
+                                )}
                             </div>
+                        )}
 
-                            <IntegrationsEventsComp
-                                combosData={combosData}
-                                appOneDetails={appOneDetails}
-                                appTwoDetails={appTwoDetails}
-                            />
-                        </div>
-                    )}
+                        {!combosData?.combinations?.length > 0 &&
+                            !appOneDetails?.events?.length > 0 &&
+                            !appTwoDetails?.events?.length > 0 && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
+
+                        {((!combosData?.combinations?.length > 0 && appOneDetails?.events?.length > 0) ||
+                            (!combosData?.combinations?.length > 0 && appTwoDetails?.events?.length > 0)) && (
+                                <div className="cont gap-4">
+                                    <div className="cont cont__w gap-2">
+                                        <h2 className="h2  ">
+                                            Enable Integrations or automations with these events of{' '}
+                                            <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                            <span className="text-accent">{appTwoDetails?.name}</span>
+                                        </h2>
+                                        <p className="sub__h1">
+                                            {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                        </p>
+                                    </div>
+
+                                    <IntegrationsEventsComp
+                                        combosData={combosData}
+                                        appOneDetails={appOneDetails}
+                                        appTwoDetails={appTwoDetails}
+                                    />
+                                </div>
+                            )}
+                    </div>
+                    {/* Template Container */}
+                    <div className="cont">
+                        <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
+                    </div>
+                </div>
             </div>
 
             {combosData?.combinations?.length > 0 &&
@@ -473,7 +482,7 @@ export default function IntegrationsAppTwoComp({
 
 
             <div className="container pb-4">
-                <div className="cont ">
+                <div className="cont">
                     {faqData && <FAQSection faqData={faqData} />}
                     <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
                         <div className="cont gap-4 w-full p-6 md:p-12 border border-t-0 md:border-b-0  custom-border">

@@ -40,7 +40,7 @@ const Login = ({ reviewData, redirect_to }) => {
                             </div>
                         </div>
                         <p className="md:w-[40vw] text-sm p-3 flex gap-2 justify-center items-center">
-                            <span>© 2025 viaSocket. All rights reserved.</span>
+                            <span>© {new Date().getFullYear()} viaSocket. All rights reserved.</span>
                             <Link href="/privacy" className="active-link text-link">
                                 Privacy
                             </Link>
