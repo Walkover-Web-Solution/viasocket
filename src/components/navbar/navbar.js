@@ -150,7 +150,7 @@ export default function Navbar({ utm, navbarData }) {
                             <div
                                 onMouseEnter={() => setMenuOpen(true)}
                                 onClick={() => setMenuOpen(true)}
-                                className={`${borderClass} items-center outline-none flex lg:hidden`}
+                                className={`${borderClass} items-center outline-none flex lg:hidden p-4`}
                                 aria-label="Menu"
                             >
                                 <MdMenu size={24} />
