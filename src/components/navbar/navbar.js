@@ -72,7 +72,7 @@ export default function Navbar({ utm, navbarData }) {
                 className="fixed top-0 z-[100] transition-transform duration-300 w-full translate-y-0 bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl"
             >
                 <div className="custom-border border-b">
-                    <div className="container justify-between items-center flex px-4 h-[64px] ">
+                    <div className="container justify-between items-center flex px-4 h-[54px] ">
                         <div className="flex items-center justify-center">
                             <Link
                                 href="/"
@@ -105,7 +105,7 @@ export default function Navbar({ utm, navbarData }) {
                                         <Link href={item?.group_link}>
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-4 mx-4 !h-[63px] items-center justify-center text-sm cursor-pointer text-gray-500 hover:text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[54px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
                                                     }`}
                                                 onMouseEnter={() => {
                                                     setOpenSecondNavbar(true);
@@ -119,7 +119,7 @@ export default function Navbar({ utm, navbarData }) {
                                     ) : (
                                         <div
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-4 mx-4 !h-[63px] items-center justify-center text-sm cursor-pointer text-gray-500 hover:text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[54px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
                                                 }`}
                                             onMouseEnter={() => {
                                                 setOpenSecondNavbar(true);
@@ -133,16 +133,16 @@ export default function Navbar({ utm, navbarData }) {
                                 ))
                             )}
                         </div>
-                        <div className="flex gap-4 items-center">
+                        <div className="flex justify-center items-center">
                             <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass}  hidden lg:flex px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px]  items-center justify-center`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass}  hidden lg:flex px-4 border-l border-r custom-border sm:min-w-[90px] xl:min-w-[100px] !h-[54px]  items-center justify-center`}
                                 onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                 rel="nofollow"
                             >
                                 Login
                             </button>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-5 btn btn-accent !h-[30px] text-sm min-h-[30px]`}
+                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-5 bg-accent border-r custom-border h-full`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Sign Up
@@ -150,7 +150,7 @@ export default function Navbar({ utm, navbarData }) {
                             <div
                                 onMouseEnter={() => setMenuOpen(true)}
                                 onClick={() => setMenuOpen(true)}
-                                className={`${borderClass} items-center outline-none flex lg:hidden`}
+                                className={`${borderClass} items-center outline-none flex lg:hidden p-4`}
                                 aria-label="Menu"
                             >
                                 <MdMenu size={24} />
@@ -171,7 +171,7 @@ export default function Navbar({ utm, navbarData }) {
                                 navbarData.filter((item) => item.group_name === groupName).map((item, index) => (
                                     <Link
                                         key={index}
-                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[52px] px-2 mx-2 xl:px-4 xl:mx-4 hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent text-sm items-center justify-center text-gray-500 hover:text-black ${isActive(`${item.link}`)}`}
+                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[52px] px-2 mx-2 xl:px-4 xl:mx-4 hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent text-sm items-center justify-center text-black ${isActive(`${item.link}`)}`}
                                         href={`${item.link}`}
                                     >
                                         {item.name}

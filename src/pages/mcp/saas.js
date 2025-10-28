@@ -96,7 +96,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, navba
             </div>
 
             <div className="container">
-                <div className="cont gap-2 border custom-border p-12 bg-white">
+                <div className="cont gap-2 border custom-border md:p-12 p-6 bg-white">
                     <h2 className="h2 text-left">Build your app to be MCP-Ready</h2>
                     <p className="sub__h1">
                         List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude,
@@ -115,7 +115,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, navba
             </div>
 
             <div className="container">
-                <div className="cont p-12 border custom-border justify-start items-start gap-4 bg-white">
+                <div className="cont md:p-12 p-6 border custom-border justify-start items-start gap-4 bg-white">
                     <div className="cont gap-1 text-left">
                         <h2 className="h2">Join the Ecosystem</h2>
                         <p className="sub__h1">
