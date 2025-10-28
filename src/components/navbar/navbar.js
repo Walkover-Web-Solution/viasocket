@@ -105,7 +105,7 @@ export default function Navbar({ utm, navbarData }) {
                                         <Link href={item?.group_link}>
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[53px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[54px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
                                                     }`}
                                                 onMouseEnter={() => {
                                                     setOpenSecondNavbar(true);
@@ -119,7 +119,7 @@ export default function Navbar({ utm, navbarData }) {
                                     ) : (
                                         <div
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r custom-border !h-[53px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[54px] items-center justify-center text-sm cursor-pointer text-black hover:shadow-[inset_0_-4px_0_0_#A8200D] hover:shadow-accent ${isGroupActive(item.group_name) ? '!shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent !text-black' : ''
                                                 }`}
                                             onMouseEnter={() => {
                                                 setOpenSecondNavbar(true);
