@@ -93,7 +93,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
 
                             <div className="flex gap-2 justify-center items-center md:gap-6">
                                 <Link
-                                    href={`https://www.instagram.com/walkover.inc/?igsh=MWEyZnptZmw3Z3phOQ%3D%3D`}
+                                    href={`https://www.instagram.com/viasocket/`}
                                     target="_blank"
                                     className=""
                                     aria-label="instagram"

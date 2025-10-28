@@ -279,7 +279,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     </div>
                                     <p className="text-sm">
                                         Action is the task that follows automatically within your {appOneDetails?.name}{' '}
-                                        app integrations.
+                                        integrations.
                                     </p>
                                 </h3>
 
