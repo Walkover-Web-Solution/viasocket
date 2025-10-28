@@ -192,14 +192,14 @@ export default function IntegrationsAppOneComp({
                         </div>
                     )}
                 </div>
-                <div className="container dotted-background cont md:gap-20 sm:gap-16 gap-12 pt-8 -mt-4 md:-mt-8">
-                    <div className="cont">
+                <div className="dotted-background py-8">
+                    <div className="container flex flex-col gap-16">
                         <div className="flex flex-col gap-8">
-                            {combosData?.combinations?.length > 0 && (
+                            {combosData?.combinations?.length > 0 ? (
                                 <>
                                     <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
                                     <div>
-                                        <div className="grid grid-cols-1 md:grid-cols-2  border-l border-t custom-border">
+                                        <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t custom-border">
                                             {combosData?.combinations
                                                 ?.filter(
                                                     (combo) =>
@@ -215,7 +215,9 @@ export default function IntegrationsAppOneComp({
 
                                                     const triggerName = combosData?.plugins[
                                                         combo?.trigger?.name
-                                                    ]?.events?.find((event) => event?.rowid === combo?.trigger?.id)?.name;
+                                                    ]?.events?.find(
+                                                        (event) => event?.rowid === combo?.trigger?.id
+                                                    )?.name;
 
                                                     const actionName = combosData?.plugins[
                                                         combo?.actions[0]?.name
@@ -229,14 +231,16 @@ export default function IntegrationsAppOneComp({
                                                             trigger={{
                                                                 name: triggerName,
                                                                 iconurl:
-                                                                    combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                                    'https://placehold.co/40x40',
+                                                                    combosData?.plugins[
+                                                                        combo?.trigger?.name
+                                                                    ]?.iconurl || 'https://placehold.co/40x40',
                                                             }}
                                                             action={{
                                                                 name: actionName,
                                                                 iconurl:
-                                                                    combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                                    'https://placehold.co/40x40',
+                                                                    combosData?.plugins[
+                                                                        combo?.actions[0]?.name
+                                                                    ]?.iconurl || 'https://placehold.co/40x40',
                                                             }}
                                                             description={combo?.description}
                                                             link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
@@ -246,6 +250,7 @@ export default function IntegrationsAppOneComp({
                                                     );
                                                 })}
                                         </div>
+
                                         {showMore && (
                                             <button
                                                 onClick={() => {
@@ -261,11 +266,9 @@ export default function IntegrationsAppOneComp({
                                         )}
                                     </div>
                                 </>
-                            )}
-
-                            {!combosData?.combinations?.length > 0 && (
+                            ) : (
                                 <>
-                                    {!appOneDetails?.events.length > 0 ? (
+                                    {!appOneDetails?.events.length ? (
                                         <IntegrationsBetaComp appOneDetails={appOneDetails} />
                                     ) : (
                                         <div className="cont gap-4">
@@ -282,10 +285,8 @@ export default function IntegrationsAppOneComp({
                                 </>
                             )}
                         </div>
-                    </div>
 
-                    {/* Template Container */}
-                    <div className="cont">
+                        {/* Template Container */}
                         <TemplateContainer selectedApps={[appOneDetails]} />
                     </div>
                 </div>
