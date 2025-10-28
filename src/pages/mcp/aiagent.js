@@ -81,22 +81,23 @@ export default function aiagent({ footerData, faqData, metaData, blogData, navba
                     </div>
                 </div>
             </div>
-
-            <div className="container cont p-12 border custom-border justify-start items-start gap-4 bg-white">
-                <div className="cont items-start gap-1">
-                    <h2 className="h2 text-left">Ready to Embed?</h2>
-                    <p className="sub__h1 text-left">
-                        Start integrating viaSocket MCP today and give your users the power to connect their agents with
-                        the tools they already use — no extra coding required.
-                    </p>
-                </div>
-                <div className="flex gap-4">
-                    <Link href="https://viasocket.com/faq/viaSocket-MCP">
-                        <button className="btn btn-accent">View MCP Docs</button>
-                    </Link>
-                    <Link href="https://cal.id/team/viasocket/embed">
-                        <button className="btn btn-accent">Schedule a Demo</button>
-                    </Link>
+            <div className="container">
+                <div className="cont md:p-12 p-6 border custom-border justify-start items-start gap-4 bg-white">
+                    <div className="cont items-start gap-1">
+                        <h2 className="h2 text-left">Ready to Embed?</h2>
+                        <p className="sub__h1 text-left">
+                            Start integrating viaSocket MCP today and give your users the power to connect their agents with
+                            the tools they already use — no extra coding required.
+                        </p>
+                    </div>
+                    <div className="flex gap-4">
+                        <Link href="https://viasocket.com/faq/viaSocket-MCP">
+                            <button className="btn btn-accent">View MCP Docs</button>
+                        </Link>
+                        <Link href="https://cal.id/team/viasocket/embed">
+                            <button className="btn btn-accent">Schedule a Demo</button>
+                        </Link>
+                    </div>
                 </div>
             </div>
 
