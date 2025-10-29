@@ -131,7 +131,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                     buttonLink="/signup?utm_source=/embed"
                 />
 
-                <div className="container">
+                <div className="container" id="ai_agent">
                     <div className=" min-h-fit bg-white border custom-border p-12">
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
@@ -156,7 +156,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container" id="pricing">
                     <div className="cont border custom-border p-12 gap-6 bg-white">
                         <div className="flex flex-col gap-8">
                             <h2 className="h2">Embed Pricing</h2>
