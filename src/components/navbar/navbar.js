@@ -193,7 +193,7 @@ export default function Navbar({ utm, navbarData }) {
                                     return (
                                         <Link
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[54px] px-2 mx-2 xl:px-4 xl:mx-4 hover:text-accent !text-sm items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[54px] px-2 mx-4 xl:px-4 xl:mx-4 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
                                             href={`${item.link}`}
                                         >
                                             {item.name}
