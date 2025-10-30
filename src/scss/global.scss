@@ -19,7 +19,13 @@
 }
 
 .global-top-space {
-    margin-top: 88px;
+    margin-top: 44px; /* Default for small and medium screens */
+}
+  
+@media (min-width: 1024px) {
+    .global-top-space {
+      margin-top: 88px; /* For large (lg) screens and above */
+    }
 }
 
 .border-05 {

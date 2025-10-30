@@ -115,8 +115,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     };
 
     // Choose which list to display
-    // If search bar is showing template results, prefer those. Otherwise fall back to page filters.
-    const templatesFromSearchActive = showSearchTemplates && (filteredSearchTemplates.length > 0 || hasSearchResults);
+    // If search bar is showing template results, prefer those. Otherwise show no templates.
+    const templatesFromSearchActive = showSearchTemplates;
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
         : (remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates);
@@ -140,7 +140,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         enableAi={false}
                     />
                     <BuildOptionsCTA />
-                    <MarqueeComponent 
+                    <MarqueeComponent
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
                         onSelectionChange={handleSelectionChange}
@@ -223,24 +223,54 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             ))}
                         </div>
                     ) : (templatesFromSearchActive ? (
-                        <>
-                            {(selectedAppsFromSearch.length > 0 || selectedDepartmentsFromSearch.length > 0 || selectedIndustriesFromSearch.length > 0) && (
+                        displayTemplates.length > 0 ?
+                            (selectedAppsFromSearch.length > 0 || selectedDepartmentsFromSearch.length > 0 || selectedIndustriesFromSearch.length > 0) && (
+                                <>
+                                    <h2 className="h2 my-8 text-left">
+                                        Top{' '}
+                                        {selectedAppsFromSearch.map((app, index) => (
+                                            <span key={app.appslugname}>
+                                                {index > 0 && ', '}
+                                                <span>{app.name}</span>
+                                            </span>
+                                        ))}{' '}
+                                        ready to use templates {selectedDepartmentsFromSearch.length > 0 && 'for '}
+                                        {selectedDepartmentsFromSearch.map((department, index) => (
+                                            <span key={department}>
+                                                {index > 0 && ', '}
+                                                <span>{department}</span>
+                                            </span>
+                                        ))}{' '}
+                                        {selectedIndustriesFromSearch.length > 0 && 'in '}
+                                        {selectedIndustriesFromSearch.map((industry, index) => (
+                                            <span key={industry}>
+                                                {index > 0 && ', '}
+                                                <span>{industry}</span>
+                                            </span>
+                                        ))}
+                                    </h2>
+                                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                        {displayTemplates.slice(0, visibleCount).map((template, index) => (
+                                            <TemplateCard key={template.id} index={index} template={template} />
+                                        ))}
+                                    </div>
+                                </>
+                            )
+                            : (
                                 <h2 className="h2 my-8 text-left">
-                                    Top{' '}
+                                    No matching templates found for {' '}
                                     {selectedAppsFromSearch.map((app, index) => (
                                         <span key={app.appslugname}>
                                             {index > 0 && ', '}
                                             <span>{app.name}</span>
                                         </span>
                                     ))}{' '}
-                                    ready to use templates {selectedDepartmentsFromSearch.length > 0 && 'for '}
                                     {selectedDepartmentsFromSearch.map((department, index) => (
                                         <span key={department}>
                                             {index > 0 && ', '}
                                             <span>{department}</span>
                                         </span>
                                     ))}{' '}
-                                    {selectedIndustriesFromSearch.length > 0 && 'in '}
                                     {selectedIndustriesFromSearch.map((industry, index) => (
                                         <span key={industry}>
                                             {index > 0 && ', '}
@@ -248,21 +278,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         </span>
                                     ))}
                                 </h2>
-                            )}
-                            {displayTemplates.length > 0 ? (
-                                <>
-                                    <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                        {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                            <TemplateCard key={template.id} index={index} template={template} />
-                                        ))}
-                                    </div>
-                                </>
-                            ) : (
-                                <div className="cont gap-4">
-                                    <p className="h3 mt-20">No templates found for current selection.</p>
-                                </div>
-                            )}
-                        </>
+                            )
                     ) : hasResults ? (
                         <>
                             {/* Rest of the Templates */}

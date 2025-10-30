@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
+import { GoArrowUpRight } from "react-icons/go";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
@@ -27,9 +28,9 @@ export default function Navbar({ utm, navbarData }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = '!text-xs !capitalize';
+        backgroundClass = '!uppercase';
     } else {
-        backgroundClass = textClass + '!text-xs !capitalize';
+        backgroundClass = textClass + '!uppercase';
     }
 
     // Normalize a path: remove query/hash, ensure leading slash, drop trailing slash (except root)
@@ -108,13 +109,63 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                <div className="custom-border border-b">
-                    <div className="justify-between items-center flex px-4 h-[44px] ">
+                <div className="custom-border border-b lg:block hidden">
+                    <div className="justify-end items-center flex px-4 h-[32px]">
+                        <div className='min-w-[180px]'></div>
+                        <div className="flex justify-center items-center">
+                            {navbarData?.length > 0 && (
+                                [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
+                                    item?.is_link ? (
+                                        <Link href={item?.group_link}>
+                                            <div
+                                                key={index}
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-4 px-4 !h-[32px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                                    }`}
+                                                onMouseEnter={() => {
+                                                    setGroupName(item.group_name);
+                                                }}
+                                            >
+                                                {item.group_name}
+                                            </div>
+                                        </Link>
+                                    ) : (
+                                        <div
+                                            key={index}
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-4 px-4 !h-[32px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                                }`}
+                                            onMouseEnter={() => {
+                                                setGroupName(item.group_name);
+                                            }}
+                                        >
+                                            {item.group_name}
+                                        </div>
+                                    )
+                                ))
+                            )}
+
+                        </div>
+                        <div className="flex justify-end items-center">
+                            <Link href={'/support'}>
+                                <div
+                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-[#84898a] border-4 border-r-0 border-t-0 border-b-0 hidden lg:flex w-fit pl-8 pr-4 !h-[20px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
+
+                                >
+                                    Support <GoArrowUpRight />
+                                </div>
+                            </Link>
+
+                        </div>
+                    </div>
+                </div>
+                <div
+                    className={`border-b custom-border transition-all duration-300 ease-in-out overflow-hidden h-[54px]`}
+                >
+                    <div className="justify-between items-center flex lg:px-8 px-4 h-[54px]">
                         <div className="flex items-center justify-center">
                             <Link
                                 href="/"
                                 aria-label="logo"
-                                className={`${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass} flex !justify-start`}
+                                className={`${style.nav_btn} lg:min-w-[180px]  min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
                                 style={{ backgroundColor: 'transparent' }}
                             >
                                 {mode === 'dark' ? (
@@ -136,72 +187,13 @@ export default function Navbar({ utm, navbarData }) {
                                 )}
                             </Link>
                         </div>
-                        <div className="flex justify-center items-center">
-                            {navbarData?.length > 0 && (
-                                [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
-                                    item?.is_link ? (
-                                        <Link href={item?.group_link}>
-                                            <div
-                                                key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[44px] items-center justify-center  cursor-pointer hover:text-accent ${isGroupActive(item.group_name) ? '!text-accent' : ''
-                                                    }`}
-                                                onMouseEnter={() => {
-                                                    setGroupName(item.group_name);
-                                                }}
-                                            >
-                                                {item.group_name}
-                                            </div>
-                                        </Link>
-                                    ) : (
-                                        <div
-                                            key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit px-8 border-r ${index == 0 ? 'border-l' : ''} custom-border !h-[44px] items-center justify-center  cursor-pointer  hover:text-accent ${isGroupActive(item.group_name) ? '!text-accent' : ''
-                                                }`}
-                                            onMouseEnter={() => {
-                                                setGroupName(item.group_name);
-                                            }}
-                                        >
-                                            {item.group_name}
-                                        </div>
-                                    )
-                                ))
-                            )}
-                            <button
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass}  hidden lg:flex px-4 border-r custom-border sm:min-w-[90px] xl:min-w-[100px] !h-[44px]  items-center justify-center hover:text-accent`}
-                                onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                rel="nofollow"
-                            >
-                                Login
-                            </button>
-                            <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-5 bg-accent border-r custom-border h-full !text-xs text-nowrap hover:bg-black`}
-                                onClick={(e) => handleRedirect(e, '/signup?', router)}
-                            >
-                                Sign Up
-                            </button>
-                            <div
-                                onMouseEnter={() => setMenuOpen(true)}
-                                onClick={() => setMenuOpen(true)}
-                                className={`${borderClass} items-center outline-none flex lg:hidden p-4`}
-                                aria-label="Menu"
-                            >
-                                <MdMenu size={24} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div
-                    className={`border-b custom-border transition-all duration-300 ease-in-out overflow-hidden h-[44px]`}
-                >
-                    <div className="justify-end items-center flex px-4 h-[44px]">
                         <div className="flex">
                             {navbarData?.length > 0 && (
                                 navbarData.filter((item) => item.group_name === groupName).map((item, index) => {
-                                    
                                     return (
                                         <Link
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[44px] px-2 mx-2 xl:px-4 xl:mx-4 hover:text-accent items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[54px] px-2 mx-4 xl:px-4 xl:mx-4 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
                                             href={`${item.link}`}
                                         >
                                             {item.name}
@@ -209,6 +201,22 @@ export default function Navbar({ utm, navbarData }) {
                                     )
                                 })
                             )}
+                        </div>
+                        <div className="flex gap-4 items-center justify-center">
+                            <button
+                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
+                                onClick={(e) => handleRedirect(e, '/signup?', router)}
+                            >
+                                Login/Sign Up
+                            </button>
+                            <div
+                            onMouseEnter={() => setMenuOpen(true)}
+                            onClick={() => setMenuOpen(true)}
+                            className={`${borderClass} items-center outline-none flex lg:hidden`}
+                            aria-label="Menu"
+                        >
+                            <MdMenu size={24} />
+                        </div>
                         </div>
                     </div>
                 </div>
