@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import Head from 'next/head';
+import Script from 'next/script';
 import { getUtmSource } from '@/utils/handleUtmSource';
 import Link from 'next/link';
 
@@ -127,6 +128,26 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     return (
         <>
             <HeadComp canonicalUrl={canonicalUrl} />
+            <Script
+                src="https://script.docstar.io/scripts/search-sdk/search-sdk.script.min.js"
+                strategy="afterInteractive"
+                onLoad={() => {
+                    try {
+                        if (window && window.DocStarSearch && typeof window.DocStarSearch.configure === 'function') {
+                            window.DocStarSearch.configure({
+                                collectionId: '23nmZIclc6pr',
+                                environment: 'prod', // "prod", "dev", or "local"
+                                openMode: 'iframe', // "iframe", "newTab", or "currentTab"
+                                debounceDelay: 300,
+                                enableKeyboardShortcut: true,
+                                minSearchLength: 2,
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Error initializing DocStarSearch:', e);
+                    }
+                }}
+            />
             <ChatWidget />
             {showSkeleton ? (
                 <Skeleton />

@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
 import { GoArrowUpRight } from "react-icons/go";
+import { FiSearch } from "react-icons/fi";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
@@ -101,6 +102,13 @@ export default function Navbar({ utm, navbarData }) {
         }
     }, [router.asPath, navbarData]);
 
+    const handleSearch = () => {
+        console.log('DocStarSearch: ', window.DocStarSearch);
+        if (window.DocStarSearch) {
+            window.DocStarSearch.open();
+        }
+    };
+
     return (
         <>
             <div
@@ -111,7 +119,6 @@ export default function Navbar({ utm, navbarData }) {
             >
                 <div className="custom-border border-b lg:block hidden">
                     <div className="justify-end items-center flex px-4 h-[32px]">
-                        <div className='min-w-[180px]'></div>
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && (
                                 [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
@@ -160,12 +167,12 @@ export default function Navbar({ utm, navbarData }) {
                 <div
                     className={`border-b custom-border transition-all duration-300 ease-in-out overflow-hidden h-[54px]`}
                 >
-                    <div className="justify-between items-center flex lg:px-8 px-4 h-[54px]">
+                    <div className="justify-between items-center flex px-4 h-[54px]">
                         <div className="flex items-center justify-center">
                             <Link
                                 href="/"
                                 aria-label="logo"
-                                className={`${style.nav_btn} lg:min-w-[180px]  min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
+                                className={`${style.nav_btn} min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
                                 style={{ backgroundColor: 'transparent' }}
                             >
                                 {mode === 'dark' ? (
@@ -203,6 +210,7 @@ export default function Navbar({ utm, navbarData }) {
                             )}
                         </div>
                         <div className="flex gap-4 items-center justify-center">
+                        <div className="!h-[54px] flex items-center justify-center lg:border-r custom-border lg:px-6 lg:mr-4 mr-2 cursor-pointer" onClick={handleSearch}><FiSearch size={20} /></div>
                             <button
                                 className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
@@ -210,13 +218,13 @@ export default function Navbar({ utm, navbarData }) {
                                 Login/Sign Up
                             </button>
                             <div
-                            onMouseEnter={() => setMenuOpen(true)}
-                            onClick={() => setMenuOpen(true)}
-                            className={`${borderClass} items-center outline-none flex lg:hidden`}
-                            aria-label="Menu"
-                        >
-                            <MdMenu size={24} />
-                        </div>
+                                onMouseEnter={() => setMenuOpen(true)}
+                                onClick={() => setMenuOpen(true)}
+                                className={`${borderClass} items-center outline-none flex lg:hidden`}
+                                aria-label="Menu"
+                            >
+                                <MdMenu size={24} />
+                            </div>
                         </div>
                     </div>
                 </div>
