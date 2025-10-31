@@ -10,7 +10,6 @@ import { GoArrowUpRight } from "react-icons/go";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
-    const [openSecondNavbar, setOpenSecondNavbar] = useState(false);
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
@@ -43,12 +42,32 @@ export default function Navbar({ utm, navbarData }) {
         return out;
     };
 
+    // Parse a path into base path and hash fragment (without '#')
+    const parsePath = (p) => {
+        const raw = (p || '').toString();
+        const noQuery = raw.split('?')[0];
+        const [pathOnly, hash = ''] = noQuery.split('#');
+        return { base: normalizePath(pathOnly), hash };
+    };
+
     const isActive = (path) => {
         const link = path || '';
         if (link.startsWith('http')) return '';
-        const current = normalizePath(router.asPath);
-        const target = normalizePath(link);
-        const active = current === target || current.startsWith(target + '/');
+        const cur = parsePath(router.asPath);
+        const trg = parsePath(link);
+
+        // Special handling for /embed and its hash children
+        if (trg.base === '/embed') {
+            // Only accent the exact selected hash child
+            if (trg.hash) {
+                return cur.base === '/embed' && cur.hash === trg.hash ? '!text-accent' : '';
+            }
+            // Base /embed (no hash) should only be active when no hash is present in current
+            return cur.base === '/embed' && !cur.hash ? '!text-accent' : '';
+        }
+
+        // Default behavior for all other routes
+        const active = cur.base === trg.base || cur.base.startsWith(trg.base + '/');
         return active ? '!text-accent' : '';
     };
 
@@ -109,9 +128,8 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                <div className="custom-border border-b lg:block hidden">
+                <div className="border-gray-300 border-b lg:block hidden">
                     <div className="justify-end items-center flex px-4 h-[32px]">
-                        <div className='min-w-[180px]'></div>
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && (
                                 [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
@@ -119,7 +137,7 @@ export default function Navbar({ utm, navbarData }) {
                                         <Link href={item?.group_link}>
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-4 px-4 !h-[32px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[32px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
                                                     }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);
@@ -131,7 +149,7 @@ export default function Navbar({ utm, navbarData }) {
                                     ) : (
                                         <div
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-4 px-4 !h-[32px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[32px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
                                                 }`}
                                             onMouseEnter={() => {
                                                 setGroupName(item.group_name);
@@ -144,28 +162,24 @@ export default function Navbar({ utm, navbarData }) {
                             )}
 
                         </div>
-                        <div className="flex justify-end items-center">
-                            <Link href={'/support'}>
-                                <div
-                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-[#84898a] border-4 border-r-0 border-t-0 border-b-0 hidden lg:flex w-fit pl-8 pr-4 !h-[20px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
-
-                                >
-                                    Support <GoArrowUpRight />
-                                </div>
-                            </Link>
-
-                        </div>
+                        <Link href={'/support'}>
+                            <div
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit pl-2 !h-[32px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
+                            >
+                                Support <GoArrowUpRight />
+                            </div>
+                        </Link>
                     </div>
                 </div>
                 <div
-                    className={`border-b custom-border transition-all duration-300 ease-in-out overflow-hidden h-[54px]`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[54px]`}
                 >
-                    <div className="justify-between items-center flex lg:px-8 px-4 h-[54px]">
+                    <div className="justify-between items-center flex px-4 h-[54px]">
                         <div className="flex items-center justify-center">
                             <Link
                                 href="/"
                                 aria-label="logo"
-                                className={`${style.nav_btn} lg:min-w-[180px]  min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
+                                className={`${style.nav_btn} min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
                                 style={{ backgroundColor: 'transparent' }}
                             >
                                 {mode === 'dark' ? (
@@ -187,36 +201,36 @@ export default function Navbar({ utm, navbarData }) {
                                 )}
                             </Link>
                         </div>
-                        <div className="flex">
-                            {navbarData?.length > 0 && (
-                                navbarData.filter((item) => item.group_name === groupName).map((item, index) => {
-                                    return (
-                                        <Link
-                                            key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass}   hidden lg:flex w-fit !h-[54px] px-2 mx-4 xl:px-4 xl:mx-4 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
-                                            href={`${item.link}`}
-                                        >
-                                            {item.name}
-                                        </Link>
-                                    )
-                                })
-                            )}
-                        </div>
-                        <div className="flex gap-4 items-center justify-center">
+                        <div className="flex items-center justify-center">
+                            <div className="flex">
+                                {navbarData?.length > 0 && (
+                                    navbarData.filter((item) => item.group_name === groupName).map((item, index) => {
+                                        return (
+                                            <Link
+                                                key={index}
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${index === 0 ? 'border-l border-gray-300' : ''} border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                                href={`${item.link}`}
+                                            >
+                                                {item.name}
+                                            </Link>
+                                        )
+                                    })
+                                )}
+                            </div>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
+                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 ml-4 lg:mr-0 mr-4 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Login/Sign Up
                             </button>
                             <div
-                            onMouseEnter={() => setMenuOpen(true)}
-                            onClick={() => setMenuOpen(true)}
-                            className={`${borderClass} items-center outline-none flex lg:hidden`}
-                            aria-label="Menu"
-                        >
-                            <MdMenu size={24} />
-                        </div>
+                                onMouseEnter={() => setMenuOpen(true)}
+                                onClick={() => setMenuOpen(true)}
+                                className={`${borderClass} items-center outline-none flex lg:hidden`}
+                                aria-label="Menu"
+                            >
+                                <MdMenu size={24} />
+                            </div>
                         </div>
                     </div>
                 </div>
