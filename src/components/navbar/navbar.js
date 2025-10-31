@@ -218,7 +218,7 @@ export default function Navbar({ utm, navbarData }) {
                                 )}
                             </div>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 ml-4 lg:mr-0 mr-4 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
+                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Login/Sign Up

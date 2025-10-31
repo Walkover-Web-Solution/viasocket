@@ -414,7 +414,7 @@ export default function McpAppComp({
                                     </h3>
                                 </div>
                                 <Link href="/signup?utm_source=mcp">
-                                    <button className="btn btn-accent">
+                                    <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                                         Get Your MCP URL for Free
                                     </button>
                                 </Link>
@@ -429,7 +429,7 @@ export default function McpAppComp({
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                                     <Link href="/support">
-                                        <button className="btn btn-accent">
+                                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                                             Self-Hosted MCP
                                         </button>
                                     </Link>
