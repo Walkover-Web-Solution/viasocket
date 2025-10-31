@@ -77,13 +77,16 @@ export default function Navbar({ utm, navbarData }) {
         const current = normalizePath(router.asPath);
         const groupItems = navbarData.filter((item) => item.group_name === groupName);
 
-        // Mark group active if any item's link equals current or is a prefix of current (sub-route)
-        // Ignore external links
+        // Mark group active if any item's link OR the group's parent link (group_link) equals current or is a prefix of current (sub-route). Ignore external links.
         return groupItems.some((item) => {
-            const link = item?.link || '';
-            if (!link || link.startsWith('http')) return false;
-            const target = normalizePath(link);
-            return current === target || current.startsWith(target + '/');
+            const candidates = [];
+            const child = item?.link || '';
+            const parent = item?.group_link || '';
+
+            if (child && !child.startsWith('http')) candidates.push(normalizePath(child));
+            if (parent && !parent.startsWith('http')) candidates.push(normalizePath(parent));
+
+            return candidates.some((target) => current === target || current.startsWith(target + '/'));
         });
     };
 
@@ -102,10 +105,14 @@ export default function Navbar({ utm, navbarData }) {
         for (const g of groupsInOrder) {
             const items = navbarData.filter((it) => it.group_name === g);
             const hasMatch = items.some((it) => {
-                const link = it?.link || '';
-                if (!link || link.startsWith('http')) return false;
-                const target = normalizePath(link);
-                return current === target || current.startsWith(target + '/');
+                const candidates = [];
+                const child = it?.link || '';
+                const parent = it?.group_link || '';
+
+                if (child && !child.startsWith('http')) candidates.push(normalizePath(child));
+                if (parent && !parent.startsWith('http')) candidates.push(normalizePath(parent));
+
+                return candidates.some((target) => current === target || current.startsWith(target + '/'));
             });
             if (hasMatch) {
                 matchedGroup = g;
