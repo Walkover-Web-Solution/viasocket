@@ -183,7 +183,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                     </div>
 
                     <div
-                        className={`fixed top-[64px] left-1/2 transform -translate-x-1/2  bt-0 transition-all duration-300   m-autotransition-all duration-500 ease-in-out container
+                        className={`fixed lg:top-[86px] top-[53px] left-1/2 transform -translate-x-1/2  bt-0 transition-all duration-300   m-autotransition-all duration-500 ease-in-out container
               ${isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'}`}
                         style={{ zIndex: 50 }}
                     >
@@ -354,6 +354,7 @@ export async function getServerSideProps(context) {
                 relatedTemplates: categoryTemplates || [],
                 isCategory: true,
                 categoryName: categoryName,
+                navbarData: navbarData || [],
             },
         };
     } else {
