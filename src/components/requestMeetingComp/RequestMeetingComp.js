@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
+import scriptRunner from '@/utils/scriptRunner';
 
 const RequestMeeting = ({ agencyName }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -57,22 +58,14 @@ const RequestMeeting = ({ agencyName }) => {
         try {
             setIsLoading(true);
 
-            const url = new URL('https://flow.sokt.io/func/scri22s212eP');
-            Object.entries(formData).forEach(([key, value]) => {
-                url.searchParams.append(key, value);
-            });
+            const payload = { ...formData };
             if (agencyName) {
-                url.searchParams.append('agencyName', agencyName);
+                payload.agencyName = agencyName;
             }
 
-            const response = await fetch(url.toString(), {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+            const response = await scriptRunner('REQUEST_MEETING', payload, 'GET');
 
-            if (response.ok) {
+            if (response) {
                 alert('Meeting request submitted successfully!');
                 document.getElementById('meeting_request_form').close();
             } else {
