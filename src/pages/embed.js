@@ -3,9 +3,9 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '@/components/getStarted/getStarted';
 import Navbar from '@/components/navbar/navbar';
-import { EMBED_FIELDS, FOOTER_FIELDS } from '@/const/fields';
+import { EMBED_FIELDS, FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
-import { getEmbedData, getFooterData } from '@/utils/getData';
+import { getEmbedData, getFooterData, getNavbarData } from '@/utils/getData';
 import Image from 'next/image';
 import React from 'react';
 import { useState } from 'react';
@@ -18,15 +18,15 @@ import { getAppCount } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorksData, metaData, appCount }) => {
+const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData, howItWorksData, metaData, appCount }) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <Navbar footerData={footerData} utm={'/embed'} />
+            <Navbar navbarData={navbarData} utm={'/embed'} />
 
-            <div className="cont lg:gap-20 md:gap-16 gap-12">
+            <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="w-full min-h-fit py-12">
                     <div className="container h-full flex flex-col">
                         <div className="flex flex-col lg:flex-row h-full justify-center items-center">
@@ -47,7 +47,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                                     </Link>
                                     <p className="text-gray-500 text-center">Or</p>
                                     <Link href="login?utm_source=/embed">
-                                        <button className="btn btn-outline bg-white">Self Embed</button>
+                                        <button className="btn btn-outline">Self Embed</button>
                                     </Link>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                     buttonLink="/signup?utm_source=/embed"
                 />
 
-                <div className="container">
+                <div className="container" id="ai_agent">
                     <div className=" min-h-fit bg-white border custom-border p-12">
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
@@ -156,7 +156,7 @@ const Embed = ({ blogData, footerData, faqData, embedData, tableData, howItWorks
                     </div>
                 </div>
 
-                <div className="container">
+                <div className="container" id="pricing">
                     <div className="cont border custom-border p-12 gap-6 bg-white">
                         <div className="flex flex-col gap-8">
                             <h2 className="h2">Embed Pricing</h2>
@@ -328,6 +328,7 @@ export async function getServerSideProps(context) {
 
     const metaData = await getMetaData('/embed', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/embed', pageUrl);
     const embedData = await getEmbedData(EMBED_FIELDS, '', pageUrl);
     const blogTags = 'embed';
@@ -361,6 +362,7 @@ export async function getServerSideProps(context) {
     return {
         props: {
             footerData: footerData || [],
+            navbarData: navbarData || [],
             blogData: blogData || [],
             faqData: faqData || [],
             embedData: embedData || [],

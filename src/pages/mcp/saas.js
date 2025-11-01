@@ -3,25 +3,23 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
-import McpSwitchComp from '@/components/mcpComps/mcpSwitchComp/McpSwitchComp';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, blogData }) {
+export default function pricing({ footerData, faqData, metaData, blogData, navbarData }) {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <Navbar footerData={footerData} utm={'/mcp'} />
+            <Navbar navbarData={navbarData} utm={'/mcp'} />
 
-            <div className="cont gap-8">
-                <McpSwitchComp />
+            <div className="cont gap-8 global-top-space pt-12">
                 <div className="container ">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
                         <div className="cont gap-4 w-full text-left">
@@ -98,7 +96,7 @@ export default function pricing({ footerData, faqData, metaData, blogData }) {
             </div>
 
             <div className="container">
-                <div className="cont gap-2 border custom-border p-12 bg-white">
+                <div className="cont gap-2 border custom-border md:p-12 p-6 bg-white">
                     <h2 className="h2 text-left">Build your app to be MCP-Ready</h2>
                     <p className="sub__h1">
                         List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude,
@@ -117,7 +115,7 @@ export default function pricing({ footerData, faqData, metaData, blogData }) {
             </div>
 
             <div className="container">
-                <div className="cont p-12 border custom-border justify-start items-start gap-4 bg-white">
+                <div className="cont md:p-12 p-6 border custom-border justify-start items-start gap-4 bg-white">
                     <div className="cont gap-1 text-left">
                         <h2 className="h2">Join the Ecosystem</h2>
                         <p className="sub__h1">
@@ -161,12 +159,14 @@ export async function getServerSideProps(context) {
     const blogTags1 = 'mcp';
     const blogTags2 = 'saas';
     const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             metaData: metaData || {},
             footerData: footerData || [],
             faqData: faqData || [],
             blogData: blogData || [],
+            navbarData: navbarData || [],
         },
     };
 }

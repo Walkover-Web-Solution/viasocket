@@ -1,8 +1,8 @@
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { getFooterData } from '@/utils/getData';
-import { FOOTER_FIELDS } from '@/const/fields';
+import { getFooterData,getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
 export async function getServerSideProps(context) {
@@ -12,22 +12,24 @@ export async function getServerSideProps(context) {
 
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const metaData = await getMetaData('/terms', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     return {
         props: {
             footerData: footerData || [],
             metaData: metaData || {},
+            navbarData: navbarData || [],
         },
     };
 }
 export const runtime = 'experimental-edge';
 
-const Terms = ({ footerData, metaData }) => {
+const Terms = ({ footerData, metaData, navbarData }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <Navbar footerData={footerData} utm={'/terms'} />
+            <Navbar navbarData={navbarData} utm={'/terms'} />
 
-            <div className="container mt-12 flex gap-16 flex-col">
+            <div className="container mt-12 flex gap-16 flex-col global-top-space">
                 <style
                     dangerouslySetInnerHTML={{
                         __html: "\n  [data-custom-class='body'], [data-custom-class='body'] * {\n          background: transparent !important;\n        }\n[data-custom-class='title'], [data-custom-class='title'] * {\nfont-size: 26px !important;\n !important;\n        }\n[data-custom-class='subtitle'], [data-custom-class='subtitle'] * {\n;\nfont-size: 14px !important;\n        }\n[data-custom-class='heading_1'], [data-custom-class='heading_1'] * {\nfont-size: 19px !important;\n;\n        }\n[data-custom-class='heading_2'], [data-custom-class='heading_2'] * {\nfont-size: 17px !important;\n;\n        }\n[data-custom-class='body_text'], [data-custom-class='body_text'] * {\n          \nfont-size: 14px !\n        }\n[data-custom-class='link'], [data-custom-class='link'] * {\n          color: #0000ff !important;\nfont-size: 14px !\nword-break: break-word !important;\n        }\n",

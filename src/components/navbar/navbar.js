@@ -1,58 +1,20 @@
-import { MdMenu } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import style from './navbar.module.scss';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { useEffect, useLayoutEffect, useState } from 'react';
-import Support from '@/components/chat-widget/support';
+import { useState, useEffect } from 'react';
+import { MdMenu } from 'react-icons/md';
+import Menubar from './menubar';
+import { GoArrowUpRight } from 'react-icons/go';
 
-export default function Navbar({ utm, footerData }) {
+export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
-    const [hide, setHide] = useState(false);
-    const [supportOpen, setSupportOpen] = useState(false);
+    const [groupName, setGroupName] = useState('');
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [originalGroupName, setOriginalGroupName] = useState('');
     const [hasToken, setHasToken] = useState(false);
-    let lastScrollY = 0;
 
-    const handleScroll = () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY > lastScrollY && currentScrollY > 50) {
-            setHide(true);
-        } else {
-            setHide(false);
-        }
-        lastScrollY = currentScrollY;
-    };
-
-    useEffect(() => {
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    useLayoutEffect(() => {
-        // Check for prod token in cookies
-        const checkToken = () => {
-            if (typeof window !== 'undefined') {
-                const getCookie = (name) => {
-                    console.log(document.cookie, 'cookie');
-                    const value = `; ${document.cookie}`;
-                    const parts = value.split(`; ${name}=`);
-                    if (parts.length === 2) return parts.pop().split(';').shift();
-                    return null;
-                };
-
-                const token = getCookie('prod');
-                console.log(token, 'token');
-                // Check if token exists and has valid environment values
-                // Local environment has 'testing' value, production has 'prod' value
-                setHasToken(!!token);
-            }
-        };
-
-        checkToken();
-    }, []);
-
-    console.log(hasToken, 'hasToken');
     let mode = 'light';
     let borderClass;
     let backgroundClass;
@@ -66,92 +28,207 @@ export default function Navbar({ utm, footerData }) {
         textClass = 'text-white ';
     }
     if (utm && utm === '/index') {
-        backgroundClass = '!text-xs !capitalize';
+        backgroundClass = '!uppercase';
     } else {
-        backgroundClass = textClass + '!text-xs !capitalize';
+        backgroundClass = textClass + '!uppercase';
     }
 
-    const isActive = (path) => {
-        if (path === '/') {
-            return router.pathname === path ? 'text-accent !font-semibold' : '';
-        }
-        return router.pathname.startsWith(path) ? 'text-accent !font-semibold' : '';
+    // Normalize a path: remove query/hash, ensure leading slash, drop trailing slash (except root)
+    const normalizePath = (p) => {
+        if (!p) return '/';
+        const noQuery = p.split('?')[0].split('#')[0];
+        let out = noQuery.trim();
+        if (!out.startsWith('/')) out = '/' + out;
+        if (out.length > 1 && out.endsWith('/')) out = out.slice(0, -1);
+        return out;
     };
+
+    // Parse a path into base path and hash fragment (without '#')
+    const parsePath = (p) => {
+        const raw = (p || '').toString();
+        const noQuery = raw.split('?')[0];
+        const [pathOnly, hash = ''] = noQuery.split('#');
+        return { base: normalizePath(pathOnly), hash };
+    };
+
+    const isActive = (path) => {
+        const link = path || '';
+        if (link.startsWith('http')) return '';
+        const cur = parsePath(router.asPath);
+        const trg = parsePath(link);
+
+        // Special handling for /embed and its hash children
+        if (trg.base === '/embed') {
+            // Only accent the exact selected hash child
+            if (trg.hash) {
+                return cur.base === '/embed' && cur.hash === trg.hash ? '!text-accent' : '';
+            }
+            // Base /embed (no hash) should only be active when no hash is present in current
+            return cur.base === '/embed' && !cur.hash ? '!text-accent' : '';
+        }
+
+        // Default behavior for all other routes
+        const active = cur.base === trg.base || cur.base.startsWith(trg.base + '/');
+        return active ? '!text-accent' : '';
+    };
+
+    const isGroupActive = (groupName) => {
+        if (!navbarData?.length) return false;
+
+        const current = normalizePath(router.asPath);
+        const groupItems = navbarData.filter((item) => item.group_name === groupName);
+
+        // Mark group active if any item's link OR the group's parent link (group_link) equals current or is a prefix of current (sub-route). Ignore external links.
+        return groupItems.some((item) => {
+            const candidates = [];
+            const child = item?.link || '';
+            const parent = item?.group_link || '';
+
+            if (child && !child.startsWith('http')) candidates.push(normalizePath(child));
+            if (parent && !parent.startsWith('http')) candidates.push(normalizePath(parent));
+
+            return candidates.some((target) => current === target || current.startsWith(target + '/'));
+        });
+    };
+
+    // Ensure the second layer reflects the active first-layer group based on current route
+    useEffect(() => {
+        if (!navbarData?.length) return;
+
+        const current = normalizePath(router.asPath);
+
+        // Find the first group (by navbarData order) that matches current route
+        const groupsInOrder = [...new Map(navbarData.map((i) => [i.group_name, i])).values()].map((i) => i.group_name);
+
+        let matchedGroup = '';
+        for (const g of groupsInOrder) {
+            const items = navbarData.filter((it) => it.group_name === g);
+            const hasMatch = items.some((it) => {
+                const candidates = [];
+                const child = it?.link || '';
+                const parent = it?.group_link || '';
+
+                if (child && !child.startsWith('http')) candidates.push(normalizePath(child));
+                if (parent && !parent.startsWith('http')) candidates.push(normalizePath(parent));
+
+                return candidates.some((target) => current === target || current.startsWith(target + '/'));
+            });
+            if (hasMatch) {
+                matchedGroup = g;
+                break;
+            }
+        }
+
+        // Only update if different to avoid unnecessary re-renders
+        if (matchedGroup && matchedGroup !== groupName) {
+            setGroupName(matchedGroup);
+            setOriginalGroupName(matchedGroup);
+        }
+    }, [router.asPath, navbarData]);
 
     return (
         <>
             <div
-                // className={`sticky top-0 z-[100] transition-transform duration-300 w-full ${
-                //     hide ? '-translate-y-full' : 'translate-y-0'
-                // }`}
-                className="sticky top-0 z-[100] transition-transform duration-300 w-full translate-y-0"
+                className="fixed top-0 z-[100] transition-transform duration-300 w-full translate-y-0 bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl"
+                onMouseLeave={() => {
+                    setGroupName(originalGroupName);
+                }}
             >
-                <div className="border-y custom-border">
-                    <div className="justify-between flex bg-[#FAF9F6] px-4 h-[44px]">
-                        <Link
-                            href="/"
-                            aria-label="logo"
-                            className={`${style.nav_btn} min-w-[180px] ${borderClass} ${backgroundClass} flex !justify-start bg-[#FFFFFF10]`}
-                            style={{ backgroundColor: '#FFFFFF10' }}
-                        >
-                            {mode === 'dark' ? (
-                                <Image
-                                    src="/assets/brand/socketWhitesvg.png"
-                                    className="h-[24px] w-auto "
-                                    width={40}
-                                    height={40}
-                                    alt="viaSocket"
-                                />
-                            ) : (
-                                <Image
-                                    src="/assets/brand/logo.svg"
-                                    className="h-[24px] w-auto "
-                                    width={40}
-                                    height={40}
-                                    alt="viaSocket"
-                                />
-                            )}
-                        </Link>
-
-                        <div className="flex">
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/')}`}
-                                href={`/`}
-                            >
-                                Home
-                            </Link>
-                            {router.pathname !== '/' &&
-                                router.pathname !== '/pricing' &&
-                                !router.pathname.startsWith('/automations') &&
-                                !router.pathname.startsWith('/integrations') && (
-                                    <Link
-                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center px-4 !text-accent !font-semibold`}
-                                        href={router.pathname}
-                                    >
-                                        {router.pathname.split('/')[1]?.toLowerCase() === 'mcp'
-                                            ? 'MCP'
-                                            : router.pathname.split('/')[1].charAt(0).toUpperCase() +
-                                              router.pathname.split('/')[1].slice(1).toLowerCase()}
-                                    </Link>
+                <div className="border-gray-300 border-b lg:block hidden">
+                    <div className="justify-end items-center flex px-4 h-[40px]">
+                        <div className="flex justify-center items-center">
+                            {navbarData?.length > 0 &&
+                                [...new Map(navbarData.map((item) => [item.group_name, item])).values()].map(
+                                    (item, index) =>
+                                        item?.is_link ? (
+                                            <Link href={item?.group_link}>
+                                                <div
+                                                    key={index}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${
+                                                        isGroupActive(item.group_name)
+                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                            : ''
+                                                    }`}
+                                                    onMouseEnter={() => {
+                                                        setGroupName(item.group_name);
+                                                    }}
+                                                >
+                                                    {item.group_name}
+                                                </div>
+                                            </Link>
+                                        ) : (
+                                            <div
+                                                key={index}
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${
+                                                    isGroupActive(item.group_name)
+                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                        : ''
+                                                }`}
+                                                onMouseEnter={() => {
+                                                    setGroupName(item.group_name);
+                                                }}
+                                            >
+                                                {item.group_name}
+                                            </div>
+                                        )
                                 )}
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/automations')}`}
-                                href={`/automations`}
+                        </div>
+                        <Link href={'/support'}>
+                            <div
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit pl-2 !h-[32px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
                             >
-                                Automations
-                            </Link>
+                                Support <GoArrowUpRight />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+                <div
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px]`}
+                >
+                    <div className="justify-between items-center flex px-4 h-[48px]">
+                        <div className="flex items-center justify-center">
                             <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden md:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/integrations')}`}
-                                href={`/integrations`}
+                                href="/"
+                                aria-label="logo"
+                                className={`${style.nav_btn} min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
+                                style={{ backgroundColor: 'transparent' }}
                             >
-                                Explore Apps
+                                {mode === 'dark' ? (
+                                    <Image
+                                        src="/assets/brand/socketWhitesvg.png"
+                                        className="h-[24px] w-auto "
+                                        width={40}
+                                        height={40}
+                                        alt="viaSocket"
+                                    />
+                                ) : (
+                                    <Image
+                                        src="/assets/brand/logo.svg"
+                                        className="h-[24px] w-auto "
+                                        width={40}
+                                        height={40}
+                                        alt="viaSocket"
+                                    />
+                                )}
                             </Link>
-                            <Link
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hover-bg-grey-100-text-black hidden sm:flex min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center ${isActive('/pricing')}`}
-                                href={`/pricing`}
-                            >
-                                Pricing
-                            </Link>
+                        </div>
+                        <div className="flex items-center justify-center">
+                            <div className="flex">
+                                {navbarData?.length > 0 &&
+                                    navbarData
+                                        .filter((item) => item.group_name === groupName)
+                                        .map((item, index) => {
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${index === 0 ? 'border-l border-gray-300' : ''} border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                                    href={`${item.link}`}
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            );
+                                        })}
+                            </div>
                             {hasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
@@ -161,25 +238,17 @@ export default function Navbar({ utm, footerData }) {
                                     Go to Panel
                                 </button>
                             ) : (
-                                <>
-                                    <button
-                                        className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden sm:flex hover-bg-grey-100-text-black px-4 sm:min-w-[90px] xl:min-w-[100px] !h-[44px] border custom-border border-t-0 border-b-0 border-r-0 bg-[#FFFFFF10] items-center justify-center`}
-                                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                        rel="nofollow"
-                                    >
-                                        Login
-                                    </button>
-                                    <button
-                                        className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
-                                        onClick={(e) => handleRedirect(e, '/signup?', router)}
-                                    >
-                                        Sign Up
-                                    </button>
-                                </>
+                                <button
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
+                                    onClick={(e) => handleRedirect(e, '/signup?', router)}
+                                >
+                                    Login/Sign Up
+                                </button>
                             )}
                             <div
-                                onMouseEnter={() => setSupportOpen(true)}
-                                className={`${borderClass} hover-bg-grey-100-text-black items-center outline-none bg-[#FFFFFF10] px-4 flex border border-t-0 border-b-0 custom-border`}
+                                onMouseEnter={() => setMenuOpen(true)}
+                                onClick={() => setMenuOpen(true)}
+                                className={`${borderClass} items-center outline-none flex lg:hidden`}
                                 aria-label="Menu"
                             >
                                 <MdMenu size={24} />
@@ -188,8 +257,7 @@ export default function Navbar({ utm, footerData }) {
                     </div>
                 </div>
             </div>
-
-            <Support open={supportOpen} onClose={() => setSupportOpen(false)} footerData={footerData} />
+            <Menubar open={menuOpen} onClose={() => setMenuOpen(false)} navbarData={navbarData} />
         </>
     );
 }

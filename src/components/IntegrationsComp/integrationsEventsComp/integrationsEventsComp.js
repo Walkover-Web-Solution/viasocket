@@ -214,7 +214,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
             ) : (
                 <div className="cont items-start w-full gap-2">
                     <div
-                        className={`flex lg:flex-row flex-col w-full gap-2 ${(!trigger?.length || !actions?.length) && 'lg:flex-row-reverse'}`}
+                        className={`flex lg:flex-row flex-col w-full lg:gap-2 gap-8 ${(!trigger?.length || !actions?.length) && 'lg:flex-row-reverse'}`}
                     >
                         {trigger?.length > 0 ? (
                             <div className="cont gap-2 w-full">
@@ -279,7 +279,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                     </div>
                                     <p className="text-sm">
                                         Action is the task that follows automatically within your {appOneDetails?.name}{' '}
-                                        app integrations.
+                                        integrations.
                                     </p>
                                 </h3>
 

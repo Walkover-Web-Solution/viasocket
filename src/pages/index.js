@@ -3,8 +3,8 @@ import { useState, useCallback } from 'react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import { getFooterData, getIndexTemplateData, getReviewSectionData } from '@/utils/getData';
-import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
+import { getFooterData, getIndexTemplateData, getReviewSectionData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -21,14 +21,25 @@ export const runtime = 'experimental-edge';
 
 // Move fetchApps function to the top level
 async function fetchApps(category) {
-    const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
-    );
-    const rawData = await response.json();
-    return rawData?.data;
+    try {
+        const response = await fetch(
+            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''
+            }`
+        );
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const rawData = await response.json();
+        return rawData?.data;
+    } catch (error) {
+        console.error('Error fetching apps:', error);
+        return [];
+    }
 }
 
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData }) => {
+const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -86,9 +97,9 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/'} />
-            <Navbar footerData={footerData} utm={'/index'} />
+            <Navbar navbarData={navbarData} utm={'/index'} />
             <div
-                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative`}
+                className={`${showTemplates || showVideos || showBlogs ? 'min-h-0 pt-12' : 'min-h-[calc(100vh-150px)] flex flex-col justify-center'} px-4 mx-auto relative global-top-space`}
             >
                 <div className="text-center container">
                     <p className="text-3xl text-black mb-12 relative z-index-1">
@@ -201,7 +212,7 @@ const SecuritySection = ({ securityGridData }) => {
     return (
         <div className="container">
             <div className="border custom-border p-6 md:p-12 border-b-0 bg-[#376F5B] cont gap-8 text-white">
-                <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20">
+                <div className="flex lg:flex-row flex-col justify-between gap-4 lg:gap-20 mr-8">
                     <div className="cont gap-1">
                         <h2 className="h2">viaSocket is the Trusted Choice for Secure Automation</h2>
                         <h3 className="sub__h1">
@@ -209,7 +220,7 @@ const SecuritySection = ({ securityGridData }) => {
                             so you can run workflows with confidence.
                         </h3>
                     </div>
-                    <div className="flex gap-4 mr-12">
+                    <div className="flex gap-4">
                         <Image src="assets/img/aicpa-soc-badge.webp" alt="aicpa soc badge" width={100} height={100} />
                         <Image src="assets/img/iso-certified.webp" alt="iso certified badge" width={100} height={100} />
                     </div>
@@ -239,6 +250,7 @@ export async function getServerSideProps(context) {
     const appCount = await getAppCount(pageUrl);
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     const securityGridData = [
         {
@@ -286,6 +298,7 @@ export async function getServerSideProps(context) {
             appCount: appCount || 0,
             indexTemplateData: indexTemplateData || [],
             reviewData: reviewData || [],
+            navbarData: navbarData || [],
         },
     };
 }

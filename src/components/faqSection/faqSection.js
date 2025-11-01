@@ -23,7 +23,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
                         return (
                             <div
                                 key={index}
-                                className={`collapse collapse-arrow pt-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${!isLast ? "border-b" : ""
+                                className={`collapse collapse-arrow py-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${!isLast ? "border-b" : ""
                                     }`}
                             >
                                 <input
@@ -36,8 +36,8 @@ const FAQSection = ({ faqData = [], faqName }) => {
                                 <div className="collapse-title font-semibold text-xl">
                                     {que}
                                 </div>
-                                <div className="collapse-content pr-10 pb-3">
-                                    <p className="leading-relaxed -mt-2 text-gray-800 md:pr-10">{ans}</p>
+                                <div className="collapse-content pr-10">
+                                    <p className="leading-relaxed text-gray-800 md:pr-10">{ans}</p>
                                     {link && (
                                         <div className="mt-3">
                                             <LinkButton content="Learn More" href={link} />

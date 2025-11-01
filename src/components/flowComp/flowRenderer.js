@@ -64,7 +64,7 @@ function generatePrettyColor(level, siblingIndex) {
 function FlowRenderer({ flowJson, scale = 100 }) {
     return (
         <div
-            className="flex flex-col items-center gap-4 overflow-hidden origin-top h-full transform"
+            className="flex flex-col items-center gap-4 origin-top h-full transform"
             style={{ transform: `scale(${scale / 100})` }}
         >
             <FlowHeader trigger={flowJson?.trigger} />
@@ -153,7 +153,6 @@ function FlowSteps({ block, order, root = 'root' }) {
                                     <Image
                                         alt={`${block[step]?.name || 'Workflow step'} icon`}
                                         src={block[step].iconUrl}
-                                        className="h-6 w-6 border p-1 object-contain"
                                         width={20}
                                         height={20}
                                     />

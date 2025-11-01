@@ -2,31 +2,22 @@ const { de } = require('date-fns/locale');
 import Image from 'next/image';
 
 function IconWrapper({
-    hideBorder = true,
     component = null,
-    size,
     iconUrl = 'https://cdn-icons-png.flaticon.com/512/380/380127.png',
-    className = '',
-    onClick = () => {},
 }) {
     // If no component is provided, use default <Image>
     component = component || (
         <Image
             src={iconUrl}
             alt="Default app icon"
-            onClick={onClick}
-            className={`h-full w-full border p-1 object-contain ${className}`}
+            className="h-full w-full border p-1 object-contain"
             width={30}
             height={30}
         />
     );
 
     return (
-        <div
-            onClick={onClick}
-            className={`flex items-center justify-center ${hideBorder ? '' : 'border border-gray-300'}`}
-            style={{ width: size, height: size }}
-        >
+        <div className="h-8 w-8 flex items-center justify-center" >
             {component}
         </div>
     );

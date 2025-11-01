@@ -9,7 +9,8 @@ const IntegrationSearchApps = ({
     setSearchTerm, 
     onSearchResults, 
     onCategoriesResults,
-    onDebounceValueChange 
+    onDebounceValueChange,
+    app,
 }) => {
     const [debounceValue, setDebounceValue] = useState('');
 
@@ -75,9 +76,10 @@ const IntegrationSearchApps = ({
         search();
     }, [debounceValue, onSearchResults, onCategoriesResults, onDebounceValueChange]);
 
+
     return (
         <>
-            <label className="input border min-w-[300px] max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
+            <label className="input border w-full sm:w-auto md:min-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                 <MdSearch fontSize={20} />
                 <input
                     value={searchTerm}
@@ -86,8 +88,7 @@ const IntegrationSearchApps = ({
                     }}
                     type="text"
                     className={`${style.input} grow`}
-                    placeholder="Search your favorite tools "
-                />
+                    placeholder={`Search any app to connect with ${app?.name || 'apps'}`} />
             </label>
         </>
     );

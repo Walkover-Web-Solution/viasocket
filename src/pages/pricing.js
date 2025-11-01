@@ -3,8 +3,8 @@ import React from 'react';
 import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { getFooterData, getPricingFeatureData } from '@/utils/getData';
-import { FOOTER_FIELDS, PRICINGFEATURE_FIELDS, COUNTRIES_FIELDS } from '@/const/fields';
+import { getFooterData, getPricingFeatureData, getNavbarData } from '@/utils/getData';
+import { FOOTER_FIELDS, PRICINGFEATURE_FIELDS, COUNTRIES_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import Link from 'next/link';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -15,12 +15,12 @@ import { GiCheckMark } from 'react-icons/gi';
 
 export const runtime = 'experimental-edge';
 
-export default function pricing({ footerData, faqData, metaData, features, countries, appCount }) {
+export default function pricing({ footerData, faqData, metaData, features, countries, appCount, navbarData }) {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <Navbar footerData={footerData} utm={'/pricing'} />
-            <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12">
+            <Navbar navbarData={navbarData} utm={'/pricing'} />
+            <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <div className="flex flex-col items-center">
                         <h1 className="text-6xl">
@@ -120,6 +120,7 @@ export async function getServerSideProps(context) {
     const features = await getPricingFeatureData(PRICINGFEATURE_FIELDS, '', pageUrl);
     const countries = await getCountries(COUNTRIES_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     return {
         props: {
@@ -129,6 +130,7 @@ export async function getServerSideProps(context) {
             features: features || [],
             countries: countries || [],
             appCount: appCount || 0,
+            navbarData: navbarData || [],
         },
     };
 }

@@ -3,8 +3,8 @@ import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS } from '@/const/fields';
-import { getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
+import { getFooterData, getNavbarData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -26,7 +26,7 @@ export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps }) => {
+const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps, navbarData }) => {
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -115,8 +115,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     };
 
     // Choose which list to display
-    // If search bar is showing template results, prefer those. Otherwise fall back to page filters.
-    const templatesFromSearchActive = showSearchTemplates && (filteredSearchTemplates.length > 0 || hasSearchResults);
+    // If search bar is showing template results, prefer those. Otherwise show no templates.
+    const templatesFromSearchActive = showSearchTemplates;
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
         : remainingTemplates.length > 0
@@ -127,9 +127,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/automations'} />
-            <Navbar footerData={footerData} utm={'/automations'} />
+            <Navbar navbarData={navbarData} utm={'/automations'} />
 
-            <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background">
+            <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background global-top-space">
                 <div className="container">
                     <h1 className="h1 text-center">
                         <span className="text-accent">Search</span> ready to use automations
@@ -227,66 +227,69 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             ))}
                         </div>
                     ) : templatesFromSearchActive ? (
-                        <>
-                            {(selectedAppsFromSearch.length > 0 ||
+                        displayTemplates.length > 0 ? (
+                            (selectedAppsFromSearch.length > 0 ||
                                 selectedDepartmentsFromSearch.length > 0 ||
                                 selectedIndustriesFromSearch.length > 0) && (
-                                <h2 className="h2 my-8 text-left">
-                                    Top{' '}
-                                    {selectedAppsFromSearch.map((app, index) => (
-                                        <span key={app.appslugname}>
-                                            {index > 0 && ', '}
-                                            <span>{app.name}</span>
-                                        </span>
-                                    ))}{' '}
-                                    ready to use templates {selectedDepartmentsFromSearch.length > 0 && 'for '}
-                                    {selectedDepartmentsFromSearch.map((department, index) => (
-                                        <span key={department}>
-                                            {index > 0 && ', '}
-                                            <span>{department}</span>
-                                        </span>
-                                    ))}{' '}
-                                    {selectedIndustriesFromSearch.length > 0 && 'in '}
-                                    {selectedIndustriesFromSearch.map((industry, index) => (
-                                        <span key={industry}>
-                                            {index > 0 && ', '}
-                                            <span>{industry}</span>
-                                        </span>
-                                    ))}
-                                </h2>
-                            )}
-                            {displayTemplates.length > 0 ? (
                                 <>
+                                    <h2 className="h2 my-8 text-left">
+                                        Top{' '}
+                                        {selectedAppsFromSearch.map((app, index) => (
+                                            <span key={app.appslugname}>
+                                                {index > 0 && ', '}
+                                                <span>{app.name}</span>
+                                            </span>
+                                        ))}{' '}
+                                        ready to use templates {selectedDepartmentsFromSearch.length > 0 && 'for '}
+                                        {selectedDepartmentsFromSearch.map((department, index) => (
+                                            <span key={department}>
+                                                {index > 0 && ', '}
+                                                <span>{department}</span>
+                                            </span>
+                                        ))}{' '}
+                                        {selectedIndustriesFromSearch.length > 0 && 'in '}
+                                        {selectedIndustriesFromSearch.map((industry, index) => (
+                                            <span key={industry}>
+                                                {index > 0 && ', '}
+                                                <span>{industry}</span>
+                                            </span>
+                                        ))}
+                                    </h2>
                                     <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                                         {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />
                                         ))}
                                     </div>
                                 </>
-                            ) : (
-                                <div className="cont gap-4">
-                                    <p className="h3 mt-20">No templates found for current selection.</p>
-                                </div>
-                            )}
-                        </>
+                            )
+                        ) : (
+                            <h2 className="h2 my-8 text-left">
+                                No matching templates found for{' '}
+                                {selectedAppsFromSearch.map((app, index) => (
+                                    <span key={app.appslugname}>
+                                        {index > 0 && ', '}
+                                        <span>{app.name}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedDepartmentsFromSearch.map((department, index) => (
+                                    <span key={department}>
+                                        {index > 0 && ', '}
+                                        <span>{department}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedIndustriesFromSearch.map((industry, index) => (
+                                    <span key={industry}>
+                                        {index > 0 && ', '}
+                                        <span>{industry}</span>
+                                    </span>
+                                ))}
+                            </h2>
+                        )
                     ) : hasResults ? (
                         <>
-                            {/* Newly Published Section */}
-                            {/* {latestTemplates.length > 0 && (
-                                <div className="mb-10">
-                                    <h2 className="h2 mb-4">Newly Published</h2>
-                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                                        {latestTemplates.map((template, index) => (
-                                            <TemplateCard key={template.id} index={index} template={template} />
-                                        ))}
-                                    </div>
-                                </div>
-                            )} */}
-
                             {/* Rest of the Templates */}
                             {displayTemplates.length > 0 && (
                                 <>
-                                    {/* <h2 className="h2 mb-4 mt-3">All Templates</h2> */}
                                     <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                                         {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                             <TemplateCard key={template.id} index={index} template={template} />
@@ -350,6 +353,7 @@ export async function getServerSideProps(context) {
     const faqData = await getFaqData('/automations', pageUrl);
     const blogTags = 'templates';
     const blogData = await getBlogData({ tag1: blogTags }, pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     const validStatuses = ['verified_by_ai', 'verified'];
 
@@ -410,6 +414,7 @@ export async function getServerSideProps(context) {
             blogData: blogData || [],
             categories: categories || [],
             apps: apps || [],
+            navbarData: navbarData || [],
         },
     };
 }

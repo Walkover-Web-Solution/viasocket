@@ -2,8 +2,8 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Navbar from '@/components/navbar/navbar';
-import { FOOTER_FIELDS } from '@/const/fields';
-import { getFooterData } from '@/utils/getData';
+import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
+import { getFooterData,getNavbarData } from '@/utils/getData';
 import Link from 'next/link';
 import React from 'react';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
@@ -100,13 +100,14 @@ const automations = ({
     automationExamples,
     gettingStartedSteps,
     workflowAutomationTools,
+    navbarData,
 }) => {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/workflow-automations'} />
-            <Navbar footerData={footerData} utm={'/workflow-automations'} />
+            <Navbar navbarData={navbarData} utm={'/workflow-automations'} />
 
-            <div className="container cont gap-12">
+            <div className="container cont gap-12 global-top-space">
                 <section className="py-12">
                     <h1 className="h1">
                         Your Business, Automated
@@ -124,7 +125,6 @@ const automations = ({
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
                     <div className="flex md:flex-row flex-col gap-8">
                         <div className="w-full md:w-3/5 cont gap-8 justify-between">
-                            {/* <div> */}
                             <div className="flex flex-col gap-2">
                                 <h2 className="h2 font-bold">What is workflow automation?</h2>
                                 <p>
@@ -187,9 +187,9 @@ const automations = ({
                         {automationSteps.map((step, index) => (
                             <div
                                 key={index}
-                                className="p-8 w-full border-r border-b custom-border bg-white flex items-center gap-8"
+                                className="p-8 w-full border-r border-b custom-border bg-white flex flex-col items-start sm:flex-row sm:items-center gap-8"
                             >
-                                <div className="min-w-12 min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
+                                <div className="min-w-8 min-h-8 sm:min-w-12 sm:min-h-12 bg-accent border custom-border text-white flex items-center justify-center text-sm sm:text-xl font-bold">
                                     {index + 1}
                                 </div>
                                 <div className="automation-work-step">
@@ -332,6 +332,7 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/workflow-automations', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/workflow-automations', pageUrl);
+    const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
 
     const automationSteps = [
         {
@@ -480,6 +481,7 @@ export async function getServerSideProps(context) {
             automationExamples: automationExamples,
             gettingStartedSteps: gettingStartedSteps,
             workflowAutomationTools: workflowAutomationTools,
+            navbarData: navbarData || [],
         },
     };
 }

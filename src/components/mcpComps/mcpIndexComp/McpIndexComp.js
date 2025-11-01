@@ -13,7 +13,6 @@ import { BsStars } from 'react-icons/bs';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import style from './McpIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
-import McpSwitchComp from '../mcpSwitchComp/McpSwitchComp';
 import Script from 'next/script';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
@@ -39,6 +38,7 @@ export default function McpIndexComp({
     keyPointData,
     metaData,
     appCount,
+    navbarData,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -134,11 +134,9 @@ export default function McpIndexComp({
                     `}
                 </Script>
 
-                <Navbar footerData={footerData} utm={'/index'} />
+                <Navbar navbarData={navbarData} utm={'/index'} />
 
-                <div className="cont gap-8">
-                    <McpSwitchComp />
-
+                <div className="cont gap-8 global-top-space pt-12">
                     <div className="container cont gap-2">
                         <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4">
                             <div className="cont gap-4 w-full text-left">

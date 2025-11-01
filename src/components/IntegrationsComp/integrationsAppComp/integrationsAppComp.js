@@ -2,10 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
-import { APPERPAGE } from '@/const/integrations';
 import createURL from '@/utils/createURL';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function IntegrationsAppComp({
     pageInfo,
@@ -16,38 +14,13 @@ export default function IntegrationsAppComp({
     searchTerm,
     searchedCategories,
 }) {
-    const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
 
-    const goToNext = () => {
-        if (integrationsInfo?.appone) {
-            const url = `/integrations/${integrationsInfo?.appone}/page/${Number(integrationsInfo?.page) + 1}`;
-            return url;
-        } else {
-            if (integrationsInfo?.category && !integrationsInfo?.page) {
-                const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
-                return url;
-            } else {
-                const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) + 1}`;
-                return url;
-            }
-        }
-    };
-
-    const goToPrev = () => {
-        if (integrationsInfo?.category && !integrationsInfo?.page) {
-            const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
-            return url;
-        } else {
-            const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
-            return url;
-        }
-    };
     return (
         <>
-            <div className="container gap-4 flex flex-col">
+            <div className="bg-white flex flex-col border-t custom-border">
                 <div className="flex">
                     {!integrationsInfo?.appone && (
-                        <div className=" border custom-border border-t-0 lg:block hidden bg-white">
+                        <div className="border custom-border border-t-0 lg:block hidden bg-white overflow-hidden">
                             <div className="cont max-w-[252px] min-w-[252px] ">
                                 {searchTerm ? (
                                     searchedCategories ? (
@@ -63,7 +36,7 @@ export default function IntegrationsAppComp({
                                             );
                                         })
                                     ) : (
-                                        <span className="p-8 text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 ">
+                                        <span className="p-4 sm:p-8 text-lg sm:text-2xl lg:text-3xl w-full col-span-3 border custom-border border-l-0 border-t-0 break-words">
                                             No Apps found for Searched name{' '}
                                         </span>
                                     )
@@ -109,7 +82,7 @@ export default function IntegrationsAppComp({
 
                         <div
                             className="grid grid-cols-1 md:grid-cols-2 w-full lg:grid-cols-3 xl:grid-cols-4"
-                            style={{ gridAutoRows: '75px' }}
+                            style={{ gridAutoRows: (searchTerm && !apps?.length) ? 'minmax(80px, auto)' : '75px' }}
                         >
                             {searchTerm ? (
                                 apps?.length > 0 ? (
@@ -119,7 +92,7 @@ export default function IntegrationsAppComp({
                                             href={createURL(
                                                 `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                             )}
-                                            className={`${style.app} custom-styles justify-center bg-white border-color`}
+                                            className={`${style.app} bg-white border custom-border flex justify-center`}
                                         >
                                             <div className="flex items-center gap-2">
                                                 <Image
@@ -127,14 +100,15 @@ export default function IntegrationsAppComp({
                                                     width={40}
                                                     height={40}
                                                     alt={app?.name}
+                                                    className="border h-10 p-1"
                                                 />
 
-                                                <h2 className="font-bold">{app?.name}</h2>
+                                                <h2 className="text-sm sm:text-base break-words">{app?.name}</h2>
                                             </div>
                                         </Link>
                                     ))
                                 ) : (
-                                    <div className="col-span-full">
+                                    <div className="col-span-full row-span-1 md:row-span-2 min-h-[200px] md:min-h-[150px]">
                                         <RequestIntegrationPopupOpener
                                             showType="searchView"
                                             className="md:border-t-0 md:border-l-0"
@@ -153,7 +127,7 @@ export default function IntegrationsAppComp({
                                                     href={createURL(
                                                         `/integrations/${integrationsInfo?.appone}/${app?.appslugname}`
                                                     )}
-                                                    className={`${style.app} custom-styles bg-white flex border-color justify-center`}
+                                                    className={`${style.app} bg-white border custom-border flex justify-center`}
                                                 >
                                                     <div className="flex items-center gap-2">
                                                         <Image
@@ -164,9 +138,8 @@ export default function IntegrationsAppComp({
                                                             className="border h-10 p-1"
                                                         />
 
-                                                        <h2>{app?.name}</h2>
+                                                        <h2 className="text-sm sm:text-base break-words">{app?.name}</h2>
                                                     </div>
-                                                    {/* <p className={style?.app__des}>{app?.description}</p> */}
                                                 </Link>
                                             );
                                         }
@@ -175,20 +148,6 @@ export default function IntegrationsAppComp({
                         </div>
                     </div>
                 </div>
-                {!searchTerm && (
-                    <div className="flex justify-end items-end gap-2 w-full">
-                        {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
-                                <GrFormPreviousLink size={20} /> Prev
-                            </Link>
-                        )}
-                        {showNext && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
-                                Next <GrFormNextLink size={20} />
-                            </Link>
-                        )}
-                    </div>
-                )}
             </div>
         </>
     );

@@ -33,6 +33,7 @@ export default function McpAppComp({
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
+    navbarData,
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -108,21 +109,18 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-8">
-                    <Navbar footerData={footerData} utm={'/mcp'} />
+                    <Navbar navbarData={navbarData} utm={'/mcp'} />
 
-                    <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-8 global-top-space pt-12">
                         <div className="container cont cont__gap">
                             <div className="flex items-center gap-2 text-lg">
                                 <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
                                     MCP{' '}
                                 </Link>
                                 <MdChevronRight fontSize={22} />
-                                <Link
-                                    href={createURL(`/mcp/${appOneDetails?.appslugname}`)}
-                                    className="flex items-center gap-0 underline capitalize"
-                                >
+                                <div className="flex items-center gap-0 capitalize">
                                     {appOneDetails?.name}
-                                </Link>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -259,7 +257,7 @@ export default function McpAppComp({
                 )}
 
                 <div className="container">
-                    <div className="cont cont__py gap-12 px-24 h-fit border  bg-black text-white">
+                    <div className="cont sm:cont__py gap-12 p-6 md:p-12  h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
                             <h2 className="h2">
                                 Connect <span className='capitalize'>{appOneDetails?.name}</span> to Any AI Assistant in 3 Easy Steps
@@ -328,9 +326,6 @@ export default function McpAppComp({
 
                                                 <h2>{app?.name}</h2>
                                             </div>
-                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                {app?.description}
-                                            </p> */}
                                         </Link>
                                     );
                                 })
@@ -362,9 +357,6 @@ export default function McpAppComp({
 
                                                 <h2>{app?.name}</h2>
                                             </div>
-                                            {/* <p className="overflow-hidden text-sm line-clamp-3 after:content-['...']">
-                                                {app?.description}
-                                            </p> */}
                                         </Link>
                                     );
                                 })
@@ -398,7 +390,7 @@ export default function McpAppComp({
                 </div>
 
                 <div className="container">
-                    <div className="cont gap-12 py-20 px-12 bg-black text-white">
+                    <div className="cont gap-12 p-6 md:p-12 bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center">
                             <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
                             <p className="sub__h1">
@@ -407,7 +399,7 @@ export default function McpAppComp({
                             </p>
                         </div>
                         <div className="flex flex-col md:flex-row gap-8 ">
-                            <div className="w-full md:w-1/2 py-20 px-8  flex flex-col justify-between gap-6 border border-white">
+                            <div className="w-full md:w-1/2 p-6 md:p-12 flex flex-col justify-between gap-6 border border-white">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">Free for Lifetime</h2>
                                     <h3 className="text-xl">
@@ -422,12 +414,12 @@ export default function McpAppComp({
                                     </h3>
                                 </div>
                                 <Link href="/signup?utm_source=mcp">
-                                    <button className="btn btn-accent">
+                                    <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                                         Get Your MCP URL for Free
                                     </button>
                                 </Link>
                             </div>
-                            <div className="w-full md:w-1/2 py-20 px-8 cont justify-between gap-6 border border-white">
+                            <div className="w-full md:w-1/2 p-6 md:p-12 cont justify-between gap-6 border border-white">
                                 <div className="cont gap-4">
                                     <h2 className="text-4xl font-bold">For Enterprises</h2>
                                     <h3 className="text-xl">
@@ -437,7 +429,7 @@ export default function McpAppComp({
                                 </div>
                                 <div className="flex flex-col sm:flex-row md:flex-col lg:flex-row gap-4">
                                     <Link href="/support">
-                                        <button className="btn btn-accent">
+                                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                                             Self-Hosted MCP
                                         </button>
                                     </Link>
@@ -458,7 +450,6 @@ export default function McpAppComp({
                             width={600}
                             height={600}
                         />
-                        {/* </div> */}
                         <div className="cont gap-4 justify-center w-full lg:w-1/2">
                             {mcpAIIntegrationData.map((steps, index) => (
                                 <div key={index} className="flex items-center gap-4">
