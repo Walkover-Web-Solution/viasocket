@@ -1,4 +1,3 @@
-
 import { CgArrowTopRight } from 'react-icons/cg';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
@@ -337,8 +336,20 @@ export default function AutomationSuggestions() {
                                                             )}&integrations=${integrations}&action&utm_source=${utm}`}
                                                         className="px-4 py-6 flex items-center gap-4 border-b custom-border hover-bg-grey-100-text-black flex-shrink-0"
                                                     >
-                                                        <Image src={triggerIcon} alt={`${triggerName} Trigger icon`} className="w-6 h-6" width={24} height={24} />
-                                                        <Image src={actionIcon} alt={`${actionName} Action icon`} className="w-6 h-6" width={24} height={24} />
+                                                        <Image
+                                                            src={triggerIcon}
+                                                            alt={`${triggerName} Trigger icon`}
+                                                            className="w-6 h-6"
+                                                            width={24}
+                                                            height={24}
+                                                        />
+                                                        <Image
+                                                            src={actionIcon}
+                                                            alt={`${actionName} Action icon`}
+                                                            className="w-6 h-6"
+                                                            width={24}
+                                                            height={24}
+                                                        />
                                                         <div className="flex gap-4 items-center justify-between w-full">
                                                             <p className="text-lg flex items-center gap-2">
                                                                 {/* {triggerName} → {actionName} */}
@@ -383,7 +394,12 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
             onClick={(e) => e.stopPropagation()}
             onChange={() => handleSelect(app)}
         />
-        <Image src={app?.iconurl || 'https://placehold.co/36x36'} width={16} height={16} alt={`${app?.name} app icon`} />
+        <Image
+            src={app?.iconurl || 'https://placehold.co/36x36'}
+            width={16}
+            height={16}
+            alt={`${app?.name} app icon`}
+        />
         <span>{app?.name}</span>
     </div>
 );

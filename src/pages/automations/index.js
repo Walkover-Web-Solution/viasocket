@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { FOOTER_FIELDS,NAVBAR_FIELDS } from '@/const/fields';
+import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getFooterData, getNavbarData } from '@/utils/getData';
 import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -119,7 +119,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const templatesFromSearchActive = showSearchTemplates;
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
-        : (remainingTemplates.length > 0 ? remainingTemplates : filteredTemplates);
+        : remainingTemplates.length > 0
+          ? remainingTemplates
+          : filteredTemplates;
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -129,7 +131,9 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
             <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background global-top-space">
                 <div className="container">
-                    <h1 className='h1 text-center'><span className='text-accent'>Search</span> ready to use automations</h1>
+                    <h1 className="h1 text-center">
+                        <span className="text-accent">Search</span> ready to use automations
+                    </h1>
                     <SearchInputHome
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
@@ -171,8 +175,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         appSlug === 'webhook'
                                             ? 'Webhook'
                                             : appSlug === 'cron'
-                                                ? 'Cron'
-                                                : appData?.pluginname || appSlug;
+                                              ? 'Cron'
+                                              : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -222,9 +226,11 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                 <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
                             ))}
                         </div>
-                    ) : (templatesFromSearchActive ? (
-                        displayTemplates.length > 0 ?
-                            (selectedAppsFromSearch.length > 0 || selectedDepartmentsFromSearch.length > 0 || selectedIndustriesFromSearch.length > 0) && (
+                    ) : templatesFromSearchActive ? (
+                        displayTemplates.length > 0 ? (
+                            (selectedAppsFromSearch.length > 0 ||
+                                selectedDepartmentsFromSearch.length > 0 ||
+                                selectedIndustriesFromSearch.length > 0) && (
                                 <>
                                     <h2 className="h2 my-8 text-left">
                                         Top{' '}
@@ -256,29 +262,29 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                     </div>
                                 </>
                             )
-                            : (
-                                <h2 className="h2 my-8 text-left">
-                                    No matching templates found for {' '}
-                                    {selectedAppsFromSearch.map((app, index) => (
-                                        <span key={app.appslugname}>
-                                            {index > 0 && ', '}
-                                            <span>{app.name}</span>
-                                        </span>
-                                    ))}{' '}
-                                    {selectedDepartmentsFromSearch.map((department, index) => (
-                                        <span key={department}>
-                                            {index > 0 && ', '}
-                                            <span>{department}</span>
-                                        </span>
-                                    ))}{' '}
-                                    {selectedIndustriesFromSearch.map((industry, index) => (
-                                        <span key={industry}>
-                                            {index > 0 && ', '}
-                                            <span>{industry}</span>
-                                        </span>
-                                    ))}
-                                </h2>
-                            )
+                        ) : (
+                            <h2 className="h2 my-8 text-left">
+                                No matching templates found for{' '}
+                                {selectedAppsFromSearch.map((app, index) => (
+                                    <span key={app.appslugname}>
+                                        {index > 0 && ', '}
+                                        <span>{app.name}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedDepartmentsFromSearch.map((department, index) => (
+                                    <span key={department}>
+                                        {index > 0 && ', '}
+                                        <span>{department}</span>
+                                    </span>
+                                ))}{' '}
+                                {selectedIndustriesFromSearch.map((industry, index) => (
+                                    <span key={industry}>
+                                        {index > 0 && ', '}
+                                        <span>{industry}</span>
+                                    </span>
+                                ))}
+                            </h2>
+                        )
                     ) : hasResults ? (
                         <>
                             {/* Rest of the Templates */}
@@ -312,7 +318,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             </p>
                             <AutomationSuggestions />
                         </div>
-                    ))}
+                    )}
                 </div>
 
                 <div className="cont gap-12 md:gap-16 lg:gap-20">
@@ -351,9 +357,7 @@ export async function getServerSideProps(context) {
 
     const validStatuses = ['verified_by_ai', 'verified'];
 
-    const templateData = (templates).filter(
-        t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
-    )
+    const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
 
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
 

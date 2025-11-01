@@ -6,13 +6,14 @@ import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
-import { GoArrowUpRight } from "react-icons/go";
+import { GoArrowUpRight } from 'react-icons/go';
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
+    const [hasToken, setHasToken] = useState(false);
 
     let mode = 'light';
     let borderClass;
@@ -97,9 +98,7 @@ export default function Navbar({ utm, navbarData }) {
         const current = normalizePath(router.asPath);
 
         // Find the first group (by navbarData order) that matches current route
-        const groupsInOrder = [...new Map(navbarData.map((i) => [i.group_name, i])).values()].map(
-            (i) => i.group_name
-        );
+        const groupsInOrder = [...new Map(navbarData.map((i) => [i.group_name, i])).values()].map((i) => i.group_name);
 
         let matchedGroup = '';
         for (const g of groupsInOrder) {
@@ -138,36 +137,41 @@ export default function Navbar({ utm, navbarData }) {
                 <div className="border-gray-300 border-b lg:block hidden">
                     <div className="justify-end items-center flex px-4 h-[40px]">
                         <div className="flex justify-center items-center">
-                            {navbarData?.length > 0 && (
-                                [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
-                                    item?.is_link ? (
-                                        <Link href={item?.group_link}>
+                            {navbarData?.length > 0 &&
+                                [...new Map(navbarData.map((item) => [item.group_name, item])).values()].map(
+                                    (item, index) =>
+                                        item?.is_link ? (
+                                            <Link href={item?.group_link}>
+                                                <div
+                                                    key={index}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${
+                                                        isGroupActive(item.group_name)
+                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                            : ''
+                                                    }`}
+                                                    onMouseEnter={() => {
+                                                        setGroupName(item.group_name);
+                                                    }}
+                                                >
+                                                    {item.group_name}
+                                                </div>
+                                            </Link>
+                                        ) : (
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md' : ''
-                                                    }`}
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${
+                                                    isGroupActive(item.group_name)
+                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                        : ''
+                                                }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);
                                                 }}
                                             >
                                                 {item.group_name}
                                             </div>
-                                        </Link>
-                                    ) : (
-                                        <div
-                                            key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md' : ''
-                                                }`}
-                                            onMouseEnter={() => {
-                                                setGroupName(item.group_name);
-                                            }}
-                                        >
-                                            {item.group_name}
-                                        </div>
-                                    )
-                                ))
-                            )}
-
+                                        )
+                                )}
                         </div>
                         <Link href={'/support'}>
                             <div
@@ -210,26 +214,37 @@ export default function Navbar({ utm, navbarData }) {
                         </div>
                         <div className="flex items-center justify-center">
                             <div className="flex">
-                                {navbarData?.length > 0 && (
-                                    navbarData.filter((item) => item.group_name === groupName).map((item, index) => {
-                                        return (
-                                            <Link
-                                                key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${index === 0 ? 'border-l border-gray-300' : ''} border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
-                                                href={`${item.link}`}
-                                            >
-                                                {item.name}
-                                            </Link>
-                                        )
-                                    })
-                                )}
+                                {navbarData?.length > 0 &&
+                                    navbarData
+                                        .filter((item) => item.group_name === groupName)
+                                        .map((item, index) => {
+                                            return (
+                                                <Link
+                                                    key={index}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${index === 0 ? 'border-l border-gray-300' : ''} border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                                    href={`${item.link}`}
+                                                >
+                                                    {item.name}
+                                                </Link>
+                                            );
+                                        })}
                             </div>
-                            <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
-                                onClick={(e) => handleRedirect(e, '/signup?', router)}
-                            >
-                                Login/Sign Up
-                            </button>
+                            {hasToken ? (
+                                <button
+                                    className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
+                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                    rel="nofollow"
+                                >
+                                    Go to Panel
+                                </button>
+                            ) : (
+                                <button
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
+                                    onClick={(e) => handleRedirect(e, '/signup?', router)}
+                                >
+                                    Login/Sign Up
+                                </button>
+                            )}
                             <div
                                 onMouseEnter={() => setMenuOpen(true)}
                                 onClick={() => setMenuOpen(true)}
