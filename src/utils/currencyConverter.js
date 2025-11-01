@@ -1,10 +1,9 @@
+import scriptRunner from './scriptRunner';
+
 export async function convertCurrency(countryCode) {
   try {
-    const response = await fetch(`https://flow.sokt.io/func/scriSlHY6j9j?country_code=${countryCode}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
+    const data = await scriptRunner('CONVERT_CURRENCY', { country_code: countryCode }, 'GET');
+    
     if (data && data[0] && data[0].pricing && data[0].one_time_price) {
       const basePricing = data[0].pricing;
       const oneTimePrice = data[0].one_time_price;

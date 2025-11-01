@@ -8,6 +8,7 @@ import Footer from '@/components/footer/footer';
 import { getFooterData } from '@/utils/getData';
 import { FOOTER_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
+import scriptRunner from '@/utils/scriptRunner';
 import { FaHeadset } from 'react-icons/fa';
 import { IoIosPeople } from 'react-icons/io';
 import { FaAnchor } from 'react-icons/fa';
@@ -75,12 +76,8 @@ export default function Support({ footerData, metaData, testimonials }) {
         setIsSend(true);
 
         try {
-            const response = await fetch(`https://flow.sokt.io/func/scrir501xRzP`, {
-                method: 'POST',
-                headers: {},
-                body: JSON.stringify(formData),
-            });
-            if (response.ok) {
+            const response = await scriptRunner('SUPPORT_REQUEST', formData, 'POST');
+            if (response) {
                 setIsSubmit(true);
                 setIsSend(false);
             } else {

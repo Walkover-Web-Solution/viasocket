@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import scriptRunner from '@/utils/scriptRunner';
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -77,7 +78,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         window.signals.identify({
             email: formData.userEmail,
         });
-
+        console.log("In the form ");
         const formDataToSend = formData;
         const { plug, ...cleanedPayload } = formDataToSend;
         cleanedPayload.userNeed = `New ${type || 'App'}`;
@@ -85,16 +86,10 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
 
         try {
             setIsLoading(true);
-            const pluginResponse = await fetch('https://flow.sokt.io/func/scriPIvL7pBP', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-
-                body: JSON.stringify(cleanedPayload),
-            });
-
-            const pluginData = await pluginResponse.json();
+            console.log("hello ji hello ");
+            
+            const pluginData = await scriptRunner('REQUEST_PLUGIN', cleanedPayload, 'POST');
+console.log(pluginData,"dafsdfasdf");
 
             if (pluginData?.data?.success) {
                 handleClose();

@@ -1,9 +1,8 @@
-import axios from 'axios';
+import scriptRunner from './scriptRunner';
 
 export default async function getPricingData(countryCode) {
     try {
-        const response = await axios.post(`https://flow.sokt.io/func/scri9yYiEIJq?country_code=${countryCode}`);
-        const responseData = await response?.data;
+        const responseData = await scriptRunner('GET_PRICING_DATA', { country_code: countryCode }, 'POST');
         return responseData;
     } catch (error) {
         console.error('Error fetching combos:', error);

@@ -7,7 +7,7 @@ import { getVideoData } from '@/utils/getVideoData';
 import { getBlogData } from '@/utils/getBlogData';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
-import axios from 'axios';
+import scriptRunner from '@/utils/scriptRunner';
 
 const SearchInputHome = ({
     onTemplatesChange,
@@ -605,8 +605,15 @@ const SearchInputHome = ({
                 params.append('categories', selectedIndustries.join(','));
             }
 
-            const response = await axios.post(`https://flow.sokt.io/func/scrifJcjUubA?${params.toString()}`, {});
-            const responseData = await response?.data;
+            const payload = {};
+            if (selectedDepartments.length > 0) {
+                payload.departments = selectedDepartments.join(',');
+            }
+            if (selectedIndustries.length > 0) {
+                payload.categories = selectedIndustries.join(',');
+            }
+            
+            const responseData = await scriptRunner('AI_SEARCH', payload, 'POST');
 
             if (responseData) {
                 setAiResponse(responseData);
