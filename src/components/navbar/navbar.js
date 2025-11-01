@@ -136,7 +136,7 @@ export default function Navbar({ utm, navbarData }) {
                 }}
             >
                 <div className="border-gray-300 border-b lg:block hidden">
-                    <div className="justify-end items-center flex px-4 h-[32px]">
+                    <div className="justify-end items-center flex px-4 h-[40px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && (
                                 [...new Map(navbarData.map(item => [item.group_name, item])).values()].map((item, index) => (
@@ -144,7 +144,7 @@ export default function Navbar({ utm, navbarData }) {
                                         <Link href={item?.group_link}>
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[32px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md' : ''
                                                     }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);
@@ -156,7 +156,7 @@ export default function Navbar({ utm, navbarData }) {
                                     ) : (
                                         <div
                                             key={index}
-                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[32px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-4px_0_0_#A8200D] !shadow-accent' : ''
+                                            className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name) ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md' : ''
                                                 }`}
                                             onMouseEnter={() => {
                                                 setGroupName(item.group_name);
@@ -179,9 +179,9 @@ export default function Navbar({ utm, navbarData }) {
                     </div>
                 </div>
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[54px]`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px]`}
                 >
-                    <div className="justify-between items-center flex px-4 h-[54px]">
+                    <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
                             <Link
                                 href="/"
@@ -225,7 +225,7 @@ export default function Navbar({ utm, navbarData }) {
                                 )}
                             </div>
                             <button
-                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent border border-black h-full !text-xs text-nowrap hover:bg-black !h-[32px]`}
+                                className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
                                 onClick={(e) => handleRedirect(e, '/signup?', router)}
                             >
                                 Login/Sign Up
