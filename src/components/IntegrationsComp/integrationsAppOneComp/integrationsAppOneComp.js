@@ -192,7 +192,7 @@ export default function IntegrationsAppOneComp({
                         </div>
                     )}
                 </div>
-                <div className="dotted-background py-8">
+                <div className="py-8">
                     <div className="container flex flex-col gap-16">
                         <div className="flex flex-col gap-8">
                             {combosData?.combinations?.length > 0 ? (

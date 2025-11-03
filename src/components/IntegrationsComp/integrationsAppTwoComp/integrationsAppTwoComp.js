@@ -356,7 +356,7 @@ export default function IntegrationsAppTwoComp({
                         </div>
                     </div>
                 </div>
-                <div className="dotted-background">
+                <div>
                     <div className="container py-8 flex flex-col gap-16">
                         {/* Combinations Section */}
                         {combosData?.combinations?.length > 0 ? (
@@ -441,8 +441,8 @@ export default function IntegrationsAppTwoComp({
                                         <IntegrationsBetaComp appOneDetails={appOneDetails} />
                                     )}
 
-                                {((!combosData?.combinations?.length && appOneDetails?.events?.length) ||
-                                    (!combosData?.combinations?.length && appTwoDetails?.events?.length)) && (
+                                {((!combosData?.combinations?.length && appOneDetails?.events?.length > 0) ||
+                                    (!combosData?.combinations?.length && appTwoDetails?.events?.length > 0)) && (
                                         <div className="cont gap-6">
                                             <div className="cont gap-2">
                                                 <h2 className="h2">
