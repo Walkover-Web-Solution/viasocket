@@ -356,118 +356,116 @@ export default function IntegrationsAppTwoComp({
                         </div>
                     </div>
                 </div>
-                <div>
-                    <div className="container py-8 flex flex-col gap-16">
-                        {/* Combinations Section */}
-                        {combosData?.combinations?.length > 0 ? (
-                            <div className="flex flex-col gap-6">
-                                <h2 className="h2">Use the Built-in Integrations</h2>
+                <div className="container py-8 flex flex-col gap-16">
+                    {/* Combinations Section */}
+                    {combosData?.combinations?.length > 0 ? (
+                        <div className="flex flex-col gap-6">
+                            <h2 className="h2">Use the Built-in Integrations</h2>
 
-                                <div
-                                    className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''
-                                        }`}
-                                >
-                                    {combosData?.combinations
-                                        ?.filter(
-                                            (combo) =>
-                                                combo?.description &&
-                                                !/^(List|Get)\b/i.test(combo.description.trim())
-                                        )
-                                        ?.slice(0, visibleCombos)
-                                        ?.map((combo, index) => {
-                                            const isSingle = combosData?.combinations?.length === 1;
-                                            const integrations =
-                                                combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                                ',' +
-                                                combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+                            <div
+                                className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''
+                                    }`}
+                            >
+                                {combosData?.combinations
+                                    ?.filter(
+                                        (combo) =>
+                                            combo?.description &&
+                                            !/^(List|Get)\b/i.test(combo.description.trim())
+                                    )
+                                    ?.slice(0, visibleCombos)
+                                    ?.map((combo, index) => {
+                                        const isSingle = combosData?.combinations?.length === 1;
+                                        const integrations =
+                                            combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                            ',' +
+                                            combosData?.plugins[combo?.actions[0]?.name]?.rowid;
 
-                                            const triggerName = combosData?.plugins[
-                                                combo?.trigger?.name
-                                            ]?.events?.find(
-                                                (event) => event?.rowid === combo?.trigger?.id
-                                            )?.name;
+                                        const triggerName = combosData?.plugins[
+                                            combo?.trigger?.name
+                                        ]?.events?.find(
+                                            (event) => event?.rowid === combo?.trigger?.id
+                                        )?.name;
 
-                                            const actionName = combosData?.plugins[
-                                                combo?.actions[0]?.name
-                                            ]?.events?.find(
-                                                (event) => event?.rowid === combo?.actions[0]?.id
-                                            )?.name;
+                                        const actionName = combosData?.plugins[
+                                            combo?.actions[0]?.name
+                                        ]?.events?.find(
+                                            (event) => event?.rowid === combo?.actions[0]?.id
+                                        )?.name;
 
-                                            return (
-                                                <CombinationCardComp
-                                                    key={index}
-                                                    showTopBorder={isSingle}
-                                                    trigger={{
-                                                        name: triggerName,
-                                                        iconurl:
-                                                            combosData?.plugins[
-                                                                combo?.trigger?.name
-                                                            ]?.iconurl || 'https://placehold.co/40x40',
-                                                    }}
-                                                    action={{
-                                                        name: actionName,
-                                                        iconurl:
-                                                            combosData?.plugins[
-                                                                combo?.actions[0]?.name
-                                                            ]?.iconurl || 'https://placehold.co/40x40',
-                                                    }}
-                                                    description={combo?.description}
-                                                    link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
-                                                        ?.map((action) => action?.id)
-                                                        .join(',')}&integrations=${integrations}&action&`}
-                                                />
-                                            );
-                                        })}
-                                </div>
-
-                                {showMore && (
-                                    <button
-                                        onClick={() => {
-                                            setVisibleCombos(visibleCombos + 8);
-                                            if (combosData?.combinations?.length <= visibleCombos) {
-                                                setShowMore(false);
-                                            }
-                                        }}
-                                        className="btn btn-outline border-t-0 border-2 border-gray-400"
-                                    >
-                                        Load More <MdKeyboardArrowDown fontSize={20} />
-                                    </button>
-                                )}
-                            </div>
-                        ) : (
-                            <>
-                                {!appOneDetails?.events?.length &&
-                                    !appTwoDetails?.events?.length && (
-                                        <IntegrationsBetaComp appOneDetails={appOneDetails} />
-                                    )}
-
-                                {((!combosData?.combinations?.length && appOneDetails?.events?.length > 0) ||
-                                    (!combosData?.combinations?.length && appTwoDetails?.events?.length > 0)) && (
-                                        <div className="cont gap-6">
-                                            <div className="cont gap-2">
-                                                <h2 className="h2">
-                                                    Enable Integrations or automations with these events of{' '}
-                                                    <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                                    <span className="text-accent">{appTwoDetails?.name}</span>
-                                                </h2>
-                                                <p className="sub__h1">
-                                                    {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                                                </p>
-                                            </div>
-
-                                            <IntegrationsEventsComp
-                                                combosData={combosData}
-                                                appOneDetails={appOneDetails}
-                                                appTwoDetails={appTwoDetails}
+                                        return (
+                                            <CombinationCardComp
+                                                key={index}
+                                                showTopBorder={isSingle}
+                                                trigger={{
+                                                    name: triggerName,
+                                                    iconurl:
+                                                        combosData?.plugins[
+                                                            combo?.trigger?.name
+                                                        ]?.iconurl || 'https://placehold.co/40x40',
+                                                }}
+                                                action={{
+                                                    name: actionName,
+                                                    iconurl:
+                                                        combosData?.plugins[
+                                                            combo?.actions[0]?.name
+                                                        ]?.iconurl || 'https://placehold.co/40x40',
+                                                }}
+                                                description={combo?.description}
+                                                link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
+                                                    ?.map((action) => action?.id)
+                                                    .join(',')}&integrations=${integrations}&action&`}
                                             />
-                                        </div>
-                                    )}
-                            </>
-                        )}
+                                        );
+                                    })}
+                            </div>
 
-                        {/* Template Container */}
-                        <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
-                    </div>
+                            {showMore && (
+                                <button
+                                    onClick={() => {
+                                        setVisibleCombos(visibleCombos + 8);
+                                        if (combosData?.combinations?.length <= visibleCombos) {
+                                            setShowMore(false);
+                                        }
+                                    }}
+                                    className="btn btn-outline border-t-0 border-2 border-gray-400"
+                                >
+                                    Load More <MdKeyboardArrowDown fontSize={20} />
+                                </button>
+                            )}
+                        </div>
+                    ) : (
+                        <>
+                            {!appOneDetails?.events?.length &&
+                                !appTwoDetails?.events?.length && (
+                                    <IntegrationsBetaComp appOneDetails={appOneDetails} />
+                                )}
+
+                            {((!combosData?.combinations?.length && appOneDetails?.events?.length > 0) ||
+                                (!combosData?.combinations?.length && appTwoDetails?.events?.length > 0)) && (
+                                    <div className="cont gap-6">
+                                        <div className="cont gap-2">
+                                            <h2 className="h2">
+                                                Enable Integrations or automations with these events of{' '}
+                                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                                <span className="text-accent">{appTwoDetails?.name}</span>
+                                            </h2>
+                                            <p className="sub__h1">
+                                                {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                            </p>
+                                        </div>
+
+                                        <IntegrationsEventsComp
+                                            combosData={combosData}
+                                            appOneDetails={appOneDetails}
+                                            appTwoDetails={appTwoDetails}
+                                        />
+                                    </div>
+                                )}
+                        </>
+                    )}
+
+                    {/* Template Container */}
+                    <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
                 </div>
             </div>
 
