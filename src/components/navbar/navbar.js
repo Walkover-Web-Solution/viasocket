@@ -143,12 +143,12 @@ export default function Navbar({ utm, navbarData }) {
     return (
         <>
             <div
-                className="fixed top-0 z-[100] transition-transform duration-300 w-full translate-y-0 bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl"
+                className="fixed top-0 z-[100] w-full"
                 onMouseLeave={() => {
                     setGroupName(originalGroupName);
                 }}
             >
-                <div className="border-gray-300 border-b lg:block hidden">
+                <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 &&
@@ -195,7 +195,7 @@ export default function Navbar({ utm, navbarData }) {
                     </div>
                 </div>
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px]`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
