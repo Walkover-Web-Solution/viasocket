@@ -102,7 +102,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                 </div>
 
                 <div className="container">
-                    <div className="cont cont__py gap-12 px-24  h-fit border bg-[#F5FBFF]">
+                    <div className="cont cont__py gap-12 md:px-24 px-6  h-fit border bg-[#F5FBFF]">
                         <div className="flex flex-col gap-2 w-full">
                             <h2 className="h2">How it works</h2>
                             <p className="sub__h1">
@@ -132,7 +132,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                 />
 
                 <div className="container" id="ai_agent">
-                    <div className=" min-h-fit bg-white border custom-border p-12">
+                    <div className=" min-h-fit bg-white border custom-border md:p-12 p-6">
                         <div className="flex flex-col lg:flex-row h-full gap-4 items-center">
                             <div className="h-full w-full lg:w-3/5 cont gap-4 px-4 lg:px-0 justify-center">
                                 <div>
@@ -149,7 +149,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                                     <button className="btn btn-accent">Read More</button>
                                 </Link>
                             </div>
-                            <div className="flex justify-center items-center relative w-full md:w-1/2 h-[600px]">
+                            <div className="flex justify-center items-center relative w-full md:w-1/2 md:h-[600px] h-[400px]">
                                 <Image src="/assets/img/readmore.svg" layout="fill" alt="Selected Embed Image" />
                             </div>
                         </div>
@@ -157,7 +157,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                 </div>
 
                 <div className="container" id="pricing">
-                    <div className="cont border custom-border p-12 gap-6 bg-white">
+                    <div className="cont border custom-border md:p-12 p-6 gap-6 bg-white">
                         <div className="flex flex-col gap-8">
                             <h2 className="h2">Embed Pricing</h2>
 

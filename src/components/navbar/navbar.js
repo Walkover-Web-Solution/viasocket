@@ -3,7 +3,7 @@ import Image from 'next/image';
 import style from './navbar.module.scss';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
 import { GoArrowUpRight } from 'react-icons/go';
@@ -91,6 +91,15 @@ export default function Navbar({ utm, navbarData }) {
         });
     };
 
+    // Read a cookie value by name (client-side only)
+    const getCookie = (name) => {
+        if (typeof document === 'undefined') return undefined;
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return undefined;
+    };
+
     // Ensure the second layer reflects the active first-layer group based on current route
     useEffect(() => {
         if (!navbarData?.length) return;
@@ -126,16 +135,21 @@ export default function Navbar({ utm, navbarData }) {
         }
     }, [router.asPath, navbarData]);
 
+    useLayoutEffect(() => {
+        const token = getCookie('prod');
+        setHasToken(Boolean(token));
+    }, []);
+
     return (
         <>
             <div
-                className="fixed top-0 z-[100] transition-transform duration-300 w-full translate-y-0 bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl"
+                className="fixed top-0 z-[100] w-full"
                 onMouseLeave={() => {
                     setGroupName(originalGroupName);
                 }}
             >
-                <div className="border-gray-300 border-b lg:block hidden">
-                    <div className="justify-end items-center flex px-4 h-[40px]">
+                <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
+                    <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 &&
                                 [...new Map(navbarData.map((item) => [item.group_name, item])).values()].map(
@@ -144,11 +158,10 @@ export default function Navbar({ utm, navbarData }) {
                                             <Link href={item?.group_link}>
                                                 <div
                                                     key={index}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${
-                                                        isGroupActive(item.group_name)
-                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name)
+                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
                                                             : ''
-                                                    }`}
+                                                        }`}
                                                     onMouseEnter={() => {
                                                         setGroupName(item.group_name);
                                                     }}
@@ -159,11 +172,10 @@ export default function Navbar({ utm, navbarData }) {
                                         ) : (
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${
-                                                    isGroupActive(item.group_name)
-                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent rounded-md'
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name)
+                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
                                                         : ''
-                                                }`}
+                                                    }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);
                                                 }}
@@ -183,7 +195,7 @@ export default function Navbar({ utm, navbarData }) {
                     </div>
                 </div>
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px]`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
@@ -231,7 +243,7 @@ export default function Navbar({ utm, navbarData }) {
                             </div>
                             {hasToken ? (
                                 <button
-                                    className={`${style.nav_btn} ${borderClass} flex text-white text-nowrap px-5 border custom-border border-t-0 border-b-0 !h-[44px] border-r-0 bg-accent items-center justify-center !text-xs`}
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
