@@ -19,21 +19,23 @@ const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
             <div className="flex flex-col gap-9">
                 {showHeading && <h2 className="h2">{heading}</h2>}
                 <div className="w-full cont">
-                    <div className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid border custom-border border-r-0 border-b-0">
+                    <div className="sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 grid gap-4">
                         {posts?.map((post, index) => (
                             <CardComponent key={index} card={post} isBlack={isBlack} />
                         ))}
                     </div>
-                    <Link href="/blog" target="_blank" className="w-fit">
-                        <LinkText
-                            children="Read more blogs"
-                            customClasses={
-                                isBlack
-                                    ? 'btn border-white border-t-0'
-                                    : 'btn btn-outline btn-md w-fit border-t-0 custom-border'
-                            }
-                        />
-                    </Link>
+                    <div className="flex items-center justify-end mt-4">
+                        <Link href="/blog" target="_blank" className="w-fit">
+                            <LinkText
+                                children="Read more blogs"
+                                customClasses={
+                                    isBlack
+                                        ? 'btn border-white border'
+                                        : 'btn btn-outline btn-md w-fit border custom-border'
+                                }
+                            />
+                        </Link>
+                    </div>
                 </div>
             </div>
         );
@@ -45,7 +47,7 @@ const CardComponent = ({ card, isBlack = false }) => {
             href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
-            className={`${isBlack ? 'border border-white' : 'border-r custom-border'} card rounded-none bg-white LinkButtonCard`}
+            className={`${isBlack ? 'border border-white' : 'border custom-border'} card rounded-none bg-white LinkButtonCard`}
         >
             {' '}
             <div className="flex flex-col gap-4 h-full">
@@ -58,7 +60,7 @@ const CardComponent = ({ card, isBlack = false }) => {
                         className="w-full h-full object-fit"
                     />
                 </div>
-                <div className="card-body flex flex-col gap-2 flex-grow p-4 border-b custom-border">
+                <div className="card-body flex flex-col gap-2 flex-grow p-4">
                     <div className="flex-grow">
                         <h3 className="font-semibold">{card?.title}</h3>
                         <p className="text-base">{card?.description}</p>

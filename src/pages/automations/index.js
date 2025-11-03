@@ -321,7 +321,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                     )}
                 </div>
 
-                <div className="cont gap-12 md:gap-16 lg:gap-20">
+                <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
                     <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>
