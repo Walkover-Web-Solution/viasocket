@@ -142,7 +142,6 @@ export default function Navbar({ utm, navbarData }) {
     }, []);
 
     const handleSearch = () => {
-        console.log('DocStarSearch: ', window.DocStarSearch);
         if (window.DocStarSearch) {
             window.DocStarSearch.open();
         }
