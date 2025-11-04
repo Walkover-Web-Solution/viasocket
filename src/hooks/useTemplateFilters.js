@@ -6,6 +6,7 @@ export const useTemplateFilters = (templates = []) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedApps, setSelectedApps] = useState([]);
+    const [requireAllApps, setRequireAllApps] = useState(false);
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
 
     // Memoized filtered templates to avoid unnecessary recalculations
@@ -23,12 +24,18 @@ export const useTemplateFilters = (templates = []) => {
         if (selectedApps.length > 0) {
             filtered = filtered.filter((template) => {
                 const pluginSlugs = (template.pluginData || []).map((p) => p.pluginslugname);
-                const hasPluginApp = pluginSlugs.some((slug) => selectedApps.includes(slug));
-                const hasWebhookTrigger = selectedApps.includes('webhook') && template.triggerType === 'webhook';
-                const hasCronTrigger = selectedApps.includes('cron') && template.triggerType === 'cron';
 
-                return hasPluginApp || hasWebhookTrigger || hasCronTrigger;
+                const appMatches = (slug) => {
+                    if (slug === 'webhook') return template.triggerType === 'webhook';
+                    if (slug === 'cron') return template.triggerType === 'cron';
+                    return pluginSlugs.includes(slug);
+                };
+
+                return requireAllApps
+                    ? selectedApps.every(appMatches) // AND logic
+                    : selectedApps.some(appMatches);  // OR logic (default)
             });
+            
         }
 
         // Filter by search term
@@ -52,7 +59,7 @@ export const useTemplateFilters = (templates = []) => {
 
         // Clean up match scores
         return filtered.map(({ matchScore, ...rest }) => rest);
-    }, [templates, searchTerm, selectedCategories, selectedApps]);
+    }, [templates, searchTerm, selectedCategories, selectedApps, requireAllApps]);
 
     // Memoized sorted templates
     const sortedTemplates = useMemo(() => {
@@ -68,10 +75,11 @@ export const useTemplateFilters = (templates = []) => {
     }, [sortedTemplates]);
 
     // Callback handlers
-    const handleFilterChange = useCallback(({ searchTerm: newSearchTerm, selectedCategories: newCategories, selectedApps: newApps }) => {
+    const handleFilterChange = useCallback(({ searchTerm: newSearchTerm, selectedCategories: newCategories, selectedApps: newApps, requireAllApps: newRequireAllApps }) => {
         setSearchTerm(newSearchTerm || '');
         setSelectedCategories(newCategories || []);
         setSelectedApps(newApps || []);
+        setRequireAllApps(!!newRequireAllApps);
         setVisibleCount(TEMPLATES_PER_PAGE); // Reset visible count when filters change
     }, []);
 
@@ -96,6 +104,7 @@ export const useTemplateFilters = (templates = []) => {
         searchTerm,
         selectedCategories,
         selectedApps,
+        requireAllApps,
         visibleCount,
         
         // Computed values
@@ -116,5 +125,6 @@ export const useTemplateFilters = (templates = []) => {
         setSearchTerm,
         setSelectedCategories,
         setSelectedApps,
+        setRequireAllApps,
     };
 };
