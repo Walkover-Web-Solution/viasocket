@@ -62,14 +62,15 @@ function TriggerOrActionCard({
         <div className="flex flex-col w-full md:w-1/2 gap-2 relative">
             <h2 className="text-sm font-semibold text-gray-500">{title}</h2>
 
+           <div className="p-4" style={{ backgroundColor: appDetails?.brandcolor }}>
             <div
-                className="w-full border custom-border flex bg-white cursor-pointer relative"
+                className="w-full border flex bg-white cursor-pointer relative"
                 onClick={(e) => {
                     e.stopPropagation();
                     onToggle();
                 }}
             >
-                <div className="custom-border border-r flex items-center justify-center p-2">
+                <div className="flex items-center justify-center p-2">
                     <Image
                         src={appDetails?.iconurl || "https://placehold.co/36x36"}
                         width={100}
@@ -106,7 +107,7 @@ function TriggerOrActionCard({
                     )}
                 </div>
             </div>
-
+            </div>
             <div
                 className={`absolute top-full left-0 mt-2 w-full border custom-border bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-20
                 ${isOpen ? "opacity-100 visible max-h-72" : "opacity-0 invisible max-h-0"}`}
@@ -229,7 +230,6 @@ export default function IntegrationsAppTwoComp({
 
     return (
         <div
-            style={{ borderLeftColor: appOneDetails?.brandcolor, borderLeftWidth: '10px' }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
             <Navbar navbarData={navbarData} utm={'/integrations/apptwo'} />
@@ -356,12 +356,12 @@ export default function IntegrationsAppTwoComp({
                         </div>
                     </div>
                 </div>
-                <div className="dotted-background">
-                    <div className="container py-8 flex flex-col gap-16">
-                        {/* Combinations Section */}
-                        {combosData?.combinations?.length > 0 ? (
-                            <div className="flex flex-col gap-6">
-                                <h2 className="h2">Use the Built-in Integrations</h2>
+                <div className={`${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
+                <div className="container py-8 flex flex-col gap-16">
+                    {/* Combinations Section */}
+                    {combosData?.combinations?.length > 0 ? (
+                        <div className="flex flex-col gap-6">
+                            <h2 className="h2">Ready to use {appOneDetails?.name} and {appTwoDetails?.name} automations</h2>
 
                                 <div
                                     className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''
@@ -465,9 +465,9 @@ export default function IntegrationsAppTwoComp({
                             </>
                         )}
 
-                        {/* Template Container */}
-                        <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
-                    </div>
+                    {/* Template Container */}
+                    <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
+                </div>
                 </div>
             </div>
 
@@ -493,11 +493,11 @@ export default function IntegrationsAppTwoComp({
 
             {videoData?.length > 0 && (
                 <div className="container">
-                    <VideoGrid videoData={videoData} />
+                    <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
                 </div>
             )}
 
-
+            
             <div className="container pb-4">
                 <div className="cont">
                     {faqData && <FAQSection faqData={faqData} />}

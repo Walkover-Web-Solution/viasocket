@@ -129,10 +129,8 @@ export default function IntegrationsAppOneComp({
                             <div className=" flex flex-col gap-2">
                                 <h1 className="h1">Integrate {appOneDetails?.name} with your favorite apps</h1>
                                 <p className="sub__h1">
-                                    Easily connect {appOneDetails?.name} with the apps you use every day. Build and
-                                    manage {appOneDetails?.name} automations to simplify work and streamline <br className='hidden xl:block' />
-                                    communication. Pick from thousands of available {appOneDetails?.name} integrations{' '}
-                                    or customize new ones through our automation platform.
+                                    Easily connect {appOneDetails?.name} with the apps you use every day. Pick from thousands of available {appOneDetails?.name} integrations{' '}
+                                    or customize <br className='hidden xl:block' /> new ones through our automation platform.
                                 </p>
                             </div>
                         </div>
@@ -192,7 +190,7 @@ export default function IntegrationsAppOneComp({
                         </div>
                     )}
                 </div>
-                <div className="dotted-background py-8">
+                <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                     <div className="container flex flex-col gap-16">
                         <div className="flex flex-col gap-8">
                             {combosData?.combinations?.length > 0 ? (
@@ -321,7 +319,7 @@ export default function IntegrationsAppOneComp({
 
                 {videoData?.length > 0 && (
                     <div className="container">
-                        <VideoGrid videoData={videoData} />
+                        <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} />
                     </div>
                 )}
 

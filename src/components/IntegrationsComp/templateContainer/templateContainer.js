@@ -37,7 +37,7 @@ export default function TemplateContainer({ selectedApps }) {
 
     useEffect(() => {
         if (appSlugs.length > 0) {
-            handleFilterChange({ selectedApps: appSlugs });
+            handleFilterChange({ selectedApps: appSlugs, requireAllApps: true });
         }
     }, [appSlugs.join(','), handleFilterChange]);
 
