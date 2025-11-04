@@ -30,7 +30,7 @@ export default function CategoryTemplates({ categoryName, templates }) {
                         <div className="flex justify-end w-full mt-4">
                             <button
                                 onClick={handleLoadMore}
-                                className="btn btn-outline border custom-border bg-white"
+                                className="btn btn-outline border custom-border"
                             >
                                 Load More <MdKeyboardArrowDown size={24} />
                             </button>

@@ -1,4 +1,4 @@
-const VideoGrid = ({ videoData, showHeading = true }) => {
+const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) => {
     const getGridClass = () => {
         switch (videoData.length) {
             case 1:
@@ -8,10 +8,10 @@ const VideoGrid = ({ videoData, showHeading = true }) => {
             default:
                 return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
         }
-    };
+    };  
     return (
         <div className="flex flex-col gap-8 border custom-border p-6 md:p-12 bg-white">
-            {showHeading && <h2 className="h2">Watch Integrations In Action</h2>}
+            {showHeading && <h2 className="h2">Step by step guides to integrate {appOneName} {appTwoName? 'and' : ''} {appTwoName}</h2>}
             <div className={`grid ${getGridClass()} gap-4`}>
                 {videoData.map((video, index) => (
                     <div key={index} className={`w-full border custom-border ${videoData.length === 1 ? 'col-span-1' : ''}`}>
