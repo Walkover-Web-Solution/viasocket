@@ -318,9 +318,7 @@ export default function IntegrationsAppOneComp({
                 </div>
 
                 {videoData?.length > 0 && (
-                    <div className="container">
-                        <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} />
-                    </div>
+                    <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} />
                 )}
 
                 {blogsData?.length > 0 && (

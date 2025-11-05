@@ -180,7 +180,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                             // transform: 'scale(1.1)', // Prevents blur edge artifacts
                         }}
                     ></div>
-                    <div className="relative z-10">
+                    <div className="relative">
                         <IndexTemplateComp categories={indexTemplateData} />
                     </div>
                 </div>

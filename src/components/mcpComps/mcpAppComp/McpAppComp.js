@@ -392,7 +392,7 @@ export default function McpAppComp({
                 <div className="container">
                     <div className="cont gap-12 p-6 md:p-12 bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center">
-                            <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                            <h2 className="h2">Start getting work done via viaSocket MCP</h2>
                             <p className="sub__h1">
                                 Break free from isolation-connect your AI to real-world data for smarter, more impactful
                                 results.
