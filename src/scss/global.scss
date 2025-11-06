@@ -261,6 +261,19 @@
     }
 }
 
+.login-container { 
+ button{
+    color: black !important;
+    border-color: black !important;
+ }
+ span{
+    color: black !important;
+ }
+ p{
+    color: black !important;
+ }
+}
+
 /** Custom Login Button */
 .loginBtn_google {
     button {
