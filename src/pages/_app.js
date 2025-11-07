@@ -134,7 +134,7 @@ export default function MyApp({ Component, pageProps, pagesData }) {
                     try {
                         if (window && window.DocStarSearch && typeof window.DocStarSearch.configure === 'function') {
                             window.DocStarSearch.configure({
-                                collectionId: '23nmZIclc6pr',
+                                collectionId: process.env.NEXT_PUBLIC_DOCSTAR_COLLECTION_ID,
                                 environment: 'prod', // "prod", "dev", or "local"
                                 openMode: 'iframe', // "iframe", "newTab", or "currentTab"
                                 debounceDelay: 300,

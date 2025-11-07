@@ -469,120 +469,120 @@ export default function IntegrationsAppTwoComp({
                         <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
                     </div>
                 </div>
-            </div>
 
-            {combosData?.combinations?.length > 0 &&
-                appOneDetails?.events?.length > 0 &&
-                appTwoDetails?.events?.length > 0 && (
-                    <div className="container cont gap-4">
-                        <h2 className="h2">Actions and Triggers</h2>
-                        <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
+                {combosData?.combinations?.length > 0 &&
+                    appOneDetails?.events?.length > 0 &&
+                    appTwoDetails?.events?.length > 0 && (
+                        <div className="container cont gap-4">
+                            <h2 className="h2">Actions and Triggers</h2>
+                            <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
+                        </div>
+                )}
+
+                <div className="container cont">
+                    <GetStarted />
+                </div>
+
+                {blogsData?.length > 0 && (
+                    <div className="container">
+                        {' '}
+                        <BlogGrid posts={blogsData} />
                     </div>
                 )}
 
-            <div className="container cont">
-                <GetStarted />
-            </div>
-
-            {blogsData?.length > 0 && (
-                <div className="container">
-                    {' '}
-                    <BlogGrid posts={blogsData} />
-                </div>
-            )}
-
-            {videoData?.length > 0 && (
-                <div className="container">
-                    <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
-                </div>
-            )}
-
-
-            <div className="container pb-4">
-                <div className="cont">
-                    {faqData && <FAQSection faqData={faqData} />}
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
-                        <div className="cont gap-4 w-full p-6 md:p-12 border border-t-0 md:border-b-0  custom-border">
-                            <div className="cont gap-2 ">
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt={appOneDetails?.name}
-                                />
-                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
-                                    <Link
-                                        key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
-                                        className="mb-2"
-                                    >
-                                        <span className="btn btn-outline">
-                                            {cat}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                            <ExternalLink
-                                href={
-                                    appOneDetails?.domain?.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain
-                                }
-                                appSlugName={appOneDetails?.appslugname}
-                                doFollowArray={getDoFollowUrlStatusArray}
-                            >
-                                <LinkText children={'Learn More'} />
-                            </ExternalLink>
-                        </div>
-                        <div className="cont w-full gap-4 p-12 border-x md:border-l-0 custom-border">
-                            <div className="cont gap-2">
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={appTwoDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt={appTwoDetails?.name}
-                                />
-                                <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full ">{appTwoDetails?.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {appTwoDetails?.category?.slice(0, 2).map((cat, index) => (
-                                    <Link
-                                        key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
-                                        className="mb-2"
-                                    >
-                                        <span className="btn btn-outline">
-                                            {cat}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                            <ExternalLink
-                                href={
-                                    appTwoDetails?.domain?.startsWith('http')
-                                        ? appTwoDetails?.domain
-                                        : 'http://' + appTwoDetails?.domain
-                                }
-                                appSlugName={appTwoDetails?.appslugname}
-                                doFollowArray={getDoFollowUrlStatusArray}
-                            >
-                                <LinkText children={'Learn More'} />
-                            </ExternalLink>
-                        </div>
+                {videoData?.length > 0 && (
+                    <div className="container">
+                        <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
                     </div>
+                )}
 
-                    <Footer footerData={footerData} />
+
+                <div className="container pb-4">
+                    <div className="cont">
+                        {faqData && <FAQSection faqData={faqData} />}
+                        <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
+                            <div className="cont gap-4 w-full p-6 md:p-12 border border-t-0 md:border-b-0  custom-border">
+                                <div className="cont gap-2 ">
+                                    <Image
+                                        className="h-10 w-fit"
+                                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                        width={36}
+                                        height={36}
+                                        alt={appOneDetails?.name}
+                                    />
+                                    <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
+                                </div>
+                                <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
+                                        <Link
+                                            key={index}
+                                            href={createURL(
+                                                `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
+                                            )}
+                                            className="mb-2"
+                                        >
+                                            <span className="btn btn-outline">
+                                                {cat}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                                <ExternalLink
+                                    href={
+                                        appOneDetails?.domain?.startsWith('http')
+                                            ? appOneDetails?.domain
+                                            : 'http://' + appOneDetails?.domain
+                                    }
+                                    appSlugName={appOneDetails?.appslugname}
+                                    doFollowArray={getDoFollowUrlStatusArray}
+                                >
+                                    <LinkText children={'Learn More'} />
+                                </ExternalLink>
+                            </div>
+                            <div className="cont w-full gap-4 p-12 border-x md:border-l-0 custom-border">
+                                <div className="cont gap-2">
+                                    <Image
+                                        className="h-10 w-fit"
+                                        src={appTwoDetails?.iconurl || 'https://placehold.co/36x36'}
+                                        width={36}
+                                        height={36}
+                                        alt={appTwoDetails?.name}
+                                    />
+                                    <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
+                                </div>
+                                <p className="text-sm sm:text-lg text-black h-full ">{appTwoDetails?.description}</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {appTwoDetails?.category?.slice(0, 2).map((cat, index) => (
+                                        <Link
+                                            key={index}
+                                            href={createURL(
+                                                `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
+                                            )}
+                                            className="mb-2"
+                                        >
+                                            <span className="btn btn-outline">
+                                                {cat}
+                                            </span>
+                                        </Link>
+                                    ))}
+                                </div>
+                                <ExternalLink
+                                    href={
+                                        appTwoDetails?.domain?.startsWith('http')
+                                            ? appTwoDetails?.domain
+                                            : 'http://' + appTwoDetails?.domain
+                                    }
+                                    appSlugName={appTwoDetails?.appslugname}
+                                    doFollowArray={getDoFollowUrlStatusArray}
+                                >
+                                    <LinkText children={'Learn More'} />
+                                </ExternalLink>
+                            </div>
+                        </div>
+
+                        <Footer footerData={footerData} />
+                    </div>
                 </div>
             </div>
         </div>
