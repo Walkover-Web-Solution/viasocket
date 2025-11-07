@@ -119,7 +119,7 @@ export default function PricingTabsClient({ countries }) {
       <div className="cont w-full">
         <div className="w-full cont lg:flex-row items-center gap-4 justify-between">
           <div className="cont items-start gap-2">
-            <h2 className="h2 w-full" >Do more with viaSocket.</h2>
+            <h2 className="h2 w-full" >Do more via viaSocket.</h2>
             <h3 className="h3" >Upgrade to access advanced features designed for growing businesses</h3>
           </div>
           <div className="flex items-end flex-col gap-2 w-full md:w-[350px]">

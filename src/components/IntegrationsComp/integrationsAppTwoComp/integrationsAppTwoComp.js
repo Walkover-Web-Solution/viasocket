@@ -490,11 +490,9 @@ export default function IntegrationsAppTwoComp({
                     </div>
                 )}
 
-                {videoData?.length > 0 && (
-                    <div className="container">
-                        <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
-                    </div>
-                )}
+            {videoData?.length > 0 && (
+                <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
+            )}
 
 
                 <div className="container pb-4">

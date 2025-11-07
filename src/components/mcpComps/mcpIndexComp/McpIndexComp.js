@@ -324,7 +324,7 @@ export default function McpIndexComp({
                 <div className="container cont">
                     <div className="flex gap-12 flex-col text-black md:p-12 p-6 border custom-border bg-white">
                         <div className="flex flex-col gap-2 justify-center">
-                            <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                            <h2 className="h2">Start getting work done via viaSocket MCP</h2>
                             <p className="sub__h1">
                                 Break free from isolation-connect your AI to real-world data for smarter, more impactful
                                 results.
