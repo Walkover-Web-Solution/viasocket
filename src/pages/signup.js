@@ -23,16 +23,6 @@ const Login = ({ reviewData, redirect_to }) => {
                             <div className="flex flex-col gap-4 px-8 py-10 items-center text-center">
                                 <div className="gap-3 flex flex-col">
                                     <h2 className="h2">Sign up for viaSocket</h2>
-                                    <p className="text-sm text-gray-600">
-                                        create a free account or{' '}
-                                        <button
-                                            className="active-link text-link"
-                                            onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
-                                            rel="nofollow"
-                                        >
-                                            Log in
-                                        </button>
-                                    </p>
                                 </div>
                                 <div className="cont gap-8 mt-4">
                                     <CustomLogin redirect_to={redirect_to} />
