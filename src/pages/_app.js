@@ -6,7 +6,7 @@ import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
-import Link from 'next/link';
+import Script from 'next/script';
 
 export const runtime = 'experimental-edge';
 
@@ -127,6 +127,26 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     return (
         <>
             <HeadComp canonicalUrl={canonicalUrl} />
+            <Script
+                src="https://script.docstar.io/scripts/search-sdk/search-sdk.script.min.js"
+                strategy="afterInteractive"
+                onLoad={() => {
+                    try {
+                        if (window && window.DocStarSearch && typeof window.DocStarSearch.configure === 'function') {
+                            window.DocStarSearch.configure({
+                                collectionId: process.env.NEXT_PUBLIC_DOCSTAR_COLLECTION_ID,
+                                environment: 'prod', // "prod", "dev", or "local"
+                                openMode: 'iframe', // "iframe", "newTab", or "currentTab"
+                                debounceDelay: 300,
+                                enableKeyboardShortcut: true,
+                                minSearchLength: 2,
+                            });
+                        }
+                    } catch (e) {
+                        console.error('Error initializing DocStarSearch:', e);
+                    }
+                }}
+            />
             <ChatWidget />
             {showSkeleton ? (
                 <Skeleton />
