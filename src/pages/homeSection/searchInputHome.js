@@ -558,7 +558,7 @@ const SearchInputHome = ({
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
                 <div
-                    className="w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text"
+                    className={`w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
                     onClick={() => {
                         if (inputRef.current) {
                             inputRef.current.focus();
@@ -675,7 +675,7 @@ const SearchInputHome = ({
                 </div>
 
                 {showDropdown && (
-                    <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-90 overflow-y-auto">
+                    <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-90 overflow-y-auto rounded-b-3xl">
                         <div className="apps-section border-b custom-border">
                             {searchData?.length > 0 ? (
                                 searchData.slice(0, 3).map((app, index) => (
