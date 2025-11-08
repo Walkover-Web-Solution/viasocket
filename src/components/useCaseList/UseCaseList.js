@@ -17,7 +17,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
             <div className="flex flex-col md:flex-row gap-4 ">
                 <div className="w-full p-8 h-fit flex flex-col">
                     <div className="cont gap-2">
-                        <h2 className="h2">{`Real-World Use Cases of ${appname} Integrations`}</h2>
+                        <h2 className="h2">{`Real-world use cases of ${appname} integrations`}</h2>
                         <p className="sub__h1">{`See how ${appname} integrates with popular apps to automate tasks and streamline your workflow.`}</p>
                     </div>
                     <div className="flex flex-col mt-5">

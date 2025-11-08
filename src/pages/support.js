@@ -149,7 +149,7 @@ export default function Support({ footerData, metaData, testimonials, navbarData
                                     <h3 className="h3">FAQ</h3>
                                     <p>Connect with other users, get answers, and share automation tips.</p>
                                 </div>
-                                <Link href="https://viasocket.com/faq" className="btn btn-outline w-fit">
+                                <Link href="https://viasocket.com/help" className="btn btn-outline w-fit">
                                     Start learning with viaSocket FAQ
                                 </Link>
                             </div>

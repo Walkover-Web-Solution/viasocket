@@ -295,7 +295,7 @@ export default function McpIndexComp({
                     title="Build your app to be MCP-Ready"
                     description="List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude, Windsurf, and many others—enabling your users to perform actions within your app directly through AI."
                     buttonLabel="Quick start guide"
-                    buttonLink="https://viasocket.com/faq/developer-hub"
+                    buttonLink="https://viasocket.com/help/developer-hub"
                 />
 
                 <FeaturesGrid featuresData={featuresData} />
@@ -337,7 +337,7 @@ export default function McpIndexComp({
                                     <h3 className="text-xl">
                                         viaSocket MCP is free to use for lifetime under a{' '}
                                         <span className="underline font-semibold">
-                                            <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                            <Link href="https://viasocket.com/help/viaSocket-MCP/Fair-Usage-Policy">
                                                 {' '}
                                                 fair usage policy
                                             </Link>{' '}

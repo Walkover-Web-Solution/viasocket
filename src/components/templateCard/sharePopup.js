@@ -1,6 +1,5 @@
-import { X } from 'lucide-react';
 import { useState } from 'react';
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaRegCopy } from 'react-icons/fa';
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaCopy } from 'react-icons/fa';
 
 const SharePopup = ({ title }) => {
     const url = typeof window !== 'undefined' ? window.location.href : '';
@@ -13,22 +12,22 @@ const SharePopup = ({ title }) => {
     const shareLinks = [
         {
             name: 'Twitter',
-            icon: <FaTwitter size={20}/>,
+            icon: <FaTwitter size={20} />,
             url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
         },
         {
             name: 'Facebook',
-            icon: <FaFacebookF size={20}/>,
+            icon: <FaFacebookF size={20} />,
             url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         },
         {
             name: 'LinkedIn',
-            icon: <FaLinkedinIn size={20}/>,
+            icon: <FaLinkedinIn size={20} />,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
         },
         {
             name: 'WhatsApp',
-            icon: <FaWhatsapp size={20}/>,
+            icon: <FaWhatsapp size={20} />,
             url: `https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`,
         },
     ];
@@ -46,23 +45,17 @@ const SharePopup = ({ title }) => {
                     <h3 className="h3">Share this template</h3>
                 </div>
 
-                <div className="flex items-center gap-2 relative border custom-border p-2">
-                    <input
-                        readOnly
-                        value={url}
-                        className="flex-1 h-[48px] outline-none text-lg p-2"
-                    />
-                    <button onClick={handleCopy} className="btn btn-outline">
-                        copy
-                    </button>
-                    {copied && (
-                        <span className="absolute -bottom-7 right-0 bg-black text-white text-xs px-2 py-1 shadow">
-                            Copied
-                        </span>
-                    )}
-                </div>
-
-                <div className="flex gap-2 justify-start items-center ">
+                <div className="flex gap-2 justify-start items-center">
+                    <div className="border custom-border transition flex items-center justify-center cursor-pointer bg-white h-[38px] relative">
+                        <button onClick={handleCopy} className="flex items-center gap-2 p-2">
+                            <FaCopy fontSize={20} /> Copy
+                        </button>
+                        {copied && (
+                            <span className="absolute -bottom-7 right-0 bg-black text-white text-xs px-2 py-1 shadow">
+                                Copied
+                            </span>
+                        )}
+                    </div>
                     {shareLinks.map((link) => (
                         <div
                             key={link.name}

@@ -405,7 +405,7 @@ export default function McpAppComp({
                                     <h3 className="text-xl">
                                         viaSocket MCP is free to use for lifetime under a{' '}
                                         <span className="underline font-semibold">
-                                            <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                            <Link href="https://viasocket.com/help/viaSocket-MCP/Fair-Usage-Policy">
                                                 {' '}
                                                 fair usage policy
                                             </Link>{' '}
@@ -465,7 +465,7 @@ export default function McpAppComp({
                     title="Discover More About viaSocket MCP"
                     description="Check out our easy-to-follow documentation and start exploring all the cool things you can do with viaSocket MCP."
                     buttonLabel="Explore The Documentation"
-                    buttonLink="https://viasocket.com/faq/viaSocket-MCP"
+                    buttonLink="https://viasocket.com/help/viaSocket-MCP"
                     theme="dark"
                 />
 
