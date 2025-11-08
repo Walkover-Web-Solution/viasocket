@@ -42,7 +42,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                                     </h2>
                                 </div>
                                 <div className="flex flex-row  flex-wrap gap-4 items-center">
-                                    <Link href="https://viasocket.com/faq/viasocket-embed">
+                                    <Link href="https://viasocket.com/help/viasocket-embed">
                                         <button className="btn btn-accent">How To Start</button>
                                     </Link>
                                     <p className="text-gray-500 text-center">Or</p>
@@ -259,7 +259,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                     title="Start Showing Automation Use Cases on Your Platform"
                     description="Simply add the provided embed code to your blog or website, and instantly display real-world automation examples that highlight how your app connects with others."
                     buttonLabel="Get your free embed code"
-                    buttonLink="https://viasocket.com/faq/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script"
+                    buttonLink="https://viasocket.com/help/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script"
                     theme="dark"
                 />
 

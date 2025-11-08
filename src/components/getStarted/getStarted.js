@@ -20,7 +20,7 @@ export default function GetStarted() {
             24X7 Chat with our AI and human Experts
           </button>
 
-          <Link href="https://viasocket.com/faq" target="_blank" aria-label="faq">
+          <Link href="https://viasocket.com/help" target="_blank" aria-label="faq">
             <button
               className={`flex text-start justify-start gap-1 btn btn-primary btn-outline custom-border`}
               aria-label="get started"

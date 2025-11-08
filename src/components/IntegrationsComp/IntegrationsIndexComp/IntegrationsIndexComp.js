@@ -103,7 +103,7 @@ export default function IntegrationsIndexComp({
                     <p className="min-w-fit">
                         <span className="text-base">Want to list your app?</span>
                         <Link
-                            href="https://viasocket.com/faq/plugin-builder"
+                            href="https://viasocket.com/help/plugin-builder"
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
@@ -413,7 +413,7 @@ export function RequestIntegrationPopupOpener({
                         </h2>
                     </div>
                     <Link
-                        href="https://viasocket.com/faq/developer-hub"
+                        href="https://viasocket.com/help/developer-hub"
                         target="_blank"
                         className="max-w-max"
                     >
