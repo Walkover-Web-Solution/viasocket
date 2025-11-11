@@ -295,7 +295,7 @@ export default function McpIndexComp({
                     title="Build your app to be MCP-Ready"
                     description="List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude, Windsurf, and many others—enabling your users to perform actions within your app directly through AI."
                     buttonLabel="Quick start guide"
-                    buttonLink="https://viasocket.com/faq/developer-hub"
+                    buttonLink="https://viasocket.com/help/developer-hub"
                 />
 
                 <FeaturesGrid featuresData={featuresData} />
@@ -324,7 +324,7 @@ export default function McpIndexComp({
                 <div className="container cont">
                     <div className="flex gap-12 flex-col text-black md:p-12 p-6 border custom-border bg-white">
                         <div className="flex flex-col gap-2 justify-center">
-                            <h2 className="h2">Start getting work done with viaSocket MCP today</h2>
+                            <h2 className="h2">Start getting work done via viaSocket MCP</h2>
                             <p className="sub__h1">
                                 Break free from isolation-connect your AI to real-world data for smarter, more impactful
                                 results.
@@ -337,7 +337,7 @@ export default function McpIndexComp({
                                     <h3 className="text-xl">
                                         viaSocket MCP is free to use for lifetime under a{' '}
                                         <span className="underline font-semibold">
-                                            <Link href="https://viasocket.com/faq/viaSocket-MCP/Fair-Usage-Policy">
+                                            <Link href="https://viasocket.com/help/viaSocket-MCP/Fair-Usage-Policy">
                                                 {' '}
                                                 fair usage policy
                                             </Link>{' '}

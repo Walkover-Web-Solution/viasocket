@@ -162,9 +162,9 @@ const ResultSection = ({
 
             {/* Video Results Section */}
             {showVideos && (loadingVideos || videos.length > 0) && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div className="mx-auto px-4 py-12 relative">
                     {(loadingVideos || videos.length > 0) && (
-                        <h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2>
+                       <div className='container'><h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2></div>
                     )}
 
                     {loadingVideos ? (

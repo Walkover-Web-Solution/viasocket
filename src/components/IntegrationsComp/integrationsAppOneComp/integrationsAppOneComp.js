@@ -8,7 +8,7 @@ import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
@@ -45,6 +45,14 @@ export default function IntegrationsAppOneComp({
     const [searchedApps, setSearchedApps] = useState([]);
     const [searchedCategories, setSearchedCategories] = useState(null);
     const [debounceValue, setDebounceValue] = useState('');
+    const [activeStep, setActiveStep] = useState(1);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveStep((prev) => (prev === 1 ? 2 : 1));
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
 
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
 
@@ -296,7 +304,7 @@ export default function IntegrationsAppOneComp({
                                 <div className="cont gap-2">
                                     <h2 className="h2">
                                         Triggers and Actions in{' '}
-                                        <span className="text-accent">{appOneDetails?.name} </span>
+                                        {appOneDetails?.name}{' '}
                                         Automations
                                     </h2>
                                     <p className="sub__h1">
@@ -309,6 +317,55 @@ export default function IntegrationsAppOneComp({
                         )}
                     </div>
                 </div>
+                <div className='container'>
+                    <div className='cont gap-8'>
+                        <div className="bg-white p-6 md:p-12 flex flex-col gap-10 border custom-border">
+                            <div className="flex md:flex-row flex-col gap-8">
+                                <div className="w-full md:w-3/5 cont gap-8 md:gap-20 justify-start">
+                                    <h2 className='h2'>How to get started with {appOneDetails?.name} automations</h2>
+                                    <div className='cont gap-8 h-full'>
+                                        <div className='cont gap-2'>
+                                            <p className='font-semibold sub__h1'>Automate when something happens in {appOneDetails?.name}</p>
+                                            <p className='sub__h1'>{`Login -> Create new flow -> Select trigger -> Search ${appOneDetails?.name} -> Choose the trigger from the list`}</p>
+                                        </div>
+                                        <div className='cont gap-2'>
+                                            <p className='font-semibold sub__h1'>Take action in {appOneDetails?.name} when something happens in an app or you want to add step in flow</p>
+                                            <p className='sub__h1'>{`Login -> Create new flow -> Select action -> Search ${appOneDetails?.name} -> Choose the action from the list`}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="w-full md:w-2/5 flex justify-center items-center py-20 bg-gradient-to-r from-blue-100 to-purple-100">
+                                    <div className="cont items-center">
+                                        <div className={`border custom-border text-black p-4 w-52 h3 bg-white flex items-center justify-center gap-4 `}>
+                                            <p>Trigger</p>
+                                            <Image
+                                                className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 1 ? "opacity-100" : "opacity-0"
+                                                    }`}
+                                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                                width={36}
+                                                height={36}
+                                                alt={appOneDetails?.name}
+                                            />
+                                        </div>
+                                        <div className="border-r border-black bg-black h-12"></div>
+                                        <div className={`border custom-border text-black p-4 w-52 h3 bg-white flex items-center justify-center gap-4 `}>
+                                            <p>Action</p>
+                                            <Image
+                                                className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 2 ? "opacity-100" : "opacity-0"
+                                                    }`}
+                                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                                width={36}
+                                                height={36}
+                                                alt={appOneDetails?.name}
+                                            />
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="container">
                     {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
                 </div>
@@ -318,9 +375,7 @@ export default function IntegrationsAppOneComp({
                 </div>
 
                 {videoData?.length > 0 && (
-                    <div className="container">
-                        <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} />
-                    </div>
+                    <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} />
                 )}
 
                 {blogsData?.length > 0 && (

@@ -251,7 +251,7 @@ export default function Navbar({ utm, navbarData }) {
                             <div className="!h-[54px] flex items-center justify-center lg:border-r border-gray-300 lg:px-6 cursor-pointer" onClick={handleSearch}><FiSearch size={20} /></div>
                             {hasToken ? (
                                 <button
-                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
@@ -259,7 +259,7 @@ export default function Navbar({ utm, navbarData }) {
                                 </button>
                             ) : (
                                 <button
-                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] rounded-[5px] !font-normal`}
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-2 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal`}
                                     onClick={(e) => handleRedirect(e, '/signup?', router)}
                                 >
                                     Login/Sign Up

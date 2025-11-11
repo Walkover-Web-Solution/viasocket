@@ -104,7 +104,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, navba
                         through AI.
                     </p>
                     <Link
-                        href="https://viasocket.com/faq/developer-hub"
+                        href="https://viasocket.com/help/developer-hub"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-accent"

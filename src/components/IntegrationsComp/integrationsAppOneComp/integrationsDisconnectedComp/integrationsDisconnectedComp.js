@@ -63,7 +63,7 @@ export default function IntegrationsDisconnectedComp({
                                 {appOneDetails?.name === 'QuickBooks' ? (
                                     <a
                                         target="_blank"
-                                        href="https://viasocket.com/faq/integration-guides/How-to-Reconnect-QuickBooks-with-viaSocket-"
+                                        href="https://viasocket.com/help/integration-guides/How-to-Reconnect-QuickBooks-with-viaSocket-"
                                         class="text-blue-500 underline"
                                     >
                                         {' '}

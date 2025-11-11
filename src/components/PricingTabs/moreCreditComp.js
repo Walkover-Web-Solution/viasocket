@@ -102,7 +102,7 @@ const MoreCreditComp = ({ selectedCountryData}) => {
                         </li>
                         <li className="flex items-center gap-3">
                             <GiCheckMark className="text-accent"/>
-                            <Link href="https://viasocket.com/faq/plans-and-pricing/what-are-credits" target='_blank' className="text-accent hover:underline w-fit">
+                            <Link href="https://viasocket.com/help/plans-and-pricing/what-are-credits" target='_blank' className="text-accent hover:underline w-fit">
                                 Know more
                             </Link>
                         </li>
