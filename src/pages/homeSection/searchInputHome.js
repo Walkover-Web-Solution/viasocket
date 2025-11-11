@@ -181,7 +181,7 @@ const SearchInputHome = ({
         industries = selectedIndustries,
         departments = selectedDepartments
     ) => {
-        if (apps.length === 0 && industries.length === 0 && departments.length === 0) {
+        if (searchTerm.length === 0 && apps.length === 0 && industries.length === 0 && departments.length === 0) {
             return;
         }
 
@@ -202,10 +202,9 @@ const SearchInputHome = ({
             const selectedAppSlugs = apps.map((app) => app.appslugname);
 
             handleTemplateFilterChange({
-                searchTerm: '',
-                selectedIndustries: industries,
+                searchTerm: searchTerm,
                 selectedApps: selectedAppSlugs,
-                selectedDepartments: departments,
+                selectedCategories: [...industries, ...departments],
             });
 
             onTemplatesChange &&
@@ -369,7 +368,8 @@ const SearchInputHome = ({
                                     if (
                                         selectedApps.length > 0 ||
                                         selectedIndustries.length > 0 ||
-                                        selectedDepartments.length > 0
+                                        selectedDepartments.length > 0 ||
+                                        customIndustry != ''
                                     ) {
                                         handleSearchTemplates();
                                         if (enableVideos) handleSearchVideos();

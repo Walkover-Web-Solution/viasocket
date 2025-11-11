@@ -9,20 +9,26 @@ export const useTemplateFilters = (templates = []) => {
     const [requireAllApps, setRequireAllApps] = useState(false);
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
 
-    // Memoized filtered templates to avoid unnecessary recalculations
     const filteredTemplates = useMemo(() => {
         let filtered = [...templates];
+        let filteredChanged = false;
 
-        // Filter by categories
+        // Filter by categories (industries and departments included)
         if (selectedCategories.length > 0) {
+            filteredChanged = true;
             filtered = filtered.filter((template) => {
                 return template.category && template.category.some((cat) => selectedCategories.includes(cat));
             });
+
+            if (filtered.length === 0) {
+                filtered = [...templates];
+            }
         }
 
         // Filter by apps
         if (selectedApps.length > 0) {
-            filtered = filtered.filter((template) => {
+
+            let filterFunction = (template) => {
                 const pluginSlugs = (template.pluginData || []).map((p) => p.pluginslugname);
 
                 const appMatches = (slug) => {
@@ -34,28 +40,33 @@ export const useTemplateFilters = (templates = []) => {
                 return requireAllApps
                     ? selectedApps.every(appMatches) // AND logic
                     : selectedApps.some(appMatches);  // OR logic (default)
-            });
-            
+            }
+            if (filteredChanged) {
+                const selectedAppFiltered = templates.filter(filterFunction)
+                filtered = [...filtered, ...selectedAppFiltered]
+            } else {
+                filtered = filtered.filter(filterFunction);
+            }
+            filteredChanged = true;
         }
 
         // Filter by search term
         if (searchTerm.trim()) {
-            const searchWords = searchTerm.toLowerCase().split(/\s+/);
-            filtered = filtered
-                .map((template) => {
-                    const title = template.title?.toLowerCase() || '';
-                    const matchedWords = searchWords.filter((word) => title.includes(word));
-                    return {
-                        ...template,
-                        matchScore: matchedWords.length,
-                    };
-                })
-                .filter((t) => t.matchScore > 0)
-                .sort((a, b) => b.matchScore - a.matchScore);
+            const filterFunction = (template) =>
+                template.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                template.metadata?.description?.toLowerCase().includes(searchTerm.toLowerCase())
+            if (filteredChanged) {
+                const searchTermFiltered = templates.filter(filterFunction)
+                filtered = [...filtered, ...searchTermFiltered]
+            } else {
+                filtered = filtered.filter(filterFunction);
+            }
+            filteredChanged = true;
         }
 
         // Remove templates without image
         filtered = filtered.filter((template) => template.templateUrl && template.templateUrl.trim() !== '');
+
 
         // Clean up match scores
         return filtered.map(({ matchScore, ...rest }) => rest);
@@ -106,7 +117,7 @@ export const useTemplateFilters = (templates = []) => {
         selectedApps,
         requireAllApps,
         visibleCount,
-        
+
         // Computed values
         filteredTemplates,
         sortedTemplates,
@@ -115,12 +126,12 @@ export const useTemplateFilters = (templates = []) => {
         hasMoreTemplates: visibleCount < remainingTemplates.length,
         totalFilters: selectedCategories.length + selectedApps.length,
         hasResults: filteredTemplates.length > 0,
-        
+
         // Actions
         handleFilterChange,
         handleLoadMore,
         clearAllFilters,
-        
+
         // Individual setters (if needed for specific use cases)
         setSearchTerm,
         setSelectedCategories,
