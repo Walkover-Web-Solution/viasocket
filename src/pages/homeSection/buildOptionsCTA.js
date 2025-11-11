@@ -17,7 +17,7 @@ const BuildOptionsCTA = () => {
             <div className="flex items-center flex-wrap gap-4">
                 {' '}
                 <Link
-                    href="https://tally.so/r/wzVdKZ"
+                    href="https://flow.viasocket.com/projects/"
                     target="_blank"
                     className="border-b-2 custom-border border-dotted"
                 >
