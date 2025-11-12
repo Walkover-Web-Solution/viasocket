@@ -11,7 +11,7 @@ const BuildOptionsCTA = () => {
                 className="border-b-2 custom-border border-dotted flex"
             >
                 build from scratch
-                <BsStars /> - take help from human experts
+                <BsStars /> or take help from human experts
             </Link>
             <div className="flex items-center mx-auto">
                 <img

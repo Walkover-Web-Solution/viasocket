@@ -168,6 +168,7 @@ export default function IntegrationsAppOneComp({
                                         onSearchResults={handleSearchResults}
                                         onCategoriesResults={handleCategoriesResults}
                                         onDebounceValueChange={handleDebounceValueChange}
+                                        app={appOneDetails}
                                     />
                                 </div>
                             </div>
