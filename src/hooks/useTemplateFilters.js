@@ -8,6 +8,7 @@ export const useTemplateFilters = (templates = []) => {
     const [selectedApps, setSelectedApps] = useState([]);
     const [requireAllApps, setRequireAllApps] = useState(false);
     const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
+    const [customIndustry, setCustomIndustry] = useState('');
 
     const filteredTemplates = useMemo(() => {
         let filtered = [...templates];
@@ -20,7 +21,7 @@ export const useTemplateFilters = (templates = []) => {
                 return template.category && template.category.some((cat) => selectedCategories.includes(cat));
             });
 
-            if (filtered.length === 0) {
+            if (customIndustry === '' && filtered.length === 0) {
                 filtered = [...templates];
             }
         }
@@ -86,12 +87,13 @@ export const useTemplateFilters = (templates = []) => {
     }, [sortedTemplates]);
 
     // Callback handlers
-    const handleFilterChange = useCallback(({ searchTerm: newSearchTerm, selectedCategories: newCategories, selectedApps: newApps, requireAllApps: newRequireAllApps }) => {
+    const handleFilterChange = useCallback(({ searchTerm: newSearchTerm, selectedCategories: newCategories, selectedApps: newApps, requireAllApps: newRequireAllApps, customIndustry: newCustomIndustry }) => {
         setSearchTerm(newSearchTerm || '');
         setSelectedCategories(newCategories || []);
         setSelectedApps(newApps || []);
         setRequireAllApps(!!newRequireAllApps);
         setVisibleCount(TEMPLATES_PER_PAGE); // Reset visible count when filters change
+        setCustomIndustry(newCustomIndustry || '');
     }, []);
 
     const handleLoadMore = useCallback(() => {

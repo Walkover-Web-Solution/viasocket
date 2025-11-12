@@ -74,6 +74,7 @@ const SearchInputHome = ({
     const [showAiResponse, setShowAiResponse] = useState(false);
     const [hasBrowserFocus, setHasBrowserFocus] = useState(false);
     const [shouldShowCaret, setShouldShowCaret] = useState(true);
+    const [customIndustry, setCustomIndustry] = useState('');
     const {
         filteredTemplates,
         hasResults: hasTemplateResults,
@@ -146,6 +147,7 @@ const SearchInputHome = ({
         setSearchTerm('');
         setCurrentSuggestion('');
         setSuggestionText('');
+        setCustomIndustry('');
         setShowDropdown(false);
     };
 
@@ -205,6 +207,7 @@ const SearchInputHome = ({
                 searchTerm: searchTerm,
                 selectedApps: selectedAppSlugs,
                 selectedCategories: [...industries, ...departments],
+                customIndustry: customIndustry,
             });
 
             onTemplatesChange &&
@@ -360,16 +363,17 @@ const SearchInputHome = ({
                             handleSelectDepartment(matchingDepartment);
                         } else {
                             // If no exact match, treat as a custom industry
-                            const customIndustry = searchTerm.trim();
-                            if (!selectedIndustries.includes(customIndustry)) {
-                                setSelectedIndustries((prev) => [...prev, customIndustry]);
+                            const custom = searchTerm.trim();
+                            setCustomIndustry(custom);
+                            if (!selectedIndustries.includes(custom)) {
+                                setSelectedIndustries((prev) => [...prev, custom]);
                                 setSearchTerm('');
                                 setTimeout(() => {
                                     if (
                                         selectedApps.length > 0 ||
                                         selectedIndustries.length > 0 ||
                                         selectedDepartments.length > 0 ||
-                                        customIndustry != ''
+                                        custom !== ''
                                     ) {
                                         handleSearchTemplates();
                                         if (enableVideos) handleSearchVideos();
