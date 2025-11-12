@@ -3,17 +3,15 @@ import { BsStars } from 'react-icons/bs';
 
 const BuildOptionsCTA = () => {
     return (
-        <div className="text-xl gap-2 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
-            or{' '}
+        <div className="text-xl gap-4 justify-center flex-wrap flex items-center mb-12 max-w-2xl mx-auto relative z-index-1 pl-6">
             <Link
                 href="https://viasocket.com/signup"
                 target="_blank"
                 className="border-b-2 custom-border border-dotted flex"
             >
-                build from scratch
-                <BsStars /> or take help from human experts
+                Build from scratch <BsStars /> or assign to human experts
             </Link>
-            <div className="flex items-center mx-auto">
+            <div className="flex items-center">
                 <img
                     src="/review-image/1.svg"
                     alt="review"
