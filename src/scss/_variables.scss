@@ -1,11 +1,11 @@
 :root {
+    --tw-border-opacity: 1;
+
     /** Border Colors */
 
-    --custom-border: #84898a;
+    --custom-border: rgb(209 213 219 / var(--tw-border-opacity, 1));
     --accent-border-color: #a8200d;
     --flow-border-color: #84898a;
-    // --flow-border-color: #000000;
-
 
     /** Background colors */
     --background-color-black: #000000;
@@ -15,7 +15,8 @@
     /** Text Colors*/
     --text-color-black: #000000;
     --text-color-white: #ffffff;
-    
+
     /** utility*/
     --u-base: 4px;
 }
+

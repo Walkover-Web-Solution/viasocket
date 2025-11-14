@@ -263,7 +263,7 @@ export default function IntegrationsIndexComp({
                     </div>
                 </div>
                 {!debounceValue && (
-                    <div className="flex justify-end items-end w-full">
+                    <div className="flex justify-end items-end w-full gap-2">
                         {integrationsInfo?.page > 0 && (
                             <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToPrev())}>
                                 <GrFormPreviousLink size={20} /> Prev

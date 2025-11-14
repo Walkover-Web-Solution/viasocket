@@ -79,7 +79,7 @@ const IntegrationSearchApps = ({
 
     return (
         <>
-            <label className="input border w-full sm:w-auto md:min-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
+            <label className="input border w-full sm:w-auto md:min-w-[460px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                 <MdSearch fontSize={20} />
                 <input
                     value={searchTerm}
@@ -87,7 +87,7 @@ const IntegrationSearchApps = ({
                         setSearchTerm(e.target.value);
                     }}
                     type="text"
-                    className={`${style.input} grow`}
+                    className={`${style.input} grow truncate w-48`}
                     placeholder={`Search any app to connect with ${app?.name || 'apps'}`} />
             </label>
         </>

@@ -108,7 +108,7 @@ export default function McpAppComp({
         <>
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
-                <div className="cont gap-8">
+                <div className="cont gap-6">
                     <Navbar navbarData={navbarData} utm={'/mcp'} />
 
                     <div className="flex flex-col gap-8 global-top-space pt-12">
@@ -118,35 +118,33 @@ export default function McpAppComp({
                                     MCP{' '}
                                 </Link>
                                 <MdChevronRight fontSize={22} />
-                                <div className="flex items-center gap-0 capitalize">
-                                    {appOneDetails?.name}
-                                </div>
+                                <div className="flex items-center gap-0 capitalize">{appOneDetails?.name}</div>
                             </div>
                         </div>
                     </div>
 
                     <div className="container flex flex-col lg:flex-row gap-4">
-                        <div className="cont gap-12 w-full lg:w-2/3">
+                        <div className="cont gap-8 w-full lg:w-2/3 justify-center">
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-white">
-                                    {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                    {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
                                         <Image
                                             src="/assets/brand/favicon-96x96.png"
                                             alt={appOneDetails?.name}
                                             width={30}
                                             height={30}
                                         />
-                                    ) : (
-                                        <Image
-                                            src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
-                                            alt={appOneDetails?.name}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    )}
+                                    ) : ( */}
+                                    <Image
+                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
+                                        alt={appOneDetails?.name}
+                                        width={30}
+                                        height={30}
+                                    />
+                                    {/* )} */}
                                 </div>
 
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
                                     <div className="cont">
                                         <h2 className="h3 capitalize">viaSocket MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
@@ -156,15 +154,17 @@ export default function McpAppComp({
                                         <h2 className="h3">MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                             <div className="cont justify-center gap-2">
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ||
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <div className="cont gap-1">
                                         <h1 className="h1 capitalize"> MCP Server for {appOneDetails?.name}</h1>
                                         <p className="text-base font-medium sm:text-lg md:text-xl text-black text-start">
-                                            Connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools like ChatGPT, Claude,
-                                            and Cursor using the viaSocket MCP Server.
+                                            Connect <span className="capitalize">{appOneDetails?.name}</span> actions
+                                            with AI tools like ChatGPT, Claude, and Cursor using the viaSocket MCP
+                                            Server.
                                         </p>
                                     </div>
                                 ) : (
@@ -193,7 +193,7 @@ export default function McpAppComp({
                                 )}
                             </div>
                         </div>
-                        <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-12 w-full lg:w-fit lg:ml-auto">
+                        <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-8 w-full lg:w-fit lg:ml-auto">
                             <div className="flex gap-4 items-center">
                                 <MdSupportAgent size={28} />
                                 <div className="">
@@ -209,8 +209,12 @@ export default function McpAppComp({
                                 <div className="">
                                     <h2 className="font-semibold">You</h2>
                                     <h3 className="text-gray-500">
-                                        {mcpPromptData[0]?.prompt || <>
-                                            I want to perform an action in <span className='capitalize'>{appOneDetails?.name}</span></>}
+                                        {mcpPromptData[0]?.prompt || (
+                                            <>
+                                                I want to perform an action in{' '}
+                                                <span className="capitalize">{appOneDetails?.name}</span>
+                                            </>
+                                        )}
                                     </h3>
                                 </div>
                             </div>
@@ -232,9 +236,9 @@ export default function McpAppComp({
                                             />
                                             <h2 className="text-gray-500">Action in Progress...</h2>
                                         </div>
-                                        {mcpPromptData[0]?.action && (
+                                        {/* {mcpPromptData[0]?.action && (
                                             <p className="text-gray-500">{mcpPromptData[0]?.action}</p>
-                                        )}
+                                        )} */}
                                     </div>
                                 </div>
                             </div>
@@ -260,11 +264,13 @@ export default function McpAppComp({
                     <div className="cont sm:cont__py gap-12 p-6 md:p-12  h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
                             <h2 className="h2">
-                                Connect <span className='capitalize'>{appOneDetails?.name}</span> to Any AI Assistant in 3 Easy Steps
+                                Connect <span className="capitalize">{appOneDetails?.name}</span> to Any AI Assistant in
+                                3 Easy Steps
                             </h2>
                             <h3 className="sub__h1">
-                                viaSocket MCP Server lets you easily connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools
-                                like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
+                                viaSocket MCP Server lets you easily connect{' '}
+                                <span className="capitalize">{appOneDetails?.name}</span> actions with AI tools like
+                                ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
                                 integrations or deal with a bulky setup.
                             </h3>
                         </div>
@@ -367,19 +373,13 @@ export default function McpAppComp({
                         <div className="flex justify-end items-center w-full">
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
-                                    <Link
-                                        className="border custom-border px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium bg-white"
-                                        href={createURL(goToPrev())}
-                                    >
+                                    <Link className="btn btn-outline" href={createURL(goToPrev())}>
                                         <MdChevronLeft size={18} />
                                         Prev
                                     </Link>
                                 )}
                                 {showNext && (
-                                    <Link
-                                        className="border custom-border px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium bg-white"
-                                        href={createURL(goToNext())}
-                                    >
+                                    <Link className="btn btn-outline" href={createURL(goToNext())}>
                                         Next
                                         <MdChevronRight size={18} />
                                     </Link>
@@ -503,7 +503,8 @@ export default function McpAppComp({
                                         </Link>
                                     ))}
                                 </div>
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ||
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <p className="text-sm text-gray-500">
                                         viaSocket is not affiliated with Adobe. Adobe and its trademarks are the
                                         property of Adobe Inc.
