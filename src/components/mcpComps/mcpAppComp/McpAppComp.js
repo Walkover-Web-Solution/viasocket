@@ -118,9 +118,7 @@ export default function McpAppComp({
                                     MCP{' '}
                                 </Link>
                                 <MdChevronRight fontSize={22} />
-                                <div className="flex items-center gap-0 capitalize">
-                                    {appOneDetails?.name}
-                                </div>
+                                <div className="flex items-center gap-0 capitalize">{appOneDetails?.name}</div>
                             </div>
                         </div>
                     </div>
@@ -129,21 +127,21 @@ export default function McpAppComp({
                         <div className="cont gap-8 w-full lg:w-2/3 justify-center">
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-white">
-                                    {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                    {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
                                         <Image
                                             src="/assets/brand/favicon-96x96.png"
                                             alt={appOneDetails?.name}
                                             width={30}
                                             height={30}
                                         />
-                                    ) : (
-                                        <Image
-                                            src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
-                                            alt={appOneDetails?.name}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    )}
+                                    ) : ( */}
+                                    <Image
+                                        src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
+                                        alt={appOneDetails?.name}
+                                        width={30}
+                                        height={30}
+                                    />
+                                    {/* )} */}
                                 </div>
 
                                 {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
@@ -159,12 +157,14 @@ export default function McpAppComp({
                                 )} */}
                             </div>
                             <div className="cont justify-center gap-2">
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ||
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <div className="cont gap-1">
                                         <h1 className="h1 capitalize"> MCP Server for {appOneDetails?.name}</h1>
                                         <p className="text-base font-medium sm:text-lg md:text-xl text-black text-start">
-                                            Connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools like ChatGPT, Claude,
-                                            and Cursor using the viaSocket MCP Server.
+                                            Connect <span className="capitalize">{appOneDetails?.name}</span> actions
+                                            with AI tools like ChatGPT, Claude, and Cursor using the viaSocket MCP
+                                            Server.
                                         </p>
                                     </div>
                                 ) : (
@@ -209,8 +209,12 @@ export default function McpAppComp({
                                 <div className="">
                                     <h2 className="font-semibold">You</h2>
                                     <h3 className="text-gray-500">
-                                        {mcpPromptData[0]?.prompt || <>
-                                            I want to perform an action in <span className='capitalize'>{appOneDetails?.name}</span></>}
+                                        {mcpPromptData[0]?.prompt || (
+                                            <>
+                                                I want to perform an action in{' '}
+                                                <span className="capitalize">{appOneDetails?.name}</span>
+                                            </>
+                                        )}
                                     </h3>
                                 </div>
                             </div>
@@ -260,11 +264,13 @@ export default function McpAppComp({
                     <div className="cont sm:cont__py gap-12 p-6 md:p-12  h-fit border  bg-black text-white">
                         <div className="flex flex-col gap-2 justify-center w-full">
                             <h2 className="h2">
-                                Connect <span className='capitalize'>{appOneDetails?.name}</span> to Any AI Assistant in 3 Easy Steps
+                                Connect <span className="capitalize">{appOneDetails?.name}</span> to Any AI Assistant in
+                                3 Easy Steps
                             </h2>
                             <h3 className="sub__h1">
-                                viaSocket MCP Server lets you easily connect <span className='capitalize'>{appOneDetails?.name}</span> actions with AI tools
-                                like ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
+                                viaSocket MCP Server lets you easily connect{' '}
+                                <span className="capitalize">{appOneDetails?.name}</span> actions with AI tools like
+                                ChatGPT, Claude, and Cursor, all with built-in authentication. No need to manage
                                 integrations or deal with a bulky setup.
                             </h3>
                         </div>
@@ -367,19 +373,13 @@ export default function McpAppComp({
                         <div className="flex justify-end items-center w-full">
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
-                                    <Link
-                                        className="btn btn-outline"
-                                        href={createURL(goToPrev())}
-                                    >
+                                    <Link className="btn btn-outline" href={createURL(goToPrev())}>
                                         <MdChevronLeft size={18} />
                                         Prev
                                     </Link>
                                 )}
                                 {showNext && (
-                                    <Link
-                                        className="btn btn-outline"
-                                        href={createURL(goToNext())}
-                                    >
+                                    <Link className="btn btn-outline" href={createURL(goToNext())}>
                                         Next
                                         <MdChevronRight size={18} />
                                     </Link>
@@ -503,7 +503,8 @@ export default function McpAppComp({
                                         </Link>
                                     ))}
                                 </div>
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {appOneDetails?.name?.toLowerCase().includes('adobe') ||
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <p className="text-sm text-gray-500">
                                         viaSocket is not affiliated with Adobe. Adobe and its trademarks are the
                                         property of Adobe Inc.
