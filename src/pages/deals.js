@@ -7,43 +7,99 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 // import { MdSearch } from 'react-icons/md';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { GiCheckMark } from 'react-icons/gi';
-import { getAppCount, getApps } from '@/utils/axiosCalls';
+import { getAppCount } from '@/utils/axiosCalls';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MdLock } from "react-icons/md";
 import { GoArrowUpRight } from "react-icons/go";
+import Countdown from 'react-countdown';
+import Marquee from "react-fast-marquee";
 
 export const runtime = 'experimental-edge';
 
-const Deals = ({ footerData, navbarData, appCount, blackFridaySaleData, apps, metaData }) => {
+const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
     const router = useRouter();
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/deals'} />
             <Navbar navbarData={navbarData} />
-            <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space relative">
-                <div className="flex flex-col items-center">
-                    <h1 className="text-6xl uppercase">
-                        Black Friday Sale
-                    </h1>
-                    <h2 className="text-2xl max-w-[650px]">
-                        The biggest SaaS deals of the year.
-                    </h2>
+            <div className='global-top-space relative'>
+                <div className="flex items-center dotted-background h-[400px] justify-center">
+                    <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-auto sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
+                        <h1 className="text-6xl uppercase">
+                            Black Friday <span className="text-accent">Sale</span>
+                        </h1>
+                        <h2 className="text-2xl max-w-[650px]">
+                            The biggest SaaS deals of the year.
+                        </h2>
+                    </div>
                 </div>
 
-                <p className="min-w-fit lg:absolute lg:top-[40px] lg:right-[40px] m-auto">
-                    <span className="text-base">Want to list your app for sale?</span>
-                    <Link
-                        href="https://tally.so/r/D42g25"
-                        target="_blank"
-                        className="text-accent text-xs flex items-center gap-1"
+                <div className="dotted-background">
+                    <Marquee
+                        speed={40}
+                        autoFill
+                        pauseOnHover={true}
                     >
-                        Apply before 28th Nov 2025 <GoArrowUpRight />
-                    </Link>
-                </p>
+                        <div className="inline-flex gap-8 py-2 bg-black text-gray-400 uppercase font-semibold text-sm border-black">
+                            <p className='ml-4'>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <p>Black Friday <span className="text-white">Sale</span></p>
+                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                        </div>
+                    </Marquee>
 
-                {/* <div className="flex flex-col items-center">
+                    <Marquee
+                        direction="right"
+                        speed={40}
+                        autoFill
+                        pauseOnHover={true}
+                    >
+                        <div className="inline-flex gap-8 py-2 bg-black text-gray-400 mt-4 uppercase font-semibold text-sm">
+                            <p className='ml-4'>Lifetime Free Deals</p>
+                            <p>up to 90% off</p>
+                            <p>Free for one year</p>
+                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                            <p>Lifetime Free Deals</p>
+                            <p>up to 90% off</p>
+                            <p>Free for one year</p>
+                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                            <p>Lifetime Free Deals</p>
+                            <p>up to 90% off</p>
+                            <p>Free for one year</p>
+                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                            <p>Lifetime Free Deals</p>
+                            <p>up to 90% off</p>
+                            <p>Free for one year</p>
+                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                        </div>
+                    </Marquee>
+                </div>
+
+
+                <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12 global-top-space">
+                    <p className="min-w-fit lg:absolute lg:top-[40px] lg:right-[40px] m-auto border custom-border p-4 bg-[#faf9f6]">
+                        <span className="text-base">Want to list your app for sale?</span>
+                        <Link
+                            href="https://tally.so/r/D42g25"
+                            target="_blank"
+                            className="text-accent text-xs flex items-center gap-1"
+                        >
+                            Apply before 28th Nov 2025 <GoArrowUpRight />
+                        </Link>
+                    </p>
+
+                    {/* <div className="flex flex-col items-center">
                     <label className="input border w-full sm:w-auto md:min-w-[460px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
                         <MdSearch fontSize={20} />
                         <input
@@ -53,66 +109,131 @@ const Deals = ({ footerData, navbarData, appCount, blackFridaySaleData, apps, me
                     </label>
                 </div> */}
 
-                <div className="flex gap-12 justify-center items-center flex-wrap bg-black border custom-border text-white">
-                    <div className='flex flex-col justify-center items-center gap-8 p-6 md:p-12'>
-                        <h2 className="h2">
-                            viaSocket is Free For Lifetime
-                        </h2>
-                        <div className='flex justify-center gap-8 items-center flex-wrap'>
-                            <div className="flex items-center gap-2">
-                                <GiCheckMark className="text-accent" />
-                                <p className="sub__h1">Unlimited Automations</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <GiCheckMark className="text-accent" />
-                                <p className="sub__h1">Unlimited Tasks</p>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <GiCheckMark className="text-accent" />
-                                <p className="sub__h1">Connect to {+appCount + 300}+ apps</p>
-                            </div>
-                        </div>
-                        <button
-                            className={`flex text-center justify-center gap-1 btn bg-accent text-white hover:bg-white hover:text-black border-none`}
-                            aria-label="sign up"
-                            onClick={(e) => handleRedirect(e, '/signup?', router)}
-                        >
-                            Grab your offer now
-                        </button>
-                    </div>
-                </div>
-
-                <div className="flex flex-row gap-4 flex-wrap justify-center items-center">
-                    {blackFridaySaleData?.map((item, index) => (
-                        <div className="flex flex-col gap-4 border custom-border p-6 bg-white max-w-[500px]" key={`blackFridaySaleData-${index}`}>
+                    <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 md:gap-12 gap-6 bg-white border custom-border">
+                        <div className='flex flex-col justify-center items-start gap-4 p-6 md:p-12'>
                             <div className="flex items-center gap-2">
                                 <Image
-                                    src={`https://thingsofbrand.com/api/icon/${item?.appdomain}`}
-                                    alt={item?.appname || ''}
+                                    src={'https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png'}
+                                    alt={'viaSocket'}
                                     width={36}
                                     height={36}
                                     className="w-9 h-9"
                                 />
-                                <h3 className='h3'>{item?.appname || ''}</h3>
+                                <h3 className='h3'>viaSocket</h3>
                             </div>
-                            <h3 className='h3'>{item?.offer_tagline || ''}</h3>
-                            <p>{item?.offer_description || ''}</p>
-                            <Link href={item?.offerpricing_url || ''} target='_blank' className='btn btn-accent w-full'>View offer</Link>
+                            <h3 className="h3">
+                                viaSocket is Free For Lifetime
+                            </h3>
+                            <p>Secure lifetime access to a complete automation platform with unlimited workflows and task executions across 1600+ integrations.</p>
+                            <button
+                                className={`btn btn-accent w-full mt-auto`}
+                                aria-label="sign up"
+                                onClick={(e) => handleRedirect(e, '/signup?', router)}
+                            >
+                                Grab your offer now
+                            </button>
                         </div>
-                    ))}
-                </div>
+                        <div className="cont md:gap-6 gap-4 border-l bg-white p-6 lg:p-12 flex items-center justify-center flex-col lg:flex-row">
+                            <div className="cont gap-3">
+                                <span className="px-3 py-1 text-xs font-semibold text-white bg-black rounded-full w-fit">
+                                    🎁  <span className="ml-2">One Time Bonus</span>
+                                </span>
+                                <p className="h3 text-accent font-bold">$100 Bonus</p>
+                                <p className="text-gray-700 text-md">Use this to take help from experts</p>
+                            </div>
+                            <div className="flex items-center md:justify-center lg:flex-1 overflow-hidden">
+                                <div className="flex -space-x-5">
+                                    <Image
+                                        src="/review-image/1.svg"
+                                        alt="Customer support expert avatar"
+                                        width={100}
+                                        height={100}
+                                        className="w-32 h-32"
+                                    />
+                                    <Image
+                                        src="/review-image/2.svg"
+                                        alt="Technical support expert avatar"
+                                        width={100}
+                                        height={100}
+                                        className="w-32 h-32"
+                                    />
+                                    <Image
+                                        src="/review-image/3.svg"
+                                        alt="Automation specialist expert avatar"
+                                        width={100}
+                                        height={100}
+                                        className="w-32 h-32"
+                                    />
+                                    <Image
+                                        src="/review-image/4.svg"
+                                        alt="Integration expert avatar"
+                                        width={100}
+                                        height={100}
+                                        className="w-32 h-32"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                <div className='flex flex-col gap-4 justify-center items-center p-6 lg:p-12 bg-white border custom-border w-fit m-auto'>
-                    <h2 className="h2 flex items-center gap-2">
-                        <MdLock className='text-accent shrink-0 !text-[44px]' />
-                        <span>Unlock 100+ more SaaS app deals on</span>
-                    </h2>
-                    <h2 className="h2"> 28th Nov 2025</h2>
-                </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                        {blackFridaySaleData?.map((item, index) => (
+                            <div className="flex flex-col gap-4 border custom-border p-6 bg-white max-w-[500px]" key={`blackFridaySaleData-${index}`}>
+                                <div className="flex items-center gap-2">
+                                    <Image
+                                        src={`https://thingsofbrand.com/api/icon/${item?.appdomain}` || `https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
+                                        alt={item?.appname || ''}
+                                        width={36}
+                                        height={36}
+                                        className="w-9 h-9"
+                                    />
+                                    <h3 className='h3'>{item?.appname || ''}</h3>
+                                </div>
+                                <h3 className='h3'>{item?.offer_tagline || ''}</h3>
+                                <p>{item?.offer_description || ''}</p>
+                                <Link href={item?.offerpricing_url || ''} target='_blank' className='btn btn-accent w-full mt-auto'>View offer</Link>
+                            </div>
+                        ))}
+                    </div>
 
-                <div className="cont lg:gap-20 md:gap-16 gap-12">
-                    <div className="cont">
-                        <Footer footerData={footerData} />
+                    <div className='flex flex-col items-center gap-6 p-6 md:p-10 lg:p-12 bg-white border custom-border w-full max-w-3xl mx-auto'>
+                        <h2 className="h2 flex items-center gap-2 text-center">
+                            <MdLock className='text-accent shrink-0 !text-[44px]' />
+                            <span>Unlock 100+ more SaaS app deals on</span>
+                        </h2>
+                        <h2 className="h2">28th Nov 2025</h2>
+
+                        <div>
+                            <Countdown
+                                date={new Date('2025-11-28')}
+                                renderer={({ days, hours, minutes, seconds }) => (
+                                    <div className="flex space-x-4 flex-wrap justify-center items-center">
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{days}</div>
+                                            <div className="text-sm text-gray-500">DAYS</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{hours}</div>
+                                            <div className="text-sm text-gray-500">HOURS</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{minutes}</div>
+                                            <div className="text-sm text-gray-500">MINUTES</div>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <div className="text-2xl font-bold text-gray-800">{seconds}</div>
+                                            <div className="text-sm text-gray-500">SECONDS</div>
+                                        </div>
+                                    </div>
+                                )}
+                            />
+                        </div>
+                    </div>
+
+                    <div className="cont lg:gap-20 md:gap-16 gap-12">
+                        <div className="cont">
+                            <Footer footerData={footerData} />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -132,9 +253,6 @@ export async function getServerSideProps(context) {
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
     const blackFridaySaleData = await getBlackFridaySaleData(BLACKFRIDAYSALE_FIELDS, '', pageUrl);
-    const apps = await getApps('', pageUrl);
-
-    console.log(apps, 'apps');
 
     return {
         props: {
@@ -143,7 +261,6 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             appCount: appCount || 0,
             blackFridaySaleData: blackFridaySaleData || [],
-            apps: apps || [],
         },
     };
 }
