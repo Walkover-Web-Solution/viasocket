@@ -108,7 +108,7 @@ export default function McpAppComp({
         <>
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
-                <div className="cont gap-8">
+                <div className="cont gap-6">
                     <Navbar navbarData={navbarData} utm={'/mcp'} />
 
                     <div className="flex flex-col gap-8 global-top-space pt-12">
@@ -126,7 +126,7 @@ export default function McpAppComp({
                     </div>
 
                     <div className="container flex flex-col lg:flex-row gap-4">
-                        <div className="cont gap-12 w-full lg:w-2/3">
+                        <div className="cont gap-8 w-full lg:w-2/3 justify-center">
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-white">
                                     {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
@@ -146,7 +146,7 @@ export default function McpAppComp({
                                     )}
                                 </div>
 
-                                {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
+                                {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
                                     <div className="cont">
                                         <h2 className="h3 capitalize">viaSocket MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
@@ -156,7 +156,7 @@ export default function McpAppComp({
                                         <h2 className="h3">MCP for {appOneDetails?.name}</h2>
                                         <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
                                     </div>
-                                )}
+                                )} */}
                             </div>
                             <div className="cont justify-center gap-2">
                                 {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
@@ -193,7 +193,7 @@ export default function McpAppComp({
                                 )}
                             </div>
                         </div>
-                        <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-12 w-full lg:w-fit lg:ml-auto">
+                        <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-8 w-full lg:w-fit lg:ml-auto">
                             <div className="flex gap-4 items-center">
                                 <MdSupportAgent size={28} />
                                 <div className="">
@@ -232,9 +232,9 @@ export default function McpAppComp({
                                             />
                                             <h2 className="text-gray-500">Action in Progress...</h2>
                                         </div>
-                                        {mcpPromptData[0]?.action && (
+                                        {/* {mcpPromptData[0]?.action && (
                                             <p className="text-gray-500">{mcpPromptData[0]?.action}</p>
-                                        )}
+                                        )} */}
                                     </div>
                                 </div>
                             </div>
@@ -368,7 +368,7 @@ export default function McpAppComp({
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
                                     <Link
-                                        className="border custom-border px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium bg-white"
+                                        className="btn btn-outline"
                                         href={createURL(goToPrev())}
                                     >
                                         <MdChevronLeft size={18} />
@@ -377,7 +377,7 @@ export default function McpAppComp({
                                 )}
                                 {showNext && (
                                     <Link
-                                        className="border custom-border px-6 py-2 flex items-center gap-2 hover-bg-grey-100-text-black transition-colors font-medium bg-white"
+                                        className="btn btn-outline"
                                         href={createURL(goToNext())}
                                     >
                                         Next

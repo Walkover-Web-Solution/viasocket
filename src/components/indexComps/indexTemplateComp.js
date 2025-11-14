@@ -73,7 +73,7 @@ const IndexTemplateComp = ({ categories }) => {
                         {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex text-xs lg:text-sm py-2 px-4 font-medium border custom-border ${
+                                className={`flex text-xs lg:text-sm py-2 px-4 font-medium border custom-border rounded-full ${
                                     selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-white text-black'
                                 }`}
                                 onClick={() => handleSelectCategory(cat)}
