@@ -215,18 +215,18 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                     </div>
 
                     <div className="flex items-center justify-center border bg-white w-full max-w-[700px] mx-auto">
-                        <div className="bg-white p-8 w-full border-t-8 border-[#a8200d] text-center">
+                        <div className="bg-white md:p-8 p-4 w-full border-t-8 border-[#a8200d] text-center">
                             <h2 className="text-gray-800 mb-2 h2 font-semibold">
                                 HUGE SAAS DEALS UNLOCK!
                             </h2>
-                            <div className='flex items-center justify-center'><span><MdLock className='text-accent shrink-0 !text-[24px]' /> {' '}</span>
+                            <div className='flex items-start justify-center mb-4'><span><MdLock className='text-accent shrink-0 !text-[24px]' /></span>
                             <p className="text-accent sub__h1 font-semibold">
                                 Unlock 100+ More SaaS App Deals
                             </p></div>
 
-                            <div className="text-black p-4 mb-8 text-center">
+                            <div className="text-black p-4 mb-4 text-center">
                                 <p className="text-lg font-medium">Deals Unlocking On:</p>
-                                <p className="text-4xl font-semibold mt-1">28<span className="text-3xl font-light align-top">th</span> Nov 2025</p>
+                                <p className="sm:text-4xl text-2xl font-semibold mt-1">28<span className="sm:text-3xl text-xl font-light align-top">th</span> Nov 2025</p>
                             </div>
 
                             <Countdown
@@ -234,22 +234,22 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                                 renderer={({ days, hours, minutes, seconds }) => (
                                     <div className="flex justify-between text-center space-x-2 sm:space-x-4 mb-8 max-w-[600px] mx-auto">
                                         <div className="flex-1 bg-white p-3 border border-gray-200">
-                                            <div className="text-4xl font-semibold text-gray-900 leading-none">{days}</div>
+                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{days}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">DAYS</div>
                                         </div>
 
                                         <div className="flex-1 bg-white p-3 border border-gray-200">
-                                            <div className="text-4xl font-semibold text-gray-900 leading-none">{hours}</div>
+                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{hours}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">HOURS</div>
                                         </div>
 
                                         <div className="flex-1 bg-white p-3 border border-gray-200">
-                                            <div className="text-4xl font-semibold text-gray-900 leading-none">{minutes}</div>
+                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{minutes}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">MINUTES</div>
                                         </div>
 
                                         <div className="flex-1 bg-white p-3 border border-gray-200">
-                                            <div className="text-4xl font-semibold text-gray-900 leading-none">{seconds}</div>
+                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{seconds}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">SECONDS</div>
                                         </div>
                                     </div>
