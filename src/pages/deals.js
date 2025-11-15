@@ -36,54 +36,58 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                 </div>
 
                 <div className="dotted-background">
-                    <Marquee
-                        speed={40}
-                        autoFill
-                        pauseOnHover={true}
-                    >
-                        <div className="inline-flex gap-8 py-2 bg-black text-gray-400 uppercase font-semibold text-sm border-black">
-                            <p className='ml-4'>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <p>Black Friday <span className="text-white">Sale</span></p>
-                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
-                        </div>
-                    </Marquee>
+                    <div className="bg-black mb-4">
+                        <Marquee
+                            speed={40}
+                            autoFill
+                            pauseOnHover={true}
+                        >
+                            <div className="inline-flex gap-8 py-2 text-gray-400 uppercase font-semibold text-sm border-black">
+                                <p className='ml-4'>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <p>Black Friday <span className="text-white">Sale</span></p>
+                                <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                            </div>
+                        </Marquee>
+                    </div>
 
-                    <Marquee
-                        direction="right"
-                        speed={40}
-                        autoFill
-                        pauseOnHover={true}
-                    >
-                        <div className="inline-flex gap-8 py-2 bg-black text-gray-400 mt-4 uppercase font-semibold text-sm">
-                            <p className='ml-4'>Lifetime Free Deals</p>
-                            <p>up to 90% off</p>
-                            <p>Free for one year</p>
-                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
-                            <p>Lifetime Free Deals</p>
-                            <p>up to 90% off</p>
-                            <p>Free for one year</p>
-                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
-                            <p>Lifetime Free Deals</p>
-                            <p>up to 90% off</p>
-                            <p>Free for one year</p>
-                            <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
-                            <p>Lifetime Free Deals</p>
-                            <p>up to 90% off</p>
-                            <p>Free for one year</p>
-                            <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
-                        </div>
-                    </Marquee>
+                    <div className="bg-black">
+                        <Marquee
+                            direction="right"
+                            speed={40}
+                            autoFill
+                            pauseOnHover={true}
+                        >
+                            <div className="inline-flex gap-8 py-2 text-gray-400 uppercase font-semibold text-sm">
+                                <p className='ml-4'>Lifetime Free Deals</p>
+                                <p>up to 90% off</p>
+                                <p>Free for one year</p>
+                                <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <p>Lifetime Free Deals</p>
+                                <p>up to 90% off</p>
+                                <p>Free for one year</p>
+                                <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <p>Lifetime Free Deals</p>
+                                <p>up to 90% off</p>
+                                <p>Free for one year</p>
+                                <img src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <p>Lifetime Free Deals</p>
+                                <p>up to 90% off</p>
+                                <p>Free for one year</p>
+                                <img src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                            </div>
+                        </Marquee>
+                    </div>
                 </div>
 
 
@@ -176,9 +180,9 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {blackFridaySaleData?.map((item, index) => (
-                            <div className="flex flex-col gap-4 border custom-border p-6 bg-white max-w-[500px]" key={`blackFridaySaleData-${index}`}>
+                            <div className="flex flex-col gap-4 border custom-border p-6 bg-white" key={`blackFridaySaleData-${index}`}>
                                 <div className="flex items-center gap-2">
                                     <Image
                                         src={`https://thingsofbrand.com/api/icon/${item?.appdomain}` || `https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
