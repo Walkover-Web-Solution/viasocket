@@ -156,19 +156,13 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                <div className='bg-black'>
-                    <Marquee
-                        speed={40}
-                        autoFill
-                        pauseOnHover={true}
-                    >
-                        <div className="h-[34px] flex justify-center items-center text-gray-300 inline-flex gap-44">
-                            <Link href="/deals" target="_blank" className='underline ml-44'>Black Friday Sale <GoArrowUpRight className="inline" /></Link>
-                            <Link href="/deals" target="_blank" className='underline'>Black Friday Sale <GoArrowUpRight className="inline" /></Link>
-                            <Link href="/deals" target="_blank" className='underline'>Black Friday Sale <GoArrowUpRight className="inline" /></Link>
-                        </div>
-                    </Marquee>
-                </div>
+                <Link href="/deals">
+                    <div className="w-full p-2 text-center transparent-border-black gradient-background border-b border-b-black">
+                        <p className="!text-xs text-black hover:underline">
+                            Black Friday Sale <GoArrowUpRight className="inline" />
+                        </p>
+                    </div>
+                </Link>
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
