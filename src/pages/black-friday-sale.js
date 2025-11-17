@@ -1,7 +1,9 @@
 import Navbar from '@/components/navbar/navbar';
+import FAQSection from '@/components/faqSection/faqSection';
 import { getFooterData, getNavbarData, getBlackFridaySaleData } from '@/utils/getData';
 import { FOOTER_FIELDS, NAVBAR_FIELDS, BLACKFRIDAYSALE_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
+import { getFaqData } from '@/utils/getFaqData';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 // import { MdSearch } from 'react-icons/md';
@@ -30,7 +32,7 @@ const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
     );
 };
 
-const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
+const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData }) => {
     const router = useRouter();
     return (
         <>
@@ -40,7 +42,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                 <div className="flex items-center dotted-background h-[400px] justify-center">
                     <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-auto sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
                         <h1 className="text-6xl uppercase">
-                            Black Friday <span className="text-accent">Sale</span>
+                            Black Friday <span className="text-accent">2025</span>
                         </h1>
                         <h2 className="text-2xl max-w-[650px]">
                             The biggest SaaS deals of the year.
@@ -124,7 +126,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                             type="text"
                         />
                     </label>
-                </div> */}
+                    </div> */}
 
                     <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 md:gap-12 gap-6 bg-white border custom-border">
                         <div className='flex flex-col justify-center items-start gap-4 p-6 md:p-12'>
@@ -195,7 +197,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {blackFridaySaleData?.map((item, index) => (
-                            <div className="flex flex-col gap-4 border custom-border p-6 bg-white" key={`blackFridaySaleData-${index}`}>
+                            <div className="flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white" key={`blackFridaySaleData-${index}`}>
                                 <div className="flex items-center gap-2">
                                     <FallbackImage
                                         src={`https://thingsofbrand.com/api/icon/${(item?.appdomain || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}`}
@@ -208,47 +210,46 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
                                     <h3 className='h3'>{item?.appname || ''}</h3>
                                 </div>
                                 <h3 className='h3'>{item?.offer_tagline || ''}</h3>
-                                <p>{item?.offer_description || ''}</p>
-                                <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mt-auto'>View offer</Link>
+                                <p className='mb-2'>{item?.offer_description || ''}</p>
+                                <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto'>View offer</Link>
                             </div>
                         ))}
                     </div>
 
-                    <div className="flex items-center justify-center border bg-white w-full max-w-[700px] mx-auto">
-                        <div className="bg-white md:p-8 p-4 w-full border-t-8 border-[#a8200d] text-center">
-                            <h2 className="text-gray-800 mb-2 h2 font-semibold">
-                                HUGE SAAS DEALS UNLOCK!
-                            </h2>
-                            <div className='flex items-start justify-center mb-4'><span><MdLock className='text-accent shrink-0 !text-[24px]' /></span>
-                            <p className="text-accent sub__h1 font-semibold">
-                                Unlock 100+ More SaaS App Deals
-                            </p></div>
+                    <div className="border bg-white w-full max-w-[700px] mx-auto">
+                        <div className="bg-white w-full md:pt-12 pt-6 gap-8 flex flex-col items-center justify-center text-center">
+                            <p className='flex md:gap-2 px-6'>
+                                <MdLock className='text-accent shrink-0' size={34} />
+                                <span className="text-accent text-3xl font-semibold">
+                                    Unlock 100+ More SaaS App Deals
+                                </span>
+                            </p>
 
-                            <div className="text-black p-4 mb-4 text-center">
-                                <p className="text-lg font-medium">Deals Unlocking On:</p>
+                            <div className="text-black">
+                                <p className="text-lg font-medium">Deals Go Live On:</p>
                                 <p className="sm:text-4xl text-2xl font-semibold mt-1">28<span className="sm:text-3xl text-xl font-light align-top">th</span> Nov 2025</p>
                             </div>
 
                             <Countdown
                                 date={new Date('2025-11-28')}
                                 renderer={({ days, hours, minutes, seconds }) => (
-                                    <div className="flex justify-between text-center space-x-2 sm:space-x-4 mb-8 max-w-[600px] mx-auto">
-                                        <div className="flex-1 bg-white p-3 border border-gray-200">
+                                    <div className="flex justify-between text-center w-full mx-auto border-t">
+                                        <div className="flex-1 p-3 border-r border-gray-200">
                                             <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{days}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">DAYS</div>
                                         </div>
 
-                                        <div className="flex-1 bg-white p-3 border border-gray-200">
+                                        <div className="flex-1 p-3 border-r border-gray-200">
                                             <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{hours}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">HOURS</div>
                                         </div>
 
-                                        <div className="flex-1 bg-white p-3 border border-gray-200">
+                                        <div className="flex-1 p-3 border-r border-gray-200">
                                             <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{minutes}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">MINUTES</div>
                                         </div>
 
-                                        <div className="flex-1 bg-white p-3 border border-gray-200">
+                                        <div className="flex-1 p-3">
                                             <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{seconds}</div>
                                             <div className="text-xs uppercase text-gray-500 mt-1">SECONDS</div>
                                         </div>
@@ -260,6 +261,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData }) => {
 
                     <div className="cont lg:gap-20 md:gap-16 gap-12">
                         <div className="cont">
+                            {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                             <Footer footerData={footerData} />
                         </div>
                     </div>
@@ -279,6 +281,7 @@ export async function getServerSideProps(context) {
     const metaData = await getMetaData('/deals', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
+    const faqData = await getFaqData('/deals', pageUrl);
     const appCount = await getAppCount(pageUrl);
     const blackFridaySaleData = await getBlackFridaySaleData(BLACKFRIDAYSALE_FIELDS, '', pageUrl);
 
@@ -289,6 +292,7 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             appCount: appCount || 0,
             blackFridaySaleData: blackFridaySaleData || [],
+            faqData: faqData || [],
         },
     };
 }
