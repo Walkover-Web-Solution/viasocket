@@ -36,7 +36,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
     const router = useRouter();
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/deals'} />
+            <MetaHeadComp metaData={metaData} page={'/black-friday-sale'} />
             <Navbar navbarData={navbarData} />
             <div className='global-top-space relative'>
                 <div className="flex items-center dotted-background h-[400px] justify-center">
@@ -261,7 +261,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
 
                     <div className="cont lg:gap-20 md:gap-16 gap-12">
                         <div className="cont">
-                            {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
+                            {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />}
                             <Footer footerData={footerData} />
                         </div>
                     </div>
@@ -278,10 +278,10 @@ export async function getServerSideProps(context) {
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-    const metaData = await getMetaData('/deals', pageUrl);
+    const metaData = await getMetaData('/black-friday-sale', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
-    const faqData = await getFaqData('/deals', pageUrl);
+    const faqData = await getFaqData('/black-friday-sale', pageUrl);
     const appCount = await getAppCount(pageUrl);
     const blackFridaySaleData = await getBlackFridaySaleData(BLACKFRIDAYSALE_FIELDS, '', pageUrl);
 
