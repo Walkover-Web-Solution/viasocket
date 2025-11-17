@@ -156,7 +156,7 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                <Link href="/deals">
+                <Link href="/black-friday-sale">
                     <div className="w-full p-2 text-center transparent-border-black gradient-background border-b border-b-black">
                         <p className="!text-xs text-black hover:underline">
                             Black Friday Sale <GoArrowUpRight className="inline" />
