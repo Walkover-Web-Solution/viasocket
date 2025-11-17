@@ -42,7 +42,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                 <div className="flex items-center dotted-background h-[400px] justify-center">
                     <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-auto sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
                         <h1 className="text-6xl uppercase">
-                            Black Friday <span className="text-accent">Sale</span>
+                            Black Friday <span className="text-accent">2025</span>
                         </h1>
                         <h2 className="text-2xl max-w-[650px]">
                             The biggest SaaS deals of the year.
@@ -218,12 +218,12 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
 
                     <div className="border bg-white w-full max-w-[700px] mx-auto">
                         <div className="bg-white w-full md:pt-12 pt-6 gap-8 flex flex-col items-center justify-center text-center">
-                            <div className='flex items-start justify-center'>
-                                <span><MdLock className='text-accent shrink-0 md:mr-2 !text-[34px]' /></span>
-                                <h2 className="text-accent h2 font-semibold">
+                            <p className='flex md:gap-2 px-6'>
+                                <MdLock className='text-accent shrink-0' size={34} />
+                                <span className="text-accent text-3xl font-semibold">
                                     Unlock 100+ More SaaS App Deals
-                                </h2>
-                            </div>
+                                </span>
+                            </p>
 
                             <div className="text-black">
                                 <p className="text-lg font-medium">Deals Go Live On:</p>
