@@ -8,6 +8,7 @@ import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
 import { GoArrowUpRight } from 'react-icons/go';
 import { FiSearch } from "react-icons/fi";
+import Marquee from "react-fast-marquee";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
@@ -155,6 +156,13 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
+                <Link href="/black-friday-sale">
+                    <div className="w-full p-2 text-center transparent-border-black gradient-background border-b">
+                        <p className="!text-xs text-black hover:underline">
+                            Black Friday 2025: View All SaaS Deals →
+                        </p>
+                    </div>
+                </Link>
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
@@ -166,8 +174,8 @@ export default function Navbar({ utm, navbarData }) {
                                                 <div
                                                     key={index}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name)
-                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
-                                                            : ''
+                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
+                                                        : ''
                                                         }`}
                                                     onMouseEnter={() => {
                                                         setGroupName(item.group_name);
@@ -180,8 +188,8 @@ export default function Navbar({ utm, navbarData }) {
                                             <div
                                                 key={index}
                                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name)
-                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
-                                                        : ''
+                                                    ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
+                                                    : ''
                                                     }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);

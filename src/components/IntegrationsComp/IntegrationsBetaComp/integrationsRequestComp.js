@@ -69,6 +69,11 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             return;
         }
 
+        if (!formData.useCase) {
+            alert('Use case is required.');
+            return;
+        }
+
         await submitForm();
         setShowSuccessPopup(true);
     };
