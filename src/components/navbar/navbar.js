@@ -151,7 +151,7 @@ export default function Navbar({ utm, navbarData }) {
     return (
         <>
             <div
-                className="fixed top-0 z-[100] w-full"
+                className="sticky top-0 z-[100] w-full"
                 onMouseLeave={() => {
                     setGroupName(originalGroupName);
                 }}

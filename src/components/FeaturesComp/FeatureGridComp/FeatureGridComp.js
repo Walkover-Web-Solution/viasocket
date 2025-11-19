@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-black-text-white justify-center transition-all duration-300 group ${style.featurecard} ` +
+            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-grey-100-text-black justify-center transition-all duration-300 group ${style.featurecard} ` +
             gridClass
         );
     }
@@ -47,15 +47,8 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     className={handleGridLayout(index)}
                                 >                                    
                                     <Image
-                                        className="block group-hover:hidden"
+                                        className="block"
                                         src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
-                                        width={36}
-                                        height={36}
-                                        alt={feature.name}
-                                    />
-                                    <Image
-                                        className="hidden group-hover:block"
-                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}
