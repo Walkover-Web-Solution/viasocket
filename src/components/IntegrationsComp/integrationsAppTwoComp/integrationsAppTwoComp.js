@@ -173,6 +173,7 @@ export default function IntegrationsAppTwoComp({
     videoData,
     getDoFollowUrlStatusArray,
     navbarData,
+    templateToShow
 }) {
     const router = useRouter();
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -466,7 +467,7 @@ export default function IntegrationsAppTwoComp({
                         )}
 
                         {/* Template Container */}
-                        <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} />
+                        <TemplateContainer selectedApps={[currentAppOne, currentAppTwo]} templateToShow={templateToShow} />
                     </div>
                 </div>
 

@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-black-text-white justify-center transition-all duration-300 group ${style.featurecard} ` +
+            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-grey-100-text-black justify-center transition-all duration-300 group ${style.featurecard} ` +
             gridClass
         );
     }
@@ -47,26 +47,19 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     className={handleGridLayout(index)}
                                 >                                    
                                     <Image
-                                        className="block group-hover:hidden"
+                                        className="block"
                                         src={feature?.iconimages[0] || 'https://placehold.co/40x40'}
                                         width={36}
                                         height={36}
                                         alt={feature.name}
                                     />
-                                    <Image
-                                        className="hidden group-hover:block"
-                                        src={feature?.iconimages[1] || 'https://placehold.co/40x40'}
-                                        width={36}
-                                        height={36}
-                                        alt={feature.name}
-                                    />
-                                    <div className="flex flex-col gap-2 mt-8">
+                                    <div className="flex flex-col gap-2 mt-8 py-4">
                                         <h2 className="text-lg font-semibold">{feature?.name}</h2>
                                         <p>{feature?.description}</p>
                                     </div>
                                     
-                                    <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <FaLongArrowAltRight className="text-2xl" style={{ transform: 'scaleX(2)' }}/>
+                                    <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                                        <span>Know More</span> <span><FaLongArrowAltRight className="text-xl" /></span> 
                                     </div>
                                 </Link>
                             );

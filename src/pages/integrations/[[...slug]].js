@@ -11,7 +11,7 @@ import Head from 'next/head';
 import { DOFOLLOWLINK_FIELDS, FOOTER_FIELDS, INTECATEGORY_FIELDS, INTECATEGORYlIST_FILED, USECASES_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getBlogData } from '@/utils/getBlogData';
 import { getVideoData } from '@/utils/getVideoData';
-import { getCombos, getApps, getAppCount } from '@/utils/axiosCalls';
+import { getCombos, getApps, getAppCount, getTemplates } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
@@ -35,7 +35,8 @@ export default function Integrations({
     videoData,
     appCount,
     getDoFollowUrlStatusArray,
-    navbarData
+    navbarData,
+    templateToShow
 }) {
     if (noData) {
         return (
@@ -65,6 +66,7 @@ export default function Integrations({
                     videoData={videoData}
                     getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                     navbarData={navbarData}
+                    templateToShow={templateToShow}
                 />
             </div>
         );
@@ -102,6 +104,7 @@ export default function Integrations({
                         appCount={appCount}
                         getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                         navbarData={navbarData}
+                        templateToShow={templateToShow}
                     />
                 </div>
             );
@@ -148,6 +151,11 @@ export async function getServerSideProps(context) {
         const blogTags2 = appTwoDetails?.appslugname;
         const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
         const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
+        const templateData = await getTemplates();
+        const validTemplates = templateData.filter(
+            t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+        );
+        const templateToShow = validTemplates;
         if (appOneDetails && appTwoDetails) {
             return {
                 props: {
@@ -166,6 +174,7 @@ export async function getServerSideProps(context) {
                     appCount: appCount || 0,
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                     navbarData: navbarData || {},
+                    templateToShow: templateToShow || [],
                 },
             };
         } else {
@@ -188,6 +197,11 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
         const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
+        const templateData = await getTemplates();
+        const validTemplates = templateData.filter(
+            t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+        );
+        const templateToShow = validTemplates;
 
         if (appOneDetails) {
             const blogTags = appOneDetails.appslugname;
@@ -217,6 +231,7 @@ export async function getServerSideProps(context) {
                     appCount: appCount || 0,
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                     navbarData: navbarData || {},
+                    templateToShow: templateToShow || [],
                 },
             };
         } else {

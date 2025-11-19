@@ -9,7 +9,7 @@ const BuildOptionsCTA = () => {
                 target="_blank"
                 className="border-b-2 custom-border border-dotted flex"
             >
-                Build from scratch <BsStars /> or assign to human experts
+                Build from scratch or assign to human experts
             </Link>
             <div className="flex items-center">
                 <img
