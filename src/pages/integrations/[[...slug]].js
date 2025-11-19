@@ -151,7 +151,7 @@ export async function getServerSideProps(context) {
         const blogTags2 = appTwoDetails?.appslugname;
         const blogData = await getBlogData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
         const videoData = await getVideoData({ tag1: blogTags1, tag2: blogTags2 }, pageUrl);
-        const templateData = await getTemplates();
+        const templateData = await getTemplates(pageUrl);
         const validTemplates = templateData.filter(
             t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
         );
@@ -197,7 +197,7 @@ export async function getServerSideProps(context) {
         const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
         const combosData = await getCombos(integrationsInfo, pageUrl);
         const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
-        const templateData = await getTemplates();
+        const templateData = await getTemplates(pageUrl);
         const validTemplates = templateData.filter(
             t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
         );
