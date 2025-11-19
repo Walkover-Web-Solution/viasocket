@@ -2,11 +2,10 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import { IoMdSearch } from 'react-icons/io';
 import searchApps from '@/utils/searchApps';
-import { getIndustries, getDepartments, getTemplates } from '@/utils/axiosCalls';
+import { getIndustries, getDepartments } from '@/utils/axiosCalls';
 import { getVideoData } from '@/utils/getVideoData';
 import { getBlogData } from '@/utils/getBlogData';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
-import { validateTemplateData } from '@/utils/validateTemplateData';
 import axios from 'axios';
 
 const filterListByName = (list, search) => {
@@ -42,10 +41,11 @@ const SearchInputHome = ({
     onAiResponseChange,
     onLoadingChange,
     onSelectionChange,
-    fetchApps,
+    initialApps,
     enableVideos = true,
     enableBlogs = true,
     enableAi = true,
+    templates,
 }) => {
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
@@ -64,7 +64,6 @@ const SearchInputHome = ({
     const [showDropdown, setShowDropdown] = useState(false);
     const [currentSuggestion, setCurrentSuggestion] = useState('');
     const [suggestionText, setSuggestionText] = useState('');
-    const [templates, setTemplates] = useState([]);
     const [videos, setVideos] = useState([]);
     const [blogs, setBlogs] = useState([]);
     const [aiResponse, setAiResponse] = useState('');
@@ -92,7 +91,6 @@ const SearchInputHome = ({
         onAiResponseChange?.({ aiResponse: '', showAiResponse: false });
     };
 
-    const fetchAppsData = useCallback(async () => await fetchApps(), [fetchApps]);
     const fetchIndustriesData = useCallback(async () => await getIndustries(window?.location?.href), []);
     const fetchDepartmentsData = useCallback(async () => await getDepartments(window?.location?.href), []);
 
@@ -188,40 +186,23 @@ const SearchInputHome = ({
         }
 
         setShowTemplates(true);
-        onLoadingChange && onLoadingChange({ templates: true });
+        // Filter templates based on selected apps, industries and departments
+        const selectedAppSlugs = apps.map((app) => app.appslugname);
 
-        try {
-            const templates = await getTemplates();
-            const validStatuses = ['verified_by_ai', 'verified'];
-            const templateData = (templates).filter(
-                t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
-            )
-            const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
-            const validTemplateData = validateTemplateData(verifiedTemplates);
-            setTemplates(validTemplateData);
+        handleTemplateFilterChange({
+            searchTerm: searchTerm,
+            selectedApps: selectedAppSlugs,
+            selectedCategories: [...industries, ...departments],
+            customIndustry: customIndustry,
+        });
 
-            // Filter templates based on selected apps, industries and departments
-            const selectedAppSlugs = apps.map((app) => app.appslugname);
-
-            handleTemplateFilterChange({
-                searchTerm: searchTerm,
-                selectedApps: selectedAppSlugs,
-                selectedCategories: [...industries, ...departments],
-                customIndustry: customIndustry,
+        onTemplatesChange &&
+            onTemplatesChange({
+                templates: templates,
+                filteredTemplates,
+                showTemplates: true,
+                hasResults: hasTemplateResults,
             });
-
-            onTemplatesChange &&
-                onTemplatesChange({
-                    templates: validTemplateData,
-                    filteredTemplates,
-                    showTemplates: true,
-                    hasResults: hasTemplateResults,
-                });
-        } catch (error) {
-            console.error('Error fetching templates:', error);
-        } finally {
-            onLoadingChange && onLoadingChange({ templates: false });
-        }
     };
 
     const handleSearchVideos = async (
@@ -441,7 +422,7 @@ const SearchInputHome = ({
 
         if (!value.trim()) {
             if (!allAppsCache.current) {
-                const apps = await fetchAppsData();
+                const apps = initialApps;
                 allAppsCache.current = apps;
             }
             setSearchData(filterSelectedApps(allAppsCache.current));
@@ -469,12 +450,12 @@ const SearchInputHome = ({
         } catch (error) {
             console.error(error);
         }
-    }, [allIndustries, allDepartments, filterSelectedApps, fetchAppsData]);
+    }, [allIndustries, allDepartments, filterSelectedApps]);
 
     useEffect(() => {
         const fetchInitialApps = async () => {
             try {
-                const apps = await fetchAppsData();
+                const apps = initialApps;
                 setSearchData(filterSelectedApps(apps));
             } catch (error) {
                 console.error(error);
@@ -505,7 +486,7 @@ const SearchInputHome = ({
         fetchInitialApps();
         fetchInitialIndustries();
         fetchInitialDepartments();
-    }, [fetchAppsData, filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
+    }, [filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
     // Auto-focus the search input when component mounts
     useEffect(() => {
         if (inputRef.current) {

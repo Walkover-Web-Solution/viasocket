@@ -8,7 +8,7 @@ import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS, NAVBAR_FIELD
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { getAppCount, getTemplates } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getApps } from '@/utils/axiosCalls';
 import Link from 'next/link';
 import AiAgentFeature from '@/pages/homeSection/aiAgentFeature';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
@@ -16,30 +16,11 @@ import ResultSection from '@/pages/homeSection/resultSection';
 import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
+import { validateTemplateData } from '@/utils/validateTemplateData';
 
 export const runtime = 'experimental-edge';
 
-// Move fetchApps function to the top level
-async function fetchApps(category) {
-    try {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''
-            }`
-        );
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const rawData = await response.json();
-        return rawData?.data;
-    } catch (error) {
-        console.error('Error fetching apps:', error);
-        return [];
-    }
-}
-
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData, templateData }) => {
+const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData, templateData, initialApps }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -125,7 +106,8 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                         onAiResponseChange={handleAiResponseChange}
                         onLoadingChange={handleLoadingChange}
                         onSelectionChange={handleSelectionChange}
-                        fetchApps={fetchApps}
+                        initialApps={initialApps}
+                        templates={templateData}
                     />
 
                     <BuildOptionsCTA />
@@ -251,7 +233,16 @@ export async function getServerSideProps(context) {
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
-    const templateData = await getTemplates(pageUrl);
+    const templates = await getTemplates(pageUrl);
+    const initialApps = await getApps({ limit: 50 }, pageUrl);
+
+    const validStatuses = ['verified_by_ai', 'verified'];
+
+    const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
+    
+    const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
+    
+    const validTemplateData = validateTemplateData(verifiedTemplates);
 
     const securityGridData = [
         {
@@ -300,7 +291,8 @@ export async function getServerSideProps(context) {
             indexTemplateData: indexTemplateData || [],
             reviewData: reviewData || [],
             navbarData: navbarData || [],
-            templateData: templateData || [],
+            templateData: validTemplateData || [],
+            initialApps: initialApps || [],
         },
     };
 }
