@@ -38,6 +38,7 @@ export default function IntegrationsAppOneComp({
     appCount,
     getDoFollowUrlStatusArray,
     navbarData,
+    templateToShow
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -294,7 +295,7 @@ export default function IntegrationsAppOneComp({
                         </div>
 
                         {/* Template Container */}
-                        <TemplateContainer selectedApps={[appOneDetails]} />
+                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow}/>
                     </div>
                 </div>
 

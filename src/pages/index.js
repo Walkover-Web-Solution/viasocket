@@ -8,7 +8,7 @@ import { FOOTER_FIELDS, INDEXTEMPLATE_FIELDS, REVIEWSECTION_FIELDS, NAVBAR_FIELD
 import Navbar from '@/components/navbar/navbar';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { getAppCount } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates } from '@/utils/axiosCalls';
 import Link from 'next/link';
 import AiAgentFeature from '@/pages/homeSection/aiAgentFeature';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
@@ -39,7 +39,7 @@ async function fetchApps(category) {
     }
 }
 
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData }) => {
+const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData, templateData }) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -181,7 +181,7 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                         }}
                     ></div>
                     <div className="relative">
-                        <IndexTemplateComp categories={indexTemplateData} />
+                        <IndexTemplateComp categories={indexTemplateData} templates={templateData}/>
                     </div>
                 </div>
             )}
@@ -251,6 +251,7 @@ export async function getServerSideProps(context) {
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
+    const templateData = await getTemplates();
 
     const securityGridData = [
         {
@@ -299,6 +300,7 @@ export async function getServerSideProps(context) {
             indexTemplateData: indexTemplateData || [],
             reviewData: reviewData || [],
             navbarData: navbarData || [],
+            templateData: templateData || [],
         },
     };
 }
