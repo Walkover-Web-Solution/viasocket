@@ -105,29 +105,18 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                     </div>
                 </div>
 
+                <p className="w-fit lg:absolute lg:top-[40px] lg:right-[40px] mx-auto lg:mt-auto mt-12 border custom-border p-4 bg-[#faf9f6]">
+                    <span className="text-base">Want to list your app for sale?</span>
+                    <Link
+                        href="https://tally.so/r/D42g25"
+                        target="_blank"
+                        className="text-accent text-xs flex items-center gap-1"
+                    >
+                        Apply before 28th Nov 2025 <GoArrowUpRight />
+                    </Link>
+                </p>
 
-                <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                    <p className="min-w-fit lg:absolute lg:top-[40px] lg:right-[40px] m-auto border custom-border p-4 bg-[#faf9f6]">
-                        <span className="text-base">Want to list your app for sale?</span>
-                        <Link
-                            href="https://tally.so/r/D42g25"
-                            target="_blank"
-                            className="text-accent text-xs flex items-center gap-1"
-                        >
-                            Apply before 28th Nov 2025 <GoArrowUpRight />
-                        </Link>
-                    </p>
-
-                    {/* <div className="flex flex-col items-center">
-                    <label className="input border w-full sm:w-auto md:min-w-[460px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
-                        <MdSearch fontSize={20} />
-                        <input
-                            placeholder='search'
-                            type="text"
-                        />
-                    </label>
-                    </div> */}
-
+                <div className="container cont lg:py-20 md:py-16 py-12 lg:gap-20 md:gap-16 gap-12">
                     <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 md:gap-12 gap-6 bg-white border custom-border">
                         <div className='flex flex-col justify-center items-start gap-4 p-6 md:p-12'>
                             <div className="flex items-center gap-2">
@@ -195,7 +184,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {blackFridaySaleData?.map((item, index) => (
                             <div className="flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white" key={`blackFridaySaleData-${index}`}>
                                 <div className="flex items-center gap-2">
@@ -216,54 +205,57 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                         ))}
                     </div>
 
-                    <div className="border bg-white w-full max-w-[700px] mx-auto">
-                        <div className="bg-white w-full md:pt-12 pt-6 gap-8 flex flex-col items-center justify-center text-center">
-                            <p className='flex md:gap-2 px-6'>
-                                <MdLock className='text-accent shrink-0' size={34} />
-                                <span className="text-accent text-3xl font-semibold">
-                                    Unlock 100+ More SaaS App Deals
-                                </span>
-                            </p>
+                </div>
 
-                            <div className="text-black">
-                                <p className="text-lg font-medium">Deals Go Live On:</p>
-                                <p className="sm:text-4xl text-2xl font-semibold mt-1">28<span className="sm:text-3xl text-xl font-light align-top">th</span> Nov 2025</p>
-                            </div>
+                <div className='bg-red-diamond w-full flex flex-col justify-center items-center h-[640px] text-white z-[2] relative overflow-x-clip'>
+                    <div className="absolute top-0 left-[-50vw] w-[173%] h-full bg-[#a8200d] z-[-2]"></div>
+                    <div className="w-max-[600px] md:pt-12 pt-6 gap-8 flex flex-col items-center justify-center text-center">
+                        <p className='flex md:gap-2 px-6'>
+                            <MdLock className='text-white shrink-0' size={34} />
+                            <span className="text-3xl">
+                                Unlock 100+ More AI and SaaS App Deals
+                            </span>
+                        </p>
+                        <div>
+                            <p className="text-lg font-medium">Deals Go Live On:</p>
+                            <p className="sm:text-4xl text-2xl font-semibold mt-1">28<span className="sm:text-3xl text-xl font-light align-top">th</span> Nov 2025</p>
+                        </div>
+                        <Image alt="diamond" src={`https://viasocket.com/discovery/_next/static/media/diamond.59922613.svg`} style={{ color: 'transparent' }} loading="lazy" decoding="async" width="574" height="497" className='diamond-1 absolute bottom-0 lg:left-[-80px] left-[-32px] lg:w-[288px] lg:h-[288px] w-[127px] h-[117px] z-[-1]' />
+                        <Image alt="diamond" src={`https://viasocket.com/discovery/_next/static/media/diamond.59922613.svg`} style={{ color: 'transparent' }} loading="lazy" decoding="async" width="574" height="497" className='diamond-2 absolute lg:right-[-160px] top-0 z-[-1] right-[-64px] lg:w-[574px] lg:h-[497px] w-[207px] h-[158px]' />
 
-                            <Countdown
-                                date={new Date('2025-11-28')}
-                                renderer={({ days, hours, minutes, seconds }) => (
-                                    <div className="flex justify-between text-center w-full mx-auto border-t">
-                                        <div className="flex-1 p-3 border-r border-gray-200">
-                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{days}</div>
-                                            <div className="text-xs uppercase text-gray-500 mt-1">DAYS</div>
-                                        </div>
-
-                                        <div className="flex-1 p-3 border-r border-gray-200">
-                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{hours}</div>
-                                            <div className="text-xs uppercase text-gray-500 mt-1">HOURS</div>
-                                        </div>
-
-                                        <div className="flex-1 p-3 border-r border-gray-200">
-                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{minutes}</div>
-                                            <div className="text-xs uppercase text-gray-500 mt-1">MINUTES</div>
-                                        </div>
-
-                                        <div className="flex-1 p-3">
-                                            <div className="sm:text-4xl text-2xl font-semibold text-gray-900 leading-none">{seconds}</div>
-                                            <div className="text-xs uppercase text-gray-500 mt-1">SECONDS</div>
-                                        </div>
+                        <Countdown
+                            date={new Date('2025-11-28')}
+                            renderer={({ days, hours, minutes, seconds }) => (
+                                <div className="flex justify-between text-center w-full mx-auto sm:gap-4 gap-1 px-2">
+                                    <div className="flex-1 p-3 bg-[#f8dfdd] text-black rounded-lg">
+                                        <div className="sm:text-4xl text-2xl font-semibold leading-none">{days}</div>
+                                        <div className="text-xs uppercase mt-1">DAYS</div>
                                     </div>
-                                )}
-                            />
-                        </div>
-                    </div>
 
-                    <div className="cont lg:gap-20 md:gap-16 gap-12">
-                        <div className="cont">
-                            {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />}
-                            <Footer footerData={footerData} />
-                        </div>
+                                    <div className="flex-1 p-3 bg-[#f8dfdd] text-black rounded-lg">
+                                        <div className="sm:text-4xl text-2xl font-semibold leading-none">{hours}</div>
+                                        <div className="text-xs uppercase mt-1">HOURS</div>
+                                    </div>
+
+                                    <div className="flex-1 p-3 bg-[#f8dfdd] text-black rounded-lg">
+                                        <div className="sm:text-4xl text-2xl font-semibold leading-none">{minutes}</div>
+                                        <div className="text-xs uppercase mt-1">MINUTES</div>
+                                    </div>
+
+                                    <div className="flex-1 p-3 bg-[#f8dfdd] text-black rounded-lg">
+                                        <div className="sm:text-4xl text-2xl font-semibold leading-none">{seconds}</div>
+                                        <div className="text-xs uppercase mt-1">SECONDS</div>
+                                    </div>
+                                </div>
+                            )}
+                        />
+                    </div>
+                </div>
+
+                <div className="container lg:gap-20 md:gap-16 gap-12 lg:mt-20 md:mt-16 mt-12">
+                    <div className="cont">
+                        {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />}
+                        <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>
