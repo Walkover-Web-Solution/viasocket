@@ -251,7 +251,7 @@ export async function getServerSideProps(context) {
     const indexTemplateData = await getIndexTemplateData(INDEXTEMPLATE_FIELDS, '', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
-    const templateData = await getTemplates();
+    const templateData = await getTemplates(pageUrl);
 
     const securityGridData = [
         {
