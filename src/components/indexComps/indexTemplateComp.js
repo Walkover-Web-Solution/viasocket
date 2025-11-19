@@ -7,31 +7,13 @@ import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 import FlowRenderer from '../flowComp/flowRenderer';
 
-const IndexTemplateComp = ({ categories }) => {
+const IndexTemplateComp = ({ categories, templates }) => {
     const [selected, setSelected] = useState({
         name: 'Finance',
         scriptid: '72077fe9954a5122c1301f4a0dce567ebd54e5d5e6c0e4ff05cfd884361c7e52',
     });
-    const [templates, setTemplates] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [currentTemplate, setCurrentTemplate] = useState(null);
 
-    // Fetch templates once
-    useEffect(() => {
-        const fetchTemplates = async () => {
-            setIsLoading(true);
-            try {
-                const data = await getTemplates();
-                setTemplates(data || []);
-            } catch (error) {
-                console.error('Error fetching templates:', error);
-            } finally {
-                setIsLoading(false);
-            }
-        };
-
-        fetchTemplates();
-    }, []);
 
     // Create a map of templates { [id]: template }
     const templateMap = useMemo(() => {
@@ -58,10 +40,10 @@ const IndexTemplateComp = ({ categories }) => {
         const template = templateMap[selected?.scriptid];
         return template
             ? `/automations/${template?.title
-                  ?.trim()
-                  .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
-                  .replace(/\s+/g, '-') // replace spaces with '-'
-                  .toLowerCase()}/${template?.id}`
+                ?.trim()
+                .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
+                .replace(/\s+/g, '-') // replace spaces with '-'
+                .toLowerCase()}/${template?.id}`
             : '#';
     };
 
@@ -105,35 +87,23 @@ const IndexTemplateComp = ({ categories }) => {
                         style={{ height: '80vh' }}
                     >
                         <div className="border dotted-background custom-border h-full flex flex-col justify-between">
-                            {isLoading || !currentTemplate ? (
-                                <div className="space-y-4">
-                                    <div className="skeleton">
-                                        <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                                        <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-                                    </div>
-                                    <div className="skeleton">
-                                        <div className="h-[70vh] bg-gray-200 rounded-lg"></div>
-                                    </div>
+                            <div className="cont p-4 max-h-[64vh] overflow-hidden">
+                                <div className="cont gap-1 mb-4">
+                                    <h1 className="h3">{currentTemplate?.title}</h1>
+                                    <h2 className="h6 leading-none">
+                                        {currentTemplate?.metadata?.description || currentTemplate?.description}
+                                    </h2>
                                 </div>
-                            ) : (
-                                <div className="cont p-4 max-h-[64vh] overflow-hidden">
-                                    <div className="cont gap-1 mb-4">
-                                        <h1 className="h3">{currentTemplate?.title}</h1>
-                                        <h2 className="h6 leading-none">
-                                            {currentTemplate?.metadata?.description || currentTemplate?.description}
-                                        </h2>
-                                    </div>
-                                    <div className="w-full relative">
-                                        <FlowRenderer
-                                            flowJson={
-                                                currentTemplate?.metadata?.flowJson ||
-                                                currentTemplate?.flowJson ||
-                                                'https://placehold.co/600x400'
-                                            }
-                                        />
-                                    </div>
+                                <div className="w-full relative">
+                                    <FlowRenderer
+                                        flowJson={
+                                            currentTemplate?.metadata?.flowJson ||
+                                            currentTemplate?.flowJson ||
+                                            'https://placehold.co/600x400'
+                                        }
+                                    />
                                 </div>
-                            )}
+                            </div>
                             <div className="flex items-center justify-end p-4 flex-wrap gap-2">
                                 <Link href={getTemplateLink()} className="btn btn-accent">
                                     Use this template
