@@ -53,13 +53,13 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                         height={36}
                                         alt={feature.name}
                                     />
-                                    <div className="flex flex-col gap-2 mt-8">
+                                    <div className="flex flex-col gap-2 mt-8 py-4">
                                         <h2 className="text-lg font-semibold">{feature?.name}</h2>
                                         <p>{feature?.description}</p>
                                     </div>
                                     
-                                    <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <FaLongArrowAltRight className="text-2xl" style={{ transform: 'scaleX(2)' }}/>
+                                    <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
+                                        <span>Know More</span> <span><FaLongArrowAltRight className="text-xl" /></span> 
                                     </div>
                                 </Link>
                             );
