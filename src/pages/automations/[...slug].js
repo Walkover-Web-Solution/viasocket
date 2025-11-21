@@ -303,6 +303,16 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                             </div>
                         </div>
                     )}
+
+                    <div className="container">
+                        <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#faf9f6] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
+                            <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
+                                <h2 className="h2">Can't find the right template?</h2>
+                                <h2 className="h2">Start with AI</h2>
+                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started free</button>
+                            </div>
+                        </div>
+                    </div>
                     <div className="pb-4">
                         <Footer footerData={footerData} />
                     </div>
