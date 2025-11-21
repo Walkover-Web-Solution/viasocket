@@ -29,3 +29,6 @@ export async function sendErrorMessage({ error, pageUrl, source }) {
         console.error('Error sending error message:', err);
     }
 }
+
+
+
