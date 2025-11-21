@@ -195,35 +195,24 @@ export default function PricingTabsClient({ countries }) {
                   <div className="text-accent text-3xl mt-1"><FaGem /></div>
                   <h3 className="h2">Premium</h3>
                 </div>
-                <div>
-                  <div className="flex items-center border custom-border ">
-                    <button
-                      onClick={() => setActiveTab("monthly")}
-                      className={`text-sm py-4 px-2 w-[150px] border-r custom-border transition-all duration-200
-                      ${activeTab === "monthly"
-                          ? "bg-black text-white"
-                          : "bg-white"
-                        }`}
-                    >
-                      Monthly
-                    </button>
-                    <button
-                      onClick={() => setActiveTab("yearly")}
-                      className={`text-sm py-4 px-2 w-[150px] transition-all duration-200
-                      ${activeTab === "yearly"
-                          ? "bg-black text-white"
-                          : "bg-white"
-                        }`}
-                    >
-                      Yearly{" "}
-                      <span
-                        className={`ml-1 font-normal text-accent ${activeTab === "yearly" ? "text-white" : "text-accent"
-                          }`}
-                      >
-                        (20% off)
-                      </span>
-                    </button>
-                  </div>
+                <div className="relative flex items-center bg-gray-100 rounded-full p-1 w-[260px] border custom-border">
+                  <div
+                    className={`absolute top-1 bottom-1 w-1/2 bg-white rounded-full shadow transition-all duration-300`}
+                    style={{ left: activeTab === "monthly" ? "4px" : "calc(50% - 4px)" }}
+                  />
+
+                  <button
+                    onClick={() => setActiveTab("monthly")}
+                    className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === "monthly" ? "text-black" : "text-gray-500"}`}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("yearly")}
+                    className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === "yearly" ? "text-black" : "text-gray-500"}`}
+                  >
+                    Yearly
+                  </button>
                 </div>
               </div>
               <div className="flex items-center gap-2">
@@ -256,7 +245,7 @@ export default function PricingTabsClient({ countries }) {
                   <h4 className="text-base font-semibold mb-3">Premium plan includes:</h4>
                   <ul className="flex flex-col gap-2 text-md">
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent"/>
+                      <GiCheckMark className="text-accent" />
                       15k tasks/month
                       <div className="relative group inline-flex items-center">
                         <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
@@ -271,7 +260,7 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent"/>
+                      <GiCheckMark className="text-accent" />
                       5k Credits/month
                       <div className="relative group inline-flex items-center">
                         <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
@@ -286,11 +275,11 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent"/>
+                      <GiCheckMark className="text-accent" />
                       50% extra credit when buying additional credits
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent"/>
+                      <GiCheckMark className="text-accent" />
                       Priority support
                     </li>
                   </ul>
@@ -361,15 +350,15 @@ export default function PricingTabsClient({ countries }) {
                 <h4 className="text-base font-semibold">Enterprise plan includes:</h4>
                 <ul className="flex flex-col gap-2 text-md">
                   <li className="flex items-center gap-2">
-                    <GiCheckMark className="text-accent"/>
+                    <GiCheckMark className="text-accent" />
                     Dedicated account manager
                   </li>
                   <li className="flex items-center gap-2">
-                    <GiCheckMark className="text-accent"/>
+                    <GiCheckMark className="text-accent" />
                     SLA-backed priority support
                   </li>
                   <li className="flex items-center gap-2">
-                    <GiCheckMark className="text-accent"/>
+                    <GiCheckMark className="text-accent" />
                     Custom integrations & onboarding
                   </li>
                 </ul>
