@@ -320,7 +320,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                                 <h2 className="h2">Can't find the right template?</h2>
                                 <h2 className="h2">Start with AI</h2>
-                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started free</button>
+                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started Free</button>
                             </div>
                         </div>
                     </div>
