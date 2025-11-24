@@ -6,7 +6,6 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-// import { MdSearch } from 'react-icons/md';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
 import { getAppCount } from '@/utils/axiosCalls';
@@ -34,18 +33,56 @@ const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
 
 const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData }) => {
     const router = useRouter();
+    const [activeFilter, setActiveFilter] = useState('all');
+
+    const filters = [
+        { id: 'all', label: 'All', keywords: [] },
+        { id: 'lifetime', label: 'Lifetime access', keywords: ['lifetime access', 'lifetime deal', 'lifetime'] },
+        { id: '60', label: '60% off', keywords: ['60% off', '60 % off', '60% discount'] },
+        { id: '50', label: '50% off', keywords: ['50% off', '50 % off', '50% discount'] },
+        { id: '40', label: '40% off', keywords: ['40% off', '40 % off', '40% discount'] },
+        { id: '30', label: '30% off', keywords: ['30% off', '30 % off', '30% discount'] },
+    ];
+
+    const getFilteredDeals = () => {
+        if (!activeFilter) return blackFridaySaleData;
+
+        const selectedFilter = filters.find((f) => f.id === activeFilter);
+        if (!selectedFilter || selectedFilter.id === 'all') return blackFridaySaleData;
+
+        const keywords = selectedFilter.keywords.map((k) => k.toLowerCase());
+
+        return blackFridaySaleData?.filter((item) => {
+            const text = `${item?.offer_tagline || ''} ${item?.offer_description || ''}`.toLowerCase();
+            return keywords.some((keyword) => text.includes(keyword));
+        });
+    };
+
+    const filteredDeals = getFilteredDeals();
+
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/black-friday-sale'} />
             <Navbar navbarData={navbarData} />
             <div className='global-top-space relative'>
-                <div className="flex items-center dotted-background h-[400px] justify-center">
-                    <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-auto sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
+                <div className="flex items-center flex-col dotted-background h-auto pt-8 pb-16 sm:py-auto justify-center">
+                    <p className="w-fit ml-auto mr-[40px] lg:block hidden border custom-border mb-4 p-4 bg-[#faf9f6]">
+                        <span className="text-base">Want to list your app for sale?</span>
+                        <Link
+                            href="https://tally.so/r/D42g25"
+                            target="_blank"
+                            className="text-accent text-xs flex items-center gap-1"
+                        >
+                            Apply before 28th Nov 2025 <GoArrowUpRight />
+                        </Link>
+                    </p>
+                    <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
+                        <p className='border bg-white rounded-full px-4 py-1 mb-2 max-w-[80%]'> 100+ Handpicked Discounts & Lifetime Offers </p>
                         <h1 className="text-6xl uppercase">
-                            Black Friday <span className="text-accent">2025</span>
+                            SaaS Black Friday Deals <span className='text-accent'>2025</span>
                         </h1>
-                        <h2 className="text-2xl max-w-[650px]">
-                            The biggest SaaS deals of the year.
+                        <h2 className="text-2xl max-w-[600px]">
+                            Discover the biggest SaaS discounts of 2025. Updated daily with lifetime deals, automation tools, marketing software, CRM, AI agents & more.
                         </h2>
                     </div>
                 </div>
@@ -105,18 +142,17 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                     </div>
                 </div>
 
-                <p className="w-fit lg:absolute lg:top-[40px] lg:right-[40px] mx-auto lg:mt-auto mt-12 border custom-border p-4 bg-[#faf9f6]">
-                    <span className="text-base">Want to list your app for sale?</span>
-                    <Link
-                        href="https://tally.so/r/D42g25"
-                        target="_blank"
-                        className="text-accent text-xs flex items-center gap-1"
-                    >
-                        Apply before 28th Nov 2025 <GoArrowUpRight />
-                    </Link>
-                </p>
-
                 <div className="container cont lg:py-20 md:py-16 py-12 lg:gap-20 md:gap-16 gap-12">
+                    <p className="w-fit lg:hidden mx-auto border custom-border p-4 bg-[#faf9f6] block">
+                        <span className="text-base">Want to list your app for sale?</span>
+                        <Link
+                            href="https://tally.so/r/D42g25"
+                            target="_blank"
+                            className="text-accent text-xs flex items-center gap-1"
+                        >
+                            Apply before 28th Nov 2025 <GoArrowUpRight />
+                        </Link>
+                    </p>
                     <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 md:gap-12 gap-6 bg-white border custom-border">
                         <div className='flex flex-col justify-center items-start gap-4 p-6 md:p-12'>
                             <div className="flex items-center gap-2">
@@ -184,30 +220,49 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {blackFridaySaleData?.map((item, index) => (
-                            <div className="flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white" key={`blackFridaySaleData-${index}`}>
-                                <div className="flex items-center gap-2">
-                                    <FallbackImage
-                                        src={`https://thingsofbrand.com/api/icon/${(item?.appdomain || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}`}
-                                        fallbackSrc={`https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
-                                        alt={item?.appname || ''}
-                                        width={36}
-                                        height={36}
-                                        className="w-9 h-9"
-                                    />
-                                    <h3 className='h3'>{item?.appname || ''}</h3>
+                    <div>
+                        {/* filters goes here  */}
+                        <div className="flex flex-wrap gap-3 mb-8 md:mb-12 md:justify-start justify-center items-center">
+                            {filters.map((filter) => (
+                                <button
+                                    key={filter.id}
+                                    type="button"
+                                    onClick={() => setActiveFilter(filter.id)}
+                                    className={`px-4 py-2 rounded-full border text-sm font-medium transition ${activeFilter === filter.id
+                                        ? 'bg-black text-white border-black'
+                                        : 'bg-white text-black border custom-border hover:!bg-black hover:text-white'
+                                        }`}
+                                >
+                                    {filter.label}
+                                </button>
+                            ))}
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {filteredDeals?.map((item, index) => (
+                                <div className="flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white" key={`blackFridaySaleData-${index}`}>
+                                    <div className="flex items-center gap-2">
+                                        <FallbackImage
+                                            src={`https://thingsofbrand.com/api/icon/${(item?.appdomain || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}`}
+                                            fallbackSrc={`https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
+                                            alt={item?.appname || ''}
+                                            width={36}
+                                            height={36}
+                                            className="w-9 h-9"
+                                        />
+                                        <h3 className='h3'>{item?.appname || ''}</h3>
+                                    </div>
+                                    <h3 className='h3'>{item?.offer_tagline || ''}</h3>
+                                    <p className='mb-2'>{item?.offer_description || ''}</p>
+                                    <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
+                                        fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
+                                            method: 'POST',
+                                            body: JSON.stringify({ appdomain: item?.appdomain }),
+                                        });
+                                    }}>View offer</Link>
                                 </div>
-                                <h3 className='h3'>{item?.offer_tagline || ''}</h3>
-                                <p className='mb-2'>{item?.offer_description || ''}</p>
-                                <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
-                                    fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
-                                        method: 'POST',
-                                        body: JSON.stringify({ appdomain: item?.appdomain }),
-                                    });
-                                }}>View offer</Link>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
                     </div>
                 </div>
 
