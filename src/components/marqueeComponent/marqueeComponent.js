@@ -1,37 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { getTemplates } from "@/utils/axiosCalls";
 import { useTemplateFilters } from "@/hooks/useTemplateFilters";
-import { validateTemplateData } from "@/utils/validateTemplateData";
 import Marquee from "react-fast-marquee";
 
-const MarqueeComponent = ({ onTemplatesChange, onLoadingChange, onSelectionChange, categories, initialTemplates = [] }) => {
-    const [templates, setTemplates] = useState(Array.isArray(initialTemplates) ? initialTemplates : []);
+const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, templates = [] }) => {
     const [shouldNotify, setShouldNotify] = useState(false);
 
     const { filteredTemplates, hasResults, handleFilterChange } = useTemplateFilters(templates);
-
-    useEffect(() => {
-        // If templates were passed from server, use them and skip client fetch
-        if (Array.isArray(initialTemplates) && initialTemplates.length > 0) {
-            setTemplates(validateTemplateData(initialTemplates));
-            return;
-        }
-        const loadTemplates = async () => {
-            try {
-                onLoadingChange && onLoadingChange({ templates: true });
-                const templateData = await getTemplates();
-                const validStatuses = ['verified_by_ai', 'verified'];
-                const verifiedTemplates = (templateData || []).filter((t) => validStatuses.includes(t.verified));
-                setTemplates(validateTemplateData(verifiedTemplates));
-            } catch (err) {
-                console.error('Error loading templates for marquee:', err);
-            } finally {
-                onLoadingChange && onLoadingChange({ templates: false });
-            }
-        };
-        loadTemplates();
-    }, [initialTemplates, onLoadingChange]);
 
     // Build a unique list of apps used in templates using pluginData
     const templateApps = useMemo(() => {

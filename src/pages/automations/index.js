@@ -10,7 +10,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getBlogData } from '@/utils/getBlogData';
 import BlogGrid from '@/components/blogGrid/blogGrid';
-import { getTemplates } from '@/utils/axiosCalls';
+import { getTemplates, getApps } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { useRouter } from 'next/router';
@@ -21,12 +21,13 @@ import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps, navbarData }) => {
+const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps, navbarData, initialApps }) => {
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -55,14 +56,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         clearAllFilters,
     } = useTemplateFilters(templateToShow);
 
-    // fetchApps function for SearchInputHome
-    const fetchApps = useCallback(async (category) => {
-        const response = await fetch(
-            `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
-        );
-        const rawData = await response.json();
-        return rawData?.data;
-    }, []);
 
     useEffect(() => {
         if (templateToShow.length === 0) return;
@@ -120,8 +113,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
         : remainingTemplates.length > 0
-          ? remainingTemplates
-          : filteredTemplates;
+            ? remainingTemplates
+            : filteredTemplates;
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -138,18 +131,18 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         onTemplatesChange={handleTemplatesChange}
                         onLoadingChange={handleLoadingChange}
                         onSelectionChange={handleSelectionChange}
-                        fetchApps={fetchApps}
+                        initialApps={initialApps}
                         enableVideos={false}
                         enableBlogs={false}
                         enableAi={false}
+                        templates={templateToShow}
                     />
                     <BuildOptionsCTA />
                     <MarqueeComponent
                         onTemplatesChange={handleTemplatesChange}
-                        onLoadingChange={handleLoadingChange}
                         onSelectionChange={handleSelectionChange}
                         categories={categories}
-                        initialTemplates={templateToShow}
+                        templates={templateToShow}
                     />
                     <div>
                         {(selectedCategories.length > 0 || selectedApps.length > 0) && (
@@ -175,8 +168,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         appSlug === 'webhook'
                                             ? 'Webhook'
                                             : appSlug === 'cron'
-                                              ? 'Cron'
-                                              : appData?.pluginname || appSlug;
+                                                ? 'Cron'
+                                                : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -323,6 +316,15 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
 
                 <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
                     <div className="container">
+                        <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-transparent items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
+                            <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
+                                <h2 className="h2">Can't find the right template?</h2>
+                                <h2 className="h2">Start with AI</h2>
+                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started Free</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="container">
                         <BlogGrid posts={blogData} />
                     </div>
                     <div className="pb-4">
@@ -362,6 +364,8 @@ export async function getServerSideProps(context) {
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
 
     const validTemplateData = validateTemplateData(verifiedTemplates);
+
+    const initialApps = await getApps({ limit: 50 }, pageUrl);
 
     const categories = [
         ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),
@@ -415,6 +419,7 @@ export async function getServerSideProps(context) {
             categories: categories || [],
             apps: apps || [],
             navbarData: navbarData || [],
+            initialApps: initialApps || [],
         },
     };
 }

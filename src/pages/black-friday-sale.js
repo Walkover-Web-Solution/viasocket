@@ -200,11 +200,15 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                                 </div>
                                 <h3 className='h3'>{item?.offer_tagline || ''}</h3>
                                 <p className='mb-2'>{item?.offer_description || ''}</p>
-                                <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto'>View offer</Link>
+                                <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
+                                    fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
+                                        method: 'POST',
+                                        body: JSON.stringify({ appdomain: item?.appdomain }),
+                                    });
+                                }}>View offer</Link>
                             </div>
                         ))}
                     </div>
-
                 </div>
 
                 <div className='bg-red-diamond w-full flex flex-col justify-center items-center h-[640px] text-white z-[2] relative overflow-x-clip'>
