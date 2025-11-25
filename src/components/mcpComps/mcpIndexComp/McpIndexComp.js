@@ -181,6 +181,7 @@ export default function McpIndexComp({
                             type="text"
                             className={`${style.input} grow`}
                             placeholder="Search your favorite MCP Servers"
+                            autoFocus
                         />
                     </label>
                     <div className="flex">

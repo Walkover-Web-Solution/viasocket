@@ -87,6 +87,7 @@ const IntegrationSearchApps = ({
                         setSearchTerm(e.target.value);
                     }}
                     type="text"
+                    autoFocus
                     className={`${style.input} grow truncate w-48`}
                     placeholder={`Search any app to connect with ${app?.name || 'apps'}`} />
             </label>
