@@ -5,7 +5,7 @@ import Footer from '@/components/footer/footer';
 import Navbar from '@/components/navbar/navbar';
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
@@ -37,6 +37,7 @@ export default function IntegrationsIndexComp({
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
     const [searchedCategoies, setSearchedCategoies] = useState();
+    const searchInputRef = useRef(null);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -55,6 +56,11 @@ export default function IntegrationsIndexComp({
             clearTimeout(handler);
         };
     }, [searchTerm]);
+    useEffect(() => {
+        if (searchInputRef.current) {
+            searchInputRef.current.focus();
+        }
+    }, []);
     useEffect(() => {
         if (debounceValue) {
             const filteredCategories = categories?.filter((category) =>
@@ -143,6 +149,7 @@ export default function IntegrationsIndexComp({
                     <label className="input border lg:min-w-[345px] lg:max-w-[400px] w-full  custom-border flex items-center gap-2 focus-within:outline-none">
                         <MdSearch fontSize={20} />
                         <input
+                            ref={searchInputRef}
                             value={searchTerm}
                             onChange={(e) => {
                                 setSearchTerm(e.target.value);
@@ -150,6 +157,7 @@ export default function IntegrationsIndexComp({
                             type="text"
                             className={`${style.input} grow`}
                             placeholder="Search your favorite tools "
+                            autoFocus
                         />
                     </label>
                 </div>
