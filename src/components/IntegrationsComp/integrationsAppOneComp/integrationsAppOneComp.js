@@ -118,19 +118,18 @@ export default function IntegrationsAppOneComp({
                             <div className="flex items-center gap-0">{appOneDetails?.name}</div>
                         </div>
 
-                        {combosData?.combinations?.length > 0 && (
-                            <div className="text-xl gap-4 flex-wrap flex items-center">
-                                <button
-                                    onClick={(e) =>
-                                        handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
-                                    }
-                                    className="btn btn-outline"
-                                    rel="nofollow"
-                                >
-                                    Connect to {appOneDetails?.name} <MdOpenInNew />
-                                </button>
-                            </div>
-                        )}
+
+                        <div className="text-xl gap-4 flex-wrap flex items-center">
+                            <button
+                                onClick={(e) =>
+                                    handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
+                                }
+                                className="btn btn-outline"
+                                rel="nofollow"
+                            >
+                                Connect to {appOneDetails?.name} <MdOpenInNew />
+                            </button>
+                        </div>
                     </div>
 
                     {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
