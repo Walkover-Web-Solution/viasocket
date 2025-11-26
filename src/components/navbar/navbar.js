@@ -7,8 +7,6 @@ import { useState, useEffect, useLayoutEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
 import { GoArrowUpRight } from 'react-icons/go';
-import { FiSearch } from "react-icons/fi";
-import Marquee from "react-fast-marquee";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
@@ -142,12 +140,6 @@ export default function Navbar({ utm, navbarData }) {
         setHasToken(Boolean(token));
     }, []);
 
-    const handleSearch = () => {
-        if (window.DocStarSearch) {
-            window.DocStarSearch.open();
-        }
-    };
-
     return (
         <>
             <div
@@ -256,7 +248,6 @@ export default function Navbar({ utm, navbarData }) {
                                             );
                                         })}
                             </div>
-                            <div className="!h-[54px] flex items-center justify-center lg:border-r border-gray-300 lg:px-6 cursor-pointer" onClick={handleSearch}><FiSearch size={20} /></div>
                             {hasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}

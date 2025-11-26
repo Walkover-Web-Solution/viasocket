@@ -17,6 +17,7 @@ import ReviewIframe from './homeSection/reviewIframe';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 import { validateTemplateData } from '@/utils/validateTemplateData';
+import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 
 export const runtime = 'experimental-edge';
 
@@ -163,10 +164,15 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                         }}
                     ></div>
                     <div className="relative">
-                        <IndexTemplateComp categories={indexTemplateData} templates={templateData}/>
+                        <IndexTemplateComp categories={indexTemplateData} templates={templateData} />
                     </div>
                 </div>
             )}
+
+            {/* Show Apps Section */}
+            <div className="bg-white py-20">
+                <ShowAppsIndex />
+            </div>
 
             {/* Review Section */}
             <div className="bg-[#f9f6f1]">

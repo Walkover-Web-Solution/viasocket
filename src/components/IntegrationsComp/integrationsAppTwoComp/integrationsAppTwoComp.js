@@ -62,9 +62,9 @@ function TriggerOrActionCard({
         <div className="flex flex-col w-full md:w-1/2 gap-2 relative">
             <h2 className="text-sm font-semibold text-gray-500">{title}</h2>
 
-            <div className="p-4" style={{ backgroundColor: appDetails?.brandcolor }}>
+            <div className="p-2" style={{ backgroundColor: appDetails?.brandcolor }}>
                 <div
-                    className="w-full border flex bg-white cursor-pointer relative"
+                    className="w-full border flex bg-white cursor-pointer relative lg:p-2"
                     onClick={(e) => {
                         e.stopPropagation();
                         onToggle();
@@ -92,7 +92,7 @@ function TriggerOrActionCard({
                                 )}
                             </>
                         ) : (
-                            <p className="text-gray-600 text-lg">
+                            <p className="text-accent underline text-lg">
                                 {title.includes("Trigger")
                                     ? "When this happens..."
                                     : "Automatically do this!"}
@@ -284,7 +284,7 @@ export default function IntegrationsAppTwoComp({
                         </h1>
                     </div>
                     <div className="flex flex-col items-center justify-center px-4 my-12">
-                        <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-5xl gap-4">
+                        <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-6xl gap-4">
                             <TriggerOrActionCard
                                 title="Choose a Trigger"
                                 appDetails={currentAppOne}
@@ -346,7 +346,7 @@ export default function IntegrationsAppTwoComp({
                                 }}
                                 className="btn btn-accent mt-10 px-8 py-3"
                             >
-                                {selectedTrigger && selectedAction ? 'Connect these apps' : 'Get Started'}
+                                {selectedTrigger && selectedAction ? 'Connect these apps for free' : 'Get Started for free'}
                             </button>
 
                             {/* {!selectedTrigger || !selectedAction ? (
