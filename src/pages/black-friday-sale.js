@@ -74,11 +74,11 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Apply before 28th Nov 2025 <GoArrowUpRight />
+                            Apply before 2nd Dec 2025 <GoArrowUpRight />
                         </Link>
                     </p>
                     <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
-                        <p className='border bg-white rounded-full px-4 py-1 mb-2 max-w-[80%]'> 100+ Handpicked Discounts & Lifetime Offers </p>
+                        <p className='border bg-white rounded-full px-4 py-1 mb-2 max-w-[80%]'> Top Handpicked Discounts & Lifetime Offers </p>
                         <h1 className="text-6xl uppercase">
                             SaaS Black Friday Deals <span className='text-accent'>2025</span>
                         </h1>
@@ -273,7 +273,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                     </div>
                 </div>
 
-                <div className='bg-red-diamond w-full flex flex-col justify-center items-center h-[640px] text-white z-[2] relative overflow-x-clip'>
+                {/* <div className='bg-red-diamond w-full flex flex-col justify-center items-center h-[640px] text-white z-[2] relative overflow-x-clip'>
                     <div className="absolute top-0 left-[-50vw] w-[173%] h-full bg-[#a8200d] z-[-2]"></div>
                     <div className="w-max-[600px] md:pt-12 pt-6 gap-8 flex flex-col items-center justify-center text-center">
                         <p className='flex md:gap-2 px-6'>
@@ -316,7 +316,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                             )}
                         />
                     </div>
-                </div>
+                </div> */}
 
                 <div className="container lg:gap-20 md:gap-16 gap-12 lg:mt-20 md:mt-16 mt-12">
                     <div className="cont">
