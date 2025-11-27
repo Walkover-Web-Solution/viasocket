@@ -55,6 +55,12 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
         return keywords.some((keyword) => text.includes(keyword));
     };
 
+    const normalizeUrl = (url) => {
+        if (!url) return '#';
+        if (/^https?:\/\//i.test(url)) return url;
+        return `https://${url.replace(/^\/+/, '')}`;
+    };
+
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/black-friday-sale'} />
@@ -254,7 +260,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                                         </div>
                                         <h3 className='h3'>{item?.offer_tagline || ''}</h3>
                                         <p className='mb-2'>{item?.offer_description || ''}</p>
-                                        <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
+                                        <Link href={`${normalizeUrl(item?.offerpricing_url)}?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025`} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
                                             fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
                                                 method: 'POST',
                                                 body: JSON.stringify({ appdomain: item?.appdomain }),
