@@ -8,7 +8,6 @@ import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { useRouter } from 'next/router';
-import { getAppCount } from '@/utils/axiosCalls';
 import Image from 'next/image';
 import { useState } from 'react';
 import Link from 'next/link';
@@ -44,21 +43,23 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
         { id: '30', label: '30% off', keywords: ['30% off', '30 % off', '30% discount'] },
     ];
 
-    const getFilteredDeals = () => {
-        if (!activeFilter) return blackFridaySaleData;
+    const matchesFilter = (item) => {
+        if (!activeFilter) return true;
 
         const selectedFilter = filters.find((f) => f.id === activeFilter);
-        if (!selectedFilter || selectedFilter.id === 'all') return blackFridaySaleData;
+        if (!selectedFilter || selectedFilter.id === 'all') return true;
 
         const keywords = selectedFilter.keywords.map((k) => k.toLowerCase());
+        const text = `${item?.offer_tagline || ''} ${item?.offer_description || ''}`.toLowerCase();
 
-        return blackFridaySaleData?.filter((item) => {
-            const text = `${item?.offer_tagline || ''} ${item?.offer_description || ''}`.toLowerCase();
-            return keywords.some((keyword) => text.includes(keyword));
-        });
+        return keywords.some((keyword) => text.includes(keyword));
     };
 
-    const filteredDeals = getFilteredDeals();
+    const normalizeUrl = (url) => {
+        if (!url) return '#';
+        if (/^https?:\/\//i.test(url)) return url;
+        return `https://${url.replace(/^\/+/, '')}`;
+    };
 
     return (
         <>
@@ -239,29 +240,35 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                         </div>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filteredDeals?.map((item, index) => (
-                                <div className="flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white" key={`blackFridaySaleData-${index}`}>
-                                    <div className="flex items-center gap-2">
-                                        <FallbackImage
-                                            src={`https://thingsofbrand.com/api/icon/${(item?.appdomain || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}`}
-                                            fallbackSrc={`https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
-                                            alt={item?.appname || ''}
-                                            width={36}
-                                            height={36}
-                                            className="w-9 h-9"
-                                        />
-                                        <h3 className='h3'>{item?.appname || ''}</h3>
+                            {blackFridaySaleData?.map((item, index) => {
+                                const isVisible = matchesFilter(item);
+                                return (
+                                    <div
+                                        className={`flex flex-col gap-4 border custom-border p-6 md:p-12 bg-white ${isVisible ? '' : 'hidden'}`}
+                                        key={`blackFridaySaleData-${index}`}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <FallbackImage
+                                                src={`https://thingsofbrand.com/api/icon/${(item?.appdomain || '').replace(/^https?:\/\//, '').replace(/\/$/, '')}`}
+                                                fallbackSrc={`https://stuff.thingsofbrand.com/viasocket.com/images/imga_red-viasocket.png`}
+                                                alt={item?.appname || ''}
+                                                width={36}
+                                                height={36}
+                                                className="w-9 h-9"
+                                            />
+                                            <h3 className='h3'>{item?.appname || ''}</h3>
+                                        </div>
+                                        <h3 className='h3'>{item?.offer_tagline || ''}</h3>
+                                        <p className='mb-2'>{item?.offer_description || ''}</p>
+                                        <Link href={`${normalizeUrl(item?.offerpricing_url)}?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025`} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
+                                            fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
+                                                method: 'POST',
+                                                body: JSON.stringify({ appdomain: item?.appdomain }),
+                                            });
+                                        }}>View offer</Link>
                                     </div>
-                                    <h3 className='h3'>{item?.offer_tagline || ''}</h3>
-                                    <p className='mb-2'>{item?.offer_description || ''}</p>
-                                    <Link href={item?.offerpricing_url + '?utm_source=viaSocket&utm_medium=listing&utm_campaign=blackfriday2025'} target='_blank' className='btn btn-accent w-full mx-auto mt-auto' onClick={() => {
-                                        fetch('https://flow.sokt.io/func/scrixtKyK3QM', {
-                                            method: 'POST',
-                                            body: JSON.stringify({ appdomain: item?.appdomain }),
-                                        });
-                                    }}>View offer</Link>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
                 </div>
@@ -333,7 +340,6 @@ export async function getServerSideProps(context) {
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/black-friday-sale', pageUrl);
-    const appCount = await getAppCount(pageUrl);
     const blackFridaySaleData = await getBlackFridaySaleData(BLACKFRIDAYSALE_FIELDS, '', pageUrl);
 
     return {
@@ -341,7 +347,6 @@ export async function getServerSideProps(context) {
             footerData: footerData || [],
             navbarData: navbarData || [],
             metaData: metaData || {},
-            appCount: appCount || 0,
             blackFridaySaleData: blackFridaySaleData || [],
             faqData: faqData || [],
         },
