@@ -22,6 +22,7 @@ import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps'
 import { APPERPAGE } from '@/const/integrations';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 import TemplateContainer from '../templateContainer/templateContainer';
+import { IoMdSearch, IoMdClose } from 'react-icons/io';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -47,6 +48,11 @@ export default function IntegrationsAppOneComp({
     const [searchedCategories, setSearchedCategories] = useState(null);
     const [debounceValue, setDebounceValue] = useState('');
     const [activeStep, setActiveStep] = useState(1);
+    const [comboSearch, setComboSearch] = useState('');
+    const [comboSuggestions, setComboSuggestions] = useState([]);
+    const [selectedAppSlug, setSelectedAppSlug] = useState(null);
+    const [pairCombosData, setPairCombosData] = useState(null);
+    const [loadingPair, setLoadingPair] = useState(false);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -202,12 +208,134 @@ export default function IntegrationsAppOneComp({
                 <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                     <div className="container flex flex-col gap-16">
                         <div className="flex flex-col gap-8">
-                            {combosData?.combinations?.length > 0 ? (
+                            {(pairCombosData ? pairCombosData?.combinations?.length > 0 : combosData?.combinations?.length > 0) ? (
                                 <>
                                     <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
+                                    <div className="cont gap-3 mb-6">
+                                         {selectedAppSlug ? (
+                                            <p className="text-sm text-gray-600">Showing automations for {appOneDetails?.name} + {combosData?.plugins?.[selectedAppSlug]?.name || selectedAppSlug}</p>
+                                        ) : (
+                                            <label className="text-sm text-gray-600">Search an app to pair with {appOneDetails?.name}</label>
+                                        )}
+                                        <div className="relative w-[400px]">
+                                            <div className="flex items-center gap-2 border custom-border bg-white px-3 py-2">
+                                                <IoMdSearch className="text-gray-500" size={20}/>
+                                                <input
+                                                    type="text"
+                                                    value={comboSearch}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value;
+                                                        setComboSearch(val);
+                                                        if (!val) {
+                                                            setComboSuggestions([]);
+                                                            // If user cleared input, also clear selection and pair results
+                                                            if (selectedAppSlug) {
+                                                                setSelectedAppSlug(null);
+                                                                setPairCombosData(null);
+                                                            }
+                                                            return;
+                                                        }
+                                                        // If user edits after selecting, auto-clear selection to resume live suggestions
+                                                        if (selectedAppSlug) {
+                                                            const selectedName = combosData?.plugins?.[selectedAppSlug]?.name || selectedAppSlug;
+                                                            if (val !== selectedName) {
+                                                                setSelectedAppSlug(null);
+                                                                setPairCombosData(null);
+                                                            }
+                                                        }
+                                                        // Build a unified suggestions map from combosData.plugins and apps prop
+                                                        const mergedMap = new Map();
+
+                                                        // From combos data (paired apps)
+                                                        const comboPluginSlugs = Object.keys(combosData?.plugins || {});
+                                                        comboPluginSlugs.forEach((slug) => {
+                                                            mergedMap.set(slug, {
+                                                                slug,
+                                                                name: combosData?.plugins?.[slug]?.name || slug,
+                                                                iconurl: combosData?.plugins?.[slug]?.iconurl,
+                                                            });
+                                                        });
+
+                                                        // From apps prop (paginated catalog page)
+                                                        (apps || []).forEach((app) => {
+                                                            if (!app?.appslugname) return;
+                                                            mergedMap.set(app.appslugname, {
+                                                                slug: app.appslugname,
+                                                                name: app.name || app.appslugname,
+                                                                iconurl: app.iconurl,
+                                                            });
+                                                        });
+
+                                                        // Turn into array, exclude current app, filter by query, limit
+                                                        const suggestions = Array.from(mergedMap.values())
+                                                            .filter((item) => item.slug !== appOneDetails?.appslugname)
+                                                            .filter((item) => {
+                                                                const displayName = item.name || item.slug;
+                                                                return displayName.toLowerCase().includes(val.toLowerCase());
+                                                            })
+                                                            .slice(0, 8);
+                                                        setComboSuggestions(suggestions);
+                                                    }}
+                                                    placeholder={`Search any app e.g. Gmail, Slack`}
+                                                    className="w-full outline-none text-base"
+                                                />
+                                                {selectedAppSlug && (
+                                                    <button
+                                                        className="ml-auto text-gray-600 hover:text-black"
+                                                        onClick={() => {
+                                                            setSelectedAppSlug(null);
+                                                            setPairCombosData(null);
+                                                            setComboSearch('');
+                                                            setComboSuggestions([]);
+                                                        }}
+                                                        aria-label="Clear selected app"
+                                                    >
+                                                        <IoMdClose size={18} />
+                                                    </button>
+                                                )}
+                                            </div>
+                                            {comboSuggestions?.length > 0 && (
+                                                <ul className="absolute z-20 w-full bg-white border custom-border mt-1 max-h-64 overflow-y-auto">
+                                                    {comboSuggestions.map((s) => (
+                                                        <li
+                                                            key={s.slug}
+                                                            className="px-3 py-2 hover:bg-gray-50 cursor-pointer flex items-center gap-2"
+                                                            onClick={async () => {
+                                                                setSelectedAppSlug(s.slug);
+                                                                setComboSearch(s.name);
+                                                                setComboSuggestions([]);
+                                                                // Fetch pair-specific combos
+                                                                try {
+                                                                    setLoadingPair(true);
+                                                                    const base = process.env.NEXT_PUBLIC_INTEGRATION_URL;
+                                                                    const url = `${base}api/v1/plugins/recommend/integrations?service=${integrationsInfo?.appone}&service=${s.slug}`;
+                                                                    const res = await fetch(url, { cache: 'no-store' });
+                                                                    if (res.ok) {
+                                                                        const data = await res.json();
+                                                                        setPairCombosData(data);
+                                                                        setVisibleCombos(12);
+                                                                        setShowMore((data?.combinations?.length || 0) >= 12);
+                                                                    } else {
+                                                                        setPairCombosData({ combinations: [] });
+                                                                    }
+                                                                } catch (e) {
+                                                                    setPairCombosData({ combinations: [] });
+                                                                } finally {
+                                                                    setLoadingPair(false);
+                                                                }
+                                                            }}
+                                                        >
+                                                            <Image src={s.iconurl || 'https://placehold.co/24x24'} width={20} height={20} alt={s.name} />
+                                                            <span>{s.name}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            )}
+                                        </div>
+                                    </div>
                                     <div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t custom-border">
-                                            {combosData?.combinations
+                                            {(pairCombosData ? pairCombosData?.combinations : combosData?.combinations)
                                                 ?.filter(
                                                     (combo) =>
                                                         combo?.description &&
@@ -215,18 +343,19 @@ export default function IntegrationsAppOneComp({
                                                 )
                                                 ?.slice(0, visibleCombos)
                                                 ?.map((combo, index) => {
+                                                    const pluginsMap = pairCombosData?.plugins || combosData?.plugins;
                                                     const integrations =
-                                                        combosData?.plugins[combo?.trigger?.name]?.rowid +
+                                                        pluginsMap[combo?.trigger?.name]?.rowid +
                                                         ',' +
-                                                        combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+                                                        pluginsMap[combo?.actions[0]?.name]?.rowid;
 
-                                                    const triggerName = combosData?.plugins[
+                                                    const triggerName = pluginsMap[
                                                         combo?.trigger?.name
                                                     ]?.events?.find(
                                                         (event) => event?.rowid === combo?.trigger?.id
                                                     )?.name;
 
-                                                    const actionName = combosData?.plugins[
+                                                    const actionName = pluginsMap[
                                                         combo?.actions[0]?.name
                                                     ]?.events?.find(
                                                         (event) => event?.rowid === combo?.actions[0]?.id
@@ -238,14 +367,14 @@ export default function IntegrationsAppOneComp({
                                                             trigger={{
                                                                 name: triggerName,
                                                                 iconurl:
-                                                                    combosData?.plugins[
+                                                                    (pairCombosData?.plugins || combosData?.plugins)[
                                                                         combo?.trigger?.name
                                                                     ]?.iconurl || 'https://placehold.co/40x40',
                                                             }}
                                                             action={{
                                                                 name: actionName,
                                                                 iconurl:
-                                                                    combosData?.plugins[
+                                                                    (pairCombosData?.plugins || combosData?.plugins)[
                                                                         combo?.actions[0]?.name
                                                                     ]?.iconurl || 'https://placehold.co/40x40',
                                                             }}
@@ -262,13 +391,14 @@ export default function IntegrationsAppOneComp({
                                             <button
                                                 onClick={() => {
                                                     setVisibleCombos(visibleCombos + 8);
-                                                    if (combosData?.combinations?.length <= visibleCombos) {
+                                                    const total = pairCombosData ? (pairCombosData?.combinations?.length || 0) : (combosData?.combinations?.length || 0);
+                                                    if (total <= visibleCombos) {
                                                         setShowMore(false);
                                                     }
                                                 }}
                                                 className="btn btn-outline border-t-0 flex ml-auto"
                                             >
-                                                Load More <MdKeyboardArrowDown fontSize={20} />
+                                                {loadingPair ? 'Loading...' : 'Load More'} <MdKeyboardArrowDown fontSize={20} />
                                             </button>
                                         )}
                                     </div>
