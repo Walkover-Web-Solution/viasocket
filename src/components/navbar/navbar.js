@@ -151,7 +151,7 @@ export default function Navbar({ utm, navbarData }) {
                 <Link href="/black-friday-sale">
                     <div className="w-full p-2 text-center transparent-border-black gradient-background border-b">
                         <p className="!text-xs text-black hover:underline">
-                            Black Friday 2025: View All SaaS Deals →
+                            Black Friday 2025: View All SaaS Deals | Expires on 3rd December →
                         </p>
                     </div>
                 </Link>

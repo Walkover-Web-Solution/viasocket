@@ -18,6 +18,7 @@ import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
+import PanelSection from '@/pages/homeSection/panelSection';
 
 export const runtime = 'experimental-edge';
 
@@ -143,6 +144,11 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
             {/* AI Agents Section - Positioned at bottom of viewport */}
             <AiAgentFeature />
 
+            {/* Show Apps Section */}
+            <div className="bg-[#faf9f6] py-20">
+                <ShowAppsIndex />
+            </div>
+
             {/* Template Section - Only show when user is not searching or has no search results */}
             {!showTemplates && !showVideos && !showBlogs && !showAiResponse && (
                 <div
@@ -169,14 +175,14 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
                 </div>
             )}
 
-            {/* Show Apps Section */}
-            <div className="bg-white py-20">
-                <ShowAppsIndex />
-            </div>
-
             {/* Review Section */}
             <div className="bg-[#f9f6f1]">
                 <ReviewIframe reviewData={reviewData} showless={false} />
+            </div>
+
+            {/* show panel image with go to panel option */}
+            <div className="py-12 bg-[#f4f3f1] relative">
+                <PanelSection />
             </div>
 
             {/* FAQ Section */}
@@ -245,9 +251,9 @@ export async function getServerSideProps(context) {
     const validStatuses = ['verified_by_ai', 'verified'];
 
     const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-    
+
     const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
-    
+
     const validTemplateData = validateTemplateData(verifiedTemplates);
 
     const securityGridData = [
