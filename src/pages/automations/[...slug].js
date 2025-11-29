@@ -14,10 +14,8 @@ import FlowRenderer from '@/components/flowComp/flowRenderer';
 import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates';
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
-import { FiMinus } from 'react-icons/fi';
-import { FiPlus } from 'react-icons/fi';
-import { MdCenterFocusStrong } from 'react-icons/md';
 import { useRouter } from 'next/router';
+import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 
 export const runtime = 'experimental-edge';
 
@@ -26,30 +24,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
     const [flowRendererHeight, setFlowRendererHeight] = useState('600px');
+
     const router = useRouter();
-
-    useEffect(() => {
-        if (contentRef.current) {
-            setFlowRendererHeight(`${contentRef.current.offsetHeight}px`);
-        }
-
-        const handleWheel = (e) => {
-            e.preventDefault();
-            const delta = e.deltaY > 0 ? -0.05 : 0.05;
-            setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
-        };
-
-        const flowContainer = flowContainerRef.current;
-        flowContainer?.addEventListener('wheel', handleWheel, { passive: false });
-
-        return () => {
-            flowContainer?.removeEventListener('wheel', handleWheel);
-        };
-    }, [template, flowRendererHeight]);
-
-    const zoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
-    const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));
-    const resetZoom = () => setScale(1);
 
     const triggerRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
@@ -164,17 +140,16 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                                 className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start border-t lg:border-t-0 lg:border-l custom-border p-6 relative dotted-background"
                                 style={{ height: flowRendererHeight }}
                             >
-                                <div className="absolute top-2 right-2 flex z-10">
-                                    <button onClick={zoomIn} className="px-2 py-1 text-xl">
-                                        <FiPlus />
-                                    </button>
-                                    <button onClick={zoomOut} className="px-2 py-1 text-xl">
-                                        <FiMinus />
-                                    </button>
-                                    <button onClick={resetZoom} className="px-2 py-1 text-xl">
-                                        <MdCenterFocusStrong />
-                                    </button>
-                                </div>
+                                <ZoomableFlowContainer
+                                    setScale={setScale}
+                                    contentRef={contentRef}
+                                    flowContainerRef={flowContainerRef}
+                                    flowRendererHeight={flowRendererHeight}
+                                    setFlowRendererHeight={setFlowRendererHeight}
+                                    template={template}
+                                    positionX="right-2"
+                                    positionY="top-2"
+                                />
 
                                 <FlowRenderer
                                     flowJson={template?.flowJson || 'https://placehold.co/600x400'}

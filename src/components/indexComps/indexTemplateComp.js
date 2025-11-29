@@ -1,13 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
-import { getTemplates } from '@/utils/axiosCalls';
 import { RiSearchLine } from 'react-icons/ri';
 import { HiCurrencyRupee } from 'react-icons/hi2';
 import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
 import { MdManageAccounts, MdHeadset } from 'react-icons/md';
 import FlowRenderer from '../flowComp/flowRenderer';
+import ZoomableFlowContainer from '../flowComp/zoomableFlowContainer';
 
 const IndexTemplateComp = ({ categories, templates }) => {
+    const [scale, setScale] = useState(1);
+    const contentRef = useRef(null);
+    const flowContainerRef = useRef(null);
+    const [flowRendererHeight, setFlowRendererHeight] = useState('550px');
+
     const [selected, setSelected] = useState({
         name: 'Finance',
         scriptid: '72077fe9954a5122c1301f4a0dce567ebd54e5d5e6c0e4ff05cfd884361c7e52',
@@ -94,13 +99,24 @@ const IndexTemplateComp = ({ categories, templates }) => {
                                         {currentTemplate?.metadata?.description || currentTemplate?.description}
                                     </h2>
                                 </div>
-                                <div className="w-full relative">
+                                <div ref={flowContainerRef} className="w-full relative" style={{ height: flowRendererHeight }}>
+                                    <ZoomableFlowContainer
+                                        setScale={setScale}
+                                        contentRef={contentRef}
+                                        flowContainerRef={flowContainerRef}
+                                        flowRendererHeight={flowRendererHeight}
+                                        setFlowRendererHeight={setFlowRendererHeight}
+                                        template={currentTemplate}
+                                        positionX="right-2"
+                                        positionY="top-2"
+                                    />
                                     <FlowRenderer
                                         flowJson={
                                             currentTemplate?.metadata?.flowJson ||
                                             currentTemplate?.flowJson ||
                                             'https://placehold.co/600x400'
                                         }
+                                        scale={scale * 100}
                                     />
                                 </div>
                             </div>
