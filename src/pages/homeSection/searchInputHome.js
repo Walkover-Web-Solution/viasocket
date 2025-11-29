@@ -414,6 +414,41 @@ const SearchInputHome = ({
         }
     };
 
+    // Function to sort search results prioritizing exact matches (for apps)
+    const sortSearchResults = (results, searchTerm) => {
+        if (!results || !searchTerm) return results;
+        
+        const lowerSearchTerm = searchTerm.toLowerCase();
+        
+        return results.sort((a, b) => {
+            const aName = (a.name || '').toLowerCase();
+            const bName = (b.name || '').toLowerCase();
+            
+            // Priority 1: Exact match (highest priority)
+            const aExactMatch = aName === lowerSearchTerm;
+            const bExactMatch = bName === lowerSearchTerm;
+            
+            if (aExactMatch && !bExactMatch) return -1;
+            if (!aExactMatch && bExactMatch) return 1;
+            
+            // Priority 2: Starts with search term
+            const aStartsWith = aName.startsWith(lowerSearchTerm);
+            const bStartsWith = bName.startsWith(lowerSearchTerm);
+            
+            if (aStartsWith && !bStartsWith) return -1;
+            if (!aStartsWith && bStartsWith) return 1;
+            
+            // Priority 3: Contains search term (partial match)
+            const aContains = aName.includes(lowerSearchTerm);
+            const bContains = bName.includes(lowerSearchTerm);
+            
+            if (aContains && !bContains) return -1;
+            if (!aContains && bContains) return 1;
+            
+            return 0; //leave them unchanged (equal priority)
+        });
+    };
+
     const handleSearch = useCallback(async (value) => {
         setSearchTerm(value);
         setShowDropdown(true);
@@ -434,7 +469,9 @@ const SearchInputHome = ({
         try {
             const result = await searchApps(value);
             const filteredApps = filterSelectedApps(result);
-            setSearchData(filteredApps);
+            // Sort the app results to prioritize exact matches
+            const sortedApps = sortSearchResults(filteredApps, value);
+            setSearchData(sortedApps);
 
             const matchingIndustries = filterListByName(allIndustries, value);
             const matchingDepartments = filterListByName(allDepartments, value);
@@ -442,7 +479,7 @@ const SearchInputHome = ({
             setFilteredIndustries(matchingIndustries);
             setFilteredDepartments(matchingDepartments);
 
-            const firstSuggestion = getFirstSuggestion(filteredApps, matchingIndustries, matchingDepartments, value);
+            const firstSuggestion = getFirstSuggestion(sortedApps, matchingIndustries, matchingDepartments, value);
             if (firstSuggestion && firstSuggestion.suggestion.toLowerCase() !== value.toLowerCase()) {
                 setCurrentSuggestion(firstSuggestion.suggestion);
                 setSuggestionText(firstSuggestion.suggestion.slice(value.length));
