@@ -95,6 +95,15 @@ export default function IntegrationsAppOneComp({
         setDebounceValue(value);
     }, []);
 
+    const filteredCombos = combosData?.combinations
+        ?.filter(
+            (combo) =>
+                combo?.description &&
+                !/^(List|Get)\b/i.test(combo.description.trim())
+        )
+
+    const selectedCombos = filteredCombos?.length > 0 ? filteredCombos : combosData?.combinations;
+
     return (
         <div>
             <Navbar navbarData={navbarData} utm={'/integrations/appone'} />
@@ -207,12 +216,7 @@ export default function IntegrationsAppOneComp({
                                     <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
                                     <div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 border-l border-t custom-border">
-                                            {combosData?.combinations
-                                                ?.filter(
-                                                    (combo) =>
-                                                        combo?.description &&
-                                                        !/^(List|Get)\b/i.test(combo.description.trim())
-                                                )
+                                            {selectedCombos
                                                 ?.slice(0, visibleCombos)
                                                 ?.map((combo, index) => {
                                                     const integrations =
@@ -266,7 +270,7 @@ export default function IntegrationsAppOneComp({
                                                         setShowMore(false);
                                                     }
                                                 }}
-                                                className="btn btn-outline border-t-0 flex ml-auto"
+                                                className="btn btn-outline mt-2 flex ml-auto"
                                             >
                                                 Load More <MdKeyboardArrowDown fontSize={20} />
                                             </button>
@@ -294,7 +298,7 @@ export default function IntegrationsAppOneComp({
                         </div>
 
                         {/* Template Container */}
-                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow}/>
+                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow} />
                     </div>
                 </div>
 

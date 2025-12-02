@@ -69,7 +69,29 @@ export default function IntegrationsIndexComp({
             setSearchedCategoies(filterPriorityCategories(filteredCategories));
             const loadApps = async () => {
                 const fetchedApps = await searchApps(debounceValue);
-                setSearchedApps(fetchedApps || []);
+                if (!fetchedApps) {
+                    setSearchedApps([]);
+                }
+                else {
+                    const sortedApps = fetchedApps.sort((a, b) => {
+                        const aName = a?.name?.toLowerCase() || '';
+                        const bName = b?.name?.toLowerCase() || '';
+
+                        const aStarts = aName.startsWith(searchTerm);
+                        const bStarts = bName.startsWith(searchTerm);
+
+                        if (aStarts !== bStarts) return aStarts ? -1 : 1;
+
+                        const aContains = aName.includes(searchTerm);
+                        const bContains = bName.includes(searchTerm);
+
+                        if (aContains !== bContains) return aContains ? -1 : 1;
+
+                        return aName.localeCompare(bName);
+                    });
+
+                    setSearchedApps(sortedApps);
+                }
             };
             loadApps();
         } else {
@@ -400,7 +422,7 @@ export function RequestIntegrationPopupOpener({
                     <span className="text-2xl">💡</span>
                     <h2 className="h3">
                         Can’t find the <span className="text-primary-600">{type || 'App'}</span> you’re looking for?
-                        <br/>
+                        <br />
                         We’ll build it for you within <span className="font-bold text-primary-700">48 hours</span>.
                     </h2>
                 </div>
@@ -415,8 +437,8 @@ export function RequestIntegrationPopupOpener({
                     <div className="flex items-start gap-3">
                         <span className="text-2xl">🚀</span>
                         <h2 className="h3">
-                            Own this app? 
-                            <br/>
+                            Own this app?
+                            <br />
                             Build its plug and make it live today!
                         </h2>
                     </div>

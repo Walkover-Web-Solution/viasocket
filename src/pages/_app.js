@@ -7,7 +7,7 @@ import ChatWidget from '@/components/chat-widget/chat-wdget';
 import GlobalPopup from '@/components/GlobalPopup/GlobalPopup';
 import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
-import Script from 'next/script';
+// import Script from 'next/script';
 
 export const runtime = 'experimental-edge';
 
