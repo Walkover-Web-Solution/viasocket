@@ -15,6 +15,7 @@ import { MdLock } from "react-icons/md";
 import { GoArrowUpRight } from "react-icons/go";
 import Countdown from 'react-countdown';
 import Marquee from "react-fast-marquee";
+import { getAppCount } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 
@@ -30,7 +31,7 @@ const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
     );
 };
 
-const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData }) => {
+const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData, appCount }) => {
     const router = useRouter();
     const [activeFilter, setActiveFilter] = useState('all');
 
@@ -80,10 +81,10 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                     <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
                         <p className='border bg-white rounded-full px-4 py-1 mb-2 max-w-[80%]'> Top Handpicked Discounts & Lifetime Offers </p>
                         <h1 className="text-6xl uppercase">
-                            SaaS Black Friday Deals <span className='text-accent'>2025</span>
+                            AI and SaaS Black Friday Deals <span className='text-accent'>2025</span>
                         </h1>
                         <h2 className="text-2xl max-w-[600px]">
-                            Discover the biggest SaaS discounts of 2025. Updated daily with lifetime deals, automation tools, marketing software, CRM, AI agents & more.
+                            Discover the biggest AI and SaaS discounts of 2025. Updated daily with lifetime deals, automation tools, marketing software, CRM, AI agents & more.
                         </h2>
                     </div>
                 </div>
@@ -169,7 +170,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                             <h3 className="h3">
                                 Free For Lifetime
                             </h3>
-                            <p>Secure lifetime access to a complete automation platform with unlimited workflows and task executions across 1600+ integrations.</p>
+                            <p>Secure lifetime access to a complete automation platform with unlimited workflows and task executions across {+appCount + 300}+ integrations.</p>
                             <button
                                 className={`btn btn-accent w-full mt-auto`}
                                 aria-label="sign up"
@@ -341,6 +342,7 @@ export async function getServerSideProps(context) {
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/black-friday-sale', pageUrl);
     const blackFridaySaleData = await getBlackFridaySaleData(BLACKFRIDAYSALE_FIELDS, '', pageUrl);
+    const appCount = await getAppCount(pageUrl);
 
     return {
         props: {
@@ -349,6 +351,7 @@ export async function getServerSideProps(context) {
             metaData: metaData || {},
             blackFridaySaleData: blackFridaySaleData || [],
             faqData: faqData || [],
+            appCount: appCount || 0
         },
     };
 }
