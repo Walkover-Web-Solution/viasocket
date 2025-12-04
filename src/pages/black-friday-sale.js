@@ -74,7 +74,7 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData 
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Apply before 2nd Dec 2025 <GoArrowUpRight />
+                            Apply Now <GoArrowUpRight />
                         </Link>
                     </p>
                     <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
