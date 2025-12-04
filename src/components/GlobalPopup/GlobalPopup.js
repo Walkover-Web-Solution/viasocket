@@ -48,13 +48,6 @@ const GlobalPopup = () => {
                         </h2>
                     </div>
 
-                    <div className="mt-2 flex items-center gap-2 justify-center text-xs text-gray-700">
-                        <span>Offers end on</span>
-                        <span className="px-3 py-1 rounded-full bg-white border custom-border text-[11px] font-semibold">
-                            3rd December 2025
-                        </span>
-                    </div>
-
                     <div className="mt-4 flex justify-center">
                         <Link href="/black-friday-sale" target="_blank" className="btn btn-accent gap-1" onClick={handleClose}>
                             Grab deals now<MdOutlineArrowRightAlt size={22} />
