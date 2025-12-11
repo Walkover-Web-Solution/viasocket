@@ -66,7 +66,7 @@ const CustomLogin = ({ redirect_to }) => {
                 </div>
             )}
             <div className='login-container'>
-                <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2" />
+                <div id={process.env.NEXT_PUBLIC_REFERENCE_ID} className="loginBtn_google flex flex-col gap-2 bg-white" />
             </div>
         </div>
     );
