@@ -220,25 +220,25 @@ const Login = ({ redirect_to }) => {
 
 export default Login;
 
-// export async function getServerSideProps(context) {
-//     const { redirect_to } = context.query;
-//     const { utm_source } = context?.query;
-//     const { req } = context;
-//     const protocol = req.headers['x-forwarded-proto'] || 'http';
-//     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+export async function getServerSideProps(context) {
+    const { redirect_to } = context.query;
+    const { utm_source } = context?.query;
+    const { req } = context;
+    const protocol = req.headers['x-forwarded-proto'] || 'http';
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 
-//     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
-//     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
-//     const metaData = await getMetaData('/signup', pageUrl);
-//     const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
-//     return {
-//         props: {
-//             footerData: footerData || [],
-//             metaData: metaData || {},
-//             redirect_to: redirect_to || '',
-//             utm_source: utm_source || 'website',
-//             testimonials: testimonials || [],
-//             reviewData: reviewData || [],
-//         },
-//     };
-// }
+    // const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
+    // const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
+    const metaData = await getMetaData('/signup', pageUrl);
+    // const testimonials = await getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl);
+    return {
+        props: {
+            // footerData: footerData || [],
+            metaData: metaData || {},
+            redirect_to: redirect_to || '',
+            utm_source: utm_source || 'website',
+            // testimonials: testimonials || [],
+            // reviewData: reviewData || [],
+        },
+    };
+}
