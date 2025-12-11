@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import CustomLogin from '@/components/customLogin/CustomLogin';
-import { SiGooglemessages } from 'react-icons/si';
+import { getMetaData } from '@/utils/getMetaData';
 import Image from 'next/image';
 
 export const runtime = 'experimental-edge';
