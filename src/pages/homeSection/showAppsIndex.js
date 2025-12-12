@@ -100,34 +100,89 @@ const APPS = [
 
 const ShowAppsIndex = () => {
     return (
-        <div className="flex flex-col gap-8">
-            <p className="text-center text-gray-500">Trusted by Teams Using These Apps</p>
-            <Marquee
-                direction="left"
-                speed={40}
-                autoFill
-                gradient
-                gradientColor={[250, 249, 246]}
-                gradientWidth={96}
-                // pauseOnHover={true}
-            >
-                <div className="inline-flex py-4 gap-20">
-                    {APPS.map((app, index) => (
-                        <div className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                            <Image
-                                key={app.src}
-                                src={app.src}
-                                alt={app.alt}
-                                width={30}
-                                height={30}
-                                className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                            />
-                            <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
-                        </div>
-                    ))}
+        <>
+            <div className="flex flex-col gap-8">
+                <p className="text-center text-gray-500">Trusted by Teams Using These Apps</p>
+                <Marquee
+                    direction="left"
+                    speed={40}
+                    autoFill
+                    gradient
+                    gradientColor={[250, 249, 246]}
+                    gradientWidth={96}
+                    // pauseOnHover={true}
+                >
+                    <div className="inline-flex py-4 gap-20">
+                        {APPS.map((app, index) => (
+                            <div className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                                <Image
+                                    key={app.src}
+                                    src={app.src}
+                                    alt={app.alt}
+                                    width={30}
+                                    height={30}
+                                    className={`object-contain cursor-pointer ${app.className ?? ''}`}
+                                />
+                                <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+                            </div>
+                        ))}
+                    </div>
+                </Marquee>
+            </div>
+            <section className="mt-16 container">
+                <div className="">
+                    <h2 className="text-3xl md:text-4xl font-semibold text-gray-900 leading-tight mb-8">
+                        Discover our AI-based
+                        <br className="hidden sm:block" />
+                        <span className="block mt-1">Demo Automation suite</span>
+                    </h2>
                 </div>
-            </Marquee>
-        </div>
+
+                <div className="mx-auto">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border border-gray-200 divide-y sm:divide-y-0 sm:divide-x overflow-hidden bg-white">
+                        <div className="p-8 flex flex-col gap-3 !hover:bg-gray-500">
+                            <div className="h-10 w-10 rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="h-5 w-5 border border-dashed border-gray-300 rounded-sm" />
+                            </div>
+                            <h3 className="text-base font-medium text-gray-900">Interactive demo</h3>
+                            <p className="text-sm text-gray-500">Create guided demos in seconds</p>
+                        </div>
+
+                        <div className="p-8 flex flex-col gap-3 !hover:bg-gray-500">
+                            <div className="h-10 w-10 rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="h-5 w-5 border border-dashed border-gray-300 rounded-sm" />
+                            </div>
+                            <h3 className="text-base font-medium text-gray-900">Sandbox</h3>
+                            <p className="text-sm text-gray-500">Build clickable demo environment</p>
+                        </div>
+
+                        <div className="p-8 flex flex-col gap-3 !hover:bg-gray-500">
+                            <div className="h-10 w-10 rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="h-5 w-5 border border-dashed border-gray-300 rounded-sm" />
+                            </div>
+                            <h3 className="text-base font-medium text-gray-900">Demo center</h3>
+                            <p className="text-sm text-gray-500">Centralize everything in one branded demo hub</p>
+                        </div>
+
+                        <div className="p-8 flex flex-col gap-3 !hover:bg-gray-500">
+                            <div className="h-10 w-10 rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="h-5 w-5 border border-dashed border-gray-300 rounded-sm" />
+                            </div>
+                            <h3 className="text-base font-medium text-gray-900">Mobile demo</h3>
+                            <p className="text-sm text-gray-500">Mobile-first demos that feel like your app</p>
+                        </div>
+
+                        <div className="p-8 flex flex-col gap-3 !hover:bg-gray-500">
+                            <div className="h-10 w-10 rounded-md border border-gray-200 bg-gray-50 flex items-center justify-center">
+                                <span className="h-5 w-5 border border-dashed border-gray-300 rounded-sm" />
+                            </div>
+                            <h3 className="text-base font-medium text-gray-900">Live demo</h3>
+                            <p className="text-sm text-gray-500">Product cloning with emulated data</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </>
     );
 };
 
