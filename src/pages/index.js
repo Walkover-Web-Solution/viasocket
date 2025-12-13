@@ -18,11 +18,23 @@ import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
+import IntelligentAutomationsSection from '@/pages/homeSection/demoAutomationSuite';
 import PanelSection from '@/pages/homeSection/panelSection';
 
 export const runtime = 'experimental-edge';
 
-const Index = ({ metaData, faqData, footerData, securityGridData, appCount, indexTemplateData, reviewData, navbarData, templateData, initialApps }) => {
+const Index = ({
+    metaData,
+    faqData,
+    footerData,
+    securityGridData,
+    appCount,
+    indexTemplateData,
+    reviewData,
+    navbarData,
+    templateData,
+    initialApps,
+}) => {
     const [templates, setTemplates] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -145,8 +157,11 @@ const Index = ({ metaData, faqData, footerData, securityGridData, appCount, inde
             <AiAgentFeature />
 
             {/* Show Apps Section */}
-            <div className="bg-[#faf9f6] py-20">
-                <ShowAppsIndex />
+            <div className="bg-gray-50 py-20">
+                <div className="flex flex-col gap-8 border container custom-border">
+                    <ShowAppsIndex />
+                    <IntelligentAutomationsSection />
+                </div>
             </div>
 
             {/* Template Section - Only show when user is not searching or has no search results */}
