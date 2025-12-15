@@ -18,7 +18,7 @@ import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 import { validateTemplateData } from '@/utils/validateTemplateData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
-import IntelligentAutomationsSection from '@/pages/homeSection/demoAutomationSuite';
+import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import PanelSection from '@/pages/homeSection/panelSection';
 
 export const runtime = 'experimental-edge';
@@ -157,8 +157,8 @@ const Index = ({
             <AiAgentFeature />
 
             {/* Show Apps Section */}
-            <div className="bg-gray-50 py-20">
-                <div className="flex flex-col gap-8 border container custom-border">
+            <div className="bg-gray-50 py-20 container">
+                <div className="flex flex-col border custom-border border-b-0">
                     <ShowAppsIndex />
                     <IntelligentAutomationsSection />
                 </div>
