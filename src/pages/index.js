@@ -160,7 +160,7 @@ const Index = ({
             <div className="bg-gray-50 py-20 container">
                 <div className="flex flex-col border custom-border border-b-0">
                     <ShowAppsIndex />
-                    <IntelligentAutomationsSection />
+                    <IntelligentAutomationsSection appCount={appCount} />
                 </div>
             </div>
 
