@@ -8,7 +8,7 @@ const IntelligentAutomationsSection = ({ appCount }) => {
             Icon: LuPuzzle,
             title: 'Automations',
             description: 'Automate advanced workflows across ' + (+appCount + 300) + '+ apps',
-            url: '/automations',
+            url: '/workflow-automations',
         },
         {
             Icon: LuBot,
