@@ -23,3 +23,4 @@ export const DOFOLLOWLINK = 'tblxpnrit';
 export const REVIEWSECTION = 'tblf98lf1';
 export const NAVBAR = 'tbl6sqnav';
 export const BLACKFRIDAYSALE = 'tblfvu5ld';
+export const DEPARTMENTDATA = 'tblghuop9';

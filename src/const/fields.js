@@ -42,5 +42,12 @@ export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId'];
 export const DOFOLLOWLINK_FIELDS = ['appslugname'];
 export const REVIEWSECTION_FIELDS = ['platform_name', 'iframe_code', 'image_g2'];
 export const FEATUREBANNER_FIELDS = ['bgimage'];
-export const NAVBAR_FIELDS = ['group_name','name', 'link', 'is_link', 'group_link'];
-export const BLACKFRIDAYSALE_FIELDS = ['appname', 'appdomain', 'offer_tagline', 'offer_description', 'offerpricing_url'];
+export const NAVBAR_FIELDS = ['group_name', 'name', 'link', 'is_link', 'group_link'];
+export const BLACKFRIDAYSALE_FIELDS = [
+    'appname',
+    'appdomain',
+    'offer_tagline',
+    'offer_description',
+    'offerpricing_url',
+];
+export const DEPARTMENTDATA_FIELDS = ['name', 'slug', 'description', 'h1_heading', 'h1_description', 'marque_apps', 'faqs'];
