@@ -296,28 +296,28 @@ export default function PricingTabsClient({ countries }) {
                 <div className="flex items-center md:justify-center flex-1 overflow-hidden">
                   <div className="flex -space-x-5">
                     <Image
-                      src="/review-image/1.svg"
+                      src="/review-image/1.webp"
                       alt="Customer support expert avatar"
                       width={80}
                       height={80}
                       className="w-20 h-20"
                     />
                     <Image
-                      src="/review-image/2.svg"
+                      src="/review-image/2.webp"
                       alt="Technical support expert avatar"
                       width={80}
                       height={80}
                       className="w-20 h-20"
                     />
                     <Image
-                      src="/review-image/3.svg"
+                      src="/review-image/3.webp"
                       alt="Automation specialist expert avatar"
                       width={80}
                       height={80}
                       className="w-20 h-20"
                     />
                     <Image
-                      src="/review-image/4.svg"
+                      src="/review-image/4.webp"
                       alt="Integration expert avatar"
                       width={80}
                       height={80}

@@ -1,17 +1,25 @@
+import FaqSection from '@/components/faqSection/faqSection';
+
 export default function FeatureContentComp({ featureData }) {
-    if (featureData && featureData.length > 0)
-        return (
-            <div className="container">
-                <div className="border custom-border p-12 bg-white flex flex-col gap-6">
-                    {featureData?.map((faq, index) => {
-                        return (
-                            <ul className="flex flex-col gap-1" key={index} style={{ listStyleType: 'square' }}>
-                                <li className="font-semibold text-lg">{faq?.question}</li>
-                                <li className="list-none">{faq?.answer}</li>
-                            </ul>
-                        );
-                    })}
-                </div>
-            </div>
-        );
+    if (!featureData || featureData.length === 0) return null;
+
+    // Map incoming data ({question, answer}) to FaqSection format ({que, ans})
+    const faqData = featureData
+        .map((item) => {
+            const que = item?.question || '';
+            const ans = item?.answer || '';
+
+            if (!que || !ans) return null;
+            return { que, ans };
+        })
+        .filter(Boolean);
+
+    if (!faqData.length) return null;
+
+    return (
+        <div className="container">
+            <FaqSection faqData={faqData} />
+        </div>
+    );
 }
+

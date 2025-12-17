@@ -34,28 +34,28 @@ export default function GetStarted() {
       <div className="flex items-center justify-center overflow-hidden w-fit lg:pr-4 xl:pr-24 md:p-0">
         <div className="flex -space-x-5">
           <Image
-            src="/review-image/1.svg"
+            src="/review-image/1.webp"
             alt="Customer support expert avatar"
             width={112}
             height={112}
             className="w-16 h-16 md:w-28 md:h-28"
           />
           <Image
-            src="/review-image/2.svg"
+            src="/review-image/2.webp"
             alt="Technical support expert avatar"
             width={112}
             height={112}
             className="w-16 h-16 md:w-28 md:h-28"
           />
           <Image
-            src="/review-image/3.svg"
+            src="/review-image/3.webp"
             alt="Automation specialist expert avatar"
             width={112}
             height={112}
             className="w-16 h-16 md:w-28 md:h-28"
           />
           <Image
-            src="/review-image/4.svg"
+            src="/review-image/4.webp"
             alt="Integration expert avatar"
             width={112}
             height={112}

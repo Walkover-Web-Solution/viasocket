@@ -176,7 +176,7 @@ const Index = ({
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url('/review-image/nevada.svg')`,
+                            backgroundImage: `url('/review-image/nevada.webp')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundAttachment: 'fixed',
