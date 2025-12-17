@@ -22,7 +22,7 @@ export async function getServerSideProps(context) {
     };
 }
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const Privacy = ({ footerData, metaData, navbarData }) => {
     return (

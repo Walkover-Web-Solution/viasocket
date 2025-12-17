@@ -23,4 +23,4 @@ export default async function (req, res) {
     }
 }
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';

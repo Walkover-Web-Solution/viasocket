@@ -3,7 +3,7 @@ import AZMetaHeadComp from '@/components/aZComp/aZMetaHeadComp/aZMetaHeadComp';
 import { fetchPluginData } from '@/utils/axiosCalls';
 import Head from 'next/head';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const SelectedAlphabetPage = ({ apps, alphabet, appDetails, step, alphabet2 }) => {
     return (

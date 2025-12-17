@@ -23,7 +23,7 @@ import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
 import { handleRedirect } from '@/utils/handleRedirection';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 

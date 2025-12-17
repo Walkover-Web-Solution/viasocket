@@ -21,7 +21,7 @@ import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import PanelSection from '@/pages/homeSection/panelSection';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const Index = ({
     metaData,

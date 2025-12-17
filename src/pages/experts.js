@@ -33,7 +33,7 @@ export async function getServerSideProps(context) {
         },
     };
 }
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const Experts = ({ verifiedAgencies, notVerifiesAgencies, pageData, pathArray, metaData, expertsHelp, footerData, navbarData }) => {
     return (

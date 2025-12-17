@@ -17,7 +17,7 @@ import Countdown from 'react-countdown';
 import Marquee from "react-fast-marquee";
 import { getAppCount } from '@/utils/axiosCalls';
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
     const [imgSrc, setImgSrc] = useState(src);
