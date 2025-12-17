@@ -3,7 +3,7 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
 import { CiSquarePlus } from 'react-icons/ci';
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);

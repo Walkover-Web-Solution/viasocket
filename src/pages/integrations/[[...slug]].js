@@ -16,7 +16,7 @@ import { getCombos, getApps, getAppCount, getTemplates } from '@/utils/axiosCall
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export default function Integrations({
     pageInfo,

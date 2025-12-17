@@ -35,7 +35,7 @@ export async function getServerSideProps(context) {
         },
     };
 }
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export default function Support({ footerData, metaData, testimonials, navbarData }) {
     const [issubmit, setIsSubmit] = useState(false);

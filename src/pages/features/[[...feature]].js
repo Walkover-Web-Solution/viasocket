@@ -32,7 +32,7 @@ export default function Features({ features, featureData, footerData, metaData, 
     );
 }
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function getServerSideProps(context) {
     const { req } = context;
