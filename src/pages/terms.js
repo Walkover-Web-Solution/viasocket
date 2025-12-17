@@ -354,7 +354,14 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                     <bdt className="statement-end-if-in-editor" />
                                 </span>
                             </span>{' '}
-                            <a data-custom-class="link" href="#software" />{' '}
+                            <a data-custom-class="link" href="#refund" />
+                        </div>
+                        <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                            <a data-custom-class="link" href="#refund">
+                                <span style={{ fontSize: '15px' }}>
+                                    <span data-custom-class="body_text">8. REFUND POLICY</span>
+                                </span>
+                            </a>{' '}
                             <a data-custom-class="link" href="#software" />
                         </div>
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
@@ -370,7 +377,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#prohibited">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">8. PROHIBITED ACTIVITIES</span>
+                                    <span data-custom-class="body_text">9. PROHIBITED ACTIVITIES</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#ugc" />
@@ -378,7 +385,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#ugc">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">9. USER GENERATED CONTRIBUTIONS</span>
+                                    <span data-custom-class="body_text">10. USER GENERATED CONTRIBUTIONS</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#license" />
@@ -387,7 +394,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                             <a data-custom-class="link" href="#license">
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
-                                        10. CONTRIBUTION <bdt className="block-component" />
+                                        11. CONTRIBUTION <bdt className="block-component" />
                                         LICENCE
                                         <bdt className="else-block" />
                                     </span>
@@ -400,7 +407,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
                                         <bdt className="block-component" />
-                                        11. GUIDELINES FOR REVIEWS
+                                        12. GUIDELINES FOR REVIEWS
                                         <bdt className="statement-end-if-in-editor" />
                                     </span>
                                 </span>
@@ -422,7 +429,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
                                         <bdt className="block-component" />
-                                        12. SOCIAL MEDIA
+                                        13. SOCIAL MEDIA
                                         <bdt className="statement-end-if-in-editor" />
                                     </span>
                                 </span>
@@ -434,7 +441,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
                                         <bdt className="block-component" />
-                                        13. THIRD-PARTY WEBSITES AND CONTENT
+                                        14. THIRD-PARTY WEBSITES AND CONTENT
                                         <bdt className="statement-end-if-in-editor" />
                                     </span>
                                 </span>
@@ -454,7 +461,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#sitemanage">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">14. SERVICES MANAGEMENT</span>
+                                    <span data-custom-class="body_text">15. SERVICES MANAGEMENT</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#ppyes" />
@@ -474,7 +481,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
                                         <bdt className="block-component" />
-                                        15. PRIVACY POLICY
+                                        16. PRIVACY POLICY
                                         <bdt className="statement-end-if-in-editor" />
                                     </span>
                                 </span>
@@ -505,7 +512,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#terms">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">16. TERM AND TERMINATION</span>
+                                    <span data-custom-class="body_text">17. TERM AND TERMINATION</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#modifications" />
@@ -513,7 +520,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#modifications">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">17. MODIFICATIONS AND INTERRUPTIONS</span>
+                                    <span data-custom-class="body_text">18. MODIFICATIONS AND INTERRUPTIONS</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#law" />
@@ -521,7 +528,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#law">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">18. GOVERNING LAW</span>
+                                    <span data-custom-class="body_text">19. GOVERNING LAW</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#disputes" />
@@ -529,7 +536,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#disputes">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">19. DISPUTE RESOLUTION</span>
+                                    <span data-custom-class="body_text">20. DISPUTE RESOLUTION</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#corrections" />
@@ -537,7 +544,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#corrections">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">20. CORRECTIONS</span>
+                                    <span data-custom-class="body_text">21. CORRECTIONS</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#disclaimer" />
@@ -545,7 +552,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#disclaimer">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">21. DISCLAIMER</span>
+                                    <span data-custom-class="body_text">22. DISCLAIMER</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#liability" />
@@ -553,7 +560,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#liability">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">22. LIMITATIONS OF LIABILITY</span>
+                                    <span data-custom-class="body_text">23. LIMITATIONS OF LIABILITY</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#indemnification" />
@@ -561,7 +568,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#indemnification">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">23. INDEMNIFICATION</span>
+                                    <span data-custom-class="body_text">24. INDEMNIFICATION</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#userdata" />
@@ -569,7 +576,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#userdata">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">24. USER DATA</span>
+                                    <span data-custom-class="body_text">25. USER DATA</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#electronic" />
@@ -578,7 +585,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                             <a data-custom-class="link" href="#electronic">
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
-                                        25. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
+                                        26. ELECTRONIC COMMUNICATIONS, TRANSACTIONS, AND SIGNATURES
                                     </span>
                                 </span>
                             </a>{' '}
@@ -589,7 +596,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                 <span style={{ fontSize: '15px' }}>
                                     <span data-custom-class="body_text">
                                         <bdt className="block-component" />
-                                        26. CALIFORNIA USERS AND RESIDENTS
+                                        27. CALIFORNIA USERS AND RESIDENTS
                                         <bdt className="statement-end-if-in-editor" />
                                     </span>
                                 </span>
@@ -599,7 +606,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#misc">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">27. MISCELLANEOUS</span>
+                                    <span data-custom-class="body_text">28. MISCELLANEOUS</span>
                                 </span>
                             </a>{' '}
                             <a data-custom-class="link" href="#contact" />
@@ -637,7 +644,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                         <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
                             <a data-custom-class="link" href="#contact">
                                 <span style={{ fontSize: '15px' }}>
-                                    <span data-custom-class="body_text">28. CONTACT US</span>
+                                    <span data-custom-class="body_text">29. CONTACT US</span>
                                 </span>
                             </a>
                         </div>
@@ -1876,6 +1883,173 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                             <div
                                 className="MsoNormal"
                                 data-custom-class="heading_1"
+                                id="refund"
+                                style={{ textAlign: 'left', lineHeight: '1.5' }}
+                            >
+                                <span style={{ fontSize: '19px' }}>
+                                    <strong>8. REFUND POLICY</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    We believe software should be easy to try and easy to walk away from.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    That said, ViaSocket includes both <strong>subscription access</strong> and <strong>usage-based credits</strong> (some of which are consumed via third-party services). To keep things fair for everyone, our refund policy is designed as follows:
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>1. Subscription Refunds (No Questions Asked)</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    • You may request a <strong>full refund of your subscription fee</strong> within <strong>7 days</strong> of purchase.<br />
+                                    • No justification required.<br />
+                                    • Refunds will be processed to the original payment method.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5', fontStyle: 'italic' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    If ViaSocket isn't right for you, we don't want your money.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>2. Usage-Based Credits (Fair & Practical)</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    Credits are consumed in real-time and often paid out to third-party providers (AI, messaging, developer tools, etc.). Because of this:
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    • <strong>Unused credits</strong> are <strong>fully refundable</strong>.<br />
+                                    • <strong>Used credits are non-refundable</strong>.<br />
+                                    • In case of partial usage, refunds will be issued <strong>only for the unused portion</strong>.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>Example:</strong><br />
+                                    If you purchased 10,000 credits and used 3,000, the remaining 7,000 credits are eligible for refund.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>3. Failed or Erroneous Executions</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    • If credits were deducted due to a <strong>system error</strong>, <strong>failed execution</strong>, or <strong>platform issue</strong>, those credits will be <strong>automatically or manually restored</strong>.<br />
+                                    • If you believe credits were wrongly consumed, just reach out — we'll fix it.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>4. Abuse Protection (Rare, but Necessary)</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    We reserve the right to deny refunds in cases of:
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    • Clear abuse of the refund policy<br />
+                                    • Automated or malicious usage patterns<br />
+                                    • Repeated refund requests after heavy usage
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5', fontStyle: 'italic' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    (We almost never need this clause — but it keeps the system honest.)
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>5. How to Request a Refund</strong>
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    Just email us at <strong><a href="mailto:support@viasocket.com">support@viasocket.com</a></strong><br />
+                                    No forms. No friction. No drama.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div className="MsoNormal" data-custom-class="body_text" style={{ lineHeight: '1.5' }}>
+                                <span style={{ fontSize: '15px' }}>
+                                    <strong>Our intent is simple:</strong><br />
+                                    Try ViaSocket freely. Stay if it creates value. Leave easily if it doesn't.
+                                </span>
+                            </div>
+                            <div className="MsoNormal" style={{ lineHeight: '1.5' }}>
+                                <br />
+                            </div>
+                            <div
+                                className="MsoNormal"
+                                data-custom-class="heading_1"
                                 id="prohibited"
                                 style={{ textAlign: 'left', lineHeight: '1.5' }}
                             >
@@ -1910,7 +2084,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                     fontSize: '19px',
                                                                 }}
                                                             >
-                                                                8.
+                                                                9.
                                                             </span>
                                                         </strong>
                                                     </span>
@@ -3683,7 +3857,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                                         fontSize: '19px',
                                                                                     }}
                                                                                 >
-                                                                                    9.
+                                                                                    10.
                                                                                 </span>
                                                                             </strong>
                                                                         </span>
@@ -4007,7 +4181,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                                 fontSize: '19px',
                                                                             }}
                                                                         >
-                                                                            10.
+                                                                            11.
                                                                         </span>
                                                                     </strong>
                                                                 </span>
@@ -4178,7 +4352,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                         fontSize: '19px',
                                                     }}
                                                 >
-                                                    11.
+                                                    12.
                                                 </span>
                                             </strong>
                                         </span>
@@ -4332,7 +4506,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                         fontSize: '19px',
                                                     }}
                                                 >
-                                                    12.
+                                                    13.
                                                 </span>
                                             </strong>
                                         </span>
@@ -4614,7 +4788,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                         fontSize: '19px',
                                                     }}
                                                 >
-                                                    13.
+                                                    14.
                                                 </span>
                                             </strong>
                                         </span>
@@ -4733,7 +4907,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            14.
+                                                            15.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -4813,7 +4987,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                         fontSize: '19px',
                                                     }}
                                                 >
-                                                    15.
+                                                    16.
                                                 </span>
                                             </strong>
                                         </span>
@@ -5216,7 +5390,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            16.
+                                                            17.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -5331,7 +5505,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            17.
+                                                            18.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -5430,7 +5604,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            18.
+                                                            19.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -5545,7 +5719,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            19.
+                                                            20.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -5749,7 +5923,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            20.
+                                                            21.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -5812,7 +5986,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                             fontSize: '19px',
                                                         }}
                                                     >
-                                                        21.
+                                                        22.
                                                     </span>
                                                 </strong>
                                             </span>
@@ -5910,7 +6084,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            22.
+                                                            23.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6043,7 +6217,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            23.
+                                                            24.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6150,7 +6324,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            24.
+                                                            25.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6229,7 +6403,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            25.
+                                                            26.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6315,7 +6489,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            26.
+                                                            27.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6394,7 +6568,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                 fontSize: '19px',
                                                             }}
                                                         >
-                                                            27.
+                                                            28.
                                                         </span>
                                                     </strong>
                                                 </span>
@@ -6488,7 +6662,7 @@ const Terms = ({ footerData, metaData, navbarData }) => {
                                                                     fontSize: '19px',
                                                                 }}
                                                             >
-                                                                28.
+                                                                29.
                                                             </span>
                                                         </strong>
                                                     </span>
