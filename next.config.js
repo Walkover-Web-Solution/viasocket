@@ -1,7 +1,7 @@
 module.exports = {
-    // experimental: {
-    //     runtime: 'experimental-edge',
-    //   },
+    // Enable Turbopack configuration (Next.js 16 default)
+    turbopack: {},
+    
     images: {
         unoptimized: true,
         loader: 'akamai',
@@ -24,6 +24,7 @@ module.exports = {
         ];
     },
 
+    // Keep webpack config for compatibility when not using Turbopack
     webpack(config) {
         config.resolve.fallback = {
             ...config.resolve.fallback,

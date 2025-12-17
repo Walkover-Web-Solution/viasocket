@@ -1,5 +1,6 @@
 import { getCategoryData, getDoFollowStatus, getFooterData, getUsecasesData, getNavbarData } from '@/utils/getData';
 import getPageInfo from '@/utils/getPageInfo';
+import getRealRouteFromDataUrl from '@/utils/getRealRouteFromDataUrl';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 import IntegrationsAppOneComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp';
@@ -132,9 +133,10 @@ export default function Integrations({
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+    const realPath = getRealRouteFromDataUrl(req.url);
+    const pageUrl = `${protocol}://${req.headers.host}${realPath}`;
 
-    const pageInfo = getPageInfo(context);
+    const pageInfo = getPageInfo(context, realPath);
     const integrationsInfo = getIntegrationsInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const appCount = await getAppCount(pageUrl);
