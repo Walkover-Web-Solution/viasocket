@@ -3,6 +3,9 @@ import Navbar from '@/components/navbar/navbar';
 import Footer from '@/components/footer/footer';
 import DepartmentFAQ from '@/components/departmentFAQ/departmentFAQ';
 import DepartmentAppsMarquee from '@/components/departmentFAQ/DepartmentAppsMarquee';
+import DepartmentUseCase from '@/components/departmentFAQ/DepartmentUseCase';
+import BlogGrid from '@/components/blogGrid/blogGrid';
+import { getBlogData } from '@/utils/getBlogData';
 import Link from 'next/link';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFooterData, getNavbarData, getDepartmentData } from '@/utils/getData';
@@ -10,7 +13,7 @@ import { FOOTER_FIELDS, NAVBAR_FIELDS, DEPARTMENTDATA_FIELDS } from '@/const/fie
 
 export const runtime = 'experimental-edge';
 
-const DepartmentDetailPage = ({ metaData, navbarData, footerData, department }) => {
+const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, blogsData }) => {
     return (
         <>
             <MetaHeadComp
@@ -37,14 +40,24 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department }) 
                 </div>
 
                 <div className="flex flex-col gap-12">
-                    <div className="flex flex-col gap-1 justify-center items-center">
+                    <div className="flex flex-col gap-6 justify-center items-center">
                         <h1 className="h1">{department?.h1_heading || department?.name || 'Department'}</h1>
                         {department?.h1_description && (
-                            <p className="text-lg text-gray-700">{department.h1_description}</p>
+                            <p className="text-lg text-gray-700 text-center max-w-2xl mx-auto">
+                                {department.h1_description}
+                            </p>
                         )}
+
+                        <div className="flex gap-4 justify-center">
+                            <button className="btn btn-accent">Get Started for free</button>
+                            <button className="btn btn-outline">Book a demo</button>
+                        </div>
                     </div>
 
                     <DepartmentAppsMarquee marque_apps={department?.marque_apps} />
+
+                    <DepartmentUseCase use_cases={department?.use_cases} />
+                    <BlogGrid posts={blogsData} />
 
                     {/* Department-specific FAQ coming from departmentData JSON */}
                     <DepartmentFAQ faqJson={department?.faqs} />
@@ -74,6 +87,9 @@ export async function getServerSideProps(context) {
         getDepartmentData(DEPARTMENTDATA_FIELDS, '', pageUrl),
     ]);
 
+    const blogTags = 'department';
+    const blogsData = await getBlogData({ tag1: blogTags }, pageUrl);
+
     const departmentList = Array.isArray(departmentData) ? departmentData : [];
     const department = departmentList.find((item) => item?.slug === slug) || null;
 
@@ -83,6 +99,7 @@ export async function getServerSideProps(context) {
             navbarData: navbarData || {},
             footerData: footerData || {},
             department,
+            blogsData: blogsData || [],
         },
     };
 }

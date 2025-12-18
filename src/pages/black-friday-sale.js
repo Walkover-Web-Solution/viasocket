@@ -94,24 +94,14 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData,
                                 <p>
                                     Black Friday <span className="text-white">Sale</span>
                                 </p>
-                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} height={16} />
                                 <p>
                                     Black Friday <span className="text-white">Sale</span>
                                 </p>
                                 <p>
                                     Black Friday <span className="text-white">Sale</span>
                                 </p>
-                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
-                                <p>
-                                    Black Friday <span className="text-white">Sale</span>
-                                </p>
-                                <p>
-                                    Black Friday <span className="text-white">Sale</span>
-                                </p>
-                                <p>
-                                    Black Friday <span className="text-white">Sale</span>
-                                </p>
-                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} height={16} />
                                 <p>
                                     Black Friday <span className="text-white">Sale</span>
                                 </p>
@@ -121,7 +111,17 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData,
                                 <p>
                                     Black Friday <span className="text-white">Sale</span>
                                 </p>
-                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} height={16} />
+                                <p>
+                                    Black Friday <span className="text-white">Sale</span>
+                                </p>
+                                <p>
+                                    Black Friday <span className="text-white">Sale</span>
+                                </p>
+                                <p>
+                                    Black Friday <span className="text-white">Sale</span>
+                                </p>
+                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} height={16} />
                             </div>
                         </Marquee>
                     </div>
@@ -132,19 +132,19 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData,
                                 <p className="ml-4">Lifetime Free Deals</p>
                                 <p>up to 90% off</p>
                                 <p>Free for one year</p>
-                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} height={16} />
                                 <p>Lifetime Free Deals</p>
                                 <p>up to 90% off</p>
                                 <p>Free for one year</p>
-                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} height={16} />
                                 <p>Lifetime Free Deals</p>
                                 <p>up to 90% off</p>
                                 <p>Free for one year</p>
-                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} />
+                                <Image src={'/assets/icons/featbolt.svg'} alt="featbolt" width={16} height={16} />
                                 <p>Lifetime Free Deals</p>
                                 <p>up to 90% off</p>
                                 <p>Free for one year</p>
-                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} />
+                                <Image src={'/assets/icons/featstar.svg'} alt="featstar" width={16} height={16} />
                             </div>
                         </Marquee>
                     </div>
