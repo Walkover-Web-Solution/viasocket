@@ -50,4 +50,4 @@ export const BLACKFRIDAYSALE_FIELDS = [
     'offer_description',
     'offerpricing_url',
 ];
-export const DEPARTMENTDATA_FIELDS = ['name', 'slug', 'description', 'h1_heading', 'h1_description', 'marque_apps', 'faqs'];
+export const DEPARTMENTDATA_FIELDS = ['name', 'slug', 'description', 'h1_heading', 'h1_description', 'marque_apps', 'faqs', 'use_cases'];
