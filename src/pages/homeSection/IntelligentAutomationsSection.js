@@ -31,7 +31,7 @@ const IntelligentAutomationsSection = ({ appCount }) => {
     ];
 
     return (
-        <section className="pt-16">
+        <section className="border-t custom-border pt-16">
             <h2 className="h2 mb-12 mx-8 text-">
                 Build Intelligent Automations <br /> <span className="text-accent">via viaSocket</span>
             </h2>

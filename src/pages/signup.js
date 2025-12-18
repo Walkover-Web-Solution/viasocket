@@ -18,7 +18,7 @@ const Login = ({ redirect_to, appCount }) => {
                                 href="/"
                                 className="h-10 w-10 bg-[#a32015] text-white flex items-center justify-center shadow-md"
                             >
-                                <img src="/assets/brand/fav_icon.png" alt="viaSocket" />
+                                <Image src="/assets/brand/fav_icon.png" alt="viaSocket" width={40} height={40} />
                             </Link>
 
                             <div className="flex flex-col gap-3">
@@ -83,7 +83,7 @@ const Login = ({ redirect_to, appCount }) => {
                                 <div className="flex items-start gap-4 flex-col">
                                     <div className="flex items-center gap-2">
                                         <Image
-                                            src="/review-image/signup-review-1.jpg"
+                                            src="/review-image/signup-review-1.webp"
                                             width={40}
                                             height={40}
                                             className="rounded-full"
@@ -109,7 +109,7 @@ const Login = ({ redirect_to, appCount }) => {
                                     <div className="flex items-start gap-4 flex-col">
                                         <div className="flex items-center gap-2">
                                             <Image
-                                                src="/review-image/signup-review-2.jpg"
+                                                src="/review-image/signup-review-2.webp"
                                                 width={40}
                                                 height={40}
                                                 className="rounded-full"
@@ -131,29 +131,37 @@ const Login = ({ redirect_to, appCount }) => {
                                 <div className="flex flex-wrap items-end justify-between gap-6 text-sm !mt-20">
                                     <div className="flex items-center gap-3">
                                         <div className="flex -space-x-2">
-                                            <img
+                                            <Image
                                                 src="https://thingsofbrand.com/api/icon/pipedrive.com"
                                                 alt="pipedrive"
                                                 className="rounded-full h-8 w-8"
                                                 style={{ filter: 'grayscale(100%)' }}
+                                                width={40}
+                                                height={40}
                                             />
-                                            <img
+                                            <Image
                                                 src="https://thingsofbrand.com/api/icon/hubspot.com"
                                                 alt="hubspot"
                                                 className="rounded-full h-8 w-8"
                                                 style={{ filter: 'grayscale(100%)' }}
+                                                width={40}
+                                                height={40}
                                             />
-                                            <img
+                                            <Image
                                                 src="https://thingsofbrand.com/api/icon/quickbooks.com"
                                                 alt="quickbooks"
                                                 className="rounded-full h-8 w-8"
                                                 style={{ filter: 'grayscale(100%)' }}
+                                                width={40}
+                                                height={40}
                                             />
-                                            <img
+                                            <Image
                                                 src="https://thingsofbrand.com/api/icon/mailchimp.com"
                                                 alt="mailchimp"
                                                 className="rounded-full h-8 w-8"
                                                 style={{ filter: 'grayscale(100%)' }}
+                                                width={40}
+                                                height={40}
                                             />
                                         </div>
                                         <div>
@@ -186,7 +194,7 @@ const Login = ({ redirect_to, appCount }) => {
                                         <span className="text-base">★★★★★</span>
                                         <span className="text-xs flex items-center gap-2">
                                             {' '}
-                                            <Image src="/review-image/capterra-logo.png" width={16} height={16} />{' '}
+                                            <Image src="/review-image/capterra-logo.webp" width={16} height={16} />{' '}
                                             Capterra
                                         </span>
                                     </div>
@@ -199,7 +207,7 @@ const Login = ({ redirect_to, appCount }) => {
                                         <span className="text-base">★★★★★</span>
                                         <span className="text-xs flex items-center gap-2">
                                             {' '}
-                                            <Image src="/review-image/g2-logo.png" width={16} height={16} /> G2
+                                            <Image src="/review-image/g2-logo.webp" width={16} height={16} /> G2
                                         </span>
                                     </div>
                                 </div>
