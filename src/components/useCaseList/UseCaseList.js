@@ -57,7 +57,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                 <div
                     className="px-2 lg:px-8 py-12 md:py-24 lg:py-16  w-full flex justify-center items-center border-l custom-border"
                     style={{
-                        backgroundImage: 'url("/review-image/pexels-ironic.svg")',
+                        backgroundImage: 'url("/review-image/pexels-ironic.webp")',
                         backgroundSize: 'cover',
                         backgroundPosition: 'center',
                     }}
