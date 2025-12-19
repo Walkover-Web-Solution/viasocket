@@ -27,7 +27,9 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                     </p>
 
                     {/* <BuildOptionsCTA /> */}
-                    <button className="btn btn-accent">Get Started</button>
+                    <Link href="/signup" className="btn btn-accent">
+                        Get Started
+                    </Link>
                 </div>
 
                 <ShowAppsIndex />
