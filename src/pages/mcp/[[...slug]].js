@@ -11,7 +11,6 @@ import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getAppCount, getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import getRealRouteFromDataUrl from '@/utils/getRealRouteFromDataUrl';
 export const runtime = 'experimental-edge';
 
 export default function Mcp({
@@ -94,9 +93,9 @@ export default function Mcp({
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const realPath = getRealRouteFromDataUrl(req.url);
-    const pageUrl = `${protocol}://${req.headers.host}${realPath}`;
-    const pageInfo = getPageInfo(context, realPath);
+    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
+
+    const pageInfo = getPageInfo(context);
     const mcpInfo = getMcpInfo(pageInfo?.pathArray);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
