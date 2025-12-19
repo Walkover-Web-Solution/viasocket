@@ -52,7 +52,10 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                             <Link href="/signup" className="btn btn-accent">
                                 Get Started for free
                             </Link>
-                            <Link href="https://cal.id/team/viasocket/embed" className="btn btn-outline">
+                            <Link
+                                href="https://cal.id/team/viasocket/workflow-setup-discussion"
+                                className="btn btn-outline"
+                            >
                                 Book a demo
                             </Link>
                         </div>
