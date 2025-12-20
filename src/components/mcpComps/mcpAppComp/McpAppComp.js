@@ -475,9 +475,9 @@ export default function McpAppComp({
                         <BlogGrid posts={blogsData} />
                     </div>
                 )}
+                {faqData && <FAQSection faqData={faqData} />}
                 <div className="pb-4">
                     <div className=" container cont">
-                        {faqData && <FAQSection faqData={faqData} />}
                         <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
                             <div className="cont gap-4 p-12 justify-between border-x custom-border w-full md:border-b-0 border-b">
                                 <Image

@@ -16,10 +16,5 @@ export default function FeatureContentComp({ featureData }) {
 
     if (!faqData.length) return null;
 
-    return (
-        <div className="container">
-            <FaqSection faqData={faqData} />
-        </div>
-    );
+    return <FaqSection faqData={faqData} />;
 }
-

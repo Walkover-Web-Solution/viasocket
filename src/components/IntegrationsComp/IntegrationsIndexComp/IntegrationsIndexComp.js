@@ -71,8 +71,7 @@ export default function IntegrationsIndexComp({
                 const fetchedApps = await searchApps(debounceValue);
                 if (!fetchedApps) {
                     setSearchedApps([]);
-                }
-                else {
+                } else {
                     const sortedApps = fetchedApps.sort((a, b) => {
                         const aName = a?.name?.toLowerCase() || '';
                         const bName = b?.name?.toLowerCase() || '';
@@ -258,7 +257,9 @@ export default function IntegrationsIndexComp({
                                     >
                                         <div className="flex items-center gap-2 justify-between">
                                             <h2 className="flex items-center gap-2">
-                                                <span className="text-xl"><span aria-label="lightbulb">💡</span></span>
+                                                <span className="text-xl">
+                                                    <span aria-label="lightbulb">💡</span>
+                                                </span>
                                                 <span>Request an App</span>
                                             </h2>
                                             <RequestIntegrationPopupOpener showType="button" title="Request" />
@@ -312,11 +313,7 @@ export default function IntegrationsIndexComp({
                 <BlogGrid posts={blogsData} />
             </div>
             <div className="pb-4">
-                {faqData?.length > 0 && (
-                    <div className="container cont">
-                        <FAQSection faqData={faqData} faqName={'/index'} />
-                    </div>
-                )}
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <div className="container cont">
                     <AlphabeticalComponent />
                 </div>
@@ -354,7 +351,9 @@ export function AppVisual({ app, index, redirectPart }) {
         >
             <div className="flex items-center gap-2 justify-between">
                 <h2 className="flex items-center gap-2">
-                    <span className="text-xl"><span aria-label="lightbulb">💡</span></span>
+                    <span className="text-xl">
+                        <span aria-label="lightbulb">💡</span>
+                    </span>
                     <span>Request an App</span>
                 </h2>
 
@@ -408,7 +407,8 @@ export function RequestIntegrationPopupOpener({
         <div className={`bg-white border custom-border p-12 cont gap-2 w-full ${className}`}>
             <div className="cont gap-1">
                 <h2 className="h2">
-                    <span aria-label="lightbulb">💡</span> Can’t find the {type || 'App'} you’re looking for? We’ll try to build it for you within 48 hours
+                    <span aria-label="lightbulb">💡</span> Can’t find the {type || 'App'} you’re looking for? We’ll try
+                    to build it for you within 48 hours
                 </h2>
             </div>
             <div className="mt-8">{showButton}</div>
@@ -426,9 +426,7 @@ export function RequestIntegrationPopupOpener({
                         We’ll build it for you within <span className="font-bold text-primary-700">48 hours</span>.
                     </h2>
                 </div>
-                <div className='ml-8'>
-                    {showButton}
-                </div>
+                <div className="ml-8">{showButton}</div>
             </div>
 
             {/* Right Section */}
@@ -442,14 +440,8 @@ export function RequestIntegrationPopupOpener({
                             Build its plug and make it live today!
                         </h2>
                     </div>
-                    <Link
-                        href="https://viasocket.com/help/developer-hub"
-                        target="_blank"
-                        className="max-w-max"
-                    >
-                        <button className="ml-8 btn text-xs sm:text-sm text-wrap btn-accent">
-                            Read our playbook
-                        </button>
+                    <Link href="https://viasocket.com/help/developer-hub" target="_blank" className="max-w-max">
+                        <button className="ml-8 btn text-xs sm:text-sm text-wrap btn-accent">Read our playbook</button>
                     </Link>
                 </div>
             </div>

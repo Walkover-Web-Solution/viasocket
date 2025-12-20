@@ -135,11 +135,7 @@ export default function pricing({ footerData, faqData, metaData, blogData, navba
                 <BlogGrid posts={blogData} />
             </div>
             <div>
-                {faqData?.length > 0 && (
-                    <div className="container">
-                        <FAQSection faqData={faqData} faqName={'/index'} />
-                    </div>
-                )}
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <div className="container">
                     <Footer footerData={footerData} />
                 </div>

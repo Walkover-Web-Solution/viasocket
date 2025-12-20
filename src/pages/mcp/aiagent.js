@@ -86,8 +86,8 @@ export default function aiagent({ footerData, faqData, metaData, blogData, navba
                     <div className="cont items-start gap-1">
                         <h2 className="h2 text-left">Ready to Embed?</h2>
                         <p className="sub__h1 text-left">
-                            Start integrating viaSocket MCP today and give your users the power to connect their agents with
-                            the tools they already use — no extra coding required.
+                            Start integrating viaSocket MCP today and give your users the power to connect their agents
+                            with the tools they already use — no extra coding required.
                         </p>
                     </div>
                     <div className="flex gap-4">
@@ -105,11 +105,7 @@ export default function aiagent({ footerData, faqData, metaData, blogData, navba
                 <BlogGrid posts={blogData} />
             </div>
             <div>
-                {faqData?.length > 0 && (
-                    <div className="container">
-                        <FAQSection faqData={faqData} faqName={'/index'} />
-                    </div>
-                )}
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <div className="container">
                     <Footer footerData={footerData} />
                 </div>
