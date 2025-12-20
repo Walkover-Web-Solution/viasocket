@@ -54,14 +54,7 @@ const departmentIcons = {
 const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqData, reviewData, appCount }) => {
     return (
         <>
-            <div
-                style={{
-                    backgroundImage: "url('/review-image/pattern-randomized-dotted.webp')",
-                    backgroundSize: 'cover',
-                    backgroundAttachment: 'fixed',
-                    backgroundRepeat: 'no-repeat',
-                }}
-            >
+            <div className="square-background">
                 <Navbar navbarData={navbarData} />
                 <MetaHeadComp metaData={metaData} page={'/department'} />
                 <div className="container mt-12 flex flex-col gap-12">
@@ -93,7 +86,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[180px]">
+                    <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[180px]">
                         {departmentData?.map((item, index) => {
                             // Determine card style based on position in grid
                             const cardType = index % 4;
@@ -117,7 +110,9 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                                     href={`/department/${item?.slug}`}
                                     key={item?.id || index}
                                     className={`group relative overflow-hidden border ${cardStyle} p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
-                                    style={{ gridRow: `span ${rowSpan}` }}
+                                    style={{
+                                        gridRow: `span ${rowSpan}`,
+                                    }}
                                 >
                                     {/* Content area */}
                                     <div className="flex flex-col gap-2">
