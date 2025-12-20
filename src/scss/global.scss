@@ -306,12 +306,12 @@
     /** Using for all btn font size */
     .btn {
         font-size: 14px;
-        padding-left: 14px;
-        padding-right: 14px;
+        padding-left: 20;
+        padding-right: 20;
         height: 40px;
         min-height: 45px;
         border-radius: 50px;
-        border-color: #ffffff;
+        border-color: var(--custom-border);
 
         @media screen and (width <= 768px) {
             font-size: 12px;

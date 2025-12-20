@@ -288,14 +288,9 @@ const Deals = ({ footerData, navbarData, blackFridaySaleData, metaData, faqData,
                         </div>
                     </div>
                 </div>
-
-                <div className="container lg:gap-20 md:gap-16 gap-12 lg:mt-20 md:mt-16 mt-12">
-                    <div className="cont">
-                        {faqData && faqData.length > 0 && (
-                            <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />
-                        )}
-                        <Footer footerData={footerData} />
-                    </div>
+                {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />}
+                <div className="container">
+                    <Footer footerData={footerData} />
                 </div>
             </div>
         </>

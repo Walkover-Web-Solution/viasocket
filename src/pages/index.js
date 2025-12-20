@@ -157,7 +157,7 @@ const Index = ({
             <AiAgentFeature />
 
             {/* Show Apps Section */}
-            <div className="bg-gray-50 py-20 container">
+            <div className="bg-white my-20 container">
                 <div className="flex flex-col border custom-border border-b-0">
                     <ShowAppsIndex />
                     <IntelligentAutomationsSection appCount={appCount} />
@@ -202,11 +202,7 @@ const Index = ({
 
             {/* FAQ Section */}
             <div className="py-12 bg-[#FAF9F6]">
-                {faqData?.length > 0 && (
-                    <div className="container cont">
-                        <FAQSection faqData={faqData} faqName={'/index'} />
-                    </div>
-                )}
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
 
                 <SecuritySection securityGridData={securityGridData} />
                 <div className="container">

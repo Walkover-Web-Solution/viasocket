@@ -27,7 +27,17 @@ export const runtime = 'experimental-edge';
 
 const TEMPLATES_PER_PAGE = 6;
 
-const Template = ({ footerData, templateToShow, metaData, faqData, blogData, categories, apps, navbarData, initialApps }) => {
+const Template = ({
+    footerData,
+    templateToShow,
+    metaData,
+    faqData,
+    blogData,
+    categories,
+    apps,
+    navbarData,
+    initialApps,
+}) => {
     const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
@@ -55,7 +65,6 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
         handleLoadMore,
         clearAllFilters,
     } = useTemplateFilters(templateToShow);
-
 
     useEffect(() => {
         if (templateToShow.length === 0) return;
@@ -113,8 +122,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
     const displayTemplates = templatesFromSearchActive
         ? filteredSearchTemplates
         : remainingTemplates.length > 0
-            ? remainingTemplates
-            : filteredTemplates;
+          ? remainingTemplates
+          : filteredTemplates;
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -168,8 +177,8 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                                         appSlug === 'webhook'
                                             ? 'Webhook'
                                             : appSlug === 'cron'
-                                                ? 'Cron'
-                                                : appData?.pluginname || appSlug;
+                                              ? 'Cron'
+                                              : appData?.pluginname || appSlug;
                                     return (
                                         <span
                                             key={appSlug}
@@ -320,7 +329,13 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                             <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                                 <h2 className="h2">Can't find the right template?</h2>
                                 <h2 className="h2">Start with AI</h2>
-                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started Free</button>
+                                <button
+                                    className="btn btn-accent mt-4"
+                                    aria-label="sign up"
+                                    onClick={(e) => handleRedirect(e, '/signup?', router)}
+                                >
+                                    Get Started Free
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -328,11 +343,7 @@ const Template = ({ footerData, templateToShow, metaData, faqData, blogData, cat
                         <BlogGrid posts={blogData} />
                     </div>
                     <div className="pb-4">
-                        {faqData?.length > 0 && (
-                            <div className="container">
-                                <FAQSection faqData={faqData} faqName={'/automations'} />
-                            </div>
-                        )}
+                        {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/automations'} />}
                         <div className="container">
                             <Footer footerData={footerData} />
                         </div>

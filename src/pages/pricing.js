@@ -54,12 +54,12 @@ export default function pricing({ footerData, faqData, metaData, features, count
                             {features.map((feature, index) =>
                                 index === 0 ? (
                                     <div key={index} className="flex items-center gap-2">
-                                        <GiCheckMark className="text-accent"/>
+                                        <GiCheckMark className="text-accent" />
                                         <p className="text-lg leading-tight">Connect to {+appCount + 300}+ apps</p>
                                     </div>
                                 ) : (
                                     <div key={index} className="flex items-center gap-2">
-                                        <GiCheckMark className="text-accent"/>
+                                        <GiCheckMark className="text-accent" />
                                         <p className="text-lg leading-tight">{feature.featurename}</p>
                                     </div>
                                 )
@@ -97,12 +97,9 @@ export default function pricing({ footerData, faqData, metaData, features, count
                         </div>
                     </div>
                 </div>
-
-                <div className="cont lg:gap-20 md:gap-16 gap-12">
-                    <div className="cont">
-                        {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
-                        <Footer footerData={footerData} />
-                    </div>
+                {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
+                <div className="container">
+                    <Footer footerData={footerData} />
                 </div>
             </div>
         </>
