@@ -1,5 +1,4 @@
 import style from './chat-widget.module.scss';
-import { MdCircle } from 'react-icons/md';
 import { IoChatboxEllipsesOutline } from "react-icons/io5";
 
 
