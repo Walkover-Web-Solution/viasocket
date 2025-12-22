@@ -121,10 +121,10 @@ export default function MyApp({ Component, pageProps, pagesData }) {
         }
     }
 
-    const showMCPBanner = !['/pricing'].some((path) => router.pathname.includes(path));
-    const show404Banner = router.pathname === '/404';
-    const showPricingBanner = router.pathname === '/pricing';
-    const showGlobalPopup = router.pathname !== '/black-friday-sale';
+    // const showMCPBanner = !['/pricing'].some((path) => router.pathname.includes(path));
+    // const show404Banner = router.pathname === '/404';
+    // const showPricingBanner = router.pathname === '/pricing';
+    // const showGlobalPopup = router.pathname !== '/black-friday-sale';
 
     return (
         <>
