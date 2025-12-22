@@ -48,11 +48,11 @@ const GlobalPopup = () => {
                         </h2>
                     </div>
 
-                    <div className="mt-4 flex justify-center">
+                    {/* <div className="mt-4 flex justify-center">
                         <Link href="/black-friday-sale" target="_blank" className="btn btn-accent gap-1" onClick={handleClose}>
                             Grab deals now<MdOutlineArrowRightAlt size={22} />
                         </Link>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

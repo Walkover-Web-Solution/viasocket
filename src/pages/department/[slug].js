@@ -36,9 +36,7 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                                 Departments
                             </Link>
                             <span className="text-gray-400">/</span>
-                            <span className="text-gray-900 font-medium">
-                                {department?.h1_heading || department?.name || 'Department'}
-                            </span>
+                            <span className="text-gray-900 font-medium">{department?.name || 'Department'}</span>
                         </nav>
                     </div>
 
@@ -46,7 +44,9 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                     <div className="flex flex-col items-center text-center">
                         <h1 className="h1 mb-4">{department?.h1_heading || department?.name || 'Department'}</h1>
                         {department?.h1_description && (
-                            <p className="text-lg mb-6 leading-relaxed max-w-2xl">{department.h1_description}</p>
+                            <p className="sub__h1 mb-6 leading-relaxed" style={{ width: '60vw' }}>
+                                {department.h1_description}
+                            </p>
                         )}
 
                         <div className="flex flex-wrap gap-4 justify-center mb-10">
@@ -63,26 +63,13 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                                 Book a demo
                             </Link>
                         </div>
-
-                        <div className="relative p-1">
-                            <div className="absolute -top-3 -right-3 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                ✓
-                            </div>
-                            <Image
-                                src="https://img.freepik.com/free-vector/business-team-discussing-ideas-startup_74855-4380.jpg?w=1380&t=st=1703069602~exp=1703070202~hmac=1b1f5f8b8b4c2c5b3b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5"
-                                alt={department?.name || 'Department'}
-                                className="w-full h-auto"
-                                width={400}
-                                height={400}
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="container py-12 flex flex-col gap-16">
                 <div className="relative bg-white p-4 border custom-border">
-                    <DepartmentAppsMarquee marque_apps={department?.marque_apps} />
+                    <DepartmentAppsMarquee marque_apps={department?.marque_apps} department={department} />
                 </div>
                 <DepartmentUseCase use_cases={department?.use_cases} />
 

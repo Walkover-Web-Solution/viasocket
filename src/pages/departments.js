@@ -10,6 +10,7 @@ import { getFaqData } from '@/utils/getFaqData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import ReviewIframe from './homeSection/reviewIframe';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
+import { getAppCount } from '@/utils/axiosCalls';
 import {
     Users,
     Calculator,
@@ -82,7 +83,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                     <div className="bg-white my-20 container">
                         <div className="flex flex-col border custom-border border-b-0">
                             <ShowAppsIndex />
-                            <IntelligentAutomationsSection appCount={appCount} />
+                            <IntelligentAutomationsSection appCount={appCount} isDepartmentPage={true} />
                         </div>
                     </div>
 
@@ -97,19 +98,11 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                             // Set border style based on card type (only using gray border)
                             const cardStyle = cardType % 2 === 0 ? 'custom-border bg-white' : 'custom-border bg-white';
 
-                            // Set image for each card type
-                            const cardImages = {
-                                0: 'https://img.freepik.com/free-vector/cute-cat-playing-yarn-ball-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated_138676-4148.jpg',
-                                1: 'https://img.freepik.com/premium-vector/cartoon-cat-with-green-eyes-white-background_1253202-12883.jpg',
-                                2: 'https://img.freepik.com/free-vector/cute-cat-playing-yarn-ball-cartoon-vector-icon-illustration-animal-nature-icon-concept-isolated_138676-4148.jpg',
-                                3: 'https://img.freepik.com/premium-vector/cartoon-cat-with-green-eyes-white-background_1253202-12883.jpg',
-                            };
-
                             return (
                                 <Link
                                     href={`/department/${item?.slug}`}
                                     key={item?.id || index}
-                                    className={`group relative overflow-hidden border ${cardStyle} p-6 flex flex-col justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
+                                    className={`group relative overflow-hidden border ${cardStyle} p-4 flex flex-col gap-2 justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
                                     style={{
                                         gridRow: `span ${rowSpan}`,
                                     }}
@@ -137,7 +130,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                                             </div>
                                         </div>
 
-                                        <div className="mt-4">
+                                        <div className="">
                                             <h3 className="h3 text-lg md:text-xl font-bold group-hover:text-accent transition-colors duration-300">
                                                 {item?.name ?? ''}
                                             </h3>
@@ -151,25 +144,27 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                                     </div>
                                     {/* Card image with enhanced styling */}
                                     <div
-                                        className="mt-4 mb-4 overflow-hidden rounded-xl shadow-sm border border-gray-100"
-                                        style={{ height: rowSpan >= 3 ? '180px' : '140px' }}
+                                        className="overflow-hidden shadow-sm border border-gray-100"
+                                        style={{ height: rowSpan >= 3 ? '280px' : '140px' }}
                                     >
-                                        <div className="relative w-full h-full">
-                                            <img
-                                                src={cardImages[cardType]}
-                                                alt={item?.name || `Department ${index + 1}`}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                                                loading="lazy"
-                                            />
-                                            {/* Overlay gradient */}
-                                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        </div>
+                                        {item?.card_image && (
+                                            <div className="relative w-full h-full">
+                                                <img
+                                                    src={item?.card_image}
+                                                    alt={item?.name || `Department ${index + 1}`}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                                                    loading="lazy"
+                                                />
+                                                {/* Overlay gradient */}
+                                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                            </div>
+                                        )}
                                     </div>
 
                                     {/* Enhanced view details button */}
-                                    <div className="mt-4 flex items-center justify-end">
+                                    <div className="flex items-center justify-end">
                                         <div className="relative overflow-hidden">
-                                            <span className="inline-flex items-center gap-2 py-2 px-4 rounded-lg bg-gray-50 text-sm font-medium text-gray-700 group-hover:text-accent group-hover:bg-accent/5 transition-all duration-300">
+                                            <span className="inline-flex items-center gap-2 py-2 px-4 bg-gray-50 text-sm font-medium text-gray-700 group-hover:text-accent group-hover:bg-accent/5 transition-all duration-300">
                                                 View details
                                                 <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-white border border-gray-200 text-accent group-hover:translate-x-1 transition-transform duration-300">
                                                     →
@@ -205,6 +200,7 @@ export async function getServerSideProps(context) {
     const departmentData = await getDepartmentData(DEPARTMENTDATA_FIELDS, '', pageUrl);
     const faqData = await getFaqData('/departments', pageUrl);
     const reviewData = await getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl);
+    const appCount = await getAppCount();
     return {
         props: {
             metaData: metaData || {},
@@ -213,6 +209,7 @@ export async function getServerSideProps(context) {
             departmentData: departmentData || {},
             faqData: faqData || {},
             reviewData: reviewData || {},
+            appCount: appCount || 1764,
         },
     };
 }

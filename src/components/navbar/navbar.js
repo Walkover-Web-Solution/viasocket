@@ -148,13 +148,13 @@ export default function Navbar({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                <Link href="/black-friday-sale">
+                {/* <Link href="/black-friday-sale">
                     <div className="w-full p-2 text-center transparent-border-black gradient-background border-b">
                         <p className="!text-xs text-black hover:underline">
                             Black Friday 2025: View All SaaS Deals →
                         </p>
                     </div>
-                </Link>
+                </Link> */}
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
