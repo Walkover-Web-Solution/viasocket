@@ -5,7 +5,7 @@ import { getFooterData, getNavbarData } from '@/utils/getData';
 import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
-
+export const runtime = 'experimental-edge';
 
 export async function getServerSideProps(context) {
     const { req } = context;

@@ -23,7 +23,7 @@ import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
 
-
+export const runtime = 'experimental-edge';
 
 const getAutomationWorkIcon = (automationWork) => {
     switch (automationWork) {

@@ -13,7 +13,7 @@ import getCountries from '@/utils/getCountries';
 import { getAppCount } from '@/utils/axiosCalls';
 import { GiCheckMark } from 'react-icons/gi';
 
-
+export const runtime = 'experimental-edge';
 
 export default function pricing({ footerData, faqData, metaData, features, countries, appCount, navbarData }) {
     return (

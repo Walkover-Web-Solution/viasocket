@@ -22,7 +22,7 @@ import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutoma
 import PanelSection from '@/pages/homeSection/panelSection';
 import ShowDepartment from '@/pages/homeSection/homeDepartment/showDepartment';
 
-
+export const runtime = 'experimental-edge';
 
 const Index = ({
     metaData,
