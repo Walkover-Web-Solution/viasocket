@@ -16,7 +16,7 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getAppCount } from '@/utils/axiosCalls';
 
-export const runtime = 'experimental-edge';
+
 
 const Embed = ({
     blogData,

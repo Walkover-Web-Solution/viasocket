@@ -12,7 +12,7 @@ import { getAppCount, getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import getRealRouteFromDataUrl from '@/utils/getRealRouteFromDataUrl';
-export const runtime = 'experimental-edge';
+
 
 export default function Mcp({
     pageInfo,

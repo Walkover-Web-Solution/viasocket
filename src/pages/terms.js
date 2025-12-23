@@ -21,7 +21,7 @@ export async function getServerSideProps(context) {
         },
     };
 }
-export const runtime = 'experimental-edge';
+
 
 const Terms = ({ footerData, metaData, navbarData }) => {
     return (
