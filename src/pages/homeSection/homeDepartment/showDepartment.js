@@ -3,7 +3,7 @@ import style from './showDepartment.module.css';
 import Link from 'next/link';
 
 const ShowDepartment = () => {
-    const departments = ['That', 'Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
+    const departments = ['Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
 
     const [currentDepartment, setCurrentDepartment] = useState('That');
     const [isAnimating, setIsAnimating] = useState(false);

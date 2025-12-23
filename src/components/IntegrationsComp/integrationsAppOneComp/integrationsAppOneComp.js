@@ -22,6 +22,7 @@ import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps'
 import { APPERPAGE } from '@/const/integrations';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 import TemplateContainer from '../templateContainer/templateContainer';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -116,13 +117,7 @@ export default function IntegrationsAppOneComp({
             <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
                 <div className="container flex flex-col justify-between gap-12">
                     <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
-                        <div className="flex items-center gap-2">
-                            <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
-                                Integrations{' '}
-                            </Link>
-                            <MdChevronRight fontSize={22} />
-                            <div className="flex items-center gap-0">{appOneDetails?.name}</div>
-                        </div>
+                        <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
 
                         <div className="text-xl gap-4 flex-wrap flex items-center">
                             <button
@@ -289,7 +284,7 @@ export default function IntegrationsAppOneComp({
                         </div>
 
                         {/* Template Container */}
-                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow} />
+                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow} requireAllApps={true}/>
                     </div>
                 </div>
 
