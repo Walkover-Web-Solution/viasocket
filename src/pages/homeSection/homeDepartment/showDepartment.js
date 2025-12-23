@@ -3,9 +3,9 @@ import style from './showDepartment.module.css';
 import Link from 'next/link';
 
 const ShowDepartment = () => {
-    const departments = ['That', 'Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
+    const departments = ['Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
 
-    const [currentDepartment, setCurrentDepartment] = useState('That');
+    const [currentDepartment, setCurrentDepartment] = useState('Marketing');
     const [isAnimating, setIsAnimating] = useState(false);
     const [isInView, setIsInView] = useState(false);
     const sectionRef = useRef(null);

@@ -1,55 +1,20 @@
 import Marquee from 'react-fast-marquee';
 import { useMemo } from 'react';
 
-// Helper functions moved outside component for better performance
-const parseAppsData = (data) => {
-    if (!data) return [];
-
-    // Handle string data
-    if (typeof data === 'string') {
-        try {
-            // Try parsing as JSON first
-            const jsonData = JSON.parse(data);
-            return Array.isArray(jsonData) ? jsonData : [jsonData];
-        } catch {
-            // If not valid JSON, parse as colon-separated or line-separated
-            return data
-                .split(/[,\n]/)
-                .map((line) => line.trim())
-                .filter(Boolean)
-                .map((line) => {
-                    const parts = line.split(':');
-                    return parts.length >= 2 ? { app: parts[0].trim(), domain: parts[1].trim() } : { app: line };
-                });
-        }
-    }
-
-    // Handle array data
-    if (Array.isArray(data)) return data;
-
-    // Handle object data
-    if (typeof data === 'object' && data !== null) return [data];
-
-    return [];
-};
-
 const DepartmentAppsMarquee = ({ marque_apps, department }) => {
-    // Use useMemo instead of useState + useEffect for better performance
-    const parsedApps = useMemo(() => parseAppsData(marque_apps), [marque_apps]);
-
     // Split apps into two equal groups for the two marquees
     const { firstHalf, secondHalf } = useMemo(() => {
-        if (!parsedApps.length) return { firstHalf: [], secondHalf: [] };
+        if (!marque_apps.length) return { firstHalf: [], secondHalf: [] };
 
-        const midpoint = Math.ceil(parsedApps.length / 2);
+        const midpoint = Math.ceil(marque_apps.length / 2);
         return {
-            firstHalf: parsedApps.slice(0, midpoint),
-            secondHalf: parsedApps.slice(midpoint),
+            firstHalf: marque_apps.slice(0, midpoint),
+            secondHalf: marque_apps.slice(midpoint),
         };
-    }, [parsedApps]);
+    }, [marque_apps]);
 
     // Early return if no apps to display
-    if (!parsedApps.length) return null;
+    if (!marque_apps.length) return null;
 
     // Memoized app item renderer for better performance
     const AppItem = ({ app, keyPrefix, isLast }) => {
@@ -95,7 +60,7 @@ const DepartmentAppsMarquee = ({ marque_apps, department }) => {
         <div className="flex flex-col gap-6 container py-8 px-4">
             <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                 <p className="text-center min-w-fit uppercase">
-                    Trusted by Teams Using These <span className="text-accent">{department?.name}</span> Apps
+                    Automate top apps for {department?.name}
                 </p>
                 <Marquee
                     direction="left"
@@ -106,7 +71,7 @@ const DepartmentAppsMarquee = ({ marque_apps, department }) => {
                     gradientWidth={96}
                 >
                     <div className="flex py-4 gap-20">
-                        {firstHalf.map((app, index) => (
+                        {firstHalf?.map((app, index) => (
                             <AppItem
                                 key={`app-${index}`}
                                 app={app}
@@ -119,7 +84,7 @@ const DepartmentAppsMarquee = ({ marque_apps, department }) => {
             </div>
             <Marquee direction="right" speed={40} autoFill gradient gradientColor={[250, 249, 246]} gradientWidth={96}>
                 <div className="flex py-4 gap-20">
-                    {secondHalf.map((app, index) => (
+                    {secondHalf?.map((app, index) => (
                         <AppItem
                             key={`app-${index}`}
                             app={app}

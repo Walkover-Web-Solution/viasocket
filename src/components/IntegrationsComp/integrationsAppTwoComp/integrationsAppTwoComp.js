@@ -23,6 +23,7 @@ import { IoMdSearch } from 'react-icons/io';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
@@ -215,38 +216,7 @@ export default function IntegrationsAppTwoComp({
             />
             <div className="cont -mt-10 global-top-space pt-12 gap-12 md:gap-16 lg:gap-20">
                 <div className="container flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
-                    <Link
-                        href={createURL(`/integrations`)}
-                        className="flex items-center gap-1 hover:text-accent transition-colors duration-200"
-                    >
-                        <span className="underline underline-offset-2">Integrations</span>
-                    </Link>
-
-                    <MdChevronRight className="mx-1 text-gray-400" fontSize={20} />
-
-                    <Link
-                        href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
-                        className="flex items-center gap-1 hover:text-accent transition-colors duration-200"
-                    >
-                        <span className="underline underline-offset-2">{appOneDetails?.name}</span>
-                    </Link>
-
-                    <MdChevronRight className="mx-1 text-gray-400" fontSize={20} />
-
-                    <Link
-                        href={createURL(`/integrations/${appTwoDetails?.appslugname}`)}
-                        className="flex items-center gap-1 hover:text-accent transition-colors duration-200"
-                    >
-                        <span className="underline underline-offset-2">{appTwoDetails?.name}</span>
-                    </Link>
-
-                    <MdChevronRight className="mx-1 text-gray-400" fontSize={20} />
-
-                    <div className="flex items-center gap-1">
-                        <span>
-                            {appOneDetails?.name} + {appTwoDetails?.name}
-                        </span>
-                    </div>
+                    <Breadcrumb parent="Integrations" child1={appOneDetails?.name} child2={appTwoDetails?.name} child3={appOneDetails?.name + ' + ' + appTwoDetails?.name} parentLink={`/integrations`} child1Link={`/integrations/${appOneDetails?.appslugname}`} child2Link={`/integrations/${appTwoDetails?.appslugname}`} />
                 </div>
                 <div className="container">
                     <div className="cont flex justify-center items-center p-4 mt-8">
@@ -426,6 +396,7 @@ export default function IntegrationsAppTwoComp({
                         <TemplateContainer
                             selectedApps={[currentAppOne, currentAppTwo]}
                             templateToShow={templateToShow}
+                            requireAllApps={true}
                         />
                     </div>
                 </div>

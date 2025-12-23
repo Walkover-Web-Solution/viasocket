@@ -11,10 +11,13 @@ import Image from 'next/image';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFooterData, getNavbarData, getDepartmentData } from '@/utils/getData';
 import { FOOTER_FIELDS, NAVBAR_FIELDS, DEPARTMENTDATA_FIELDS } from '@/const/fields';
+import { getTemplates } from '@/utils/axiosCalls';
+import TemplateContainer from '@/components/IntegrationsComp/templateContainer/templateContainer';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
 export const runtime = 'experimental-edge';
 
-const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, blogsData }) => {
+const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, blogsData, templateToShow }) => {
     return (
         <div className="square-background">
             <MetaHeadComp
@@ -26,22 +29,10 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
             <div className="relative overflow-hidden pt-16 pb-12">
                 <div className="container relative z-10">
                     {/* Breadcrumb */}
-                    <div className="mb-8 flex flex-col gap-2 text-sm text-gray-600">
-                        <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-1">
-                            <Link href="/" className="hover:text-accent transition-colors">
-                                Home
-                            </Link>
-                            <span className="text-gray-400">/</span>
-                            <Link href="/departments" className="hover:text-accent transition-colors">
-                                Departments
-                            </Link>
-                            <span className="text-gray-400">/</span>
-                            <span className="text-gray-900 font-medium">{department?.name || 'Department'}</span>
-                        </nav>
-                    </div>
+                    <Breadcrumb parent="Departments" child1={department?.name} parentLink="/departments" />
 
                     {/* Hero content - centered */}
-                    <div className="flex flex-col items-center text-center">
+                    <div className="flex flex-col items-center text-center pt-12">
                         <h1 className="h1 mb-4">{department?.h1_heading || department?.name || 'Department'}</h1>
                         {department?.h1_description && (
                             <p className="sub__h1 mb-6 leading-relaxed" style={{ width: '60vw' }}>
@@ -71,6 +62,8 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                 <div className="relative bg-white p-4 border custom-border">
                     <DepartmentAppsMarquee marque_apps={department?.marque_apps} department={department} />
                 </div>
+        
+                <TemplateContainer selectedApps={department?.marque_apps} templateToShow={templateToShow} requireAllApps={false} department_name={department?.name}/>
                 <DepartmentUseCase use_cases={department?.use_cases} />
 
                 <BlogGrid posts={blogsData} />
@@ -106,6 +99,12 @@ export async function getServerSideProps(context) {
     const departmentList = Array.isArray(departmentData) ? departmentData : [];
     const department = departmentList.find((item) => item?.slug === slug) || null;
 
+    const templateData = await getTemplates(pageUrl);
+    const validTemplates = templateData.filter(
+        t => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0
+    );
+    const templateToShow = validTemplates;
+
     return {
         props: {
             metaData: metaData || {},
@@ -113,6 +112,7 @@ export async function getServerSideProps(context) {
             footerData: footerData || {},
             department,
             blogsData: blogsData || [],
+            templateToShow: templateToShow || [],
         },
     };
 }
