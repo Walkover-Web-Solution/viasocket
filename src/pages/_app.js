@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
-// import GlobalPopup from '@/components/GlobalPopup/GlobalPopup';
 import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
 // import Script from 'next/script';
@@ -124,13 +123,11 @@ export default function MyApp({ Component, pageProps, pagesData }) {
     // const showMCPBanner = !['/pricing'].some((path) => router.pathname.includes(path));
     // const show404Banner = router.pathname === '/404';
     // const showPricingBanner = router.pathname === '/pricing';
-    // const showGlobalPopup = router.pathname !== '/black-friday-sale';
 
     return (
         <>
             <HeadComp canonicalUrl={canonicalUrl} />
             <ChatWidget />
-            {/* {showGlobalPopup && <GlobalPopup />} */}
             {showSkeleton ? (
                 <Skeleton />
             ) : (
