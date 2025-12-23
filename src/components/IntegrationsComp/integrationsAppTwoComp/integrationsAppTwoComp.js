@@ -17,7 +17,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { MdChevronRight, MdKeyboardArrowDown } from 'react-icons/md';
+import { MdKeyboardArrowDown } from 'react-icons/md';
 import { GoArrowSwitch } from 'react-icons/go';
 import { IoMdSearch } from 'react-icons/io';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
