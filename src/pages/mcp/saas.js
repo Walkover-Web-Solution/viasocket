@@ -11,7 +11,7 @@ import Link from 'next/link';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 
-
+export const runtime = 'experimental-edge';
 
 export default function pricing({ footerData, faqData, metaData, blogData, navbarData }) {
     return (

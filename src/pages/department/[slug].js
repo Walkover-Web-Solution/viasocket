@@ -15,7 +15,7 @@ import { getTemplates } from '@/utils/axiosCalls';
 import TemplateContainer from '@/components/IntegrationsComp/templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
-
+export const runtime = 'experimental-edge';
 
 const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, blogsData, templateToShow }) => {
     return (
