@@ -17,7 +17,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 
-export const runtime = 'experimental-edge';
+
 
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName, navbarData }) => {
     const [scale, setScale] = useState(1);
@@ -301,7 +301,7 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
 
 export async function getServerSideProps(context) {
     const { req, query } = context;
-    const [firstSlug, secondSlug] = query.slug || [];
+    const [firstSlug, secondSlug] = [query.slug].flat() || [];
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
 

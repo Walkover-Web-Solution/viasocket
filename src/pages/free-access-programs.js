@@ -6,7 +6,7 @@ import { getFooterData, getProgramsData, getNavbarData } from '@/utils/getData';
 import { FOOTER_FIELDS, PROGRAMS_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 
-export const runtime = 'experimental-edge';
+
 
 export default function Programs({ footerData, metaData, programs, navbarData }) {
     return (

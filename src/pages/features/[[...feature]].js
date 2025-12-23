@@ -9,6 +9,7 @@ import { getBlogData } from '@/utils/getBlogData';
 import { getAllFeatures, getFeatureData, getFooterData, getNavbarData } from '@/utils/getData';
 import { getMetaData } from '@/utils/getMetaData';
 import GetPageInfo from '@/utils/getPageInfo';
+import getRealRouteFromDataUrl from '@/utils/getRealRouteFromDataUrl';
 
 export default function Features({ features, featureData, footerData, metaData, pathArray, pageInfo, blogData, navbarData }) {
     return (
@@ -31,14 +32,14 @@ export default function Features({ features, featureData, footerData, metaData, 
     );
 }
 
-export const runtime = 'experimental-edge';
+
 
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
-    const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-
-    const pageInfo = GetPageInfo(context);
+    const realPath = getRealRouteFromDataUrl(req.url);
+    const pageUrl = `${protocol}://${req.headers.host}${realPath}`;
+    const pageInfo = GetPageInfo(context, realPath);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const metaData = await getMetaData(pageInfo?.url, pageUrl);

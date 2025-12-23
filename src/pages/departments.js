@@ -189,7 +189,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
 
 export default DepartmentGrid;
 
-export const runtime = 'experimental-edge';
+
 export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
