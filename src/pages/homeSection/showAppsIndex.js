@@ -110,7 +110,7 @@ const APPSTWO = [
 const ShowAppsIndex = () => {
     return (
         <>
-            <div className="flex flex-col gap-6 container border-b py-8 px-4 custom-border">
+            <div className="flex flex-col gap-6 container py-8 px-4">
                 <div className="flex items-center gap-8">
                     <p className="text-center text-gray-500 min-w-fit ms-4 uppercase">
                         Trusted by Teams Using These Apps

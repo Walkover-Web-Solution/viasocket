@@ -20,6 +20,7 @@ import { validateTemplateData } from '@/utils/validateTemplateData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import PanelSection from '@/pages/homeSection/panelSection';
+import ShowDepartment from '@/pages/homeSection/homeDepartment/showDepartment';
 
 export const runtime = 'experimental-edge';
 
@@ -170,7 +171,7 @@ const Index = ({
             <AiAgentFeature />
 
             {/* Show Apps Section */}
-            <div className="bg-gray-50 py-20 container">
+            <div className="bg-white my-20 container">
                 <div className="flex flex-col border custom-border border-b-0">
                     <ShowAppsIndex />
                     <IntelligentAutomationsSection appCount={appCount} />
@@ -189,7 +190,7 @@ const Index = ({
                     <div
                         className="absolute inset-0"
                         style={{
-                            backgroundImage: `url('/review-image/nevada.svg')`,
+                            backgroundImage: `url('/review-image/nevada.webp')`,
                             backgroundSize: 'cover',
                             backgroundPosition: 'center',
                             backgroundAttachment: 'fixed',
@@ -203,6 +204,7 @@ const Index = ({
                 </div>
             )}
 
+            <ShowDepartment />
             {/* Review Section */}
             <div className="bg-[#f9f6f1]">
                 <ReviewIframe reviewData={reviewData} showless={false} />
@@ -215,11 +217,7 @@ const Index = ({
 
             {/* FAQ Section */}
             <div className="py-12 bg-[#FAF9F6]">
-                {faqData?.length > 0 && (
-                    <div className="container cont">
-                        <FAQSection faqData={faqData} faqName={'/index'} />
-                    </div>
-                )}
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
 
                 <SecuritySection securityGridData={securityGridData} />
                 <div className="container">

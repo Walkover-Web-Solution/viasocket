@@ -1,15 +1,26 @@
 import { FiServer } from 'react-icons/fi';
-import { LuBot, LuPuzzle } from 'react-icons/lu';
+import { LuBot, LuPuzzle, LuLayoutTemplate } from 'react-icons/lu';
 import { FaCode } from 'react-icons/fa6';
 import Link from 'next/link';
-const IntelligentAutomationsSection = ({ appCount }) => {
-    const automationItems = [
-        {
-            Icon: LuPuzzle,
-            title: 'Automations',
-            description: 'Automate advanced workflows across ' + (+appCount + 300) + '+ apps',
-            url: '/workflow-automations',
-        },
+
+const IntelligentAutomationsSection = ({ appCount, isDepartmentPage = false }) => {
+    const automationItem = {
+        Icon: LuPuzzle,
+        title: 'Automations',
+        description: 'Automate advanced workflows across ' + (+appCount + 300) + '+ apps',
+        url: '/workflow-automations',
+    };
+
+    // Templates item - only shown on departments page at position 2
+    const templatesItem = {
+        Icon: LuLayoutTemplate,
+        title: 'Templates',
+        description: 'Explore thousands of pre-built templates',
+        url: '/templates',
+    };
+
+    // Other base items that are always shown
+    const otherBaseItems = [
         {
             Icon: LuBot,
             title: 'AI agents',
@@ -22,16 +33,23 @@ const IntelligentAutomationsSection = ({ appCount }) => {
             description: 'Connect your AI to any app',
             url: '/mcp',
         },
-        {
-            Icon: FaCode,
-            title: 'Embed',
-            description: 'One SDK, thousands of App Integrations',
-            url: '/embed',
-        },
     ];
 
+    // Embed item - shown everywhere except departments page
+    const embedItem = {
+        Icon: FaCode,
+        title: 'Embed',
+        description: 'One SDK, thousands of App Integrations',
+        url: '/embed',
+    };
+
+    // Conditionally include Templates at position 2 (after Automations) or Embed at the end
+    const automationItems = isDepartmentPage
+        ? [automationItem, templatesItem, ...otherBaseItems]
+        : [automationItem, ...otherBaseItems, embedItem];
+
     return (
-        <section className="pt-16">
+        <section className="border-t custom-border pt-16">
             <h2 className="h2 mb-12 mx-8 text-">
                 Build Intelligent Automations <br /> <span className="text-accent">via viaSocket</span>
             </h2>
@@ -44,10 +62,13 @@ const IntelligentAutomationsSection = ({ appCount }) => {
                         <Link
                             key={title}
                             href={url}
-                            className={`p-8 flex flex-col gap-4 hover:bg-gray-100 border-r-0 lg:border-r xl:border-r border-b custom-border last:border-r-0 ${mdBorderClass}`}
+                            className={`group p-8 flex flex-col gap-4 hover:bg-gray-100 border-r-0 lg:border-r xl:border-r border-b custom-border last:border-r-0 ${mdBorderClass}`}
                             target="_blank"
                         >
-                            <Icon size={30} className="text-gray-500" />
+                            <Icon
+                                size={30}
+                                className="text-gray-500 group-hover:text-accent transition-colors duration-300"
+                            />
                             <h3 className="text-2xl">{title}</h3>
                             <p>{description}</p>
                         </Link>

@@ -1,6 +1,7 @@
 import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
+import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
 export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
     return (
@@ -10,6 +11,10 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData })
             <div className="container">
                 <div className="h-fit ">
                     <div className="py-20 cont gap-16 h-full flex justify-center ">
+                    {/* Breadcrumb */}
+                    {featureData?.slug && (
+                       <Breadcrumb parent="Features" child1={featureData?.slug} parentLink={`/features`} />
+                    )}
                         <div className="cont gap-4">
                             <div className="cont gap-1">
                                 <h1 className="h1 ">

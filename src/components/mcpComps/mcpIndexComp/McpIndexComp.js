@@ -373,11 +373,7 @@ export default function McpIndexComp({
                 </div>
 
                 <div className="">
-                    {faqData?.length > 0 && (
-                        <div className="container cont">
-                            <FAQSection faqData={faqData} faqName={'/index'} />
-                        </div>
-                    )}
+                    {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                     <div className="container">
                         <Footer footerData={footerData} />
                     </div>

@@ -97,3 +97,16 @@
     background-repeat: repeat;
     background-color: #faf9f6;
 }
+
+.square-background {
+    background-image: linear-gradient(to right, #f0f0f0 1px, transparent 1px),
+        linear-gradient(to bottom, #f0f0f0 1px, transparent 1px);
+    background-size:
+        30px 30px,
+        30px 30px;
+    background-attachment: fixed;
+    background-repeat: repeat, repeat;
+    background-position:
+        0 0,
+        0 0;
+}

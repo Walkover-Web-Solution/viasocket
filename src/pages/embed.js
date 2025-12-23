@@ -18,7 +18,17 @@ import { getAppCount } from '@/utils/axiosCalls';
 
 export const runtime = 'experimental-edge';
 
-const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData, howItWorksData, metaData, appCount }) => {
+const Embed = ({
+    blogData,
+    footerData,
+    navbarData,
+    faqData,
+    embedData,
+    tableData,
+    howItWorksData,
+    metaData,
+    appCount,
+}) => {
     const [selectedImage, setSelectedImage] = useState(embedData[0]?.image?.[0]);
 
     return (
@@ -269,11 +279,7 @@ const Embed = ({ blogData, footerData, navbarData, faqData, embedData, tableData
                     </div>
                 )}
                 <div className="pb-4">
-                    {faqData?.length > 0 && (
-                        <div className="container">
-                            <FAQSection faqData={faqData} faqName={'/embed'} />
-                        </div>
-                    )}
+                    {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/embed'} />}
 
                     <div className="container">
                         <GetStarted />

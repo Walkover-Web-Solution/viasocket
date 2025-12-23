@@ -1,5 +1,5 @@
-import { useState, memo } from "react";
-import { LinkButton } from "../uiComponents/buttons";
+import { useState, memo } from 'react';
+import { LinkButton } from '../uiComponents/buttons';
 
 const FAQSection = ({ faqData = [], faqName }) => {
     const [openIndex, setOpenIndex] = useState(null);
@@ -11,7 +11,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
     };
 
     return (
-        <div className="cont md:mb-20">
+        <div className="border custom-border p-8 mb-8 bg-white container">
             <section className="flex flex-col gap-8">
                 <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
 
@@ -23,8 +23,9 @@ const FAQSection = ({ faqData = [], faqName }) => {
                         return (
                             <div
                                 key={index}
-                                className={`collapse collapse-arrow py-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${!isLast ? "border-b" : ""
-                                    }`}
+                                className={`collapse collapse-arrow py-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${
+                                    !isLast ? 'border-b' : ''
+                                }`}
                             >
                                 <input
                                     id={`faq-toggle-${index}`}
@@ -33,9 +34,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
                                     onChange={() => toggleAccordion(index)}
                                     className="peer"
                                 />
-                                <div className="collapse-title font-semibold text-xl">
-                                    {que}
-                                </div>
+                                <div className="collapse-title font-semibold text-xl">{que}</div>
                                 <div className="collapse-content pr-10">
                                     <p className="leading-relaxed text-gray-800 md:pr-10">{ans}</p>
                                     {link && (

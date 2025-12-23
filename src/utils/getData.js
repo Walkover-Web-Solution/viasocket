@@ -22,7 +22,8 @@ import {
     DOFOLLOWLINK,
     REVIEWSECTION,
     NAVBAR,
-    BLACKFRIDAYSALE
+    BLACKFRIDAYSALE,
+    DEPARTMENTDATA
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -163,5 +164,10 @@ export async function getReviewSectionData(fields, filter, pageUrl){
 
 export async function getBlackFridaySaleData(fields, filter, pageUrl){
     const data = await getDataFromTable(BLACKFRIDAYSALE, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getDepartmentData(fields, filter, pageUrl){
+    const data = await getDataFromTable(DEPARTMENTDATA, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }

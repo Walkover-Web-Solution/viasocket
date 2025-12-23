@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { BsStars } from 'react-icons/bs';
+import Image from 'next/image';
 
 const BuildOptionsCTA = () => {
     return (
@@ -12,29 +12,29 @@ const BuildOptionsCTA = () => {
                 Build from scratch or assign to human experts
             </Link>
             <div className="flex items-center">
-                <img
-                    src="/review-image/1.svg"
+                <Image
+                    src="/review-image/1.webp"
                     alt="review"
                     className="rounded-[50px] relative"
                     width={35}
                     height={35}
                 />
-                <img
-                    src="/review-image/2.svg"
+                <Image
+                    src="/review-image/2.webp"
                     alt="review"
                     className="rounded-[50px] relative right-[10px]"
                     width={35}
                     height={35}
                 />
-                <img
-                    src="/review-image/3.svg"
+                <Image
+                    src="/review-image/3.webp"
                     alt="review"
                     className="rounded-[50px] relative right-[20px]"
                     width={35}
                     height={35}
                 />
-                <img
-                    src="/review-image/4.svg"
+                <Image
+                    src="/review-image/4.webp"
                     alt="review"
                     className="rounded-[50px] relative right-[30px]"
                     width={35}
