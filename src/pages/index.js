@@ -20,6 +20,7 @@ import { validateTemplateData } from '@/utils/validateTemplateData';
 import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import PanelSection from '@/pages/homeSection/panelSection';
+import ShowDepartment from '@/pages/homeSection/homeDepartment/showDepartment';
 
 export const runtime = 'experimental-edge';
 
@@ -203,6 +204,7 @@ const Index = ({
                 </div>
             )}
 
+            <ShowDepartment />
             {/* Review Section */}
             <div className="bg-[#f9f6f1]">
                 <ReviewIframe reviewData={reviewData} showless={false} />
