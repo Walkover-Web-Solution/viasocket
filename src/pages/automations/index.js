@@ -13,7 +13,6 @@ import BlogGrid from '@/components/blogGrid/blogGrid';
 import { getTemplates, getApps } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-import { useRouter } from 'next/router';
 import AutomationSuggestions from '../workflow-automation-ideas';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { validateTemplateData } from '@/utils/validateTemplateData';
@@ -21,7 +20,7 @@ import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BuildOptionsCTA from '@/pages/homeSection/buildOptionsCTA';
-import { handleRedirect } from '@/utils/handleRedirection';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -38,7 +37,6 @@ const Template = ({
     navbarData,
     initialApps,
 }) => {
-    const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(true);
     // SearchInputHome integration
@@ -329,13 +327,7 @@ const Template = ({
                             <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                                 <h2 className="h2">Can't find the right template?</h2>
                                 <h2 className="h2">Start with AI</h2>
-                                <button
-                                    className="btn btn-accent mt-4"
-                                    aria-label="sign up"
-                                    onClick={(e) => handleRedirect(e, '/signup?', router)}
-                                >
-                                    Get Started Free
-                                </button>
+                                <DashboardButton utm_src={"automations"}/>
                             </div>
                         </div>
                     </div>

@@ -22,6 +22,7 @@ import { GrTrigger } from 'react-icons/gr';
 import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -113,13 +114,11 @@ const automations = ({
                         Your Business, Automated
                         <span className="text-accent"> Intelligently</span>
                     </h1>
-                    <p className="sub__h1 text-gray-600 leading-relaxed">
+                    <p className="sub__h1 text-gray-600 leading-relaxed mb-3">
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
-                    <Link href="/signup?utm_source=/workflow-automations">
-                        <button className="btn btn-accent mt-3">Start for free</button>
-                    </Link>
+                    <DashboardButton utm_src={"/workflow-automations"}/>
                 </section>
 
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
