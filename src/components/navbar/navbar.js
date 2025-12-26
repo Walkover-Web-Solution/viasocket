@@ -7,6 +7,7 @@ import { useState, useEffect, useLayoutEffect } from 'react';
 import { MdMenu } from 'react-icons/md';
 import Menubar from './menubar';
 import { GoArrowUpRight } from 'react-icons/go';
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function Navbar({ utm, navbarData }) {
     const router = useRouter();
@@ -254,7 +255,7 @@ export default function Navbar({ utm, navbarData }) {
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
-                                    Go to Panel
+                                    Dashboard <FaArrowRightLong className="ml-2"/>
                                 </button>
                             ) : (
                                 <button

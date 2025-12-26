@@ -9,6 +9,7 @@ import { usePathname } from 'next/navigation';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
+import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function NavbarOptimized({ utm, navbarData }) {
     const pathname = usePathname();
@@ -261,7 +262,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
-                                    Go to Panel
+                                    Dashboard <FaArrowRightLong className="ml-2" />
                                 </button>
                             ) : (
                                 <button

@@ -73,7 +73,7 @@ export default function ShowDepartmentOptimized() {
             <div className="container">
                 <h4 className="font-semibold text-xl mb-1">Automate your entire team</h4>
                 <h2 className={`font-bold mb-10 flex flex-col ${style['main-heading']}`}>
-                    <span className="mr-4">We Have a Workflow for</span>
+                    <span className="mr-4">We Have Workflows for</span>
                     <span className={`${isAnimating ? style['animating-out'] : ''} text-accent`}>
                         {currentDepartment}
                     </span>
