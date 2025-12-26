@@ -11,6 +11,7 @@ import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import ReviewIframe from './homeSection/reviewIframe';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import { getAppCount } from '@/utils/axiosCalls';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import {
     Users,
     Calculator,
@@ -57,7 +58,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
         <>
             <div className="square-background">
                 <Navbar navbarData={navbarData} />
-                <MetaHeadComp metaData={metaData} page={'/department'} />
+                <MetaHeadComp metaData={metaData} page={'/departments'} />
                 <div className="container mt-12 flex flex-col gap-12">
                     <div className="flex flex-col justify-center items-center">
                         <h1 className="h1 text-center">
@@ -67,9 +68,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                             Build workflows that run across teams, tools, and systems—without manual handoffs.
                         </p>
                         <div className="flex gap-4 justify-center mt-5">
-                            <Link href="/signup" className="btn btn-accent">
-                                Get Started for free
-                            </Link>
+                            <DashboardButton utm_src={"/departments/hero"} />
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 className="btn btn-outline"
@@ -80,7 +79,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
                     </div>
 
                     {/* Show Apps Section */}
-                    <div className="bg-white my-20 container">
+                    <div className="bg-white my-20 cont">
                         <div className="flex flex-col border custom-border border-b-0">
                             <ShowAppsIndex />
                             <IntelligentAutomationsSection appCount={appCount} isDepartmentPage={true} />
@@ -194,7 +193,7 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    const metaData = await getMetaData('/department', pageUrl);
+    const metaData = await getMetaData('/departments', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const departmentData = await getDepartmentData(DEPARTMENTDATA_FIELDS, '', pageUrl);
