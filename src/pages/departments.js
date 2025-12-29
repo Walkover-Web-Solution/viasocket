@@ -57,7 +57,7 @@ const DepartmentGrid = ({ metaData, navbarData, footerData, departmentData, faqD
         <>
             <div className="square-background">
                 <Navbar navbarData={navbarData} />
-                <MetaHeadComp metaData={metaData} page={'/department'} />
+                <MetaHeadComp metaData={metaData} page={'/departments'} />
                 <div className="container mt-12 flex flex-col gap-12">
                     <div className="flex flex-col justify-center items-center">
                         <h1 className="h1 text-center">
@@ -194,7 +194,7 @@ export async function getServerSideProps(context) {
     const { req } = context;
     const protocol = req.headers['x-forwarded-proto'] || 'http';
     const pageUrl = `${protocol}://${req.headers.host}${req.url}`;
-    const metaData = await getMetaData('/department', pageUrl);
+    const metaData = await getMetaData('/departments', pageUrl);
     const navbarData = await getNavbarData(NAVBAR_FIELDS, '', pageUrl);
     const footerData = await getFooterData(FOOTER_FIELDS, '', pageUrl);
     const departmentData = await getDepartmentData(DEPARTMENTDATA_FIELDS, '', pageUrl);
