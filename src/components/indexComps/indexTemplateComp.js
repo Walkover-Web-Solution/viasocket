@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
 import { RiSearchLine } from 'react-icons/ri';
@@ -18,7 +20,6 @@ const IndexTemplateComp = ({ categories, templates }) => {
         scriptid: '72077fe9954a5122c1301f4a0dce567ebd54e5d5e6c0e4ff05cfd884361c7e52',
     });
     const [currentTemplate, setCurrentTemplate] = useState(null);
-
 
     // Create a map of templates { [id]: template }
     const templateMap = useMemo(() => {
@@ -45,10 +46,10 @@ const IndexTemplateComp = ({ categories, templates }) => {
         const template = templateMap[selected?.scriptid];
         return template
             ? `/automations/${template?.title
-                ?.trim()
-                .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
-                .replace(/\s+/g, '-') // replace spaces with '-'
-                .toLowerCase()}/${template?.id}`
+                  ?.trim()
+                  .replace(/[^a-zA-Z0-9\s]/g, '') // remove special characters
+                  .replace(/\s+/g, '-') // replace spaces with '-'
+                  .toLowerCase()}/${template?.id}`
             : '#';
     };
 
@@ -99,7 +100,11 @@ const IndexTemplateComp = ({ categories, templates }) => {
                                         {currentTemplate?.metadata?.description || currentTemplate?.description}
                                     </h2>
                                 </div>
-                                <div ref={flowContainerRef} className="w-full relative" style={{ height: flowRendererHeight }}>
+                                <div
+                                    ref={flowContainerRef}
+                                    className="w-full relative"
+                                    style={{ height: flowRendererHeight }}
+                                >
                                     <ZoomableFlowContainer
                                         setScale={setScale}
                                         contentRef={contentRef}

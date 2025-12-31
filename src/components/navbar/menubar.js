@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+'use client';
+
+import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
 function NavList({ items }) {
@@ -22,14 +24,14 @@ export default function Menubar({ open, onClose, navbarData }) {
 
     if (navbarData && Array.isArray(navbarData)) {
         // Get all unique group names
-        const uniqueGroups = [...new Set(navbarData.map(item => item.group_name))];
+        const uniqueGroups = [...new Set(navbarData.map((item) => item.group_name))];
 
         // For each unique group, collect its items
-        groups = uniqueGroups.map(groupName => {
-            const groupItems = navbarData.filter(item => item.group_name === groupName);
+        groups = uniqueGroups.map((groupName) => {
+            const groupItems = navbarData.filter((item) => item.group_name === groupName);
             return {
                 group_name: groupName,
-                items: groupItems
+                items: groupItems,
             };
         });
     }
@@ -62,10 +64,12 @@ export default function Menubar({ open, onClose, navbarData }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
-                    }`}
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+                    open ? 'translate-x-0' : 'translate-x-full'
+                }`}
                 role="dialog"
-                aria-modal="true" aria-label="Menubar"
+                aria-modal="true"
+                aria-label="Menubar"
             >
                 <div className="md:hidden flex justify-end p-4 border-b mb-4">
                     <X className="h-8 w-8" onClick={onClose} />
