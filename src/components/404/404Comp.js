@@ -1,5 +1,7 @@
+'use client';
+
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { MdArrowBackIos } from 'react-icons/md';
 
 export default function ErrorComp() {
@@ -8,9 +10,7 @@ export default function ErrorComp() {
     return (
         <>
             <div className="container flex flex-col gap-4 justify-center min-h-screen">
-                <h1 className="h1">
-                    404: Return to homepage.
-                </h1>
+                <h1 className="h1">404: Return to homepage.</h1>
                 <div className="flex gap-4">
                     <button className="btn btn-accent btn-md" onClick={() => router.back()}>
                         <MdArrowBackIos />
@@ -21,8 +21,6 @@ export default function ErrorComp() {
                     </Link>
                 </div>
             </div>
-
         </>
     );
 }
-

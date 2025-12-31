@@ -1,13 +1,15 @@
+'use client';
+
 import { MdSearch } from 'react-icons/md';
 import { useEffect, useState } from 'react';
 import categories from '@/data/categories.json';
 import searchApps from '@/utils/searchApps';
 import style from './IntegrationsAppComp.module.scss';
 
-const IntegrationSearchApps = ({ 
-    searchTerm, 
-    setSearchTerm, 
-    onSearchResults, 
+const IntegrationSearchApps = ({
+    searchTerm,
+    setSearchTerm,
+    onSearchResults,
     onCategoriesResults,
     onDebounceValueChange,
     app,
@@ -76,7 +78,6 @@ const IntegrationSearchApps = ({
         search();
     }, [debounceValue, onSearchResults, onCategoriesResults, onDebounceValueChange]);
 
-
     return (
         <>
             <label className="input border w-full sm:w-auto md:min-w-[460px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
@@ -89,7 +90,8 @@ const IntegrationSearchApps = ({
                     type="text"
                     autoFocus
                     className={`${style.input} grow truncate w-48`}
-                    placeholder={`Search any app to connect with ${app?.name || 'apps'}`} />
+                    placeholder={`Search any app to connect with ${app?.name || 'apps'}`}
+                />
             </label>
         </>
     );

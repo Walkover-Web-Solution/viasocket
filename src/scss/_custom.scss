@@ -1,4 +1,15 @@
 .btn {
+        font-size: 14px;
+        padding-left: 20;
+        padding-right: 20;
+        height: 40px;
+        min-height: 45px;
+        border-radius: 50px;
+        border-color: var(--custom-border);
+
+        @media screen and (width <= 768px) {
+            font-size: 12px;
+        }
     @apply w-fit px-4 py-2 tracking-wider text-lg;
     &.w-full {
         width: 100% !important;

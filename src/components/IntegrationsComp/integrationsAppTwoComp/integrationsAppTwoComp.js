@@ -1,12 +1,12 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import { LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
-import BlogGrid from '@/components/blogGrid/blogGrid';
+import BlogGrid from '@/app/components/blog/BlogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
@@ -14,7 +14,6 @@ import CombinationCardComp from '@/components/combinationCardComp/combinationCar
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
-import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
 import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
@@ -24,6 +23,7 @@ import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/Integrat
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
@@ -148,6 +148,7 @@ export default function IntegrationsAppTwoComp({
     getDoFollowUrlStatusArray,
     navbarData,
     templateToShow,
+    skipHeadComp,
 }) {
     const router = useRouter();
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -200,23 +201,33 @@ export default function IntegrationsAppTwoComp({
         setAppTwoEvents(categorizeEvents(currentAppOne?.events));
 
         const newURL = `/integrations/${currentAppTwo?.appslugname}/${currentAppOne?.appslugname}`;
-        router.push(newURL, undefined, { shallow: true });
+        router.push(newURL);
     };
 
     return (
         <div className="cont gap-12 md:gap-16 lg:gap-20">
-            <Navbar navbarData={navbarData} utm={'/integrations/apptwo'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/integrations/apptwo'} />
 
-            <IntegrationsHeadComp
-                metaData={metaData}
-                page={'/integrations/AppOne'}
-                plugins={[appOneDetails, appTwoDetails]}
-                type={'appTwo'}
-                pageInfo={pageInfo}
-            />
+            {!skipHeadComp && (
+                <IntegrationsHeadComp
+                    metaData={metaData}
+                    page={'/integrations/AppOne'}
+                    plugins={[appOneDetails, appTwoDetails]}
+                    type={'appTwo'}
+                    pageInfo={pageInfo}
+                />
+            )}
             <div className="cont -mt-10 global-top-space pt-12 gap-12 md:gap-16 lg:gap-20">
                 <div className="container flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
-                    <Breadcrumb parent="Integrations" child1={appOneDetails?.name} child2={appTwoDetails?.name} child3={appOneDetails?.name + ' + ' + appTwoDetails?.name} parentLink={`/integrations`} child1Link={`/integrations/${appOneDetails?.appslugname}`} child2Link={`/integrations/${appTwoDetails?.appslugname}`} />
+                    <Breadcrumb
+                        parent="Integrations"
+                        child1={appOneDetails?.name}
+                        child2={appTwoDetails?.name}
+                        child3={appOneDetails?.name + ' + ' + appTwoDetails?.name}
+                        parentLink={`/integrations`}
+                        child1Link={`/integrations/${appOneDetails?.appslugname}`}
+                        child2Link={`/integrations/${appTwoDetails?.appslugname}`}
+                    />
                 </div>
                 <div className="container">
                     <div className="cont flex justify-center items-center p-4 mt-8">
