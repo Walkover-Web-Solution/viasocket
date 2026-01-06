@@ -1,18 +1,17 @@
+'use client';
+
 import { useState, useEffect, useMemo } from 'react';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import Link from 'next/link';
 import TemplateCard from '@/components/templateCard/templateCard';
 
 export default function TemplateContainer({ selectedApps, templateToShow, requireAllApps, department_name }) {
+    const appSlugs = useMemo(
+        () => selectedApps?.map((app) => app.appslugname || app.slugname || app.slug).filter(Boolean) || [],
+        [selectedApps]
+    );
 
-    const appSlugs = useMemo(() =>
-        selectedApps?.map(app => app.appslugname || app.slugname || app.slug).filter(Boolean) || []
-        , [selectedApps]);
-
-    const {
-        filteredTemplates,
-        handleFilterChange
-    } = useTemplateFilters(templateToShow);
+    const { filteredTemplates, handleFilterChange } = useTemplateFilters(templateToShow);
 
     useEffect(() => {
         if (appSlugs.length > 0) {
@@ -28,7 +27,9 @@ export default function TemplateContainer({ selectedApps, templateToShow, requir
         <div>
             <div className="cont md:flex-row mb-6 md:mb-8 gap-2 justify-between">
                 <p className="h3">
-                    {department_name ? `Ready to use automation templates for ${department_name}` : 'Explore more automations built by businesses and experts'}
+                    {department_name
+                        ? `Ready to use automation templates for ${department_name}`
+                        : 'Explore more automations built by businesses and experts'}
                 </p>
                 <button className="btn btn-outline">
                     <Link href="/automations">Explore all templates</Link>
