@@ -1,13 +1,12 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
 import { MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
+import Navbar from '@/components/navbar/navbar';
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useRef, useState } from 'react';
-import BlogGrid from '@/app/components/blog/BlogGrid';
+import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
@@ -17,7 +16,6 @@ import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
-import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -30,7 +28,6 @@ export default function IntegrationsIndexComp({
     faqData,
     appCount,
     navbarData,
-    skipHeadComp,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -121,10 +118,8 @@ export default function IntegrationsIndexComp({
 
     return (
         <>
-            {!skipHeadComp && (
-                <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
-            )}
-            <NavbarOptimized navbarData={navbarData} utm={'/index'} />
+            <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
+            <Navbar navbarData={navbarData} utm={'/index'} />
 
             <div className="container integrations-page-hero global-top-space pt-12">
                 <div className="flex flex-col md:flex-row md:items-center gap-4 justify-between">
