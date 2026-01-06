@@ -16,7 +16,6 @@ import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -286,8 +285,8 @@ const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, 
                         <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#faf9f6] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
                             <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                                 <h2 className="h2">Can't find the right template?</h2>
-                                <h2 className="h2 mb-4">Start with AI</h2>
-                                <DashboardButton utm_src={`/automations/${template?.title}`}/>
+                                <h2 className="h2">Start with AI</h2>
+                                <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started Free</button>
                             </div>
                         </div>
                     </div>

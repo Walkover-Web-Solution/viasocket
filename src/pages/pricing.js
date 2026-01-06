@@ -12,7 +12,6 @@ import PricingTabsClient from '@/components/PricingTabs/PricingTabs';
 import getCountries from '@/utils/getCountries';
 import { getAppCount } from '@/utils/axiosCalls';
 import { GiCheckMark } from 'react-icons/gi';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -36,7 +35,9 @@ export default function pricing({ footerData, faqData, metaData, features, count
                         </h2>
                     </div>
                     <div className="cont lg:flex-row items-center gap-2 mt-4">
-                        <DashboardButton utm_src={"/pricing/hero"} className="w-full" />
+                        <Link href="/signup?utm_source=pricing/hero" className="w-full">
+                            <button className="btn btn-accent">Start for free</button>
+                        </Link>
                         <Link
                             href="https://cal.id/team/viasocket/workflow-setup-discussion"
                             className="btn btn-outline"

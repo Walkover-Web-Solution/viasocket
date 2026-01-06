@@ -14,7 +14,6 @@ import { FOOTER_FIELDS, NAVBAR_FIELDS, DEPARTMENTDATA_FIELDS } from '@/const/fie
 import { getTemplates } from '@/utils/axiosCalls';
 import TemplateContainer from '@/components/IntegrationsComp/templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -42,10 +41,15 @@ const DepartmentDetailPage = ({ metaData, navbarData, footerData, department, bl
                         )}
 
                         <div className="flex flex-wrap gap-4 justify-center mb-10">
-                            <DashboardButton utm_src={"department/"+department?.slug}/>
+                            <Link
+                                href="/signup"
+                                className="btn btn-accent px-6 py-3 rounded-xl text-white font-medium hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                            >
+                                Get Started for free
+                            </Link>
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                                className="btn btn-outline px-6 py-3 border-gray-300 hover:border-accent hover:bg-accent/5 transition-all duration-300"
+                                className="btn btn-outline px-6 py-3 rounded-xl border-2 border-gray-300 hover:border-accent hover:bg-accent/5 transition-all duration-300"
                             >
                                 Book a demo
                             </Link>
