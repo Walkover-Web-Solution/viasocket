@@ -7,7 +7,7 @@ import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
 import { getMCPAiAgentPageData } from '../../lib/data';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getMCPAiAgentPageData();

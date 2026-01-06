@@ -11,7 +11,7 @@ import { getEmbedPageData } from '../lib/data';
 import Table from '../components/embed/Table';
 import EmbedImageSelector from '../components/embed/EmbedImageSelector';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getEmbedPageData();

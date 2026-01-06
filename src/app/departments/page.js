@@ -28,7 +28,7 @@ import {
     TriangleAlert,
 } from 'lucide-react';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 // Department icon mapping
 const departmentIcons = {

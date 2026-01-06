@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Footer from '@/components/footer/footer';
 import { getFreeAccessProgramsPageData } from '../lib/data';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
   const { metaData } = await getFreeAccessProgramsPageData();
