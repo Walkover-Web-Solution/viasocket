@@ -1,6 +1,6 @@
 module.exports = {
     // experimental: {
-    //     runtime: 'experimental-edge',
+    //     runtime: 'edge',
     //   },
     images: {
         unoptimized: true,

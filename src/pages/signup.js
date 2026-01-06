@@ -4,7 +4,7 @@ import { getMetaData } from '@/utils/getMetaData';
 import Image from 'next/image';
 import { getAppCount } from '@/utils/axiosCalls';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 const Login = ({ redirect_to, appCount }) => {
     return (

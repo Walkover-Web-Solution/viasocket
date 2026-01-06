@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { getUtmSource } from '@/utils/handleUtmSource';
 // import Script from 'next/script';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export default function MyApp({ Component, pageProps, pagesData }) {
     const router = useRouter();
