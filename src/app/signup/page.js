@@ -3,6 +3,8 @@ import Image from 'next/image';
 import CustomLoginOptimized from '../components/customLogin/CustomLoginOptimized';
 import { getSignupPageData } from '../lib/data';
 
+export const runtime = 'edge';
+
 export async function generateMetadata() {
     const { metaData } = await getSignupPageData();
     

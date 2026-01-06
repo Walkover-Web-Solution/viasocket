@@ -1,6 +1,8 @@
 import { getFeaturesPageData } from '@/app/lib/data';
 import FeaturesClient from '@/app/components/features/FeaturesClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
     try {
         const resolvedParams = await params;

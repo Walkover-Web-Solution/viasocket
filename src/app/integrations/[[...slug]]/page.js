@@ -3,6 +3,8 @@ import ErrorComp from '@/components/404/404Comp';
 import { getIntegrationsPageData } from '../../lib/data';
 import IntegrationsClient from '@/app/components/integrations/IntegrationsClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
     const { slug = [] } = await params;
     

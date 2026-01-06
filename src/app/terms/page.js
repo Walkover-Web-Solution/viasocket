@@ -3,6 +3,8 @@ import { getTermsPageData } from '../lib/data';
 import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 
+export const runtime = 'edge';
+
 export async function generateMetadata() {
     const { metaData } = await getTermsPageData();
 

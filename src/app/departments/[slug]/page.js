@@ -2,6 +2,8 @@ import { getDepartmentPageData } from '@/app/lib/data';
 import DepartmentClient from '@/app/components/department/DepartmentClient';
 import { notFound } from 'next/navigation';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
     try {
         const { slug } = await params;

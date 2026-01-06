@@ -1,6 +1,8 @@
 import { getWorkflowAutomationIdeasPageData } from '../lib/data';
 import AutomationSuggestionsClient from '../components/workflow-automation-ideas/AutomationSuggestionsClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata() {
     const { metaData } = await getWorkflowAutomationIdeasPageData();
     

@@ -3,7 +3,7 @@ import NavbarOptimized from '../../components/navbar/NavbarOptimized';
 import { getAutomationSlugPageData } from '../../lib/data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export default async function AutomationSlugPage({ params }) {
     const pageData = await getAutomationSlugPageData(params.slug || []);

@@ -12,12 +12,13 @@ import { GrTrigger } from 'react-icons/gr';
 import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
-
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getWorkflowAutomationsPageData } from '../lib/data';
+
+export const runtime = 'edge';
 
 const getAutomationWorkIcon = (automationWork) => {
     switch (automationWork) {

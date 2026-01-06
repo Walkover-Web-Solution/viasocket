@@ -1,6 +1,8 @@
 import { getFindAppsPageData } from '@/app/lib/data';
 import FindAppsClient from '@/app/components/find-apps/FindAppsClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
     try {
         const resolvedParams = await params;

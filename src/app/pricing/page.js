@@ -7,7 +7,7 @@ import { getPricingPageData } from '../lib/data';
 import Link from 'next/link';
 import { GiCheckMark } from 'react-icons/gi';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
   const { metaData } = await getPricingPageData();

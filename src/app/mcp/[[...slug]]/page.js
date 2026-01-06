@@ -5,6 +5,8 @@ import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getMCPPageData } from '../../lib/data';
 import McpClient from '@/app/components/mcp/McpClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata({ params }) {
     const { slug = [] } = await params;
     

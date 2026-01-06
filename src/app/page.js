@@ -7,7 +7,7 @@ import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
 import { getHomePageData } from './lib/data';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
   const { metaData } = await getHomePageData();

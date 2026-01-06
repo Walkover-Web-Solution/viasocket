@@ -4,6 +4,8 @@ import Footer from '@/components/footer/footer';
 import { getSupportPageData } from '../lib/data';
 import SupportClient from '../components/support/SupportClient';
 
+export const runtime = 'edge';
+
 export async function generateMetadata() {
     const { metaData } = await getSupportPageData();
     

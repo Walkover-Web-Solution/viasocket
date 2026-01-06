@@ -3,7 +3,7 @@ import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getDataRetentionDeletionPageData } from '../lib/data';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getDataRetentionDeletionPageData();
