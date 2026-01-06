@@ -15,7 +15,7 @@ import { GoArrowUpRight } from 'react-icons/go';
 import Marquee from 'react-fast-marquee';
 import { getAppCount } from '@/utils/axiosCalls';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
     const [imgSrc, setImgSrc] = useState(src);

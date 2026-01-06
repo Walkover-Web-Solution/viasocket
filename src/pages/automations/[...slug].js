@@ -17,7 +17,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 const TemplateDetailPage = ({ footerData, metaData, template, relatedTemplates, isCategory, categoryName, navbarData }) => {
     const [scale, setScale] = useState(1);

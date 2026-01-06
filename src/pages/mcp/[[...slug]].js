@@ -11,7 +11,7 @@ import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import { getAppCount, getApps, getCombos } from '@/utils/axiosCalls';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
-export const runtime = 'experimental-edge';
+export const runtime = 'edge';
 
 export default function Mcp({
     pageInfo,
