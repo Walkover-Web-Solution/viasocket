@@ -23,7 +23,6 @@ import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
-import ShowDepartment from '@/pages/homeSection/homeDepartment/showDepartment';
 
 export const runtime = 'experimental-edge';
 
@@ -297,8 +296,6 @@ const automations = ({
                         ))}
                     </div>
                 </section>
-
-                <ShowDepartment />
 
                 <div className="border custom-border bg-white cont gap-4 text-black p-6 md:p-12">
                     <div className="cont gap-1">
