@@ -1,11 +1,10 @@
-'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import { MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
-import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
+import Navbar from '@/components/navbar/navbar';
 import { useEffect, useState } from 'react';
-import BlogGrid from '@/app/components/blog/BlogGrid';
+import BlogGrid from '@/components/blogGrid/blogGrid';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -135,7 +134,7 @@ export default function McpIndexComp({
                     `}
                 </Script>
 
-                <NavbarOptimized navbarData={navbarData} utm={'/index'} />
+                <Navbar navbarData={navbarData} utm={'/index'} />
 
                 <div className="cont gap-8 global-top-space pt-12">
                     <div className="container cont gap-2">
