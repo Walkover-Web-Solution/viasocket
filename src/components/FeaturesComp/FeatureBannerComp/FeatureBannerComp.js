@@ -2,7 +2,6 @@ import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
     return (
@@ -27,7 +26,9 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData })
                                 </p>
                             </div>
                             {!featureData?.image && (
-                                <DashboardButton utm_src={pageInfo?.url} />
+                                <Link className="w-fit" href={`/signup?utm_source=${pageInfo?.url}`}>
+                                    <button className="btn btn-accent">Start for free</button>
+                                </Link>
                             )}
                         </div>
                         {(featureData?.image || featureData?.bgimage) && (

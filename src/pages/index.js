@@ -21,7 +21,6 @@ import ShowAppsIndex from '@/pages/homeSection/showAppsIndex';
 import IntelligentAutomationsSection from '@/pages/homeSection/IntelligentAutomationsSection';
 import PanelSection from '@/pages/homeSection/panelSection';
 import ShowDepartment from '@/pages/homeSection/homeDepartment/showDepartment';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export const runtime = 'experimental-edge';
 
@@ -129,7 +128,9 @@ const Index = ({
                     <BuildOptionsCTA />
 
                     <div className="flex gap-4 justify-center mt-5">
-                        <DashboardButton utm_src={"/hero"} className="relative z-index-1"/>
+                        <Link href="/signup" className="btn btn-accent relative z-index-1">
+                            Start for free
+                        </Link>
                         <Link
                             href="https://cal.id/team/viasocket/workflow-setup-discussion"
                             target="_blank"
@@ -170,8 +171,8 @@ const Index = ({
             <AiAgentFeature />
 
             {/* Show Apps Section */}
-            <div className="my-20 container">
-                <div className="flex flex-col border custom-border border-b-0 bg-white">
+            <div className="bg-white my-20 container">
+                <div className="flex flex-col border custom-border border-b-0">
                     <ShowAppsIndex />
                     <IntelligentAutomationsSection appCount={appCount} />
                 </div>
