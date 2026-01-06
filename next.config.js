@@ -1,5 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+module.exports = {
+    // experimental: {
+    //     runtime: 'experimental-edge',
+    //   },
     images: {
         unoptimized: true,
         loader: 'akamai',
@@ -22,8 +24,6 @@ const nextConfig = {
         ];
     },
 
-    turbopack: {},
-
     webpack(config) {
         config.resolve.fallback = {
             ...config.resolve.fallback,
@@ -33,5 +33,3 @@ const nextConfig = {
         return config;
     },
 };
-
-module.exports = nextConfig;
