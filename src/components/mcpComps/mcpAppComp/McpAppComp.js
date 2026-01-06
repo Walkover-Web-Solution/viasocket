@@ -1,10 +1,9 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MdChevronLeft, MdChevronRight, MdSearch } from 'react-icons/md';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import BlogGrid from '@/app/components/blog/BlogGrid';
+import BlogGrid from '@/components/blogGrid/blogGrid';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
@@ -12,7 +11,7 @@ import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { IoPersonOutline } from 'react-icons/io5';
 import { VscSend } from 'react-icons/vsc';
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
-import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
+import Navbar from '@/components/navbar/navbar';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
@@ -110,7 +109,7 @@ export default function McpAppComp({
             <div className="cont md:gap-20 sm:gap-16 gap-12">
                 <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-6">
-                    <NavbarOptimized navbarData={navbarData} utm={'/mcp'} />
+                    <Navbar navbarData={navbarData} utm={'/mcp'} />
 
                     <div className="flex flex-col gap-8 global-top-space pt-12">
                         <div className="container cont cont__gap">

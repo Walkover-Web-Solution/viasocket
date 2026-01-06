@@ -1,5 +1,3 @@
-'use client';
-
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { MdSearch, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
@@ -197,6 +195,7 @@ const AutocompleteFilter = ({
         });
     }, [inputValue, selectedCategories, selectedApps, onFilterChange]);
 
+
     return (
         <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
             {/* Input Field */}
@@ -213,21 +212,21 @@ const AutocompleteFilter = ({
                         onKeyDown={handleKeyDown}
                         className="flex-1 outline-none"
                     />
+
                 </div>
             </div>
 
             {/* Categories and Apps Display - Two separate boxes */}
             <div className="mt-2 grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-hidden">
                 {/* Categories Box */}
-                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`}>
+                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`} >
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">CATEGORIES</h4>
                     <div className="space-y-1">
                         {categories.map((category) => (
                             <div
                                 key={category}
-                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${
-                                    selectedCategories.includes(category) ? 'bg-blue-50' : ''
-                                }`}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedCategories.includes(category) ? 'bg-blue-50' : ''
+                                    }`}
                                 onClick={() => {
                                     const newCategories = selectedCategories.includes(category)
                                         ? selectedCategories.filter((c) => c !== category)
@@ -241,14 +240,17 @@ const AutocompleteFilter = ({
                             >
                                 <div className="relative mr-3">
                                     <div
-                                        className={`w-4 h-4 border-2 flex items-center justify-center ${
-                                            selectedCategories.includes(category)
-                                                ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
-                                        }`}
+                                        className={`w-4 h-4 border-2 flex items-center justify-center ${selectedCategories.includes(category)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
                                     >
                                         {selectedCategories.includes(category) && (
-                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg
+                                                className="w-3 h-3 text-white"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
                                                 <path
                                                     fillRule="evenodd"
                                                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -271,9 +273,8 @@ const AutocompleteFilter = ({
                         {apps.map((app) => (
                             <div
                                 key={app.pluginslugname}
-                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${
-                                    selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
-                                }`}
+                                className={`flex items-center p-2 hover:bg-gray-100 cursor-pointer rounded ${selectedApps.includes(app.pluginslugname) ? 'bg-blue-50' : ''
+                                    }`}
                                 onClick={() => {
                                     const newApps = selectedApps.includes(app.pluginslugname)
                                         ? selectedApps.filter((a) => a !== app.pluginslugname)
@@ -287,14 +288,17 @@ const AutocompleteFilter = ({
                             >
                                 <div className="relative mr-3">
                                     <div
-                                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
-                                            selectedApps.includes(app.pluginslugname)
-                                                ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
-                                        }`}
+                                        className={`w-4 h-4 rounded border-2 flex items-center justify-center ${selectedApps.includes(app.pluginslugname)
+                                            ? 'bg-blue-500 border-blue-500'
+                                            : 'border-gray-300 bg-white'
+                                            }`}
                                     >
                                         {selectedApps.includes(app.pluginslugname) && (
-                                            <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                            <svg
+                                                className="w-3 h-3 text-white"
+                                                fill="currentColor"
+                                                viewBox="0 0 20 20"
+                                            >
                                                 <path
                                                     fillRule="evenodd"
                                                     d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -329,7 +333,9 @@ const AutocompleteFilter = ({
                     </div>
                 </div>
             </div>
+
         </div>
+        
     );
 };
 

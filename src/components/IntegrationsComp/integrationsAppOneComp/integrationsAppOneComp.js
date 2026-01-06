@@ -5,7 +5,7 @@ import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
-import BlogGrid from '@/app/components/blog/BlogGrid';
+import BlogGrid from '@/components/blogGrid/blogGrid';
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import { LinkText } from '@/components/uiComponents/buttons';
 import { useState, useCallback, useEffect } from 'react';
@@ -16,13 +16,13 @@ import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
+import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
 import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
 import { APPERPAGE } from '@/const/integrations';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -40,7 +40,6 @@ export default function IntegrationsAppOneComp({
     getDoFollowUrlStatusArray,
     navbarData,
     templateToShow,
-    skipHeadComp,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -105,18 +104,16 @@ export default function IntegrationsAppOneComp({
 
     return (
         <div>
-            <NavbarOptimized navbarData={navbarData} utm={'/integrations/appone'} />
+            <Navbar navbarData={navbarData} utm={'/integrations/appone'} />
 
-            {!skipHeadComp && (
-                <IntegrationsHeadComp
-                    metaData={metaData}
-                    page={'/integrations/AppOne'}
-                    plugins={[appOneDetails]}
-                    type={'appOne'}
-                    pageInfo={pageInfo}
-                    integrationsInfo={integrationsInfo}
-                />
-            )}
+            <IntegrationsHeadComp
+                metaData={metaData}
+                page={'/integrations/AppOne'}
+                plugins={[appOneDetails]}
+                type={'appOne'}
+                pageInfo={pageInfo}
+                integrationsInfo={integrationsInfo}
+            />
             <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
                 <div className="container flex flex-col justify-between gap-12">
                     <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
@@ -287,11 +284,7 @@ export default function IntegrationsAppOneComp({
                         </div>
 
                         {/* Template Container */}
-                        <TemplateContainer
-                            selectedApps={[appOneDetails]}
-                            templateToShow={templateToShow}
-                            requireAllApps={true}
-                        />
+                        <TemplateContainer selectedApps={[appOneDetails]} templateToShow={templateToShow} requireAllApps={true}/>
                     </div>
                 </div>
 
