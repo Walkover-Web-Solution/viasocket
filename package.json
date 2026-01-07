@@ -4,11 +4,12 @@
     "private": true,
     "scripts": {
         "dev": "next dev -p 1111",
-        "build": "next build ",
+        "prebuild": "node build-utilities/generate-robots-txt.js",
+        "build": "next build",
         "start": "next start -p 1111",
-        "pages:build": "npx @cloudflare/next-on-pages",
-        "preview": "npm run pages:build && wrangler pages dev",
-        "deploy": "npm run pages:build && wrangler pages deploy"
+        "pages:build": "npx @opennextjs/cloudflare build",
+        "preview": "npm run pages:build && wrangler pages dev .open-next/worker",
+        "deploy": "npm run pages:build && wrangler pages deploy .open-next/worker"
     },
     "dependencies": {
         "axios": "^1.9.0",
@@ -42,7 +43,7 @@
         "sass": "^1.69.4"
     },
     "devDependencies": {
-        "@cloudflare/next-on-pages": "^1.13.8",
+        "@opennextjs/cloudflare": "^1.14.8",
         "autoprefixer": "^10.4.17",
         "daisyui": "^4.7.2",
         "husky": "^9.0.11",
@@ -50,6 +51,7 @@
         "postcss": "^8.4.35",
         "prettier": "3.2.5",
         "tailwindcss": "^3.4.16",
-        "vercel": "42.0.0"
+        "vercel": "42.0.0",
+        "wrangler": "^4.54.0"
     }
 }
