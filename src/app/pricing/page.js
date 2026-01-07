@@ -3,7 +3,7 @@ import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import PricingTabsClient from '../components/pricing/PricingTabsClient';
-import { getPricingPageData } from '../lib/data';
+import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
 import { GiCheckMark } from 'react-icons/gi';
 

@@ -1,4 +1,4 @@
-import { getDepartmentPageData } from '@/app/lib/data';
+import { getDepartmentPageData } from '@/app/lib/department-data';
 import DepartmentClient from '@/app/components/department/DepartmentClient';
 import { notFound } from 'next/navigation';
 

@@ -1,15 +1,13 @@
 import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
-import { getIntegrationsPageData } from '../../lib/data';
+import { getIntegrationsPageData } from '../lib/integration-data';
 import IntegrationsClient from '@/app/components/integrations/IntegrationsClient';
 
 export const runtime = 'edge';
 
-export async function generateMetadata({ params }) {
-    const { slug = [] } = await params;
-    
+export async function generateMetadata() {
     try {
-        const data = await getIntegrationsPageData(slug);
+        const data = await getIntegrationsPageData([]);
         
         if (data.noData) {
             return {
@@ -18,33 +16,21 @@ export async function generateMetadata({ params }) {
             };
         }
 
-        const { metadata, appOneDetails, appTwoDetails } = data;
-        
-        let title = metadata?.title || 'Integrations - viaSocket';
-        let description = metadata?.description || 'Connect your favorite apps with viaSocket integrations';
-
-        if (appOneDetails?.name) {
-            title = title.replace(/\[AppOne\]/g, appOneDetails.name);
-            description = description.replace(/\[AppOne\]/g, appOneDetails.name);
-        }
-        if (appTwoDetails?.name) {
-            title = title.replace(/\[AppTwo\]/g, appTwoDetails.name);
-            description = description.replace(/\[AppTwo\]/g, appTwoDetails.name);
-        }
+        const { metadata } = data;
         
         return {
-            title,
-            description,
+            title: metadata?.title || 'Integrations - viaSocket',
+            description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
             keywords: metadata?.keywords,
             openGraph: {
-                title,
-                description,
+                title: metadata?.title || 'Integrations - viaSocket',
+                description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
                 images: metadata?.image ? [{ url: metadata.image }] : undefined,
             },
             twitter: {
                 card: 'summary_large_image',
-                title,
-                description,
+                title: metadata?.title || 'Integrations - viaSocket',
+                description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
                 images: metadata?.image ? [metadata.image] : undefined,
             },
         };
@@ -57,11 +43,12 @@ export async function generateMetadata({ params }) {
     }
 }
 
-export default async function IntegrationsPage({ params, searchParams }) {
-    const { slug = [] } = await params;
+export default async function IntegrationsBasePage({ searchParams }) {
+    const resolvedSearchParams = await searchParams;
     
     try {
-        const data = await getIntegrationsPageData(slug, searchParams);
+        // Pass empty array for slug to get base integrations page
+        const data = await getIntegrationsPageData([], resolvedSearchParams);
         
         if (data.noData) {
             return <ErrorComp footerData={data.footerData} />;
@@ -69,7 +56,7 @@ export default async function IntegrationsPage({ params, searchParams }) {
 
         return <IntegrationsClient data={data} />;
     } catch (error) {
-        console.error('Error rendering Integrations page:', error);
+        console.error('Error rendering base Integrations page:', error);
         return notFound();
     }
 }
