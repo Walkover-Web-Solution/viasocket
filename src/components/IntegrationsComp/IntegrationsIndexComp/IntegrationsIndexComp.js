@@ -111,10 +111,10 @@ export default function IntegrationsIndexComp({
 
     const goToPrev = () => {
         if (integrationsInfo?.category && !integrationsInfo?.page) {
-            const url = `${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            const url = `/${pageInfo?.pathArray.join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
             return url;
         } else {
-            const url = `${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
+            const url = `/${pageInfo?.pathArray.slice(0, -2).join('/')}/page/${Number(integrationsInfo?.page) - 1}`;
             return url;
         }
     };

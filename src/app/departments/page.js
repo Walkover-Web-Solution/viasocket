@@ -7,7 +7,7 @@ import FaqSection from '@/components/faqSection/faqSection';
 import ShowAppsIndex from '@/pages-0ld/homeSection/showAppsIndex';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
 import IntelligentAutomationsSection from '@/pages-0ld/homeSection/IntelligentAutomationsSection';
-import { getDepartmentsPageData } from '../lib/data';
+import { getDepartmentsPageData } from '../lib/department-data';
 import {
     Users,
     Calculator,
@@ -123,7 +123,7 @@ export default async function DepartmentsPage() {
 
                             return (
                                 <Link
-                                    href={`/department/${item?.slug}`}
+                                    href={`/departments/${item?.slug}`}
                                     key={item?.id || index}
                                     className={`group relative overflow-hidden border ${cardStyle} p-4 flex flex-col gap-2 justify-between transition-all duration-300 hover:shadow-xl hover:-translate-y-1`}
                                     style={{

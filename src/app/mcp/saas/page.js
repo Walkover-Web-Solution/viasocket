@@ -5,7 +5,7 @@ import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
-import { getMCPSaasPageData } from '../../lib/data';
+import { getMCPSaasPageData } from '../../lib/mcp-data';
 
 export const runtime = 'edge';
 

@@ -1,8 +1,7 @@
+
 import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
-import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
-import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
-import { getMCPPageData } from '../../lib/data';
+import { getMCPPageData } from '../lib/mcp-data';
 import McpClient from '@/app/components/mcp/McpClient';
 
 export const runtime = 'edge';
@@ -20,16 +19,10 @@ export async function generateMetadata({ params }) {
             };
         }
 
-        const { metaData, appOneDetails } = data;
+        const { metaData } = data;
         
         let title = metaData?.title || 'MCP - viaSocket';
         let description = metaData?.description || 'Connect your AI to 1000+ apps with viaSocket MCP';
-        
-        // Replace [app_name] placeholder with actual app name
-        if (appOneDetails?.name) {
-            title = title.replace(/\[app_name\]/g, appOneDetails.name);
-            description = description.replace(/\[app_name\]/g, appOneDetails.name);
-        }
         
         return {
             title,

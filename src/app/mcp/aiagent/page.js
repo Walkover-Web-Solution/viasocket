@@ -5,7 +5,7 @@ import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
-import { getMCPAiAgentPageData } from '../../lib/data';
+import { getMCPAiAgentPageData } from '../../lib/mcp-data';
 
 export const runtime = 'edge';
 
