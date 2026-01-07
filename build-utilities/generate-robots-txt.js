@@ -1,6 +1,5 @@
 const fs = require("fs");
-const path = require("path");
-
+const path = require ("path");
 function generateRobots() {
     const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod';
 
@@ -12,14 +11,7 @@ Sitemap: https://viasocket.com/sitemap.xml`
         : `User-agent: *
 Disallow: /`;
 
-    const publicDir = path.join(__dirname, "..", "public");
-    const robotsPath = path.join(publicDir, "robots.txt");
-    
-    if (!fs.existsSync(publicDir)) {
-        fs.mkdirSync(publicDir, { recursive: true });
-    }
-    
-    fs.writeFileSync(robotsPath, robotsContent);
-}
 
+    fs.writeFileSync(path.resolve("public/robots.txt"), robotsContent);
+}
 generateRobots();
