@@ -102,21 +102,18 @@ export default function SearchInputHomeOptimized({
 
     // All the handler functions from original component
     const handleSelectApp = (app) => {
-        setSelectedApps((prev) => {
-            const exists = prev.some((selected) => selected.appslugname === app.appslugname);
-            let newSelectedApps = exists ? prev.filter((item) => item.appslugname !== app.appslugname) : [...prev, app];
-
-            if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
-                handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
-                if (enableVideos) handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
-                if (enableBlogs) handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
-            } else {
-                resetToInitialState();
-            }
-            if (enableAi) getAiResponse(newSelectedApps, selectedIndustries, selectedDepartments);
-
-            return newSelectedApps;
-        });
+        let prev = selectedApps;
+        const exists = prev.some((selected) => selected.appslugname === app.appslugname);
+        let newSelectedApps = exists ? prev.filter((item) => item.appslugname !== app.appslugname) : [...prev, app];
+        if (newSelectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+            handleSearchTemplates(newSelectedApps, selectedIndustries, selectedDepartments);
+            if (enableVideos) handleSearchVideos(newSelectedApps, selectedIndustries, selectedDepartments);
+            if (enableBlogs) handleSearchBlogs(newSelectedApps, selectedIndustries, selectedDepartments);
+        } else {
+            resetToInitialState();
+        }
+        if (enableAi) getAiResponse(newSelectedApps, selectedIndustries, selectedDepartments);
+        setSelectedApps(newSelectedApps);
         setSearchTerm('');
         setCurrentSuggestion('');
         setSuggestionText('');
@@ -304,34 +301,34 @@ export default function SearchInputHomeOptimized({
     // Function to sort search results prioritizing exact matches (for apps)
     const sortSearchResults = (results, searchTerm) => {
         if (!results || !searchTerm) return results;
-        
+
         const lowerSearchTerm = searchTerm.toLowerCase();
-        
+
         return results.sort((a, b) => {
             const aName = (a.name || '').toLowerCase();
             const bName = (b.name || '').toLowerCase();
-            
+
             // Priority 1: Exact match (highest priority)
             const aExactMatch = aName === lowerSearchTerm;
             const bExactMatch = bName === lowerSearchTerm;
-            
+
             if (aExactMatch && !bExactMatch) return -1;
             if (!aExactMatch && bExactMatch) return 1;
-            
+
             // Priority 2: Starts with search term
             const aStartsWith = aName.startsWith(lowerSearchTerm);
             const bStartsWith = bName.startsWith(lowerSearchTerm);
-            
+
             if (aStartsWith && !bStartsWith) return -1;
             if (!aStartsWith && bStartsWith) return 1;
-            
+
             // Priority 3: Contains search term (partial match)
             const aContains = aName.includes(lowerSearchTerm);
             const bContains = bName.includes(lowerSearchTerm);
-            
+
             if (aContains && !bContains) return -1;
             if (!aContains && bContains) return 1;
-            
+
             return 0; //leave them unchanged (equal priority)
         });
     };

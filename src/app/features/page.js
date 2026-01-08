@@ -1,4 +1,4 @@
-import { getFeaturesPageData } from '@/app/lib/data';
+import { getFeaturesPageData } from '@/app/lib/feature-data';
 import FeaturesClient from '@/app/components/features/FeaturesClient';
 
 export const runtime = 'edge';

@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 import ResultSectionOptimized from './ResultSectionOptimized';
 import BuildOptionsCTAOptimized from './BuildOptionsCTAOptimized';
+import CTAButtons from './CTAButtons';
 
-export default function SearchAndResults({ initialApps, templateData }) {
+export default function SearchAndResults({ initialApps, templateData, onSearchStateChange }) {
   const [templates, setTemplates] = useState([]);
   const [showTemplates, setShowTemplates] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -62,6 +63,12 @@ export default function SearchAndResults({ initialApps, templateData }) {
 
   const hasActiveSearch = showTemplates || showVideos || showBlogs || showAiResponse;
 
+  // Notify parent component when search state changes
+  useEffect(() => {
+    if (onSearchStateChange) {
+      onSearchStateChange(hasActiveSearch);
+    }
+  }, [hasActiveSearch, onSearchStateChange]);
   return (
     <>
       <SearchInputHomeOptimized
@@ -76,6 +83,8 @@ export default function SearchAndResults({ initialApps, templateData }) {
       />
 
       <BuildOptionsCTAOptimized />
+
+       <CTAButtons />
 
       <ResultSectionOptimized
         // Template props
@@ -98,13 +107,6 @@ export default function SearchAndResults({ initialApps, templateData }) {
         showBlogs={showBlogs}
         loadingBlogs={loadingBlogs}
         blogs={blogs}
-      />
-
-      {/* Return search state for conditional rendering in parent */}
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `window.__SEARCH_STATE__ = ${JSON.stringify({ hasActiveSearch })};`
-        }}
       />
     </>
   );
