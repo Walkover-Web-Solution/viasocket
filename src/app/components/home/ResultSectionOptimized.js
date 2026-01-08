@@ -13,27 +13,27 @@ export default function ResultSectionOptimized({
     selectedApps = [],
     selectedDepartments = [],
     selectedIndustries = [],
-    
+
     // AI Response props
     showAiResponse,
     loadingAiResponse,
     aiResponse,
-    
+
     // Video props
     showVideos,
     loadingVideos,
     videos = [],
-    
+
     // Blog props
     showBlogs,
     loadingBlogs,
     blogs = []
 }) {
     return (
-        <div className="bg-[#faf9f6] result-section">
+        <div className="bg-[#faf9f6] result-section text-left">
             {/* Template Results Section */}
             {showTemplates && (loadingTemplates || hasTemplateResults) && (
-                <div className="container mx-auto px-4 py-12 relative">
+                <div className="container mx-auto px-4 py-12 relative z-index-1">
                     {(loadingTemplates || hasTemplateResults) && (
                         <h2 className="h2 mb-8 text-left">
                             Top{' '}
@@ -60,137 +60,141 @@ export default function ResultSectionOptimized({
                         </h2>
                     )}
 
-                    {loadingTemplates && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {loadingTemplates ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                             {[...Array(6)].map((_, index) => (
-                                <div key={index} className="animate-pulse">
-                                    <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
-                                    <div className="bg-gray-200 h-4 rounded mb-2"></div>
-                                    <div className="bg-gray-200 h-4 rounded w-3/4"></div>
-                                </div>
+                                <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
                             ))}
                         </div>
-                    )}
-
-                    {!loadingTemplates && hasTemplateResults && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {filteredTemplates.slice(0, 9).map((template, index) => (
-                                <TemplateCard
-                                    key={template.id || index}
-                                    template={template}
-                                    showInstallButton={true}
-                                />
+                    ) : hasTemplateResults ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {filteredTemplates.slice(0, 6).map((template, index) => (
+                                <TemplateCard key={template.id} index={index} template={template} />
                             ))}
                         </div>
-                    )}
-
-                    {!loadingTemplates && !hasTemplateResults && (
-                        <div className="text-center py-12">
-                            <p className="text-gray-600 text-lg">
-                                No templates found for your selection. Try different apps or categories.
-                            </p>
-                        </div>
-                    )}
+                    ) : null}
                 </div>
             )}
 
             {/* AI Response Section */}
             {showAiResponse && (
-                <div className="container mx-auto px-4 py-12 bg-gradient-to-r from-blue-50 to-indigo-50">
-                    <h2 className="h2 mb-8 text-left">AI Recommendations</h2>
-                    
-                    {loadingAiResponse && (
-                        <div className="animate-pulse">
-                            <div className="bg-gray-200 h-4 rounded mb-4"></div>
-                            <div className="bg-gray-200 h-4 rounded mb-4 w-5/6"></div>
-                            <div className="bg-gray-200 h-4 rounded mb-4 w-4/6"></div>
-                            <div className="bg-gray-200 h-4 rounded w-3/6"></div>
-                        </div>
-                    )}
-                    
-                    {!loadingAiResponse && aiResponse && (
-                        <div className="prose prose-lg max-w-none">
-                            <ReactMarkdown>{aiResponse}</ReactMarkdown>
-                        </div>
-                    )}
+                <div className="container mx-auto px-4 py-12 relative z-index-1">
+                    <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
+
+                    <div className="w-full">
+                        {loadingAiResponse ? (
+                            <div className="bg-white border custom-border p-8">
+                                <div className="space-y-4">Creating ideas for you...</div>
+                            </div>
+                        ) : aiResponse ? (
+                            <div className="bg-white border custom-border p-8 ai-agent-response">
+                                <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                            </div>
+                        ) : null}
+                    </div>
                 </div>
             )}
 
-            {/* Video Results Section */}
-            {showVideos && (
-                <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-left">
-                        Related Videos {selectedApps.length > 0 && 'for '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                    </h2>
-                    
-                    {loadingVideos && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {[...Array(6)].map((_, index) => (
-                                <div key={index} className="animate-pulse">
-                                    <div className="bg-gray-200 aspect-video rounded-lg mb-4"></div>
-                                    <div className="bg-gray-200 h-4 rounded mb-2"></div>
-                                    <div className="bg-gray-200 h-4 rounded w-3/4"></div>
+            {/* AI Ideas Note Section - Show when incomplete selections */}
+            {(selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                !showAiResponse && (
+                    <div className="container mx-auto px-4 py-12 relative z-index-1">
+                        <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
+
+                        <div className="w-full">
+                            <div className="border custom-border p-8 bg-white">
+                                <div className="flex items-start gap-3">
+                                    <div className="cont">
+                                        <div className="ai-agent-note">
+                                            {selectedApps.length > 0 &&
+                                                selectedIndustries.length === 0 &&
+                                                selectedDepartments.length === 0 && (
+                                                    <p>
+                                                        Give more details about your business, department you want
+                                                        to automate and your industry to receive more personalized
+                                                        automation ideas.
+                                                    </p>
+                                                )}
+                                            {(selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
+                                                selectedApps.length === 0 && (
+                                                    <p>
+                                                        {selectedIndustries.length > 0 &&
+                                                            selectedDepartments.length === 0 && (
+                                                                <>
+                                                                    Give more details about your business, apps you
+                                                                    use and your department to receive more
+                                                                    personalized automation ideas.
+                                                                </>
+                                                            )}
+                                                        {selectedDepartments.length > 0 &&
+                                                            selectedIndustries.length === 0 && (
+                                                                <>
+                                                                    Give more details about your business, apps you
+                                                                    use and your industry to receive more
+                                                                    personalized automation ideas.
+                                                                </>
+                                                            )}
+                                                        {selectedIndustries.length > 0 &&
+                                                            selectedDepartments.length > 0 && (
+                                                                <>
+                                                                    Give more details about your business and apps
+                                                                    you use to receive more personalized automation
+                                                                    ideas.
+                                                                </>
+                                                            )}
+                                                    </p>
+                                                )}
+                                            {selectedApps.length === 1 &&
+                                                (selectedIndustries.length > 0 ||
+                                                    selectedDepartments.length > 0) && (
+                                                    <p>
+                                                        Great start! Select one more <strong>app</strong> to unlock
+                                                        AI-powered automation ideas.
+                                                    </p>
+                                                )}
+                                        </div>
+                                    </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+            {/* Video Results Section */}
+            {showVideos && (loadingVideos || videos.length > 0) && (
+                <div className="mx-auto px-4 py-12 relative z-index-1">
+                    {(loadingVideos || videos.length > 0) && (
+                        <div className='container'><h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2></div>
+                    )}
+
+                    {loadingVideos ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                            {[...Array(6)].map((_, index) => (
+                                <div key={index} className="skeleton bg-gray-100 h-[300px] rounded-none"></div>
                             ))}
                         </div>
-                    )}
-                    
-                    {!loadingVideos && videos.length > 0 && (
-                        <VideoGrid videos={videos} />
-                    )}
-                    
-                    {!loadingVideos && videos.length === 0 && (
-                        <div className="text-center py-12">
-                            <p className="text-gray-600 text-lg">
-                                No videos found for your selection.
-                            </p>
-                        </div>
-                    )}
+                    ) : videos.length > 0 ? (
+                        <VideoGrid videoData={videos} showHeading={false} />
+                    ) : null}
                 </div>
             )}
 
             {/* Blog Results Section */}
-            {showBlogs && (
-                <div className="container mx-auto px-4 py-12">
-                    <h2 className="h2 mb-8 text-left">
-                        Related Articles {selectedApps.length > 0 && 'about '}
-                        {selectedApps.map((app, index) => (
-                            <span key={app.appslugname}>
-                                {index > 0 && ', '}
-                                <span>{app.name}</span>
-                            </span>
-                        ))}
-                    </h2>
-                    
-                    {loadingBlogs && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {showBlogs && (loadingBlogs || blogs.length > 0) && (
+                <div className="container mx-auto px-4 py-12 relative z-index-1">
+                    {(loadingBlogs || blogs.length > 0) && (
+                        <h2 className="h2 mb-8 text-left">Automation insights & tips </h2>
+                    )}
+
+                    {loadingBlogs ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                             {[...Array(6)].map((_, index) => (
-                                <div key={index} className="animate-pulse">
-                                    <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
-                                    <div className="bg-gray-200 h-4 rounded mb-2"></div>
-                                    <div className="bg-gray-200 h-4 rounded w-3/4"></div>
-                                </div>
+                                <div key={index} className="skeleton bg-gray-100 h-[400px] rounded-none"></div>
                             ))}
                         </div>
-                    )}
-                    
-                    {!loadingBlogs && blogs.length > 0 && (
-                        <BlogGrid blogs={blogs} />
-                    )}
-                    
-                    {!loadingBlogs && blogs.length === 0 && (
-                        <div className="text-center py-12">
-                            <p className="text-gray-600 text-lg">
-                                No articles found for your selection.
-                            </p>
-                        </div>
-                    )}
+                    ) : blogs.length > 0 ? (
+                        <BlogGrid posts={blogs} showHeading={false} />
+                    ) : null}
                 </div>
             )}
         </div>

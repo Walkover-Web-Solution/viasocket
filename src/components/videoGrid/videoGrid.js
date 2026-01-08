@@ -94,7 +94,7 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                     className={`flex items-stretch gap-0 ${isScrollable ? 'overflow-x-auto scroll-smooth snap-x snap-mandatory pr-2' : ''}`}
                     style={isScrollable ? { scrollbarWidth: 'none' } : undefined}
                 >
-                    {videoData.map((video, index) => {
+                    {videoData?.map((video, index) => {
                         const isActive = index === activeIndex;
                         return (
                             <div
