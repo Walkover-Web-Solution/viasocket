@@ -5,6 +5,7 @@ import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
 import { FiLinkedin, FiYoutube } from 'react-icons/fi';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
@@ -95,43 +96,36 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <Link
                                     href={`https://www.instagram.com/viasocket/`}
                                     target="_blank"
-                                    className=""
                                     aria-label="instagram"
                                 >
-                                    <FaInstagram size={24} />
+                                    <FaInstagram size={20} />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
-                                    className=""
                                     aria-label="facebook"
                                 >
-                                    <FiLinkedin size={24} />
+                                    <FiLinkedin size={20} />
                                 </Link>
 
-                                <Link
-                                    href={`https://x.com/viasocket`}
-                                    target="_blank"
-                                    className=""
-                                    aria-label="twitter"
-                                >
-                                    <FaXTwitter size={24} />
+                                <Link href={`https://x.com/viasocket`} target="_blank" aria-label="twitter">
+                                    <FaXTwitter size={20} />
                                 </Link>
-                                <Link
-                                    href={`https://www.youtube.com/@viasocket`}
-                                    target="_blank"
-                                    className=""
-                                    aria-label="youtube"
-                                >
-                                    <FiYoutube size={24} />
+                                <Link href={`https://www.youtube.com/@viasocket`} target="_blank" aria-label="youtube">
+                                    <Image
+                                        src="/review-image/youtube-icon.png"
+                                        alt="youtube"
+                                        width={20}
+                                        height={20}
+                                        className="h-5 w-5"
+                                    />
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
                                     target="_blank"
-                                    className=""
                                     aria-label="discord"
                                 >
-                                    <RxDiscordLogo size={24} />
+                                    <RxDiscordLogo size={20} />
                                 </Link>
                             </div>
                         </div>
