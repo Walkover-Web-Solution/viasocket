@@ -24,6 +24,7 @@ import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
@@ -279,23 +280,20 @@ export default function IntegrationsAppTwoComp({
                             />
                         </div>
                         <div className="flex flex-col items-center">
-                            <button
-                                onClick={(e) => {
-                                    if (selectedTrigger && selectedAction) {
+                            {selectedTrigger && selectedAction ? (
+                                <button
+                                    onClick={(e) => {
                                         handleRedirect(
                                             e,
                                             `${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger.rowid}/action?events=${selectedAction.rowid}&integrations=${selectedTrigger.pluginrecordid},${selectedAction.pluginrecordid}&action&`
                                         );
-                                    } else {
-                                        handleRedirect(e, '/signup?', router);
-                                    }
-                                }}
-                                className="btn btn-accent mt-10 px-8 py-3"
-                            >
-                                {selectedTrigger && selectedAction
-                                    ? 'Connect these apps for free'
-                                    : 'Get Started for free'}
-                            </button>
+                                    }}
+                                    className="btn btn-accent mt-10 px-8 py-3"
+                                >
+                                    Connect these apps for free
+                                </button>) : (
+                                <DashboardButton utm_src={"/integrations/" + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname} />
+                            )}
                         </div>
                     </div>
                 </div>

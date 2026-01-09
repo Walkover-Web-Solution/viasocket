@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
@@ -12,9 +11,9 @@ import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates'
 import Link from 'next/link';
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 import TemplateCard from '@/components/templateCard/templateCard';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function AutomationSlugClient({ pageData }) {
-    const router = useRouter();
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
@@ -268,8 +267,8 @@ export default function AutomationSlugClient({ pageData }) {
                 <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#faf9f6] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
                     <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                         <h2 className="h2">Can't find the right template?</h2>
-                        <h2 className="h2">Start with AI</h2>
-                        <button className="btn btn-accent mt-4" aria-label="sign up" onClick={(e) => handleRedirect(e, '/signup?', router)}>Get Started Free</button>
+                        <h2 className="h2 mb-4">Start with AI</h2>
+                       <DashboardButton utm_src={`/automations/${template?.title}`}/>
                     </div>
                 </div>
             </div>

@@ -4,22 +4,20 @@ import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
-import { useRouter } from 'next/navigation';
 import AutomationSuggestionsClient from '../workflow-automation-ideas/AutomationSuggestionsClient';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { Webhook, Timer } from 'lucide-react';
 import SearchInputHome from '@/pages-0ld/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BuildOptionsCTA from '@/pages-0ld/homeSection/buildOptionsCTA';
-import { handleRedirect } from '@/utils/handleRedirection';
 import BlogGrid from '../blog/BlogGrid';
 import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 const TEMPLATES_PER_PAGE = 6;
 
 export default function AutomationsClient({ pageData }) {
-    const router = useRouter();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(false);
     
@@ -306,13 +304,7 @@ export default function AutomationsClient({ pageData }) {
                         <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                             <h2 className="h2">Can't find the right template?</h2>
                             <h2 className="h2">Start with AI</h2>
-                            <button
-                                className="btn btn-accent mt-4"
-                                aria-label="sign up"
-                                onClick={(e) => handleRedirect(e, '/signup?', router)}
-                            >
-                                Start for free
-                            </button>
+                            <DashboardButton utm_src={"/automations"}/>
                         </div>
                     </div>
                 </div>

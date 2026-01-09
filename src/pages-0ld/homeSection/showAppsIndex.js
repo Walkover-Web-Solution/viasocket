@@ -126,9 +126,8 @@ const ShowAppsIndex = () => {
                     >
                         <div className="inline-flex py-4 gap-20">
                             {APPSONE.map((app, index) => (
-                                <div className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                                <div key={index} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
                                     <Image
-                                        key={app.src}
                                         src={app.src}
                                         alt={app.alt}
                                         width={30}
@@ -153,9 +152,8 @@ const ShowAppsIndex = () => {
                 >
                     <div className="inline-flex py-4 gap-20">
                         {APPSTWO.map((app, index) => (
-                            <div className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                            <div key={index} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
                                 <Image
-                                    key={app.src}
                                     src={app.src}
                                     alt={app.alt}
                                     width={30}

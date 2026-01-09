@@ -10,6 +10,7 @@ import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import { FaArrowRightLong } from 'react-icons/fa6';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function DepartmentClient({ data }) {
     const { metaData, navbarData, footerData, department, blogsData, templateToShow } = data;
@@ -36,15 +37,10 @@ export default function DepartmentClient({ data }) {
                         )}
 
                         <div className="flex flex-wrap gap-4 justify-center mb-10">
-                            <Link
-                                href="/signup"
-                                className="btn btn-accent px-6 py-3 rounded-xl text-white font-medium hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                            >
-                                Dashboard <FaArrowRightLong />
-                            </Link>
+                            <DashboardButton utm_src={"departments/"+department?.slug}/>
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                                className="btn btn-outline px-6 py-3 rounded-xl border-2 border-gray-300 hover:border-accent hover:bg-accent/5 transition-all duration-300"
+                                className="btn btn-outline px-6 py-3 border-gray-300 hover:border-accent hover:bg-accent/5 transition-all duration-300"
                             >
                                 Book a demo
                             </Link>

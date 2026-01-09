@@ -8,6 +8,7 @@ import ShowAppsIndex from '@/pages-0ld/homeSection/showAppsIndex';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
 import IntelligentAutomationsSection from '@/pages-0ld/homeSection/IntelligentAutomationsSection';
 import { getDepartmentsPageData } from '../lib/department-data';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import {
     Users,
     Calculator,
@@ -80,7 +81,7 @@ export default async function DepartmentsPage() {
         <>
             <div className="square-background">
                 <NavbarOptimized navbarData={navbarData} />
-                <MetaHeadComp metaData={metaData} page={'/department'} />
+                <MetaHeadComp metaData={metaData} page={'/departments'} />
                 <div className="container mt-12 flex flex-col gap-12">
                     <div className="flex flex-col justify-center items-center">
                         <h1 className="h1 text-center">
@@ -90,9 +91,7 @@ export default async function DepartmentsPage() {
                             Build workflows that run across teams, tools, and systems—without manual handoffs.
                         </p>
                         <div className="flex gap-4 justify-center mt-5">
-                            <Link href="/signup" className="btn btn-accent">
-                                Start for free
-                            </Link>
+                            <DashboardButton utm_src={"/departments/hero"} />
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 className="btn btn-outline"
@@ -103,7 +102,7 @@ export default async function DepartmentsPage() {
                     </div>
 
                     {/* Show Apps Section */}
-                    <div className="bg-white my-20 container">
+                    <div className="bg-white my-20 cont">
                         <div className="flex flex-col border custom-border border-b-0">
                             <ShowAppsIndex />
                             <IntelligentAutomationsSection appCount={appCount} isDepartmentPage={true} />

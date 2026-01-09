@@ -173,6 +173,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                         src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
                                         height={36}
                                         width={36}
+                                        alt={"plugin icon"}
                                     />
                                 )}
                                 <h3 className="h3 font-bold">

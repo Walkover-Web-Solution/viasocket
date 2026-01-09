@@ -17,6 +17,8 @@ import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getWorkflowAutomationsPageData } from '../lib/data';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import ShowDepartmentOptimized from '@/app/components/home/ShowDepartmentOptimized';
 
 export const runtime = 'edge';
 
@@ -132,13 +134,11 @@ export default async function WorkflowAutomationsPage() {
                         Your Business, Automated
                         <span className="text-accent"> Intelligently</span>
                     </h1>
-                    <p className="sub__h1 text-gray-600 leading-relaxed">
+                    <p className="sub__h1 text-gray-600 leading-relaxed mb-3">
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
-                    <Link href="/signup?utm_source=/workflow-automations">
-                        <button className="btn btn-accent mt-3">Start for free</button>
-                    </Link>
+                    <DashboardButton utm_src={"/workflow-automations"}/>
                 </section>
 
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
@@ -317,6 +317,8 @@ export default async function WorkflowAutomationsPage() {
                         ))}
                     </div>
                 </section>
+
+                <ShowDepartmentOptimized />
 
                 <div className="border custom-border bg-white cont gap-4 text-black p-6 md:p-12">
                     <div className="cont gap-1">
