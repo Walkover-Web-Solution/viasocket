@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useMemo } from 'react';
 
 // Helper function to parse use_cases data

@@ -1,4 +1,4 @@
-import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/integrationsIndexClientComp';
 import Image from 'next/image';
 import { useState } from 'react';
 import { MdKeyboardArrowDown } from 'react-icons/md';

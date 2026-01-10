@@ -1,4 +1,4 @@
-import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
+import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/integrationsIndexClientComp';
 
 export default function IntegrationsBetaComp({ appOneDetails }) {
     return (

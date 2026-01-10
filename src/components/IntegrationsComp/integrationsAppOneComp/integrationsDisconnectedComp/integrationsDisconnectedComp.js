@@ -8,8 +8,8 @@ import { LinkText } from '@/components/uiComponents/buttons';
 import createURL from '@/utils/createURL';
 import IntegrationsHeadComp from '../../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsEventsComp from '../../integrationsEventsComp/integrationsEventsComp';
-import Navbar from '@/components/navbar/navbar';
 import ExternalLink from '@/utils/ExternalLink';
+import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 
 export default function IntegrationsDisconnectedComp({
     appOneDetails,
@@ -30,7 +30,7 @@ export default function IntegrationsDisconnectedComp({
             }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <Navbar navbarData={navbarData} utm={'/integrations/appone'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/integrations/appone'} />
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}

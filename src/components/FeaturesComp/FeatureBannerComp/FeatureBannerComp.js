@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
+import NavbarServer from '@/app/components/navbar/NavbarServer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
     return (
         <>
-            <NavbarOptimized navbarData={navbarData} utm={pageInfo?.url} />
+            <NavbarServer navbarData={navbarData} utm={pageInfo?.url} />
 
             <div className="container">
                 <div className="h-fit ">

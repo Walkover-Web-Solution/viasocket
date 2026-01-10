@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import style from '@/pages-0ld/homeSection/homeDepartment/showDepartment.module.css';
+import style from './showDepartment.module.css';
 
 export default function ShowDepartmentOptimized() {
     const departments = ['Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
