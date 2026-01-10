@@ -3,7 +3,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { RxDiscordLogo } from 'react-icons/rx';
 import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
-import { FiLinkedin, FiYoutube } from 'react-icons/fi';
+import { FiLinkedin } from 'react-icons/fi';
+
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 
 export default function Footer({ footerData, borderClass, isBlack = false }) {
@@ -112,13 +113,10 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     <FaXTwitter size={20} />
                                 </Link>
                                 <Link href={`https://www.youtube.com/@viasocket`} target="_blank" aria-label="youtube">
-                                    <Image
-                                        src="/review-image/youtube-icon.png"
-                                        alt="youtube"
-                                        width={20}
-                                        height={20}
-                                        className="min-w-[20px] min-h-[20px]"
-                                    />
+                                    <svg width={20} height={20} viewBox="0 0 20 20">
+                                        <rect x="0" y="3" width="20" height="14" rx="3" fill="black" />
+                                        <polygon points="8,7 8,13 13,10" fill="white" />
+                                    </svg>
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
