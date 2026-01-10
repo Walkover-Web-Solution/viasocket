@@ -11,12 +11,15 @@ import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
 import { FaArrowRightLong } from "react-icons/fa6";
 
-export default function NavbarOptimized({ utm, navbarData }) {
+export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
     const pathname = usePathname();
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
-    const [hasToken, setHasToken] = useState(false);
+    const [clientHasToken, setClientHasToken] = useState(false);
+    
+    // Use server-provided hasToken if available, otherwise use client-side detection
+    const finalHasToken = hasToken !== null ? hasToken : clientHasToken;
     let mode = 'light';
     let borderClass;
     let backgroundClass;
@@ -103,6 +106,14 @@ export default function NavbarOptimized({ utm, navbarData }) {
         return undefined;
     };
 
+    // Client-side token detection (only if hasToken prop is not provided)
+    useLayoutEffect(() => {
+        if (hasToken === null) {
+            const token = getCookie('prod');
+            setClientHasToken(Boolean(token));
+        }
+    }, [hasToken]);
+
     // Ensure the second layer reflects the active first-layer group based on current route
     useEffect(() => {
         if (!navbarData?.length) return;
@@ -138,10 +149,6 @@ export default function NavbarOptimized({ utm, navbarData }) {
         }
     }, [pathname, navbarData]);
 
-    useLayoutEffect(() => {
-        const token = getCookie('prod');
-        setHasToken(Boolean(token));
-    }, []);
 
     return (
         <>
@@ -256,7 +263,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                             </div>
 
                             {/* Dynamic login/panel button based on token */}
-                            {hasToken ? (
+                            {finalHasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}

@@ -1,7 +1,7 @@
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarOptimized from '../components/navbar/NavbarOptimized';
+import NavbarServer from '../components/navbar/NavbarServer';
 import PricingTabsClient from '../components/pricing/PricingTabsClient';
 import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
@@ -37,7 +37,7 @@ export default async function PricingPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <NavbarOptimized navbarData={navbarData} utm={'/pricing'} />
+            <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <div className="flex flex-col items-center">

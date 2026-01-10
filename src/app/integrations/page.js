@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
 import { getIntegrationsPageData } from '../lib/integration-data';
-import IntegrationsClient from '@/app/components/integrations/IntegrationsClient';
+import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 
 export const runtime = 'edge';
 
@@ -54,7 +54,7 @@ export default async function IntegrationsBasePage({ searchParams }) {
             return <ErrorComp footerData={data.footerData} />;
         }
 
-        return <IntegrationsClient data={data} />;
+        return <IntegrationsMain data={data} />;
     } catch (error) {
         console.error('Error rendering base Integrations page:', error);
         return notFound();

@@ -1,5 +1,5 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarOptimized from '../components/navbar/NavbarOptimized';
+import NavbarServer from '../components/navbar/NavbarServer';
 import { getAutomationsPageData } from '../lib/data';
 import AutomationsClient from '../components/automations/AutomationsClient';
 
@@ -11,7 +11,7 @@ export default async function AutomationsPage() {
     return (
         <>
             <MetaHeadComp metaData={pageData.metaData} page={'/automations'} />
-            <NavbarOptimized navbarData={pageData.navbarData} utm={'/automations'} />
+            <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
             <AutomationsClient pageData={pageData} />
         </>
     );

@@ -1,5 +1,5 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarOptimized from '../components/navbar/NavbarOptimized';
+import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
 import { getSupportPageData } from '../lib/data';
 import SupportClient from '../components/support/SupportClient';
@@ -33,7 +33,7 @@ export default async function SupportPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <NavbarOptimized navbarData={navbarData} utm={'/support'} />
+            <NavbarServer navbarData={navbarData} utm={'/support'} />
             
             <SupportClient testimonials={testimonials} />
             

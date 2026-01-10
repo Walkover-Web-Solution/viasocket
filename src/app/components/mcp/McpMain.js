@@ -1,9 +1,8 @@
-'use client'
 import McpAppComp from '@/components/mcpComps/mcpAppComp/McpAppComp';
 import McpIndexComp from '@/components/mcpComps/mcpIndexComp/McpIndexComp';
 import React from 'react'
 
-const McpClient = (props) => {
+const McpMain = (props) => {
     const { data } = props;
     if (data.mcpInfo?.appone) {
         // App-specific MCP page
@@ -52,4 +51,4 @@ const McpClient = (props) => {
     }
 }
 
-export default McpClient
+export default McpMain

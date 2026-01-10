@@ -338,7 +338,7 @@ export default function PricingTabsClient({ countries }) {
               <p className="h3 text-accent">Custom</p>
 
 
-              <Link href="/signup?utm_source=pricing/enterprise" className="w-[50%]">
+              <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" className="w-[50%]">
                 <button className="w-full btn btn-accent">
                   Contact Sales
                 </button>

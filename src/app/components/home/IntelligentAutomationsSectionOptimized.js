@@ -16,7 +16,7 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
         Icon: LuLayoutTemplate,
         title: 'Templates',
         description: 'Explore thousands of pre-built templates',
-        url: '/templates',
+        url: '/automations',
     };
 
     // Other base items that are always shown
