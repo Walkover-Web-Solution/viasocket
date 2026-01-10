@@ -117,7 +117,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                         alt="youtube"
                                         width={20}
                                         height={20}
-                                        className="h-5 w-5"
+                                        className="min-w-[20px] min-h-[20px]"
                                     />
                                 </Link>
                                 <Link
