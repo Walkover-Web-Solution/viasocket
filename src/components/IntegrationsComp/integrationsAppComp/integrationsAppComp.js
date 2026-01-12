@@ -3,7 +3,7 @@ import Image from 'next/image';
 import categories from '@/data/categories.json';
 import style from './IntegrationsAppComp.module.scss';
 import createURL from '@/utils/createURL';
-import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/integrationsIndexClientComp';
+import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
 
 export default function IntegrationsAppComp({
     pageInfo,

@@ -1,6 +1,6 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getPrivacyPageData } from '../lib/data';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 
 export const runtime = 'edge';
@@ -32,7 +32,7 @@ export default async function PrivacyPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
-            <NavbarServer navbarData={navbarData} utm={'/privacy'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/privacy'} />
 
             {/* <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <style

@@ -15,7 +15,10 @@ const IndexTemplateComp = ({ categories, templates }) => {
     const flowContainerRef = useRef(null);
     const [flowRendererHeight, setFlowRendererHeight] = useState('550px');
 
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState({
+        name: 'Finance',
+        scriptid: '72077fe9954a5122c1301f4a0dce567ebd54e5d5e6c0e4ff05cfd884361c7e52',
+    });
     const [currentTemplate, setCurrentTemplate] = useState(null);
 
     // Create a map of templates { [id]: template }
@@ -26,16 +29,6 @@ const IndexTemplateComp = ({ categories, templates }) => {
         });
         return map;
     }, [templates]);
-
-     // Initialize selected category with first category or Finance if available
-    useEffect(() => {
-        if (!selected && categories?.length > 0) {
-            // Try to find Finance category first, otherwise use first category
-            const financeCategory = categories.find((cat) => cat.name === 'Finance');
-            const defaultCategory = financeCategory || categories[0];
-            setSelected(defaultCategory);
-        }
-    }, [categories, selected]);
 
     // Set default template if available
     useEffect(() => {

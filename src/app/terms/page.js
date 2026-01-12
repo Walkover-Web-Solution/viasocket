@@ -1,6 +1,6 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getTermsPageData } from '../lib/data';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 
 export const runtime = 'edge';
@@ -32,7 +32,7 @@ export default async function TermsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <NavbarServer navbarData={navbarData} utm={'/terms'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/terms'} />
 
             {/* <div className="container mt-12 flex gap-16 flex-col global-top-space">
                 <style

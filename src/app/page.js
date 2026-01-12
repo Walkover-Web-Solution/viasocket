@@ -1,7 +1,7 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import NavbarServer from './components/navbar/NavbarServer';
+import NavbarOptimized from './components/navbar/NavbarOptimized';
 import HeroContainer from './components/home/HeroContainer';
 import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
@@ -41,7 +41,7 @@ export default async function HomePage() {
   return (
     <>
       <MetaHeadComp metaData={metaData} page={'/'} />
-      <NavbarServer navbarData={navbarData} utm={'/index'} />
+      <NavbarOptimized navbarData={navbarData} utm={'/index'} />
       
       <HeroContainer 
         appCount={appCount}

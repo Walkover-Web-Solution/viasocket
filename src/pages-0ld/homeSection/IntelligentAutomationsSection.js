@@ -3,7 +3,7 @@ import { LuBot, LuPuzzle, LuLayoutTemplate } from 'react-icons/lu';
 import { FaCode } from 'react-icons/fa6';
 import Link from 'next/link';
 
-export default function IntelligentAutomationsSectionOptimized({ appCount, isDepartmentPage = false }) {
+const IntelligentAutomationsSection = ({ appCount, isDepartmentPage = false }) => {
     const automationItem = {
         Icon: LuPuzzle,
         title: 'Automations',
@@ -77,4 +77,6 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
             </div>
         </section>
     );
-}
+};
+
+export default IntelligentAutomationsSection;

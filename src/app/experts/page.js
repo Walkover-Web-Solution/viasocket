@@ -4,7 +4,7 @@ import { MdChevronRight, MdOutlineArticle } from 'react-icons/md';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import { getExpertsPageData } from '../lib/data';
 
 export const runtime = 'edge';
@@ -36,7 +36,7 @@ export default async function ExpertsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} />
-            <NavbarServer navbarData={navbarData} utm={'/experts'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/experts'} />
 
             <div className="global-top-space">
                 <div className="pt-12 container">

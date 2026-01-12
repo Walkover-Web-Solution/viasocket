@@ -1,5 +1,5 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Link from 'next/link';
 import Footer from '@/components/footer/footer';
 import { getFreeAccessProgramsPageData } from '../lib/data';
@@ -33,7 +33,7 @@ export default async function FreeAccessProgramsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <NavbarServer navbarData={navbarData} utm={'/free-access-programs'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/free-access-programs'} />
 
             <div className="container cont py-12 cont__gap global-top-space">
                 <div className="cont gap-2">

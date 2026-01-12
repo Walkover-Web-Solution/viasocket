@@ -1,10 +1,8 @@
-'use client'
-
 import { useState, useEffect, useRef } from 'react';
+import style from './showDepartment.module.css';
 import Link from 'next/link';
-import style from '@/pages-0ld/homeSection/homeDepartment/showDepartment.module.css';
 
-export default function ShowDepartmentOptimized() {
+const ShowDepartment = () => {
     const departments = ['Marketing', 'Sales', 'HR', 'Finance', 'IT', 'Operation', 'Legal'];
 
     const [currentDepartment, setCurrentDepartment] = useState('Marketing');
@@ -73,7 +71,7 @@ export default function ShowDepartmentOptimized() {
             <div className="container">
                 <h4 className="font-semibold text-xl mb-1">Automate your entire team</h4>
                 <h2 className={`font-bold mb-10 flex flex-col ${style['main-heading']}`}>
-                    <span className="mr-4">We Have Workflows for</span>
+                    <span className="mr-4">We Have a Workflow for</span>
                     <span className={`${isAnimating ? style['animating-out'] : ''} text-accent`}>
                         {currentDepartment}
                     </span>
@@ -84,4 +82,6 @@ export default function ShowDepartmentOptimized() {
             </div>
         </div>
     );
-}
+};
+
+export default ShowDepartment;

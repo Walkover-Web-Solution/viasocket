@@ -1,27 +1,25 @@
-'use client';
-
 import Link from 'next/link';
 import Image from 'next/image';
-import { GoArrowUpRight } from 'react-icons/go';
-import { MdMenu } from 'react-icons/md';
-import { useState, useEffect, useLayoutEffect } from 'react';
-import { usePathname } from 'next/navigation';
+import style from './navbar.module.scss';
 import { handleRedirect } from '@/utils/handleRedirection';
-import Menubar from '@/components/navbar/menubar';
-import style from '@/components/navbar/navbar.module.scss';
+import { useRouter } from 'next/router';
+import { useState, useEffect, useLayoutEffect } from 'react';
+import { MdMenu } from 'react-icons/md';
+import Menubar from './menubar';
+import { GoArrowUpRight } from 'react-icons/go';
 import { FaArrowRightLong } from "react-icons/fa6";
 
-export default function NavbarOptimized({ utm, navbarData }) {
-    const pathname = usePathname();
+export default function Navbar({ utm, navbarData }) {
+    const router = useRouter();
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
     const [hasToken, setHasToken] = useState(false);
+
     let mode = 'light';
     let borderClass;
     let backgroundClass;
     let textClass;
-
     if (utm && utm === '/pricing') {
         borderClass = '';
     }
@@ -57,7 +55,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
     const isActive = (path) => {
         const link = path || '';
         if (link.startsWith('http')) return '';
-        const cur = parsePath(pathname);
+        const cur = parsePath(router.asPath);
         const trg = parsePath(link);
 
         // Special handling for /embed and its hash children
@@ -78,7 +76,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
     const isGroupActive = (groupName) => {
         if (!navbarData?.length) return false;
 
-        const current = normalizePath(pathname);
+        const current = normalizePath(router.asPath);
         const groupItems = navbarData.filter((item) => item.group_name === groupName);
 
         // Mark group active if any item's link OR the group's parent link (group_link) equals current or is a prefix of current (sub-route). Ignore external links.
@@ -107,7 +105,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
     useEffect(() => {
         if (!navbarData?.length) return;
 
-        const current = normalizePath(pathname);
+        const current = normalizePath(router.asPath);
 
         // Find the first group (by navbarData order) that matches current route
         const groupsInOrder = [...new Map(navbarData.map((i) => [i.group_name, i])).values()].map((i) => i.group_name);
@@ -136,7 +134,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
             setGroupName(matchedGroup);
             setOriginalGroupName(matchedGroup);
         }
-    }, [pathname, navbarData]);
+    }, [router.asPath, navbarData]);
 
     useLayoutEffect(() => {
         const token = getCookie('prod');
@@ -151,7 +149,13 @@ export default function NavbarOptimized({ utm, navbarData }) {
                     setGroupName(originalGroupName);
                 }}
             >
-                {/* Top navigation bar */}
+                {/* <Link href="/black-friday-sale">
+                    <div className="w-full p-2 text-center transparent-border-black gradient-background border-b">
+                        <p className="!text-xs text-black hover:underline">
+                            Black Friday 2025: View All SaaS Deals →
+                        </p>
+                    </div>
+                </Link> */}
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
@@ -159,13 +163,13 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                 [...new Map(navbarData.map((item) => [item.group_name, item])).values()].map(
                                     (item, index) =>
                                         item?.is_link ? (
-                                            <Link key={index} href={item?.group_link}>
+                                            <Link href={item?.group_link}>
                                                 <div
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center cursor-pointer hover:text-accent !text-xs ${
-                                                        isGroupActive(item.group_name)
-                                                            ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
-                                                            : ''
-                                                    }`}
+                                                    key={index}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer hover:text-accent !text-xs ${isGroupActive(item.group_name)
+                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
+                                                        : ''
+                                                        }`}
                                                     onMouseEnter={() => {
                                                         setGroupName(item.group_name);
                                                     }}
@@ -176,11 +180,10 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                         ) : (
                                             <div
                                                 key={index}
-                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center cursor-pointer hover:text-accent !text-xs ${
-                                                    isGroupActive(item.group_name)
-                                                        ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
-                                                        : ''
-                                                }`}
+                                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center  cursor-pointer  hover:text-accent !text-xs ${isGroupActive(item.group_name)
+                                                    ? '!text-accent !shadow-[inset_0_-1.5px_0_0_#A8200D] !shadow-accent'
+                                                    : ''
+                                                    }`}
                                                 onMouseEnter={() => {
                                                     setGroupName(item.group_name);
                                                 }}
@@ -199,8 +202,6 @@ export default function NavbarOptimized({ utm, navbarData }) {
                         </Link>
                     </div>
                 </div>
-
-                {/* Main navigation bar */}
                 <div
                     className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl`}
                 >
@@ -215,7 +216,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                 {mode === 'dark' ? (
                                     <Image
                                         src="/assets/brand/socketWhitesvg.png"
-                                        className="h-[24px] w-auto"
+                                        className="h-[24px] w-auto "
                                         width={40}
                                         height={40}
                                         alt="viaSocket"
@@ -223,7 +224,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                 ) : (
                                     <Image
                                         src="/assets/brand/logo.svg"
-                                        className="h-[24px] w-auto"
+                                        className="h-[24px] w-auto "
                                         width={40}
                                         height={40}
                                         alt="viaSocket"
@@ -231,9 +232,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                 )}
                             </Link>
                         </div>
-
                         <div className="flex items-center justify-center">
-                            {/* Dynamic navigation links based on selected group */}
                             <div className="flex">
                                 {navbarData?.length > 0 &&
                                     navbarData
@@ -242,11 +241,7 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                             return (
                                                 <Link
                                                     key={index}
-                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${
-                                                        index === 0 ? 'border-l border-gray-300' : ''
-                                                    } border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(
-                                                        `${item.link}`
-                                                    )} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
+                                                    className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${index === 0 ? 'border-l border-gray-300' : ''} border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(`${item.link}`)} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
                                                     href={`${item.link}`}
                                                 >
                                                     {item.name}
@@ -254,26 +249,22 @@ export default function NavbarOptimized({ utm, navbarData }) {
                                             );
                                         })}
                             </div>
-
-                            {/* Dynamic login/panel button based on token */}
                             {hasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
-                                    Dashboard <FaArrowRightLong className="ml-2" />
+                                    Dashboard <FaArrowRightLong className="ml-2"/>
                                 </button>
                             ) : (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
-                                    onClick={(e) => handleRedirect(e, '/signup?')}
+                                    onClick={(e) => handleRedirect(e, '/signup?', router)}
                                 >
                                     Login/Sign Up
                                 </button>
                             )}
-
-                            {/* Mobile menu trigger */}
                             <div
                                 onMouseEnter={() => setMenuOpen(true)}
                                 onClick={() => setMenuOpen(true)}
@@ -286,7 +277,6 @@ export default function NavbarOptimized({ utm, navbarData }) {
                     </div>
                 </div>
             </div>
-
             <Menubar open={menuOpen} onClose={() => setMenuOpen(false)} navbarData={navbarData} />
         </>
     );
