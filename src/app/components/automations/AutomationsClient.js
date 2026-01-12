@@ -7,13 +7,13 @@ import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import AutomationSuggestionsClient from '../workflow-automation-ideas/AutomationSuggestionsClient';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { Webhook, Timer } from 'lucide-react';
+import SearchInputHome from '@/pages-0ld/homeSection/searchInputHome';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
+import BuildOptionsCTA from '@/pages-0ld/homeSection/buildOptionsCTA';
 import BlogGrid from '../blog/BlogGrid';
 import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
-import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
-import BuildOptionsCTAOptimized from '../home/BuildOptionsCTAOptimized';
 
 const TEMPLATES_PER_PAGE = 6;
 
@@ -107,7 +107,7 @@ export default function AutomationsClient({ pageData }) {
                 <h1 className="h1 text-center">
                     <span className="text-accent">Search</span> ready to use automations
                 </h1>
-                <SearchInputHomeOptimized
+                <SearchInputHome
                     onTemplatesChange={handleTemplatesChange}
                     onLoadingChange={handleLoadingChange}
                     onSelectionChange={handleSelectionChange}
@@ -117,7 +117,7 @@ export default function AutomationsClient({ pageData }) {
                     enableAi={false}
                     templates={pageData.templateToShow}
                 />
-                <BuildOptionsCTAOptimized />
+                <BuildOptionsCTA />
                 <MarqueeComponent
                     onTemplatesChange={handleTemplatesChange}
                     onSelectionChange={handleSelectionChange}

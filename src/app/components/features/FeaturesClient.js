@@ -1,3 +1,5 @@
+'use client';
+
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import FeatureBannerComp from '@/components/FeaturesComp/FeatureBannerComp/FeatureBannerComp';
 import FeatureContentComp from '@/components/FeaturesComp/FeatureContentComp/FeatureContentComp';

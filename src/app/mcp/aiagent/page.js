@@ -1,6 +1,6 @@
 import FAQSection from '@/components/faqSection/faqSection';
 import React from 'react';
-import NavbarServer from '../../components/navbar/NavbarServer';
+import NavbarOptimized from '../../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
@@ -36,7 +36,7 @@ export default async function MCPAiAgentPage() {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <NavbarServer navbarData={navbarData} utm={'/mcp'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/mcp'} />
 
             <div className="cont gap-8 global-top-space pt-12">
                 <div className="container cont">

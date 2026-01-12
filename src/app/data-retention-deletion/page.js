@@ -1,5 +1,5 @@
 import Footer from '@/components/footer/footer';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getDataRetentionDeletionPageData } from '../lib/data';
 
@@ -32,7 +32,7 @@ export default async function DataRetentionDeletionPolicyPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/data-retention-deletion-policy'} />
-            <NavbarServer navbarData={navbarData} utm={'/data-retention-deletion-policy'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/data-retention-deletion-policy'} />
 
             <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <h1 className="h1">

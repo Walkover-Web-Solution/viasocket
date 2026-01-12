@@ -1,5 +1,5 @@
 import Footer from '@/components/footer/footer';
-import NavbarServer from '../../components/navbar/NavbarServer';
+import NavbarOptimized from '../../components/navbar/NavbarOptimized';
 import { getAutomationSlugPageData } from '../../lib/data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 
@@ -10,7 +10,7 @@ export default async function AutomationSlugPage({ params }) {
 
     return (
         <div className="dotted-background global-top-space">
-            <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
+            <NavbarOptimized navbarData={pageData.navbarData} utm={'/automations'} />
             <AutomationSlugClient pageData={pageData} />
             <div className="pt-20 pb-4 container">
                 <Footer footerData={pageData.footerData} />

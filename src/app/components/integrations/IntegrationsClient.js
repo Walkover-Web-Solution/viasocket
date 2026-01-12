@@ -1,10 +1,11 @@
+'use client'
 import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
 import IntegrationsAppOneComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp';
 import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAppTwoComp/integrationsAppTwoComp';
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
 import React from 'react'
 
-const IntegrationsMain = (props) => {
+const IntegrationsClient = (props) => {
     const { data } = props;
     
     if (data.integrationsInfo?.appone && data.integrationsInfo?.apptwo) {
@@ -91,4 +92,4 @@ const IntegrationsMain = (props) => {
     }
 }
 
-export default IntegrationsMain
+export default IntegrationsClient

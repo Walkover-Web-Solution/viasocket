@@ -2,7 +2,7 @@
 import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
 import { getMCPPageData } from '../lib/mcp-data';
-import McpMain from '@/app/components/mcp/McpMain';
+import McpClient from '@/app/components/mcp/McpClient';
 
 export const runtime = 'edge';
 
@@ -59,7 +59,7 @@ export default async function McpPage({ params }) {
             return <ErrorComp footerData={data.footerData} />;
         }
 
-      return <McpMain data={data} />;
+      return <McpClient data={data} />;
     } catch (error) {
         console.error('Error rendering MCP page:', error);
         return notFound();

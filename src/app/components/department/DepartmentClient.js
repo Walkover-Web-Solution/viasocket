@@ -1,12 +1,15 @@
+'use client';
+
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import DepartmentFAQ from '@/components/departmentFAQ/departmentFAQ';
 import DepartmentAppsMarquee from '@/components/departmentFAQ/DepartmentAppsMarquee';
 import DepartmentUseCase from '@/components/departmentFAQ/DepartmentUseCase';
 import TemplateContainer from '@/components/IntegrationsComp/templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import NavbarServer from '@/app/components/navbar/NavbarServer';
+import NavbarOptimized from '@/app/components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import Link from 'next/link';
+import { FaArrowRightLong } from 'react-icons/fa6';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function DepartmentClient({ data }) {
@@ -14,7 +17,7 @@ export default function DepartmentClient({ data }) {
     
     return (
         <div className="square-background">
-            <NavbarServer
+            <NavbarOptimized
                 navbarData={navbarData}
                 utm={department?.slug ? `/departments/${department.slug}` : '/departments'}
             />

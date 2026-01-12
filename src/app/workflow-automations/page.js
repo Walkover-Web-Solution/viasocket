@@ -13,7 +13,7 @@ import { GrAction } from 'react-icons/gr';
 import { TbSettingsAutomation } from 'react-icons/tb';
 import { FaChartLine } from 'react-icons/fa';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarServer from '../components/navbar/NavbarServer';
+import NavbarOptimized from '../components/navbar/NavbarOptimized';
 import Footer from '@/components/footer/footer';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getWorkflowAutomationsPageData } from '../lib/data';
@@ -126,7 +126,7 @@ export default async function WorkflowAutomationsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/workflow-automations'} />
-            <NavbarServer navbarData={navbarData} utm={'/workflow-automations'} />
+            <NavbarOptimized navbarData={navbarData} utm={'/workflow-automations'} />
 
             <div className="container cont gap-12 global-top-space">
                 <section className="py-12">
