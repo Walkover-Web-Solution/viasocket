@@ -11,13 +11,14 @@ export default function HeadComp({ canonicalUrl }) {
                     ))}
 
                 {/* Favicon links for different sizes */}
-                <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-16x16.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32x32.png" />
-                <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/fav_icon.png" />
-                <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64x64.png" />
-                <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png" />
-                <link rel="icon" type="image/png" sizes="128x128" href="/assets/brand/favicon-128x128.png" />
-                <link rel="icon" type="image/png" sizes="144x144" href="/assets/brand/favicon-144x144.png" />
+                {/* <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-16x16.png" /> */}
+                <link rel="icon" type="image/png" sizes="16x16" href="/assets/brand/favicon-18x18.svg" />
+                {/* <link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/favicon-32x32.png" /> */}
+                {/* <link rel="icon" type="image/png" sizes="48x48" href="/assets/brand/fav_icon.png" /> */}
+                {/* <link rel="icon" type="image/png" sizes="64x64" href="/assets/brand/favicon-64x64.png" /> */}
+                {/* <link rel="icon" type="image/png" sizes="96x96" href="/assets/brand/favicon-96x96.png" /> */}
+                {/* <link rel="icon" type="image/png" sizes="128x128" href="/assets/brand/favicon-128x128.png" /> */}
+                {/* <link rel="icon" type="image/png" sizes="144x144" href="/assets/brand/favicon-144x144.png" /> */}
                 
                 <link rel="apple-touch-icon" sizes="76x76" href="/assets/brand/apple-touch-icon.png" />
                 <link rel="manifest" href="/site.webmanifest" />
