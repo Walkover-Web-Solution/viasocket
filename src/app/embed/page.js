@@ -2,7 +2,7 @@ import BlogGrid from '../components/blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import GetStarted from '../components/common/GetStarted';
-import NavbarOptimized from '../components/navbar/NavbarOptimized';
+import NavbarServer from '../components/navbar/NavbarServer';
 import Image from 'next/image';
 import Link from 'next/link';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -41,7 +41,7 @@ export default async function EmbedPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/embed'} />
-            <NavbarOptimized navbarData={navbarData} utm={'/embed'} />
+            <NavbarServer navbarData={navbarData} utm={'/embed'} />
 
             <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="w-full min-h-fit py-12">

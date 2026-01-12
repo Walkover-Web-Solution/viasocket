@@ -1,12 +1,10 @@
 import { getMetaData } from '@/utils/getMetaData';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarOptimized from '../components/navbar/NavbarOptimized';
+import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import FaqSection from '@/components/faqSection/faqSection';
-import ShowAppsIndex from '@/pages-0ld/homeSection/showAppsIndex';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
-import IntelligentAutomationsSection from '@/pages-0ld/homeSection/IntelligentAutomationsSection';
 import { getDepartmentsPageData } from '../lib/department-data';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import {
@@ -28,6 +26,8 @@ import {
     Radio,
     TriangleAlert,
 } from 'lucide-react';
+import ShowAppsIndexOptimized from '../components/home/ShowAppsIndexOptimized';
+import IntelligentAutomationsSectionOptimized from '../components/home/IntelligentAutomationsSectionOptimized';
 
 export const runtime = 'edge';
 
@@ -80,7 +80,7 @@ export default async function DepartmentsPage() {
     return (
         <>
             <div className="square-background">
-                <NavbarOptimized navbarData={navbarData} />
+                <NavbarServer navbarData={navbarData} />
                 <MetaHeadComp metaData={metaData} page={'/departments'} />
                 <div className="container mt-12 flex flex-col gap-12">
                     <div className="flex flex-col justify-center items-center">
@@ -102,10 +102,10 @@ export default async function DepartmentsPage() {
                     </div>
 
                     {/* Show Apps Section */}
-                    <div className="bg-white my-20 cont">
-                        <div className="flex flex-col border custom-border border-b-0">
-                            <ShowAppsIndex />
-                            <IntelligentAutomationsSection appCount={appCount} isDepartmentPage={true} />
+                    <div className="my-20 container">
+                        <div className="flex flex-col border custom-border border-b-0 bg-white">
+                            <ShowAppsIndexOptimized />
+                            <IntelligentAutomationsSectionOptimized appCount={appCount} isDepartmentPage={true} />
                         </div>
                     </div>
 
