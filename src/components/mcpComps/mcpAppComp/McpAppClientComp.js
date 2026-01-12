@@ -15,7 +15,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
 import { MdSupportAgent } from 'react-icons/md';
-import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/integrationsIndexClientComp';
+import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 
 const APPERPAGE = 9;
 

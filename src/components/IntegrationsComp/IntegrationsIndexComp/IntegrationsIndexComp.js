@@ -1,6 +1,6 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
-import IntegrationsIndexClientComp from './integrationsIndexClientComp';
+import IntegrationsIndexClientComp from './IntegrationsIndexClientComp';
 
 export default function IntegrationsIndexComp({
     pageInfo,

@@ -18,7 +18,7 @@ import searchApps from '@/utils/searchApps';
 import {
     AppVisual,
     RequestIntegrationPopupOpener,
-} from '@/components/IntegrationsComp/IntegrationsIndexComp/integrationsIndexClientComp';
+} from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function McpIndexClientComp({

@@ -19,7 +19,7 @@ import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
 import { MdKeyboardArrowDown } from 'react-icons/md';
 import { GoArrowSwitch } from 'react-icons/go';
 import { IoMdSearch } from 'react-icons/io';
-import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/integrationsIndexClientComp';
+import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
