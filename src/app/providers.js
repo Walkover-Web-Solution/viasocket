@@ -70,7 +70,7 @@ export default function AppProvider({ children }) {
   // Generate canonical URL logic
   const pathSegments = pathname.split('/')
   const isPaginated = pathSegments.includes('page')
-  
+
   let canonicalUrl = `https://viasocket.com${pathname}`
   if (isPaginated) {
     if (pathname.startsWith('/mcp')) {
@@ -87,6 +87,30 @@ export default function AppProvider({ children }) {
       }
     }
   }
+
+  useEffect(() => {
+    const helloConfig = {
+      widgetToken: 'a13cc',
+      show_close_button: true,
+      hide_launcher: true,
+      urlsToOpenInIFrame: [
+        'https://viasocket.com/faq',
+        'https://viasocket.com/discovery',
+        'https://viasocket.com/blog',
+        'https://viasocket.com/community',
+      ],
+    };
+
+    const script = document.createElement('script');
+    script.src = 'https://blacksea.msg91.com/chat-widget.js';
+    script.onload = () => initChatWidget(helloConfig, 50);
+
+    document.head.appendChild(script);
+
+    return () => {
+      document.head.removeChild(script);
+    };
+  }, []);
 
   return (
     <>

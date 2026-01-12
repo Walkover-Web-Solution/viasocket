@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { MdAdd, MdAdsClick, MdCheck, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
 import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
 import { handleRedirect } from '@/utils/handleRedirection';
-import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexComp';
+import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 
 export default function IntegrationsEventsComp({ combosData, appOneDetails, appTwoDetails }) {

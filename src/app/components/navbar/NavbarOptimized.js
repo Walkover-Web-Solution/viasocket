@@ -4,19 +4,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GoArrowUpRight } from 'react-icons/go';
 import { MdMenu } from 'react-icons/md';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
 import { FaArrowRightLong } from "react-icons/fa6";
 
-export default function NavbarOptimized({ utm, navbarData }) {
+export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
     const pathname = usePathname();
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
-    const [hasToken, setHasToken] = useState(false);
+
     let mode = 'light';
     let borderClass;
     let backgroundClass;
@@ -94,15 +94,6 @@ export default function NavbarOptimized({ utm, navbarData }) {
         });
     };
 
-    // Read a cookie value by name (client-side only)
-    const getCookie = (name) => {
-        if (typeof document === 'undefined') return undefined;
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return undefined;
-    };
-
     // Ensure the second layer reflects the active first-layer group based on current route
     useEffect(() => {
         if (!navbarData?.length) return;
@@ -138,10 +129,6 @@ export default function NavbarOptimized({ utm, navbarData }) {
         }
     }, [pathname, navbarData]);
 
-    useLayoutEffect(() => {
-        const token = getCookie('prod');
-        setHasToken(Boolean(token));
-    }, []);
 
     return (
         <>

@@ -18,8 +18,8 @@ export default function MainContent({
       <AiAgentFeatureOptimized />
 
       {/* Show Apps Section */}
-      <div className="bg-white my-20 container">
-        <div className="flex flex-col border custom-border border-b-0">
+      <div className="my-20 container">
+        <div className="flex flex-col border custom-border border-b-0 bg-white">
           <ShowAppsIndexOptimized />
           <IntelligentAutomationsSectionOptimized appCount={appCount} />
         </div>
