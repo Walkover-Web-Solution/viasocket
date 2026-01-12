@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { GoArrowUpRight } from 'react-icons/go';
 import { MdMenu } from 'react-icons/md';
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Menubar from '@/components/navbar/menubar';
@@ -16,10 +16,7 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
     const [groupName, setGroupName] = useState('');
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState('');
-    const [clientHasToken, setClientHasToken] = useState(false);
-    
-    // Use server-provided hasToken if available, otherwise use client-side detection
-    const finalHasToken = hasToken !== null ? hasToken : clientHasToken;
+
     let mode = 'light';
     let borderClass;
     let backgroundClass;
@@ -96,23 +93,6 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
             return candidates.some((target) => current === target || current.startsWith(target + '/'));
         });
     };
-
-    // Read a cookie value by name (client-side only)
-    const getCookie = (name) => {
-        if (typeof document === 'undefined') return undefined;
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return undefined;
-    };
-
-    // Client-side token detection (only if hasToken prop is not provided)
-    useLayoutEffect(() => {
-        if (hasToken === null) {
-            const token = getCookie('prod');
-            setClientHasToken(Boolean(token));
-        }
-    }, [hasToken]);
 
     // Ensure the second layer reflects the active first-layer group based on current route
     useEffect(() => {
@@ -263,7 +243,7 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
                             </div>
 
                             {/* Dynamic login/panel button based on token */}
-                            {finalHasToken ? (
+                            {hasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                                     onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
