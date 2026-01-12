@@ -1,11 +1,12 @@
 import createURL from '@/utils/createURL';
 import Link from 'next/link';
 import Image from 'next/image';
-import { RxDiscordLogo } from 'react-icons/rx';
-import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
-import { FiLinkedin } from 'react-icons/fi';
-
+import { FaInstagramSquare } from 'react-icons/fa';
+import { FaLinkedin } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
+import { PiDiscordLogoFill } from 'react-icons/pi';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import YouTubeIcon from '../icons/YouTubeIcon';
 
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
@@ -99,31 +100,28 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     target="_blank"
                                     aria-label="instagram"
                                 >
-                                    <FaInstagram size={20} />
+                                    <FaInstagramSquare size={20} />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
                                     aria-label="facebook"
                                 >
-                                    <FiLinkedin size={20} />
+                                    <FaLinkedin size={20} />
                                 </Link>
 
                                 <Link href={`https://x.com/viasocket`} target="_blank" aria-label="twitter">
-                                    <FaXTwitter size={20} />
+                                    <FaSquareXTwitter size={20} />
                                 </Link>
                                 <Link href={`https://www.youtube.com/@viasocket`} target="_blank" aria-label="youtube">
-                                    <svg width={20} height={20} viewBox="0 0 20 20">
-                                        <rect x="0" y="3" width="20" height="14" rx="3" fill="black" />
-                                        <polygon points="8,7 8,13 13,10" fill="white" />
-                                    </svg>
+                                    <YouTubeIcon />
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
                                     target="_blank"
                                     aria-label="discord"
                                 >
-                                    <RxDiscordLogo size={20} />
+                                    <PiDiscordLogoFill size={20} />
                                 </Link>
                             </div>
                         </div>
