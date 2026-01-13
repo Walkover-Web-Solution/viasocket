@@ -1,9 +1,11 @@
 import createURL from '@/utils/createURL';
 import Link from 'next/link';
 import Image from 'next/image';
-import { RxDiscordLogo } from 'react-icons/rx';
-import { FaXTwitter, FaInstagram } from 'react-icons/fa6';
-import { FiLinkedin, FiYoutube } from 'react-icons/fi';
+import { FaInstagramSquare } from 'react-icons/fa';
+import { FaLinkedin } from 'react-icons/fa';
+import { FaSquareXTwitter } from 'react-icons/fa6';
+import { PiDiscordLogoFill } from 'react-icons/pi';
+import YouTubeIcon from './YouTubeIcon';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
@@ -98,7 +100,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="instagram"
                                 >
-                                    <FaInstagram size={24} />
+                                    <FaInstagramSquare size={20} />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
@@ -106,7 +108,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="facebook"
                                 >
-                                    <FiLinkedin size={24} />
+                                    <FaLinkedin size={20} />
                                 </Link>
 
                                 <Link
@@ -115,7 +117,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="twitter"
                                 >
-                                    <FaXTwitter size={24} />
+                                    <FaSquareXTwitter size={20} />
                                 </Link>
                                 <Link
                                     href={`https://www.youtube.com/@viasocket`}
@@ -123,7 +125,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="youtube"
                                 >
-                                    <FiYoutube size={24} />
+                                    <YouTubeIcon />
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
@@ -131,7 +133,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="discord"
                                 >
-                                    <RxDiscordLogo size={24} />
+                                    <PiDiscordLogoFill size={20} />
                                 </Link>
                             </div>
                         </div>
