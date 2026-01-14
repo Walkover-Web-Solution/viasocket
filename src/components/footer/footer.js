@@ -97,7 +97,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <Link
                                     href={`https://www.instagram.com/viasocket/`}
                                     target="_blank"
-                                    className=""
                                     aria-label="instagram"
                                 >
                                     <FaInstagramSquare size={20} />
@@ -105,7 +104,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
-                                    className=""
                                     aria-label="facebook"
                                 >
                                     <FaLinkedin size={20} />
@@ -130,7 +128,6 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
                                     target="_blank"
-                                    className=""
                                     aria-label="discord"
                                 >
                                     <PiDiscordLogoFill size={20} />

@@ -42,9 +42,9 @@ export default async function SignupPage({ searchParams }) {
                         <div className="space-y-8 flex flex-col">
                             <Link
                                 href="/"
-                                className="h-10 w-10 bg-[#a32015] text-white flex items-center justify-center shadow-md"
+                                className="h-10 w-10 flex items-center justify-center shadow-md"
                             >
-                                <Image src="/assets/brand/fav_icon.png" alt="viaSocket" width={40} height={40} />
+                                <Image src="/assets/brand/favicon_dark.svg" alt="viaSocket" width={40} height={40} />
                             </Link>
 
                             <div className="flex flex-col gap-3">
