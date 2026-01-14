@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
 import { RiSearchLine } from 'react-icons/ri';
@@ -25,7 +27,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
         return map;
     }, [templates]);
 
-    // Initialize selected category with first category or Finance if available
+     // Initialize selected category with first category or Finance if available
     useEffect(() => {
         if (!selected && categories?.length > 0) {
             // Try to find Finance category first, otherwise use first category

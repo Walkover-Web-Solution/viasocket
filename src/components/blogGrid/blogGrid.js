@@ -1,17 +1,18 @@
-import { useRouter } from 'next/router';
+'use client';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
 import { LinkText } from '../uiComponents/buttons';
 import Image from 'next/image';
 
 const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
-    const router = useRouter();
-    const heading = router.pathname.startsWith('/mcp')
+    const pathname = usePathname();
+    const heading = pathname.startsWith('/mcp')
         ? 'Know More About MCP'
-        : router.asPath.split('/').length === 4
-            ? `Know More About ${formatSegment(router.asPath.split('/')[2])} and ${formatSegment(router.asPath.split('/')[3])} Integrations`
-            : router.asPath.split('/').length === 3
-                ? `Know More About ${formatSegment(router.asPath.split('/')[2])} Integrations`
+        : pathname.split('/').length === 4
+            ? `Know More About ${formatSegment(pathname.split('/')[2])} and ${formatSegment(pathname.split('/')[3])} Integrations`
+            : pathname.split('/').length === 3
+                ? `Know More About ${formatSegment(pathname.split('/')[2])} Integrations`
                 : 'Know More About viaSocket Integrations';
 
     if (posts?.length > 0) {

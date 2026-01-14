@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -171,15 +173,20 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                         src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
                                         height={36}
                                         width={36}
+                                        alt={"plugin icon"}
                                     />
                                 )}
                                 <h3 className="h3 font-bold">
-                                    Request a new {type ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${formData?.plug?.name}` : 'Integration'}
+                                    Request a new{' '}
+                                    {type
+                                        ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${formData?.plug?.name}`
+                                        : 'Integration'}
                                 </h3>
                             </div>
                             <p className="flex items-center gap-1">
                                 <span className="text-lg font-medium">
-                                    Sit back and relax — we'll build your {type ? `${type}` : 'app'} in only 48 hours! 🚀
+                                    Sit back and relax — we'll build your {type ? `${type}` : 'app'} in only 48 hours!
+                                    🚀
                                 </span>{' '}
                             </p>
                         </div>

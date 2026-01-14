@@ -1,20 +1,21 @@
-import Navbar from '@/components/navbar/navbar';
 import Image from 'next/image';
 import Link from 'next/link';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+import NavbarServer from '@/app/components/navbar/NavbarServer';
+import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
 export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
     return (
         <>
-            <Navbar navbarData={navbarData} utm={pageInfo?.url} />
+            <NavbarServer navbarData={navbarData} utm={pageInfo?.url} />
 
             <div className="container">
                 <div className="h-fit ">
                     <div className="py-20 cont gap-16 h-full flex justify-center ">
-                    {/* Breadcrumb */}
-                    {featureData?.slug && (
-                       <Breadcrumb parent="Features" child1={featureData?.slug} parentLink={`/features`} />
-                    )}
+                        {/* Breadcrumb */}
+                        {featureData?.slug && (
+                            <Breadcrumb parent="Features" child1={featureData?.slug} parentLink={`/features`} />
+                        )}
                         <div className="cont gap-4">
                             <div className="cont gap-1">
                                 <h1 className="h1 ">
@@ -26,17 +27,13 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData })
                                 </p>
                             </div>
                             {!featureData?.image && (
-                                <Link className="w-fit" href={`/signup?utm_source=${pageInfo?.url}`}>
-                                    <button className="btn btn-accent">Start for free</button>
-                                </Link>
+                                <DashboardButton utm_src={pageInfo?.url} />
                             )}
                         </div>
                         {(featureData?.image || featureData?.bgimage) && (
                             <div
                                 className={`lg:p-20 p-4 flex flex-col items-center relative ${
-                                    featureData?.bgimage 
-                                        ? 'bg-[#ede8de]' 
-                                        : 'bg-white border custom-border'
+                                    featureData?.bgimage ? 'bg-[#ede8de]' : 'bg-white border custom-border'
                                 }`}
                                 style={{
                                     backgroundImage: featureData?.bgimage ? `url("${featureData.bgimage}")` : undefined,

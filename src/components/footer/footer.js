@@ -5,9 +5,8 @@ import { FaInstagramSquare } from 'react-icons/fa';
 import { FaLinkedin } from 'react-icons/fa';
 import { FaSquareXTwitter } from 'react-icons/fa6';
 import { PiDiscordLogoFill } from 'react-icons/pi';
-import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
-import YouTubeIcon from '../icons/YouTubeIcon';
-
+import YouTubeIcon from './YouTubeIcon';
+import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
     const groupedData = filteredData?.reduce((acc, obj) => {
@@ -110,10 +109,20 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     <FaLinkedin size={20} />
                                 </Link>
 
-                                <Link href={`https://x.com/viasocket`} target="_blank" aria-label="twitter">
+                                <Link
+                                    href={`https://x.com/viasocket`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="twitter"
+                                >
                                     <FaSquareXTwitter size={20} />
                                 </Link>
-                                <Link href={`https://www.youtube.com/@viasocket`} target="_blank" aria-label="youtube">
+                                <Link
+                                    href={`https://www.youtube.com/@viasocket`}
+                                    target="_blank"
+                                    className=""
+                                    aria-label="youtube"
+                                >
                                     <YouTubeIcon />
                                 </Link>
                                 <Link

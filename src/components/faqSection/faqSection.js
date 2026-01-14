@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, memo } from 'react';
 import { LinkButton } from '../uiComponents/buttons';
 

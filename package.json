@@ -4,9 +4,9 @@
     "private": true,
     "scripts": {
         "dev": "next dev -p 1111",
-        "build": "next build ",
-        "start": "next start -p 1111",
         "prebuild": "node build-utilities/generate-robots-txt.js",
+        "build": "next build",
+        "start": "next start -p 1111",
         "pages:build": "npx @cloudflare/next-on-pages",
         "preview": "npm run pages:build && wrangler pages dev",
         "deploy": "npm run pages:build && wrangler pages deploy"
@@ -16,20 +16,20 @@
         "axios-cache-interceptor": "^1.8.0",
         "color": "^4.2.3",
         "date-fns": "^2.30.0",
-        "eslint-config-next": "^14.1.0",
+        "eslint-config-next": "^16.0.0",
         "fs": "^0.0.1-security",
         "gray-matter": "^4.0.3",
         "js-yaml": "^4.1.0",
         "lucide-react": "^0.511.0",
         "mui-chips-input": "^2.1.4",
         "multiselect-react-dropdown": "^2.0.25",
-        "next": "^14.1.0",
+        "next": "^15.5.9",
         "next-mdx-remote": "^4.4.1",
         "path": "^0.12.7",
-        "react": "^18.2.0",
+        "react": "^18.3.1",
         "react-autocomplete": "^1.8.1",
         "react-countdown": "^2.3.6",
-        "react-dom": "^18.2.0",
+        "react-dom": "^18.3.1",
         "react-fast-marquee": "^1.6.5",
         "react-google-recaptcha": "^3.1.0",
         "react-google-recaptcha-v3": "^1.10.1",
@@ -43,7 +43,7 @@
         "sass": "^1.69.4"
     },
     "devDependencies": {
-        "@cloudflare/next-on-pages": "^1.13.8",
+        "@cloudflare/next-on-pages": "^1.13.16",
         "autoprefixer": "^10.4.17",
         "daisyui": "^4.7.2",
         "husky": "^9.0.11",
@@ -51,6 +51,7 @@
         "postcss": "^8.4.35",
         "prettier": "3.2.5",
         "tailwindcss": "^3.4.16",
-        "vercel": "42.0.0"
+        "vercel": "42.0.0",
+        "wrangler": "^4.54.0"
     }
 }

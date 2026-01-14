@@ -12,7 +12,7 @@
 }
 
 //check import file for imports
-@import 'import';
+@import '_import';
 .heading {
     font-family: 'Inter Tight';
     color: #252525;
@@ -414,4 +414,14 @@ body {
             #52eaea 126deg,
             #dad7dc 178deg,
             #e5e0e9 360deg) border-box;
+}
+
+// for t&c and privacy page
+.link{
+    color: #0000ff !important;
+    text-decoration: none !important;
+}
+
+.list-type-square{
+    list-style-type: square;
 }
