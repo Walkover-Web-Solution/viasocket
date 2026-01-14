@@ -255,7 +255,7 @@ export default function AutomationSlugClient({ pageData }) {
             {relatedTemplates?.length > 0 && (
                 <div className="cont gap-4">
                     <div className="h2">Related Templates</div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                         {relatedTemplates.map((template) => (
                             <TemplateCard key={template.id} template={template} />
                         ))}

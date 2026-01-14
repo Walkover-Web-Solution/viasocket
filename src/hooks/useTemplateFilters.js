@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
-const TEMPLATES_PER_PAGE = 6;
+const TEMPLATES_PER_PAGE = 9;
 
 export const useTemplateFilters = (templates = []) => {
     const [searchTerm, setSearchTerm] = useState('');
