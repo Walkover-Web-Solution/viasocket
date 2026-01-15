@@ -7,7 +7,8 @@ import FaqSection from '@/components/faqSection/faqSection';
 export const runtime = 'edge';
 
 export default async function AutomationSlugPage({ params }) {
-    const pageData = await getAutomationSlugPageData(params.slug || []);
+    const paramsData = await params;
+    const pageData = await getAutomationSlugPageData(paramsData.slug || []);
 
     return (
         <div className="dotted-background global-top-space">
