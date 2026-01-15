@@ -731,8 +731,9 @@ export async function getAutomationSlugPageData(slug) {
         const [firstSlug, secondSlug] = slug || [];
 
         // Fetch basic data in parallel
-        const [footerData, navbarData, templates] = await Promise.all([
+        const [footerData, faqData, navbarData, templates] = await Promise.all([
             getFooterData(FOOTER_FIELDS, '', pageUrl),
+            getFaqData('/automation', pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getTemplates(pageUrl),
         ]);
@@ -800,6 +801,7 @@ export async function getAutomationSlugPageData(slug) {
                 isCategory: false,
                 categoryName: null,
                 navbarData: navbarData || [],
+                faqData: faqData || [],
             };
         }
     } catch (error) {
@@ -818,6 +820,7 @@ export async function getAutomationSlugPageData(slug) {
             isCategory: false,
             categoryName: null,
             navbarData: [],
+            faqData: [],
         };
     }
 }
