@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { FaTimes } from 'react-icons/fa';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
@@ -21,6 +22,8 @@ export default function AutomationSlugClient({ pageData }) {
 
     const triggerRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
+    const [isStickyVisible, setIsStickyVisible] = useState(true);
+    const [openPopup, setOpenPopup] = useState(false);
 
     const { footerData, metaData, template, relatedTemplates, isCategory, categoryName, navbarData } = pageData;
 
@@ -36,6 +39,18 @@ export default function AutomationSlugClient({ pageData }) {
         if (triggerRef.current) observer.observe(triggerRef.current);
         return () => observer.disconnect();
     }, [pageData]);
+
+    const handleShareTemplate = () => {
+        setOpenPopup(true);
+    };
+
+    const handleClosePopup = () => {
+        setOpenPopup(false);
+    };
+
+    const handleCloseStickyBar = () => {
+        setIsStickyVisible(false);
+    };
 
     if (isCategory) {
         return (
@@ -62,7 +77,7 @@ export default function AutomationSlugClient({ pageData }) {
     }
 
     return (
-        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20">
+        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative">
             <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
                 <div className="dotted-background flex flex-col lg:flex-row lg:gap-1">
                     <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] flex flex-col  justify-between gap-6 p-6">
@@ -91,17 +106,22 @@ export default function AutomationSlugClient({ pageData }) {
                             )}
                         </div>
                         <div className=" flex items-center gap-12 justify-between">
-                            <button
-                                className="btn btn-accent"
-                                onClick={(e) =>
-                                    handleRedirect(
-                                        e,
-                                        `https://flow.viasocket.com/template/${template?.id}?`
-                                    )
-                                }
-                            >
-                                Install Template
-                            </button>
+                            <div className="flex items-center gap-4">
+                                <button
+                                    className="btn btn-accent"
+                                    onClick={(e) =>
+                                        handleRedirect(
+                                            e,
+                                            `https://flow.viasocket.com/template/${template?.id}?`
+                                        )
+                                    }
+                                >
+                                    Install Template
+                                </button>
+                                <button className='btn btn-outline' onClick={handleShareTemplate}>
+                                    Share Template
+                                </button>
+                            </div>
                             <div className="flex gap-1 flex-col">
                                 <h3 className="text-sm">Created by {template?.userName}</h3>
                                 <h3 className="text-xs ml-auto">Installed by {template?.usedCount} users</h3>
@@ -131,28 +151,46 @@ export default function AutomationSlugClient({ pageData }) {
             </div>
 
             <div
-                className={`fixed lg:top-[86px] top-[53px] left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out container ${
-                    isSticky ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-                }`}
+                className={`fixed bottom-[80px] sm:bottom-[10px] left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out container ${isSticky && isStickyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+                    }`}
                 style={{ zIndex: 50 }}
             >
-                <div className="container border custom-border bg-[#faf9f6] md:gap-24 gap-4 flex flex-col md:flex-row items-center justify-between p-4 md:px-12 md:py-0">
-                    <h2 className="h3">{template?.title}</h2>
+                <div className="container border custom-border bg-[#faf9f6] gap-2 flex flex-col items-center justify-between pt-2 sm:pt-6 md:px-12 relative">
                     <button
-                        className="btn btn-accent md:my-4"
-                        onClick={(e) =>
-                            handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
-                        }
+                        onClick={handleCloseStickyBar}
+                        className="absolute top-2 right-2 p-2 hover:bg-gray-200 rounded-full transition-colors duration-200"
+                        aria-label="Close sticky bar"
                     >
-                        Install Template
+                        <FaTimes className="w-4 h-4 text-gray-600" />
                     </button>
+                    <h2 className="h3">{template?.title}</h2>
+                    <div className="flex items-center gap-4">
+                        <button
+                            className="btn btn-accent my-4"
+                            onClick={(e) =>
+                                handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
+                            }
+                        >
+                            Install Template
+                        </button>
+                        <button className='btn btn-outline' onClick={handleShareTemplate}>
+                            Share Template
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div className="flex flex-col md:flex-row gap-4">
-                <div className="w-full md:w-2/5 cont gap-4">
-                    <SharePopup title={template?.title} />
-                    {template?.instructions && (
+            {openPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-100">
+                    <div className="bg-white p-0 max-w-md w-full mx-4">
+                        <SharePopup title={template?.title} onClose={handleClosePopup} />
+                    </div>
+                </div>
+            )}
+
+            <div className="flex flex-col md:flex-row gap-4 cont">
+                {template?.instructions && (
+                    <div className="w-full md:w-2/5 cont gap-4">
                         <div className="w-full border custom-border p-4 h-[400px] lg:h-full cont gap-2 bg-white">
                             <h3 className="h3">Instructions</h3>
                             <textarea
@@ -161,10 +199,11 @@ export default function AutomationSlugClient({ pageData }) {
                                 value={template?.instructions}
                             />
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
+
                 {template?.content && (
-                    <div className=" w-full md:w-3/5 flex justify-center">
+                    <div className={`w-full ${template?.instructions ? 'md:w-3/5' : ''}`}>
                         <div className={`bg-white border custom-border p-8 ${style.markdownImage}`}>
                             <ReactMarkdown
                                 components={{
@@ -263,12 +302,12 @@ export default function AutomationSlugClient({ pageData }) {
                 </div>
             )}
 
-            <div className="container">
+            <div className="cont">
                 <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#faf9f6] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
                     <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                         <h2 className="h2">Can't find the right template?</h2>
                         <h2 className="h2 mb-4">Start with AI</h2>
-                       <DashboardButton utm_src={`/automations/${template?.title}`}/>
+                        <DashboardButton utm_src={`/automations/${template?.title}`} />
                     </div>
                 </div>
             </div>
