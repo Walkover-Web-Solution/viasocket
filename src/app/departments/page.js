@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import ShowAppsIndexOptimized from '../components/home/ShowAppsIndexOptimized';
 import IntelligentAutomationsSectionOptimized from '../components/home/IntelligentAutomationsSectionOptimized';
+import Image from 'next/image';
 
 export const runtime = 'edge';
 
@@ -171,10 +172,12 @@ export default async function DepartmentsPage() {
                                     >
                                         {item?.card_image && (
                                             <div className="w-full h-full relative">
-                                                <img
-                                                    src={item.card_image}
+                                                <Image
+                                                    src={item.card_image?.[0]}
                                                     alt={`${item?.name} automation`}
                                                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    width={100}
+                                                    height={100}
                                                 />
                                             </div>
                                         )}

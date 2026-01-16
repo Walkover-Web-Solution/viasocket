@@ -6,9 +6,9 @@ const ReviewFilters = ({ filters, onSelect, selectedFilter }) => {
                     key={filter.id}
                     type="button"
                     onClick={() => onSelect(filter.id)}
-                    className={`px-4 py-2 rounded-full border text-sm font-medium transition ${selectedFilter === filter.id
-                        ? 'bg-black text-white border-black'
-                        : 'bg-white text-black border custom-border hover:!bg-black hover:text-white'
+                    className={`w-[100px] py-2 rounded-full border text-sm font-medium transition ${selectedFilter === filter.id
+                        ? 'bg-accent/10 text-accent border-2 border-accent'
+                        : 'bg-white text-black border-2 custom-border hover:!border-accent hover:text-accent'
                         }`}
                 >
                     {filter.label}

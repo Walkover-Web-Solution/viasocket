@@ -13,7 +13,7 @@ const filters = [
     { id: 'capterra', label: 'Capterra' },
 ];
 
-export default function ReviewIframeOptimized({reviewsData }) {
+export default function ReviewIframeOptimized({reviewData }) {
     const [selectedFilter, setSelectedFilter] = useState('all');
 
     const selectedFilterObj = selectedFilter ? filters.find((f) => f.id === selectedFilter) : null;
@@ -31,7 +31,7 @@ export default function ReviewIframeOptimized({reviewsData }) {
                 </h2>
                 <ReviewFilters filters={filters} onSelect={setSelectedFilter} selectedFilter={selectedFilter} />
             </div>
-            <TestimonialsOptimized reviewsData={reviewsData} matchesFilter={matchesFilter} />
+            <TestimonialsOptimized reviewData={reviewData} matchesFilter={matchesFilter} />
         </div>
     );
 }
