@@ -153,7 +153,7 @@ export default function AutomationSlugClient({ pageData }) {
             <div
                 className={`fixed bottom-[80px] sm:bottom-[10px] left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out container ${isSticky && isStickyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
                     }`}
-                style={{ zIndex: 50 }}
+                style={{ zIndex: 100 }}
             >
                 <div className="container border custom-border bg-[#faf9f6] gap-2 flex flex-col items-center justify-between pt-2 sm:pt-6 md:px-12 relative">
                     <button
@@ -181,7 +181,7 @@ export default function AutomationSlugClient({ pageData }) {
             </div>
 
             {openPopup && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-100">
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[50]">
                     <div className="bg-white p-0 max-w-md w-full mx-4">
                         <SharePopup title={template?.title} onClose={handleClosePopup} />
                     </div>
