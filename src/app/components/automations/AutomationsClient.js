@@ -7,13 +7,63 @@ import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
 import AutomationSuggestionsClient from '../workflow-automation-ideas/AutomationSuggestionsClient';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { Webhook, Timer } from 'lucide-react';
-import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
+import dynamic from 'next/dynamic';
+
+const MarqueeComponentDynamic = dynamic(
+    () => import('@/components/marqueeComponent/marqueeComponent'),
+    {
+        loading: () => <MarqueeSkeleton />,
+        ssr: false
+    }
+);
+
+const MarqueeSkeleton = () => (
+    <div className="my-12">
+        <div className="relative overflow-hidden">
+            <div 
+                className="inline-flex py-4 animate-pulse"
+                style={{
+                    background: 'linear-gradient(90deg, rgba(250,249,246,0) 0%, rgba(250,249,246,0.4) 96px, rgba(250,249,246,0.4) calc(100% - 96px), rgba(250,249,246,0) 100%)'
+                }}
+            >
+                {[...Array(10)].map((_, idx) => (
+                    <button
+                        key={idx}
+                        className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                        disabled
+                    >
+                        <div className="w-[24px] h-[24px] bg-gray-200 rounded"></div>
+                        <div className="w-16 h-8 bg-gray-200 rounded"></div>
+                    </button>
+                ))}
+            </div>
+        </div>
+
+        <div className="relative overflow-hidden">
+            <div 
+                className="inline-flex py-4 animate-pulse"
+                style={{
+                    background: 'linear-gradient(90deg, rgba(250,249,246,0) 0%, rgba(250,249,246,0.4) 96px, rgba(250,249,246,0.4) calc(100% - 96px), rgba(250,249,246,0) 100%)'
+                }}
+            >
+                {[...Array(10)].map((_, idx) => (
+                    <button
+                        key={idx}
+                        className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                        disabled
+                    >
+                        <div className="w-20 h-8 bg-gray-200 rounded"></div>
+                    </button>
+                ))}
+            </div>
+        </div>
+    </div>
+);
 import BlogGrid from '../blog/BlogGrid';
 import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
-import BuildOptionsCTAOptimized from '../home/BuildOptionsCTAOptimized';
 
 const TEMPLATES_PER_PAGE = 6;
 
@@ -117,7 +167,7 @@ export default function AutomationsClient({ pageData }) {
                     enableAi={false}
                     templates={pageData.templateToShow}
                 />
-                <MarqueeComponent
+                <MarqueeComponentDynamic
                     onTemplatesChange={handleTemplatesChange}
                     onSelectionChange={handleSelectionChange}
                     categories={pageData.categories}
