@@ -90,7 +90,21 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, te
                             onClick={() => handleClickApp(app)}
                             className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
                         >
-                            {app.icon && <Image src={app.icon} alt={app.name} width={22} height={22} />}
+                            {app.icon ? (
+                                <Image 
+                                    src={app.icon} 
+                                    alt={app.name} 
+                                    width={22} 
+                                    height={22}
+                                    onError={(e) => {
+                                        e.target.src = '/assets/icons/default-app-icon.svg';
+                                    }}
+                                />
+                            ) : (
+                                <div className="w-[22px] h-[22px] bg-gray-200 rounded flex items-center justify-center text-xs font-medium text-gray-600">
+                                    {app.name.charAt(0).toUpperCase()}
+                                </div>
+                            )}
                             <span>{app.name}</span>
                         </button>
                     ))}
