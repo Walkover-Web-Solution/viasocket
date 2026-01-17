@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo } from 'react';
+import Image from 'next/image';
 
 // Helper function to parse use_cases data
 const parseUseCasesData = (data) => {
@@ -72,9 +73,11 @@ const DepartmentUseCase = ({ use_cases }) => {
                             {imageUrl && (
                                 <div className="flex-1 flex justify-center">
                                     <div className="relative w-full max-w-md rounded-lg overflow-hidden shadow-md">
-                                        <img
+                                        <Image
                                             src={imageUrl}
                                             alt={sectionTitle || 'Department use case'}
+                                            width={400}
+                                            height={300}
                                             className="object-cover w-full h-auto max-h-[400px]"
                                             loading="lazy"
                                             onError={(e) => {
