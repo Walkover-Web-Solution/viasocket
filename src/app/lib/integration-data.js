@@ -15,7 +15,7 @@ import {
 } from '@/const/fields';
 import { getVideoData } from '@/utils/getVideoData';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
-import { getAppCount, getTemplates, getApps, getCombos } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getApps, getCombos, getCategoryBlogs } from '@/utils/axiosCalls';
 import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
@@ -148,6 +148,8 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             ]);
 
             const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
+            const categoryBlogs = await getCategoryBlogs({ page: integrationsInfo?.page, categoryData }, pageUrl);
+            const categoryName = integrationsInfo?.category || 'all';
 
             return {
                 pageInfo: pageInfo || {},
@@ -167,6 +169,8 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 navbarData: navbarData || {},
                 templateToShow: [],
                 noData: false,
+                categoryBlogs: categoryBlogs || [],
+                categoryName: categoryName || 'all',
             };
         }
     } catch (error) {
@@ -175,6 +179,7 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             noData: true,
             footerData: {},
             navbarData: {},
+            categoryBlogs: [],
         };
     }
 }

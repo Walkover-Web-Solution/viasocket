@@ -16,6 +16,7 @@ import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import TopCategoryBlogs from './topCategoryBlogs';
 
 export default function IntegrationsIndexClientComp({
     pageInfo,
@@ -25,8 +26,10 @@ export default function IntegrationsIndexClientComp({
     blogsData,
     categoryData,
     categories,
+    categoryBlogs,
     faqData,
     appCount,
+    categoryName,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -304,6 +307,8 @@ export default function IntegrationsIndexClientComp({
                     </div>
                 )}
             </div>
+
+            <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName}/>
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
