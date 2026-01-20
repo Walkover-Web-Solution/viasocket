@@ -1,6 +1,6 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
-import { getAutomationsPageData } from '../lib/data';
+import { getAutomationsPageData } from '../lib/automation-data';
 import AutomationsClient from '../components/automations/AutomationsClient';
 
 export const runtime = 'edge';
