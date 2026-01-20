@@ -13,7 +13,6 @@ import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
-import BuildOptionsCTAOptimized from '../home/BuildOptionsCTAOptimized';
 
 const TEMPLATES_PER_PAGE = 6;
 
@@ -120,8 +119,9 @@ export default function AutomationsClient({ pageData }) {
                 <MarqueeComponent
                     onTemplatesChange={handleTemplatesChange}
                     onSelectionChange={handleSelectionChange}
-                    categories={pageData.categories}
                     templates={pageData.templateToShow}
+                    marqueeApps={pageData.marqueeApps}
+                    marqueeCategories={pageData.marqueeCategories}
                 />
                 <div>
                     {(selectedCategories.length > 0 || selectedApps.length > 0) && (

@@ -1,43 +1,16 @@
+'use client';
+
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import { useTemplateFilters } from "@/hooks/useTemplateFilters";
 import Marquee from "react-fast-marquee";
+import { Package } from "lucide-react";
 
-const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, templates = [] }) => {
+const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, templates = [], marqueeApps = [], marqueeCategories = [] }) => {
+    
     const [shouldNotify, setShouldNotify] = useState(false);
 
     const { filteredTemplates, hasResults, handleFilterChange } = useTemplateFilters(templates);
-
-    // Build a unique list of apps used in templates using pluginData
-    const templateApps = useMemo(() => {
-        const map = new Map(); // slug -> { name, slug, icon }
-        (templates || []).forEach((t) => {
-            const pluginData = Array.isArray(t?.pluginData) ? t.pluginData : [];
-            pluginData.forEach((p) => {
-                const slug = p?.pluginslugname;
-                const name = p?.pluginname;
-                const icon = p?.iconurl;
-                if (slug && name && !map.has(slug)) {
-                    map.set(slug, { name, slug, icon });
-                }
-            });
-        });
-        return Array.from(map.values());
-    }, [templates]);
-
-    // Always show 20 apps (from templates): first 20 if enough, otherwise repeat to fill 20
-    const topApps = useMemo(() => {
-        const sorted = templateApps.slice().sort((a, b) => a.name.localeCompare(b.name));
-        if (!sorted.length) return [];
-        if (sorted.length >= 20) return sorted.slice(0, 20);
-        return Array.from({ length: 20 }, (_, i) => sorted[i % sorted.length]);
-    }, [templateApps]);
-
-    const fewCategories = useMemo(() => {
-        return (categories || [])
-            .filter((category) => category !== "Server Monitoring")
-            .slice(0, 20);
-    }, [categories]);
 
     const updateParentWithFilters = useCallback(({ selectedApps = [], selectedIndustries = [] }) => {
         handleFilterChange({
@@ -75,6 +48,7 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, te
     return (
         <div className="my-12">
             {/* Top row: 20 Apps with logos, scroll left */}
+            <div className="h-[74px]">
             <Marquee
                 speed={40}
                 autoFill
@@ -84,20 +58,30 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, te
                 pauseOnHover={true}
             >
                 <div className="inline-flex py-4">
-                    {topApps.map((app, idx) => (
+                    {marqueeApps?.map((app, idx) => (
                         <button
-                            key={`${app.slug}-${idx}`}
+                            key={`${app?.slug}-${idx}`}
                             onClick={() => handleClickApp(app)}
                             className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
                         >
-                            {app.icon && <Image src={app.icon} alt={app.name} width={22} height={22} />}
-                            <span>{app.name}</span>
+                            {app?.icon ? (
+                                <Image src={app?.icon} alt={app?.name} width={22} height={22} onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.nextSibling.style.display = 'inline-block';
+                                }} />
+                            ) : (
+                                <Package size={22} className="text-gray-400" />
+                            )}
+                            <Package size={22} className="text-gray-400" style={{ display: 'none' }} />
+                            <span>{app?.name}</span>
                         </button>
                     ))}
                 </div>
             </Marquee>
+            </div>
 
             {/* Bottom row: 20 Template categories, scroll right */}
+            <div className="h-[74px]">
             <Marquee
                 direction="right"
                 speed={40}
@@ -108,17 +92,18 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, categories, te
                 pauseOnHover={true}
             >
                 <div className="inline-flex py-4">
-                    {fewCategories.map((name, idx) => (
+                    {marqueeCategories?.map((category, idx) => (
                         <button
-                            key={`${name}-${idx}`}
-                            onClick={() => handleClickChip(name)}
+                            key={`${category?.name}-${idx}`}
+                            onClick={() => handleClickChip(category?.name)}
                             className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
                         >
-                            <span>{name}</span>
+                            <span>{category?.name}</span>
                         </button>
                     ))}
                 </div>
             </Marquee>
+            </div>
         </div>
     );
 };

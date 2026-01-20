@@ -1,6 +1,6 @@
 import Footer from '@/components/footer/footer';
 import NavbarServer from '../../components/navbar/NavbarServer';
-import { getAutomationSlugPageData } from '../../lib/data';
+import { getAutomationSlugPageData } from '../../lib/automation-data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 import FaqSection from '@/components/faqSection/faqSection';
 
