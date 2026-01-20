@@ -1,4 +1,4 @@
-import { getAutomationSlugPageData } from '../../lib/data';
+import { getAutomationSlugPageData } from '../../lib/automation-data';
 
 export async function generateMetadata({ params }) {
     const paramsData = await params;

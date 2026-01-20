@@ -1,4 +1,4 @@
-import { getAutomationsPageData } from '../lib/data';
+import { getAutomationsPageData } from '../lib/automation-data';
 
 export async function generateMetadata() {
     const { metaData } = await getAutomationsPageData();
