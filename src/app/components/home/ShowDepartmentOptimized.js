@@ -113,7 +113,7 @@ export default function ShowDepartmentOptimized() {
                     <h4 className="font-semibold text-xl mb-1">Automate your entire team</h4>
                     <h2 className={`font-bold mb-10 flex flex-col ${style['main-heading']}`}>
                         <span className="mr-4">We Have Workflows for</span>
-                        <span className={`${isAnimating ? style['animating-out'] : ''} text-accent`}>
+                        <span className={`${isAnimating ? style['animating-out'] : style['animating-in']} text-accent`}>
                             {currentDepartment.name}
                         </span>
                     </h2>
@@ -128,12 +128,7 @@ export default function ShowDepartmentOptimized() {
                         alt={currentDepartment.name}
                         fill
                         priority
-                        className={`
-                            object-cover transition-all duration-700 ease-in-out
-                            ${imgAnimating
-                                ? "opacity-0 -translate-x-12 scale-95"
-                                : "opacity-100 translate-x-0 scale-100"}
-                        `}
+                        className={`object-cover ${imgAnimating ? style['img-animating-out'] : style['img-animating-in']}`}
                     />
                 </div>
 
