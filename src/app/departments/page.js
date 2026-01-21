@@ -101,14 +101,6 @@ export default async function DepartmentsPage() {
                         </div>
                     </div>
 
-                    {/* Show Apps Section */}
-                    <div className="my-20 container">
-                        <div className="flex flex-col border custom-border border-b-0 bg-white">
-                            <ShowAppsIndexOptimized />
-                            <IntelligentAutomationsSectionOptimized appCount={appCount} isDepartmentPage={true} />
-                        </div>
-                    </div>
-
                     <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[180px]">
                         {departmentData?.map((item, index) => {
                             // Determine card style based on position in grid
@@ -196,6 +188,14 @@ export default async function DepartmentsPage() {
                                 </Link>
                             );
                         })}
+                    </div>
+
+                    {/* Show Apps Section */}
+                    <div className="my-20 container">
+                        <div className="flex flex-col border custom-border border-b-0 bg-white">
+                            <ShowAppsIndexOptimized />
+                            <IntelligentAutomationsSectionOptimized appCount={appCount} isDepartmentPage={true} />
+                        </div>
                     </div>
                     <ReviewIframeOptimized reviewData={reviewData} showless={false} />
                     <FaqSection faqData={faqData} />

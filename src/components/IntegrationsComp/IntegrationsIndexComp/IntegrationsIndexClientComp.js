@@ -280,7 +280,7 @@ export default function IntegrationsIndexClientComp({
                         ) : (
                             <>
                                 {apps?.map((app, index) => (
-                                    <AppVisual redirectPart="integrations" app={app} index={index} />
+                                    <AppVisual key={index} redirectPart="integrations" app={app} index={index} />
                                 ))}
                                 <AppVisual
                                     redirectPart="integrations"
