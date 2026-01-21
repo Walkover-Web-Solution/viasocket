@@ -7,7 +7,7 @@ export default function TopCategoryBlogs({ categoryBlogs, categoryName = 'all' }
             {
                 categoryBlogs?.length > 0 && (
                     <div className="container">
-                        <div className="bg-[url('https://viasocket.com/discovery/_next/static/media/background.b863ac0c.svg')] bg-cover border custom-border p-6 md:p-12">
+                        <div className="bg-[url('/assets/bg-img/top-blogs-bg.svg')] bg-cover border custom-border p-6 md:p-12">
                             <h2 className="h2 mb-12">Discover Top {categoryName.toLocaleLowerCase() === 'all' ? '' : categoryBlogs?.[0]?.meta?.category} Apps</h2>
                             <div className="space-y-6">
                                 {
