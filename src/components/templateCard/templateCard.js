@@ -27,21 +27,24 @@ const TemplateCard = ({ template, index }) => {
                         if (triggerIcon && !shownIcons.has(triggerIcon)) {
                             shownIcons.add(triggerIcon);
                             elements.push(
-                                <div key="trigger" className="w-6 h-6 md:w-8 md:h-8 bg-gray-50 flex items-center justify-center border">
-                                    <Image src={triggerIcon} alt="trigger" width={16} height={16} className="w-3 h-3 md:w-5 md:h-5" />
+                                <div key="trigger" className="w-8 h-8 relative bg-gray-50 border">
+                                    <Image src={triggerIcon} alt="trigger" width={16} height={16} className="object-contain p-1"
+                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px', color: 'transparent'}} />
                                 </div>
                             );
                         } else if (!triggerIcon) {
                             if (triggerType === 'webhook') {
                                 elements.push(
-                                    <div key="webhook" className="w-6 h-6 md:w-8 md:h-8 bg-gray-50 flex items-center justify-center border">
-                                        <Webhook size={12} className="md:w-4 md:h-4" />
+                                    <div key="webhook" className="w-8 h-8 relative bg-gray-50 border">
+                                        <Webhook size={12} className="object-contain p-1"
+                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}} />
                                     </div>
                                 );
                             } else if (triggerType === 'cron') {
                                 elements.push(
-                                    <div key="cron" className="w-6 h-6 md:w-8 md:h-8 bg-gray-50 flex items-center justify-center border">
-                                        <Timer size={12} className="md:w-4 md:h-4" />
+                                    <div key="cron" className="w-8 h-8 relative bg-gray-50 border">
+                                        <Timer size={12} className="object-contain p-1"
+                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}} />
                                     </div>
                                 );
                             }
@@ -57,7 +60,7 @@ const TemplateCard = ({ template, index }) => {
                                     elements.push(
                                     <div
                                         key={`app-icon-wrapper-${i}`}
-                                        className="w-6 h-6 md:w-8 md:h-8 bg-gray-50 flex items-center justify-center border"
+                                        className="h-8 w-8 relative bg-gray-50 border"
                                     >
                                         <Image
                                             key={`app-icon-${i}`}
@@ -65,14 +68,15 @@ const TemplateCard = ({ template, index }) => {
                                             alt={`app icon`}
                                             width={16}
                                             height={16}
-                                            className="w-3 h-3 md:w-5 md:h-5"
+                                            className="object-contain p-1"
+                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}}
                                         />
                                     </div>
                                 );
                                 }
                                 else{
                                     elements.push(
-                                        <div key="app-icon-wrapper-more" className="text-black w-6 h-6 md:w-8 md:h-8 bg-gray-50 flex items-center justify-center border">
+                                        <div key="app-icon-wrapper-more" className="text-black w-8 h-8 bg-gray-50 flex items-center justify-center border">
                                             <span>+{appIcons.length - 5}</span>
                                         </div>
                                     );
