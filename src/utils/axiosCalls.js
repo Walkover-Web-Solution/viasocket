@@ -276,6 +276,9 @@ export async function getCategoryBlogs(query, pageUrl) {
     const fetchUrl = `https://viasocket.com/discovery/api/blog?search=${encodeURIComponent(searchQuery)}`;
     try {
         const response = await axiosWithCache.get(fetchUrl, {
+            headers: {
+                env: 'prod',
+            },
             cache: {
                 ttl: 1000 * 60 * 20, //cache for 20 min
                 interpretHeader: false,
