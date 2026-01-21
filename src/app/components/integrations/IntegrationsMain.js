@@ -85,6 +85,8 @@ const IntegrationsMain = (props) => {
                     appCount={data.appCount}
                     navbarData={data.navbarData}
                     skipHeadComp={true}
+                    categoryBlogs={data.categoryBlogs}
+                    categoryName={data.categoryName}
                 />
             </div>
         );
