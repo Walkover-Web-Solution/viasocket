@@ -62,3 +62,4 @@ export const DEPARTMENTDATA_FIELDS = [
     'card_image',
 ];
 export const TEMPLATEMARQUEEITEMS_FIELDS = ['name', 'slug', 'icon', 'is_app'];
+export const SCHEDULEFORSUPPORT_FIELDS = ['name', 'time', 'availability'];

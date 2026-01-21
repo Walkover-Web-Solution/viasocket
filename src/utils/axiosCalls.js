@@ -25,6 +25,26 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
+export async function getLiveSupportData(table, query, pageUrl) {
+    const apiUrl = `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${table}${query ? query : ''}`;
+
+    try {
+        const response = await axiosWithCache.get(apiUrl, {
+            headers: {
+                'auth-key': `${process.env.NEXT_PUBLIC_SCHEDULE_SUPPORT_DB_KEY}`,
+            },
+            cache: {
+                ttl: 1000 * 60 * 20, // Cache for 20 minutes
+                interpretHeader: false,
+            },
+        });
+        return response?.data;
+    } catch (error) {
+        console.error(error?.response?.data || error.message);
+        sendErrorMessage({ error, pageUrl, source: apiUrl });
+    }
+}
+
 export async function getBlogs(pageUrl) {
     const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {

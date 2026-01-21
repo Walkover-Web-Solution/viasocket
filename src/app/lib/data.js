@@ -9,6 +9,7 @@ import {
     getExpertBlogs,
     getPageData,
     getEmbedData,
+    getSupportData,
 } from '@/utils/getData';
 import {
     FOOTER_FIELDS,
@@ -21,6 +22,7 @@ import {
     EXPERTBLOGS_FIELDS,
     PAGEDATA_FIELDS,
     EMBED_FIELDS,
+    SCHEDULEFORSUPPORT_FIELDS
 } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -407,11 +409,12 @@ export async function getSupportPageData() {
         const pageUrl = `${baseUrl}/support`;
 
         // Fetch dynamic data in parallel
-        const [footerData, navbarData, metaData, testimonials] = await Promise.all([
+        const [footerData, navbarData, metaData, testimonials, liveSupport] = await Promise.all([
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getMetaData('/support', pageUrl),
             getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl),
+            getSupportData(SCHEDULEFORSUPPORT_FIELDS, '', pageUrl),
         ]);
 
         return {
@@ -419,6 +422,7 @@ export async function getSupportPageData() {
             footerData: footerData || [],
             navbarData: navbarData || [],
             testimonials: testimonials || [],
+            liveSupport: liveSupport || [],
         };
     } catch (error) {
         console.error('Error fetching support page data:', error);
@@ -427,6 +431,7 @@ export async function getSupportPageData() {
             footerData: [],
             navbarData: [],
             testimonials: [],
+            liveSupport: [],
         };
     }
 }
