@@ -14,6 +14,8 @@ export default function IntegrationsIndexComp({
     appCount,
     navbarData,
     skipHeadComp,
+    categoryBlogs,
+    categoryName,
 }) {
     return (
         <>
@@ -29,6 +31,8 @@ export default function IntegrationsIndexComp({
                 blogsData={blogsData}
                 categoryData={categoryData}
                 categories={categories}
+                categoryBlogs={categoryBlogs}
+                categoryName={categoryName}
                 faqData={faqData}
                 appCount={appCount}
             />
