@@ -1,148 +1,55 @@
 'use client'
 
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FaArrowRight } from "react-icons/fa6";
 
-export default function TestimonialsOptimized({ reviewData, showless }) {
-    const [tweets, setTweets] = useState([]);
-    const iframesData = reviewData?.filter((item) => item?.platform_name !== 'Twitter');
-
-    useEffect(() => {
-        // Only run DOM parsing on client side
-        if (typeof window !== 'undefined' && reviewData) {
-            const tweetsData = reviewData.filter((item) => item?.platform_name === 'Twitter');
-            const parsedTweets = tweetsData.map((item) => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(item?.iframe_code, "text/html");
-                
-                // Extract content from p tag, clean up the {' '} placeholders
-                const pTag = doc.querySelector("p");
-                let content = pTag?.innerText || pTag?.textContent || '';
-                content = content.replace(/\{\'.*?\'\}/g, ' ').replace(/\s+/g, ' ').trim();
-
-                // Extract author from the &mdash; text node
-                const authorElement = doc.querySelector('blockquote');
-                let author = '';
-                if (authorElement) {
-                    const textNodes = Array.from(authorElement.childNodes)
-                        .filter(node => node.nodeType === Node.TEXT_NODE)
-                        .map(node => node.textContent.trim())
-                        .filter(Boolean);
-                    
-                    const authorText = textNodes.find(text => text.includes('—'));
-                    if (authorText) {
-                        author = authorText.replace('—', '').replace(/\{\'.*?\'\}/g, '').trim();
-                    }
-                }
-
-                // Extract timestamp and link from the last anchor tag
-                const anchors = doc.querySelectorAll("a");
-                const lastAnchor = anchors[anchors.length - 1];
-                const timestamp = lastAnchor?.innerText || lastAnchor?.textContent || '';
-                const tweetLink = lastAnchor?.getAttribute("href")?.split("?")[0]; // remove ?ref_src
-
-                return {
-                    content: content,
-                    author: author,
-                    timestamp: timestamp.trim(),
-                    tweetLink: tweetLink,
-                };
-            });
-            
-            setTweets(parsedTweets);
-        }
-    }, [reviewData]);
-
-    const iframes = iframesData?.map((item, index) => {
-        let src = item?.image_g2?.[0]; 
-        
-        if (item?.platform_name !== 'G2' && item?.iframe_code) {
-            if (typeof window !== 'undefined') {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(item.iframe_code, 'text/html');
-                const iframe = doc.querySelector('iframe');
-                src = iframe?.getAttribute('src') || item.iframe_code;
-            } else {
-                const srcMatch = item.iframe_code.match(/src=["']([^"']+)["']/);
-                src = srcMatch ? srcMatch[1] : item.iframe_code;
-            }
-        }
-        
-        return {
-            src: src,
-            style: item?.platform_name === 'LinkedIn' ? { gridRow: 'span 2' } : {}, 
-            key: index,
-            isImage: item?.platform_name === 'G2',
-        };  
-    }) || [];
-
-    useEffect(() => {
-        // Load Twitter widgets script only once
-        if (!document.querySelector('script[src="https://platform.twitter.com/widgets.js"]')) {
-            const script = document.createElement('script');
-            script.src = 'https://platform.twitter.com/widgets.js';
-            script.async = true;
-            script.charset = 'utf-8';
-            document.body.appendChild(script);
-        }
-
-        return () => {
-            // Cleanup Twitter script on unmount
-            const existingScript = document.querySelector('script[src="https://platform.twitter.com/widgets.js"]');
-            if (existingScript) {
-                document.body.removeChild(existingScript);
-            }
-        };
-    }, []);
-
-    // Determine how many cards to show when showless is enabled
-    const maxCards = showless ? 4 : Number.MAX_SAFE_INTEGER;
-    const iframeToShow = iframes.slice(0, Math.min(iframes.length, maxCards));
-    const remaining = Math.max(0, maxCards - iframeToShow.length);
-    const tweetsToShow = tweets.slice(0, remaining);
-
+export default function TestimonialsOptimized({ reviewData, matchesFilter }) {
     return (
-        <div
-            className="iframe-container grid grid-flow-dense grid-cols-1 lg:grid-cols-3 xl:grid-cols-4 border-b-0 mt-8 border custom-border border-r-0"
-            style={{ gridAutoRows: '365px' }}
-        >
-           {iframeToShow.map(({ src, style, key, isImage }, index) => (
-                <div
-                    key={`iframe-${key}`}
-                    className={`border-r border-b custom-border p-3 bg-white ${isImage ? 'lg:col-span-2 xl:col-span-2 relative' : ''}`}
-                    style={style}
-                >
-                    {isImage ? (
-                        <Image 
-                            src={src} 
-                            alt={`Customer review screenshot ${index + 1}`} 
-                            fill 
-                            className="object-contain w-full h-full"
-                        />
-                    ) : (
-                        <iframe
-                            src={src}
-                            height="100%"
-                            width="100%"
-                            frameBorder="0"
-                            allowFullScreen=""
-                            title={`Embedded post ${key}`}
-                        />
-                    )}
-                </div>
-            ))}
-
-            {tweetsToShow.map(({ content, author, timestamp, tweetLink }, index) => (
-                <div key={`tweet-${index}`} className="border-r border-b custom-border p-3 bg-white">
-                    <blockquote className="twitter-tweet">
-                        <p lang="en" dir="ltr">
-                            {content}
-                        </p>
-                        &mdash; {author}
-                        <a href={tweetLink}>{timestamp}</a>
-                    </blockquote>
-                </div>
-            ))}
-        </div>
+        <>
+            <div className="mb-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
+                {
+                    reviewData?.map((item, index) => {
+                        const isVisible = matchesFilter(item);
+                        if (!isVisible) return null;
+                        return (
+                            <Link href={item?.link || '#'} target="_blank" key={item?.name + "-" + index}>
+                                <div className="bg-white md:p-12 p-6 flex flex-col gap-4 border custom-border h-[320px] group hover:shadow-md transition-shadow">
+                                    <div className="flex items-center justify-between gap-2 overflow-hidden">
+                                        <div className="flex items-center gap-2 min-w-0 flex-1">
+                                            {item?.user_profile?.[0] && item?.user_profile?.[0].trim() !== '' ? (
+                                                <Image src={item?.user_profile?.[0]} alt={item?.user_name} width={100} height={100} className="w-12 h-12 rounded-full flex-shrink-0" />
+                                            ) : (
+                                                <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 text-3xl flex-shrink-0">
+                                                    {item?.user_name?.charAt(0)?.toUpperCase() || '?'}
+                                                </div>
+                                            )}
+                                            <div className="min-w-0 flex-1">
+                                                <p className="truncate">{item?.user_name}</p>
+                                                <p className="text-sm text-gray-600 truncate">{item?.subtitle}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex-shrink-0">
+                                            {item?.platform_logo?.[0] && item?.platform_logo?.[0].trim() !== '' && (
+                                                <Image src={item?.platform_logo?.[0]} alt={item?.name} width={100} height={100} className="w-auto h-6" />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="line-clamp-5 flex-1">
+                                        <p>{item?.description}</p>
+                                    </div>
+                                    <div className="flex items-center justify-between mt-auto gap-2">
+                                        <p className="text-xs text-gray-400">{item?.date}</p>
+                                        <button className="text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 whitespace-nowrap">
+                                            Read more <FaArrowRight className="text-xs" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </Link>
+                        )
+                    })
+                }
+            </div>
+        </>
     );
 }
