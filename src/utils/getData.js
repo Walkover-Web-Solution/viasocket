@@ -23,7 +23,8 @@ import {
     NAVBAR,
     BLACKFRIDAYSALE,
     DEPARTMENTDATA,
-    SOCIALREVIEWS
+    SOCIALREVIEWS,
+    TEMPLATEMARQUEEITEMS
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -169,5 +170,10 @@ export async function getBlackFridaySaleData(fields, filter, pageUrl){
 
 export async function getDepartmentData(fields, filter, pageUrl){
     const data = await getDataFromTable(DEPARTMENTDATA, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getTemplateMarqueeItemsData(fields, filter, pageUrl){
+    const data = await getDataFromTable(TEMPLATEMARQUEEITEMS, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }

@@ -61,3 +61,4 @@ export const DEPARTMENTDATA_FIELDS = [
     'use_cases',
     'card_image',
 ];
+export const TEMPLATEMARQUEEITEMS_FIELDS = ['name', 'slug', 'icon', 'is_app'];
