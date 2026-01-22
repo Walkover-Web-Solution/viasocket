@@ -16,18 +16,6 @@ const filters = [
 export default function ReviewIframeOptimized({reviewData }) {
     const [selectedFilter, setSelectedFilter] = useState('all');
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            setSelectedFilter((currentFilter) => {
-                const currentIndex = filters.findIndex((f) => f.id === currentFilter);
-                const nextIndex = (currentIndex + 1) % filters.length;
-                return filters[nextIndex].id;
-            });
-        }, 4000);
-
-        return () => clearInterval(interval);
-    }, []);
-
     const selectedFilterObj = selectedFilter ? filters.find((f) => f.id === selectedFilter) : null;
 
     const matchesFilter = (item) => {
