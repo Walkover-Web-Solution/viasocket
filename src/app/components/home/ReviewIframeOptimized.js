@@ -3,7 +3,7 @@
 import TestimonialsOptimized from './TestimonialsOptimized';
 import { IoMdHeart } from 'react-icons/io';
 import ReviewFilters from './reviewFilters';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const filters = [
     { id: 'all', label: 'All' },
@@ -16,6 +16,18 @@ const filters = [
 export default function ReviewIframeOptimized({reviewData }) {
     const [selectedFilter, setSelectedFilter] = useState('all');
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setSelectedFilter((currentFilter) => {
+                const currentIndex = filters.findIndex((f) => f.id === currentFilter);
+                const nextIndex = (currentIndex + 1) % filters.length;
+                return filters[nextIndex].id;
+            });
+        }, 4000);
+
+        return () => clearInterval(interval);
+    }, []);
+
     const selectedFilterObj = selectedFilter ? filters.find((f) => f.id === selectedFilter) : null;
 
     const matchesFilter = (item) => {
@@ -24,8 +36,8 @@ export default function ReviewIframeOptimized({reviewData }) {
         return selectedFilterObj.id === item.name?.toLowerCase();
     };
     return (
-        <div className="iframe-main-wrapper pb-12 pt-8 relative container">
-            <div className="flex items-center justify-between gap-2">
+        <div className="iframe-main-wrapper py-12 relative container">
+            <div className="flex md:flex-row flex-col items-center justify-between gap-8 mb-12">
                 <h2 className="h2 flex items-center gap-1">
                     <span>Reviews</span> <IoMdHeart className="text-red-700" />
                 </h2>

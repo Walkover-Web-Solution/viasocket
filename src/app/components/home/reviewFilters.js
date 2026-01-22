@@ -1,14 +1,14 @@
 const ReviewFilters = ({ filters, onSelect, selectedFilter }) => {
     return (
-        <div className="flex flex-wrap gap-3 mb-8 md:mb-12 md:justify-start justify-center items-center">
+        <div className="inline-flex flex-wrap gap-3 md:justify-start justify-center items-center  ">
             {filters.map((filter) => (
                 <button
                     key={filter.id}
                     type="button"
                     onClick={() => onSelect(filter.id)}
-                    className={`w-[100px] py-2 rounded-full border text-sm font-medium transition ${selectedFilter === filter.id
-                        ? 'bg-accent/10 text-accent border-2 border-accent'
-                        : 'bg-white text-black border-2 custom-border hover:!border-accent hover:text-accent'
+                    className={`relative rounded-full px-6 py-2.5 text-sm font-semibold transition-all duration-300 ${selectedFilter === filter.id
+                        ? 'bg-accent text-white shadow-md scale-105'
+                        : 'bg-gray-50 text-gray-700 border custom-border hover:border-accent hover:text-accent hover:shadow-sm'
                         }`}
                 >
                     {filter.label}
