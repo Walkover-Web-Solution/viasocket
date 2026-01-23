@@ -26,7 +26,7 @@ export async function getDataFromTable(table, query, pageUrl) {
 }
 
 export async function getLiveSupportData(pageUrl) {
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}get-support-data`;
+    const url = `https://plugservice-api.viasocket.com/get-support-data`;
     try {
         const response = await axiosWithCache.get(url, {
             // cache: {
