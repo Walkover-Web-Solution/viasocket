@@ -25,6 +25,28 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
+export async function getLiveSupportData(pageUrl) {
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}get-support-data`;
+    try {
+        const response = await axiosWithCache.get(url, {
+            // cache: {
+            //     ttl: 1000 * 60 * 20, //cache for 20 min
+            //     interpretHeader: false,
+            // },
+        });
+        console.log(response?.data?.count?.rows,'response -krish');
+        return response?.data?.count?.rows || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+
+        return [];
+    }
+}
+
 export async function getBlogs(pageUrl) {
     const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {

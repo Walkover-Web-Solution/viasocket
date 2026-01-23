@@ -12,6 +12,7 @@
         "deploy": "npm run pages:build && wrangler pages deploy"
     },
     "dependencies": {
+        "@dotlottie/player-component": "^2.7.12",
         "axios": "^1.9.0",
         "axios-cache-interceptor": "^1.8.0",
         "color": "^4.2.3",

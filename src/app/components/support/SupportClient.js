@@ -11,8 +11,10 @@ import { FaPhoneSquareAlt } from 'react-icons/fa';
 import { FaWhatsappSquare } from 'react-icons/fa';
 import { FaCalendarCheck } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import { FaArrowRight } from "react-icons/fa6";
+import LiveIcon from './LiveIcon';
 
-export default function SupportClient({ testimonials }) {
+export default function SupportClient({ testimonials, isLiveSupportAvailable }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
@@ -89,8 +91,21 @@ export default function SupportClient({ testimonials }) {
             <div className="flex flex-col gap-20 mt-12">
                 <div className="instant-help-section flex flex-col gap-6">
                     <h2 className="h2">Instant Help</h2>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {isLiveSupportAvailable && (
+                            <div className="flex flex-col border custom-border p-6 bg-white justify-between">
+                                <LiveIcon />
+                                <div className="flex flex-col min-h-[100px]">
+                                    <h3 className="h3">Live Support</h3>
+                                    <p>Experts are live — jump in!</p>
+                                    <p>Ask your questions — or just come say hi 👋</p>
+                                </div>
+                                <button className="btn btn-primary btn-accent w-fit" onClick={() => window.open('https://meet.google.com/hya-tdxd-mip', '_blank')}>
+                                    Take me to Google Meet <FaArrowRight />
+                                </button>
+                            </div>
+                        )}
+
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
                             <FaHeadset size={32} />
                             <div className="flex flex-col min-h-[100px]">
