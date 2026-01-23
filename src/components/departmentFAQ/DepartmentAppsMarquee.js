@@ -2,6 +2,7 @@
 
 import Marquee from 'react-fast-marquee';
 import { useMemo } from 'react';
+import Image from 'next/image';
 
 const DepartmentAppsMarquee = ({ marque_apps, department }) => {
     // Split apps into two equal groups for the two marquees
@@ -36,7 +37,7 @@ const DepartmentAppsMarquee = ({ marque_apps, department }) => {
                 {domain && (
                     <div className="w-8 h-8 relative overflow-hidden rounded-full bg-gray-50 flex items-center justify-center">
                         {iconSrc ? (
-                            <img
+                            <Image
                                 src={iconSrc}
                                 alt={`${appName} icon`}
                                 width={30}
