@@ -52,64 +52,85 @@ const MoreCreditComp = ({ selectedCountryData }) => {
 
     return (
         <div className="cont  w-full">
+            <style jsx>{`
+                input[type="range"]::-webkit-slider-thumb {
+                    appearance: none;
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: white;
+                    border: 2px solid black;
+                    cursor: pointer;
+                }
+                input[type="range"]::-moz-range-thumb {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 50%;
+                    background: white;
+                    border: 2px solid black;
+                    cursor: pointer;
+                }
+            `}</style>
             {/* HEADER */}
             <div className="flex items-center justify-between mb-6">
                 <h2 className="h2">Buy More Credits</h2>
             </div>
             <div className="border custom-border p-10 bg-white w-full">
-                <div className="grid md:grid-cols-2 gap-10 items-center">
-                    {/* LEFT: Credit Selector */}
-                    <div className="flex flex-col items-center gap-1">
-                        <div className="flex items-center h-14">
-                            <button
-                                className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
-                                onClick={handleDecrement}
-                                aria-label="Decrement credits"
-                            >
-                                <FiMinus />
-                            </button>
+                <div className="flex flex-col items-center gap-16">
+                    <div className="text-center">
+                        <p className="text-gray-600 text-lg mb-2">Total Price</p>
+                        <p className="text-3xl font-bold text-accent mb-1">{formattedPrice}</p>
+                        <p className="text-gray-500">for {credits.toLocaleString()} credits</p>
+                    </div>
 
-                            <div className="px-8 h-11 flex items-center justify-center border custom-border text-2xl font-semibold text-center w-[200px]">
-                                {credits.toLocaleString()}
+                    <div className="w-full max-w-3xl">
+                        <div className="text-center mb-4">
+                            <span className="text-2xl font-semibold">{credits.toLocaleString()}</span>
+                            <span className="text-gray-500 ml-2">credits</span>
+                        </div>
+                        
+                        <div className="relative">
+                            <input
+                                type="range"
+                                min="10000"
+                                max="200000"
+                                step="10000"
+                                value={credits}
+                                onChange={(e) => setCredits(Number(e.target.value))}
+                                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                                style={{
+                                    background: `linear-gradient(to right, black 0%, black ${((credits - 10000) / (200000 - 10000)) * 100}%, #e5e7eb ${((credits - 10000) / (200000 - 10000)) * 100}%, #e5e7eb 100%)`
+                                }}
+                            />
+                            <div className="flex justify-between text-sm text-gray-500 mt-2">
+                                <span>10,000</span>
+                                <span>200,000</span>
                             </div>
+                        </div>
+                    </div>
 
-                            <button
-                                className="btn h-14 w-14 text-2xl font-bold hover:bg-black hover:text-white transition border-0"
-                                onClick={handleIncrement}
-                                aria-label="Increment credits"
-                            >
-                                <FiPlus />
-                            </button>
-                        </div>
-                        <p className="text-lg text-gray-600">Select your credits</p>
-                    </div>
-                    <div className="flex flex-col gap-6">
+                    <div className="grid md:grid-cols-2 gap-x-16 gap-y-3 w-full max-w-2xl">
                         <div className="flex items-center gap-3">
-                            <p className="text-3xl font-bold text-accent">{formattedPrice}</p>
+                            <GiCheckMark className="text-accent flex-shrink-0" />
+                            <span className="text-gray-700">Used in paid built-in plugs</span>
                         </div>
-                        <ul className="space-y-3 text-md text-gray-700">
-                            <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />
-                                Used in paid built-in plugs
-                            </li>
-                            <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />1 credit = 2 tasks
-                            </li>
-                            <li className="flex items-center gap-3 ml-6">
-                                Use credits as tasks, When your tasks are consumed
-                            </li>
-                            <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />
-                                <Link
-                                    href="https://viasocket.com/help/plans-and-pricing/what-are-credits"
-                                    target="_blank"
-                                    className="text-accent hover:underline w-fit"
-                                >
-                                    Know more
-                                </Link>
-                            </li>
-                        </ul>
+                        <div className="flex items-center gap-3">
+                            <GiCheckMark className="text-accent flex-shrink-0" />
+                            <span className="text-gray-700">Credits consumed as tasks run</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <GiCheckMark className="text-accent flex-shrink-0" />
+                            <span className="text-gray-700">1 credit = 2 tasks</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <GiCheckMark className="text-accent flex-shrink-0" />
+                            <span className="text-gray-700">No expiration date</span>
+                        </div>
                     </div>
+
+                    <button className="btn btn-accent text-white font-semibold px-8 py-3 rounded-lg transition-colors">
+                        Purchase {credits.toLocaleString()} Credits
+                    </button>
                 </div>
             </div>
         </div>
