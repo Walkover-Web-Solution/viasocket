@@ -1,7 +1,7 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
-import { getSupportPageData } from '../lib/data';
+import { getSupportPageData } from '../lib/support-data';
 import SupportClient from '../components/support/SupportClient';
 
 export const runtime = 'edge';

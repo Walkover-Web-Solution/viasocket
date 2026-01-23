@@ -25,23 +25,24 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
-export async function getLiveSupportData(table, query, pageUrl) {
-    const apiUrl = `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${table}${query ? query : ''}`;
-
+export async function getLiveSupportData(pageUrl) {
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}get-support-data`;
     try {
-        const response = await axiosWithCache.get(apiUrl, {
-            headers: {
-                'auth-key': `${process.env.NEXT_PUBLIC_SCHEDULE_SUPPORT_DB_KEY}`,
-            },
+        const response = await axiosWithCache.get(url, {
             cache: {
-                ttl: 1000 * 60 * 20, // Cache for 20 minutes
+                ttl: 1000 * 60 * 20, //cache for 20 min
                 interpretHeader: false,
             },
         });
-        return response?.data;
+        return response?.data?.count?.rows || [];
     } catch (error) {
-        console.error(error?.response?.data || error.message);
-        sendErrorMessage({ error, pageUrl, source: apiUrl });
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+
+        return [];
     }
 }
 

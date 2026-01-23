@@ -26,7 +26,7 @@ import {
     SOCIALREVIEWS,
     TEMPLATEMARQUEEITEMS
 } from '@/const/tables';
-import { getDataFromTable, getLiveSupportData } from './axiosCalls';
+import { getDataFromTable } from './axiosCalls';
 
 const handleData = (data) => {
     return data?.data?.rows;
@@ -175,10 +175,5 @@ export async function getDepartmentData(fields, filter, pageUrl){
 
 export async function getTemplateMarqueeItemsData(fields, filter, pageUrl){
     const data = await getDataFromTable(TEMPLATEMARQUEEITEMS, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
-export async function getSupportData(fields, filter, pageUrl){
-    const data = await getLiveSupportData(SCHEDULEFORSUPPORT, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
