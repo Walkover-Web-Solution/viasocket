@@ -34,7 +34,6 @@ export async function getLiveSupportData(pageUrl) {
             //     interpretHeader: false,
             // },
         });
-        console.log(response?.data?.count?.rows,'response -krish');
         return response?.data?.count?.rows || [];
     } catch (error) {
         sendErrorMessage({
