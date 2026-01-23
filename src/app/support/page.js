@@ -30,11 +30,20 @@ export async function generateMetadata() {
 export default async function SupportPage() {
     const { metaData, footerData, navbarData, testimonials, liveSupport } = await getSupportPageData();
 
+    const getCurrentHourIST = () => {
+        const hour = new Intl.DateTimeFormat("en-IN", {
+            timeZone: "Asia/Kolkata",
+            hour: "numeric",
+            hour12: false,
+        }).format(new Date());
+
+        return Number(hour);
+    };
+
     const isTimeSlotActive = (timeSlot) => {
         if (!timeSlot) return false;
 
-        const now = new Date();
-        const currentHour = now.getHours();
+        const currentHour = getCurrentHourIST();
 
         const timeStr = timeSlot.trim();
         const match = timeStr.match(/(\d+)\s*-\s*(\d+)\s*(AM|PM)/i);
