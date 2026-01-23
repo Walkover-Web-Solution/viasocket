@@ -29,10 +29,6 @@ export async function getLiveSupportData(pageUrl) {
     const url = `https://plugservice-api.viasocket.com/get-support-data`;
     try {
         const response = await axiosWithCache.get(url, {
-            // cache: {
-            //     ttl: 1000 * 60 * 20, //cache for 20 min
-            //     interpretHeader: false,
-            // },
         });
         return response?.data?.count?.rows || [];
     } catch (error) {
