@@ -14,7 +14,7 @@ import { MdEmail } from 'react-icons/md';
 import { FaArrowRight } from "react-icons/fa6";
 import LiveIcon from './LiveIcon';
 
-export default function SupportClient({ testimonials, isLiveSupportAvailable }) {
+export default function SupportClient({ testimonials, isLiveSupportAvailable , liveSupport }) {
     const [issubmit, setIsSubmit] = useState(false);
     const [isSend, setIsSend] = useState(false);
     const [formData, setFormData] = useState({
@@ -77,6 +77,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
         window.chatWidget.open();
     };
 
+    console.log('testing',isLiveSupportAvailable,liveSupport, 'isLiveSupportAvailable');
     return (
         <div className="container mt-12 global-top-space pt-12">
             <div className="support-page-heading">

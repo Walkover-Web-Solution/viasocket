@@ -62,7 +62,7 @@ export default async function SupportPage() {
             <MetaHeadComp metaData={metaData} page={'/support'} />
             <NavbarServer navbarData={navbarData} utm={'/support'} />
 
-            <SupportClient testimonials={testimonials} isLiveSupportAvailable={isLiveSupportAvailable} />
+            <SupportClient testimonials={testimonials} isLiveSupportAvailable={isLiveSupportAvailable} liveSupport={liveSupport} />
 
             <div className="container py-8">
                 <Footer footerData={footerData} />
