@@ -25,6 +25,23 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
+export async function getLiveSupportData(pageUrl) {
+    const url = `https://plugservice-api.viasocket.com/get-support-data`;
+    try {
+        const response = await axiosWithCache.get(url, {
+        });
+        return response?.data?.count?.rows || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+
+        return [];
+    }
+}
+
 export async function getBlogs(pageUrl) {
     const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {

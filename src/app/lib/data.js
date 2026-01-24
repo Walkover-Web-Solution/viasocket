@@ -3,24 +3,22 @@ import {
     getIndexTemplateData,
     getReviewSectionData,
     getNavbarData,
-    getTestimonialData,
     getProgramsData,
     getAgencies,
     getExpertBlogs,
     getPageData,
-    getEmbedData,
+    getEmbedData
 } from '@/utils/getData';
 import {
     FOOTER_FIELDS,
     INDEXTEMPLATE_FIELDS,
     REVIEWSECTION_FIELDS,
     NAVBAR_FIELDS,
-    TESTIMONIALS_FIELDS,
     PROGRAMS_FIELDS,
     AGENCIES_FIELDS,
     EXPERTBLOGS_FIELDS,
     PAGEDATA_FIELDS,
-    EMBED_FIELDS,
+    EMBED_FIELDS
 } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -397,36 +395,6 @@ export async function getPrivacyPageData() {
             metaData: {},
             footerData: [],
             navbarData: [],
-        };
-    }
-}
-
-export async function getSupportPageData() {
-    try {
-        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
-        const pageUrl = `${baseUrl}/support`;
-
-        // Fetch dynamic data in parallel
-        const [footerData, navbarData, metaData, testimonials] = await Promise.all([
-            getFooterData(FOOTER_FIELDS, '', pageUrl),
-            getNavbarData(NAVBAR_FIELDS, '', pageUrl),
-            getMetaData('/support', pageUrl),
-            getTestimonialData(TESTIMONIALS_FIELDS, '', pageUrl),
-        ]);
-
-        return {
-            metaData: metaData || {},
-            footerData: footerData || [],
-            navbarData: navbarData || [],
-            testimonials: testimonials || [],
-        };
-    } catch (error) {
-        console.error('Error fetching support page data:', error);
-        return {
-            metaData: {},
-            footerData: [],
-            navbarData: [],
-            testimonials: [],
         };
     }
 }
