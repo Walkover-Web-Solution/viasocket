@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import ShowAppsIndexOptimized from '../components/home/ShowAppsIndexOptimized';
 import IntelligentAutomationsSectionOptimized from '../components/home/IntelligentAutomationsSectionOptimized';
+import Image from 'next/image';
 
 export const runtime = 'edge';
 
@@ -101,14 +102,6 @@ export default async function DepartmentsPage() {
                         </div>
                     </div>
 
-                    {/* Show Apps Section */}
-                    <div className="my-20 container">
-                        <div className="flex flex-col border custom-border border-b-0 bg-white">
-                            <ShowAppsIndexOptimized />
-                            <IntelligentAutomationsSectionOptimized appCount={appCount} isDepartmentPage={true} />
-                        </div>
-                    </div>
-
                     <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 auto-rows-[180px]">
                         {departmentData?.map((item, index) => {
                             // Determine card style based on position in grid
@@ -171,10 +164,12 @@ export default async function DepartmentsPage() {
                                     >
                                         {item?.card_image && (
                                             <div className="w-full h-full relative">
-                                                <img
-                                                    src={item.card_image}
+                                                <Image
+                                                    src={item.card_image?.[0]}
                                                     alt={`${item?.name} automation`}
                                                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                    width={100}
+                                                    height={100}
                                                 />
                                             </div>
                                         )}
@@ -196,6 +191,14 @@ export default async function DepartmentsPage() {
                                 </Link>
                             );
                         })}
+                    </div>
+
+                    {/* Show Apps Section */}
+                    <div className="my-20 container">
+                        <div className="flex flex-col border custom-border border-b-0 bg-white">
+                            <ShowAppsIndexOptimized />
+                            <IntelligentAutomationsSectionOptimized appCount={appCount} isDepartmentPage={true} />
+                        </div>
                     </div>
                     <ReviewIframeOptimized reviewData={reviewData} showless={false} />
                     <FaqSection faqData={faqData} />

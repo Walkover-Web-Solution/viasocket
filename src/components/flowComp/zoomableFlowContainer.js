@@ -1,27 +1,36 @@
 import { FiMinus } from 'react-icons/fi';
 import { FiPlus } from 'react-icons/fi';
 import { MdCenterFocusStrong } from 'react-icons/md';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const ZoomableFlowContainer = ({ setScale, contentRef, flowContainerRef, flowRendererHeight, setFlowRendererHeight, template, positionX, positionY }) => {
+    const [isWheelZoomEnabled, setIsWheelZoomEnabled] = useState(false);
+
     useEffect(() => {
         if (contentRef.current) {
             setFlowRendererHeight(`${contentRef.current.offsetHeight}px`);
         }
 
         const handleWheel = (e) => {
+            if (!isWheelZoomEnabled) return;
             e.preventDefault();
             const delta = e.deltaY > 0 ? -0.05 : 0.05;
             setScale((prev) => Math.min(Math.max(prev + delta, 0.1), 3));
         };
 
+        const handleClick = () => {
+            setIsWheelZoomEnabled(true);
+        };
+
         const flowContainer = flowContainerRef.current;
         flowContainer?.addEventListener('wheel', handleWheel, { passive: false });
+        flowContainer?.addEventListener('click', handleClick);
 
         return () => {
             flowContainer?.removeEventListener('wheel', handleWheel);
+            flowContainer?.removeEventListener('click', handleClick);
         };
-    }, [template, flowRendererHeight]);
+    }, [template, flowRendererHeight, isWheelZoomEnabled]);
 
     const zoomIn = () => setScale((prev) => Math.min(prev + 0.1, 3));
     const zoomOut = () => setScale((prev) => Math.max(prev - 0.1, 0.1));

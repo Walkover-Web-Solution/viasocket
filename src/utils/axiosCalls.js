@@ -25,6 +25,23 @@ export async function getDataFromTable(table, query, pageUrl) {
     }
 }
 
+export async function getLiveSupportData(pageUrl) {
+    const url = `https://plugservice-api.viasocket.com/get-support-data`;
+    try {
+        const response = await axiosWithCache.get(url, {
+        });
+        return response?.data?.count?.rows || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+
+        return [];
+    }
+}
+
 export async function getBlogs(pageUrl) {
     const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {
@@ -267,5 +284,31 @@ export async function getAppCount(pageUrl) {
     } catch (error) {
         console.log(error?.response?.data || error.message, 'errormesssageeeee');
         sendErrorMessage({ error, pageUrl, source: apiUrl });
+    }
+}
+
+export async function getCategoryBlogs(query, pageUrl) {
+    const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name.toLowerCase() === 'all' ? '' : query?.categoryData[0]?.name : '';
+    const searchQuery = category.replace(/-/g, " ");
+    const fetchUrl = `https://viasocket.com/discovery/api/blog?search=${encodeURIComponent(searchQuery)}`;
+    try {
+        const response = await axiosWithCache.get(fetchUrl, {
+            headers: {
+                env: 'prod',
+            },
+            cache: {
+                ttl: 1000 * 60 * 20, //cache for 20 min
+                interpretHeader: false,
+            },
+        });
+        const blogs = response?.data?.data?.blogs;
+        return blogs || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: fetchUrl,
+        });
+        return [];
     }
 }

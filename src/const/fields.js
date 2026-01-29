@@ -40,7 +40,7 @@ export const MCP_FIELDS = ['action', 'description', 'name', 'prompt', 'slug_name
 export const PRICINGFEATURE_FIELDS = ['featurename'];
 export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId'];
 export const DOFOLLOWLINK_FIELDS = ['appslugname'];
-export const REVIEWSECTION_FIELDS = ['platform_name', 'iframe_code', 'image_g2'];
+export const REVIEWSECTION_FIELDS = ['name', 'user_name', 'subtitle', 'description', 'date', 'link', 'user_profile', 'platform_logo'];
 export const FEATUREBANNER_FIELDS = ['bgimage'];
 export const NAVBAR_FIELDS = ['group_name', 'name', 'link', 'is_link', 'group_link'];
 export const BLACKFRIDAYSALE_FIELDS = [
@@ -61,3 +61,4 @@ export const DEPARTMENTDATA_FIELDS = [
     'use_cases',
     'card_image',
 ];
+export const TEMPLATEMARQUEEITEMS_FIELDS = ['name', 'slug', 'icon', 'is_app'];

@@ -13,7 +13,6 @@ import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
-import BuildOptionsCTAOptimized from '../home/BuildOptionsCTAOptimized';
 
 const TEMPLATES_PER_PAGE = 6;
 
@@ -117,12 +116,12 @@ export default function AutomationsClient({ pageData }) {
                     enableAi={false}
                     templates={pageData.templateToShow}
                 />
-                <BuildOptionsCTAOptimized />
                 <MarqueeComponent
                     onTemplatesChange={handleTemplatesChange}
                     onSelectionChange={handleSelectionChange}
-                    categories={pageData.categories}
                     templates={pageData.templateToShow}
+                    marqueeApps={pageData.marqueeApps}
+                    marqueeCategories={pageData.marqueeCategories}
                 />
                 <div>
                     {(selectedCategories.length > 0 || selectedApps.length > 0) && (
@@ -223,7 +222,7 @@ export default function AutomationsClient({ pageData }) {
                                         </span>
                                     ))}
                                 </h2>
-                                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                         <TemplateCard key={template.id} index={index} template={template} />
                                     ))}
@@ -258,7 +257,7 @@ export default function AutomationsClient({ pageData }) {
                         {/* Rest of the Templates */}
                         {displayTemplates.length > 0 && (
                             <>
-                                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                                <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
                                         <TemplateCard key={template.id} index={index} template={template} />
                                     ))}

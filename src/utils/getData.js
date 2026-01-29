@@ -20,10 +20,11 @@ import {
     INDEXTEMPLATE,
     FOOTER,
     DOFOLLOWLINK,
-    REVIEWSECTION,
     NAVBAR,
     BLACKFRIDAYSALE,
-    DEPARTMENTDATA
+    DEPARTMENTDATA,
+    SOCIALREVIEWS,
+    TEMPLATEMARQUEEITEMS
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -158,7 +159,7 @@ export async function getDoFollowStatus(fields, filter, pageUrl){
 }
 
 export async function getReviewSectionData(fields, filter, pageUrl){
-    const data = await getDataFromTable(REVIEWSECTION, handleFieldsFilter(fields, filter), pageUrl);
+    const data = await getDataFromTable(SOCIALREVIEWS, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
 
@@ -169,5 +170,10 @@ export async function getBlackFridaySaleData(fields, filter, pageUrl){
 
 export async function getDepartmentData(fields, filter, pageUrl){
     const data = await getDataFromTable(DEPARTMENTDATA, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getTemplateMarqueeItemsData(fields, filter, pageUrl){
+    const data = await getDataFromTable(TEMPLATEMARQUEEITEMS, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }

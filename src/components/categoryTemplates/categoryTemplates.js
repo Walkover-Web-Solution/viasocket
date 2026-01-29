@@ -23,7 +23,7 @@ export default function CategoryTemplates({ categoryName, templates }) {
 
             {templates?.length > 0 ? (
                 <>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                         {templates.slice(0, visibleCount).map((template) => (
                             <TemplateCard key={template.id} template={template} />
                         ))}

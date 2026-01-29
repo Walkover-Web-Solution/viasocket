@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaCopy } from 'react-icons/fa';
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaCopy, FaTimes } from 'react-icons/fa';
 
-const SharePopup = ({ title }) => {
+const SharePopup = ({ title, onClose }) => {
     const url = typeof window !== 'undefined' ? window.location.href : '';
 
     const encodedTitle = encodeURIComponent(title || '');
@@ -43,6 +43,13 @@ const SharePopup = ({ title }) => {
             <div className="cont gap-4">
                 <div className="flex justify-between items-center">
                     <h3 className="h3">Share this template</h3>
+                    <button 
+                        onClick={onClose}
+                        className="p-1 hover:bg-gray-100 rounded transition-colors"
+                        title="Close"
+                    >
+                        <FaTimes size={16} />
+                    </button>
                 </div>
 
                 <div className="flex gap-2 justify-start items-center">

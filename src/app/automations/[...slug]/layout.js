@@ -1,7 +1,8 @@
-import { getAutomationSlugPageData } from '../../lib/data';
+import { getAutomationSlugPageData } from '../../lib/automation-data';
 
 export async function generateMetadata({ params }) {
-    const { metaData } = await getAutomationSlugPageData(params.slug || []);
+    const paramsData = await params;
+    const { metaData } = await getAutomationSlugPageData(paramsData.slug || []);
 
     return {
         title: metaData?.title || 'viaSocket Template',

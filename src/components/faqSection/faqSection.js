@@ -13,8 +13,8 @@ const FAQSection = ({ faqData = [], faqName }) => {
     };
 
     return (
-        <div className="border custom-border p-8 mb-8 bg-white container">
-            <section className="flex flex-col gap-8">
+        <div className="mb-8 container">
+            <section className="flex flex-col gap-8 border custom-border p-8 bg-white">
                 <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
 
                 <div className="flex flex-col">

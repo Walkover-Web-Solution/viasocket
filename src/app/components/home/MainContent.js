@@ -4,7 +4,7 @@ import IntelligentAutomationsSectionOptimized from './IntelligentAutomationsSect
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import ShowDepartmentOptimized from './ShowDepartmentOptimized';
 import ReviewIframeOptimized from './ReviewIframeOptimized';
-import PanelSectionOptimized from './PanelSectionOptimized';
+// import PanelSectionOptimized from './PanelSectionOptimized';
 
 export default function MainContent({ 
   appCount, 
@@ -56,9 +56,9 @@ export default function MainContent({
       </div>
 
       {/* Panel Section */}
-      <div className="py-12 bg-[#f4f3f1] relative">
+      {/* <div className="py-12 bg-[#f4f3f1] relative">
         <PanelSectionOptimized />
-      </div>
+      </div> */}
     </>
   );
 }
