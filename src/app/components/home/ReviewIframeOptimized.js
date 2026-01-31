@@ -24,7 +24,7 @@ export default function ReviewIframeOptimized({reviewData }) {
         return selectedFilterObj.id === item.name?.toLowerCase();
     };
     return (
-        <div className="iframe-main-wrapper py-12 relative container">
+        <div className="iframe-main-wrapper py-12 pt-20 relative container">
             <div className="flex md:flex-row flex-col items-center justify-between gap-8 mb-12">
                 <h2 className="h2 flex items-center gap-1">
                     <span>Reviews</span> <IoMdHeart className="text-red-700" />

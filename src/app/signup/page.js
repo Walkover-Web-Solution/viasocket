@@ -84,7 +84,7 @@ export default async function SignupPage({ searchParams }) {
 
                     {/* Right column - testimonial card */}
                     <div className="relative px-4 sm:px-8 xl:px-16 h-full py-8 flex flex-col items-center justify-center gap-8 bg-[#FAF8F5]">
-                        <div className="relative w-full bg-[#8a1a0b] text-white rounded-3xl  flex justify-between flex-col px-6 sm:px-10 py-10 overflow-hidden gap-8 w-full lg:h-[80vh]">
+                        <div className="relative w-full bg-[#8a1a0b] text-white rounded-3xl  flex justify-between flex-col px-6 sm:px-10 py-10 overflow-hidden gap-8 w-full lg:min-h-[80vh]">
                             <div
                                 className="pointer-events-none select-none absolute inset-0 flex justify-center items-center text-nowrap italic text-center text-[52px] md:text-[72px] lg:text-[140px] font-serif text-white/20 leading-none"
                                 style={{ fontFamily: 'Georgia, serif' }}
