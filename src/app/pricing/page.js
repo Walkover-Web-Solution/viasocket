@@ -94,9 +94,9 @@ export default async function PricingPage() {
                     </div>
                 </div>
 
-                <div id="pricingTabs">
+                {/* <div id="pricingTabs">
                     <PricingTabsClient countries={countries} />
-                </div>
+                </div> */}
 
                 <div className="cont flex items-center justify-center w-full">
                     <div className="cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center access-program text-white">
