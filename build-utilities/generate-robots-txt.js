@@ -6,8 +6,7 @@ function generateRobots() {
     const robotsContent = isProd
         ? `User-agent: *
 Disallow: /admin/
-Sitemap: https://socket-plug-services-h7duexlbuq-el.a.run.app/sitemap/index-page
-Sitemap: https://viasocket.com/sitemap.xml`
+Sitemap: https://plugservice-api.viasocket.com/sitemap/index-page`
         : `User-agent: *
 Disallow: /`;
 
