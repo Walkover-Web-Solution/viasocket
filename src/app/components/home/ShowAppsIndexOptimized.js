@@ -107,61 +107,94 @@ const APPSTWO = [
     },
 ];
 
-export default function ShowAppsIndexOptimized() {
+export default function ShowAppsIndexOptimized({ isHomePage = false }) {
     return (
-        <div className="flex flex-col gap-6 container py-8 px-4">
-            <div className="flex items-center gap-8">
-                <p className="text-center text-gray-500 min-w-fit ms-4 uppercase">
-                    Trusted by Teams Using These Apps
-                </p>
-                <Marquee
-                    direction="left"
-                    speed={40}
-                    autoFill
-                    gradient
-                    gradientColor={[250, 249, 246]}
-                    gradientWidth={96}
-                >
-                    <div className="inline-flex py-4 gap-20">
-                        {APPSONE.map((app, index) => (
-                            <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                <Image
-                                    src={app.src}
-                                    alt={app.alt}
-                                    width={30}
-                                    height={30}
-                                    className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                                />
-                                <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+        <div className="flex flex-col gap-6 container py-12 px-4">
+            {isHomePage ? (
+                <>
+                    <div className="flex flex-col items-center justify-center gap-12 py-20">
+                        <h2 className="h2">Trusted by Teams Using These Apps</h2>
+                        <Marquee
+                            direction="left"
+                            speed={40}
+                            autoFill
+                            gradient
+                            gradientColor={[250, 249, 246]}
+                            gradientWidth={96}
+                        >
+                            <div className="inline-flex py-4 gap-20 h-[62px]">
+                                {[...APPSONE, ...APPSTWO].map((app, index) => (
+                                    <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                                        <Image
+                                            src={app.src}
+                                            alt={app.alt}
+                                            width={30}
+                                            height={30}
+                                            className={`object-contain cursor-pointer ${app.className ?? ''}`}
+                                        />
+                                        <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
+                        </Marquee>
                     </div>
-                </Marquee>
-            </div>
-            <Marquee
-                direction="right"
-                speed={40}
-                autoFill
-                gradient
-                gradientColor={[250, 249, 246]}
-                gradientWidth={96}
-                className="ms-4"
-            >
-                <div className="inline-flex py-4 gap-20">
-                    {APPSTWO.map((app, index) => (
-                        <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                            <Image
-                                src={app.src}
-                                alt={app.alt}
-                                width={30}
-                                height={30}
-                                className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                            />
-                            <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+                </>
+            ) : (
+                <>
+                    <div className="flex items-center gap-8">
+                        <p className="text-center text-gray-500 min-w-fit ms-4 uppercase">
+                            Trusted by Teams Using These Apps
+                        </p>
+                        <Marquee
+                            direction="left"
+                            speed={40}
+                            autoFill
+                            gradient
+                            gradientColor={[250, 249, 246]}
+                            gradientWidth={96}
+                        >
+                            <div className="inline-flex py-4 gap-20">
+                                {APPSONE.map((app, index) => (
+                                    <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                                        <Image
+                                            src={app.src}
+                                            alt={app.alt}
+                                            width={30}
+                                            height={30}
+                                            className={`object-contain cursor-pointer ${app.className ?? ''}`}
+                                        />
+                                        <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </Marquee>
+                    </div>
+                    <Marquee
+                        direction="right"
+                        speed={40}
+                        autoFill
+                        gradient
+                        gradientColor={[250, 249, 246]}
+                        gradientWidth={96}
+                        className="ms-4"
+                    >
+                        <div className="inline-flex py-4 gap-20">
+                            {APPSTWO.map((app, index) => (
+                                <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
+                                    <Image
+                                        src={app.src}
+                                        alt={app.alt}
+                                        width={30}
+                                        height={30}
+                                        className={`object-contain cursor-pointer ${app.className ?? ''}`}
+                                    />
+                                    <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
-            </Marquee>
+                    </Marquee>
+                </>
+            )}
         </div>
     );
 }

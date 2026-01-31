@@ -10,6 +10,7 @@ export default function TestimonialsOptimized({ reviewData, matchesFilter }) {
             <div className="mb-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                 {
                     reviewData?.map((item, index) => {
+                        if (item?.user_name?.trim() === '' && item?.subtitle?.trim() === '' && item?.description?.trim() === '') return null;
                         const isVisible = matchesFilter(item);
                         if (!isVisible) return null;
                         return (
