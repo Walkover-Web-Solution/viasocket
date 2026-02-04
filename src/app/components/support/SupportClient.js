@@ -109,7 +109,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
                             <FaHeadset size={32} />
                             <div className="flex flex-col min-h-[100px]">
-                                <h3 className="h3">Live Chat</h3>
+                                <h3 className="h3">Talk to Human</h3>
                                 <p>For quick questions or troubleshooting that doesn’t require a call.</p>
                             </div>
                             <button className="btn btn-outline w-fit" onClick={openChatWidget}>
