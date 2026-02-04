@@ -12,6 +12,9 @@ export async function generateMetadata() {
         title: metaData?.title || 'Sign Up - viaSocket',
         description: metaData?.description || 'Sign up to viaSocket and start automating your workflows',
         keywords: metaData?.keywords,
+        alternates: {
+            canonical: 'https://viasocket.com/signup',
+        },
         openGraph: {
             title: metaData?.title,
             description: metaData?.description,
