@@ -3,12 +3,17 @@ import NavbarServer from '../../components/navbar/NavbarServer';
 import { getAutomationSlugPageData } from '../../lib/automation-data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 import FaqSection from '@/components/faqSection/faqSection';
+import { redirect } from 'next/navigation';
 
 export const runtime = 'edge';
 
 export default async function AutomationSlugPage({ params }) {
     const paramsData = await params;
     const pageData = await getAutomationSlugPageData(paramsData.slug || []);
+
+    if (pageData.isCategory === false && !pageData.template) {
+        redirect('/automations');
+    }
 
     return (
         <div className="dotted-background global-top-space">
