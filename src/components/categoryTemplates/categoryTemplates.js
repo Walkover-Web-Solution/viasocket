@@ -15,7 +15,7 @@ export default function CategoryTemplates({ categoryName, templates }) {
     return (
         <div className="cont gap-4 pt-20">
             <div className="text-left cont gap-4 mb-4">
-                <h1 className="h1">
+                <h1 className="h1 break-words">
                     <span className="text-accent italic">{`${templates.length}+`}</span>{' '}
                     {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates
                 </h1>
