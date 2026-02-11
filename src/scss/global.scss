@@ -13,17 +13,9 @@
 
 //check import file for imports
 @import '_import';
-.heading {
-    font-family: 'Inter Tight';
-    color: #252525;
-}
-
-.border-05 {
-    border: 0.5px solid #252525 !important;
-}
 
 .custom-flow-border {
-  position: relative;
+    position: relative;
 }
 
 .custom-flow-border {
@@ -34,43 +26,22 @@
         left: 0;
         width: 100%;
         height: 1px;
-        background-image: repeating-linear-gradient(
-            to right,
-            var(--flow-border-color) 0px,
-            var(--flow-border-color) 10px,
-            transparent 10px,
-            transparent 20px
-        );
+        background-image: repeating-linear-gradient(to right,
+                var(--flow-border-color) 0px,
+                var(--flow-border-color) 10px,
+                transparent 10px,
+                transparent 20px);
     }
 }
 
-.font-family-times-now {
-    font-family: 'Inter Tight';
-}
 .toggle:checked {
     @apply bg-black text-white;
 }
 
-.toggle:checked + .font-semibold.text-md {
+.toggle:checked+.font-semibold.text-md {
     @apply text-white;
 }
-.casestudy_img {
-    // height: 295px!important;
-    // overflow: hidden;
-    img {
-        height: 100%;
-        max-width: none;
-        width: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-}
-.signup_img {
-    // height: 400px !important;
-    img {
-        height: 100%;
-    }
-}
+
 .pagination {
     display: flex;
     @apply gap-3 mx-auto items-center;
@@ -82,146 +53,6 @@
 
 .collapse:not(.collapse-close):has(> input[type='radio']:checked) .collapse-title {
     background: none;
-}
-// temp{
-#interfaceEmbed {
-    display: none !important;
-    opacity: 0;
-    height: 0px !important;
-}
-
-.form-parent {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    display: none;
-    transform: translate(-50%, -50%);
-    height: 600px;
-    width: 500px;
-    background-color: white;
-    padding: 28px 0px;
-    z-index: 999999;
-    box-sizing: border-box;
-}
-
-.int-card-des:first-letter {
-    text-transform: capitalize;
-}
-
-.wrapper {
-    border-radius: 4px !important;
-}
-.gradient-background {
-    background: linear-gradient(300deg, #a2ffe0, #ccd9fc, #fdcdf2, #fff1a9);
-    background-size: 240% 240%;
-    animation: gradient-animation 24s ease infinite;
-}
-
-@keyframes gradient-animation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
-.rmsc {
-    .dropdown-container {
-        height: 44px;
-        display: flex;
-        @apply items-center;
-    }
-}
-.jiMOeR {
-    z-index: 99;
-    @apply hover:shadow-md;
-    .wrapper {
-        box-shadow: none !important;
-    }
-}
-
-.react-select-cont {
-    div {
-        position: relative;
-        @apply w-full;
-        input {
-            @apply p-3 w-full;
-        }
-    }
-}
-.react-autosuggest-item {
-    @apply py-1 px-3 flex gap-3 items-center cursor-pointer hover:bg-slate-200;
-    img {
-        width: 22px;
-    }
-}
-
-.industry-autocomplete {
-    div {
-        input {
-            @apply input w-full input-sm h-[36px] border-[#CCCCCC] flex items-center gap-2 bg-white;
-        }
-    }
-}
-
-.version-link {
-    text-decoration: none;
-    position: relative;
-    display: inline-block;
-    color: white;
-    @apply uppercase tracking-wider;
-}
-.version-link::after {
-    content: '';
-    position: absolute;
-    width: 120%;
-    height: 1px;
-    bottom: -2px;
-    left: 50%;
-    background-color: currentColor;
-    transition: width 0.3s ease-in-out;
-    transform: translateX(-50%);
-}
-.version-link:hover::after {
-    width: 40px;
-}
-
-.hero_gradient {
-    background: linear-gradient(95.2deg, rgb(173, 215, 252) 26.8%, rgba(192, 229, 246, 1) 64%);
-}
-
-/* Base translation for larger screens (X-axis) */
-.custom-translate {
-    transition: all 0.5s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-}
-
-/* For screens smaller than 640px (sm), use translateY */
-@media (max-width: 639px) {
-    .custom-translate {
-        transform: translateY(var(--translate-value));
-        -webkit-transform: translateY(var(--translate-value));
-        -moz-transform: translateY(var(--translate-value));
-        -ms-transform: translateY(var(--translate-value));
-        -o-transform: translateY(var(--translate-value));
-    }
-}
-
-/* For larger screens, use translateX */
-@media (min-width: 640px) {
-    .custom-translate {
-        transform: translateX(var(--translate-value));
-    }
 }
 
 /** Customized the container padding */
@@ -235,7 +66,7 @@
     }
 }
 
-@media screen and (576px <= width <= 992px) {
+@media screen and (576px <=width <=992px) {
     body {
         .home-page-container {
             padding: 0 !important;
@@ -243,7 +74,7 @@
     }
 }
 
-@media screen and (992px <= width <= 1200px) {
+@media screen and (992px <=width <=1200px) {
     body {
         .home-page-container {
             padding: 1rem !important;
@@ -251,17 +82,20 @@
     }
 }
 
-.login-container { 
- button{
-    color: black !important;
-    border-color: black !important;
- }
- span{
-    color: black !important;
- }
- p{
-    color: black !important;
- }
+/** login/signup page **/
+.login-container {
+    button {
+        color: black !important;
+        border-color: black !important;
+    }
+
+    span {
+        color: black !important;
+    }
+
+    p {
+        color: black !important;
+    }
 }
 
 /** Custom Login Button */
@@ -286,18 +120,6 @@
     }
 }
 
-
-.grecaptcha-badge {
-    position: fixed !important;
-    bottom: 80px !important;
-    right: -200px !important;
-    left: auto !important;
-    z-index: 9999 !important;
-    &:hover{
-        right: 0px !important;
-    }
-}
-
 /** Using for custom design */
 #__next {
     border-left: 1px solid var(--custom-border);
@@ -313,18 +135,10 @@
         border-radius: 50px;
         border-color: var(--custom-border);
 
-        @media screen and (width <= 768px) {
+        @media screen and (width <=768px) {
             font-size: 12px;
         }
     }
-}
-
-.my-element {
-  transition: transform .2s; /* Animation */
-}
-/* Style to apply on hover (mouseenter) */
-.my-element:hover {
-    transform: scale(1.5);
 }
 
 /** Using for ai agent response markdown */
@@ -332,39 +146,13 @@
     h3 {
         @apply md:text-2xl text-xl font-semibold mb-3;
     }
+
     h4 {
         @apply text-lg font-semibold;
     }
 
     p {
         margin-bottom: 1rem;
-    }
-}
-
-
-/**Using for reviewIframe.js component */
-.twitter-tweet.twitter-tweet-rendered {
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
-    height: 100%;
-    min-height: 100%;
-
-    #twitter-widget-0,
-    #twitter-widget-1 {
-        max-width: 100% !important;
-        max-height: 100% !important;
-    }
-}
-
-// Responsive styling for signup page review section
-body {
-    &:has(.signup-review-section) {
-        .iframe-container {
-            grid-template-columns: 1fr 1fr;
-            @media screen and (width <= 1200px) {
-                grid-template-columns: 1fr;
-            }
-        }
     }
 }
 
@@ -417,11 +205,11 @@ body {
 }
 
 // for t&c and privacy page
-.link{
+.link {
     color: #0000ff !important;
     text-decoration: none !important;
 }
 
-.list-type-square{
+.list-type-square {
     list-style-type: square;
 }
