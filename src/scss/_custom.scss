@@ -1,28 +1,33 @@
 .btn {
-        font-size: 14px;
-        padding-left: 20;
-        padding-right: 20;
-        height: 40px;
-        min-height: 45px;
-        border-radius: 50px;
-        border-color: var(--custom-border);
+    font-size: 14px;
+    padding-left: 20;
+    padding-right: 20;
+    height: 40px;
+    min-height: 45px;
+    border-radius: 50px;
+    border-color: var(--custom-border);
 
-        @media screen and (width <= 768px) {
-            font-size: 12px;
-        }
+    @media screen and (width <=768px) {
+        font-size: 12px;
+    }
+
     @apply w-fit px-4 py-2 tracking-wider text-lg;
+
     &.w-full {
         width: 100% !important;
     }
+
     &.btn-outline {
         @apply bg-white hover:bg-black hover:text-white !border-gray-200;
     }
+
     &.btn-primary {
         @apply hover:bg-accent;
     }
 
     &.btn-accent {
         @apply text-white border-black;
+
         &:hover {
             @apply bg-black;
         }
@@ -31,6 +36,7 @@
     &.btn-lg {
         @apply min-h-[46px] h-[46px] text-[14px];
     }
+
     &:disabled {
         @apply bg-gray-200 text-black;
     }
@@ -40,15 +46,19 @@
     max-width: 1560px;
     margin-left: auto;
     margin-right: auto;
+
     @media only screen and (max-width: 1580px) {
         @apply px-12;
     }
+
     @media only screen and (max-width: 1280px) {
         @apply px-12;
     }
+
     @media only screen and (max-width: 780px) {
         @apply px-6;
     }
+
     @media only screen and (max-width: 480px) {
         @apply px-4;
     }
@@ -60,9 +70,11 @@
     @media only screen and (max-width: 1280px) {
         @apply py-20;
     }
+
     @media only screen and (max-width: 780px) {
         @apply py-12;
     }
+
     @media only screen and (max-width: 480px) {
         @apply py-8;
     }
@@ -70,52 +82,26 @@
 
 .cont {
     @apply flex flex-col;
+
     &__py {
         @apply py-20;
     }
+
     &__gap {
         @apply gap-6;
     }
+
     &__w {
         @apply lg:w-[800px] w-full;
     }
 }
 
-.tooltip-error {
-    --tooltip-color: #4b4b4b;
-    --tooltip-text-color: white;
-}
-
 .text-link {
     color: #4485f2;
 }
+
 .text-6xl {
     line-height: 81px !important;
-}
-.searchWrapper {
-    @apply lg:w-1/3 sm:w-2/3 w-full bg-white px-3 py-2 min-h-[46px] flex flex-wrap gap-1 items-center hover:shadow-lg;
-    min-height: 46px !important;
-    padding-left: 12px !important;
-    .chip {
-        @apply bg-accent  px-2;
-    }
-    .searchBox {
-        @apply text-gray-600 text-sm;
-    }
-}
-.optionListContainer {
-    // display: block !important;
-    // @apply w-[200px];
-    max-width: fit-content;
-    .optionContainer {
-        width: 300px !important;
-        .option {
-            @apply px-2 py-2  hover:bg-gray-300 hover:text-gray-800;
-            &.highlightOption {
-                @apply bg-accent text-white;
-            }
-        }
-    }
 }
 
 .btn.btn-disabled,
@@ -125,6 +111,7 @@
 
 .collapse:not(.collapse-close):has(> input[type='radio']:checked) {
     @apply border;
+
     .collapse-title {
         background-color: #f5f5f5;
         color: #000;
@@ -134,9 +121,11 @@
 .feature_grid {
     background-image: url('/assets/img/program_feature_grid.png');
     background-position: center center;
+
     .grid-block {
         @apply transition-all duration-200;
         border: 1px solid rgb(135, 135, 135);
+
         &:hover {
             background: #00000025;
         }
@@ -144,7 +133,7 @@
 }
 
 //added for access program card on pricing page
-.access-program{
+.access-program {
     background-image: url('/assets/img/program_feature_grid.png');
     background-position: center center;
     background-size: cover;
@@ -175,6 +164,7 @@ $button-transition-timing: 100ms;
     }
 
     &:hover {
+
         // color: var(--link-color);
         .arrow-head {
             transform: translateX(3px);
@@ -215,6 +205,7 @@ $button-transition-timing: 100ms;
 .feature_block:hover .icon__light {
     display: block;
 }
+
 .feature_block:hover .icon__dark,
 .feature_block .icon__light {
     display: none;
@@ -222,18 +213,4 @@ $button-transition-timing: 100ms;
 
 .modal-box {
     border-radius: 0px !important;
-}
-.country-autocomplete {
-    @apply flex items-center justify-center;
-    div {
-        input {
-            background-color: transparent !important;
-            @apply focus:outline-none;
-            @apply placeholder-gray-500;
-        }
-    }
-}
-
-.combo_card:hover > .combocard_div {
-    @apply text-white bg-black transition-colors;
 }
