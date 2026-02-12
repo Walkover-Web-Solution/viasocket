@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import Link from 'next/link';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
