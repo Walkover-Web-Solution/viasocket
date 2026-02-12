@@ -120,7 +120,7 @@ export default async function EmbedPage() {
                                         Give Your Chatbot the Power of {+appCount + 300}+ Integrations
                                     </h2>
                                     <p className="sub__h1">
-                                        You can connect your chatbot to over 1500 apps on viaSocket. Automate tasks,
+                                        You can connect your chatbot to over {+appCount + 300} apps on viaSocket. Automate tasks,
                                         streamline workflows and enhance your chatbot's capabilities—all in just a few
                                         clicks. Explore the possibilities and watch your chatbot evolve.
                                     </p>

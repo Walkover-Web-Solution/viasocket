@@ -54,11 +54,6 @@
     }
 }
 
-.border-color {
-    border: 1px solid #e3e2e2 !important;
-    transition: all 0.3s ease-in-out;
-}
-
 /** Globally used for scrollbar width */
 .scrollbar-thin {
     scrollbar-width: thin !important;
@@ -109,4 +104,22 @@
     background-position:
         0 0,
         0 0;
+}
+
+.gradient-background {
+    background: linear-gradient(300deg, #a2ffe0, #ccd9fc, #fdcdf2, #fff1a9);
+    background-size: 240% 240%;
+    animation: gradient-animation 24s ease infinite;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
