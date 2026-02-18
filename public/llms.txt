@@ -1,6 +1,6 @@
 # https://viasocket.com/
 
-> viaSocket is an AI-powered automation platform with 2,000+ integrations. It lets users build no-code workflows, deploy AI agents, and connect apps using visual tools and MCP support. Teams can trigger actions, sync data, and automate business processes without programming, reducing manual work and scaling operations through intelligent, event-driven workflows.
+> viaSocket is an AI-powered automation platform with a wide ecosystem of app integrations. It lets users build no-code workflows, deploy AI agents, and connect apps using visual tools and MCP support. Teams can trigger actions, sync data, and automate business processes without programming, reducing manual work and scaling operations through intelligent, event-driven workflows.
 
 ## Product Overview
 
@@ -9,41 +9,18 @@
 - [Pricing](https://viasocket.com/pricing): Subscription plans and lifetime free access program
 - [About viaSocket](https://viasocket.com/help/about-us): Platform overview, customer stories, and use cases
 
-## AI & Automation Features
-
-- [AI Agents](https://viasocket.com/features): Build intelligent AI agents powered by GPT, Claude, and other LLMs for autonomous task handling
-- [AI Workflow Builder](https://viasocket.com/features): Create AI-powered workflows with natural language guidance
-- [Conditional Paths](https://viasocket.com/features): Define specific conditions to trigger different actions in workflows
-- [Storage](https://viasocket.com/features): Built-in data storage feature for managing workflow data in JSON format
-- [Memory](https://viasocket.com/features): Store and recall data between workflow steps
-- [Human Intervention](https://viasocket.com/features): Pause workflows for manual input and expert assistance
-- [Delay](https://viasocket.com/features): Pause workflows for specified time periods
-- [Web Scraping/Crawling](https://viasocket.com/features): Extract data from websites automatically
-
-## Integrations & Apps
-
-- [Apps & Integrations](https://viasocket.com/integrations): Browse 2,000+ app integrations across all categories
+## App Integrations & Templates
+- [Apps & Integrations](https://viasocket.com/integrations): Browse integrations across a wide range of app categories
 - [Integration Categories](https://viasocket.com/integrations/category/contact-management): Organized by function (CRM, Marketing, E-Commerce, etc.)
 - [Request an Integration](https://viasocket.com/integrations): Request new app integrations
-
-## Templates & Workflows
-
 - [Workflow Automation Templates](https://viasocket.com/automations): Pre-built automation templates for common use cases
-- [Popular Workflows](https://viasocket.com/): Showcase of popular automation workflows
 
 ## MCP (Model Context Protocol)
 
 - [viaSocket MCP](https://viasocket.com/mcp): Connect AI assistants to viaSocket's ecosystem of integrations
-- [Accessing n8n MCP Server](https://viasocket.com/mcp): Guide to connecting MCP with AI tools like ChatGPT, Claude, and Cursor
-- [Ditch MCP, Embed Actions](https://viasocket.com/mcp/aiagent): Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical baggage
+- [viaSocket MCP Server](https://viasocket.com/blog/mcp-servers-a-comprehensive-guide): Guide to connecting MCP with AI tools like Cursor, Claude, and Windsurf.
+- [Connect your Ai to Apps](https://viasocket.com/mcp/aiagent): Simpler than MCP—Embed gives your AI agents native superpowers, minus the technical baggage
 - [MCP for SaaS](https://viasocket.com/mcp/saas): Create and run a dedicated MCP server for your SaaS app to expose APIs, automate workflows, and connect AI agents without infrastructure overhead 
-
-## Developer Resources
-
-- [Build Your Own Plug](https://viasocket.com/): Create custom integrations and plugins
-- [List Your App](https://viasocket.com/): Add your app to viaSocket marketplace
-- [HTTP API Request](https://viasocket.com/help): Connect to external services via API
-- [JavaScript Code](https://viasocket.com/help): Add custom JavaScript for flexible logic
 
 ## QuickStart
 - [QuickStart](https://viasocket.com/help/quickstart): Get started with viaSocket automation platform. Learn the basics and build your first workflow.
@@ -138,7 +115,6 @@
 - [LeadConnector](https://viasocket.com/integrations/leadconnector): Connect LeadConnector CRM for automated lead capture and pipeline management
 - [Airtable](https://viasocket.com/integrations/airtable): Sync and automate Airtable databases across your workflows
 - [Slack](https://viasocket.com/integrations/slack): Send automated Slack messages and notifications from any workflow trigger
-- [Shopify](https://viasocket.com/integrations/shopify): Automate Shopify orders, inventory, and customer data workflows
 - [HubSpot](https://viasocket.com/integrations/hubspot): Sync contacts, deals, and marketing data with HubSpot CRM
 - [Zendesk Sell](https://viasocket.com/integrations/zendesk-sell): Automate sales pipeline and contact management in Zendesk Sell
 - [Zendesk Support](https://viasocket.com/integrations/zendesk-support): Automate support ticket routing, updates, and escalations in Zendesk
@@ -298,8 +274,27 @@
 - [Anthropic (Claude)](https://viasocket.com/integrations/anthropic): Integrate Claude AI for intelligent text processing and generation within workflows
 - [Apify](https://viasocket.com/integrations/apify): Automate large-scale web scraping and data extraction using Apify actors
 - [MySQL](https://viasocket.com/integrations/mysql): Query and update MySQL databases automatically within multi-step workflows
-- [Google Sheets](https://viasocket.com/integrations/google-sheets): Automate data entry, row creation, and spreadsheet syncing with Google Sheets
-- [Airtable](https://viasocket.com/integrations/airtable): Sync and automate Airtable database records across connected workflows
+- [Sangam CRM](https://viasocket.com/integrations/sangam-crm): Automate CRM workflows and manage customer data with Sangam CRM
+- [Xero](https://viasocket.com/integrations/xero): Automate accounting, invoicing, and financial workflows with Xero
+- [Gorgias](https://viasocket.com/integrations/gorgias): Automate helpdesk ticket routing and customer support workflows with Gorgias
+- [LionDesk](https://viasocket.com/integrations/liondesk): Automate CRM and lead management workflows with LionDesk
+- [LiveChat](https://viasocket.com/integrations/livechat): Trigger workflows from LiveChat conversations and customer interactions
+- [Dialpad](https://viasocket.com/integrations/dialpad): Automate call logging and communication workflows with Dialpad
+- [Livestorm](https://viasocket.com/integrations/livestorm): Trigger workflows from Livestorm webinar registrations and attendee events
+- [Bubble](https://viasocket.com/integrations/bubble): Automate no-code app workflows and data management with Bubble
+- [Fireflies.AI](https://viasocket.com/integrations/fireflies): Automate meeting transcription and action item workflows with Fireflies.AI
+- [FreeAgent](https://viasocket.com/integrations/freeagent): Automate accounting and financial management workflows with FreeAgent
+- [WATI](https://viasocket.com/integrations/wati): Automate WhatsApp messaging and customer engagement workflows with WATI
+- [BugHerd](https://viasocket.com/integrations/bugherd): Trigger workflows from BugHerd bug reports and issue tracking events
+- [Firecrawl](https://viasocket.com/integrations/firecrawl): Automate web scraping and data extraction workflows with Firecrawl
+- [DocsBot AI](https://viasocket.com/integrations/docsbot): Automate AI knowledge base queries and response workflows with DocsBot AI
+- [YourGPT](https://viasocket.com/integrations/yourgpt): Automate AI chatbot and customer interaction workflows with YourGPT
+- [Pennylane](https://viasocket.com/integrations/pennylane): Automate accounting and financial reporting workflows with Pennylane
+- [Facebook Ads Insights](https://viasocket.com/integrations/facebook-ads-insights): Trigger workflows from Facebook Ads performance and campaign insight events
+- [Help Scout](https://viasocket.com/integrations/help-scout): Automate customer support ticket and conversation workflows with Help Scout
+- [SureCart](https://viasocket.com/integrations/surecart): Automate e-commerce order and payment workflows with SureCart
+- [Clappia](https://viasocket.com/integrations/clappia): Automate no-code app and form submission workflows with Clappia
+- [Envoy](https://viasocket.com/integrations/envoy): Trigger workflows from Envoy visitor check-ins and workplace management events
 
 ## Flow
 - [Flow](https://viasocket.com/help/flow): Core guide to creating, managing, and scaling automation workflows inside viaSocket.
@@ -353,7 +348,7 @@
 - [viaSocket MCP](https://viasocket.com/mcp): Overview of Model Context Protocol integration that allows AI assistants to securely interact with viaSocket workflows and tools.
 - [Fair usage policy](https://viasocket.com/help/viasocket-mcp/fair-usage-policy): Usage limits and responsible access guidelines for MCP connections.
 - [Cursor integration](https://viasocket.com/help/viasocket-mcp/cursor-integration): Connect viaSocket MCP with Cursor IDE for AI-assisted development.
-- [Claude Desktop](https://viasocket.com/help/viasocket-mcp/claude-desktop): Guide to linking viaSocket with Claude Desktop applications.
+- [Anthropic Claude](https://viasocket.com/mcp/anthropic-claude): Guide to linking viaSocket with Claude Desktop applications.
 - [windsurf](https://viasocket.com/mcp/windsurf): Setup instructions for Windsurf MCP integration.
 - [Python client integration](https://viasocket.com/help/viasocket-mcp/python-client-integration): Use MCP with Python applications and automation scripts.
 - [TypeScript client integration](https://viasocket.com/help/viasocket-mcp/typescript-client-integration): Connect MCP with TypeScript-based projects.
@@ -454,7 +449,6 @@
 - [Getting Started - Zendesk Sell](https://viasocket.com/help/integration-guides/getting-started-zendesk-sell): Sales CRM automation.
 - [Getting Started - Box](https://viasocket.com/help/integration-guides/getting-started-box): Cloud storage automation with Box.
 - [Getting Started - Klaviyo](https://viasocket.com/help/integration-guides/getting-started-klaviyo): Email marketing automation.
-- [How to find the chat ID in Google Chat](https://viasocket.com/help/integration-guides/how-to-find-the-chat-id-in-google-chat): Locate Google Chat room IDs.
 - [Getting Started - Gorgias](https://viasocket.com/help/integration-guides/getting-started-gorgias): Helpdesk workflow automation.
 - [Getting Started - Asana](https://viasocket.com/help/integration-guides/getting-started-asana): Project automation with Asana.
 - [Getting Started - Zoho Books](https://viasocket.com/help/integration-guides/getting-started---zoho-books): Accounting workflows in Zoho Books.
@@ -569,14 +563,6 @@
 ## About
 - [About Us](https://viasocket.com/help/about-us): Story of viaSocket’s evolution from early automation experiments to a full AI orchestration platform built to simplify workflow automation.
 - [Company Profile](https://viasocket.com/help/company-profile): Corporate overview, business background, and platform positioning.
-- [Origin and Mission](https://viasocket.com/help/about-us): viaSocket was created to eliminate automation complexity and give every professional the power to build integrations without code.
-- [Platform Growth Milestones](https://viasocket.com/help/about-us): Expansion from internal tool to global automation platform with 2,000+ integrations and tens of thousands of users.
-- [Customer Impact](https://viasocket.com/help/about-us): Millions of automated tasks processed and thousands of hours saved for users monthly.
-- [Usage Statistics](https://viasocket.com/help/about-us): Active workflows, customer base, integration scale, and performance metrics.
-- [Industry Ratings](https://viasocket.com/help/about-us): Platform ratings and third-party recognition.
-- [Core Values](https://viasocket.com/help/about-us): Commitment to simplicity, accessibility, time efficiency, and human-centered automation.
-- [Pushpendra Agrawal – Founder](https://viasocket.com/help/about-us): Founder leadership focused on empowering users and maintaining direct customer access.
-- [Ravi Palliwal – Co-founder](https://viasocket.com/help/about-us): Co-founder driving integration expansion and product growth.
 - [Walkover](https://viasocket.com/help/company-profile): Parent company behind viaSocket and MSG91, specializing in scalable communication and automation platforms.
 - [Support Team](mailto:support@viasocket.com): Technical support and troubleshooting assistance.
 - [Founders Email](mailto:founders@viasocket.com): Direct communication with company leadership.
@@ -584,10 +570,6 @@
 - [Community](https://viasocket.com/community/): Join the automation user community.
 - [Sales Contact](https://calendly.com/rpaliwal71/15-mins): Connect with the sales team.
 - [Hire an Expert](https://viasocket.com/experts): Access certified automation consultants.
-- [Media Features](https://viasocket.com/help/about-us): Coverage in The Tribune, ANI, ThePrint, and international tech publications.
-- [Customer Recognition](https://viasocket.com/help/about-us): Trusted by thousands of customers with strong industry ratings.
-- [Team Culture](https://viasocket.com/help/about-us): Collaborative global team focused on innovation, usability, and continuous improvement.
-- [Open Communication](https://viasocket.com/help/about-us): Direct access to founders and support channels for feedback and collaboration.
 
 ## viasocket blogs
 
@@ -686,7 +668,7 @@
 - [Comment](https://viasocket.com/features/comment): Add documentation inside workflows.
 - [Memory](https://viasocket.com/features/memory): Persist data across workflow runs.
 - [Delay](https://viasocket.com/features/delay): Add time-based pauses.
-- [Break](https://viasocket.com/features/delay): Conditionally stop workflow execution.
+- [Break](https://viasocket.com/features/break): Conditionally stop workflow execution.
 
 ### Collaboration & Team Features
 - [Shared Workspace](https://viasocket.com/features/shared-workspace): Team-based workflow collaboration.
@@ -722,7 +704,7 @@
 - [Code assistance](https://viasocket.com/features/functions): AI-assisted JavaScript writing.
 
 ### Built-in Tools
-- [SMTP](https://viasocket.com/features/http-api-request): Send emails directly from workflows.
+- [SMTP](https://viasocket.com/features/smtp): Send emails directly from workflows.
 - [SMS](https://viasocket.com/features/standard-apps): Send SMS messages via automation.
 - [Memory Tool](https://viasocket.com/features/memory): Cross-run data persistence.
 - [AI Tool](https://viasocket.com/features/ai-agent): Embed AI inside workflows.
@@ -1005,15 +987,12 @@ Maintain automated logs, approval trails, and compliance documentation across wo
 
 ## Support Resources
 - [Documentation](https://viasocket.com/help): Complete knowledge base covering workflows, integrations, troubleshooting, and advanced automation guides.
-- [Support Center](https://viasocket.com/help/others/support): Official help portal for technical assistance, account issues, and platform troubleshooting.
 - [Direct Support](https://viasocket.com/support): Contact viaSocket support team for real-time help and issue resolution.
 - [Expert Services](https://viasocket.com/experts): Hire certified automation experts to design, build, and optimize workflows.
 - [Partner Program](https://viasocket.com/help/partners): Join partnership programs for affiliates, agencies, and automation professionals.
 - [Beta Testing Program](https://viasocket.com/help/others/apply-as-beta-tester-for-viasocket): Apply for early access to new features and experimental tools.
 - [Lifetime Free Access Programs](https://viasocket.com/help/free-access-for-life-to-impactful-organizations): Special access initiatives supporting NGOs, educators, creators, and impact-driven organizations.
 - [Community](https://viasocket.com/community/): Connect with automation users, share workflows, and learn best practices.
-- [Schedule a Support Call](https://cal.id/team/viasocket/superheros): Book a live session with the support or onboarding team.
-- [Sales Assistance](https://calendly.com/rpaliwal71/15-mins): Talk with sales for pricing, enterprise onboarding, and custom plans.
 
 ## Contact
 - [Support](https://viasocket.com/help/others/support): Reach the official support team for technical help, troubleshooting, and account assistance.
