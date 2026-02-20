@@ -35,7 +35,7 @@ export default function IntegrationsAppOneComp({
 
     const { triggersCount, actionsCount } = getTriggersAndActionsCount(appOneDetails?.events);
     const appName = appOneDetails?.name || 'App';
-    const appSlug = appOneDetails?.slug || '';
+    const appSlug = appOneDetails?.appslugname || '';
     const totalApps = appCount || '2000';
 
     const filteredCombos = combosData?.combinations?.filter(
