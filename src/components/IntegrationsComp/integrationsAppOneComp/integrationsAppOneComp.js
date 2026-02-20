@@ -66,7 +66,6 @@ export default function IntegrationsAppOneComp({
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
         "url": `https://viasocket.com/integrations/${appSlug}`,
-        "image": `https://viasocket.com/images/apps/${appSlug}.png`,
         "description": `Automate ${appName} workflows using AI-powered automation. Connect ${appName} with ${totalApps}+ apps using ${triggersCount} triggers and ${actionsCount} actions.`,
         "featureList": featureList,
         "isRelatedTo": {
