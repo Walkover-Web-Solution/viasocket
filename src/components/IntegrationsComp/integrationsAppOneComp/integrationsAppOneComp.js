@@ -35,44 +35,59 @@ export default function IntegrationsAppOneComp({
 
     const { triggersCount, actionsCount } = getTriggersAndActionsCount(appOneDetails?.events);
     const appName = appOneDetails?.name || 'App';
+    const appSlug = appOneDetails?.appslugname || '';
     const totalApps = appCount || '2000';
 
-    const schemaDescription = `Automate ${appName} with viaSocket. Connect ${triggersCount} triggers and ${actionsCount} actions to ${totalApps}+ apps.`;
+    const filteredCombos = combosData?.combinations?.filter(
+        (combo) => combo?.description && !/^(List|Get)\b/i.test(combo.description.trim())
+    );
+    const selectedCombos = filteredCombos?.length > 0 ? filteredCombos : combosData?.combinations || [];
+    const useCaseFeatures = selectedCombos
+        .map((combo) => combo?.description?.trim())
+        .filter(Boolean)
+        .slice(0, 2);
+
+    const featureList = [];
+    useCaseFeatures.forEach((useCase) => featureList.push(useCase));
+    featureList.push(`Connect ${appName} with ${totalApps}+ business applications`);
+
+    if (triggersCount > 0 && actionsCount > 0) {
+        featureList.push(`Includes ${triggersCount} triggers and ${actionsCount} actions`);
+    } else if (triggersCount > 0) {
+        featureList.push(`Includes ${triggersCount} triggers`);
+    } else if (actionsCount > 0) {
+        featureList.push(`Includes ${actionsCount} actions`);
+    }
 
     const schemaData = {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "viaSocket Integration & Automation",
+        "name": `viaSocket for ${appName}`,
         "applicationCategory": "BusinessApplication",
         "operatingSystem": "Web",
+        "url": `https://viasocket.com/integrations/${appSlug}`,
+        "description": `Automate ${appName} workflows using AI-powered automation. Connect ${appName} with ${totalApps}+ apps using ${triggersCount} triggers and ${actionsCount} actions.`,
+        "featureList": featureList,
+        "isRelatedTo": {
+            "@type": "SoftwareApplication",
+            "name": appName
+        },
         "offers": {
             "@type": "Offer",
             "price": "0",
-            "priceCurrency": "USD"
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "url": "https://viasocket.com/pricing"
         },
         "provider": {
             "@type": "Organization",
             "name": "viaSocket",
-            "url": "https://viasocket.com"
-        },
-        "featureList": [
-            "2000+ integrations available",
-            "Built-in AI agents",
-            "MCP (Model Context Protocol) support",
-            "Dedicated Automation support",
-            "Request your required integration",
-            "No-code drag-and-drop interface",
-            "AI workflow builder",
-            "Realtime execution logs",
-            "Complex logic & branching",
-            "Human intervention steps (Approval workflows)",
-            "Persistent memory & variable storage",
-            "Email-to-flow functionality",
-            "Custom JavaScript functions",
-            "Enterprise-grade security",
-            "Mobile app available"
-        ],
-        "description": schemaDescription
+            "url": "https://viasocket.com",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://viasocket.com/assets/brand/logo.svg"
+            }
+        }
     };
 
     const faqSchemaData = faqData?.length > 0 ? {
