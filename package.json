@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "dev": "next dev -p 1111",
-        "prebuild": "node build-utilities/generate-robots-txt.js",
+        "prebuild": "node build-utilities/generate-robots-txt.js && node build-utilities/generate-sitemap-xml.js",
         "build": "next build",
         "start": "next start -p 1111",
         "pages:build": "npx @cloudflare/next-on-pages",
