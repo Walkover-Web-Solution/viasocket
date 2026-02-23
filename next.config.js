@@ -15,6 +15,11 @@ const nextConfig = {
     async redirects() {
         return [
             {
+                source: '/department/:path*',
+                destination: '/departments/:path*',
+                permanent: true,
+            },
+            {
                 source: '/login',
                 destination: 'https://flow.viasocket.com/',
                 permanent: false,
