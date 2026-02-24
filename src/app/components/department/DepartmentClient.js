@@ -47,7 +47,7 @@ export default function DepartmentClient({ data }) {
             </div>
 
             <div className="container py-12 flex flex-col gap-16">
-                <div className="relative bg-white p-4 border custom-border">
+                <div className="relative bg-white p-4 border custom-border h-[250px]">
                     <DepartmentAppsMarquee marque_apps={department?.marque_apps} department={department} />
                 </div>
 

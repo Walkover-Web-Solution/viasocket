@@ -4,7 +4,7 @@ import NavbarOptimized from './NavbarOptimized';
 const normalizePath = (path) => {
     if (!path) return '/';
 
-    const noQuery = path.toString().split('?')[0].split('#')[0].trim();
+    const noQuery = (path?.toString() || '').split('?')[0].split('#')[0].trim();
     let normalized = noQuery.startsWith('/') ? noQuery : `/${noQuery}`;
 
     if (normalized === '/index') normalized = '/';
