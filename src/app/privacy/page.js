@@ -106,17 +106,22 @@ export default async function PrivacyPage() {
 
                                     <p >We collect personal information that you voluntarily provide to us when you register on the Services, express an interest in obtaining information about us or our products and Services, when you participate in activities on the Services, or otherwise when you contact us.</p>
 
-                                    <p><strong>Personal Information Provided by You</strong>. The personal information that we collect depends on the context of your interactions with us and the Services, the choices you make, and the products and features you use. The personal information we collect may include the following:
-                                        <ul className="list-type-square">
-                                            <li>names</li>
-                                            <li>email addresses</li>
-                                        </ul>
-                                        <strong>Sensitive Information.</strong> We do not process sensitive information.</p>
-
-                                    <p><strong>Social Media Login Data.</strong> We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called "<a className="link" href="#sociallogins">HOW DO WE HANDLE YOUR SOCIAL LOGINS?</a>" below.</p>
+                                    <p>
+                                        We store basic account identification information such as first name, last
+                                        name, email address, and profile image to facilitate user account creation,
+                                        authentication, organizational mapping, and display within the platform
+                                        interface.
+                                    </p>
 
                                     <p>
-                                        All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</p>
+                                        Such personally identifiable information (PII) is stored securely and
+                                        protected using appropriate technical and organizational security measures,
+                                        including encryption at rest where applicable.
+                                    </p>
+                                    <p><strong>Sensitive Information.</strong> We do not process sensitive information.</p>
+                                    <p><strong>Social Media Login Data.</strong> We may provide you with the option to register with us using your existing social media account details, like your Facebook, Twitter, or other social media account. If you choose to register in this way, we will collect the information described in the section called "<a className="link" href="#sociallogins">HOW DO WE HANDLE YOUR SOCIAL LOGINS?</a>" below.</p>
+
+                                    <p>All personal information that you provide to us must be true, complete, and accurate, and you must notify us of any changes to such personal information.</p>
 
                                 </div>
                                 <p className="font-bold"> Information automatically collected</p>

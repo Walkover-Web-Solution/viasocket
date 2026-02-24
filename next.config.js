@@ -20,6 +20,21 @@ const nextConfig = {
                 permanent: true,
             },
             {
+                source: '/data-retention-deletion-policy',
+                destination: '/data-retention-deletion',
+                permanent: true,
+            },
+            {
+                source: '/about',
+                destination: '/help/about-us',
+                permanent: true,
+            },
+            {
+                source: '/variables',
+                destination: '/features/variables',
+                permanent: true,
+            },
+            {
                 source: '/login',
                 destination: 'https://flow.viasocket.com/',
                 permanent: false,
