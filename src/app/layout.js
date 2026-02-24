@@ -1,4 +1,5 @@
 import '@/scss/global.scss';
+import { cookies } from 'next/headers';
 import AppProvider from './providers';
 
 export const metadata = {
@@ -26,7 +27,11 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('prod');
+    const hasToken = Boolean(token?.value);
+
     return (
         <html lang="en" data-theme="light">
             <head>
@@ -41,7 +46,7 @@ export default function RootLayout({ children }) {
             </head>
             <body>
                 <div id="__next">
-                    <AppProvider>{children}</AppProvider>
+                    <AppProvider hasToken={hasToken}>{children}</AppProvider>
                 </div>
                 <script
                     dangerouslySetInnerHTML={{

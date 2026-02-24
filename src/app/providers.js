@@ -1,14 +1,19 @@
 'use client'
 
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useMemo, useState } from 'react'
 import HeadComp from '@/components/headComp/headComp'
 import ChatWidget from '@/components/chat-widget/chat-wdget'
 import { getUtmSource } from '@/utils/handleUtmSource'
 
-export default function AppProvider({ children }) {
+const AuthContext = createContext({ hasToken: false })
+
+export const useAuthContext = () => useContext(AuthContext)
+
+export default function AppProvider({ children, hasToken = false }) {
   const pathname = usePathname()
   const [showSkeleton, setShowSkeleton] = useState(false)
+  const authContextValue = useMemo(() => ({ hasToken }), [hasToken])
 
   // Convert pathname to match old router logic
   const pathArray = pathname.split('/').filter(Boolean)
@@ -113,7 +118,7 @@ export default function AppProvider({ children }) {
   }, []);
 
   return (
-    <>
+    <AuthContext.Provider value={authContextValue}>
       <HeadComp canonicalUrl={canonicalUrl} />
       <ChatWidget />
       {showSkeleton ? (
@@ -123,7 +128,7 @@ export default function AppProvider({ children }) {
           {children}
         </div>
       )}
-    </>
+    </AuthContext.Provider>
   )
 }
 
