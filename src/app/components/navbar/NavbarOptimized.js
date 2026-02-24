@@ -121,7 +121,7 @@ export default function NavbarOptimized({
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
-                            {navbarData?.length > 0 &&
+                            {navbarData?.length > 0 && topLevelGroups?.length > 0 &&
                                 topLevelGroups.map(
                                     (item, index) =>
                                         item?.is_link ? (
@@ -201,8 +201,8 @@ export default function NavbarOptimized({
                         <div className="flex items-center justify-center">
                             {/* Dynamic navigation links based on selected group */}
                             <div className="flex">
-                                {navbarData?.length > 0 &&
-                                    (groupedNavbarData?.[groupName] || [])
+                                {navbarData?.length > 0 && groupedNavbarData &&
+                                    (groupedNavbarData[groupName] || [])
                                         .map((item, index) => {
                                             return (
                                                 <Link
