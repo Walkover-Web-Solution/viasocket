@@ -1,25 +1,11 @@
 "use client";
 
 import { FaArrowRightLong } from "react-icons/fa6";
-import { useState, useLayoutEffect } from 'react';
 import Link from 'next/link';
+import { useAuthContext } from '@/app/providers';
 
 const DashboardButton = ({ utm_src, className = "" }) => {
-    const [hasToken, setHasToken] = useState(false);
-
-    // Read a cookie value by name (client-side only)
-    const getCookie = (name) => {
-        if (typeof document === 'undefined') return undefined;
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return undefined;
-    };
-
-    useLayoutEffect(() => {
-        const token = getCookie('prod');
-        setHasToken(Boolean(token));
-    }, []);
+    const { hasToken } = useAuthContext();
 
     return (
         <>
