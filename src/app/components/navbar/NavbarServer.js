@@ -31,7 +31,14 @@ const getGroupData = (navbarData, pageUrl) => {
         return acc;
     }, {});
 
-    const topLevelGroups = [...new Map(navbarData.map((item) => [item.group_name, item])).values()];
+    const topLevelGroups = [
+        ...new Map(
+            navbarData
+                .filter((item) => item?.group_name)
+                .map((item) => [item.group_name, item])
+        ).values(),
+    ];
+
     const currentPath = normalizePath(pageUrl || '/');
 
     let bestMatch = null;
@@ -41,7 +48,7 @@ const getGroupData = (navbarData, pageUrl) => {
         const candidates = [item?.link, item?.group_link].filter(Boolean);
 
         for (const candidate of candidates) {
-            if (candidate.startsWith('http')) continue;
+            if (typeof candidate === 'string' && candidate.startsWith('http')) continue;
 
             const target = normalizePath(candidate);
 
