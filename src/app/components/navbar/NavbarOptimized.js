@@ -87,7 +87,7 @@ export default function NavbarOptimized({
         const groupItems = groupedNavbarData?.[groupName] || [];
         if (!groupItems.length) return false;
 
-        const current = normalizePath(currentPath && currentPath !== '' ? currentPath : pathname);
+const current = normalizePath(currentPath || pathname);
 
         // Mark group active if any item's link OR the group's parent link (group_link) equals current or is a prefix of current (sub-route). Ignore external links.
         return groupItems.some((item) => {
