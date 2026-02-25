@@ -15,6 +15,7 @@ export default function IntegrationsAppTwoComp({
     navbarData,
     templateToShow,
     skipHeadComp,
+    hasToken,
 }) {
     return (
         <div className="cont gap-12 md:gap-16 lg:gap-20">
@@ -39,6 +40,7 @@ export default function IntegrationsAppTwoComp({
                 videoData={videoData}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
+                hasToken={hasToken}
             />
         </div>
     );

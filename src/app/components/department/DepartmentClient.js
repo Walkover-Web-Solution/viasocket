@@ -9,7 +9,7 @@ import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
-export default function DepartmentClient({ data }) {
+export default function DepartmentClient({ data, hasToken }) {
     const { metaData, navbarData, footerData, department, blogsData, templateToShow } = data;
     
     return (
@@ -34,7 +34,7 @@ export default function DepartmentClient({ data }) {
                         )}
 
                         <div className="flex flex-wrap gap-4 justify-center mb-10">
-                            <DashboardButton utm_src={"departments/"+department?.slug}/>
+                            <DashboardButton utm_src={"departments/" + department?.slug} hasToken={hasToken} />
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 className="btn btn-outline px-6 py-3 border-gray-300 hover:border-accent hover:bg-accent/5 transition-all duration-300"

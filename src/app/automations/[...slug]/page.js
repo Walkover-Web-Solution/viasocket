@@ -4,12 +4,14 @@ import { getAutomationSlugPageData } from '../../lib/automation-data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 import FaqSection from '@/components/faqSection/faqSection';
 import { redirect } from 'next/navigation';
+import { getHasToken } from '../../lib/getAuth';
 
 export const runtime = 'edge';
 
 export default async function AutomationSlugPage({ params }) {
     const paramsData = await params;
     const pageData = await getAutomationSlugPageData(paramsData.slug || []);
+    const hasToken = await getHasToken();
 
     if (pageData.isCategory === false && !pageData.template) {
         redirect('/automations');
@@ -18,7 +20,7 @@ export default async function AutomationSlugPage({ params }) {
     return (
         <div className="dotted-background global-top-space">
             <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
-            <AutomationSlugClient pageData={pageData} />
+            <AutomationSlugClient pageData={pageData} hasToken={hasToken} />
             <div className="pt-20 pb-4">
                 {pageData.faqData?.length > 0 && (
                     <FaqSection faqData={pageData.faqData} faqName={'/automation'} />

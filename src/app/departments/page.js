@@ -7,6 +7,8 @@ import FaqSection from '@/components/faqSection/faqSection';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
 import { getDepartmentsPageData } from '../lib/department-data';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import { getHasToken } from '../lib/getAuth'
+
 import {
     Users,
     Calculator,
@@ -77,6 +79,8 @@ export async function generateMetadata() {
 export default async function DepartmentsPage() {
     const { metaData, navbarData, footerData, departmentData, faqData, reviewData, appCount } =
         await getDepartmentsPageData();
+    
+    const hasToken = await getHasToken();
 
     return (
         <>
@@ -92,7 +96,7 @@ export default async function DepartmentsPage() {
                             Build workflows that run across teams, tools, and systems—without manual handoffs.
                         </p>
                         <div className="flex gap-4 justify-center mt-5">
-                            <DashboardButton utm_src={"/departments/hero"} />
+                            <DashboardButton utm_src={"/departments/hero"} hasToken={hasToken}/>
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 className="btn btn-outline"

@@ -5,7 +5,7 @@ import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrat
 import React from 'react'
 
 const IntegrationsMain = (props) => {
-    const { data } = props;
+    const { data, hasToken } = props;
     
     if (data.integrationsInfo?.appone && data.integrationsInfo?.apptwo) {
         // App-to-app integration page
@@ -26,6 +26,7 @@ const IntegrationsMain = (props) => {
                     navbarData={data.navbarData}
                     templateToShow={data.templateToShow}
                     skipHeadComp={true}
+                    hasToken={hasToken}
                 />
             </div>
         );

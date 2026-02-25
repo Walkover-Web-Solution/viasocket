@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
 import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
+import { getHasToken } from '../../lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -62,6 +63,7 @@ export default async function IntegrationsPage({ params, searchParams }) {
     const resolvedParams = await params;
     const resolvedSearchParams = await searchParams;
     const slug = resolvedParams?.slug || [];
+    const hasToken = await getHasToken();
     
     try {
         const data = await getIntegrationsPageData(slug, resolvedSearchParams);
@@ -70,7 +72,7 @@ export default async function IntegrationsPage({ params, searchParams }) {
             return <ErrorComp footerData={data.footerData} />;
         }
 
-        return <IntegrationsMain data={data} />;
+        return <IntegrationsMain data={data} hasToken={hasToken} />;
     } catch (error) {
         console.error('Error rendering Integrations page:', error);
         return notFound();
