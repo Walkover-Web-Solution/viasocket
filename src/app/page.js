@@ -6,6 +6,7 @@ import HeroContainer from './components/home/HeroContainer';
 import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
 import { getHomePageData } from './lib/data';
+import { getHasToken } from './lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -37,6 +38,7 @@ export default async function HomePage() {
     templateData,
     initialApps,
   } = await getHomePageData();
+  const hasToken = await getHasToken();
 
   return (
     <>
@@ -46,7 +48,8 @@ export default async function HomePage() {
       <HeroContainer 
         appCount={appCount}
         initialApps={initialApps} 
-        templateData={templateData} 
+        templateData={templateData}
+        hasToken={hasToken}
       />
 
       <div className="custom-background-home-page"></div>

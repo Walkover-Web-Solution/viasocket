@@ -6,7 +6,7 @@ import ResultSectionOptimized from './ResultSectionOptimized';
 import BuildOptionsCTAOptimized from './BuildOptionsCTAOptimized';
 import CTAButtons from './CTAButtons';
 
-export default function SearchAndResults({ initialApps, templateData, onSearchStateChange }) {
+export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken }) {
   const [templates, setTemplates] = useState([]);
   const [showTemplates, setShowTemplates] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -84,7 +84,7 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
 
       <BuildOptionsCTAOptimized />
 
-       <CTAButtons />
+       <CTAButtons hasToken={hasToken} />
 
       <ResultSectionOptimized
         // Template props

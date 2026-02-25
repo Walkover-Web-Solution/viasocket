@@ -145,6 +145,7 @@ export default function IntegrationsAppTwoClientComp({
     videoData,
     getDoFollowUrlStatusArray,
     templateToShow,
+    hasToken,
 }) {
     const router = useRouter();
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -275,7 +276,10 @@ export default function IntegrationsAppTwoClientComp({
                             >
                                 Connect these apps for free
                             </button>) : (
-                            <DashboardButton utm_src={"/integrations/" + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname} />
+                            <DashboardButton
+                                utm_src={"/integrations/" + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname}
+                                hasToken={hasToken}
+                            />
                         )}
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
-export default function FeatureBannerComp({ featureData, pageInfo, navbarData }) {
+export default function FeatureBannerComp({ featureData, pageInfo, navbarData, hasToken }) {
     return (
         <>
             <NavbarServer navbarData={navbarData} utm={pageInfo?.url} />
@@ -26,7 +26,7 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData })
                                 </p>
                             </div>
                             {!featureData?.image && (
-                                <DashboardButton utm_src={pageInfo?.url} />
+                                <DashboardButton utm_src={pageInfo?.url} hasToken={hasToken} />
                             )}
                         </div>
                         {(featureData?.image || featureData?.bgimage) && (

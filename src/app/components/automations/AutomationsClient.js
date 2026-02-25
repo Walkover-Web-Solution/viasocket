@@ -16,7 +16,7 @@ import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
 
 const TEMPLATES_PER_PAGE = 6;
 
-export default function AutomationsClient({ pageData }) {
+export default function AutomationsClient({ pageData, hasToken }) {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [loading, setLoading] = useState(false);
     
@@ -303,7 +303,7 @@ export default function AutomationsClient({ pageData }) {
                         <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                             <h2 className="h2">Can't find the right template?</h2>
                             <h2 className="h2">Start with AI</h2>
-                            <DashboardButton utm_src={"/automations"}/>
+                            <DashboardButton utm_src={"/automations"} hasToken={hasToken} />
                         </div>
                     </div>
                 </div>

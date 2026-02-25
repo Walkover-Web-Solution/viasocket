@@ -19,6 +19,7 @@ import FAQSection from '@/components/faqSection/faqSection';
 import { getWorkflowAutomationsPageData } from '../lib/data';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import ShowDepartmentOptimized from '@/app/components/home/ShowDepartmentOptimized';
+import { getHasToken } from '../lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -122,6 +123,7 @@ export default async function WorkflowAutomationsPage() {
         gettingStartedSteps,
         workflowAutomationTools
     } = await getWorkflowAutomationsPageData();
+    const hasToken = await getHasToken();
 
     return (
         <>
@@ -138,7 +140,7 @@ export default async function WorkflowAutomationsPage() {
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
-                    <DashboardButton utm_src={"/workflow-automations"}/>
+                    <DashboardButton utm_src={"/workflow-automations"} hasToken={hasToken} />
                 </section>
 
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
