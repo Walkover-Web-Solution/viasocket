@@ -65,8 +65,8 @@ export const useTemplateFilters = (templates = []) => {
             filteredChanged = true;
         }
 
-        // Remove templates without image
-        filtered = filtered.filter((template) => template.templateUrl && template.templateUrl.trim() !== '');
+        // Deduplicate templates when multiple filter branches merge overlapping matches
+        filtered = Array.from(new Map(filtered.map((template) => [template.id, template])).values());
 
 
         // Clean up match scores
