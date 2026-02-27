@@ -11,11 +11,19 @@ import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
 import { FaArrowRightLong } from "react-icons/fa6";
 
-export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
+export default function NavbarOptimized({
+    utm,
+    navbarData,
+    hasToken = null,
+    initialGroupName = '',
+    groupedNavbarData = {},
+    topLevelGroups = [],
+    currentPath = '/',
+}) {
     const pathname = usePathname();
-    const [groupName, setGroupName] = useState('');
+    const [groupName, setGroupName] = useState(initialGroupName);
     const [menuOpen, setMenuOpen] = useState(false);
-    const [originalGroupName, setOriginalGroupName] = useState('');
+    const [originalGroupName, setOriginalGroupName] = useState(initialGroupName);
 
     let mode = 'light';
     let borderClass;
@@ -76,10 +84,10 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
     };
 
     const isGroupActive = (groupName) => {
-        if (!navbarData?.length) return false;
+        const groupItems = groupedNavbarData?.[groupName] || [];
+        if (!groupItems.length) return false;
 
-        const current = normalizePath(pathname);
-        const groupItems = navbarData.filter((item) => item.group_name === groupName);
+const current = normalizePath(currentPath || pathname);
 
         // Mark group active if any item's link OR the group's parent link (group_link) equals current or is a prefix of current (sub-route). Ignore external links.
         return groupItems.some((item) => {
@@ -94,40 +102,11 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
         });
     };
 
-    // Ensure the second layer reflects the active first-layer group based on current route
+    // Keep local hover state in sync when server sends updated active group.
     useEffect(() => {
-        if (!navbarData?.length) return;
-
-        const current = normalizePath(pathname);
-
-        // Find the first group (by navbarData order) that matches current route
-        const groupsInOrder = [...new Map(navbarData.map((i) => [i.group_name, i])).values()].map((i) => i.group_name);
-
-        let matchedGroup = '';
-        for (const g of groupsInOrder) {
-            const items = navbarData.filter((it) => it.group_name === g);
-            const hasMatch = items.some((it) => {
-                const candidates = [];
-                const child = it?.link || '';
-                const parent = it?.group_link || '';
-
-                if (child && !child.startsWith('http')) candidates.push(normalizePath(child));
-                if (parent && !parent.startsWith('http')) candidates.push(normalizePath(parent));
-
-                return candidates.some((target) => current === target || current.startsWith(target + '/'));
-            });
-            if (hasMatch) {
-                matchedGroup = g;
-                break;
-            }
-        }
-
-        // Only update if different to avoid unnecessary re-renders
-        if (matchedGroup && matchedGroup !== groupName) {
-            setGroupName(matchedGroup);
-            setOriginalGroupName(matchedGroup);
-        }
-    }, [pathname, navbarData]);
+        setGroupName(initialGroupName || '');
+        setOriginalGroupName(initialGroupName || '');
+    }, [initialGroupName]);
 
 
     return (
@@ -142,8 +121,8 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
                 <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
-                            {navbarData?.length > 0 &&
-                                [...new Map(navbarData.map((item) => [item.group_name, item])).values()].map(
+                            {navbarData?.length > 0 && topLevelGroups?.length > 0 &&
+                                topLevelGroups.map(
                                     (item, index) =>
                                         item?.is_link ? (
                                             <Link key={index} href={item?.group_link}>
@@ -222,9 +201,8 @@ export default function NavbarOptimized({ utm, navbarData, hasToken = null }) {
                         <div className="flex items-center justify-center">
                             {/* Dynamic navigation links based on selected group */}
                             <div className="flex">
-                                {navbarData?.length > 0 &&
-                                    navbarData
-                                        .filter((item) => item.group_name === groupName)
+                                {navbarData?.length > 0 && groupedNavbarData &&
+                                    (groupedNavbarData[groupName] || [])
                                         .map((item, index) => {
                                             return (
                                                 <Link

@@ -4,7 +4,7 @@ import { useCallback, useState } from 'react';
 import HeroSection from './HeroSection';
 import SearchAndResults from './SearchAndResults';
 
-export default function HeroContainer({ appCount, initialApps, templateData }) {
+export default function HeroContainer({ appCount, initialApps, templateData, hasToken }) {
   const [hasActiveSearch, setHasActiveSearch] = useState(false);
 
   // Handle search state changes from SearchAndResults component
@@ -25,6 +25,7 @@ export default function HeroContainer({ appCount, initialApps, templateData }) {
           initialApps={initialApps}
           templateData={templateData}
           onSearchStateChange={handleSearchStateChange}
+          hasToken={hasToken}
         />
       </div>
     </div>

@@ -14,7 +14,7 @@ import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 import TemplateCard from '@/components/templateCard/templateCard';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
-export default function AutomationSlugClient({ pageData }) {
+export default function AutomationSlugClient({ pageData, hasToken }) {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
@@ -307,7 +307,7 @@ export default function AutomationSlugClient({ pageData }) {
                     <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                         <h2 className="h2">Can't find the right template?</h2>
                         <h2 className="h2 mb-4">Start with AI</h2>
-                        <DashboardButton utm_src={`/automations/${template?.title}`} />
+                        <DashboardButton utm_src={`/automations/${template?.title}`} hasToken={hasToken} />
                     </div>
                 </div>
             </div>

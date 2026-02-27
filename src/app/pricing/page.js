@@ -7,6 +7,7 @@ import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
 import { GiCheckMark } from 'react-icons/gi';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import { getHasToken } from '../lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -33,6 +34,7 @@ export async function generateMetadata() {
 
 export default async function PricingPage() {
     const { footerData, faqData, metaData, features, countries, appCount, navbarData } = await getPricingPageData();
+    const hasToken = await getHasToken();
 
     return (
         <>
@@ -53,7 +55,7 @@ export default async function PricingPage() {
                         </h2>
                     </div>
                     <div className="cont lg:flex-row items-center gap-2 mt-4">
-                        <DashboardButton utm_src={"/pricing/hero"} className="w-full" />
+                        <DashboardButton utm_src={"/pricing/hero"} className="w-full" hasToken={hasToken} />
                         <Link
                             href="https://cal.id/team/viasocket/workflow-setup-discussion"
                             className="btn btn-outline"

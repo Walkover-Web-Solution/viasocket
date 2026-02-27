@@ -4,12 +4,12 @@ import FeatureContentComp from '@/components/FeaturesComp/FeatureContentComp/Fea
 import FeatureGridComp from '@/components/FeaturesComp/FeatureGridComp/FeatureGridComp';
 import FeaturesFooterComp from '@/components/FeaturesComp/FeaturesFooterComp/FeaturesFooterComp';
 
-export default function FeaturesClient({ data }) {
+export default function FeaturesClient({ data, hasToken }) {
     const { features, featureData, footerData, pageInfo, blogData, navbarData } = data;
 
     return (
         <div className="cont global-top-space ">
-            <FeatureBannerComp featureData={featureData} pageInfo={pageInfo} navbarData={navbarData} />
+            <FeatureBannerComp featureData={featureData} pageInfo={pageInfo} navbarData={navbarData} hasToken={hasToken} />
             <FeatureGridComp features={features} pageInfo={pageInfo} />
             <FeatureContentComp featureData={featureData?.faqs} pageInfo={pageInfo} />
             <div className="container cont cont__py">

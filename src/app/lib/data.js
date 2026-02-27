@@ -24,7 +24,6 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getBlogData } from '@/utils/getBlogData';
 import { getAppCount, getTemplates, getApps } from '@/utils/axiosCalls';
-import { validateTemplateData } from '@/utils/validateTemplateData';
 import { fetchPluginData } from '@/utils/axiosCalls';
 
 export async function getHomePageData() {
@@ -57,8 +56,7 @@ export async function getHomePageData() {
 
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-        const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
-        const validTemplateData = validateTemplateData(verifiedTemplates);
+        const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
 
         const securityGridData = [
             {

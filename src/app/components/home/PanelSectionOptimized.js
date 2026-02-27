@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
-export default function PanelSectionOptimized() {
+export default function PanelSectionOptimized({ hasToken }) {
     return (
         <>
             <div className="container mt-12">
@@ -18,7 +18,7 @@ export default function PanelSectionOptimized() {
                         />
                     </div>
                     <div className="absolute bottom-[5%] left-[57%] -translate-x-1/2 flex justify-center flex-col items-center gap-4 z-50">
-                        <DashboardButton utm_src={"/sspanel"}/>
+                        <DashboardButton utm_src={"/sspanel"} hasToken={hasToken} />
                     </div>
                 </div>
             </div>

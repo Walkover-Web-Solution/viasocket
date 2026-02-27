@@ -12,7 +12,6 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getBlogData } from '@/utils/getBlogData';
 import { getTemplates, getApps } from '@/utils/axiosCalls';
-import { validateTemplateData } from '@/utils/validateTemplateData';
 
 export async function getAutomationsPageData() {
     try {
@@ -33,8 +32,7 @@ export async function getAutomationsPageData() {
 
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-        const verifiedTemplates = templateData.filter((t) => validStatuses.includes(t.verified));
-        const validTemplateData = validateTemplateData(verifiedTemplates);
+        const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
 
         const categories = [
             ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),

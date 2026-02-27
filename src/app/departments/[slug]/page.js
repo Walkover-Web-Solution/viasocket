@@ -1,6 +1,7 @@
 import { getDepartmentPageData } from '@/app/lib/department-data';
 import DepartmentClient from '@/app/components/department/DepartmentClient';
 import { notFound } from 'next/navigation';
+import { getHasToken } from '@/app/lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -50,12 +51,13 @@ export default async function DepartmentPage({ params }) {
     try {
         const { slug } = await params;
         const data = await getDepartmentPageData(slug);
+        const hasToken = await getHasToken();
         
         if (data.noData || !data.department) {
             notFound();
         }
 
-        return <DepartmentClient data={data} />;
+        return <DepartmentClient data={data} hasToken={hasToken} />;
     } catch (error) {
         console.error('Error in department page:', error);
         notFound();

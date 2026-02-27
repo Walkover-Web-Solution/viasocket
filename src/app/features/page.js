@@ -1,5 +1,6 @@
 import { getFeaturesPageData } from '@/app/lib/feature-data';
 import FeaturesClient from '@/app/components/features/FeaturesClient';
+import { getHasToken } from '@/app/lib/getAuth';
 
 export const runtime = 'edge';
 
@@ -51,6 +52,7 @@ export default async function FeaturesPage({ params }) {
         const resolvedParams = await params;
         const feature = resolvedParams.feature || [];
         const data = await getFeaturesPageData(feature);
+        const hasToken = await getHasToken();
         
         if (data.noData) {
             return (
@@ -61,7 +63,7 @@ export default async function FeaturesPage({ params }) {
             );
         }
         
-        return <FeaturesClient data={data} />;
+        return <FeaturesClient data={data} hasToken={hasToken} />;
     } catch (error) {
         console.error('Error in FeaturesPage:', error);
         return (
