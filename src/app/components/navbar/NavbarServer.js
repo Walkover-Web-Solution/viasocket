@@ -71,7 +71,7 @@ const getGroupData = (navbarData, pageUrl) => {
         }
     }
 
-    const initialGroupName = bestMatch?.group_name || topLevelGroups[0]?.group_name || '';
+    const initialGroupName = bestMatch?.group_name || '';
 
     return {
         groupedNavbarData,
