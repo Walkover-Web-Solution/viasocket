@@ -33,7 +33,7 @@ export default function McpIndexComp({
                     `}
                 </Script>
 
-                <NavbarServer navbarData={navbarData} utm={'/index'} />
+                <NavbarServer navbarData={navbarData} utm={'/mcp'} />
                 <McpIndexClientComp
                     pageInfo={pageInfo}
                     integrationsInfo={integrationsInfo}
