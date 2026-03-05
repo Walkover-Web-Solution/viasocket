@@ -9,7 +9,7 @@ const heroTheme = {
   gridLeftOpacity: 0.025,
   gridRightOpacity: 0.06,
   logoFilter: "brightness(0)",
-  headlineColor: "#0a0a0a",
+  headlineColor: "var(--btn-color)",
   headlineAccentColor: "#2563EB",
   subtitleColor: "rgba(0,0,0,0.7)",
   ctaShadow: "0 0 30px rgba(37,99,235,0.2)",
@@ -35,7 +35,7 @@ const heroTheme = {
   glassBoxShadow: "0 8px 50px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.02)",
   glassHighlight: "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.5) 60%, transparent 90%)",
   glassInnerWash: "radial-gradient(ellipse 60% 40% at 30% 0%, rgba(255,255,255,0.25) 0%, transparent 70%)",
-  glassTitleColor: "#0a0a0a",
+  glassTitleColor: "var(--btn-color)",
   glassSubtitleColor: "rgba(0,0,0,0.68)",
   dotInactive: "rgba(0,0,0,0.18)",
   navBtnBg: "rgba(0,0,0,0.04)",
@@ -239,7 +239,7 @@ export default function HeroContainerNew() {
                 top: 55,
                 height: 2,
                 borderRadius: 1,
-                background: "rgba(0,0,0,0.06)",
+                background: "var(--rail-color)",
               }}
             />
             {/* Left vertical rail — full height */}
@@ -249,7 +249,7 @@ export default function HeroContainerNew() {
                 left: 115,
                 width: 2,
                 borderRadius: 1,
-                background: "rgba(0,0,0,0.06)",
+                background: "var(--rail-color)",
               }}
             />
             {/* Right vertical rail — full height */}
@@ -259,7 +259,7 @@ export default function HeroContainerNew() {
                 right: 115,
                 width: 2,
                 borderRadius: 1,
-                background: "rgba(0,0,0,0.06)",
+                background: "var(--rail-color)",
               }}
             />
             {/* Top-left dot (intersection of horizontal + left vertical) */}
@@ -285,7 +285,7 @@ export default function HeroContainerNew() {
                 bottom: 9,
                 height: 2,
                 borderRadius: 1,
-                background: "rgba(0,0,0,0.06)",
+                background: "var(--rail-color)",
               }}
             />
           </div>
@@ -336,8 +336,7 @@ export default function HeroContainerNew() {
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-5">
                   <button
-                    className="group bg-[#0a0a0a] hover:bg-[#000000] text-white px-[26px] py-[14px] rounded-[14px] text-[14px] font-medium transition-all duration-200 flex items-center gap-2"
-                    style={{ boxShadow: "0 0 30px rgba(0,0,0,0.15)" }}
+                    className="new-primary-btn"
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}
                   >
@@ -609,7 +608,7 @@ function FigmaLogoIcon({ logo }) {
       style={{
         background: "#ffffff",
         border: `1px solid rgba(0,0,0,0.08)`,
-        boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+        boxShadow: "0 1px 3px var(--rail-color)",
       }}
     >
       <img

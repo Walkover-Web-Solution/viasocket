@@ -4,19 +4,13 @@ import {
   Workflow,
   LayoutGrid,
   Table2,
-  ArrowRight,
-  ChevronRight,
-  AlertCircle,
-  Mail,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import Image from "next/image";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 
-/* ── App logos (Figma assets) ─────────────────────────────────── */
-const imgTypeform = "https://thingsofbrand.com/api/icon/typeform.io";
 const imgSlack = "https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg";
 const imgGmail = "https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png";
 
-/* ── Quadrant data ─────────────────────────────────────────── */
 const quadrants = [
   {
     label: "AI Agents",
@@ -52,18 +46,12 @@ const quadrants = [
   },
 ];
 
-/* ══════════════════════════════════════════════════════════════
-   VISUALS — compact, right-aligned within each quadrant
-   ═══════════════════════════════════════════════════════════════ */
-
-/* ── AI Agents: AI Agent decision tile only ── */
 function AIAgentVisual() {
   return (
     <div className="flex flex-col gap-2.5 w-full max-w-[280px] items-center">
       {/* Ticket chip */}
       <span
-        className="text-[12px] px-2.5 py-[3px] rounded-[3px]"
-        style={{ color: "#ef4444", background: "#fef2f2", border: "1px solid rgba(239,68,68,0.15)", fontWeight: 600 }}
+        className="text-xs px-2.5 py-[3px] rounded-[3px] font-semibold text-[#ef4444] bg-[#fef2f2] border border-[rgba(239,68,68,0.15)]"
       >
         Ticket #4821
       </span>
@@ -77,19 +65,18 @@ function AIAgentVisual() {
 
       {/* AI Agent tile */}
       <div
-        className="rounded-[4px] overflow-hidden w-full"
-        style={{ border: "1px solid rgba(124,58,237,0.2)" }}
+        className="rounded overflow-hidden w-full border border-[rgba(124,58,237,0.2)]"
       >
-        <div className="px-2.5 py-1" style={{ background: "#7c3aed" }}>
+        <div className="px-2.5 py-1 bg-[#7c3aed]">
           <div className="flex items-center gap-1.5">
             <Sparkles className="w-3.5 h-3.5 text-white" />
-            <span className="text-[12px] text-white" style={{ fontWeight: 600 }}>
+            <span className="text-xs text-white font-semibold">
               AI Agent
             </span>
           </div>
         </div>
-        <div className="px-2.5 py-1.5" style={{ background: "#faf8ff" }}>
-          <span className="text-[11px] block" style={{ color: "#7c3aed", fontWeight: 500 }}>
+        <div className="px-2.5 py-1.5 bg-[#faf8ff]">
+          <span className="text-[11px] block text-[#7c3aed] font-medium">
             Priority: High · Sentiment: Frustrated
           </span>
         </div>
@@ -104,8 +91,7 @@ function AIAgentVisual() {
 
       {/* Escalate chip */}
       <span
-        className="text-[12px] px-2.5 py-[3px] rounded-[3px]"
-        style={{ color: "#059669", background: "#f0fdf4", border: "1px solid rgba(5,150,105,0.15)", fontWeight: 600 }}
+        className="text-xs px-2.5 py-[3px] rounded-[3px] font-semibold text-[#059669] bg-[#f0fdf4] border border-[rgba(5,150,105,0.15)]"
       >
         Escalate to Senior Agent
       </span>
@@ -120,25 +106,25 @@ function WorkflowVisual() {
       {/* Step 1: Trigger */}
       <div className="flex flex-col gap-1.5">
         <span
-          className="text-[12px] uppercase tracking-wider"
-          style={{ color: "#0a0a0a", fontWeight: 600 }}
+          className="text-xs uppercase tracking-wider font-semibold"
         >
           When
         </span>
         <div
-          className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] min-w-0"
-          style={{ background: "#f8fdfd", border: "1px solid rgba(8,145,178,0.12)" }}
+          className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] min-w-0 bg-[#f8fdfd] border border-[#0891b21f]"
         >
-          <img
+          <Image
             src={imgGmail}
             alt="Gmail"
             className="w-7 h-7 rounded-[3px] object-contain shrink-0"
+            width={28}
+            height={28}
           />
           <div className="min-w-0">
-            <span className="text-[14px] block truncate" style={{ color: "#0a0a0a", fontWeight: 600 }}>
+            <span className="text-sm block truncate font-semibold">
               New email received
             </span>
-            <span className="text-[12px] block" style={{ color: "#6b7280" }}>
+            <span className="text-xs block text-[#6b7280]">
               Gmail
             </span>
           </div>
@@ -155,25 +141,25 @@ function WorkflowVisual() {
       {/* Step 2: Action */}
       <div className="flex flex-col gap-1.5">
         <span
-          className="text-[12px] uppercase tracking-wider"
-          style={{ color: "#0a0a0a", fontWeight: 600 }}
+          className="text-[12px] uppercase tracking-wider font-semibold"
         >
           Do
         </span>
         <div
-          className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] min-w-0"
-          style={{ background: "#f8fdfd", border: "1px solid rgba(8,145,178,0.12)" }}
+          className="flex items-center gap-2.5 px-3 py-2 rounded-[4px] min-w-0 bg-[#f8fdfd] border border-[#0891b21f]"
         >
-          <img
+          <Image
             src={imgSlack}
             alt="Slack"
             className="w-7 h-7 rounded-[3px] object-contain shrink-0"
+            width={28}
+            height={28}
           />
           <div className="min-w-0">
-            <span className="text-[14px] block truncate" style={{ color: "#0a0a0a", fontWeight: 600 }}>
+            <span className="text-sm block truncate font-semibold">
               Send message
             </span>
-            <span className="text-[12px] block" style={{ color: "#6b7280" }}>
+            <span className="text-xs block text-[#6b7280]">
               #leads channel
             </span>
           </div>
@@ -183,34 +169,35 @@ function WorkflowVisual() {
   );
 }
 
-/* ── Integrations: rotating logo grid with app icons ── */
 const allAppLogos = [
-  { name: "Slack", src: "https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg", direct: true },
-  { name: "Microsoft", src: "https://thingsofbrand.com/api/icon/teams.microsoft.com", direct: true },
-  { name: "Zoom", src: "https://stuff.thingsofbrand.com/zoom.us/images/img688a247e14_zoom.jpg", direct: true },
-  { name: "Gmail", src: "https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png", direct: true },
-  { name: "GoogleSheets", src: "https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png", direct: true },
-  { name: "Hubspot", src: "https://thingsofbrand.com/api/icon/hubspot.com", direct: true },
-  { name: "Salesforce", src: "https://stuff.thingsofbrand.com/salesforce.com/images/img1_salesforce.png", direct: true },
-  { name: "Pipedrive", src: "https://thingsofbrand.com/api/icon/pipedrive.com", direct: true },
-  { name: "Quickbooks", src: "https://thingsofbrand.com/api/icon/quickbooks.com", direct: true },
-  { name: "Xero", src: "https://thingsofbrand.com/api/icon/xero.com", direct: true },
-  { name: "MSG91", src: "https://thingsofbrand.com/api/icon/msg91.com", direct: true },
-  { name: "Mailchimp", src: "https://thingsofbrand.com/api/icon/mailchimp.com", direct: true },
-  { name: "ActiveCampaign", src: "https://thingsofbrand.com/api/icon/activecampaign.com", direct: true },
-  { name: "Zendesk", src: "https://thingsofbrand.com/api/icon/zendesk.com", direct: true },
-  { name: "Freshdesk", src: "https://thingsofbrand.com/api/icon/freshdesk.com", direct: true },
-  { name: "Trello", src: "https://thingsofbrand.com/api/icon/trello.com", direct: true },
-  { name: "Asana", src: "https://thingsofbrand.com/api/icon/asana.com", direct: true },
-  { name: "Clickup", src: "https://thingsofbrand.com/api/icon/clickup.com", direct: true },
-  { name: "Notion", src: "https://thingsofbrand.com/api/icon/notion.com", direct: true },
-  { name: "Fireflies", src: "https://thingsofbrand.com/api/icon/fireflies.ai", direct: true },
+  { name: "Slack", src: "https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg" },
+  { name: "Whatsapp", src: "https://thingsofbrand.com/api/icon/whatsapp.com" },
+  { name: "Zoom", src: "https://stuff.thingsofbrand.com/zoom.us/images/img688a247e14_zoom.jpg" },
+  { name: "Airtable", src: "https://thingsofbrand.com/api/icon/airtable.com" },
+  { name: "GoogleSheets", src: "https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png" },
+  { name: "Hubspot", src: "https://thingsofbrand.com/api/icon/hubspot.com" },
+  { name: "Figma", src: "https://thingsofbrand.com/api/icon/figma.com" },
+  { name: "Pipedrive", src: "https://thingsofbrand.com/api/icon/pipedrive.com" },
+  { name: "Quickbooks", src: "https://thingsofbrand.com/api/icon/quickbooks.com" },
+  { name: "Xero", src: "https://thingsofbrand.com/api/icon/xero.com" },
+  { name: "MSG91", src: "https://thingsofbrand.com/api/icon/msg91.com" },
+  { name: "Mailchimp", src: "https://thingsofbrand.com/api/icon/mailchimp.com" },
+  { name: "ActiveCampaign", src: "https://thingsofbrand.com/api/icon/activecampaign.com" },
+  { name: "Zendesk", src: "https://thingsofbrand.com/api/icon/zendesk.com" },
+  { name: "Shopify", src: "https://thingsofbrand.com/api/icon/shopify.com" },
+  { name: "Trello", src: "https://thingsofbrand.com/api/icon/trello.com" },
+  { name: "Asana", src: "https://thingsofbrand.com/api/icon/asana.com" },
+  { name: "Clickup", src: "https://thingsofbrand.com/api/icon/clickup.com" },
+  { name: "Notion", src: "https://thingsofbrand.com/api/icon/notion.com" },
+  { name: "Github", src: "https://thingsofbrand.com/api/icon/github.com" },
 ];
 
 const VISIBLE_COUNT = 6;
 
 function IntegrationsVisual() {
   const [startIdx, setStartIdx] = useState(0);
+  const itemRefs = useRef(new Map());
+  const prevRects = useRef(new Map());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -224,46 +211,80 @@ function IntegrationsVisual() {
     visible.push(allAppLogos[(startIdx + i) % allAppLogos.length]);
   }
 
+  useLayoutEffect(() => {
+    const nextRects = new Map();
+
+    itemRefs.current.forEach((node, key) => {
+      if (node) nextRects.set(key, node.getBoundingClientRect());
+    });
+
+    nextRects.forEach((nextRect, key) => {
+      const node = itemRefs.current.get(key);
+      if (!node) return;
+
+      const prevRect = prevRects.current.get(key);
+
+      if (prevRect) {
+        const dx = prevRect.left - nextRect.left;
+        const dy = prevRect.top - nextRect.top;
+
+        if (dx || dy) {
+          node.animate(
+            [
+              { transform: `translate(${dx}px, ${dy}px)` },
+              { transform: "translate(0px, 0px)" },
+            ],
+            {
+              duration: 300,
+              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+            }
+          );
+        }
+      } else {
+        node.animate(
+          [
+            { opacity: 0, transform: "scale(0.7)" },
+            { opacity: 1, transform: "scale(1)" },
+          ],
+          {
+            duration: 300,
+            easing: "ease-out",
+          }
+        );
+      }
+    });
+
+    prevRects.current = nextRects;
+  }, [startIdx]);
+
   return (
     <div className="grid grid-cols-3 gap-2 w-full max-w-[180px]">
       {visible.map((app) => (
-          <div key={app.name} className="relative">
+        <div
+          key={app.name}
+          className="relative"
+          ref={(node) => {
+            if (node) itemRefs.current.set(app.name, node);
+            else itemRefs.current.delete(app.name);
+          }}
+        >
+          <div
+            className="w-[52px] h-[52px] rounded flex items-center justify-center relative bg-white border border-[var(--rail-color)] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+          >
             <div
-              className="w-[52px] h-[52px] rounded-[4px] flex items-center justify-center relative"
-              style={{
-                background: "#fff",
-                border: "1px solid rgba(0,0,0,0.06)",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-              }}
+              className="relative shrink-0 overflow-hidden w-[26px] h-[26px]"
             >
-              <div
-                className="relative shrink-0 overflow-hidden"
-                style={{
-                  width: app.direct ? 26 : (app.w ?? 24) * 1.2,
-                  height: app.direct ? 26 : (app.h ?? 24) * 1.2,
-                }}
-              >
-                {app.direct ? (
-                  <img
-                    alt=""
-                    src={app.src}
-                    className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-                  />
-                ) : (
-                  <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                    <img
-                      alt=""
-                      src={app.src}
-                      className={`absolute max-w-none pointer-events-none ${app.imgClass}`}
-                    />
-                  </div>
-                )}
-              </div>
-              {/* Green active dot */}
-              {/* removed */}
+              <Image
+                alt={app.name}
+                src={app.src}
+                className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+                width={26}
+                height={26}
+              />
             </div>
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -271,29 +292,23 @@ function IntegrationsVisual() {
 /* ── Tables: compact data table ── */
 function TablesVisual() {
   const tableRows = [
-    { name: "Acme Corp", email: "john@acme.co", status: "Qualified", sc: "white", bg: "#10B981" },
-    { name: "Globex Inc", email: "sara@globex.io", status: "Nurture", sc: "#92400e", bg: "#fde68a" },
-    { name: "Initech Ltd", email: "mike@init.dev", status: "New", sc: "white", bg: "#2563EB" },
-    { name: "Wayne Ent", email: "bruce@wayne.co", status: "Qualified", sc: "white", bg: "#10B981" },
+    { name: "Acme Corp", email: "john@acme.co", status: "Qualified", statusClass: "text-white bg-[#10B981]" },
+    { name: "Globex Inc", email: "sara@globex.io", status: "Nurture", statusClass: "text-[#92400e] bg-[#fde68a]" },
+    { name: "Initech Ltd", email: "mike@init.dev", status: "New", statusClass: "text-white bg-[#2563EB]" },
+    { name: "Wayne Ent", email: "bruce@wayne.co", status: "Qualified", statusClass: "text-white bg-[#10B981]" },
   ];
 
   return (
     <div
-      className="rounded-[4px] overflow-hidden w-full max-w-[260px]"
-      style={{ background: "#fff", border: "1px solid rgba(0,0,0,0.08)", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}
+      className="rounded-[4px] overflow-hidden w-full max-w-[260px] bg-white border border-[rgba(0,0,0,0.08)] shadow-[0_1px_4px_rgba(0,0,0,0.04)]"
     >
       <div
-        className="grid px-2.5 py-1.5"
-        style={{
-          gridTemplateColumns: "1.2fr 1.2fr 0.8fr",
-          borderBottom: "1px solid rgba(0,0,0,0.08)",
-        }}
+        className="grid px-2.5 py-1.5 [grid-template-columns:1.2fr_1.2fr_0.8fr] border-b border-[rgba(0,0,0,0.08)]"
       >
         {["Company", "Email", "Status"].map((h) => (
           <span
             key={h}
-            className="text-[10px] uppercase truncate"
-            style={{ color: "#a3a3a3", fontWeight: 600, letterSpacing: "0.4px" }}
+            className="text-[10px] uppercase truncate text-[#a3a3a3] font-semibold tracking-[0.4px]"
           >
             {h}
           </span>
@@ -302,21 +317,18 @@ function TablesVisual() {
       {tableRows.map((r, idx, arr) => (
         <div
           key={r.name}
-          className="grid px-2.5 py-1.5 items-center"
-          style={{
-            gridTemplateColumns: "1.2fr 1.2fr 0.8fr",
-            borderBottom: idx < arr.length - 1 ? "1px solid rgba(0,0,0,0.05)" : "none",
-          }}
+          className={`grid px-2.5 py-1.5 items-center [grid-template-columns:1.2fr_1.2fr_0.8fr] ${idx < arr.length - 1 ? "border-b border-[rgba(0,0,0,0.05)]" : ""
+            }`}
         >
-          <span className="text-[11px] truncate pr-2" style={{ color: "#1f2937", fontWeight: 600 }}>
+          <span className="text-[11px] truncate pr-2 text-[#1f2937] font-semibold">
             {r.name}
           </span>
-          <span className="text-[10px] truncate pr-2" style={{ color: "#6b7280" }}>
+          <span className="text-[10px] truncate pr-2 text-[#6b7280]">
             {r.email}
           </span>
           <span
-            className="text-[9px] px-1.5 py-[1px] rounded-[3px] w-fit truncate"
-            style={{ color: r.sc, background: r.bg, fontWeight: 600 }}
+            className={`text-[9px] px-1.5 py-[1px] rounded-[3px] w-fit truncate font-semibold ${r.statusClass || "text-white bg-[#2563EB]"
+              }`}
           >
             {r.status}
           </span>
@@ -331,8 +343,7 @@ const visualComponents = [AIAgentVisual, WorkflowVisual, IntegrationsVisual, Tab
 export function CoreCapabilities() {
   return (
     <section
-      className="w-full py-12 md:py-16 overflow-visible"
-      style={{ background: "#ffffff", zIndex: 1, position: "relative" }}
+      className="w-full py-12 md:py-16 overflow-visible bg-white z-[1] relative"
     >
       <div className="relative max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px]">
         {/* Decorative grid rails */}
@@ -349,7 +360,7 @@ export function CoreCapabilities() {
               width: 2,
               borderRadius: 1,
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.06) 80%, transparent 100%)",
+                "linear-gradient(to bottom, var(--rail-color) 80%, transparent 100%)",
             }}
           />
           <div
@@ -361,20 +372,15 @@ export function CoreCapabilities() {
               width: 2,
               borderRadius: 1,
               background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.06) 80%, transparent 100%)",
+                "linear-gradient(to bottom, var(--rail-color) 80%, transparent 100%)",
             }}
           />
         </div>
 
         <div className="relative z-[2]">
-          {/* Centered headline */}
           <div className="mb-14 md:mb-16 text-center">
             <h2
-              className="text-[28px] md:text-[36px] lg:text-[42px] leading-[1.1] tracking-[-0.8px] lg:tracking-[-1.2px]"
-              style={{
-                color: "#0a0a0a",
-                fontWeight: 700,
-              }}
+              className="heading2"
             >
               Four Building Blocks.{" "}
               <span style={{ color: "#a3a3a3" }}>Infinite Automations.</span>
@@ -407,7 +413,6 @@ export function CoreCapabilities() {
               {quadrants.map((q, i) => {
                 const Visual = visualComponents[i];
                 const Icon = q.icon;
-                const isTop = i < 2;
                 const isLeft = i % 2 === 0;
 
                 return (
@@ -443,10 +448,9 @@ export function CoreCapabilities() {
                             />
                           </div>
                           <span
-                            className="text-[20px] md:text-[22px] lg:text-[24px] tracking-[-0.4px]"
+                            className="text-[20px] md:text-[22px] lg:text-[24px] tracking-[-0.4px] font-semibold"
                             style={{
                               color: q.accent,
-                              fontWeight: 600,
                             }}
                           >
                             {q.label}
@@ -455,11 +459,7 @@ export function CoreCapabilities() {
 
                         {/* Bold headline */}
                         <p
-                          className="leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1"
-                          style={{
-                            color: "#0a0a0a",
-                            fontWeight: 700,
-                          }}
+                          className="leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1 font-bold"
                         >
                           {(() => {
                             const lastDot = q.headline.lastIndexOf(". ", q.headline.length - 2);
@@ -501,7 +501,7 @@ export function CoreCapabilities() {
                 left: "50%",
                 transform: "translate(-50%, -50%)",
                 background: "#f0f0f0",
-                border: "1px solid rgba(0,0,0,0.06)",
+                border: "1px solid var(--rail-color)",
               }}
             />
           </div>

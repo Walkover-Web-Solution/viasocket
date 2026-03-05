@@ -2,11 +2,12 @@
 
 import { ChevronDown, MessageCircle } from "lucide-react";
 import { useState } from "react";
+import Link from "next/link";
 
 export default function FAQs({ faqData = [] }) {
   const [openId, setOpenId] = useState(1);
 
-  const railColor = "rgba(0,0,0,0.06)";
+  const railColor = "var(--rail-color)";
 
   if (!faqData.length) return null;
 
@@ -96,19 +97,14 @@ export default function FAQs({ faqData = [] }) {
         </svg>
       </div>
 
-      <div className="relative max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px]" style={{ zIndex: 2 }}>
+      <div className="relative max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px] z-[2]">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
-          {/* Left column: Sticky heading */}
           <div
             className="lg:w-[380px] flex-shrink-0 lg:sticky lg:top-32 lg:self-start"
             style={{ animation: "faqFadeUp 420ms ease both" }}
           >
             <h2
-              className="text-[28px] md:text-[36px] lg:text-[40px] leading-[1.1] tracking-[-0.8px] lg:tracking-[-1.2px] mb-4"
-              style={{
-                color: "#0a0a0a",
-                fontWeight: 700,
-              }}
+              className="heading2 mb-4"
             >
               Everything you
               <br />
@@ -116,38 +112,20 @@ export default function FAQs({ faqData = [] }) {
             </h2>
 
             <p
-              className="text-[15px] leading-[1.7] mb-8"
-              style={{
-                color: "rgba(0,0,0,0.7)",
-                fontWeight: 500,
-              }}
+              className="sub-heading mb-8"
             >
               Frequently asked ques about viaSocket — pricing, security, integrations, and getting started.
             </p>
 
-            <a
+            <Link
               href="#"
-              className="inline-flex items-center gap-2.5 px-[26px] py-[14px] rounded-[14px] transition-all duration-200 group"
-              style={{
-                background: "#0a0a0a",
-                border: "none",
-                color: "#ffffff",
-                boxShadow: "0px 0px 30px 0px rgba(0,0,0,0.15)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#000000";
-                e.currentTarget.style.boxShadow = "0px 0px 40px 0px rgba(0,0,0,0.25)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = "#0a0a0a";
-                e.currentTarget.style.boxShadow = "0px 0px 30px 0px rgba(0,0,0,0.15)";
-              }}
+              className="new-primary-btn"
             >
               <MessageCircle className="w-4 h-4" />
-              <span className="text-[14px]" style={{ fontWeight: 500 }}>
+              <span className="text-sm font-semibold">
                 Talk to our team
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Right column: Accordion */}
@@ -181,7 +159,7 @@ export default function FAQs({ faqData = [] }) {
 
                     {/* que */}
                     <span
-                      className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[#0a0a0a] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
+                      className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--btn-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
                     >
                       {faq?.que}
                     </span>

@@ -47,11 +47,11 @@ export default async function HomePage() {
 
       <HeroContainerNew/>
       <CoreCapabilities/>
-      <VisualShowcase/>
-      <ReviewsGrid/>
+      <VisualShowcase categoryData={indexTemplateData} templateData={templateData} />
+      <ReviewsGrid reviewData={reviewData}/>
       {faqData?.length > 0 && <FAQs faqData={faqData} />}
-      <SecuritySectionNew/>
-      <FooterNew/>
+      <SecuritySectionNew securityGridData={securityGridData}/>
+      <FooterNew footerData={footerData} />
     </>
   );
 }

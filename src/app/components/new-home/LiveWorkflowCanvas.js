@@ -10,7 +10,7 @@ const theme = {
   nodeTextInactive: "rgba(0,0,0,0.45)",
   sectionLabel: "rgba(0,0,0,0.3)",
   branchLabel: "rgba(0,0,0,0.25)",
-  branchGroupBorder: "rgba(0,0,0,0.06)",
+  branchGroupBorder: "var(--rail-color)",
   branchGroupBg: "rgba(0,0,0,0.015)",
   conditionLabelBg: "#f0f0f2",
   conditionLabelBorder: "rgba(0,0,0,0.08)",

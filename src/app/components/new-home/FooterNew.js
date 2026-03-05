@@ -4,38 +4,8 @@ import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { PiDiscordLogoFill } from "react-icons/pi";
 import YouTubeIcon from "../../../components/footer/YouTubeIcon";
-
-const columns = [
-  {
-    lgPl: "lg:pl-[116px]",
-    groups: [
-      { heading: "Support", links: ["Book a Demo", "Contact Support Team", "Request a Feature", "Knowledge Base", "Community"] },
-      { heading: "", links: ["Blog", "Download Mobile App", "Request an Integration"] },
-      { heading: "", links: ["viaSocket Embed", "MCP Marketplace"] },
-    ],
-  },
-  {
-    lgPl: "lg:pl-[115px]",
-    groups: [
-      { heading: "Company", links: ["About", "We are Hiring", "Culture We Foster", "Client Stories", "Roadmap"] },
-      { heading: "Compare", links: ["viaSocket vs Zapier", "viaSocket vs Make", "viaSocket vs Pabbly"] },
-    ],
-  },
-  {
-    lgPl: "lg:pl-[80px]",
-    groups: [
-      { heading: "MCP", links: ["MCP Marketplace", "MCP for AI Agents", "MCP for SaaS Players"] },
-      { heading: "Pricing Plans", links: ["Pricing", "Startups plan", "Discount for Developing Nations", "Free Access Program"] },
-    ],
-  },
-  {
-    lgPl: "lg:pl-[103px]",
-    groups: [
-      { heading: "For SaaS", links: ["List Your App", "Build Your Own Product", "Whitelabel MCP Server", "Become a Billing Partner", "Embed"] },
-      { heading: "AI & Automation", links: ["Apps Integrations", "Features", "Automations", "Discover Top Apps", "Workflow Automation Guide"] },
-    ],
-  },
-];
+import createURL from "@/utils/createURL";
+import { RequestIntegrationPopupOpener } from "@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp";
 
 /* ── Grid constants ──────────────────────────────────────────── */
 const LINE_COLOR = "rgba(81,81,81,0.12)";
@@ -46,9 +16,9 @@ const DOT_OPACITY = 0.5;
  * Figma grid positions on 1920px frame:
  * - Vertical rails: 140px (7.29%) & 1780px (92.71%) — full height
  * - Inner verticals: 521px (27.14%), 945px (49.22%), 1365px (71.09%) — 532px tall
- * - Horizontal lines: y=45 & y=577 — full width
+ * - Horizontal lines: y=45 & y=597 — full width
  * - Dots at: x = 136, 516, 940, 1360, 1776 (as % = 7.08, 26.88, 48.96, 70.83, 92.5)
- *            y = 40 (top row) & 572 (bottom row)
+ *            y = 40 (top row) & 592 (bottom row)
  */
 const verticalLines = [
   { x: "7.29%", full: true },
@@ -61,7 +31,30 @@ const verticalLines = [
 const dotXPositions = ["7.08%", "26.88%", "48.96%", "70.83%", "92.5%"];
 
 /* ── Footer component ────────────────────────────────────────── */
-export default function FooterNew() {
+export default function FooterNew({ footerData = [] }) {
+  const filteredData = footerData?.filter((item) => !item?.hidden);
+  const groupedData = filteredData?.reduce((acc, obj) => {
+    const groupName = obj?.group_name;
+    if (!groupName) return acc;
+    if (!acc[groupName]) {
+      acc[groupName] = [];
+    }
+    acc[groupName].push(obj);
+    return acc;
+  }, {});
+
+  const groupedEntries = Object.entries(groupedData || {});
+  const columnCount = 4;
+  const baseSize = Math.floor(groupedEntries.length / columnCount);
+  const remainder = groupedEntries.length % columnCount;
+  let start = 0;
+  const footerColumns = Array.from({ length: columnCount }, (_, i) => {
+    const size = baseSize + (i < remainder ? 1 : 0);
+    const chunk = groupedEntries.slice(start, start + size);
+    start += size;
+    return chunk;
+  });
+
   const bgStyle = {
     backgroundImage: [
       "radial-gradient(ellipse at 20% 50%, rgba(42,42,30,1) 0%, rgba(26,26,20,1) 50%)",
@@ -72,8 +65,6 @@ export default function FooterNew() {
 
   return (
     <footer className="w-full relative overflow-hidden" style={bgStyle}>
-
-      {/* ── Atmospheric glows (Figma Container4–7) ──────────── */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute rounded-full" style={{ width: 500, height: 500, right: -79, top: -5, background: "rgba(59,130,246,0.2)", filter: "blur(150px)" }} />
         <div className="absolute rounded-full" style={{ width: 450, height: 450, left: -76, top: 347, background: "rgba(29,78,216,0.15)", filter: "blur(140px)" }} />
@@ -94,7 +85,7 @@ export default function FooterNew() {
                 left: line.x,
                 top: line.full ? 0 : 45,
                 bottom: line.full ? 0 : "auto",
-                height: line.full ? undefined : 532,
+                height: line.full ? undefined : 672,
                 width: 2,
                 background: LINE_COLOR,
               }}
@@ -103,8 +94,8 @@ export default function FooterNew() {
 
           {/* Top horizontal at y=45 */}
           <div className="absolute" style={{ top: 45, left: -3, right: -3, height: 2, background: LINE_COLOR }} />
-          {/* Bottom horizontal at y=577 */}
-          <div className="absolute" style={{ top: 577, left: -3, right: -3, height: 2, background: LINE_COLOR }} />
+          {/* Bottom horizontal at y=717 */}
+          <div className="absolute" style={{ top: 717, left: -3, right: -3, height: 2, background: LINE_COLOR }} />
 
           {/* Intersection dots — top row (y=40) */}
           {dotXPositions.map((x, i) => (
@@ -112,9 +103,9 @@ export default function FooterNew() {
               <circle cx="5" cy="5" r="5" fill={DOT_COLOR} fillOpacity={DOT_OPACITY} />
             </svg>
           ))}
-          {/* Intersection dots — bottom row (y=572) */}
+          {/* Intersection dots — bottom row (y=712) */}
           {dotXPositions.map((x, i) => (
-            <svg key={`dot-b-${i}`} className="absolute" style={{ left: x, top: 572, width: 10, height: 10 }} viewBox="0 0 10 10" fill="none">
+            <svg key={`dot-b-${i}`} className="absolute" style={{ left: x, top: 712, width: 10, height: 10 }} viewBox="0 0 10 10" fill="none">
               <circle cx="5" cy="5" r="5" fill={DOT_COLOR} fillOpacity={DOT_OPACITY} />
             </svg>
           ))}
@@ -125,13 +116,13 @@ export default function FooterNew() {
       <div className="max-w-[1920px] mx-auto relative z-10">
 
         {/* ── Link columns ─────────────────────────────────── */}
-        <div className="px-6 md:px-12 pt-[70px] pb-12 lg:pt-[114px] lg:pb-[100px] lg:px-[7.29%]">
+        <div className="px-6 md:px-12 pt-[70px] pb-12 lg:pt-[114px] lg:pb-[64px] lg:px-[7.29%]">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 lg:gap-x-0 lg:gap-y-0">
-            {columns.map((col, ci) => (
-              <div key={ci} className={`flex flex-col gap-8 ${col.lgPl}`}>
-                {col.groups.map((group, gi) => (
-                  <div key={gi}>
-                    {group.heading && (
+            {footerColumns.map((columnGroups, ci) => (
+              <div key={ci} className="flex flex-col gap-8 lg:pl-12">
+                {columnGroups.map(([groupName, items]) => (
+                  <div key={groupName}>
+                    {groupName && (
                       <h4
                         className="text-[11px] tracking-[1.65px] uppercase mb-4 whitespace-pre-wrap"
                         style={{
@@ -141,27 +132,32 @@ export default function FooterNew() {
                           color: "rgba(255,255,255,0.6)",
                         }}
                       >
-                        {group.heading}
+                        {groupName}
                       </h4>
                     )}
                     <ul className="space-y-[6px]">
-                      {group.links.map((link) => (
-                        <li key={link}>
-                          <a
-                            href="#"
-                            className="text-[14px] transition-colors duration-200 block text-white"
+                      {items.map((item, index) => (
+                        <li key={`${groupName}-${index}-${item?.name}`}>
+                          <Link
+                            target="_blank"
+                            href={createURL(item?.link)}
+                            className="text-[14px] transition-colors duration-200 block text-white hover:text-[rgba(255,255,255,0.6)]"
                             style={{
                               fontFamily: "'Inter', sans-serif",
                               fontWeight: 400,
                               lineHeight: "21px",
                             }}
-                            onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
-                            onMouseLeave={(e) => (e.currentTarget.style.color = "white")}
+                            aria-label={item?.name}
                           >
-                            {link}
-                          </a>
+                            {item?.name}
+                          </Link>
                         </li>
                       ))}
+                      {groupName === "Support" && (
+                        <li>
+                          <RequestIntegrationPopupOpener title="Request an Integration" showType="footer" />
+                        </li>
+                      )}
                     </ul>
                   </div>
                 ))}
@@ -171,7 +167,7 @@ export default function FooterNew() {
         </div>
 
         {/* ── Large wordmark ─────────────────────────────────── */}
-        <div className="w-full flex justify-center select-none overflow-hidden lg:mt-[57px]">
+        <div className="w-full flex justify-center select-none overflow-hidden lg:mt-[20px]">
           <p
             className="text-white whitespace-nowrap"
             style={{
@@ -201,9 +197,17 @@ export default function FooterNew() {
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "20.4px", color: "rgba(255,255,255,0.5)" }}
             >
               © 2026 viaSocket |{" "}
-              <a href="#" className="underline decoration-solid hover:opacity-80 transition-opacity">
-                Privacy, Terms and Data Retention &amp; Deletion Policy
-              </a>
+              <Link href="/privacy" className="underline decoration-solid hover:opacity-80 transition-opacity">
+                Privacy
+              </Link>
+              <span>, </span>
+              <Link href="/terms" className="underline decoration-solid hover:opacity-80 transition-opacity">
+                Terms
+              </Link>
+              <span> and </span>
+              <Link href="/data-retention-deletion" className="underline decoration-solid hover:opacity-80 transition-opacity">
+                Data Retention &amp; Deletion Policy
+              </Link>
             </p>
             <p
               className="text-[12px]"
@@ -221,13 +225,13 @@ export default function FooterNew() {
             >
               Crafted by Eshaan Sharma
             </p>
-            <a
-              href="#"
+            <Link
+              href="/privacy"
               className="text-[12px] text-center underline decoration-solid hover:opacity-80 transition-opacity"
               style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "18px", color: "rgba(255,255,255,0.5)" }}
             >
               Privacy Policy
-            </a>
+            </Link>
           </div>
 
           {/* Right — social icons */}
