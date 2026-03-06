@@ -32,18 +32,16 @@ export default async function HomePage() {
     faqData,
     footerData,
     securityGridData,
-    appCount,
     indexTemplateData,
     reviewData,
     navbarData,
     templateData,
-    initialApps,
   } = await getHomePageData();
 
   return (
     <div className='new-home-page'>
       <MetaHeadComp metaData={metaData} page={'/'} />
-      <NavbarServer navbarData={navbarData} utm={'/index'} />
+      <NavbarServer navbarData={navbarData} utm={'/index'} isNavbarWhite={true} />
 
       <HeroContainerNew/>
       <CoreCapabilities/>
