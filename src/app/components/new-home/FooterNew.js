@@ -8,7 +8,7 @@ import createURL from "@/utils/createURL";
 import { RequestIntegrationPopupOpener } from "@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp";
 
 /* ── Grid constants ──────────────────────────────────────────── */
-const LINE_COLOR = "rgba(81,81,81,0.12)";
+const LINE_COLOR = "#5151511f";
 const DOT_COLOR = "#414141";
 const DOT_OPACITY = 0.5;
 
@@ -124,12 +124,9 @@ export default function FooterNew({ footerData = [] }) {
                   <div key={groupName}>
                     {groupName && (
                       <h4
-                        className="text-[11px] tracking-[1.65px] uppercase mb-4 whitespace-pre-wrap"
+                        className="text-[11px] tracking-[1.65px] uppercase mb-4 whitespace-pre-wrap text-[#ffffff99]"
                         style={{
-                          fontFamily: "'Inter', sans-serif",
-                          fontWeight: 400,
                           lineHeight: "16.5px",
-                          color: "rgba(255,255,255,0.6)",
                         }}
                       >
                         {groupName}
@@ -141,10 +138,8 @@ export default function FooterNew({ footerData = [] }) {
                           <Link
                             target="_blank"
                             href={createURL(item?.link)}
-                            className="text-[14px] transition-colors duration-200 block text-white hover:text-[rgba(255,255,255,0.6)]"
+                            className="text-sm transition-colors duration-200 block text-white font-normal hover:text-[#ffffff99]"
                             style={{
-                              fontFamily: "'Inter', sans-serif",
-                              fontWeight: 400,
                               lineHeight: "21px",
                             }}
                             aria-label={item?.name}
@@ -154,7 +149,7 @@ export default function FooterNew({ footerData = [] }) {
                         </li>
                       ))}
                       {groupName === "Support" && (
-                        <li>
+                        <li className="text-sm transition-colors duration-200 block text-white font-normal hover:text-[#ffffff99]">
                           <RequestIntegrationPopupOpener title="Request an Integration" showType="footer" />
                         </li>
                       )}
@@ -169,10 +164,8 @@ export default function FooterNew({ footerData = [] }) {
         {/* ── Large wordmark ─────────────────────────────────── */}
         <div className="w-full flex justify-center select-none overflow-hidden lg:mt-[20px]">
           <p
-            className="text-white whitespace-nowrap"
+            className="text-white whitespace-nowrap font-bold"
             style={{
-              fontFamily: "'Inter', sans-serif",
-              fontWeight: 700,
               fontSize: "clamp(80px, 14.8vw, 283.793px)",
               lineHeight: "0.85",
               letterSpacing: "-0.025em",
@@ -185,16 +178,15 @@ export default function FooterNew({ footerData = [] }) {
         {/* ── Divider — rail to rail ─────────────────────────── */}
         <div
           className="mx-6 md:mx-12 lg:mx-[7.29%] mt-8 lg:mt-12"
-          style={{ height: 1, borderTop: "1px solid rgba(255,255,255,0.15)" }}
+          style={{ height: 1, borderTop: "1px solid #ffffff26" }}
         />
 
         {/* ── Bottom bar ─────────────────────────────────────── */}
-        <div className="px-6 md:px-12 lg:px-[9.84%] py-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+        <div className="px-6 md:px-12 lg:px-[9.84%] py-5 flex flex-col md:flex-row items-start items-center justify-between gap-4">
           {/* Left — copyright */}
           <div className="flex flex-col gap-0.5">
             <p
-              className="text-[12px]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "20.4px", color: "rgba(255,255,255,0.5)" }}
+              className="text-sm new-home-footer-muted-text"
             >
               © 2026 viaSocket |{" "}
               <Link href="/privacy" className="underline decoration-solid hover:opacity-80 transition-opacity">
@@ -210,46 +202,28 @@ export default function FooterNew({ footerData = [] }) {
               </Link>
             </p>
             <p
-              className="text-[12px]"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "20.4px", color: "rgba(255,255,255,0.5)" }}
+              className="text-sm new-home-footer-muted-text"
             >
               Walkover Web Solutions Pvt Ltd. | All rights reserved.
             </p>
           </div>
 
-          {/* Center — crafted by */}
-          <div className="flex flex-col items-center gap-0">
-            <p
-              className="text-[12px] text-center"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "18px", color: "rgba(255,255,255,0.5)" }}
-            >
-              Crafted by Eshaan Sharma
-            </p>
-            <Link
-              href="/privacy"
-              className="text-[12px] text-center underline decoration-solid hover:opacity-80 transition-opacity"
-              style={{ fontFamily: "'Inter', sans-serif", fontWeight: 400, lineHeight: "18px", color: "rgba(255,255,255,0.5)" }}
-            >
-              Privacy Policy
-            </Link>
-          </div>
-
           {/* Right — social icons */}
           <div className="flex items-center gap-4">
             <Link href="https://www.instagram.com/viasocket/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="instagram">
-              <FaInstagramSquare size={20} style={{ color: "rgba(255,255,255,0.6)" }} />
+              <FaInstagramSquare size={20} style={{ color: "#ffffff99" }} />
             </Link>
             <Link href="https://www.linkedin.com/company/viasocket-walkover/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="linkedin">
-              <FaLinkedin size={20} style={{ color: "rgba(255,255,255,0.6)" }} />
+              <FaLinkedin size={20} style={{ color: "#ffffff99" }} />
             </Link>
             <Link href="https://x.com/viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="twitter">
-              <FaSquareXTwitter size={20} style={{ color: "rgba(255,255,255,0.6)" }} />
+              <FaSquareXTwitter size={20} style={{ color: "#ffffff99" }} />
             </Link>
             <Link href="https://www.youtube.com/@viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="youtube">
-              <YouTubeIcon width={20} height={20} fill="rgba(255,255,255,0.6)" />
+              <YouTubeIcon width={20} height={20} fill="#ffffff99" />
             </Link>
             <Link href="https://discord.com/invite/wqsSsMAkkz" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="discord">
-              <PiDiscordLogoFill size={20} style={{ color: "rgba(255,255,255,0.6)" }} />
+              <PiDiscordLogoFill size={20} style={{ color: "#ffffff99" }} />
             </Link>
           </div>
         </div>

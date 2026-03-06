@@ -23,6 +23,7 @@
         "gray-matter": "^4.0.3",
         "js-yaml": "^4.1.0",
         "lucide-react": "^0.511.0",
+        "motion": "^12.35.0",
         "mui-chips-input": "^2.1.4",
         "multiselect-react-dropdown": "^2.0.25",
         "next": "^15.5.9",

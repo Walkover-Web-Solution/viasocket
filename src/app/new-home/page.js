@@ -41,7 +41,7 @@ export default async function HomePage() {
   } = await getHomePageData();
 
   return (
-    <>
+    <div className='new-home-page'>
       <MetaHeadComp metaData={metaData} page={'/'} />
       <NavbarServer navbarData={navbarData} utm={'/index'} />
 
@@ -52,6 +52,6 @@ export default async function HomePage() {
       {faqData?.length > 0 && <FAQs faqData={faqData} />}
       <SecuritySectionNew securityGridData={securityGridData}/>
       <FooterNew footerData={footerData} />
-    </>
+    </div>
   );
 }

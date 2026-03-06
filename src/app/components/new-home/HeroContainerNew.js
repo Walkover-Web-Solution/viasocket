@@ -1,5 +1,7 @@
 "use client";
 import { useState, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight, ChevronLeft, ChevronRight, Star, Play, Sparkles, Workflow } from "lucide-react";
 import { LiveWorkflowCanvas } from "./LiveWorkflowCanvas";
 
@@ -9,7 +11,6 @@ const heroTheme = {
   gridLeftOpacity: 0.025,
   gridRightOpacity: 0.06,
   logoFilter: "brightness(0)",
-  headlineColor: "var(--btn-color)",
   headlineAccentColor: "#2563EB",
   subtitleColor: "rgba(0,0,0,0.7)",
   ctaShadow: "0 0 30px rgba(37,99,235,0.2)",
@@ -35,7 +36,7 @@ const heroTheme = {
   glassBoxShadow: "0 8px 50px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.6), inset 0 -1px 0 rgba(0,0,0,0.02)",
   glassHighlight: "linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.5) 40%, rgba(255,255,255,0.7) 50%, rgba(255,255,255,0.5) 60%, transparent 90%)",
   glassInnerWash: "radial-gradient(ellipse 60% 40% at 30% 0%, rgba(255,255,255,0.25) 0%, transparent 70%)",
-  glassTitleColor: "var(--btn-color)",
+  glassTitleColor: "var(--black-color)",
   glassSubtitleColor: "rgba(0,0,0,0.68)",
   dotInactive: "rgba(0,0,0,0.18)",
   navBtnBg: "rgba(0,0,0,0.04)",
@@ -295,10 +296,12 @@ export default function HeroContainerNew() {
             <div className="space-y-7 pt-4 lg:pt-12">
               {/* Logo */}
               <div>
-                <img
+                <Image
                   src="/assets/brand/logo.svg"
                   alt="viaSocket"
-                  className="h-9 opacity-90"
+                  width={160}
+                  height={36}
+                  className="h-9 w-auto opacity-90"
                   style={{ filter: t.logoFilter }}
                 />
               </div>
@@ -309,8 +312,7 @@ export default function HeroContainerNew() {
               {/* Main Headline */}
               <div className="space-y-5">
                 <h1
-                  className="text-[36px] md:text-[48px] lg:text-[57px] leading-[1.15] md:leading-[1.2] lg:leading-[72px] tracking-[-0.8px] lg:tracking-[-1.475px]"
-                  style={{ color: t.headlineColor }}
+                  className="heading1"
                 >
                   Stop repetitive work.
                   <br />
@@ -318,16 +320,13 @@ export default function HeroContainerNew() {
                   <br />
                   <span
                     className="font-semibold transition-colors duration-500"
-                    style={{ fontFamily: "'Inter', sans-serif", color: currentUseCase.accentColor }}
+                    style={{ color: currentUseCase.accentColor }}
                   >
                     think.
                   </span>
                 </h1>
 
-                <p
-                  className="text-[16px] md:text-[18px] lg:text-[20px] leading-[1.55] lg:leading-[30.6px] max-w-[512px]"
-                  style={{ color: t.subtitleColor }}
-                >
+                <p className="sub-heading2">
                   Create reliable workflows. Add AI when you need decisions, not just triggers. No code required.
                 </p>
               </div>
@@ -335,16 +334,20 @@ export default function HeroContainerNew() {
               {/* CTAs */}
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-5">
-                  <button
+                  <Link
+                    href="/signup"
                     className="new-primary-btn"
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}
                   >
                     Start Automating
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
+                  </Link>
 
-                  <button
+                  <Link
+                    href="https://youtu.be/iXeq8A5u988?si=umoNftFnExlruzi3"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="group flex items-center gap-2.5 text-[14px] transition-colors cursor-pointer"
                     style={{ color: t.watchTextColor, fontWeight: 500 }}
                     onMouseEnter={(e) => {
@@ -378,7 +381,7 @@ export default function HeroContainerNew() {
                       <Play data-play-icon className="w-3 h-3 ml-0.5 transition-all duration-200" style={{ fill: t.playIconFill }} />
                     </div>
                     Watch 2-minute overview
-                  </button>
+                  </Link>
                 </div>
               </div>
 
@@ -540,10 +543,6 @@ export default function HeroContainerNew() {
   );
 }
 
-/* ═══════════════════════════════════════════
-   Review Badge
-   ══════════════════════════════════════════ */
-
 function ReviewBadge({
   platform,
   rating,
@@ -571,10 +570,6 @@ function ReviewBadge({
     </div>
   );
 }
-
-/* ═══════════════════════════════════════════
-   Shuffling App Icons
-   ═══════════════════════════════════════════ */
 
 const allLogos = [
   { id: 0, src: "https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg", alt: "slack icon", iconName: "Slack" },
@@ -611,9 +606,11 @@ function FigmaLogoIcon({ logo }) {
         boxShadow: "0 1px 3px var(--rail-color)",
       }}
     >
-      <img
+      <Image
         alt={logo.alt}
         src={logo.src}
+        width={24}
+        height={24}
         className="w-6 h-6 object-contain pointer-events-none"
       />
     </div>

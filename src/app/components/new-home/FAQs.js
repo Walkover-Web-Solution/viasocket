@@ -112,14 +112,15 @@ export default function FAQs({ faqData = [] }) {
             </h2>
 
             <p
-              className="sub-heading mb-8"
+              className="sub-heading2 mb-8"
             >
               Frequently asked ques about viaSocket — pricing, security, integrations, and getting started.
             </p>
 
             <Link
-              href="#"
+              href="/support"
               className="new-primary-btn"
+              target="_blank"
             >
               <MessageCircle className="w-4 h-4" />
               <span className="text-sm font-semibold">
@@ -159,7 +160,7 @@ export default function FAQs({ faqData = [] }) {
 
                     {/* que */}
                     <span
-                      className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--btn-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
+                      className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--black-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
                     >
                       {faq?.que}
                     </span>

@@ -132,10 +132,10 @@ export default function VisualShowcase({
                 style={{
                   fontSize: 14,
                   background: isActive
-                    ? "var(--btn-color)"
+                    ? "var(--black-color)"
                     : "transparent",
                   border: `1.5px solid ${isActive
-                    ? "var(--btn-color)"
+                    ? "var(--black-color)"
                     : "rgba(0,0,0,0.25)"}`,
                   color: isActive
                     ? "#ffffff"
@@ -255,7 +255,7 @@ export default function VisualShowcase({
                     {cardHeading}
                   </h2>
                   <p
-                    className="leading-[1.6] max-w-[460px] mb-6 sub-heading"
+                    className="leading-[1.6] max-w-[460px] mb-6 sub-heading2"
                   >
                     {cardDescription}
                   </p>
@@ -286,7 +286,7 @@ export default function VisualShowcase({
             background: "var(--rail-color)",
             border: `1px solid rgba(0,0,0,0.1)`,
             backdropFilter: "blur(8px)",
-            color: "var(--btn-color)",
+            color: "var(--black-color)",
             pointerEvents: isHovered ? "auto" : "none",
             opacity: isHovered ? 1 : 0,
           }}
@@ -310,7 +310,7 @@ export default function VisualShowcase({
             background: "var(--rail-color)",
             border: `1px solid rgba(0,0,0,0.1)`,
             backdropFilter: "blur(8px)",
-            color: "var(--btn-color)",
+            color: "var(--black-color)",
             pointerEvents: isHovered ? "auto" : "none",
             opacity: isHovered ? 1 : 0,
           }}

@@ -258,7 +258,7 @@ export default function ReviewsGrid({ ref, reviewData }) {
                 </span>
               </h2>
               <p
-                className="mt-5 sub-heading max-w-[420px]"
+                className="mt-5 sub-heading2 max-w-[420px]"
               >
                 Real feedback from teams automating with viaSocket — across
                 LinkedIn, G2, Capterra, and X.

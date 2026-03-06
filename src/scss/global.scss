@@ -220,9 +220,9 @@
 //     color: var(--rail-color);
 // }
 
-.new-primary-btn{
-    background: var(--btn-color);
-    border: 1.5px solid var(--btn-color);
+.new-primary-btn {
+    background: var(--black-color);
+    border: 1.5px solid var(--black-color);
     transition: all 0.15s ease;
     @apply text-white text-sm font-semibold inline-flex items-center gap-2 rounded-full px-6 py-3;
     width: fit-content;
@@ -232,6 +232,12 @@
         transform: scale(1.03);
     }
 }
+
+.new-home-footer-muted-text {
+    line-height: 21px;
+    color: #ffffff80;
+}
+
 //visual showcase component
 .vs-showcase-card {
     width: var(--vs-card-width);
@@ -243,43 +249,78 @@
     transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
 }
 
-.heading2 {
-  font-size: 28px;
-  line-height: 1.1;
+.heading1 {
+  font-size: 36px;
+  line-height: 1.15;
   letter-spacing: -0.8px;
-  font-weight: 700;
+  color: var(--black-color);
 
   @media (min-width: 768px) {
-    font-size: 36px;
+    font-size: 48px;
+    line-height: 1.2;
   }
 
   @media (min-width: 1024px) {
-    font-size: 42px;
-    letter-spacing: -1.2px;
+    font-size: 57px;
+    line-height: 72px;
+    letter-spacing: -1.475px;
+  }
+}
+
+.heading2 {
+    font-size: 28px;
+    line-height: 1.1;
+    letter-spacing: -0.8px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    color: var(--black-color);
+
+    @media (min-width: 768px) {
+        font-size: 36px;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 42px;
+        letter-spacing: -1.2px;
+    }
+}
+
+.sub-heading1{
+    font-size: 16px;
+    line-height: 1.55;
+    color: #000000b3;
+
+  @media (min-width: 768px) {
+    font-size: 18px;
+  }
+
+  @media (min-width: 1024px) {
+    font-size: 20px;
+    line-height: 30.6px;
   }
 }
 
 //sub heading
-.sub-heading{
+.sub-heading2 {
     @apply text-base md:text-lg;
     line-height: 1.5;
     color: #000000a6;
 }
 
 .reviews-marquee-fade {
-  height: 48px;
-  z-index: 2;
+    height: 48px;
+    z-index: 2;
 
-  &-top {
-    background: linear-gradient(to bottom, #ffffff, transparent);
-  }
+    &-top {
+        background: linear-gradient(to bottom, #ffffff, transparent);
+    }
 
-  &-bottom {
-    background: linear-gradient(to top, #ffffff, transparent);
-  }
+    &-bottom {
+        background: linear-gradient(to top, #ffffff, transparent);
+    }
 }
 
 //security section
-.light-white{
+.light-white {
     color: #ffffffe0;
 }
