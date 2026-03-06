@@ -197,7 +197,7 @@ export default function HeroContainerNew() {
   }, [handleNext]);
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: t.bg }}>
+    <div className="min-h-[92vh] relative overflow-hidden" style={{ backgroundColor: t.bg }}>
       {/* Unified Grid Background with Gradient Density */}
       <div className="absolute inset-0 pointer-events-none">
         {/* Left side */}
@@ -229,7 +229,7 @@ export default function HeroContainerNew() {
       </div>
 
       {/* Main Activation Surface */}
-      <div className="relative z-10 min-h-screen flex items-center">
+      <div className="relative z-10 min-h-[92vh] flex items-center">
         <div className="w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px] py-12 md:py-20 relative">
           {/* Decorative grid rails — vertical boundary lines + intersection dots (matches footer grid) */}
           <div className="absolute inset-0 pointer-events-none hidden lg:block z-[1]" aria-hidden="true">
@@ -553,14 +553,23 @@ function ReviewBadge({
     <div className="flex items-center gap-2">
       <div className="flex items-center gap-1">
         {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            className="w-3.5 h-3.5"
-            style={{
-              color: i < Math.floor(rating) ? "#2563EB" : theme.starInactive,
-              fill: i < Math.floor(rating) ? "#2563EB" : "transparent",
-            }}
-          />
+          <div key={i} className="relative w-3.5 h-3.5">
+            <Star
+              className="absolute inset-0 w-3.5 h-3.5"
+              style={{
+                color: theme.starInactive,
+                fill: "transparent",
+              }}
+            />
+            <Star
+              className="absolute inset-0 w-3.5 h-3.5"
+              style={{
+                color: "#2563EB",
+                fill: "#2563EB",
+                clipPath: `inset(0 ${Math.max(0, 100 - Math.min(1, Math.max(0, rating - i)) * 100)}% 0 0)`,
+              }}
+            />
+          </div>
         ))}
       </div>
       <div className="text-[12px]" style={{ color: theme.reviewText }}>

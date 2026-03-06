@@ -224,8 +224,9 @@
     background: var(--black-color);
     border: 1.5px solid var(--black-color);
     transition: all 0.15s ease;
-    @apply text-white text-sm font-semibold inline-flex items-center gap-2 rounded-full px-6 py-3;
+    @apply text-white text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
     width: fit-content;
+    white-space: nowrap;
 
     &:hover {
         background: #000000;
@@ -250,21 +251,21 @@
 }
 
 .heading1 {
-  font-size: 36px;
-  line-height: 1.15;
-  letter-spacing: -0.8px;
-  color: var(--black-color);
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    color: var(--black-color);
 
-  @media (min-width: 768px) {
-    font-size: 48px;
-    line-height: 1.2;
-  }
+    @media (min-width: 768px) {
+        font-size: 48px;
+        line-height: 1.2;
+    }
 
-  @media (min-width: 1024px) {
-    font-size: 57px;
-    line-height: 72px;
-    letter-spacing: -1.475px;
-  }
+    @media (min-width: 1024px) {
+        font-size: 57px;
+        line-height: 72px;
+        letter-spacing: -1.475px;
+    }
 }
 
 .heading2 {
@@ -285,19 +286,19 @@
     }
 }
 
-.sub-heading1{
+.sub-heading1 {
     font-size: 16px;
     line-height: 1.55;
     color: #000000b3;
 
-  @media (min-width: 768px) {
-    font-size: 18px;
-  }
+    @media (min-width: 768px) {
+        font-size: 18px;
+    }
 
-  @media (min-width: 1024px) {
-    font-size: 20px;
-    line-height: 30.6px;
-  }
+    @media (min-width: 1024px) {
+        font-size: 20px;
+        line-height: 30.6px;
+    }
 }
 
 //sub heading
