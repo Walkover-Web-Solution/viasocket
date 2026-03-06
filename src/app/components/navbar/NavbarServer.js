@@ -80,7 +80,7 @@ const getGroupData = (navbarData, pageUrl) => {
     };
 };
 
-export default async function NavbarServer({ utm, navbarData }) {
+export default async function NavbarServer({ utm, navbarData, isNavbarWhite = false }) {
     // Server-side cookie reading
     const cookieStore = await cookies();
     const token = cookieStore.get('prod');
@@ -96,6 +96,7 @@ export default async function NavbarServer({ utm, navbarData }) {
             groupedNavbarData={groupedNavbarData}
             topLevelGroups={topLevelGroups}
             currentPath={normalizePath(utm || '/')}
+            isNavbarWhite={isNavbarWhite}
         />
     );
 }
