@@ -239,6 +239,7 @@ export default function VisualShowcase({
               <div className="absolute top-6 right-6 z-20">
                 <Link
                   href={cardTemplateLink}
+                  target="_blank"
                   className="text-sm flex items-center gap-1.5 cursor-pointer transition duration-150 hover:opacity-70 hover:scale-[1.03] active:scale-[0.97] font-semibold"
                 >
                   Use this template

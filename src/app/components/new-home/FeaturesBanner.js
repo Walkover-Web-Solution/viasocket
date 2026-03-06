@@ -5,8 +5,9 @@ import {
   LayoutGrid,
   Table2,
 } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
-import { useState, useEffect, useLayoutEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const imgSlack = "https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg";
 const imgGmail = "https://mailmeteor.com/logos/assets/PNG/Gmail_Logo_512px.png";
@@ -196,8 +197,6 @@ const VISIBLE_COUNT = 6;
 
 function IntegrationsVisual() {
   const [startIdx, setStartIdx] = useState(0);
-  const itemRefs = useRef(new Map());
-  const prevRects = useRef(new Map());
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -211,80 +210,37 @@ function IntegrationsVisual() {
     visible.push(allAppLogos[(startIdx + i) % allAppLogos.length]);
   }
 
-  useLayoutEffect(() => {
-    const nextRects = new Map();
-
-    itemRefs.current.forEach((node, key) => {
-      if (node) nextRects.set(key, node.getBoundingClientRect());
-    });
-
-    nextRects.forEach((nextRect, key) => {
-      const node = itemRefs.current.get(key);
-      if (!node) return;
-
-      const prevRect = prevRects.current.get(key);
-
-      if (prevRect) {
-        const dx = prevRect.left - nextRect.left;
-        const dy = prevRect.top - nextRect.top;
-
-        if (dx || dy) {
-          node.animate(
-            [
-              { transform: `translate(${dx}px, ${dy}px)` },
-              { transform: "translate(0px, 0px)" },
-            ],
-            {
-              duration: 300,
-              easing: "cubic-bezier(0.22, 1, 0.36, 1)",
-            }
-          );
-        }
-      } else {
-        node.animate(
-          [
-            { opacity: 0, transform: "scale(0.7)" },
-            { opacity: 1, transform: "scale(1)" },
-          ],
-          {
-            duration: 300,
-            easing: "ease-out",
-          }
-        );
-      }
-    });
-
-    prevRects.current = nextRects;
-  }, [startIdx]);
-
   return (
     <div className="grid grid-cols-3 gap-2 w-full max-w-[180px]">
-      {visible.map((app) => (
-        <div
-          key={app.name}
-          className="relative"
-          ref={(node) => {
-            if (node) itemRefs.current.set(app.name, node);
-            else itemRefs.current.delete(app.name);
-          }}
-        >
-          <div
-            className="w-[52px] h-[52px] rounded flex items-center justify-center relative bg-white border border-[var(--rail-color)] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
+      <AnimatePresence mode="popLayout" initial={false}>
+        {visible.map((app) => (
+          <motion.div
+            key={app.name}
+            layout
+            initial={{ opacity: 0, scale: 0.72 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.72 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="relative"
           >
             <div
-              className="relative shrink-0 overflow-hidden w-[26px] h-[26px]"
+              className="w-[52px] h-[52px] rounded flex items-center justify-center relative bg-white border border-[var(--rail-color)] shadow-[0_1px_3px_rgba(0,0,0,0.04)]"
             >
-              <Image
-                alt={app.name}
-                src={app.src}
-                className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-                width={26}
-                height={26}
-              />
+              <div
+                className="relative shrink-0 overflow-hidden w-[26px] h-[26px]"
+              >
+                <Image
+                  alt={app.name}
+                  src={app.src}
+                  className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
+                  width={26}
+                  height={26}
+                />
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
+          </motion.div>
+        ))}
+      </AnimatePresence>
     </div>
   );
 }
@@ -378,14 +334,19 @@ export function CoreCapabilities() {
         </div>
 
         <div className="relative z-[2]">
-          <div className="mb-14 md:mb-16 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            className="mb-14 md:mb-16 text-center"
+          >
             <h2
               className="heading2"
             >
               Four Building Blocks.{" "}
               <span style={{ color: "#a3a3a3" }}>Infinite Automations.</span>
             </h2>
-          </div>
+          </motion.div>
 
           {/* 2x2 editorial grid with divider lines */}
           <div className="relative">
@@ -416,8 +377,11 @@ export function CoreCapabilities() {
                 const isLeft = i % 2 === 0;
 
                 return (
-                  <div
+                  <motion.div
                     key={q.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.03, duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                     className="flex flex-col md:flex-row items-start gap-6 md:gap-8"
                     style={{
                       padding: "40px 0",
@@ -488,7 +452,7 @@ export function CoreCapabilities() {
                         <Visual />
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
