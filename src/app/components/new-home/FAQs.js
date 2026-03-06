@@ -3,6 +3,7 @@
 import { ChevronDown, MessageCircle } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
+import { LinkButton } from "../../../components/uiComponents/buttons";
 
 export default function FAQs({ faqData = [] }) {
   const [openId, setOpenId] = useState(1);
@@ -204,7 +205,7 @@ export default function FAQs({ faqData = [] }) {
                         {faq?.link && (
                           <div className="mt-3">
                             <LinkButton content="Learn More" href={faq?.link} />
-                          </div>
+                          </div> 
                         )}
                       </div>
                     </div>
