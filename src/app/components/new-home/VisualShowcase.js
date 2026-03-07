@@ -251,12 +251,12 @@ export default function VisualShowcase({
                 {/* Left — text content */}
                 <div className="flex flex-col justify-center">
                   <h2
-                    className="heading2 mb-4 max-w-[520px] lowercase first-letter:uppercase"
+                    className="heading2 mb-4 w-full lg:max-w-[520px] lowercase first-letter:uppercase"
                   >
                     {cardHeading}
                   </h2>
                   <p
-                    className="leading-[1.6] max-w-[460px] mb-6 sub-heading2"
+                    className="leading-[1.6] w-full lg:max-w-[460px] mb-6 sub-heading2"
                   >
                     {cardDescription}
                   </p>
@@ -270,7 +270,7 @@ export default function VisualShowcase({
                 </div>
 
                 {/* Right — workflow mockup */}
-                <div className="h-full min-h-[280px] lg:min-h-[340px]">
+                <div className="h-full min-h-[280px] lg:min-h-[340px] hidden lg:block">
                   <TemplateFlowPreview template={cardTemplate} />
                 </div>
               </div>
