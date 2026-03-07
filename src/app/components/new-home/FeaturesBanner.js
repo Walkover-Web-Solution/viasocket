@@ -340,11 +340,9 @@ export function CoreCapabilities() {
             transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="mb-14 md:mb-16 text-center"
           >
-            <h2
-              className="heading2"
-            >
+            <h2 className="heading2">
               Four Building Blocks.{" "}
-              <span style={{ color: "#a3a3a3" }}>Infinite Automations.</span>
+              <span className="gray-heading">Infinite Automations.</span>
             </h2>
           </motion.div>
 
@@ -352,7 +350,7 @@ export function CoreCapabilities() {
           <div className="relative">
             {/* Horizontal divider — between rows (desktop) */}
             <div
-              className="hidden md:block absolute left-0 right-0 pointer-events-none"
+              className="hidden lg:block absolute left-0 right-0 pointer-events-none"
               style={{
                 top: "50%",
                 height: 1,
@@ -361,7 +359,7 @@ export function CoreCapabilities() {
             />
             {/* Vertical divider — between columns (desktop) */}
             <div
-              className="hidden md:block absolute top-0 bottom-0 pointer-events-none"
+              className="hidden lg:block absolute top-0 bottom-0 pointer-events-none"
               style={{
                 left: "50%",
                 width: 1,
@@ -370,7 +368,7 @@ export function CoreCapabilities() {
             />
 
             {/* Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2">
               {quadrants.map((q, i) => {
                 const Visual = visualComponents[i];
                 const Icon = q.icon;
@@ -392,16 +390,12 @@ export function CoreCapabilities() {
                   >
                     {/* Inner padding wrapper */}
                     <div
-                      className="flex flex-col sm:flex-row items-start gap-5 md:gap-6 w-full"
-                      style={{
-                        paddingLeft: !isLeft ? 32 : 0,
-                        paddingRight: isLeft ? 32 : 0,
-                      }}
+                      className={`flex flex-col sm:flex-row items-center sm:items-start gap-5 md:gap-6 w-full ${!isLeft ? "sm:pl-8" : ""} ${isLeft ? "sm:pr-8" : ""}`}
                     >
                       {/* Text side */}
                       <div className="flex-1 min-w-0">
                         {/* Colored label with icon */}
-                        <div className="flex items-center gap-3 mb-4">
+                        <div className="flex items-center gap-3 mb-4 justify-center sm:justify-start">
                           <div
                             className="w-9 h-9 rounded flex items-center justify-center shrink-0"
                             style={{ background: `${q.accent}18` }}
@@ -423,7 +417,7 @@ export function CoreCapabilities() {
 
                         {/* Bold headline */}
                         <p
-                          className="leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1 font-bold"
+                          className="text-center sm:text-start leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1 font-bold"
                         >
                           {(() => {
                             const lastDot = q.headline.lastIndexOf(". ", q.headline.length - 2);
@@ -443,7 +437,7 @@ export function CoreCapabilities() {
 
                       {/* Compact visual — right-aligned */}
                       <div
-                        className="shrink-0 flex items-start justify-end mt-1 p-4 rounded-[6px]"
+                        className="items-center shrink-0 flex md:items-start justify-end mt-1 p-4 rounded-[6px]"
                         style={{
                           border: "1px solid rgba(0,0,0,0.07)",
                           background: "rgba(0,0,0,0.015)",
@@ -459,7 +453,7 @@ export function CoreCapabilities() {
 
             {/* Intersection dots at divider crossing (desktop) */}
             <div
-              className="hidden md:block absolute w-[8px] h-[8px] rounded-full pointer-events-none"
+              className="hidden lg:block absolute w-[8px] h-[8px] rounded-full pointer-events-none"
               style={{
                 top: "50%",
                 left: "50%",
@@ -472,7 +466,7 @@ export function CoreCapabilities() {
 
           {/* Mobile dividers between stacked quadrants */}
           <style>{`
-            @media (max-width: 767px) {
+            @media (max-width: 1023px) {
               .grid > div:not(:last-child) {
                 border-bottom: 1px solid rgba(0,0,0,0.08);
               }
