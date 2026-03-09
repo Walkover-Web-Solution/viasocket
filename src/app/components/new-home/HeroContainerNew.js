@@ -194,7 +194,7 @@ export default function HeroContainerNew() {
                   <Link
                     href="https://youtu.be/iXeq8A5u988?si=umoNftFnExlruzi3"
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="nofollow noopener noreferrer"
                     className="group flex items-center gap-2.5 text-[14px] transition-colors cursor-pointer"
                     style={{ color: t.watchTextColor, fontWeight: 500 }}
                     onMouseEnter={(e) => {
@@ -244,8 +244,12 @@ export default function HeroContainerNew() {
 
                 {/* Reviews */}
                 <div className="flex items-center sm:gap-6 gap-4 pt-2 sm:flex-row flex-col">
-                  <ReviewBadge platform="G2" rating={4.7} reviews={342} theme={t} />
-                  <ReviewBadge platform="Capterra" rating={4.8} reviews={189} theme={t} />
+                  <Link href="https://www.g2.com/products/viasocket/reviews" target="_blank" rel="nofollow noopener noreferrer">
+                    <ReviewBadge platform="G2" rating={4.7} reviews={342} theme={t} />
+                  </Link>
+                  <Link href="https://www.capterra.com/p/10020406/viaSocket/" target="_blank" rel="nofollow noopener noreferrer">
+                    <ReviewBadge platform="Capterra" rating={4.8} reviews={189} theme={t} />
+                  </Link>
                 </div>
               </div>
             </div>
