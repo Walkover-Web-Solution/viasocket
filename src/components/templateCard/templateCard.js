@@ -1,20 +1,20 @@
-import { Timer, Webhook } from 'lucide-react';
+import { Timer, Webhook, ArrowRight, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowRight } from "react-icons/fa";
-import { FiUsers } from "react-icons/fi";
 
-const TemplateCard = ({ template, index }) => {
-    const bgcolor = template?.flowJson?.trigger?.brandcolor;
+const TemplateCard = ({ template, preventClick }) => {
+    const bgcolor = template?.flowJson?.trigger?.brandcolor || '#ffffff';
+    const isLightBg = bgcolor.toLowerCase().startsWith('#fff');
     return (
         <Link
             key={template?.id}
             href={`/automations/${template?.title?.trim().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}/${template?.id}`}
             className="group shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col"
             style={{ backgroundColor: bgcolor || 'white' }}
+            onClick={(e) => { if (preventClick?.current) e.preventDefault(); }}
         >
-            <div className={`p-4 md:p-6 flex flex-col gap-4 ${bgcolor ? bgcolor.toLowerCase().startsWith('#fff') ? 'text-black' : 'text-white' : 'text-black'}`}>
-                <div className="flex items-center gap-2 mt-auto">
+            <div className={`p-4 md:p-6 flex flex-col gap-4 h-[290px] ${isLightBg ? 'text-black' : 'text-white'}`}>
+                <div className="flex items-center gap-2">
                     {(() => {
                         const triggerIcon = template?.triggerIcon;
                         const triggerType = template?.triggerType;
@@ -29,7 +29,7 @@ const TemplateCard = ({ template, index }) => {
                             elements.push(
                                 <div key="trigger" className="w-8 h-8 relative bg-gray-50 border">
                                     <Image src={triggerIcon} alt="trigger" width={16} height={16} className="object-contain p-1"
-                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px', color: 'transparent'}} />
+                                        style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px', color: 'transparent' }} />
                                 </div>
                             );
                         } else if (!triggerIcon) {
@@ -37,14 +37,14 @@ const TemplateCard = ({ template, index }) => {
                                 elements.push(
                                     <div key="webhook" className="w-8 h-8 relative bg-gray-50 border">
                                         <Webhook size={12} className="object-contain p-1"
-                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}} />
+                                            style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }} />
                                     </div>
                                 );
                             } else if (triggerType === 'cron') {
                                 elements.push(
                                     <div key="cron" className="w-8 h-8 relative bg-gray-50 border">
                                         <Timer size={12} className="object-contain p-1"
-                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}} />
+                                            style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }} />
                                     </div>
                                 );
                             }
@@ -55,26 +55,25 @@ const TemplateCard = ({ template, index }) => {
                             const icon = appIcons[i];
                             if (icon && !shownIcons.has(icon)) {
                                 shownIcons.add(icon);
-                                if(i<=6)
-                                {
+                                if (i <= 6) {
                                     elements.push(
-                                    <div
-                                        key={`app-icon-wrapper-${i}`}
-                                        className="h-8 w-8 relative bg-gray-50 border"
-                                    >
-                                        <Image
-                                            key={`app-icon-${i}`}
-                                            src={icon}
-                                            alt={`app icon`}
-                                            width={16}
-                                            height={16}
-                                            className="object-contain p-1"
-                                            style={{position: 'absolute', height: '100%', width: '100%', inset: '0px'}}
-                                        />
-                                    </div>
-                                );
+                                        <div
+                                            key={`app-icon-wrapper-${i}`}
+                                            className="h-8 w-8 relative bg-gray-50 border"
+                                        >
+                                            <Image
+                                                key={`app-icon-${i}`}
+                                                src={icon}
+                                                alt={`app icon`}
+                                                width={16}
+                                                height={16}
+                                                className="object-contain p-1"
+                                                style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                                            />
+                                        </div>
+                                    );
                                 }
-                                else{
+                                else {
                                     elements.push(
                                         <div key="app-icon-wrapper-more" className="text-black w-8 h-8 bg-gray-50 flex items-center justify-center border">
                                             <span>+{appIcons.length - 5}</span>
@@ -84,23 +83,27 @@ const TemplateCard = ({ template, index }) => {
                                 }
                             }
                         }
-
                         return elements;
                     })()}
                 </div>
 
-                <h4 className="h4 font-semibold text-2xl line-clamp-3 min-h-[90px]">
-                    {template?.title}
-                </h4>
-
-                <div className="flex items-center justify-between gap-4 line-clamp-2">
-                    <div className='line-clamp-1'>By {template?.userName}</div>
-                    <div className='flex gap-2 items-center'> <FiUsers /><span>{template?.usedCount}</span></div>
+                <div className="flex-1 flex items-center">
+                    <h4 className={`line-clamp-3 font-[Inter,sans-serif] text-[30px] font-[720] leading-[38px] tracking-[-0.5px] m-0`}>{template?.title}</h4>
                 </div>
 
-                <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>View Template</span>
-                    <FaArrowRight/>
+                <div className="flex items-center justify-between mt-auto">
+                    <div className="flex items-center gap-2">
+                        <span className={`text-xs ${isLightBg ? 'text-[#00000099]' : 'text-white/60'}`}>{template?.userName}</span>
+                        <span className={`${isLightBg ? 'text-[#00000066]' : 'text-white/40'}`}>&middot;</span>
+                        <div className="flex items-center gap-1">
+                            <Users size={12} className={isLightBg ? 'text-[#00000066]' : 'text-[#ffffff8c]'} />
+                            <span className={`text-xs ${isLightBg ? 'text-[#00000066]' : 'text-white/60'}`}>{template?.usedCount || 0} uses</span>
+                        </div>
+                    </div>
+                    <span className={`flex items-center gap-1 text-xs font-semibold ${isLightBg ? 'text-[#000000cc]' : 'text-white/70'}`}>
+                        Use template
+                        <ArrowRight size={13} />
+                    </span>
                 </div>
             </div>
         </Link>

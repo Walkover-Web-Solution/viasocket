@@ -5,7 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { LinkButton } from "../../../components/uiComponents/buttons";
 
-export default function FAQs({ faqData = [] }) {
+export default function FAQs({ faqData = [], isHomepage = false }) {
   const [openId, setOpenId] = useState(1);
 
   const railColor = "var(--rail-color)";
@@ -15,88 +15,92 @@ export default function FAQs({ faqData = [] }) {
   return (
     <section className="w-full py-20 md:py-28 relative overflow-visible bg-white">
       {/* Decorative grid rails */}
-      <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", top: 0, bottom: -400, zIndex: 0 }}>
-        <div
-          className="absolute top-0 bottom-0"
-          style={{
-            left: 115,
-            width: 2,
-            borderRadius: 1,
-            background: `linear-gradient(to bottom, transparent 0%, ${railColor} 24px, ${railColor} calc(100% - 400px), transparent 100%)`,
-          }}
-        />
-        <div
-          className="absolute top-0 bottom-0"
-          style={{
-            right: 115,
-            width: 2,
-            borderRadius: 1,
-            background: `linear-gradient(to bottom, transparent 0%, ${railColor} 24px, ${railColor} calc(100% - 400px), transparent 100%)`,
-          }}
-        />
-      </div>
+      {isHomepage && (
+        <>
+          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", top: 0, bottom: -400, zIndex: 0 }}>
+            <div
+              className="absolute top-0 bottom-0"
+              style={{
+                left: 115,
+                width: 2,
+                borderRadius: 1,
+                background: `linear-gradient(to bottom, transparent 0%, ${railColor} 24px, ${railColor} calc(100% - 400px), transparent 100%)`,
+              }}
+            />
+            <div
+              className="absolute top-0 bottom-0"
+              style={{
+                right: 115,
+                width: 2,
+                borderRadius: 1,
+                background: `linear-gradient(to bottom, transparent 0%, ${railColor} 24px, ${railColor} calc(100% - 400px), transparent 100%)`,
+              }}
+            />
+          </div>
 
-      {/* Top gradient blend */}
-      <div
-        className="absolute left-0 right-0 top-0 pointer-events-none"
-        style={{
-          height: 120,
-          background: "linear-gradient(to bottom, #ffffff, transparent)",
-          zIndex: 0,
-        }}
-      />
+          {/* Top gradient blend */}
+          <div
+            className="absolute left-0 right-0 top-0 pointer-events-none"
+            style={{
+              height: 120,
+              background: "linear-gradient(to bottom, #ffffff, transparent)",
+              zIndex: 0,
+            }}
+          />
 
-      {/* Top horizontal line + intersection dots */}
-      <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, top: 60 }}>
-        <div
-          className="absolute"
-          style={{
-            top: 0,
-            left: 0,
-            right: 0,
-            height: 2,
-            borderRadius: 1,
-            background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
-          }}
-        />
-        <svg className="absolute" style={{ left: 116, top: 0, width: 10, height: 10, transform: "translate(-50%, -50%)" }} viewBox="0 0 10 10" fill="none">
-          <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
-        </svg>
-        <svg className="absolute" style={{ right: 116, top: 0, width: 10, height: 10, transform: "translate(50%, -50%)" }} viewBox="0 0 10 10" fill="none">
-          <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
-        </svg>
-      </div>
+          {/* Top horizontal line + intersection dots */}
+          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, top: 60 }}>
+            <div
+              className="absolute"
+              style={{
+                top: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                borderRadius: 1,
+                background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
+              }}
+            />
+            <svg className="absolute" style={{ left: 116, top: 0, width: 10, height: 10, transform: "translate(-50%, -50%)" }} viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
+            </svg>
+            <svg className="absolute" style={{ right: 116, top: 0, width: 10, height: 10, transform: "translate(50%, -50%)" }} viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
+            </svg>
+          </div>
 
-      {/* Bottom gradient blend */}
-      <div
-        className="absolute left-0 right-0 bottom-0 pointer-events-none"
-        style={{
-          height: 120,
-          background: "linear-gradient(to bottom, transparent, #e8f5ec)",
-          zIndex: 0,
-        }}
-      />
+          {/* Bottom gradient blend */}
+          <div
+            className="absolute left-0 right-0 bottom-0 pointer-events-none"
+            style={{
+              height: 120,
+              background: "linear-gradient(to bottom, transparent, #e8f5ec)",
+              zIndex: 0,
+            }}
+          />
 
-      {/* Bottom horizontal line + intersection dots */}
-      <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, bottom: 60 }}>
-        <div
-          className="absolute"
-          style={{
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 2,
-            borderRadius: 1,
-            background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
-          }}
-        />
-        <svg className="absolute" style={{ left: 116, bottom: 0, width: 10, height: 10, transform: "translate(-50%, 50%)" }} viewBox="0 0 10 10" fill="none">
-          <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
-        </svg>
-        <svg className="absolute" style={{ right: 116, bottom: 0, width: 10, height: 10, transform: "translate(50%, 50%)" }} viewBox="0 0 10 10" fill="none">
-          <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
-        </svg>
-      </div>
+          {/* Bottom horizontal line + intersection dots */}
+          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, bottom: 60 }}>
+            <div
+              className="absolute"
+              style={{
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: 2,
+                borderRadius: 1,
+                background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
+              }}
+            />
+            <svg className="absolute" style={{ left: 116, bottom: 0, width: 10, height: 10, transform: "translate(-50%, 50%)" }} viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
+            </svg>
+            <svg className="absolute" style={{ right: 116, bottom: 0, width: 10, height: 10, transform: "translate(50%, 50%)" }} viewBox="0 0 10 10" fill="none">
+              <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
+            </svg>
+          </div>
+        </>
+      )}
 
       <div className="relative max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px] z-[2]">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20">
@@ -205,7 +209,7 @@ export default function FAQs({ faqData = [] }) {
                         {faq?.link && (
                           <div className="mt-3">
                             <LinkButton content="Learn More" href={faq?.link} />
-                          </div> 
+                          </div>
                         )}
                       </div>
                     </div>
