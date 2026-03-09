@@ -63,7 +63,7 @@ export default function SecuritySectionNew({ securityGridData = [] }) {
               return (
                 <div
                   key={item?.title}
-                  className="p-7 bg-[#3a8a54]"
+                  className="p-7 bg-[#2d6b42]"
                   style={{
                     animation: `securityFadeUp 360ms ease ${i * 0.06}s both`,
                   }}

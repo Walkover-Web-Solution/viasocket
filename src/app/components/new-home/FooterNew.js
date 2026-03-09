@@ -117,7 +117,7 @@ export default function FooterNew({ footerData = [] }) {
 
         {/* ── Link columns ─────────────────────────────────── */}
         <div className="px-6 md:px-12 pt-[70px] pb-12 lg:pt-[114px] lg:pb-[64px] lg:px-[7.29%]">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-8 lg:gap-x-0 lg:gap-y-0">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-x-0 lg:gap-y-0">
             {footerColumns.map((columnGroups, ci) => (
               <div key={ci} className="flex flex-col gap-8 lg:pl-12">
                 {columnGroups.map(([groupName, items]) => (
@@ -183,6 +183,10 @@ export default function FooterNew({ footerData = [] }) {
 
         {/* ── Bottom bar ─────────────────────────────────────── */}
         <div className="px-6 md:px-12 lg:px-[9.84%] py-5 flex flex-col md:flex-row items-start items-center justify-between gap-4">
+          <div className="flex items-center gap-4 md:hidden">
+            <SocialIcons />
+          </div>
+          
           {/* Left — copyright */}
           <div className="flex flex-col gap-0.5">
             <p
@@ -209,25 +213,33 @@ export default function FooterNew({ footerData = [] }) {
           </div>
 
           {/* Right — social icons */}
-          <div className="flex items-center gap-4">
-            <Link href="https://www.instagram.com/viasocket/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="instagram">
-              <FaInstagramSquare size={20} style={{ color: "#ffffff99" }} />
-            </Link>
-            <Link href="https://www.linkedin.com/company/viasocket-walkover/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="linkedin">
-              <FaLinkedin size={20} style={{ color: "#ffffff99" }} />
-            </Link>
-            <Link href="https://x.com/viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="twitter">
-              <FaSquareXTwitter size={20} style={{ color: "#ffffff99" }} />
-            </Link>
-            <Link href="https://www.youtube.com/@viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="youtube">
-              <YouTubeIcon width={20} height={20} fill="#ffffff99" />
-            </Link>
-            <Link href="https://discord.com/invite/wqsSsMAkkz" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="discord">
-              <PiDiscordLogoFill size={20} style={{ color: "#ffffff99" }} />
-            </Link>
+          <div className="md:flex items-center gap-4 hidden">
+            <SocialIcons />
           </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+function SocialIcons() {
+  return (
+    <>
+      <Link href="https://www.instagram.com/viasocket/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="instagram">
+        <FaInstagramSquare size={20} style={{ color: "#ffffff99" }} />
+      </Link>
+      <Link href="https://www.linkedin.com/company/viasocket-walkover/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="linkedin">
+        <FaLinkedin size={20} style={{ color: "#ffffff99" }} />
+      </Link>
+      <Link href="https://x.com/viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="twitter">
+        <FaSquareXTwitter size={20} style={{ color: "#ffffff99" }} />
+      </Link>
+      <Link href="https://www.youtube.com/@viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="youtube">
+        <YouTubeIcon width={20} height={20} fill="#ffffff99" />
+      </Link>
+      <Link href="https://discord.com/invite/wqsSsMAkkz" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="discord">
+        <PiDiscordLogoFill size={20} style={{ color: "#ffffff99" }} />
+      </Link>
+    </>
   );
 }

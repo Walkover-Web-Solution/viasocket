@@ -231,19 +231,29 @@ export default function ReviewsGrid({ ref, reviewData }) {
     <section
       className="w-full py-10 md:py-14 relative bg-white"
     >
+      {/* Top horizontal rail — below lg only */}
+      <div
+        className="absolute left-0 right-0 top-0 pointer-events-none block lg:hidden"
+        style={{
+          height: 2,
+          borderRadius: 1,
+          background: "var(--rail-color)",
+          zIndex: 1,
+        }}
+      />
       <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px]">
         {/* Desktop: columns left + header right */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
           {/* Left — 2-column vertical marquee */}
           <div
-            className="flex gap-4 flex-shrink-0 w-full lg:w-[56%] relative overflow-hidden"
+            className="flex gap-4 flex-shrink-0 w-full lg:w-[56%] relative"
           >
-            <MarqueeColumn cards={col1} durationPerCard={7} />
-            <MarqueeColumn
-              cards={col2}
-              durationPerCard={8}
-              reverse
-            />
+            <div className="w-full sm:w-1/2 overflow-hidden">
+              <MarqueeColumn cards={col1} durationPerCard={7} />
+            </div>
+            <div className="hidden sm:block sm:w-1/2">
+              <MarqueeColumn cards={col2} durationPerCard={8} reverse />
+            </div>
           </div>
 
           {/* Right — Header content, sticky on desktop */}
@@ -253,7 +263,7 @@ export default function ReviewsGrid({ ref, reviewData }) {
                 className="heading2"
               >
                 Trusted by teams{" "}
-                <span style={{ color: "#888888" }}>
+                <span className="gray-heading">
                   who ship faster
                 </span>
               </h2>
