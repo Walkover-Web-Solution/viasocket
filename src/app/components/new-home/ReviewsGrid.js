@@ -231,6 +231,16 @@ export default function ReviewsGrid({ ref, reviewData }) {
     <section
       className="w-full py-10 md:py-14 relative bg-white"
     >
+      {/* Top horizontal rail — below lg only */}
+      <div
+        className="absolute left-0 right-0 top-0 pointer-events-none block lg:hidden"
+        style={{
+          height: 2,
+          borderRadius: 1,
+          background: "var(--rail-color)",
+          zIndex: 1,
+        }}
+      />
       <div className="max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px]">
         {/* Desktop: columns left + header right */}
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">

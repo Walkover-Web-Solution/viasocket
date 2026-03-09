@@ -48,8 +48,8 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
             }}
           />
 
-          {/* Top horizontal line + intersection dots */}
-          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, top: 60 }}>
+          {/* Top horizontal line */}
+          <div className="absolute left-0 right-0 pointer-events-none" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, top: 60 }}>
             <div
               className="absolute"
               style={{
@@ -61,6 +61,9 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
                 background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
               }}
             />
+          </div>
+          {/* Top intersection dots */}
+          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, top: 60 }}>
             <svg className="absolute" style={{ left: 116, top: 0, width: 10, height: 10, transform: "translate(-50%, -50%)" }} viewBox="0 0 10 10" fill="none">
               <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
             </svg>
@@ -79,8 +82,8 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
             }}
           />
 
-          {/* Bottom horizontal line + intersection dots */}
-          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, bottom: 60 }}>
+          {/* Bottom horizontal line */}
+          <div className="absolute left-0 right-0 pointer-events-none" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, bottom: 60 }}>
             <div
               className="absolute"
               style={{
@@ -92,6 +95,9 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
                 background: `linear-gradient(to right, transparent 0%, ${railColor} 12%, ${railColor} 88%, transparent 100%)`,
               }}
             />
+          </div>
+          {/* Bottom intersection dots */}
+          <div className="absolute left-0 right-0 pointer-events-none hidden lg:block" aria-hidden="true" style={{ maxWidth: 1920, margin: "0 auto", zIndex: 3, bottom: 60 }}>
             <svg className="absolute" style={{ left: 116, bottom: 0, width: 10, height: 10, transform: "translate(-50%, 50%)" }} viewBox="0 0 10 10" fill="none">
               <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
             </svg>

@@ -76,17 +76,31 @@ export default function HeroContainerNew() {
       <div className="relative z-10 min-h-[92vh] flex items-center">
         <div className="w-full max-w-[1920px] mx-auto px-6 md:px-12 lg:px-[180px] py-12 md:py-20 relative">
           {/* Decorative grid rails — vertical boundary lines + intersection dots (matches footer grid) */}
+          {/* Top horizontal rail — full width, breaks out of container */}
+          <div
+            className="absolute pointer-events-none hidden lg:block z-[1]"
+            style={{
+              top: 55,
+              left: "calc(-50vw + 50%)",
+              right: "calc(-50vw + 50%)",
+              height: 2,
+              borderRadius: 1,
+              background: "var(--rail-color)",
+            }}
+          />
+          {/* Bottom horizontal rail — full width, visible on all screens */}
+          <div
+            className="absolute pointer-events-none z-[1]"
+            style={{
+              bottom: 9,
+              left: "calc(-50vw + 50%)",
+              right: "calc(-50vw + 50%)",
+              height: 2,
+              borderRadius: 1,
+              background: "var(--rail-color)",
+            }}
+          />
           <div className="absolute inset-0 pointer-events-none hidden lg:block z-[1]" aria-hidden="true">
-            {/* Top horizontal rail — full width */}
-            <div
-              className="absolute left-0 right-0"
-              style={{
-                top: 55,
-                height: 2,
-                borderRadius: 1,
-                background: "var(--rail-color)",
-              }}
-            />
             {/* Left vertical rail — full height */}
             <div
               className="absolute top-0 bottom-0"
@@ -123,18 +137,7 @@ export default function HeroContainerNew() {
             <svg className="absolute" style={{ right: 116, bottom: 0, width: 10, height: 10, transform: "translate(50%, -50%)" }} viewBox="0 0 10 10" fill="none">
               <circle cx="5" cy="5" r="5" fill="#e5e7eb" />
             </svg>
-            {/* Bottom horizontal rail — full width, connecting bottom dots */}
-            <div
-              className="absolute left-0 right-0"
-              style={{
-                bottom: 9,
-                height: 2,
-                borderRadius: 1,
-                background: "var(--rail-color)",
-              }}
-            />
           </div>
-
           <div className="grid grid-cols-1 lg:grid-cols-[40fr_60fr] gap-10 lg:gap-20 items-start relative z-[2]">
             {/* LEFT SIDE - Document Style */}
             <div className="space-y-7 pt-4 lg:pt-12">
@@ -240,7 +243,7 @@ export default function HeroContainerNew() {
                 <ShufflingAppIcons />
 
                 {/* Reviews */}
-                <div className="flex items-center gap-6 pt-2">
+                <div className="flex items-center sm:gap-6 gap-4 pt-2 sm:flex-row flex-col">
                   <ReviewBadge platform="G2" rating={4.7} reviews={342} theme={t} />
                   <ReviewBadge platform="Capterra" rating={4.8} reviews={189} theme={t} />
                 </div>
@@ -287,7 +290,7 @@ function ReviewBadge({
           </div>
         ))}
       </div>
-      <div className="text-[12px]" style={{ color: theme.reviewText }}>
+      <div className="text-[12px] text-nowrap" style={{ color: theme.reviewText }}>
         <span className="font-medium" style={{ color: theme.reviewHighlight }}>{rating}</span> on {platform}
       </div>
       <div className="text-[11px]" style={{ color: theme.reviewCount }}>({reviews})</div>
