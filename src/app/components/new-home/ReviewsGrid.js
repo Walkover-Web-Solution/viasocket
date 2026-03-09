@@ -37,7 +37,7 @@ function ReviewCard({ review }) {
     <Link
       href={review?.link || "#"}
       target="_blank"
-      rel="noopener noreferrer"
+      rel="nofollow noopener noreferrer"
       className="flex flex-col bg-white border border-gray-200 rounded-none flex-shrink-0 relative overflow-hidden no-underline relative z-1 cursor-pointer"
       style={{
         height: CARD_H,
