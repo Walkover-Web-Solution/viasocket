@@ -54,6 +54,20 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         queryObject = JSON.parse(utmData);
     }
 
+    // Include A/B variant only if user hasn't signed up yet
+    try {
+        const abRaw = getCookie('ab_test');
+        if (abRaw) {
+            const abData = JSON.parse(decodeURIComponent(abRaw));
+            if (abData.variant && !abData.signup) {
+                queryObject.ab_test = abData.variant;
+                // Mark signup = true so variant is not sent again
+                abData.signup = true;
+                setCookie('ab_test', JSON.stringify(abData), 365);
+            }
+        }
+    } catch {}
+
     const queryString = Object.entries(queryObject)
         .map(([key, val]) => `${key}=${val}`)
         .join('&');
