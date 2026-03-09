@@ -143,7 +143,7 @@ const current = normalizePath(currentPath || pathname);
                 }}
             >
                 {/* Top navigation bar */}
-                <div className={`border-gray-300 border-b lg:block hidden ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60' : 'bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60'} backdrop-blur-xl`}>
+                <div className={`border-gray-300 border-b lg:block hidden ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && topLevelGroups?.length > 0 &&
@@ -193,7 +193,7 @@ const current = normalizePath(currentPath || pathname);
 
                 {/* Main navigation bar */}
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60' : 'bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60'} backdrop-blur-xl`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#faf9f6]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
