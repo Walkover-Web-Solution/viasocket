@@ -234,6 +234,21 @@
     }
 }
 
+.secondary-button{
+    background: transparent;
+    border: 1.5px solid var(--black-color);
+    transition: all 0.15s ease;
+    @apply text-black text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    width: fit-content;
+    white-space: nowrap;
+
+    &:hover {
+        background: var(--black-color);
+        transform: scale(1.03);
+        color: #ffffff;
+    }
+}
+
 .new-home-footer-muted-text {
     line-height: 21px;
     color: #ffffff80;
