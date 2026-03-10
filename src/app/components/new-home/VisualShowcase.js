@@ -236,17 +236,6 @@ export default function VisualShowcase({
               }}
               onClick={() => !isActive && setActiveIndex(i)}
             >
-              <div className="absolute top-6 right-6 z-20">
-                <Link
-                  href={cardTemplateLink}
-                  target="_blank"
-                  className="text-sm flex items-center gap-1.5 cursor-pointer transition duration-150 hover:opacity-70 hover:scale-[1.03] active:scale-[0.97] font-semibold"
-                >
-                  Use this template
-                  <MdArrowOutward />
-                </Link>
-              </div>
-
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-10 h-full px-8 md:px-12 py-10 md:py-14 relative z-10 items-center">
                 {/* Left — text content */}
                 <div className="flex flex-col justify-center">
@@ -260,13 +249,22 @@ export default function VisualShowcase({
                   >
                     {cardDescription}
                   </p>
-                  <Link
-                    href="/automations"
-                    className="new-primary-btn"
-                  >
-                    Browse all templates
-                    <IoMdArrowForward />
-                  </Link>
+                  <div className="flex items-center gap-4 sm:flex-row flex-col">
+                    <Link
+                      href="/automations"
+                      className="new-primary-btn"
+                    >
+                      Browse all templates
+                    </Link>
+                    <Link
+                      href={cardTemplateLink}
+                      target="_blank"
+                      className="secondary-button"
+                    >
+                      Use this template
+                      <MdArrowOutward />
+                    </Link>
+                  </div>
                 </div>
 
                 {/* Right — workflow mockup */}
