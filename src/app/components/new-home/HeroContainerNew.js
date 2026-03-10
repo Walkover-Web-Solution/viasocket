@@ -182,7 +182,7 @@ export default function HeroContainerNew() {
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-5">
                   <Link
-                    href="/signup"
+                    href="/signup?utm_source=/hero"
                     className="new-primary-btn"
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}
