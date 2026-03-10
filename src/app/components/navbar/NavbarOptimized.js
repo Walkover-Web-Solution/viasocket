@@ -19,11 +19,13 @@ export default function NavbarOptimized({
     groupedNavbarData = {},
     topLevelGroups = [],
     currentPath = '/',
+    isNavbarWhite = false
 }) {
     const pathname = usePathname();
     const [groupName, setGroupName] = useState(initialGroupName);
     const [menuOpen, setMenuOpen] = useState(false);
     const [originalGroupName, setOriginalGroupName] = useState(initialGroupName);
+    const [showNavbarOnScroll, setShowNavbarOnScroll] = useState(!isNavbarWhite);
 
     let mode = 'light';
     let borderClass;
@@ -108,17 +110,40 @@ const current = normalizePath(currentPath || pathname);
         setOriginalGroupName(initialGroupName || '');
     }, [initialGroupName]);
 
+    useEffect(() => {
+        if (!isNavbarWhite) {
+            setShowNavbarOnScroll(true);
+            return;
+        }
+
+        const onScroll = () => {
+            setShowNavbarOnScroll(window.scrollY > 16);
+        };
+
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, [isNavbarWhite]);
+
 
     return (
         <>
             <div
-                className="sticky top-0 z-[100] w-full"
+                className={`${
+                    isNavbarWhite ? 'fixed top-0 left-0 right-0' : 'sticky top-0'
+                } z-[100] w-full transition-all duration-300 ${
+                    isNavbarWhite
+                        ? showNavbarOnScroll
+                            ? 'max-h-[84px] overflow-visible translate-y-0 opacity-100 pointer-events-auto'
+                            : 'max-h-0 overflow-hidden -translate-y-full opacity-0 pointer-events-none'
+                        : 'max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto'
+                }`}
                 onMouseLeave={() => {
                     setGroupName(originalGroupName);
                 }}
             >
                 {/* Top navigation bar */}
-                <div className="border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 backdrop-blur-xl">
+                <div className={`border-gray-300 border-b lg:block hidden ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && topLevelGroups?.length > 0 &&
@@ -168,7 +193,7 @@ const current = normalizePath(currentPath || pathname);
 
                 {/* Main navigation bar */}
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 backdrop-blur-xl`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#faf9f6]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
@@ -224,7 +249,7 @@ const current = normalizePath(currentPath || pathname);
                             {hasToken ? (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
-                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com?')}
+                                    onClick={(e) => handleRedirect(e, pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
                                     Dashboard <FaArrowRightLong className="ml-2" />
@@ -232,7 +257,7 @@ const current = normalizePath(currentPath || pathname);
                             ) : (
                                 <button
                                     className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
-                                    onClick={(e) => handleRedirect(e, '/signup?')}
+                                    onClick={(e) => handleRedirect(e, pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : '/signup?')}
                                 >
                                     Login/Sign Up
                                 </button>
