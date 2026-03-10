@@ -17,33 +17,25 @@ const quadrants = [
     label: "AI Agents",
     accent: "#7c3aed",
     icon: Sparkles,
-    headline: "Your workflow hits a decision. AI makes it. No human needed.",
-    description:
-      "AI steps score leads, classify tickets, draft emails — real decisions, not just triggers.",
+    headline: "Let AI handle the thinking inside your automations."
   },
   {
     label: "No-Code Workflows",
     accent: "#0891b2",
     icon: Workflow,
-    headline: "If this happens, do that. Runs forever. Zero maintenance.",
-    description:
-      "Drag triggers, conditions, and actions into flows that run 24/7 without writing a line of code.",
+    headline: "Build multi-step automations visually with triggers, conditions, and actions."
   },
   {
     label: "2,000+ Integrations",
     accent: "#059669",
     icon: LayoutGrid,
-    headline: "Every app you use already works with ViaSocket. No setup.",
-    description:
-      "Slack, HubSpot, Stripe, Salesforce, Notion — 2,000+ apps ready out of the box.",
+    headline: "Connect your entire stack — CRMs, support tools, payments, and more."
   },
   {
     label: "Tables",
     accent: "#e11d48",
     icon: Table2,
-    headline: "Your automation needs somewhere to store data. It's built in.",
-    description:
-      "Store, filter, and act on structured data right inside your workflows.",
+    headline: "Built-in tables to store and manage your data."
   },
 ];
 
@@ -390,7 +382,7 @@ export function CoreCapabilities() {
                   >
                     {/* Inner padding wrapper */}
                     <div
-                      className={`flex flex-col sm:flex-row items-center sm:items-start gap-5 md:gap-6 w-full ${!isLeft ? "sm:pl-8" : ""} ${isLeft ? "sm:pr-8" : ""}`}
+                      className={`flex flex-col sm:flex-row items-center sm:items-start gap-5 md:gap-6 w-full ${!isLeft ? "sm:pl-8" : ""} ${isLeft ? "sm:pr-12" : ""}`}
                     >
                       {/* Text side */}
                       <div className="flex-1 min-w-0">
@@ -419,19 +411,7 @@ export function CoreCapabilities() {
                         <p
                           className="text-center sm:text-start leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1 font-bold"
                         >
-                          {(() => {
-                            const lastDot = q.headline.lastIndexOf(". ", q.headline.length - 2);
-                            if (lastDot === -1) return q.headline;
-                            const main = q.headline.slice(0, lastDot + 1);
-                            const last = q.headline.slice(lastDot + 2);
-                            return (
-                              <>
-                                {main}
-                                <br />
-                                {last}
-                              </>
-                            );
-                          })()}
+                          {q.headline}
                         </p>
                       </div>
 

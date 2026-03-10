@@ -103,9 +103,11 @@ export default function HeroContainerNew() {
           <div className="absolute inset-0 pointer-events-none hidden lg:block z-[1]" aria-hidden="true">
             {/* Left vertical rail — full height */}
             <div
-              className="absolute top-0 bottom-0"
+              className="absolute"
               style={{
                 left: 115,
+                top: -100,
+                bottom: -100,
                 width: 2,
                 borderRadius: 1,
                 background: "var(--rail-color)",
@@ -113,9 +115,11 @@ export default function HeroContainerNew() {
             />
             {/* Right vertical rail — full height */}
             <div
-              className="absolute top-0 bottom-0"
+              className="absolute"
               style={{
                 right: 115,
+                top: -100,
+                bottom: -100,
                 width: 2,
                 borderRadius: 1,
                 background: "var(--rail-color)",
