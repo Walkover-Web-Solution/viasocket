@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Star, Play, Sparkles, Workflow } from "lucide-react";
 import { LiveWorkflowCanvas, ACCENT_COLORS } from "./LiveWorkflowCanvas";
+import { handleRedirect } from '@/utils/handleRedirection';
 
 const heroTheme = {
   bg: "#ffffff",
@@ -185,15 +186,15 @@ export default function HeroContainerNew() {
               {/* CTAs */}
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-5">
-                  <Link
-                    href="/signup?utm_source=/hero"
+                  <button
                     className="new-primary-btn"
+                    onClick={(e) => handleRedirect(e, '/signup?', null, '/hero')}
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}
                   >
                     Start Automating
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                  </Link>
+                  </button>
 
                   <Link
                     href="https://youtu.be/iXeq8A5u988?si=umoNftFnExlruzi3"
