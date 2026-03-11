@@ -1,20 +1,26 @@
 "use client";
 
 import { FaArrowRightLong } from "react-icons/fa6";
-import Link from 'next/link';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 const DashboardButton = ({ utm_src, className = "", hasToken }) => {
 
     return (
         <>
             {hasToken ? (
-                <Link href={`https://flow.viasocket.com?utm_source=${utm_src}`} className={className}>
-                    <button className="btn btn-accent z-50">Dashboard <FaArrowRightLong /></button>
-                </Link>
+                <button
+                    className={`btn btn-accent z-50 ${className}`}
+                    onClick={(e) => handleRedirect(e, `https://flow.viasocket.com?`, null, utm_src)}
+                >
+                    Dashboard <FaArrowRightLong />
+                </button>
             ) : (
-                <Link href={`/signup?utm_source=${utm_src}`} className={className}>
-                    <button className="btn btn-accent z-50">Start for free</button>
-                </Link>
+                <button
+                    className={`btn btn-accent z-50 ${className}`}
+                    onClick={(e) => handleRedirect(e, `/signup?`, null, utm_src)}
+                >
+                    Start for free
+                </button>
             )}
         </>
     )

@@ -1,8 +1,8 @@
 import { setUtmSource } from './handleUtmSource';
 
-export const handleRedirect = (e, url, router) => {
+export const handleRedirect = (e, url, router, customSource) => {
     e.preventDefault();
-    const source = typeof window !== 'undefined' ? window.location.pathname : '';
+    const source = customSource || (typeof window !== 'undefined' ? window.location.pathname : '');
     const utmParams = setUtmSource({ source });
     const finalUrl = `${url}state=${utmParams}`;
 
