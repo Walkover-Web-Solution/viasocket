@@ -55,16 +55,8 @@ export default function FooterNew({ footerData = [] }) {
     return chunk;
   });
 
-  const bgStyle = {
-    backgroundImage: [
-      "radial-gradient(ellipse at 20% 50%, rgba(42,42,30,1) 0%, rgba(26,26,20,1) 50%)",
-      "radial-gradient(ellipse at 80% 20%, rgba(30,34,40,1) 0%, rgba(26,26,20,1) 50%)",
-      "linear-gradient(90deg, #1a1a14 0%, #1a1a14 100%)",
-    ].join(", "),
-  };
-
   return (
-    <footer className="w-full relative overflow-hidden" style={bgStyle}>
+    <footer className="w-full relative overflow-hidden bg-[#1a1a14]">
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         <div className="absolute rounded-full" style={{ width: 500, height: 500, right: -79, top: -5, background: "rgba(0,0,0,0.2)", filter: "blur(150px)" }} />
         <div className="absolute rounded-full" style={{ width: 450, height: 450, left: -76, top: 347, background: "rgba(0,0,0,0.15)", filter: "blur(140px)" }} />
