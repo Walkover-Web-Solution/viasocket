@@ -61,6 +61,9 @@ export function middleware(request) {
     response = NextResponse.next();
   }
 
+  // Prevent CDN (Cloudflare) from caching this response — cached responses strip Set-Cookie
+  response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
+
   return setAbCookie(response, { variant, signup });
 }
 
