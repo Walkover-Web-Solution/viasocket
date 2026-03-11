@@ -35,25 +35,19 @@ export function middleware(request) {
     if (raw) abData = JSON.parse(raw);
   } catch {}
 
+  const isLoggedIn = !!request.cookies.get('prod')?.value;
   let variant;
-  let signup;
+  let signup = isLoggedIn;
 
   if (abData && (abData.variant === 'old' || abData.variant === 'new')) {
-    // Variant already set → always use it, regardless of login state
+    // Variant already set → keep it sticky
     variant = abData.variant;
-    signup = !!abData.signup;
+  } else if (isLoggedIn) {
+    // First visit, already logged in → not part of experiment
+    variant = 'old';
   } else {
-    // First time — no variant yet
-    const isLoggedIn = !!request.cookies.get('prod')?.value;
-    if (isLoggedIn) {
-      // Already logged in before experiment → old, not part of experiment
-      variant = 'old';
-      signup = true;
-    } else {
-      // New guest → random 50/50
-      variant = Math.random() < 0.5 ? 'old' : 'new';
-      signup = false;
-    }
+    // New guest → random 50/50
+    variant = Math.random() < 0.5 ? 'old' : 'new';
   }
 
   let response;
@@ -73,3 +67,4 @@ export function middleware(request) {
 export const config = {
   matcher: ['/', '/home'],
 };
+  
