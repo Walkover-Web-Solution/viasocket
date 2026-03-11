@@ -66,10 +66,10 @@ export default function FooterNew({ footerData = [] }) {
   return (
     <footer className="w-full relative overflow-hidden" style={bgStyle}>
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute rounded-full" style={{ width: 500, height: 500, right: -79, top: -5, background: "rgba(59,130,246,0.2)", filter: "blur(150px)" }} />
-        <div className="absolute rounded-full" style={{ width: 450, height: 450, left: -76, top: 347, background: "rgba(29,78,216,0.15)", filter: "blur(140px)" }} />
-        <div className="absolute rounded-full" style={{ width: 550, height: 550, left: "43.5%", top: 594, background: "rgba(37,99,235,0.18)", filter: "blur(160px)" }} />
-        <div className="absolute rounded-full" style={{ width: 350, height: 350, left: "39.5%", top: 594, background: "rgba(96,165,250,0.12)", filter: "blur(130px)" }} />
+        <div className="absolute rounded-full" style={{ width: 500, height: 500, right: -79, top: -5, background: "rgba(0,0,0,0.2)", filter: "blur(150px)" }} />
+        <div className="absolute rounded-full" style={{ width: 450, height: 450, left: -76, top: 347, background: "rgba(0,0,0,0.15)", filter: "blur(140px)" }} />
+        <div className="absolute rounded-full" style={{ width: 550, height: 550, left: "43.5%", top: 594, background: "rgba(0,0,0,0.18)", filter: "blur(160px)" }} />
+        <div className="absolute rounded-full" style={{ width: 350, height: 350, left: "39.5%", top: 594, background: "rgba(0,0,0,0.12)", filter: "blur(130px)" }} />
       </div>
 
       {/* ── Decorative grid (lg+ only) ────────────────────────── */}
