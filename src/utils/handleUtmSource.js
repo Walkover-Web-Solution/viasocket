@@ -60,8 +60,18 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         const abRaw = getCookie('ab_test');
         if (abRaw) {
             const abData = JSON.parse(decodeURIComponent(abRaw));
+            const isLoggedIn = !!getCookie('prod');
+            //once signup is true it stays true forever
+            if (isLoggedIn && !abData.signup) {
+                abData.signup = true;
+                setCookie('ab_test', encodeURIComponent(JSON.stringify(abData)), 30);
+            }
             if (abData.variant && !abData.signup) {
                 queryObject.utm_content = abData.variant;
+            } else {
+                delete queryObject.utm_content;
+                utmData = JSON.stringify(queryObject);
+                setCookie('utmData', utmData, 1);
             }
         }
     } catch (e) {

@@ -37,7 +37,7 @@ export function middleware(request) {
 
   const isLoggedIn = !!request.cookies.get('prod')?.value;
   let variant;
-  let signup = isLoggedIn;
+  let signup = isLoggedIn || !!abData?.signup;
 
   if (abData && (abData.variant === 'old' || abData.variant === 'new')) {
     // Variant already set → keep it sticky
