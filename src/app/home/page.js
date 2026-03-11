@@ -8,6 +8,7 @@ import ReviewsGrid from '../components/new-home/ReviewsGrid';
 import FAQs from '../components/new-home/FAQs';
 import SecuritySectionNew from '../components/new-home/SecuritySectionNew';
 import FooterNew from '../components/new-home/FooterNew';
+import AbTestInit from '@/components/AbTestInit';
 
 export const runtime = 'edge';
 
@@ -40,6 +41,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <AbTestInit variant="new" />
       <MetaHeadComp metaData={metaData} page={'/'} />
       <NavbarServer navbarData={navbarData} utm={'/index'} isNavbarWhite={true} />
 
