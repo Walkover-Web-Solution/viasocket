@@ -17,10 +17,10 @@ export default function SupportSection() {
               Get instant answers from our AI assistant or connect with a support specialist anytime.
             </p>
             <div className="flex flex-wrap items-center gap-4 pt-2">
-              <button className="primary-button">
+              <Link href="https://viasocket.com/help" target="_blank" className="primary-button">
                 Browse help centre
                 <ExternalLink size={15} />
-              </button>
+              </Link>
               <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer" className="secondary-button">
                 Book a demo
               </Link>
@@ -41,7 +41,7 @@ export default function SupportSection() {
             <div className="flex flex-col gap-4 px-4 py-5 pb-6">
               <div className="flex items-start gap-2.5">
                 <div className="w-8 h-8 shrink-0">
-                   <MdSupportAgent size={28} />
+                  <MdSupportAgent size={28} />
                 </div>
                 <div className="flex flex-col gap-0.5 pt-0.5">
                   <span className="text-xs font-semibold text-black">viaSocket</span>

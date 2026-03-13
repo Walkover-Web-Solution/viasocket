@@ -11,7 +11,7 @@ import Breadcrumb from "@/components/breadcrumb/breadcrumb";
 export default function HeroSection({ appOneDetails, useCasesCardsData, headings, appName }) {
     const [activeIndex, setActiveIndex] = useState(0);
 
-    const usecases = useCasesCardsData || [
+    const usecases = useCasesCardsData?.length > 0 ? useCasesCardsData : [
         { title: "AI-Powered Data Processing", description: "Use AI to classify, enrich, and transform incoming data before routing it to the right destination." },
         { title: "Automated Report Generation", description: "Pull data from multiple sources, compile insights, and deliver reports on a schedule — hands-free." },
         { title: "Multi-Step Task Automation", description: "Chain actions across apps with conditional logic to handle complex business processes end to end." },
@@ -45,7 +45,7 @@ export default function HeroSection({ appOneDetails, useCasesCardsData, headings
                         </div>
 
                         {/* Headline */}
-                        <h1 className="heading1 mb-2.5 font-semibold">
+                        <h1 className="heading1 mb-2.5 max-w-3xl font-semibold">
                             {(() => {
                                 const appname = appName || appOneDetails?.name;
                                 const h1 = headings?.h1;

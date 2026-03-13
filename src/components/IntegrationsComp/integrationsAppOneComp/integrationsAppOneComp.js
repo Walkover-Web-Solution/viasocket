@@ -4,8 +4,7 @@ import IntegrationsAppOneClientCompv1 from './integrationsAppOneClientCompv1';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import { cookies } from 'next/headers';
 
-
-export default function IntegrationsAppOneComp({
+export default async function IntegrationsAppOneComp({
     appOneDetails,
     combosData,
     pageInfo,
@@ -25,17 +24,17 @@ export default function IntegrationsAppOneComp({
     skipHeadComp,
 }) {
     // Read A/B variant from cookie (set client-side by AbTestInit)
-    let variant = 'new';
-    // try {
-    //     const cookieStore = cookies();
-    //     const abRaw = cookieStore.get('ab_test')?.value;
-    //     if (abRaw) {
-    //         const abData = JSON.parse(abRaw);
-    //         if (abData.variant === 'old' || abData.variant === 'new') {
-    //             variant = abData.variant;
-    //         }
-    //     }
-    // } catch { }
+    let variant = 'old';
+    try {
+        const cookieStore = await cookies();
+        const abRaw = cookieStore.get('ab_test')?.value;
+        if (abRaw) {
+            const abData = JSON.parse(abRaw);
+            if (abData.variant === 'old' || abData.variant === 'new') {
+                variant = abData.variant;
+            }
+        }
+    } catch { }
 
     const getTriggersAndActionsCount = (events) => {
         let triggersCount = 0;

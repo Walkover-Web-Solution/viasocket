@@ -23,6 +23,10 @@ import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
 import { getBlogData } from '@/utils/getBlogData';
 
+function safeJsonParse(value, fallback = []) {
+    try { return JSON.parse(value) || fallback; } catch { return fallback; }
+}
+
 function transformAppData(app) {
     return {
         appSlug: app.app_slug,
@@ -40,14 +44,14 @@ function transformAppData(app) {
             title: app.page_title,
             description: app.meta_description,
             keywords: [
-                ...JSON.parse(app.primary_keyword || "[]"),
-                ...JSON.parse(app.secondary_keywords || "[]"),
+                ...safeJsonParse(app.primary_keyword),
+                ...safeJsonParse(app.secondary_keywords),
             ],
         },
 
-        useCasesCardsData: JSON.parse(app.use_case_cards || "[]"),
+        useCasesCardsData: safeJsonParse(app.use_case_cards),
 
-        faqData: JSON.parse(app.faqs || "[]"),
+        faqData: safeJsonParse(app.faqs),
     };
 }
 
