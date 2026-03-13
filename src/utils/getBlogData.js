@@ -1,7 +1,7 @@
 import { getBlogs } from './axiosCalls';
 
 export async function getBlogData(tags, pageUrl) {
-    const MIN_BLOGS = 3;
+    const MIN_BLOGS = 4;
     const MAX_BLOGS = 6;
     const DEFAULT_TAG = 'index';
 

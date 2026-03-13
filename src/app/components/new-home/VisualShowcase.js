@@ -252,7 +252,7 @@ export default function VisualShowcase({
                   <div className="flex items-center gap-4 sm:flex-row flex-col">
                     <Link
                       href="/automations"
-                      className="new-primary-btn"
+                      className="primary-button"
                     >
                       Browse all templates
                     </Link>
