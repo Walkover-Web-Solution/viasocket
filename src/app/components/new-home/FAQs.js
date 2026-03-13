@@ -130,7 +130,7 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
 
             <Link
               href="/support"
-              className="new-primary-btn"
+              className="primary-button"
               target="_blank"
             >
               <MessageCircle className="w-4 h-4" />
@@ -173,7 +173,7 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
                     <span
                       className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--black-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
                     >
-                      {faq?.que}
+                      {faq?.que || faq?.question}
                     </span>
 
                     {/* Chevron */}
@@ -210,7 +210,7 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
                             fontWeight: 500,
                           }}
                         >
-                          {faq?.ans}
+                          {faq?.ans || faq?.answer}
                         </p>
                         {faq?.link && (
                           <div className="mt-3">

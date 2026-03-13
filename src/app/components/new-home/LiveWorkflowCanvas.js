@@ -419,6 +419,10 @@ export function LiveWorkflowCanvas({ usecases, onActiveChange }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
+  useEffect(() => {
+    onActiveChange?.(currentIndex);
+  }, [currentIndex, onActiveChange]);
+
   const currentFlow = FLOWS[currentIndex % FLOWS.length];
   const currentAccentColor = ACCENT_COLORS[currentIndex % ACCENT_COLORS.length];
   const currentTitle = usecases?.[currentIndex % usecases.length]?.title;
@@ -429,11 +433,10 @@ export function LiveWorkflowCanvas({ usecases, onActiveChange }) {
     setCurrentIndex((prev) => {
       const len = usecases?.length || FLOWS.length;
       const next = (prev + 1) % len;
-      onActiveChange?.(next);
       return next;
     });
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [isTransitioning, usecases?.length, onActiveChange]);
+  }, [isTransitioning, usecases?.length]);
 
   const handlePrev = useCallback(() => {
     if (isTransitioning) return;
@@ -441,11 +444,10 @@ export function LiveWorkflowCanvas({ usecases, onActiveChange }) {
     setCurrentIndex((prev) => {
       const len = usecases?.length || FLOWS.length;
       const next = (prev - 1 + len) % len;
-      onActiveChange?.(next);
       return next;
     });
     setTimeout(() => setIsTransitioning(false), 600);
-  }, [isTransitioning, usecases?.length, onActiveChange]);
+  }, [isTransitioning, usecases?.length]);
 
   const handleAnimationComplete = useCallback(() => {
     setTimeout(() => {

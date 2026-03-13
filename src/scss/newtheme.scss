@@ -1,0 +1,372 @@
+// ─── Breakpoints ─────────────────────────────────────────────────────
+$bp-md: 768px;
+$bp-xl: 1280px;
+
+// ─── Hover card mixin (parameterized by CSS variable name) ───────────
+@mixin hover-card-effect($rgb-var) {
+  background-color: #ffffff;
+  border: 1px solid #00000017;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+  box-shadow: 0 1px 3px #0000000a;
+
+  &:hover {
+    background-color: rgba(var(#{$rgb-var}), 0.025);
+    border-color: rgba(var(#{$rgb-var}), 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px #00000014, 0 0 0 1px rgba(var(#{$rgb-var}), 0.06);
+  }
+}
+
+// ─── CSS Custom Properties ───────────────────────────────────────────
+:root {
+  --black-color: #080810;
+  --vs-bg-card: #ffffff;
+
+  // Text
+  --vs-headline: #080810;
+  --vs-body-standard: #000000d1;
+  --vs-muted: #00000080;
+  --vs-card-title: #000000eb;
+
+  // Accent
+  --vs-accent: #2563eb;
+  --vs-ambient-glow: #7c3aed;
+
+  // Card Layout
+  --vs-card-width: 100%;
+  --vs-card-bg: #ffffff;
+  --vs-card-opacity: 1;
+  --vs-card-transform: none;
+  --vs-card-z-index: auto;
+}
+
+.label-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--label-color);
+}
+
+.label-text-xs {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--label-color);
+}
+
+.card-title-sm {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  color: var(--vs-headline);
+  margin: 0;
+}
+
+.card-title-xs {
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.3px;
+  color: var(--vs-card-title);
+  margin: 0;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  Card & Layout Classes
+// ═══════════════════════════════════════════════════════════════════════
+
+.glass-card {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--vs-bg-card);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-container);
+}
+
+.section-container {
+  border: 1.5px solid var(--border-color);
+  border-radius: 0;
+  background-color: var(--bg-surface);
+  box-shadow: var(--shadow-container);
+  overflow: hidden;
+}
+
+.section {
+  position: relative;
+  padding: 48px 20px;
+  max-width: 1600px;
+  margin: 0 auto;
+
+  @media (min-width: $bp-md) {
+    padding: 64px 32px;
+  }
+
+  @media (min-width: $bp-xl) {
+    padding: 80px 48px;
+  }
+}
+
+.section-heading {
+  margin-bottom: 48px;
+
+  .accent-bar {
+    margin-bottom: 14px;
+  }
+
+  .heading2 {
+    margin-bottom: 8px;
+  }
+}
+
+//integration page
+.accent-bar {
+  width: 48px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--vs-accent), var(--vs-ambient-glow));
+}
+
+.app-icon-box {
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid #00000014;
+  background-color: var(--vs-surface);
+
+  img {
+    position: absolute;
+    pointer-events: none;
+    width: 73%;
+    height: 73%;
+    left: 13.5%;
+    top: 13.5%;
+    object-fit: contain;
+  }
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 14px;
+  border-radius: 9999px;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.carousel-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 0;
+  background-color: #00000008;
+  cursor: pointer;
+  transition: border-color 200ms ease, color 200ms ease, background-color 200ms ease;
+
+  &:not(:disabled) {
+    border: 1px solid #0000001f;
+    color: #000000b3;
+  }
+
+  &:disabled {
+    border: 1px solid #0000000f;
+    color: #00000033;
+  }
+}
+
+//  Hover effect for Arrow CTA
+.hover-arrow-cta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  font-size: 13px;
+  font-weight: 500;
+  transition: color 200ms ease;
+
+  svg {
+    transition: transform 200ms ease;
+  }
+
+  &:hover {
+    svg {
+      transform: translateX(3px);
+    }
+  }
+}
+
+//  Misc Utilities
+.transition-shadow {
+  transition: box-shadow 200ms ease;
+}
+
+.transition-colors {
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+
+.transition-lift {
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.footer-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9999px;
+
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--vs-body-standard);
+  background-color: var(--vs-surface);
+}
+
+//  Template Card
+.template-card-slot {
+  scroll-snap-align: start;
+  flex: 0 0 calc(33.333% - 16px);
+  min-width: 280px;
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+//  Triggers & Actions
+// ═══════════════════════════════════════════════════════════════════════
+
+.ta-row {
+  @include hover-card-effect(--row-rgb);
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px #0000000f, 0 1px 3px #0000000a;
+
+  &:hover {
+    box-shadow: 0 8px 28px #0000001a, 0 2px 8px rgba(var(--row-rgb), 0.12), 0 0 0 1px rgba(var(--row-rgb), 0.08);
+
+    .ta-icon-box {
+      box-shadow: 0 2px 8px rgba(var(--row-rgb), 0.18);
+    }
+  }
+}
+
+.ta-icon-box {
+  width: 36px;
+  height: 36px;
+  background-color: rgba(var(--row-rgb), 0.14);
+  transition: box-shadow 200ms ease;
+  margin-top: 1px;
+}
+
+.ta-column-header {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #00000014;
+}
+
+.ta-badge {
+  padding: 2px 8px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.ta-request-btn {
+  padding: 11px 22px;
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  background: linear-gradient(135deg, var(--row-color), rgba(var(--row-rgb), 0.85));
+  box-shadow: 0 0 12px rgba(var(--row-rgb), 0.2), 0 2px 6px #00000026;
+  letter-spacing: 0.01em;
+  transition: background 200ms ease, box-shadow 200ms ease, transform 200ms ease;
+
+  svg {
+    transition: transform 200ms ease;
+  }
+
+  &:hover {
+    background: linear-gradient(135deg, rgba(var(--row-rgb), 0.9), var(--row-color));
+    box-shadow: 0 0 24px rgba(var(--row-rgb), 0.4), 0 4px 12px #00000040;
+    transform: translateY(-1px);
+
+    svg:last-child {
+      transform: translateX(2px);
+    }
+  }
+}
+
+//  Common brand-color hover card
+.brand-color-card {
+  @include hover-card-effect(--bc-rgb);
+}
+
+//  Ready-to-Use Card (extends brand-color-card)
+.rtu-card {
+  @extend .brand-color-card;
+  gap: 16px;
+  padding: 20px 24px;
+
+  &:hover {
+    .rtu-connector line,
+    .rtu-connector path {
+      stroke: var(--bc);
+    }
+
+    .rtu-arrow-btn {
+      background-color: var(--bc);
+      border-color: var(--bc);
+      box-shadow: 0 2px 10px rgba(var(--bc-rgb), 0.3);
+
+      svg {
+        color: #ffffff;
+        transform: translateX(1px);
+      }
+    }
+  }
+}
+
+.rtu-connector {
+  line,
+  path {
+    stroke: #00000038;
+    transition: stroke 200ms ease;
+  }
+}
+
+.rtu-arrow-btn {
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  border: 1px solid #0000001a;
+  transition: background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+
+  svg {
+    color: #00000059;
+    transition: color 200ms ease, transform 200ms ease;
+  }
+}
+
+//  Support / Chat Widget
+.chat-widget {
+  width: 340px;
+  background: #ffffff;
+  border-top-left-radius: 10px;
+  box-shadow: 0 0 22px #0000001a, 4px 6px 11px #00000026;
+  overflow: hidden;
+  z-index: 2;
+  align-self: flex-end;
+  margin-bottom: -40px;
+  margin-right: -40px;
+}

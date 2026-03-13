@@ -58,6 +58,7 @@ const IntegrationsMain = (props) => {
                         appOneDetails={data.appOneDetails}
                         combosData={data.combosData}
                         faqData={data.faqData}
+                        appData={data.appData}
                         footerData={data.footerData}
                         useCaseData={data.useCaseData}
                         videoData={data.videoData}

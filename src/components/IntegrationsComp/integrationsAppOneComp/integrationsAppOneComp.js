@@ -1,6 +1,9 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppOneClientComp from './integrationsAppOneClientComp';
+import IntegrationsAppOneClientCompv1 from './integrationsAppOneClientCompv1';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import { cookies } from 'next/headers';
+
 
 export default function IntegrationsAppOneComp({
     appOneDetails,
@@ -9,6 +12,7 @@ export default function IntegrationsAppOneComp({
     integrationsInfo,
     apps,
     faqData,
+    appData,
     footerData,
     blogsData,
     metaData,
@@ -20,6 +24,19 @@ export default function IntegrationsAppOneComp({
     templateToShow,
     skipHeadComp,
 }) {
+    // Read A/B variant from cookie (set client-side by AbTestInit)
+    let variant = 'new';
+    // try {
+    //     const cookieStore = cookies();
+    //     const abRaw = cookieStore.get('ab_test')?.value;
+    //     if (abRaw) {
+    //         const abData = JSON.parse(abRaw);
+    //         if (abData.variant === 'old' || abData.variant === 'new') {
+    //             variant = abData.variant;
+    //         }
+    //     }
+    // } catch { }
+
     const getTriggersAndActionsCount = (events) => {
         let triggersCount = 0;
         let actionsCount = 0;
@@ -117,7 +134,7 @@ export default function IntegrationsAppOneComp({
                 />
             )}
 
-            <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
+            <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} isNavbarWhite={true} />
 
             {!skipHeadComp && (
                 <IntegrationsHeadComp
@@ -130,22 +147,42 @@ export default function IntegrationsAppOneComp({
                 />
             )}
 
-            <IntegrationsAppOneClientComp
-                pageInfo={pageInfo}
-                integrationsInfo={integrationsInfo}
-                metadata={metaData}
-                apps={apps}
-                blogsData={blogsData}
-                appOneDetails={appOneDetails}
-                combosData={combosData}
-                faqData={faqData}
-                footerData={footerData}
-                useCaseData={useCaseData}
-                videoData={videoData}
-                appCount={appCount}
-                getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
-                templateToShow={templateToShow}
-            />
+            {variant === 'new' ? (
+                <IntegrationsAppOneClientCompv1
+                    pageInfo={pageInfo}
+                    integrationsInfo={integrationsInfo}
+                    metadata={metaData}
+                    apps={apps}
+                    blogsData={blogsData}
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
+                    faqData={faqData}
+                    appData={appData}
+                    footerData={footerData}
+                    useCaseData={useCaseData}
+                    videoData={videoData}
+                    appCount={appCount}
+                    getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    templateToShow={templateToShow}
+                />
+            ) : (
+                <IntegrationsAppOneClientComp
+                    pageInfo={pageInfo}
+                    integrationsInfo={integrationsInfo}
+                    metadata={metaData}
+                    apps={apps}
+                    blogsData={blogsData}
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
+                    faqData={faqData}
+                    footerData={footerData}
+                    useCaseData={useCaseData}
+                    videoData={videoData}
+                    appCount={appCount}
+                    getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+                    templateToShow={templateToShow}
+                />
+            )}
         </div>
     );
 }

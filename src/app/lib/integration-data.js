@@ -4,14 +4,16 @@ import {
     getNavbarData,
     getDoFollowStatus,
     getUsecasesData,
+    getSingleAppIntegrationData
 } from '@/utils/getData';
 import {
     FOOTER_FIELDS,
     NAVBAR_FIELDS,
     INTECATEGORY_FIELDS,
-    INTECATEGORYlIST_FILED,          
+    INTECATEGORYlIST_FILED,
     DOFOLLOWLINK_FIELDS,
     USECASES_FIELDS,
+    SINGLEAPP_FIELDS
 } from '@/const/fields';
 import { getVideoData } from '@/utils/getVideoData';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
@@ -20,6 +22,34 @@ import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
 import { getBlogData } from '@/utils/getBlogData';
+
+function transformAppData(app) {
+    return {
+        appSlug: app.app_slug,
+
+        appName: app.app_name,
+
+        appDescription: app.app_description,
+
+        headings: {
+            h1: app.h1_title,
+            subheadline: app.subheadline,
+        },
+
+        metadata: {
+            title: app.page_title,
+            description: app.meta_description,
+            keywords: [
+                ...JSON.parse(app.primary_keyword || "[]"),
+                ...JSON.parse(app.secondary_keywords || "[]"),
+            ],
+        },
+
+        useCasesCardsData: JSON.parse(app.use_case_cards || "[]"),
+
+        faqData: JSON.parse(app.faqs || "[]"),
+    };
+}
 
 export async function getIntegrationsPageData(slug = [], searchParams = {}) {
     try {
@@ -88,13 +118,15 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             }
         } else if (integrationsInfo?.appone) {
             // Single app integration page
-            const [metadata, faqData, categoryData, combosData, useCaseData] = await Promise.all([
-                getMetaData('/integrations/AppOne', pageUrl),
-                getFaqData('[doubleApp]', pageUrl),
+            const [categoryData, combosData, useCaseData] = await Promise.all([
                 getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${integrationsInfo?.category || 'all'}'`, pageUrl),
                 getCombos(integrationsInfo, pageUrl),
                 getUsecasesData(USECASES_FIELDS, `filter=slugname='${integrationsInfo?.appone}'`, pageUrl),
             ]);
+
+            const singleAppIntegrationData = await getSingleAppIntegrationData(SINGLEAPP_FIELDS, `filter=app_slug='${integrationsInfo?.appone}'`, pageUrl);
+
+            const appData = transformAppData(singleAppIntegrationData);
 
             const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
             const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
@@ -114,8 +146,9 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                     pageInfo: pageInfo || {},
                     footerData: footerData || [],
                     apps: apps || [],
-                    metadata: metadata || {},
-                    faqData: faqData || [],
+                    metadata: appData?.metadata || {},
+                    faqData: appData?.faqData || [],
+                    appData: appData || {},
                     integrationsInfo: integrationsInfo || {},
                     combosData: combosData || {},
                     appOneDetails: appOneDetails || {},
