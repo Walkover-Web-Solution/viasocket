@@ -11,14 +11,12 @@ const sourceAccent = {
   capterra: "#044D80",
 };
 
-const sourceLogo = {
-  linkedin: 'https://thingsofbrand.com/api/icon/linkedin.com',
-  twitter: 'https://thingsofbrand.com/api/icon/twitter.com',
-  g2: 'https://thingsofbrand.com/api/icon/g2.com',
-  capterra: 'https://thingsofbrand.com/api/icon/capterra.com',
-};
-
-const SOURCE_ORDER = ["linkedin", "twitter", "g2", "capterra"];
+const SOURCES = [
+  { name: "linkedin", image: "https://thingsofbrand.com/api/icon/linkedin.com", url: "https://in.linkedin.com/company/viasocket-walkover" },
+  { name: "twitter", image: "https://thingsofbrand.com/api/icon/twitter.com", url: "https://x.com/viasocket" },
+  { name: "g2", image: "https://thingsofbrand.com/api/icon/g2.com", url: "https://www.g2.com/products/viasocket/reviews" },
+  { name: "capterra", image: "https://thingsofbrand.com/api/icon/capterra.com", url: "https://www.capterra.com/p/10020406/viaSocket/" },
+];
 const CARD_H = 260;
 const GAP = 16;
 
@@ -69,15 +67,26 @@ function ReviewCard({ review }) {
       <div className="flex flex-col flex-1 p-5 min-h-0 relative">
         {/* Author row */}
         <div className="flex items-center gap-3 mb-3">
-          <div
-            className={`w-9 h-9 rounded-none flex items-center justify-center text-xs flex-shrink-0 font-bold color-${accent}`}
-            style={{
-              background: `${accent}18`,
-              border: `1.5px solid ${accent}30`,
-            }}
-          >
-            {initials}
-          </div>
+          {review?.user_profile?.[0] && review?.user_profile?.[0].trim() !== '' ? (
+            <Image
+              src={review.user_profile[0]}
+              alt={review?.user_name || ''}
+              width={36}
+              height={36}
+              className="w-9 h-9 rounded-none object-cover flex-shrink-0"
+            />
+          ) : (
+            <div
+              className={`w-9 h-9 rounded-none flex items-center justify-center text-xs flex-shrink-0 font-bold`}
+              style={{
+                background: `${accent}18`,
+                border: `1.5px solid ${accent}30`,
+                color: accent,
+              }}
+            >
+              {initials}
+            </div>
+          )}
           <div className="min-w-0 flex-1">
             <p
               className="text-sm truncate font-bold"
@@ -275,18 +284,17 @@ export default function ReviewsGrid({ ref, reviewData }) {
               </p>
 
               <div className="flex items-center gap-4 mt-8">
-                {SOURCE_ORDER.map(
-                  (src) => (
+                {SOURCES.map((src) => (
+                  <Link key={src.name} href={src.url} target="_blank" rel="nofollow noopener noreferrer">
                     <Image
-                      key={src}
-                      src={sourceLogo[src]}
-                      alt={src}
-                      className="object-contain w-6 h-6 opacity-80"
+                      src={src.image}
+                      alt={src.name}
+                      className="object-contain w-6 h-6 opacity-80 hover:opacity-100 transition-opacity"
                       width={24}
                       height={24}
                     />
-                  )
-                )}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>

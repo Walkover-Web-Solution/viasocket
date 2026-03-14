@@ -117,6 +117,7 @@ export default function TriggersActionsSection({ brandColor, appOneDetails, comb
   const actionColor = "#1d4ed8";
 
   if (!hasCombos) return null;
+  if (triggers.length === 0 && actions.length === 0) return null;
 
   return (
     <section className="section">
@@ -128,9 +129,9 @@ export default function TriggersActionsSection({ brandColor, appOneDetails, comb
       />
 
       <div className="section-container">
-        <div className="grid grid-cols-1 md:grid-cols-2 tracking-wide">
+        <div className={`grid grid-cols-1 ${triggers.length > 0 && actions.length > 0 ? 'md:grid-cols-2' : ''} tracking-wide`}>
           {triggers.length > 0 && (
-            <div className="p-6 sm:p-7 max-md:border-b md:border-r primary-border">
+            <div className={`p-6 sm:p-7 ${actions.length > 0 ? 'max-md:border-b md:border-r primary-border' : ''}`}>
               <TAColumn type="trigger" color={triggerColor} items={triggers} appOneDetails={appOneDetails} />
             </div>
           )}

@@ -26,7 +26,21 @@ export default function IntegrationsAppOneClientCompv1({
   getDoFollowUrlStatusArray,
   templateToShow
 }) {
-  const appBrandColor = appOneDetails?.brandcolor;
+
+  function isTooLight(hex) {
+    if (hex.length === 4) hex = '#' + hex[1] + hex[1] + hex[2] + hex[2] + hex[3] + hex[3];
+    const r = parseInt(hex.substr(1, 2), 16);
+    const g = parseInt(hex.substr(3, 2), 16);
+    const b = parseInt(hex.substr(5, 2), 16);
+
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    return brightness > 240; // too close to white
+  }
+  
+  const brandcolor = appOneDetails?.brandcolor || "#000000";
+  const appBrandColor = isTooLight(brandcolor) ? "#000000" : brandcolor;
+
   return (
     <>
       <div
