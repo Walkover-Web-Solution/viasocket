@@ -6,7 +6,7 @@ import Link from "next/link";
 import { LinkButton } from "../../../components/uiComponents/buttons";
 
 export default function FAQs({ faqData = [], isHomepage = false }) {
-  const [openId, setOpenId] = useState(1);
+  const [openId, setOpenId] = useState(null);
 
   const railColor = "var(--rail-color)";
 
