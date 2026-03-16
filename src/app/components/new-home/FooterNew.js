@@ -141,8 +141,8 @@ export default function FooterNew({ footerData = [] }) {
                         </li>
                       ))}
                       {groupName === "Support" && (
-                        <li className="text-sm transition-colors duration-200 block text-white font-normal hover:text-[#ffffff99]">
-                          <RequestIntegrationPopupOpener title="Request an Integration" showType="footer" />
+                        <li className="text-sm transition-colors duration-200 block font-normal">
+                          <RequestIntegrationPopupOpener title="Request an Integration" showType="footer" isNewTheme={true} />
                         </li>
                       )}
                     </ul>

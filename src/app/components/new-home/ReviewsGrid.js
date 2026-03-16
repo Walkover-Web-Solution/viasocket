@@ -27,7 +27,7 @@ function ReviewCard({ review }) {
   const [hovered, setHovered] = useState(false);
   const accent = sourceAccent[review.name];
   const initials =
-    review?.user_name
+    (review?.user_name || "")
       .split(" ")
       .map((w) => w[0])
       .join("")
