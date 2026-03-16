@@ -374,6 +374,7 @@ export function RequestIntegrationPopupOpener({
     type,
     title,
     secondAppInfo = null,
+    isNewTheme = false,
 }) {
     const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
 
@@ -454,7 +455,7 @@ export function RequestIntegrationPopupOpener({
             className="text-sm cursor-pointer hover:underline transition-all duration-300 text-left"
             onClick={openModal}
         >
-            Request an Integration
+            <span className={isNewTheme ? 'text-white hover:text-[#ffffff99]' : ''}>Request an Integration</span>
         </span>
     );
 
