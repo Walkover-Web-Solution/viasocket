@@ -19,7 +19,6 @@ $bp-xl: 1280px;
 
 // ─── CSS Custom Properties ───────────────────────────────────────────
 :root {
-  --black-color: #080810;
   --vs-bg-card: #ffffff;
 
   // Text
@@ -40,7 +39,7 @@ $bp-xl: 1280px;
   --vs-card-z-index: auto;
 }
 
-.label-text {
+.label-text-sm {
   font-size: 12px;
   font-weight: 500;
   color: var(--label-color);
