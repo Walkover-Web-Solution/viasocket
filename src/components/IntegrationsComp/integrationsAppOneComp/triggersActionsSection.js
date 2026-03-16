@@ -48,7 +48,7 @@ function TAColumn({ type, color, items, appName, appOneDetails }) {
           </span>
           <span className="font-bold text-lg">{headerText}</span>
           <span
-            className="label-text ta-badge "
+            className="label-text-sm ta-badge "
             style={{ color, backgroundColor: `rgba(${cRgb},0.13)` }}
           >
             {label}
