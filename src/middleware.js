@@ -21,7 +21,7 @@ export function middleware(request) {
   let abData = null;
   try {
     const raw = request.cookies.get(COOKIE_NAME)?.value;
-    if (raw) abData = JSON.parse(raw);
+    if (raw) abData = JSON.parse(decodeURIComponent(raw));
   } catch {}
 
   let variant;

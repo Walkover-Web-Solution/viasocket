@@ -21,11 +21,11 @@ export default function AbTestInit({ variant }) {
 
         if (existing) {
             try {
-                const abData = JSON.parse(existing);
+                const abData = JSON.parse(decodeURIComponent(existing));
                 // Update signup flag if user is now logged in (one-way latch)
                 if (isLoggedIn && !abData.signup) {
                     abData.signup = true;
-                    setCookie('ab_test', JSON.stringify(abData), 365);
+                    setCookie('ab_test', encodeURIComponent(JSON.stringify(abData)), 365);
                 }
             } catch {}
             return;
@@ -33,7 +33,7 @@ export default function AbTestInit({ variant }) {
 
         // No ab_test cookie exists — create it client-side
         const signup = isLoggedIn;
-        setCookie('ab_test', JSON.stringify({ variant, signup }), 365);
+        setCookie('ab_test', encodeURIComponent(JSON.stringify({ variant, signup })), 365);
     }, [variant]);
 
     return null;
