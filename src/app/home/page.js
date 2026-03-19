@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import { getHomePageData } from '../lib/data';
@@ -41,6 +42,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
       <AbTestInit variant="new" />
       <MetaHeadComp metaData={metaData} page={'/'} />
       <NavbarServer navbarData={navbarData} utm={'/index'} isNavbarWhite={true} />
