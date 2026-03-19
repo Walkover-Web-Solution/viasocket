@@ -63,8 +63,8 @@ export default async function HomePage() {
         reviewData={reviewData}
       />
 
-      {/* FAQ Section */}
-      <div className="py-12 bg-[#FAF9F6]">
+      {/* FAQ Section - Dark Theme */}
+      <div className="py-12 bg-[#0a0a0a]">
         {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
         
         <SecuritySection securityGridData={securityGridData} />

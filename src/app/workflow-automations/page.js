@@ -58,34 +58,34 @@ const getIconComponent = (iconName) => {
 const getCategoryIcon = (category) => {
     switch (category) {
         case 'Marketing':
-            return <Mail size={32} className="text-black" />;
+            return <Mail size={32} className="text-white" />;
         case 'Sales & CRM':
-            return <BarChart3 size={32} className="text-black" />;
+            return <BarChart3 size={32} className="text-white" />;
         case 'HR & Payroll':
-            return <UserPlus size={32} className="text-black" />;
+            return <UserPlus size={32} className="text-white" />;
         case 'IT & Support':
-            return <Headphones size={32} className="text-black" />;
+            return <Headphones size={32} className="text-white" />;
         default:
-            return <FileText size={32} className="text-black" />;
+            return <FileText size={32} className="text-white" />;
     }
 };
 
 const getToolsIcon = (tools) => {
     switch (tools) {
         case 'Ease of use':
-            return <AiOutlineCheckCircle size={32} className="text-black" />;
+            return <AiOutlineCheckCircle size={32} className="text-white" />;
         case 'Role-based controls':
-            return <FaUserShield size={32} className="text-black" />;
+            return <FaUserShield size={32} className="text-white" />;
         case 'Dashboards & reports':
-            return <MdDashboardCustomize size={32} className="text-black" />;
+            return <MdDashboardCustomize size={32} className="text-white" />;
         case 'Seamless integrations':
-            return <MdIntegrationInstructions size={32} className="text-black" />;
+            return <MdIntegrationInstructions size={32} className="text-white" />;
         case 'Mobile support':
-            return <MdOutlineMobileFriendly size={32} className="text-black" />;
+            return <MdOutlineMobileFriendly size={32} className="text-white" />;
         case 'Extensibility':
-            return <FaCogs size={32} className="text-black" />;
+            return <FaCogs size={32} className="text-white" />;
         default:
-            return <AiOutlineCheckCircle size={32} className="text-black" />;
+            return <AiOutlineCheckCircle size={32} className="text-white" />;
     }
 };
 
@@ -185,11 +185,11 @@ export default async function WorkflowAutomationsPage() {
                         </div>
                         <div className="w-full md:w-2/5 flex justify-center items-center py-20 bg-gradient-to-r from-blue-100 to-purple-100">
                             <div className="cont items-center">
-                                <div className="border custom-border text-black p-4 w-52 h3 bg-white">
+                                <div className="border custom-border text-white p-4 w-52 h3 bg-white">
                                     Step 1: Trigger
                                 </div>
                                 <div className="border-r border-black bg-black h-12"></div>
-                                <div className="border custom-border text-black p-4 w-52 h3 bg-white">
+                                <div className="border custom-border text-white p-4 w-52 h3 bg-white">
                                     Step 2: Actions
                                 </div>
                             </div>
@@ -199,7 +199,7 @@ export default async function WorkflowAutomationsPage() {
                 </section>
 
                 {/* How it Works - White */}
-                <section className="bg-[#FAF9F6] p-6 md:p-12 border custom-border">
+                <section className="bg-[#0a0a0a] p-6 md:p-12 border custom-border">
                     <div className="text-left mb-10">
                         <h2 className="h2 mb-1">How does workflow automation work?</h2>
                         <p className="text-lg text-gray-600">Automation follows a simple process:</p>
@@ -227,7 +227,7 @@ export default async function WorkflowAutomationsPage() {
                 </section>
 
                 {/* Why Important - Black */}
-                <section className="bg-white border custom-border text-black p-6 md:p-12">
+                <section className="bg-white border custom-border text-white p-6 md:p-12">
                     <div className="text-left mb-10">
                         <h2 className="h2 font-bold mb-1">Why is workflow automation important?</h2>
                         <p className="text-lg">
@@ -238,7 +238,7 @@ export default async function WorkflowAutomationsPage() {
 
                     <div className="sm:grid-cols-1 lg:grid-cols-2 grid gap-8">
                         {importancePoints.map((point, index) => (
-                            <div key={index} className="bg-[#F2F2F2] text-black p-8 cont gap-1 border custom-border">
+                            <div key={index} className="bg-[#1a1a1a] text-white p-8 cont gap-1 border custom-border">
                                 <div className="flex items-center gap-2">
                                     {getIconComponent(point.iconName)}
                                     <h3 className="h3 font-bold">{point.title}</h3>
@@ -261,7 +261,7 @@ export default async function WorkflowAutomationsPage() {
 
                     <div className="grid lg:grid-cols-2 gap-8">
                         {automationExamples.map((example, index) => (
-                            <div key={index} className="bg-[#FAF9F6] text-black p-8 cont gap-2 border custom-border">
+                            <div key={index} className="bg-[#0a0a0a] text-white p-8 cont gap-2 border custom-border">
                                 <div className="flex items-center gap-2">
                                     {getCategoryIcon(example.category)}
                                     <h3 className="h3 font-bold">{example.category}</h3>
@@ -269,8 +269,8 @@ export default async function WorkflowAutomationsPage() {
                                 <p className="after:text-gray-300">{example.description}</p>
                                 {example.aiNote && (
                                     <div className="flex items-center gap-2 mt-4">
-                                        <Zap size={20} className="text-black flex-shrink-0" />
-                                        <p className="text-black">{example.aiNote}</p>
+                                        <Zap size={20} className="text-white flex-shrink-0" />
+                                        <p className="text-white">{example.aiNote}</p>
                                     </div>
                                 )}
                             </div>
@@ -278,7 +278,7 @@ export default async function WorkflowAutomationsPage() {
                     </div>
                 </section>
 
-                <section className="border custom-border p-6 md:p-12 bg-[#F2F2F2] flex flex-col gap-10">
+                <section className="border custom-border p-6 md:p-12 bg-[#1a1a1a] flex flex-col gap-10">
                     <h2 className="h2 font-bold">What are the features to look for in workflow automation tools?</h2>
                     <div className="grid sm:grid-cols-1 lg:grid-cols-2 gap-8">
                         {workflowAutomationTools.map((tool, index) => (
@@ -304,7 +304,7 @@ export default async function WorkflowAutomationsPage() {
                         {gettingStartedSteps.map((step, index) => (
                             <div
                                 key={index}
-                                className="flex items-center gap-8 px-8 py-6 border-l-4 border-accent bg-white text-black"
+                                className="flex items-center gap-8 px-8 py-6 border-l-4 border-accent bg-white text-white"
                             >
                                 <div className="flex-shrink-0">
                                     <div className="w-12 h-12 bg-accent border custom-border text-white flex items-center justify-center text-xl font-bold">
@@ -322,7 +322,7 @@ export default async function WorkflowAutomationsPage() {
 
                 <ShowDepartmentOptimized />
 
-                <div className="border custom-border bg-white cont gap-4 text-black p-6 md:p-12">
+                <div className="border custom-border bg-white cont gap-4 text-white p-6 md:p-12">
                     <div className="cont gap-1">
                         <h2 className="h2">Ready to work smarter, not harder?</h2>
                         <p className="text-lg">
@@ -331,7 +331,7 @@ export default async function WorkflowAutomationsPage() {
                         </p>
                     </div>
                     <Link href="/signup?utm_source=worflow-automations">
-                        <button className="btn bg-accent text-white hover:bg-white hover:text-black border custom-border">
+                        <button className="btn bg-accent text-white hover:bg-white hover:text-white border custom-border">
                             Get started with viaSocket
                         </button>
                     </Link>

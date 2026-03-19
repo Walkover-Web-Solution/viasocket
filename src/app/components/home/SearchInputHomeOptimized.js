@@ -578,7 +578,7 @@ export default function SearchInputHomeOptimized({
         <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
                 <div
-                    className={`w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
+                    className={`w-full min-h-[56px] px-6 py-4 text-lg bg-[#1a1a1a] border border-gray-700 text-white focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
                     onClick={() => {
                         if (inputRef.current) {
                             inputRef.current.focus();
@@ -592,7 +592,7 @@ export default function SearchInputHomeOptimized({
                     {selectedApps?.map((app) => (
                         <div
                             key={app?.appslugname}
-                            className="flex items-center bg-white border custom-border px-2 py-1 text-sm"
+                            className="flex items-center bg-[#252525] border border-gray-600 px-2 py-1 text-sm text-white"
                         >
                             <Image
                                 src={app.iconurl || 'https://placehold.co/16x16'}
@@ -616,7 +616,7 @@ export default function SearchInputHomeOptimized({
                     {selectedIndustries?.map((industry) => (
                         <div
                             key={industry}
-                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                            className="flex items-center border bg-[#252525] border-gray-600 px-2 py-1 text-sm text-white"
                         >
                             <span>{industry}</span>
                             <button
@@ -633,7 +633,7 @@ export default function SearchInputHomeOptimized({
                     {selectedDepartments?.map((department) => (
                         <div
                             key={department}
-                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                            className="flex items-center border bg-[#252525] border-gray-600 px-2 py-1 text-sm text-white"
                         >
                             <span>{department}</span>
                             <button
@@ -686,20 +686,20 @@ export default function SearchInputHomeOptimized({
                         />
                         {!hasBrowserFocus && searchTerm === '' && shouldShowCaret && (
                             <div className="absolute left-0 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                                <div className="w-px h-5 bg-gray-800 animate-blink"></div>
+                                <div className="w-px h-5 bg-white animate-blink"></div>
                             </div>
                         )}
                     </div>
                 </div>
 
                 {showDropdown && (
-                    <div className="absolute top-full left-0 right-0 border-t-0 bg-white border custom-border shadow-lg z-10 max-h-90 overflow-y-auto rounded-b-3xl">
-                        <div className="apps-section border-b custom-border">
+                    <div className="absolute top-full left-0 right-0 border-t-0 bg-[#1a1a1a] border border-gray-700 shadow-lg z-10 max-h-90 overflow-y-auto rounded-b-3xl">
+                        <div className="apps-section border-b border-gray-700">
                             {searchData?.length > 0 ? (
                                 searchData.slice(0, 3).map((app, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center gap-3 px-4 py-3 hover:bg-gray-100 cursor-pointer"
+                                        className="flex items-center gap-3 px-4 py-3 hover:bg-[#252525] cursor-pointer text-white"
                                         onMouseDown={(e) => {
                                             e.preventDefault();
                                             handleSelectApp(app);
@@ -716,7 +716,7 @@ export default function SearchInputHomeOptimized({
                                     </div>
                                 ))
                             ) : (
-                                <div className="px-4 py-6 text-center text-gray-500">
+                                <div className="px-4 py-6 text-center text-gray-400">
                                     <p className="text-sm">
                                         No apps found
                                         {searchTerm ? ` for "${searchTerm}"` : ''}
@@ -724,9 +724,9 @@ export default function SearchInputHomeOptimized({
                                 </div>
                             )}
                         </div>
-                        <div className="departments-section border-b custom-border">
-                            <div className="px-4 py-2 border-b custom-border text-left">
-                                <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                        <div className="departments-section border-b border-gray-700">
+                            <div className="px-4 py-2 border-b border-gray-700 text-left">
+                                <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                     Departments
                                 </h4>
                             </div>
@@ -736,7 +736,7 @@ export default function SearchInputHomeOptimized({
                                     .map((department, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                            className="flex items-center gap-2 cursor-pointer hover:bg-[#252525] p-4 text-white"
                                             onMouseDown={(e) => {
                                                 e.preventDefault();
                                                 handleSelectDepartment(department);
@@ -748,7 +748,7 @@ export default function SearchInputHomeOptimized({
                                         </div>
                                     ))
                             ) : (
-                                <div className="px-4 py-6 text-center text-gray-500">
+                                <div className="px-4 py-6 text-center text-gray-400">
                                     <p className="text-sm">
                                         No departments found
                                         {searchTerm ? ` for "${searchTerm}"` : ''}
@@ -758,8 +758,8 @@ export default function SearchInputHomeOptimized({
                         </div>
 
                         <div className="industries-section">
-                            <div className="px-4 py-2 border-b custom-border text-left">
-                                <h4 className="text-xs font-semibold text-gray-600 uppercase tracking-wide">
+                            <div className="px-4 py-2 border-b border-gray-700 text-left">
+                                <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
                                     Industries
                                 </h4>
                             </div>
@@ -770,7 +770,7 @@ export default function SearchInputHomeOptimized({
                                         .map((industry, index) => (
                                             <div
                                                 key={index}
-                                                className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
+                                                className="flex items-center gap-2 cursor-pointer hover:bg-[#252525] p-4 text-white"
                                                 onClick={(e) => {
                                                     e.preventDefault();
                                                     handleSelectIndustry(industry);
@@ -783,7 +783,7 @@ export default function SearchInputHomeOptimized({
                                         ))}
                                 </>
                             ) : (
-                                <div className="px-4 py-6 text-center text-gray-500">
+                                <div className="px-4 py-6 text-center text-gray-400">
                                     <p className="text-sm">
                                         No industries found
                                         {searchTerm ? ` for "${searchTerm}"` : ''}

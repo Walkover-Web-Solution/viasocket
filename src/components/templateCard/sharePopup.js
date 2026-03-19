@@ -39,13 +39,13 @@ const SharePopup = ({ title, onClose }) => {
     };
 
     return (
-        <div className="p-4 w-full h-fit border custom-border bg-white">
+        <div className="p-4 w-full h-fit border custom-border bg-[#1a1a1a]">
             <div className="cont gap-4">
                 <div className="flex justify-between items-center">
                     <h3 className="h3">Share this template</h3>
                     <button 
                         onClick={onClose}
-                        className="p-1 hover:bg-gray-100 rounded transition-colors"
+                        className="p-1 hover:bg-[#252525] rounded transition-colors"
                         title="Close"
                     >
                         <FaTimes size={16} />
@@ -53,7 +53,7 @@ const SharePopup = ({ title, onClose }) => {
                 </div>
 
                 <div className="flex gap-2 justify-start items-center">
-                    <div className="border custom-border transition flex items-center justify-center cursor-pointer bg-white h-[38px] relative">
+                    <div className="border custom-border transition flex items-center justify-center cursor-pointer bg-[#1a1a1a] h-[38px] relative">
                         <button onClick={handleCopy} className="flex items-center gap-2 p-2">
                             <FaCopy fontSize={20} /> Copy
                         </button>
@@ -70,7 +70,7 @@ const SharePopup = ({ title, onClose }) => {
                             onClick={() => {
                                 window.open(link.url, '_blank', 'noopener,noreferrer');
                             }}
-                            className="border custom-border p-2 transition flex items-center justify-center cursor-pointer bg-white"
+                            className="border custom-border p-2 transition flex items-center justify-center cursor-pointer bg-[#1a1a1a]"
                         >
                             {link.icon}
                         </div>

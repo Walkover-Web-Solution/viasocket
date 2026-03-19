@@ -27,7 +27,7 @@ const AgencyList = ({ agencies, type }) => {
                         ) {
                             return (
                                 <div className="" key={index + offset}>
-                                    <div className="flex flex-col col-span-1 bg-white border overflow-hidden  border-slate-200  h-full">
+                                    <div className="flex flex-col col-span-1 bg-[#1a1a1a] border overflow-hidden  border-slate-200  h-full">
                                         <div className="p-6">
                                             <div className={` h-[30px] pe-16`}>
                                                 {agency?.logo ? (

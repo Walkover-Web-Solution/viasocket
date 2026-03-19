@@ -82,7 +82,7 @@ export default async function EmbedPage() {
                 </div>
 
                 <div className="container">
-                    <div className="cont cont__py gap-12 md:px-24 px-6  h-fit border bg-[#F5FBFF]">
+                    <div className="cont cont__py gap-12 md:px-24 px-6  h-fit border bg-[#0f1419]">
                         <div className="flex flex-col gap-2 w-full">
                             <h2 className="h2">How it works</h2>
                             <p className="sub__h1">

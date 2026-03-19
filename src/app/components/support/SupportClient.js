@@ -179,7 +179,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                 Read our playbook
                             </Link>
                         </div>
-                        <div className="w-full lg:w-2/5 border custom-border p-6 flex flex-col gap-4 bg-[#FAF9F6]">
+                        <div className="w-full lg:w-2/5 border custom-border p-6 flex flex-col gap-4 bg-[#0a0a0a]">
                             <div className="flex flex-col">
                                 <h3 className="h3">Build it together with our team</h3>
                                 <p>Our team can come on screen sharing and build it together with your team.</p>

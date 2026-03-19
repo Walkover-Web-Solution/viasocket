@@ -67,7 +67,7 @@ export default async function PricingPage() {
                 </div>
 
                 <div className="flex items-center justify-center">
-                    <div className="gap-8 border custom-border p-6 md:p-12 bg-[#faf9f6] mt-4 max-w-[1000px]">
+                    <div className="gap-8 border custom-border p-6 md:p-12 bg-[#0a0a0a] mt-4 max-w-[1000px]">
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-[max-content_max-content_max-content] gap-4 gap-x-20">
                             {features.map((feature, index) =>
                                 index === 0 ? (

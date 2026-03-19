@@ -297,7 +297,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                 )}
             </div>
 
-            <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
+            <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#0a0a0a] pt-12">
                 <div className="container">
                     <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-transparent items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
                         <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">

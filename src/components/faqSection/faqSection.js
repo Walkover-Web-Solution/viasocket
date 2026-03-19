@@ -14,8 +14,8 @@ const FAQSection = ({ faqData = [], faqName }) => {
 
     return (
         <div className="mb-8 container">
-            <section className="flex flex-col gap-8 border custom-border p-8 bg-white">
-                <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
+            <section className="flex flex-col gap-8 border border-gray-700 p-8 bg-[#111111]">
+                <h2 className="h2 flex items-center justify-center text-white">Frequently Asked Questions</h2>
 
                 <div className="flex flex-col">
                     {faqData.map(({ que, ans, link }, index) => {
@@ -25,7 +25,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
                         return (
                             <div
                                 key={index}
-                                className={`collapse collapse-arrow py-2 transition-all duration-300 rounded-none linkButtonCard border-gray-300 ${
+                                className={`collapse collapse-arrow py-2 transition-all duration-300 rounded-none linkButtonCard border-gray-600 ${
                                     !isLast ? 'border-b' : ''
                                 }`}
                             >
@@ -36,9 +36,9 @@ const FAQSection = ({ faqData = [], faqName }) => {
                                     onChange={() => toggleAccordion(index)}
                                     className="peer"
                                 />
-                                <div className="collapse-title font-semibold text-xl">{que}</div>
+                                <div className="collapse-title font-semibold text-xl text-white">{que}</div>
                                 <div className="collapse-content pr-10">
-                                    <p className="leading-relaxed text-gray-800 md:pr-10">{ans}</p>
+                                    <p className="leading-relaxed text-gray-300 md:pr-10">{ans}</p>
                                     {link && (
                                         <div className="mt-3">
                                             <LinkButton content="Learn More" href={link} />

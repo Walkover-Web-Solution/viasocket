@@ -3,12 +3,12 @@ import Image from 'next/image';
 
 export default function GetStarted() {
   return (
-    <div className="bg-white border custom-border p-6 md:p-12 custom-border flex gap-12 justify-between items-center flex-wrap">
+    <div className="bg-[#111111] border border-gray-700 p-6 md:p-12 flex gap-12 justify-between items-center flex-wrap">
       <div className="flex flex-col gap-4">
         <div className="flex justify-between flex-col md:flex-row">
           <div className="flex flex-col gap-2 w-fit h-full">
-            <h2 className="h2">We'll help you get started</h2>
-            <p className="sub__h1">Our team is all set to help you!</p>
+            <h2 className="h2 text-white">We'll help you get started</h2>
+            <p className="sub__h1 text-gray-300">Our team is all set to help you!</p>
           </div>
         </div>
         <div className="flex  lg:gap-6 gap-4  flex-wrap">

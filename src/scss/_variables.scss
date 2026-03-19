@@ -1,26 +1,38 @@
 :root {
     --tw-border-opacity: 1;
 
-    /** Border Colors */
+    /** Border Colors - Dark Theme */
+    --custom-border: rgb(55 65 81 / var(--tw-border-opacity, 1));
+    --accent-border-color: #ff6b5b;
+    --flow-border-color: #6b7280;
 
-    --custom-border: rgb(209 213 219 / var(--tw-border-opacity, 1));
-    --accent-border-color: #a8200d;
-    --flow-border-color: #84898a;
+    /** Background colors - Dark Theme */
+    --background-color-black: #0a0a0a;
+    --background-color-white: #111111;
+    --background-color-grey-100: #1a1a1a;
+    --background-primary: #0a0a0a;
+    --background-secondary: #141414;
+    --background-tertiary: #1a1a1a;
+    --background-card: #1e1e1e;
+    --background-elevated: #252525;
 
-    /** Background colors */
-    --background-color-black: #000000;
-    --background-color-white: #ffffff;
-    --background-color-grey-100: #f3f4f6;
+    /** Text Colors - Dark Theme */
+    --text-color-black: #ffffff;
+    --text-color-white: #0a0a0a;
+    --text-primary: #ffffff;
+    --text-secondary: #b3b3b3;
+    --text-muted: #888888;
 
-    /** Text Colors*/
-    --text-color-black: #000000;
-    --text-color-white: #ffffff;
-
-    /** utility*/
+    /** utility */
     --u-base: 4px;
 
-    // new home page 
-    --rail-color: #0000000f;
-    --black-color: #0a0a0a;
+    // new home page - Dark Theme
+    --rail-color: #ffffff0f;
+    --black-color: #ffffff;
+    --white-color: #0a0a0a;
+    
+    /** Dark theme accent colors */
+    --accent-primary: #3b82f6;
+    --accent-hover: #60a5fa;
 }
 

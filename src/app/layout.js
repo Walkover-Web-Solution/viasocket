@@ -21,14 +21,14 @@ export const metadata = {
     },
     manifest: '/site.webmanifest',
     other: {
-        'msapplication-TileColor': '#da532c',
-        'theme-color': '#ffffff',
+        'msapplication-TileColor': '#0a0a0a',
+        'theme-color': '#0a0a0a',
     },
 };
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" data-theme="light">
+        <html lang="en" data-theme="dark">
             <head>
                 <noscript>
                     <iframe

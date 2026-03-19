@@ -80,7 +80,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
         <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative">
             <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
                 <div className="dotted-background flex flex-col lg:flex-row lg:gap-1">
-                    <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] flex flex-col  justify-between gap-6 p-6">
+                    <div ref={contentRef} className="w-full lg:w-[55%] bg-[#0a0a0a] flex flex-col  justify-between gap-6 p-6">
                         <div className="cont gap-4">
                             <h1 className="h1">{template?.title}</h1>
                             <h2 className="h3">{template?.description}</h2>
@@ -155,7 +155,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                     }`}
                 style={{ zIndex: 100 }}
             >
-                <div className="container border custom-border bg-[#faf9f6] gap-2 flex flex-col items-center justify-between pt-2 sm:pt-6 md:px-12 relative">
+                <div className="container border custom-border bg-[#0a0a0a] gap-2 flex flex-col items-center justify-between pt-2 sm:pt-6 md:px-12 relative">
                     <button
                         onClick={handleCloseStickyBar}
                         className="absolute top-2 right-2 p-2 hover:bg-gray-200 rounded-full transition-colors duration-200"
@@ -303,7 +303,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
             )}
 
             <div className="cont">
-                <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#faf9f6] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
+                <div className="cont bg-[url('/assets/bg-img/shapes-bg.svg')] bg-cover bg-center bg-[#0a0a0a] items-center justify-center p-6 md:p-12 h-[600px] overflow-hidden border mt-12">
                     <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                         <h2 className="h2">Can't find the right template?</h2>
                         <h2 className="h2 mb-4">Start with AI</h2>

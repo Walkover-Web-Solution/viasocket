@@ -454,7 +454,7 @@ const AppGridSkeleton = () => {
             {skeletonCards.map((_, index) => (
                 <div
                     key={index}
-                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 custom-border border border-l-0 border-t-0 gap-2 bg-[#FAFAFA]"
+                    className="flex flex-col sm:py-9 py-6 sm:px-6 px-4 custom-border border border-l-0 border-t-0 gap-2 bg-[#1a1a1a]"
                 >
                     <div className="flex items-center gap-2">
                         {/* Better icon placeholder with a subtle icon-like shape */}

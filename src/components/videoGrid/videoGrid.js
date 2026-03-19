@@ -76,14 +76,14 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                         <button
                             aria-label="Scroll left"
                             onClick={() => scrollByAmount(-1)}
-                            className="hidden sm:flex items-center justify-center absolute left-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute left-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-[#1a1a1a] rounded-full border"
                         >
                             <IoIosArrowBack size={24} />
                         </button>
                         <button
                             aria-label="Scroll right"
                             onClick={() => scrollByAmount(1)}
-                            className="hidden sm:flex items-center justify-center absolute right-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute right-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-[#1a1a1a] rounded-full border"
                         >
                             <IoIosArrowForward size={24} />
                         </button>

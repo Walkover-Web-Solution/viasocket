@@ -56,7 +56,7 @@ const MoreCreditComp = ({ selectedCountryData}) => {
             <div className="flex items-center justify-between mb-6">
                 <h2 className="h2">Buy More Credits</h2>
             </div>
-        <div className='border custom-border p-10 bg-white w-full'>
+        <div className='border custom-border p-10 bg-[#1a1a1a] w-full'>
             <div className="grid md:grid-cols-2 gap-10 items-center">
                 {/* LEFT: Credit Selector */}
                 <div className="flex flex-col items-center gap-1">

@@ -18,18 +18,18 @@
     }
 
     &.btn-outline {
-        @apply bg-white hover:bg-black hover:text-white !border-gray-200;
+        @apply bg-transparent hover:bg-white hover:text-black !border-gray-600 text-white;
     }
 
     &.btn-primary {
-        @apply hover:bg-accent;
+        @apply hover:bg-accent text-white;
     }
 
     &.btn-accent {
-        @apply text-white border-black;
+        @apply text-white border-accent;
 
         &:hover {
-            @apply bg-black;
+            @apply bg-[#ff8577];
         }
     }
 
@@ -38,7 +38,7 @@
     }
 
     &:disabled {
-        @apply bg-gray-200 text-black;
+        @apply bg-gray-700 text-gray-400;
     }
 }
 
@@ -110,11 +110,11 @@
 }
 
 .collapse:not(.collapse-close):has(> input[type='radio']:checked) {
-    @apply border;
+    @apply border border-gray-700;
 
     .collapse-title {
-        background-color: #f5f5f5;
-        color: #000;
+        background-color: #1a1a1a;
+        color: #ffffff;
     }
 }
 

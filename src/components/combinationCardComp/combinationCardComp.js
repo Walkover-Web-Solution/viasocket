@@ -6,14 +6,14 @@ export default function CombinationCardComp({ trigger, action, description, link
     return (
         <button
             onClick={(e) => handleRedirect(e, link)}
-            className={`border custom-border border-l-0 p-4 bg-white flex gap-4 items-center transition-all cursor-pointer group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
+            className={`border custom-border border-l-0 p-4 bg-[#1a1a1a] flex gap-4 items-center transition-all cursor-pointer group relative ${showTopBorder ? 'border-t' : 'border-t-0'}`}
         >
             <div className="flex items-center">
-                <div className="p-2 cont items-center bg-white w-[40px] border h-[40px] relative">
+                <div className="p-2 cont items-center bg-[#1a1a1a] w-[40px] border h-[40px] relative">
                     <Image className="object-contain p-1.5" alt="trigger icon" src={trigger?.iconurl} fill />
                 </div>
                 <div className="w-8 border-t-2" />
-                <div className="p-2 cont items-center bg-white w-[40px] border h-[40px] relative">
+                <div className="p-2 cont items-center bg-[#1a1a1a] w-[40px] border h-[40px] relative">
                     <Image className="object-contain p-1.5" alt="action icon" src={action?.iconurl} fill />
                 </div>
             </div>

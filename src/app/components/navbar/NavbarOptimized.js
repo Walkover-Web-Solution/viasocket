@@ -27,7 +27,7 @@ export default function NavbarOptimized({
     const [originalGroupName, setOriginalGroupName] = useState(initialGroupName);
     const [showNavbarOnScroll, setShowNavbarOnScroll] = useState(!isNavbarWhite);
 
-    let mode = 'light';
+    let mode = 'dark';
     let borderClass;
     let backgroundClass;
     let textClass;
@@ -35,11 +35,9 @@ export default function NavbarOptimized({
     if (utm && utm === '/pricing') {
         borderClass = '';
     }
-    if (utm !== '/index') {
-        textClass = 'text-dark ';
-    } else {
-        textClass = 'text-white ';
-    }
+    // Dark theme: always use light text
+    textClass = 'text-white ';
+    
     if (utm && utm === '/index') {
         backgroundClass = '!uppercase';
     } else {
@@ -142,8 +140,8 @@ const current = normalizePath(currentPath || pathname);
                     setGroupName(originalGroupName);
                 }}
             >
-                {/* Top navigation bar */}
-                <div className={`border-gray-300 border-b lg:block hidden ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
+                {/* Top navigation bar - Dark Theme */}
+                <div className={`border-gray-700 border-b lg:block hidden ${isNavbarWhite ? 'bg-[#0a0a0a]/80 supports-[backdrop-filter]:bg-[#0a0a0a]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#0a0a0a]/60' : 'bg-[#111111]/80 supports-[backdrop-filter]:bg-[#111111]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#111111]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <div className="flex justify-center items-center">
                             {navbarData?.length > 0 && topLevelGroups?.length > 0 &&
@@ -191,9 +189,9 @@ const current = normalizePath(currentPath || pathname);
                     </div>
                 </div>
 
-                {/* Main navigation bar */}
+                {/* Main navigation bar - Dark Theme */}
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#faf9f6]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
+                    className={`border-b border-gray-700 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-[#0a0a0a]/80 supports-[backdrop-filter]:bg-[#0a0a0a]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#0a0a0a]/60' : 'bg-[#0a0a0a]/80 supports-[backdrop-filter]:bg-[#0a0a0a]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#0a0a0a]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
@@ -224,7 +222,7 @@ const current = normalizePath(currentPath || pathname);
                         </div>
 
                         <div className="flex items-center justify-center">
-                            {/* Dynamic navigation links based on selected group */}
+                            {/* Dynamic navigation links based on selected group - Dark Theme */}
                             <div className="flex">
                                 {navbarData?.length > 0 && groupedNavbarData &&
                                     (groupedNavbarData[groupName] || [])
@@ -233,8 +231,8 @@ const current = normalizePath(currentPath || pathname);
                                                 <Link
                                                     key={index}
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${
-                                                        index === 0 ? 'border-l border-gray-300' : ''
-                                                    } border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(
+                                                        index === 0 ? 'border-l border-gray-700' : ''
+                                                    } border-r border-gray-700 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(
                                                         `${item.link}`
                                                     )} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
                                                     href={`${item.link}`}

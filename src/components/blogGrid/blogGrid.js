@@ -48,7 +48,7 @@ const CardComponent = ({ card, isBlack = false }) => {
             href={`https://viasocket.com/blog/${card?.slug}`}
             target="_blank"
             id="blogSection"
-            className={`${isBlack ? 'border border-white' : 'border custom-border'} card rounded-none bg-white LinkButtonCard`}
+            className={`${isBlack ? 'border border-white' : 'border custom-border'} card rounded-none bg-[#1a1a1a] LinkButtonCard`}
         >
             {' '}
             <div className="flex flex-col gap-4 h-full">

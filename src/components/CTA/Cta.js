@@ -18,25 +18,25 @@ const Cta = ({
     description,
     buttonLabel,
     buttonLink,
-    theme = 'white',
+    theme = 'dark',
     newTab = false,
     readMoreLink,
 }) => {
     return (
         <div className="container">
-            <div className={`cont border custom-border gap-2 p-6 md:p-12 ${theme === 'white' ? 'bg-white' : 'bg-black'}`}>
+            <div className={`cont border border-gray-700 gap-2 p-6 md:p-12 ${theme === 'dark' ? 'bg-[#111111]' : 'bg-[#1a1a1a]'}`}>
                 <div className="cont gap-1">
-                    <h2 className={`h2 text-left ${theme === 'white' ? 'text-black' : 'text-white'}`}>{title}</h2>
+                    <h2 className={`h2 text-left text-white`}>{title}</h2>
 
                     {subDescription && <p className={`text-2xl font-semibold text-accent`}>{subDescription}</p>}
 
                     {description && (
-                        <h2 className={`sub__h1 ${theme === 'white' ? 'text-black' : 'text-white'} mt-2 text-gray-700`}>{description}</h2>
+                        <h2 className={`sub__h1 text-gray-300 mt-2`}>{description}</h2>
                     )}
                 </div>
                 <Link href={buttonLink} target={newTab ? '_blank' : '_self'} className="w-fit mt-8">
                     <button
-                        className={`btn ${theme === 'white' ? 'btn-accent' : 'bg-accent text-white hover:bg-white hover:text-black border-none'}`}
+                        className={`btn bg-accent text-white hover:bg-[#ff8577] border-none`}
                     >
                         {buttonLabel}
                     </button>

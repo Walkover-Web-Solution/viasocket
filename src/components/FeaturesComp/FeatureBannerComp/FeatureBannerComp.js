@@ -32,7 +32,7 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData, h
                         {(featureData?.image || featureData?.bgimage) && (
                             <div
                                 className={`lg:p-20 p-4 flex flex-col items-center relative ${
-                                    featureData?.bgimage ? 'bg-[#ede8de]' : 'bg-white border custom-border'
+                                    featureData?.bgimage ? 'bg-[#ede8de]' : 'bg-[#1a1a1a] border custom-border'
                                 }`}
                                 style={{
                                     backgroundImage: featureData?.bgimage ? `url("${featureData.bgimage}")` : undefined,

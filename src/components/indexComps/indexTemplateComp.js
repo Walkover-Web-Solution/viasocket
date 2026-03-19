@@ -68,8 +68,8 @@ const IndexTemplateComp = ({ categories, templates }) => {
                         {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex text-xs lg:text-sm py-2 px-4 font-medium border custom-border rounded-full ${
-                                    selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-white text-black'
+                                className={`flex text-xs lg:text-sm py-2 px-4 font-medium border border-gray-600 rounded-full ${
+                                    selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-[#1a1a1a] text-white'
                                 }`}
                                 onClick={() => handleSelectCategory(cat)}
                             >
@@ -96,14 +96,14 @@ const IndexTemplateComp = ({ categories, templates }) => {
                     </div>
 
                     <div
-                        className="cont p-6 overflow-hidden m-auto bg-[#faf9f6] xl:w-[60vw] w-full"
+                        className="cont p-6 overflow-hidden m-auto bg-[#1a1a1a] xl:w-[60vw] w-full"
                         style={{ height: '80vh' }}
                     >
-                        <div className="border dotted-background custom-border h-full flex flex-col justify-between">
+                        <div className="border dotted-background border-gray-700 h-full flex flex-col justify-between">
                             <div className="cont p-4 max-h-[64vh] overflow-hidden">
                                 <div className="cont gap-1 mb-4">
-                                    <h1 className="h3">{currentTemplate?.title}</h1>
-                                    <h2 className="h6 leading-none">
+                                    <h1 className="h3 text-white">{currentTemplate?.title}</h1>
+                                    <h2 className="h6 leading-none text-gray-300">
                                         {currentTemplate?.metadata?.description || currentTemplate?.description}
                                     </h2>
                                 </div>
@@ -149,8 +149,8 @@ const IndexTemplateComp = ({ categories, templates }) => {
                         {categories?.slice(0, 5)?.map((cat, i) => (
                             <button
                                 key={cat?.name}
-                                className={`flex text-xs w-fit items-center gap-2 py-2 px-4 font-medium border custom-border ${
-                                    selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-white text-black'
+                                className={`flex text-xs w-fit items-center gap-2 py-2 px-4 font-medium border border-gray-600 ${
+                                    selected?.name === cat?.name ? 'bg-accent text-white' : 'bg-[#1a1a1a] text-white'
                                 }`}
                                 onClick={() => handleSelectCategory(cat)}
                             >
@@ -174,12 +174,12 @@ const IndexTemplateComp = ({ categories, templates }) => {
                         ))}
                     </div>
 
-                    <div className="cont dotted-background justify-between w-full" style={{ height: '74vh' }}>
+                    <div className="cont dotted-background justify-between w-full bg-[#1a1a1a]" style={{ height: '74vh' }}>
                         <div className="h-full">
                             <div className="p-4 h-[65vh] w-[60vw] sm:w-full overflow-hidden" style={{ width: '100%' }}>
                                 <div className="cont gap-1">
-                                    <h1 className="h3">{currentTemplate?.title}</h1>
-                                    <h2 className="h6 leading-none">
+                                    <h1 className="h3 text-white">{currentTemplate?.title}</h1>
+                                    <h2 className="h6 leading-none text-gray-300">
                                         {currentTemplate?.metadata?.description || currentTemplate?.description}
                                     </h2>
                                 </div>
@@ -193,7 +193,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
                                     />
                                 </div>
                             </div>
-                            <div className="flex items-center justify-end flex-wrap gap-2 p-3 border-t custom-border">
+                            <div className="flex items-center justify-end flex-wrap gap-2 p-3 border-t border-gray-700">
                                 <Link href={getTemplateLink()} className="btn btn-accent">
                                     Use this template
                                 </Link>

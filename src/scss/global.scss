@@ -9,6 +9,12 @@
     h1 {
         @apply font-inter-tight;
     }
+    
+    /* Dark theme base styles */
+    html, body {
+        background-color: var(--background-primary);
+        color: var(--text-primary);
+    }
 }
 
 //check import file for imports
@@ -55,10 +61,10 @@
     background: none;
 }
 
-/** Customized the container padding */
+/** Customized the container padding - Dark Theme */
 @media screen and (width <=576px) {
     body {
-        background: white;
+        background: var(--background-primary);
 
         .home-page-container {
             padding: 0 !important;
@@ -68,6 +74,7 @@
 
 @media screen and (576px <=width <=992px) {
     body {
+        background: var(--background-primary);
         .home-page-container {
             padding: 0 !important;
         }
@@ -76,25 +83,29 @@
 
 @media screen and (992px <=width <=1200px) {
     body {
+        background: var(--background-primary);
         .home-page-container {
             padding: 1rem !important;
         }
     }
 }
 
-/** login/signup page **/
+/** login/signup page - Dark Theme **/
 .login-container {
+    background-color: var(--background-secondary);
+    
     button {
-        color: black !important;
-        border-color: black !important;
+        color: white !important;
+        border-color: var(--custom-border) !important;
+        background-color: var(--background-elevated) !important;
     }
 
     span {
-        color: black !important;
+        color: var(--text-primary) !important;
     }
 
     p {
-        color: black !important;
+        color: var(--text-secondary) !important;
     }
 }
 
@@ -120,10 +131,11 @@
     }
 }
 
-/** Using for custom design */
+/** Using for custom design - Dark Theme */
 #__next {
     border-left: 1px solid var(--custom-border);
     border-right: 1px solid var(--custom-border);
+    background-color: var(--background-primary);
 
     /** Using for all btn font size */
     .btn {
@@ -134,9 +146,15 @@
         min-height: 45px;
         border-radius: 50px;
         border-color: var(--custom-border);
+        background-color: var(--background-elevated);
+        color: var(--text-primary);
 
         @media screen and (width <=768px) {
             font-size: 12px;
+        }
+        
+        &:hover {
+            background-color: var(--background-card);
         }
     }
 }
@@ -156,9 +174,9 @@
     }
 }
 
-//bottom white gradient effect for panel section
+//bottom gradient effect for panel section - Dark Theme
 .btm-gradient {
-    background-image: linear-gradient(#0000, #f4f3f1 44%);
+    background-image: linear-gradient(transparent, var(--background-primary) 44%);
     z-index: 10;
     height: 90px;
     display: block;
@@ -191,17 +209,17 @@
     animation: gradientBorder 3s linear infinite;
 
     background:
-        /* inner background behind content */
-        linear-gradient(#ffffff, #ffffff) content-box,
+        /* inner background behind content - Dark Theme */
+        linear-gradient(var(--background-card), var(--background-card)) content-box,
 
         /* animated border */
         conic-gradient(from var(--angle),
-            #dcd6e0 0deg,
-            #f36fff 53deg,
-            #268aff 90deg,
-            #52eaea 126deg,
-            #dad7dc 178deg,
-            #e5e0e9 360deg) border-box;
+            #3b3b3b 0deg,
+            #a855f7 53deg,
+            #3b82f6 90deg,
+            #22d3d3 126deg,
+            #4b4b4b 178deg,
+            #3b3b3b 360deg) border-box;
 }
 
 // for t&c and privacy page
@@ -224,12 +242,13 @@
     background: var(--black-color);
     border: 1.5px solid var(--black-color);
     transition: all 0.15s ease;
-    @apply text-white text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    @apply text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    color: var(--white-color);
     width: fit-content;
     white-space: nowrap;
 
     &:hover {
-        background: #000000;
+        background: #e0e0e0;
         transform: scale(1.03);
     }
 }
@@ -238,14 +257,15 @@
     background: transparent;
     border: 1.5px solid var(--black-color);
     transition: all 0.15s ease;
-    @apply text-black text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    @apply text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    color: var(--black-color);
     width: fit-content;
     white-space: nowrap;
 
     &:hover {
         background: var(--black-color);
         transform: scale(1.03);
-        color: #ffffff;
+        color: var(--white-color);
     }
 }
 
@@ -269,7 +289,7 @@
     font-size: 36px;
     line-height: 1.15;
     letter-spacing: -0.8px;
-    color: var(--black-color);
+    color: var(--text-primary);
 
     @media (min-width: 768px) {
         font-size: 48px;
@@ -289,7 +309,7 @@
     letter-spacing: -0.8px;
     font-weight: 700;
     letter-spacing: -0.8px;
-    color: var(--black-color);
+    color: var(--text-primary);
 
     @media (min-width: 768px) {
         font-size: 36px;
@@ -304,7 +324,7 @@
 .sub-heading1 {
     font-size: 16px;
     line-height: 1.55;
-    color: #000000b3;
+    color: var(--text-secondary);
 
     @media (min-width: 768px) {
         font-size: 18px;
@@ -320,7 +340,7 @@
 .sub-heading2 {
     @apply text-base md:text-lg;
     line-height: 1.5;
-    color: #000000a6;
+    color: var(--text-muted);
 }
 
 .reviews-marquee-fade {
@@ -328,11 +348,11 @@
     z-index: 2;
 
     &-top {
-        background: linear-gradient(to bottom, #ffffff, transparent);
+        background: linear-gradient(to bottom, var(--background-primary), transparent);
     }
 
     &-bottom {
-        background: linear-gradient(to top, #ffffff, transparent);
+        background: linear-gradient(to top, var(--background-primary), transparent);
     }
 }
 

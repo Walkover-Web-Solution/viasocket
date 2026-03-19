@@ -30,7 +30,7 @@ export default function ResultSectionOptimized({
     blogs = []
 }) {
     return (
-        <div className="bg-[#faf9f6] result-section text-left">
+        <div className="bg-[#0a0a0a] result-section text-left">
             {/* Template Results Section */}
             {showTemplates && (loadingTemplates || hasTemplateResults) && (
                 <div className="container mx-auto px-4 py-12 relative z-index-1">

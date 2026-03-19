@@ -27,7 +27,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                 break;
         }
         return (
-            `bg-white lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-grey-100-text-black justify-center transition-all duration-300 group ${style.featurecard} ` +
+            `bg-[#1a1a1a] lg:p-10 p-4 pb-16 border custom-border border-t-0 border-l-0 flex flex-col text-center items-center h-full hover-bg-grey-100-text-white justify-center transition-all duration-300 group ${style.featurecard} ` +
             gridClass
         );
     }

@@ -47,7 +47,7 @@ export default function BlackFridaySaleClient({ blackFridaySaleData }) {
     return (
         <>
             <div className="flex items-center flex-col dotted-background h-auto pt-8 pb-16 sm:py-auto justify-center">
-                <p className="w-fit ml-auto mr-[40px] lg:block hidden border custom-border mb-4 p-4 bg-[#faf9f6]">
+                <p className="w-fit ml-auto mr-[40px] lg:block hidden border custom-border mb-4 p-4 bg-[#0a0a0a]">
                     <span className="text-base">Want to list your app for sale?</span>
                     <Link
                         href="https://tally.so/r/D42g25"
@@ -57,7 +57,7 @@ export default function BlackFridaySaleClient({ blackFridaySaleData }) {
                         Apply before 28th Nov 2025 <GoArrowUpRight />
                     </Link>
                 </p>
-                <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
+                <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#0a0a0a] text-center'>
                     <p className='border bg-white rounded-full px-4 py-1 mb-2 max-w-[80%]'> 100+ Handpicked Discounts & Lifetime Offers </p>
                     <h1 className="text-6xl uppercase">
                         SaaS Black Friday Deals <span className='text-accent'>2025</span>
@@ -124,7 +124,7 @@ export default function BlackFridaySaleClient({ blackFridaySaleData }) {
             </div>
 
             <div className="container cont lg:py-20 md:py-16 py-12 lg:gap-20 md:gap-16 gap-12">
-                <p className="w-fit lg:hidden mx-auto border custom-border p-4 bg-[#faf9f6] block">
+                <p className="w-fit lg:hidden mx-auto border custom-border p-4 bg-[#0a0a0a] block">
                     <span className="text-base">Want to list your app for sale?</span>
                     <Link
                         href="https://tally.so/r/D42g25"

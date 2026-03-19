@@ -13,7 +13,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
     }, [useCaseData]);
 
     return (
-        <div className="cont gap-8 bg-white border custom-border">
+        <div className="cont gap-8 bg-[#1a1a1a] border custom-border">
             <div className="flex flex-col md:flex-row gap-4 ">
                 <div className="w-full p-8 h-fit flex flex-col">
                     <div className="cont gap-2">
@@ -24,7 +24,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                         {allUseCases.map((uc, index) => (
                             <div
                                 key={index}
-                                className={`p-4 w-full cursor-pointer transition-all  group ${activeIndex === index ? 'bg-black text-white' : 'hover-bg-grey-100-text-black'
+                                className={`p-4 w-full cursor-pointer transition-all  group ${activeIndex === index ? 'bg-black text-white' : 'hover-bg-grey-100-text-white'
                                     }`}
                                 onMouseEnter={() => {
                                     setActiveUseCases(uc?.content);
@@ -41,7 +41,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                                         <div
                                             className={`font-semibold ${activeIndex === index
                                                     ? 'text-white'
-                                                    : 'text-black group-hover:text-white'
+                                                    : 'text-white group-hover:text-white'
                                                 }`}
                                         >
                                             {uc?.heading}
@@ -62,7 +62,7 @@ const UseCaseList = ({ useCaseData, appname }) => {
                         backgroundPosition: 'center',
                     }}
                 >
-                    <ul className="list-disc bg-white m-4 lg:m-12 h-full p-8 flex flex-col justify-center">
+                    <ul className="list-disc bg-[#1a1a1a] m-4 lg:m-12 h-full p-8 flex flex-col justify-center">
                         {activeUseCases?.map((item, j) => (
                             <li key={j} className="text-xl mb-4">
                                 {item}

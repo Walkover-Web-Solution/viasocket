@@ -62,7 +62,7 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, templates = []
                         <button
                             key={`${app?.slug}-${idx}`}
                             onClick={() => handleClickApp(app)}
-                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border"
                         >
                             {app?.icon ? (
                                 <Image src={app?.icon} alt={app?.name} width={22} height={22} onError={(e) => {
@@ -96,7 +96,7 @@ const MarqueeComponent = ({ onTemplatesChange, onSelectionChange, templates = []
                         <button
                             key={`${category?.name}-${idx}`}
                             onClick={() => handleClickChip(category?.name)}
-                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-white border"
+                            className="mx-4 inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] border"
                         >
                             <span>{category?.name}</span>
                         </button>

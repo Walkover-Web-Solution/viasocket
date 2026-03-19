@@ -7,7 +7,7 @@ function NavList({ items }) {
     return (
         <ul className="grid grid-cols-1 md:grid-cols-2 list-none">
             {items?.map((item, i) => (
-                <li key={i} className="hover:bg-gray-100 text-black p-2">
+                <li key={i} className="hover:bg-[#252525] text-white p-2">
                     <a href={item?.link} className="flex flex-col">
                         <span className="text-lg hover:text-accent hover:underline">{item?.name}</span>
                     </a>
@@ -64,23 +64,23 @@ export default function Menubar({ open, onClose, navbarData }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-[#111111] border-l border-gray-700 shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
                     open ? 'translate-x-0' : 'translate-x-full'
                 }`}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Menubar"
             >
-                <div className="md:hidden flex justify-end p-4 border-b mb-4">
-                    <X className="h-8 w-8" onClick={onClose} />
+                <div className="md:hidden flex justify-end p-4 border-b border-gray-700 mb-4">
+                    <X className="h-8 w-8 text-white" onClick={onClose} />
                 </div>
                 <div className="cont justify-between h-full pt-0 md:pt-8">
                     {groups && (
                         <div className="cont gap-4">
                             {groups?.map((row, index) => {
                                 return (
-                                    <div key={index} className="border-b px-4 pb-4">
-                                        <h3 className="text-xl font-semibold px-2 mb-2">{row?.group_name}</h3>
+                                    <div key={index} className="border-b border-gray-700 px-4 pb-4">
+                                        <h3 className="text-xl font-semibold px-2 mb-2 text-white">{row?.group_name}</h3>
                                         {row?.items?.length > 0 && <NavList items={row?.items} />}
                                     </div>
                                 );

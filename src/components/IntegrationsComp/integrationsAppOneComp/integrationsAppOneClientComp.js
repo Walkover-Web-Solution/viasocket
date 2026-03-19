@@ -101,7 +101,7 @@ export default function IntegrationsAppOneClientComp({
     const selectedCombos = filteredCombos?.length > 0 ? filteredCombos : combosData?.combinations;
 
     return (
-        <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
+        <div className="bg-[#0a0a0a] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
             <div className="container flex flex-col justify-between gap-12">
                 <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />

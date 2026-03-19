@@ -152,11 +152,11 @@ export default function PricingTabsClient({ countries }) {
                                 value={searchTerm || (isDetectingLocation ? 'Detecting location...' : '')}
                                 onChange={handleSearchChange}
                                 onFocus={() => setIsDropdownOpen(true)}
-                                className="focus:outline-none text-lg pl-10 pr-4 py-2 w-full border custom-border bg-white"
+                                className="focus:outline-none text-lg pl-10 pr-4 py-2 w-full border custom-border bg-[#1a1a1a]"
                             />
                             <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
                                 <svg
-                                    className={`w-5 h-5 text-black transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                                    className={`w-5 h-5 text-white transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"
@@ -171,7 +171,7 @@ export default function PricingTabsClient({ countries }) {
                             </div>
 
                             {isDropdownOpen && countries && countries.length > 0 && (
-                                <ul className="absolute top-full left-0 w-full bg-white border custom-border max-h-60 overflow-y-auto scrollbar-none z-50 shadow-lg">
+                                <ul className="absolute top-full left-0 w-full bg-[#1a1a1a] border custom-border max-h-60 overflow-y-auto scrollbar-none z-50 shadow-lg">
                                     {countries
                                         .filter(
                                             (c) =>
@@ -185,7 +185,7 @@ export default function PricingTabsClient({ countries }) {
                                                     handleCountrySelect(country.country);
                                                     setSearchTerm(country.country);
                                                 }}
-                                                className="px-4 py-2 text-lg cursor-pointer hover:bg-gray-100 flex items-center gap-2"
+                                                className="px-4 py-2 text-lg cursor-pointer hover:bg-[#252525] flex items-center gap-2"
                                             >
                                                 <Image
                                                     src={country.img}
@@ -206,7 +206,7 @@ export default function PricingTabsClient({ countries }) {
 
                 <div className="flex flex-col items-center mt-4 w-full">
                     <div className="w-full flex flex-col lg:flex-row gap-8">
-                        <div className="lg:w-[60%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
+                        <div className="lg:w-[60%] cont gap-8 border custom-border p-6 lg:p-12 bg-[#1a1a1a]">
                             <div className="cont flex flex-col lg:flex-row items-center gap-2 justify-between">
                                 <div className="flex gap-4">
                                     <div className="text-accent text-3xl mt-1">
@@ -214,21 +214,21 @@ export default function PricingTabsClient({ countries }) {
                                     </div>
                                     <h3 className="h2">Premium</h3>
                                 </div>
-                                <div className="relative flex items-center bg-gray-100 rounded-full p-1 w-[260px] border custom-border">
+                                <div className="relative flex items-center bg-[#252525] rounded-full p-1 w-[260px] border custom-border">
                                     <div
-                                        className={`absolute top-1 bottom-1 w-1/2 bg-white rounded-full shadow transition-all duration-300`}
+                                        className={`absolute top-1 bottom-1 w-1/2 bg-[#1a1a1a] rounded-full shadow transition-all duration-300`}
                                         style={{ left: activeTab === 'monthly' ? '4px' : 'calc(50% - 4px)' }}
                                     />
 
                                     <button
                                         onClick={() => setActiveTab('monthly')}
-                                        className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === 'monthly' ? 'text-black' : 'text-gray-500'}`}
+                                        className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === 'monthly' ? 'text-white' : 'text-gray-500'}`}
                                     >
                                         Monthly
                                     </button>
                                     <button
                                         onClick={() => setActiveTab('yearly')}
-                                        className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === 'yearly' ? 'text-black' : 'text-gray-500'}`}
+                                        className={`relative z-10 w-1/2 text-sm py-2 transition-colors ${activeTab === 'yearly' ? 'text-white' : 'text-gray-500'}`}
                                     >
                                         Yearly
                                     </button>
@@ -363,7 +363,7 @@ export default function PricingTabsClient({ countries }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="lg:w-[40%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
+                        <div className="lg:w-[40%] cont gap-8 border custom-border p-6 lg:p-12 bg-[#1a1a1a]">
                             <div className="flex items-center gap-4">
                                 <div className="text-accent text-3xl mt-1">
                                     <FaCrown />

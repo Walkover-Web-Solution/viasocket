@@ -201,7 +201,7 @@ const AutocompleteFilter = ({
         <div className="relative w-full h-full min-h-0 flex flex-col overflow-hidden" ref={dropdownRef}>
             {/* Input Field */}
             <div className="relative">
-                <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-white">
+                <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-[#1a1a1a]">
                     <MdSearch fontSize={20} className="text-gray-400" />
                     <input
                         ref={inputRef}
@@ -219,7 +219,7 @@ const AutocompleteFilter = ({
             {/* Categories and Apps Display - Two separate boxes */}
             <div className="mt-2 grid grid-rows-2 md:grid-rows-1 grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0 overflow-hidden">
                 {/* Categories Box */}
-                <div className={`border custom-border p-3 bg-white h-full overflow-y-auto`}>
+                <div className={`border custom-border p-3 bg-[#1a1a1a] h-full overflow-y-auto`}>
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">CATEGORIES</h4>
                     <div className="space-y-1">
                         {categories.map((category) => (
@@ -244,7 +244,7 @@ const AutocompleteFilter = ({
                                         className={`w-4 h-4 border-2 flex items-center justify-center ${
                                             selectedCategories.includes(category)
                                                 ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
+                                                : 'border-gray-300 bg-[#1a1a1a]'
                                         }`}
                                     >
                                         {selectedCategories.includes(category) && (
@@ -265,7 +265,7 @@ const AutocompleteFilter = ({
                 </div>
 
                 {/* Apps Box */}
-                <div className={`border custom-border bg-white p-3 h-full overflow-y-auto`}>
+                <div className={`border custom-border bg-[#1a1a1a] p-3 h-full overflow-y-auto`}>
                     <h4 className="text-sm font-semibold text-gray-600 mb-2">APPS</h4>
                     <div className="space-y-1">
                         {apps.map((app) => (
@@ -290,7 +290,7 @@ const AutocompleteFilter = ({
                                         className={`w-4 h-4 rounded border-2 flex items-center justify-center ${
                                             selectedApps.includes(app.pluginslugname)
                                                 ? 'bg-blue-500 border-blue-500'
-                                                : 'border-gray-300 bg-white'
+                                                : 'border-gray-300 bg-[#1a1a1a]'
                                         }`}
                                     >
                                         {selectedApps.includes(app.pluginslugname) && (

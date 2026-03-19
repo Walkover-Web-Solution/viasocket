@@ -45,12 +45,12 @@ export default function MainContent({
 
       <ShowDepartmentOptimized />
 
-      <div className="bg-white">
+      <div className="bg-[#0a0a0a]">
         <ShowBadges />
       </div>
 
-      {/* Review Section */}
-      <div className="bg-[#f9f6f1]">
+      {/* Review Section - Dark Theme */}
+      <div className="bg-[#111111]">
         <ReviewIframeOptimized reviewData={reviewData} showless={false} />
       </div>
 
