@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -40,9 +41,9 @@ export default async function HomePage() {
     initialApps,
   } = await getHomePageData();
   const hasToken = await getHasToken();
-
   return (
     <>
+      <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js"  />
       <AbTestInit variant="old" />
       <MetaHeadComp metaData={metaData} page={'/'} />
       <NavbarServer navbarData={navbarData} utm={'/index'} />
