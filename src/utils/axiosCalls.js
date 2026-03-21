@@ -141,12 +141,7 @@ export async function getVideos(pageUrl) {
 export async function getTemplates(pageUrl) {
     const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}templates/all`;
     try {
-        const response = await axiosWithCache.get(url, {
-            cache: {
-                ttl: 1000 * 60 * 20, //cache for 20 min
-                interpretHeader: false,
-            },
-        });
+        const response = await axios.get(url);
         return response?.data?.data?.templates || [];
     } catch (error) {
         sendErrorMessage({
