@@ -3,6 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Star, Play, Sparkles, Workflow } from "lucide-react";
+import FeatureChips from "@/components/featureChips/featureChips";
 import { LiveWorkflowCanvas, ACCENT_COLORS } from "./LiveWorkflowCanvas";
 import { handleRedirect } from '@/utils/handleRedirection';
 
@@ -12,10 +13,6 @@ const heroTheme = {
   gridLeftOpacity: 0.025,
   gridRightOpacity: 0.06,
   logoFilter: "brightness(0)",
-  headlineAccentColor: "#2563EB",
-  subtitleColor: "rgba(0,0,0,0.7)",
-  ctaShadow: "0 0 30px rgba(37,99,235,0.2)",
-  ctaShadowHover: "0 0 40px rgba(37,99,235,0.35)",
   watchTextColor: "rgba(0,0,0,0.65)",
   watchTextHover: "rgba(0,0,0,0.8)",
   playBtnBg: "rgba(0,0,0,0.04)",
@@ -24,7 +21,6 @@ const heroTheme = {
   playBtnBorderHover: "rgba(0,0,0,0.15)",
   playIconFill: "rgba(0,0,0,0.5)",
   playIconFillHover: "rgba(0,0,0,0.8)",
-  trustLabel: "rgba(0,0,0,0.55)",
   starInactive: "rgba(0,0,0,0.12)",
   reviewText: "rgba(0,0,0,0.6)",
   reviewHighlight: "rgba(0,0,0,0.78)",
@@ -159,7 +155,10 @@ export default function HeroContainerNew() {
               </div>
 
               {/* Feature Chips — above headline */}
-              <FeatureChips />
+              <FeatureChips chips={[
+                { label: "AI Agents", icon: <Sparkles className="w-3.5 h-3.5" />, ai: true },
+                { label: "No-Code Workflows", icon: <Workflow className="w-3.5 h-3.5" />, color: "#10B981", ai: false },
+              ]} />
 
               {/* Main Headline */}
               <div className="space-y-5">
@@ -187,7 +186,7 @@ export default function HeroContainerNew() {
               <div className="space-y-4 pt-2">
                 <div className="flex items-center gap-5">
                   <button
-                    className="new-primary-btn"
+                    className="primary-button"
                     onClick={(e) => handleRedirect(e, '/signup?', null, '/hero')}
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}
@@ -401,58 +400,6 @@ function ShufflingAppIcons() {
           100% { transform: translateX(-50%); }
         }
       `}</style>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════
-   Feature Chips
-   ═════════════════════════════════════════ */
-
-function FeatureChips() {
-  const chips = [
-    { label: "AI Agents", icon: <Sparkles className="w-3.5 h-3.5" />, ai: true },
-    { label: "No-Code Workflows", icon: <Workflow className="w-3.5 h-3.5" />, color: "#10B981", ai: false },
-  ];
-
-  return (
-    <div className="flex items-center gap-3">
-      {chips.map((chip) => (
-        <div
-          key={chip.label}
-          className="relative flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-semibold overflow-hidden"
-          style={chip.ai ? {
-            background: "linear-gradient(135deg, rgba(168,85,247,0.12) 0%, rgba(99,102,241,0.1) 50%, rgba(59,130,246,0.08) 100%)",
-            border: "1px solid rgba(168,85,247,0.3)",
-            color: "#7c3aed",
-            boxShadow: "0 2px 12px rgba(168,85,247,0.12), inset 0 1px 0 rgba(255,255,255,0.5)",
-          } : {
-            background: `linear-gradient(135deg, ${chip.color}18 0%, ${chip.color}10 100%)`,
-            border: `1px solid ${chip.color}40`,
-            color: chip.color,
-            boxShadow: `0 2px 12px ${chip.color}10, inset 0 1px 0 rgba(255,255,255,0.5)`,
-          }}
-        >
-          {/* Glass shimmer highlight */}
-          <div
-            className="absolute top-0 left-0 right-0 h-px pointer-events-none"
-            style={{
-              background: chip.ai
-                ? "linear-gradient(90deg, transparent 10%, rgba(168,85,247,0.3) 50%, transparent 90%)"
-                : `linear-gradient(90deg, transparent 10%, ${chip.color}28 50%, transparent 90%)`,
-            }}
-          />
-          <span style={chip.ai ? {
-            color: "#8b5cf6",
-          } : {
-            color: chip.color,
-            opacity: 0.85,
-          }}>
-            {chip.icon}
-          </span>
-          {chip.label}
-        </div>
-      ))}
     </div>
   );
 }

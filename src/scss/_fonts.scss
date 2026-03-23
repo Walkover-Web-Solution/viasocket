@@ -1,32 +1,6 @@
-@font-face {
-    font-family: 'Times Now';
-    src: url('../../public/fonts/times-now/TimesNow-Light.woff') format('woff');
-    font-style: normal;
-    font-weight: 400;
-    /* Light */
-}
-
-// @font-face {
-//     font-family: 'Times Now';
-//     src: url('../../public/fonts/times-now/TimesNow-SemiBold.woff') format('woff');
-//     font-style: normal;
-//     font-weight: 600; /* Regular */
-// }
-
-// @font-face {
-//     font-family: 'Times Now';
-//     src: url('../../public/fonts/times-now/TimesNow-Bold.woff') format('woff');
-//     font-style: normal;
-//     font-weight: 800; /* Bold */
-// }
-// @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
 body {
     font-family: 'Inter Tight', serif;
     color: #252525;
-    // background-image: radial-gradient(circle, #d3d3d3 1px, transparent 1px);
-    // background-size: 16px 16px; 
-    // background-repeat: repeat;
     background-color: #FAF9F6;
 }
 
@@ -35,7 +9,6 @@ body {
     font-family: 'Inter Tight';
     line-height: 1.1em;
     font-weight: 400;
-    // text-transform: capitalize;
     color: #222222;
 
     &__b {
@@ -80,4 +53,62 @@ body {
     @apply text-base;
     font-family: 'Inter Tight';
     font-weight: 400;
+}
+
+
+//new theme -------------------
+
+.heading1 {
+    font-size: 36px;
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    color: var(--black-color);
+
+    @media (min-width: 768px) {
+        font-size: 48px;
+        line-height: 1.2;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 57px;
+        line-height: 72px;
+        letter-spacing: -1.475px;
+    }
+}
+
+.heading2 {
+    font-size: 28px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--black-color);
+
+    @media (min-width: 768px) {
+        font-size: 36px;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 42px;
+    }
+}
+
+.sub-heading1 {
+    font-size: 16px;
+    line-height: 1.55;
+    color: #000000b3;
+
+    @media (min-width: 768px) {
+        font-size: 18px;
+    }
+
+    @media (min-width: 1024px) {
+        font-size: 20px;
+        line-height: 30.6px;
+    }
+}
+
+//sub heading
+.sub-heading2 {
+    @apply text-base md:text-lg;
+    line-height: 1.5;
+    color: #000000a6;
 }

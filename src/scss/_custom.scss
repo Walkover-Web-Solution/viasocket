@@ -214,3 +214,63 @@ $button-transition-timing: 100ms;
 .modal-box {
     border-radius: 0px !important;
 }
+
+
+// for new UI theme -----------------
+
+//buttons
+.primary-button {
+    background: var(--black-color);
+    border: 1.5px solid var(--black-color);
+    transition: all 0.15s ease;
+    @apply text-white text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    width: fit-content;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        background: #000000;
+        transform: scale(1.03);
+    }
+}
+
+.secondary-button{
+    background: transparent;
+    border: 1.5px solid var(--black-color);
+    transition: all 0.15s ease;
+    @apply text-black text-sm font-semibold inline-flex items-center gap-2 rounded-lg px-6 py-3;
+    width: fit-content;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+        background: var(--black-color);
+        transform: scale(1.03);
+        color: #ffffff;
+    }
+}
+
+.outline-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 20px;
+  background-color: #00000005;
+  border: 1px solid #0000001a;
+  border-radius: 0;
+  color: var(--vs-muted);
+  
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+
+  &:hover {
+    background-color: #0000000a;
+    border-color: #00000026;
+    color: #000000bf;
+  }
+}
+
+

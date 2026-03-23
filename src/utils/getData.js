@@ -24,7 +24,8 @@ import {
     BLACKFRIDAYSALE,
     DEPARTMENTDATA,
     SOCIALREVIEWS,
-    TEMPLATEMARQUEEITEMS
+    TEMPLATEMARQUEEITEMS,
+    SINGLEAPPINTEGRATIONDATA
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -176,4 +177,10 @@ export async function getDepartmentData(fields, filter, pageUrl){
 export async function getTemplateMarqueeItemsData(fields, filter, pageUrl){
     const data = await getDataFromTable(TEMPLATEMARQUEEITEMS, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
+}
+
+export async function getSingleAppIntegrationData(fields, filter, pageUrl){
+    const data = await getDataFromTable(SINGLEAPPINTEGRATIONDATA, handleFieldsFilter(fields, filter), pageUrl);
+    const res = handleData(data);
+    return res?.[0] || {};
 }
