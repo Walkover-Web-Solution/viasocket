@@ -12,9 +12,7 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
     setHasActiveSearch(isActive);
   }, []);
 
-  const containerClasses = hasActiveSearch
-    ? 'min-h-0 pt-12'
-    : 'min-h-[calc(100vh-150px)] flex flex-col justify-center';
+  const containerClasses = 'min-h-0 pt-12';
 
   return (
     <div className={`${containerClasses} px-4 mx-auto relative global-top-space`}>

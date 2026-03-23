@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import TemplateCard from '@/components/templateCard/templateCard';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import BlogGrid from '@/components/blogGrid/blogGrid';
@@ -10,6 +11,7 @@ export default function ResultSectionOptimized({
     loadingTemplates,
     hasTemplateResults,
     filteredTemplates = [],
+    defaultTemplates = [],
     selectedApps = [],
     selectedDepartments = [],
     selectedIndustries = [],
@@ -29,8 +31,32 @@ export default function ResultSectionOptimized({
     loadingBlogs,
     blogs = []
 }) {
+    const noSearchActive = !showTemplates && !showAiResponse && !showVideos && !showBlogs;
+    const latestDefaultTemplates = [...defaultTemplates]
+        ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
+        ?.slice(6, 12);
+
     return (
         <div className="bg-[#faf9f6] result-section text-left">
+            {/* Default Templates Section - show when no search is active */}
+            {noSearchActive && latestDefaultTemplates.length > 0 && (
+                <div className="container mx-auto px-4 py-12 relative z-index-1">
+                    <h2 className="h2 mb-8 text-left">Top ready to use templates</h2>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+                        {latestDefaultTemplates.map((template, index) => (
+                            <TemplateCard key={template.id} index={index} template={template} />
+                        ))}
+                    </div>
+
+                    <div className="flex justify-end w-full mt-4">
+                        <Link href="/automations" className="btn btn-outline">
+                            Explore all templates
+                        </Link>
+                    </div>
+                </div>
+            )}
+
             {/* Template Results Section */}
             {showTemplates && (loadingTemplates || hasTemplateResults) && (
                 <div className="container mx-auto px-4 py-12 relative z-index-1">
