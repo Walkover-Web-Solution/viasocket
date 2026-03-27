@@ -3,12 +3,23 @@
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 
+// Link overrides for navbar items - allows redirecting specific links to new URLs
+const NAVBAR_LINK_OVERRIDES = {
+    '/mcp': 'https://mushroom.viasocket.com',
+};
+
+// Helper function to get the final link (with any overrides applied)
+const getNavbarLink = (link) => {
+    if (!link) return link;
+    return NAVBAR_LINK_OVERRIDES[link] || link;
+};
+
 function NavList({ items }) {
     return (
         <ul className="grid grid-cols-1 md:grid-cols-2 list-none">
             {items?.map((item, i) => (
                 <li key={i} className="hover:bg-gray-100 text-black p-2">
-                    <a href={item?.link} className="flex flex-col">
+                    <a href={getNavbarLink(item?.link)} className="flex flex-col">
                         <span className="text-lg hover:text-accent hover:underline">{item?.name}</span>
                     </a>
                 </li>
