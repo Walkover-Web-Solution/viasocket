@@ -11,6 +11,17 @@ import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
 import { FaArrowRightLong } from "react-icons/fa6";
 
+// Link overrides for navbar items - allows redirecting specific links to new URLs
+const NAVBAR_LINK_OVERRIDES = {
+    '/mcp': 'https://mushroom.viasocket.com',
+};
+
+// Helper function to get the final link (with any overrides applied)
+const getNavbarLink = (link) => {
+    if (!link) return link;
+    return NAVBAR_LINK_OVERRIDES[link] || link;
+};
+
 export default function NavbarOptimized({
     utm,
     navbarData,
@@ -150,7 +161,7 @@ const current = normalizePath(currentPath || pathname);
                                 topLevelGroups.map(
                                     (item, index) =>
                                         item?.is_link ? (
-                                            <Link key={index} href={item?.group_link}>
+                                            <Link key={index} href={getNavbarLink(item?.group_link)}>
                                                 <div
                                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden lg:flex w-fit mx-2 px-2 !h-[24px] items-center justify-center cursor-pointer hover:text-accent !text-xs ${
                                                         isGroupActive(item.group_name)
@@ -229,6 +240,7 @@ const current = normalizePath(currentPath || pathname);
                                 {navbarData?.length > 0 && groupedNavbarData &&
                                     (groupedNavbarData[groupName] || [])
                                         .map((item, index) => {
+                                            const finalLink = getNavbarLink(item.link);
                                             return (
                                                 <Link
                                                     key={index}
@@ -237,7 +249,7 @@ const current = normalizePath(currentPath || pathname);
                                                     } border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(
                                                         `${item.link}`
                                                     )} ${item.name === 'Home' ? 'lg:hidden' : ''}`}
-                                                    href={`${item.link}`}
+                                                    href={finalLink}
                                                 >
                                                     {item.name}
                                                 </Link>
