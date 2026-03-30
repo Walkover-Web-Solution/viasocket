@@ -13,7 +13,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 // Link overrides for navbar items - allows redirecting specific links to new URLs
 const NAVBAR_LINK_OVERRIDES = {
-    '/mcp': 'https://mushroom.viasocket.com',
+    '/mcp': 'https://mushrooms.viasocket.com',
 };
 
 // Helper function to get the final link (with any overrides applied)

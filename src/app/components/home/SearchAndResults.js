@@ -92,6 +92,7 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         loadingTemplates={loadingTemplates}
         hasTemplateResults={hasTemplateResults}
         filteredTemplates={filteredTemplates}
+        defaultTemplates={templateData}
         selectedApps={selectedApps}
         selectedDepartments={selectedDepartments}
         selectedIndustries={selectedIndustries}
