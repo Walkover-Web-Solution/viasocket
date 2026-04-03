@@ -6,6 +6,20 @@ import HeadComp from '@/components/headComp/headComp'
 import ChatWidget from '@/components/chat-widget/chat-wdget'
 import { getUtmSource } from '@/utils/handleUtmSource'
 
+let zarazLoaded = false
+
+export function loadZarazManually() {
+  if (zarazLoaded) return
+  zarazLoaded = true
+
+  const script = document.createElement('script')
+  script.src = '/cdn-cgi/zaraz/i.js'
+  script.async = true
+  script.defer = true
+
+  document.head.appendChild(script)
+}
+
 export default function AppProvider({ children }) {
   const pathname = usePathname()
   const [showSkeleton, setShowSkeleton] = useState(false)
@@ -65,6 +79,10 @@ export default function AppProvider({ children }) {
 
   useEffect(() => {
     getUtmSource()
+  }, [])
+
+  useEffect(() => {
+    loadZarazManually()
   }, [])
 
   // Generate canonical URL logic
