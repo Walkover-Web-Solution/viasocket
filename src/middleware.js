@@ -33,8 +33,8 @@ export function middleware(request) {
     // First visit, already logged in → not part of experiment
     variant = 'old';
   } else {
-    // New guest, no cookie yet → random 80/20 (new/old)
-    variant = Math.random() > 0.8 ? 'old' : 'new';
+    // New guest, no cookie yet → random 80/20 (old/new)
+    variant = Math.random() < 0.8 ? 'old' : 'new';
   }
 
   if (variant === 'new') {
