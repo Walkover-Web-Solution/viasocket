@@ -136,7 +136,7 @@ export default function McpIndexClientComp({
 
                                 <button
                                     className="btn btn-accent"
-                                    onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
+                                    onClick={(e) => handleRedirect(e, 'https://app.mushroom.viasocket.com/login?')}
                                 >
                                     Get Your MCP URL
                                 </button>
@@ -330,7 +330,7 @@ export default function McpIndexClientComp({
                                         without rate limits
                                     </h3>
                                 </div>
-                                <Link href="/signup?utm_source=mcp">
+                                <Link href="https://app.mushroom.viasocket.com/login?">
                                     <button className="btn btn-accent">Get Your MCP URL for Free</button>
                                 </Link>
                             </div>

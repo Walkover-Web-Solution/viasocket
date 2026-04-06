@@ -31,6 +31,7 @@ export default function IntegrationsAppOneClientComp({
     apps,
     faqData,
     footerData,
+    appData,
     blogsData,
     metaData,
     useCaseData,
@@ -122,11 +123,11 @@ export default function IntegrationsAppOneClientComp({
                 {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
                     <div className="flex flex-col gap-12">
                         <div className=" flex flex-col gap-2">
-                            <h1 className="h1">Integrate {appOneDetails?.name} with your favorite apps</h1>
+                            <h1 className="h1">
+                                {appData?.headings?.h1 || `Automate ${appOneDetails?.name} with viaSocket`}
+                            </h1>
                             <p className="sub__h1">
-                                Easily connect {appOneDetails?.name} with the apps you use every day. Pick from
-                                thousands of available {appOneDetails?.name} integrations or customize{' '}
-                                <br className="hidden xl:block" /> new ones through our automation platform.
+                                {appData?.headings?.subheadline || `Eliminate repetitive tasks and manual data entry. Build automated workflows with viaSocket's AI agents and serverless logic — no code required.`}
                             </p>
                         </div>
                     </div>
