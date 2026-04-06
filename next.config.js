@@ -41,7 +41,7 @@ const nextConfig = {
             },
             {
                 source: '/mcp',
-                destination: 'https://mushrooms.viasocket.com',
+                destination: 'https://mushrooms.viasocket.com/',
                 permanent: true,
             },
         ];
