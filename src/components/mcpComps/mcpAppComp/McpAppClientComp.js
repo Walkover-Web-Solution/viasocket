@@ -174,7 +174,7 @@ export default function McpAppClientComp({
                                 {mcpPromptData[0]?.prompt || appOneDetails.events.length > 0 ? (
                                     <button
                                         className="btn btn-accent"
-                                        onClick={(e) => handleRedirect(e, 'https://flow.viasocket.com/mcp?')}
+                                        onClick={(e) => handleRedirect(e, 'https://app.mushroom.viasocket.com/login?')}
                                     >
                                         Get Your MCP URL
                                     </button>
@@ -407,7 +407,7 @@ export default function McpAppClientComp({
                                         without rate limits
                                     </h3>
                                 </div>
-                                <Link href="/signup?utm_source=mcp">
+                                <Link href="https://app.mushroom.viasocket.com/login?">
                                     <button className="btn bg-accent text-white hover:bg-white hover:text-black border-none">
                                         Get Your MCP URL for Free
                                     </button>

@@ -44,7 +44,6 @@ export default async function HomePage() {
   return (
     <>
       <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js"  />
-      <AbTestInit variant="old" />
       <MetaHeadComp metaData={metaData} page={'/'} />
       <NavbarServer navbarData={navbarData} utm={'/index'} />
       

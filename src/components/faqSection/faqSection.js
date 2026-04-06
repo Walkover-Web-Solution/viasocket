@@ -18,7 +18,7 @@ const FAQSection = ({ faqData = [], faqName }) => {
                 <h2 className="h2 flex items-center justify-center">Frequently Asked Questions</h2>
 
                 <div className="flex flex-col">
-                    {faqData.map(({ que, ans, link }, index) => {
+                    {faqData.map((faq, index) => {
                         const isLast = index === faqData.length - 1;
                         const isOpen = openIndex === index;
 
@@ -36,12 +36,12 @@ const FAQSection = ({ faqData = [], faqName }) => {
                                     onChange={() => toggleAccordion(index)}
                                     className="peer"
                                 />
-                                <div className="collapse-title font-semibold text-xl">{que}</div>
+                                <div className="collapse-title font-semibold text-xl">{faq?.que || faq?.question}</div>
                                 <div className="collapse-content pr-10">
-                                    <p className="leading-relaxed text-gray-800 md:pr-10">{ans}</p>
-                                    {link && (
+                                    <p className="leading-relaxed text-gray-800 md:pr-10">{faq?.ans || faq?.answer}</p>
+                                    {faq?.link && (
                                         <div className="mt-3">
-                                            <LinkButton content="Learn More" href={link} />
+                                            <LinkButton content="Learn More" href={faq?.link} />
                                         </div>
                                     )}
                                 </div>
