@@ -34,7 +34,6 @@ export default function NavbarOptimized({
     utm,
     navbarData,
     hasToken = null,
-    isNavbarWhite = false
 }) {
     const pathname = usePathname();
     const [menuOpen, setMenuOpen] = useState(false);
@@ -73,7 +72,7 @@ export default function NavbarOptimized({
                 className={`sticky top-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
             >
                 {/* Top navigation bar */}
-                <div className={`border-gray-300 border-b lg:block hidden ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
+                <div className={`border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="justify-end items-center flex px-4 h-[34px]">
                         <Link href={'https://mushrooms.viasocket.com'}>
                             <div
@@ -94,7 +93,7 @@ export default function NavbarOptimized({
 
                 {/* Main navigation bar */}
                 <div
-                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] ${isNavbarWhite ? 'bg-white/40 supports-[backdrop-filter]:bg-[#ffffff]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#ffffff]/60' : 'bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#faf9f6]/60'} backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
+                    className={`border-b border-gray-300 transition-all duration-300 ease-in-out overflow-hidden h-[48px] bg-[#faf9f6]/80 supports-[backdrop-filter]:bg-[#faf9f6]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#faf9f6]/60 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
                 >
                     <div className="justify-between items-center flex px-4 h-[48px]">
                         <div className="flex items-center justify-center">
