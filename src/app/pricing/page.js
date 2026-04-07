@@ -55,7 +55,7 @@ export default async function PricingPage() {
                         </h2>
                     </div>
                     <div className="cont lg:flex-row items-center gap-2 mt-4">
-                        <DashboardButton utm_src={"/pricing/hero"} className="w-full" hasToken={hasToken} />
+                        <DashboardButton utm_src={"/pricing/hero"} hasToken={hasToken} />
                         <Link
                             href="https://cal.id/team/viasocket/workflow-setup-discussion"
                             className="btn btn-outline"
