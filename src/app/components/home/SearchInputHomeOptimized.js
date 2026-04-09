@@ -658,6 +658,7 @@ export default function SearchInputHomeOptimized({
                             ref={inputRef}
                             type="text"
                             className="w-full bg-transparent outline-none text-lg relative z-10"
+                            placeholder='Search ready-made automations'
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {

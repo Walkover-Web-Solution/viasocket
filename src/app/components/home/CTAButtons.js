@@ -9,8 +9,9 @@ export default function CTAButtons({ hasToken }) {
         href="https://cal.id/team/viasocket/workflow-setup-discussion"
         target="_blank"
         className="btn btn-outline relative z-index-1"
+        rel="nofollow noopener noreferrer"
       >
-        Book a demo
+        Let Experts Build It
       </Link>
     </div>
   );
