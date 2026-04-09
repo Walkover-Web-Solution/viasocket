@@ -3,7 +3,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 import ResultSectionOptimized from './ResultSectionOptimized';
-import BuildOptionsCTAOptimized from './BuildOptionsCTAOptimized';
 import CTAButtons from './CTAButtons';
 
 export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken }) {
@@ -81,8 +80,6 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         initialApps={initialApps}
         templates={templateData}
       />
-
-      <BuildOptionsCTAOptimized />
 
        <CTAButtons hasToken={hasToken} />
 
