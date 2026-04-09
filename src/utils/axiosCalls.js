@@ -275,7 +275,8 @@ export async function getAppCount(pageUrl) {
                 interpretHeader: false,
             },
         });
-        return response.data.count;
+        const count = response.data.count;
+        return Math.ceil(count / 100) * 100;
     } catch (error) {
         console.log(error?.response?.data || error.message, 'errormesssageeeee');
         sendErrorMessage({ error, pageUrl, source: apiUrl });
