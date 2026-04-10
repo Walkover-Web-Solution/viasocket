@@ -73,28 +73,35 @@ export default function NavbarOptimized({
             >
                 {/* Top navigation bar */}
                 <div className={`border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
-                    <div className="items-center justify-end flex !h-[34px]">
+                    <div className="items-center justify-end flex !h-[30px]">
                         <div
-                            className={`hidden lg:flex cursor-pointer w-full bg-[#5CD2A2]/90 supports-[backdrop-filter]:bg-[#5CD2A2]/80 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[34px] items-center justify-center gap-2`}
+                            className={`hidden lg:flex cursor-pointer w-full bg-[#5CD2A2]/90 supports-[backdrop-filter]:bg-[#5CD2A2]/80 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[30px] items-center justify-center gap-2 !text-sm`}
                         >
                             <span>MCP is now</span>
-                            <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={120} height={120} />
+                            <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
                             <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
-                                <div className='bg-white rounded-full px-3 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors mx-2 !h-[24px]'>
+                                <div className='bg-white rounded-full px-3 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors mx-2 !h-[20px] !text-xs'>
                                     Explore More <GoArrowUpRight />
                                 </div>
                             </Link>
                         </div>
                         <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer">
                             <div
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[20px] !h-[34px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[18px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                             >
                                 Contact Sales
                             </div>
                         </Link>
+                        <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer">
+                            <div
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[22px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
+                            >
+                               Hire an expert
+                            </div>
+                        </Link>
                         <Link href={'/support'}>
                             <div
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-gray-300 hidden lg:flex w-fit px-4 !h-[34px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-gray-300 hidden lg:flex w-fit px-4 !h-[30px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
                             >
                                 Support <GoArrowUpRight />
                             </div>
