@@ -1,52 +1,34 @@
 import Link from 'next/link';
-import Image from 'next/image';
-
-const appIcons = [
-  {
-    src: 'https://thingsofbrand.com/api/icon/pipedrive.com',
-    alt: 'pipedrive icon',
-  },
-  {
-    src: 'https://stuff.thingsofbrand.com/zoom.us/images/img688a247e14_zoom.jpg',
-    alt: 'zoom icon',
-  },
-  {
-    src: 'https://thingsofbrand.com/api/icon/notion.so',
-    alt: 'notion icon',
-  },
-  {
-    src: 'https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg',
-    alt: 'slack icon',
-  },
-];
+import AnimatedAppIcons from './AnimatedAppIcons';
 
 export default function HeroSection({ appCount }) {
   return (
     <div className="text-center">
-      <h1 className="h1 !normal-case flex flex-col gap-1 relative z-index-1">
+      <h1 className="h1 !normal-case flex flex-col gap-1 relative z-index-1 leading-relaxed">
         <span>
           Automate Anything with <span className="text-accent">AI Agents</span>
         </span>
         <span className="flex items-baseline justify-center gap-2 flex-wrap">
           & <span className="text-accent">{+appCount + 300}+ Apps</span>
-          <span className="inline-flex items-center gap-2">
-            {appIcons.map((icon, index) => (
-              <Image
-                key={index}
-                src={icon.src}
-                alt={icon.alt}
-                width={32}
-                height={32}
-                className="rounded-lg w-8 h-auto"
-              />
-            ))}
-          </span>
+          <AnimatedAppIcons />
         </span>
       </h1>
-      <p className="text-lg text-gray-600 mt-4 relative z-index-1 flex flex-wrap justify-center gap-x-3">
-        <span className="whitespace-nowrap">WEB SCRAPING</span>
+      <p className="text-lg text-gray-600 mt-6 relative z-index-1 flex flex-wrap justify-center gap-x-3">
+        <Link
+          href="https://viasocket.com/features/web-scraping-crawling"
+          target="_blank"
+          className="hover:border-b-2 custom-border hover:border-dotted whitespace-nowrap"
+        >
+          WEB SCRAPING
+        </Link>
         <span>·</span>
-        <span className="whitespace-nowrap">HUMAN INTERVENTION</span>
+        <Link
+          href="https://viasocket.com/features/human-intervention"
+          target="_blank"
+          className="hover:border-b-2 custom-border hover:border-dotted whitespace-nowrap"
+        >
+          HUMAN INTERVENTION
+        </Link>
         <span>·</span>
         <Link
           href="https://viasocket.com/features"
