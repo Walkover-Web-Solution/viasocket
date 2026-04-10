@@ -37,7 +37,7 @@ export async function getAutomationsPageData() {
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
         const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
 
-        const featuredTemplateIds = FeaturedTemplateIds.map((item) => item.template_id);
+        const featuredTemplateIds = FeaturedTemplateIds.map((item) => item.name);
         const FeaturedTemplates = validTemplateData.filter((t) => featuredTemplateIds.includes(t.id));
 
         const categories = [
