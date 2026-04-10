@@ -7,7 +7,8 @@ import {
     getAgencies,
     getExpertBlogs,
     getPageData,
-    getEmbedData
+    getEmbedData,
+    getFeaturedTemplatesData
 } from '@/utils/getData';
 import { Shield, Globe, Lock, Eye, Server, AlertTriangle } from "lucide-react";
 import {
@@ -19,7 +20,8 @@ import {
     AGENCIES_FIELDS,
     EXPERTBLOGS_FIELDS,
     PAGEDATA_FIELDS,
-    EMBED_FIELDS
+    EMBED_FIELDS,
+    FEATUREDTEMPLATES_FIELDS
 } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -43,6 +45,7 @@ export async function getHomePageData() {
             navbarData,
             templates,
             initialApps,
+            featuredTemplatesData,
         ] = await Promise.all([
             getFaqData('/index', pageUrl),
             getMetaData('/', pageUrl),
@@ -53,6 +56,7 @@ export async function getHomePageData() {
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getTemplates(pageUrl),
             getApps({ limit: 50 }, pageUrl),
+            getFeaturedTemplatesData(FEATUREDTEMPLATES_FIELDS, '', pageUrl),
         ]);
 
         const validStatuses = ['verified_by_ai', 'verified'];
@@ -114,6 +118,7 @@ export async function getHomePageData() {
             navbarData: navbarData || [],
             templateData: validTemplateData || [],
             initialApps: initialApps || [],
+            featuredTemplatesData: featuredTemplatesData || [],
         };
     } catch (error) {
         console.error('Error fetching home page data:', error);
