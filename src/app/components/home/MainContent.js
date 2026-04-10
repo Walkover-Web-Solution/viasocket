@@ -1,4 +1,3 @@
-import AiAgentFeatureOptimized from './AiAgentFeatureOptimized';
 import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import ShowDepartmentOptimized from './ShowDepartmentOptimized';
@@ -7,16 +6,12 @@ import ShowBadges from './ShowBadges';
 // import PanelSectionOptimized from './PanelSectionOptimized';
 
 export default function MainContent({
-  appCount,
   indexTemplateData,
   templateData,
   reviewData
 }) {
   return (
     <>
-      {/* AI Agents Section */}
-      <AiAgentFeatureOptimized />
-
       {/* Show Apps Section */}
       <ShowAppsIndexOptimized isHomePage={true} />
 

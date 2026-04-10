@@ -295,6 +295,18 @@ export default function AutomationsClient({ pageData, hasToken }) {
                         </button>
                     </div>
                 )}
+
+                {/* Featured templates section */}
+                {pageData?.FeaturedTemplates && pageData.FeaturedTemplates.length > 0 && (
+                    <div className="mt-12">
+                        <h2 className="h2">Featured Templates</h2>
+                        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+                            {pageData.FeaturedTemplates.map((template, index) => (
+                                <TemplateCard key={template.id} index={index} template={template} />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
 
             <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
