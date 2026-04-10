@@ -575,10 +575,10 @@ export default function SearchInputHomeOptimized({
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
     return (
-        <div className="relative max-w-2xl mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
+        <div className="relative max-w-lg mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
             <div className="relative">
                 <div
-                    className={`w-full min-h-[56px] px-6 py-4 text-lg bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
+                    className={`w-full min-h-[48px] px-6 py-3 text-base bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
                     onClick={() => {
                         if (inputRef.current) {
                             inputRef.current.focus();
@@ -649,7 +649,7 @@ export default function SearchInputHomeOptimized({
                     ))}
                     <div className="relative flex-1 min-w-[200px]">
                         {suggestionText && (
-                            <div className="absolute inset-0 pointer-events-none text-lg text-gray-400 flex items-center whitespace-pre">
+                            <div className="absolute inset-0 pointer-events-none text-base text-gray-400 flex items-center whitespace-pre">
                                 <span style={{ color: 'transparent' }}>{searchTerm}</span>
                                 <span>{suggestionText}</span>
                             </div>
@@ -657,8 +657,8 @@ export default function SearchInputHomeOptimized({
                         <input
                             ref={inputRef}
                             type="text"
-                            className="w-full bg-transparent outline-none text-lg relative z-10"
-                            placeholder='Search ready-made automations'
+                            className="w-full bg-transparent outline-none text-base relative z-10"
+                            placeholder={selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0 ? '' : 'Search ready-made automations'}
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {

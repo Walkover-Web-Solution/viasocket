@@ -125,13 +125,16 @@ export default function ShowAppsIndexOptimized({ isHomePage = false }) {
                             <div className="inline-flex py-4 gap-20 h-[62px]">
                                 {[...APPSONE, ...APPSTWO].map((app, index) => (
                                     <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                        <Image
-                                            src={app.src}
-                                            alt={app.alt}
-                                            width={30}
-                                            height={30}
-                                            className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                                        />
+                                        <div className="h-10 w-10 relative bg-gray-50 border">
+                                            <Image
+                                                src={app.src}
+                                                alt={app.alt}
+                                                width={20}
+                                                height={20}
+                                                className="object-contain p-1"
+                                                style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                                            />
+                                        </div>
                                         <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
                                     </div>
                                 ))}
@@ -156,13 +159,16 @@ export default function ShowAppsIndexOptimized({ isHomePage = false }) {
                             <div className="inline-flex py-4 gap-20">
                                 {APPSONE.map((app, index) => (
                                     <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                        <Image
-                                            src={app.src}
-                                            alt={app.alt}
-                                            width={30}
-                                            height={30}
-                                            className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                                        />
+                                        <div className="h-10 w-10 relative bg-gray-50 border">
+                                            <Image
+                                                src={app.src}
+                                                alt={app.alt}
+                                                width={20}
+                                                height={20}
+                                                className="object-contain p-1"
+                                                style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                                            />
+                                        </div>
                                         <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
                                     </div>
                                 ))}
@@ -181,13 +187,16 @@ export default function ShowAppsIndexOptimized({ isHomePage = false }) {
                         <div className="inline-flex py-4 gap-20">
                             {APPSTWO.map((app, index) => (
                                 <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                    <Image
-                                        src={app.src}
-                                        alt={app.alt}
-                                        width={30}
-                                        height={30}
-                                        className={`object-contain cursor-pointer ${app.className ?? ''}`}
-                                    />
+                                    <div className="h-10 w-10 relative bg-gray-50 border">
+                                        <Image
+                                            src={app.src}
+                                            alt={app.alt}
+                                            width={20}
+                                            height={20}
+                                            className="object-contain p-1"
+                                            style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
+                                        />
+                                    </div>
                                     <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
                                 </div>
                             ))}

@@ -21,6 +21,16 @@ function NavList({ navItems }) {
                     <span className="text-lg hover:text-accent hover:underline">support</span>
                 </Link>
             </li>
+            <li className="hover:bg-gray-100 text-black p-2">
+                <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                    <span className="text-lg hover:text-accent hover:underline">Contact Sales</span>
+                </Link>
+            </li>
+            <li className="hover:bg-gray-100 text-black p-2">
+                <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                    <span className="text-lg hover:text-accent hover:underline">Hire an expert</span>
+                </Link>
+            </li>
         </ul>
     );
 }
@@ -62,19 +72,19 @@ export default function Menubar({ open, onClose, navItems }) {
                 aria-modal="true"
                 aria-label="Menubar"
             >
-                <div className="md:hidden flex justify-end p-4 border-b">
+                <div className="flex justify-end p-4 border-b">
                     <X className="h-8 w-8" onClick={onClose} />
                 </div>
 
                 {/* MCP Banner for Mobile */}
-                <div className="!bg-[#5CD2A2] py-2 px-4 mb-4 text-lg">
+                <div className="!bg-[#5CD2A2] py-2 px-4 text-lg">
                     <div className="flex sm:flex-row flex-col items-center justify-center gap-2">
-                       <div className="flex items-center gap-1 justify-center">
+                       <div className="flex items-center gap-1 justify-center whitespace-nowrap">
                          <span>MCP is now</span>
                         <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
                        </div>
                         <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
-                            <div className='bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
+                            <div className='whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
                                 Explore More <GoArrowUpRight />
                             </div>
                         </Link>

@@ -59,21 +59,25 @@ export default function AnimatedAppIcons() {
       {indices.map((logoIndex, i) => {
         const logo = ALL_LOGOS[logoIndex];
         return (
-          <span
+          <div
             key={i}
-            className="inline-flex w-8 h-8 flex-shrink-0 transition-opacity duration-[280ms] ease-in-out"
-            style={{
-              opacity: fadingSlot === i ? 0 : 1,
-            }}
+            className="h-10 w-10 relative bg-gray-50 border"
           >
             <Image
               src={logo.src}
               alt={logo.alt}
-              width={32}
-              height={32}
-              className="rounded-lg w-full h-full object-contain"
+              width={20}
+              height={20}
+              className="object-contain p-1 transition-opacity duration-[280ms] ease-in-out"
+              style={{ 
+                position: 'absolute', 
+                height: '100%', 
+                width: '100%', 
+                inset: '0px',
+                opacity: fadingSlot === i ? 0 : 1,
+              }}
             />
-          </span>
+          </div>
         );
       })}
     </span>
