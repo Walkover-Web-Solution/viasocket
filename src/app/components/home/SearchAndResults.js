@@ -5,7 +5,7 @@ import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 import ResultSectionOptimized from './ResultSectionOptimized';
 import CTAButtons from './CTAButtons';
 
-export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken }) {
+export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken, featuredTemplatesData }) {
   const [templates, setTemplates] = useState([]);
   const [showTemplates, setShowTemplates] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -93,6 +93,7 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         selectedApps={selectedApps}
         selectedDepartments={selectedDepartments}
         selectedIndustries={selectedIndustries}
+        featuredTemplatesData={featuredTemplatesData}
         // AI Response props
         showAiResponse={showAiResponse}
         loadingAiResponse={loadingAiResponse}

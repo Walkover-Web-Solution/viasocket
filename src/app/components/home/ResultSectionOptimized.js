@@ -15,6 +15,7 @@ export default function ResultSectionOptimized({
     selectedApps = [],
     selectedDepartments = [],
     selectedIndustries = [],
+    featuredTemplatesData = [],
 
     // AI Response props
     showAiResponse,
@@ -32,9 +33,21 @@ export default function ResultSectionOptimized({
     blogs = []
 }) {
     const noSearchActive = !showTemplates && !showAiResponse && !showVideos && !showBlogs;
-    const latestDefaultTemplates = [...defaultTemplates]
-        ?.sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt))
-        ?.slice(6, 12);
+    const featuredIds = featuredTemplatesData.map(t => t.name) || [];
+    
+    const sortByFeatured = (templates) => {
+        return [...templates].sort((a, b) => {
+            const aIsFeatured = featuredIds.includes(a.id);
+            const bIsFeatured = featuredIds.includes(b.id);
+            if (aIsFeatured && !bIsFeatured) return -1;
+            if (!aIsFeatured && bIsFeatured) return 1;
+            // If both have same featured status, sort by date
+            return new Date(b.updatedAt) - new Date(a.updatedAt);
+        });
+    };
+    
+    const latestDefaultTemplates = sortByFeatured(defaultTemplates).slice(0, 6);
+    const sortedFilteredTemplates = sortByFeatured(filteredTemplates);
 
     return (
         <div className="bg-[#faf9f6] result-section text-left">
@@ -45,7 +58,7 @@ export default function ResultSectionOptimized({
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                         {latestDefaultTemplates.map((template, index) => (
-                            <TemplateCard key={template.id} index={index} template={template} />
+                            <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
                         ))}
                     </div>
 
@@ -94,8 +107,8 @@ export default function ResultSectionOptimized({
                         </div>
                     ) : hasTemplateResults ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
-                            {filteredTemplates.slice(0, 6).map((template, index) => (
-                                <TemplateCard key={template.id} index={index} template={template} />
+                            {sortedFilteredTemplates.slice(0, 6).map((template, index) => (
+                                <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
                             ))}
                         </div>
                     ) : null}
