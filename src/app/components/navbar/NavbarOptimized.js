@@ -32,7 +32,6 @@ const navItems = [
 
 export default function NavbarOptimized({
     utm,
-    navbarData,
     hasToken = null,
 }) {
     const pathname = usePathname();
@@ -72,7 +71,7 @@ export default function NavbarOptimized({
                 className={`sticky top-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
             >
                 {/* Top navigation bar */}
-                <div className={`border-gray-300 border-b lg:block hidden bg-[#f2f2ef] supports-[backdrop-filter]:bg-[#f2f2ef]/60 supports-[-webkit-backdrop-filter:blur(0)]:bg-[#f2f2ef]/60 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
+                <div className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="items-center justify-end flex !h-[30px]">
                         <div
                             className={`hidden lg:flex cursor-pointer w-full bg-[#5CD2A2]/90 supports-[backdrop-filter]:bg-[#5CD2A2]/80 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[30px] items-center justify-center gap-2 !text-sm`}
@@ -85,14 +84,14 @@ export default function NavbarOptimized({
                                 </div>
                             </Link>
                         </div>
-                        <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer">
+                        <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer">
                             <div
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[18px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                             >
                                 Contact Sales
                             </div>
                         </Link>
-                        <Link href="https://cal.id/team/viasocket/workflow-setup-discussion" target="_blank" rel="nofollow noopener noreferrer">
+                        <Link href="https://cal.id/team/viasocket/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer">
                             <div
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[22px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                             >
