@@ -3,10 +3,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 import ResultSectionOptimized from './ResultSectionOptimized';
-import BuildOptionsCTAOptimized from './BuildOptionsCTAOptimized';
 import CTAButtons from './CTAButtons';
 
-export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken }) {
+export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken, featuredTemplatesData }) {
   const [templates, setTemplates] = useState([]);
   const [showTemplates, setShowTemplates] = useState(false);
   const [loadingTemplates, setLoadingTemplates] = useState(false);
@@ -82,8 +81,6 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         templates={templateData}
       />
 
-      <BuildOptionsCTAOptimized />
-
        <CTAButtons hasToken={hasToken} />
 
       <ResultSectionOptimized
@@ -96,6 +93,7 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         selectedApps={selectedApps}
         selectedDepartments={selectedDepartments}
         selectedIndustries={selectedIndustries}
+        featuredTemplatesData={featuredTemplatesData}
         // AI Response props
         showAiResponse={showAiResponse}
         loadingAiResponse={loadingAiResponse}

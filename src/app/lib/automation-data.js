@@ -2,11 +2,13 @@ import {
     getFooterData,
     getNavbarData,
     getTemplateMarqueeItemsData,
+    getFeaturedTemplatesData,
 } from '@/utils/getData';
 import {
     FOOTER_FIELDS,
     NAVBAR_FIELDS,
     TEMPLATEMARQUEEITEMS_FIELDS,
+    FEATUREDTEMPLATES_FIELDS
 } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -19,7 +21,7 @@ export async function getAutomationsPageData() {
         const pageUrl = `${baseUrl}/automations`;
 
         // Fetch dynamic data in parallel
-        const [footerData, templates, metaData, faqData, blogData, navbarData, initialApps, templateMarqueeItems] = await Promise.all([
+        const [footerData, templates, metaData, faqData, blogData, navbarData, initialApps, templateMarqueeItems, featuredTemplatesData] = await Promise.all([
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getTemplates(pageUrl),
             getMetaData('/automations', pageUrl),
@@ -28,6 +30,7 @@ export async function getAutomationsPageData() {
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getApps({ limit: 50 }, pageUrl),
             getTemplateMarqueeItemsData(TEMPLATEMARQUEEITEMS_FIELDS, '', pageUrl),
+            getFeaturedTemplatesData(FEATUREDTEMPLATES_FIELDS, '', pageUrl),
         ]);
 
         const validStatuses = ['verified_by_ai', 'verified'];
@@ -92,6 +95,7 @@ export async function getAutomationsPageData() {
             initialApps: initialApps || [],
             marqueeApps: marqueeApps || [],
             marqueeCategories: marqueeCategories || [],
+            featuredTemplatesData: featuredTemplatesData || [],
         };
     } catch (error) {
         console.error('Error fetching automations page data:', error);
@@ -111,6 +115,7 @@ export async function getAutomationsPageData() {
             initialApps: [],
             marqueeApps: [],
             marqueeCategories: [],
+            featuredTemplatesData: [],
         };
     }
 }

@@ -2,17 +2,25 @@ import { Timer, Webhook, ArrowRight, Users } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const TemplateCard = ({ template, preventClick }) => {
+const TemplateCard = ({ template, preventClick, isFeatured }) => {
     const bgcolor = template?.flowJson?.trigger?.brandcolor || '#ffffff';
     const isLightBg = bgcolor.toLowerCase().startsWith('#fff');
     return (
         <Link
             key={template?.id}
             href={`/automations/${template?.title?.trim().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}/${template?.id}`}
-            className="group shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col"
+            className="group shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col relative"
             style={{ backgroundColor: bgcolor || 'white' }}
             onClick={(e) => { if (preventClick?.current) e.preventDefault(); }}
         >
+            {isFeatured && (
+                <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-full z-10 flex items-center gap-1">
+                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                    Featured
+                </div>
+            )}
             <div className={`p-4 md:p-6 flex flex-col gap-4 h-[290px] ${isLightBg ? 'text-black' : 'text-white'}`}>
                 <div className="flex items-center gap-2">
                     {(() => {
@@ -27,23 +35,23 @@ const TemplateCard = ({ template, preventClick }) => {
                         if (triggerIcon && !shownIcons.has(triggerIcon)) {
                             shownIcons.add(triggerIcon);
                             elements.push(
-                                <div key="trigger" className="w-8 h-8 relative bg-gray-50 border">
-                                    <Image src={triggerIcon} alt="trigger" width={16} height={16} className="object-contain p-1"
+                                <div key="trigger" className="w-10 h-10 relative bg-gray-50 border">
+                                    <Image src={triggerIcon} alt="trigger" width={20} height={20} className="object-contain p-1"
                                         style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px', color: 'transparent' }} />
                                 </div>
                             );
                         } else if (!triggerIcon) {
                             if (triggerType === 'webhook') {
                                 elements.push(
-                                    <div key="webhook" className="w-8 h-8 relative bg-gray-50 border">
-                                        <Webhook size={12} className="object-contain p-1"
+                                    <div key="webhook" className="w-10 h-10 relative bg-gray-50 border">
+                                        <Webhook size={16} className="object-contain p-1"
                                             style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }} />
                                     </div>
                                 );
                             } else if (triggerType === 'cron') {
                                 elements.push(
-                                    <div key="cron" className="w-8 h-8 relative bg-gray-50 border">
-                                        <Timer size={12} className="object-contain p-1"
+                                    <div key="cron" className="w-10 h-10 relative bg-gray-50 border">
+                                        <Timer size={16} className="object-contain p-1"
                                             style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }} />
                                     </div>
                                 );
@@ -55,18 +63,18 @@ const TemplateCard = ({ template, preventClick }) => {
                             const icon = appIcons[i];
                             if (icon && !shownIcons.has(icon)) {
                                 shownIcons.add(icon);
-                                if (i <= 6) {
+                                if (i <= 3) {
                                     elements.push(
                                         <div
                                             key={`app-icon-wrapper-${i}`}
-                                            className="h-8 w-8 relative bg-gray-50 border"
+                                            className="h-10 w-10 relative bg-gray-50 border"
                                         >
                                             <Image
                                                 key={`app-icon-${i}`}
                                                 src={icon}
                                                 alt={`app icon`}
-                                                width={16}
-                                                height={16}
+                                                width={20}
+                                                height={20}
                                                 className="object-contain p-1"
                                                 style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
                                             />
@@ -75,8 +83,8 @@ const TemplateCard = ({ template, preventClick }) => {
                                 }
                                 else {
                                     elements.push(
-                                        <div key="app-icon-wrapper-more" className="text-black w-8 h-8 bg-gray-50 flex items-center justify-center border">
-                                            <span>+{appIcons.length - 5}</span>
+                                        <div key="app-icon-wrapper-more" className="text-black w-10 h-10 bg-gray-50 flex items-center justify-center border">
+                                            <span>+{appIcons.length - 4}</span>
                                         </div>
                                     );
                                     break;
@@ -94,14 +102,9 @@ const TemplateCard = ({ template, preventClick }) => {
                 <div className="flex items-center justify-between mt-auto">
                     <div className="flex items-center gap-2">
                         <span className={`text-xs ${isLightBg ? 'text-[#00000099]' : 'text-white/60'}`}>{template?.userName}</span>
-                        <span className={`${isLightBg ? 'text-[#00000066]' : 'text-white/40'}`}>&middot;</span>
-                        <div className="flex items-center gap-1">
-                            <Users size={12} className={isLightBg ? 'text-[#00000066]' : 'text-[#ffffff8c]'} />
-                            <span className={`text-xs ${isLightBg ? 'text-[#00000066]' : 'text-white/60'}`}>{template?.usedCount || 0} uses</span>
-                        </div>
                     </div>
                     <span className={`flex items-center gap-1 text-xs font-semibold ${isLightBg ? 'text-[#000000cc]' : 'text-white/70'}`}>
-                        Use template
+                        Preview template
                         <ArrowRight size={13} />
                     </span>
                 </div>

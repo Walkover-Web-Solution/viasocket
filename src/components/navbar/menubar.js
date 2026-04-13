@@ -2,50 +2,41 @@
 
 import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { GoArrowUpRight } from 'react-icons/go';
 
-// Link overrides for navbar items - allows redirecting specific links to new URLs
-const NAVBAR_LINK_OVERRIDES = {
-    '/mcp': 'https://mushroom.viasocket.com',
-};
-
-// Helper function to get the final link (with any overrides applied)
-const getNavbarLink = (link) => {
-    if (!link) return link;
-    return NAVBAR_LINK_OVERRIDES[link] || link;
-};
-
-function NavList({ items }) {
+function NavList({ navItems }) {
     return (
-        <ul className="grid grid-cols-1 md:grid-cols-2 list-none">
-            {items?.map((item, i) => (
+        <ul className="grid grid-cols-1 list-none">
+            {navItems?.map((item, i) => (
                 <li key={i} className="hover:bg-gray-100 text-black p-2">
-                    <a href={getNavbarLink(item?.link)} className="flex flex-col">
+                    <Link href={item?.link} className="flex flex-col">
                         <span className="text-lg hover:text-accent hover:underline">{item?.name}</span>
-                    </a>
+                    </Link>
                 </li>
             ))}
+            <li className="hover:bg-gray-100 text-black p-2">
+                <Link href={'/support'} className="flex flex-col">
+                    <span className="text-lg hover:text-accent hover:underline">support</span>
+                </Link>
+            </li>
+            <li className="hover:bg-gray-100 text-black p-2">
+                <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                    <span className="text-lg hover:text-accent hover:underline">Contact Sales</span>
+                </Link>
+            </li>
+            <li className="hover:bg-gray-100 text-black p-2">
+                <Link href="https://cal.id/team/viasocket/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                    <span className="text-lg hover:text-accent hover:underline">Hire an expert</span>
+                </Link>
+            </li>
         </ul>
     );
 }
 
-export default function Menubar({ open, onClose, navbarData }) {
+export default function Menubar({ open, onClose, navItems }) {
     const panelRef = useRef();
-
-    let groups = [];
-
-    if (navbarData && Array.isArray(navbarData)) {
-        // Get all unique group names
-        const uniqueGroups = [...new Set(navbarData.map((item) => item.group_name))];
-
-        // For each unique group, collect its items
-        groups = uniqueGroups.map((groupName) => {
-            const groupItems = navbarData.filter((item) => item.group_name === groupName);
-            return {
-                group_name: groupName,
-                items: groupItems,
-            };
-        });
-    }
 
     useEffect(() => {
         const handleMouseLeave = (e) => {
@@ -75,29 +66,33 @@ export default function Menubar({ open, onClose, navbarData }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
-                    open ? 'translate-x-0' : 'translate-x-full'
-                }`}
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
+                    }`}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Menubar"
             >
-                <div className="md:hidden flex justify-end p-4 border-b mb-4">
+                <div className="flex justify-end p-4 border-b">
                     <X className="h-8 w-8" onClick={onClose} />
                 </div>
-                <div className="cont justify-between h-full pt-0 md:pt-8">
-                    {groups && (
-                        <div className="cont gap-4">
-                            {groups?.map((row, index) => {
-                                return (
-                                    <div key={index} className="border-b px-4 pb-4">
-                                        <h3 className="text-xl font-semibold px-2 mb-2">{row?.group_name}</h3>
-                                        {row?.items?.length > 0 && <NavList items={row?.items} />}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    )}
+
+                {/* MCP Banner for Mobile */}
+                <div className="!bg-[#5CD2A2] py-2 px-4 text-lg">
+                    <div className="flex sm:flex-row flex-col items-center justify-center gap-2">
+                       <div className="flex items-center gap-1 justify-center whitespace-nowrap">
+                         <span>MCP is now</span>
+                        <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
+                       </div>
+                        <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
+                            <div className='whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
+                                Explore More <GoArrowUpRight />
+                            </div>
+                        </Link>
+                    </div>
+                </div>
+
+                <div className="cont justify-between h-full pt-0 md:pt-8 px-4 gap-4">
+                    <NavList navItems={navItems} />
                 </div>
             </div>
         </div>

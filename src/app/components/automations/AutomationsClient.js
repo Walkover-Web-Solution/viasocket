@@ -91,13 +91,25 @@ export default function AutomationsClient({ pageData, hasToken }) {
         });
     };
 
-    // Choose which list to display
+    // Choose which list to display and sort featured first
     const templatesFromSearchActive = showSearchTemplates;
+    const featuredIds = (pageData?.featuredTemplatesData || []).map((item) => item.name);
+    
+    const sortByFeatured = (templates) => {
+        return [...templates].sort((a, b) => {
+            const aIsFeatured = featuredIds.includes(a.id);
+            const bIsFeatured = featuredIds.includes(b.id);
+            if (aIsFeatured && !bIsFeatured) return -1;
+            if (!aIsFeatured && bIsFeatured) return 1;
+            return 0;
+        });
+    };
+    
     const displayTemplates = templatesFromSearchActive
-        ? filteredSearchTemplates
+        ? sortByFeatured(filteredSearchTemplates)
         : remainingTemplates.length > 0
-          ? remainingTemplates
-          : filteredTemplates;
+          ? sortByFeatured(remainingTemplates)
+          : sortByFeatured(filteredTemplates);
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -224,7 +236,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                 </h2>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} />
+                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
                                     ))}
                                 </div>
                             </>
@@ -259,7 +271,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                             <>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} />
+                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
                                     ))}
                                 </div>
                                 {hasMoreToShow && (
@@ -295,6 +307,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                         </button>
                     </div>
                 )}
+
             </div>
 
             <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
