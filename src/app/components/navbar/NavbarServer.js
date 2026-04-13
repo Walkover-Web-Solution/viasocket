@@ -9,8 +9,7 @@ export default async function NavbarServer({ utm, navbarData }) {
 
     return (
         <NavbarOptimized 
-            utm={utm} 
-            navbarData={navbarData} 
+            utm={utm}
             hasToken={hasToken}
         />
     );

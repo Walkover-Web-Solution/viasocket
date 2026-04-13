@@ -21,7 +21,7 @@ export async function getAutomationsPageData() {
         const pageUrl = `${baseUrl}/automations`;
 
         // Fetch dynamic data in parallel
-        const [footerData, templates, metaData, faqData, blogData, navbarData, initialApps, templateMarqueeItems, FeaturedTemplateIds] = await Promise.all([
+        const [footerData, templates, metaData, faqData, blogData, navbarData, initialApps, templateMarqueeItems, featuredTemplatesData] = await Promise.all([
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getTemplates(pageUrl),
             getMetaData('/automations', pageUrl),
@@ -36,9 +36,6 @@ export async function getAutomationsPageData() {
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
         const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
-
-        const featuredTemplateIds = FeaturedTemplateIds.map((item) => item.name);
-        const FeaturedTemplates = validTemplateData.filter((t) => featuredTemplateIds.includes(t.id));
 
         const categories = [
             ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),
@@ -98,7 +95,7 @@ export async function getAutomationsPageData() {
             initialApps: initialApps || [],
             marqueeApps: marqueeApps || [],
             marqueeCategories: marqueeCategories || [],
-            FeaturedTemplates: FeaturedTemplates || [],
+            featuredTemplatesData: featuredTemplatesData || [],
         };
     } catch (error) {
         console.error('Error fetching automations page data:', error);
@@ -118,7 +115,7 @@ export async function getAutomationsPageData() {
             initialApps: [],
             marqueeApps: [],
             marqueeCategories: [],
-            FeaturedTemplates: [],
+            featuredTemplatesData: [],
         };
     }
 }
