@@ -93,7 +93,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
 
     // Choose which list to display and sort featured first
     const templatesFromSearchActive = showSearchTemplates;
-    const featuredIds = (pageData?.FeaturedTemplates || []).map((item) => item.name);
+    const featuredIds = (pageData?.featuredTemplatesData || []).map((item) => item.name);
     
     const sortByFeatured = (templates) => {
         return [...templates].sort((a, b) => {
