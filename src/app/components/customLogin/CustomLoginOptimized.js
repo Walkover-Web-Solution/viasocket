@@ -14,6 +14,7 @@ const CustomLoginOptimized = ({ redirect_to }) => {
                 console.error('failure reason', error);
             },
             state: setUtmSource(),
+            theme: 'light',
         };
 
         if (redirect_to) {
