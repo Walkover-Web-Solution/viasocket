@@ -1,13 +1,14 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 
 const TEMPLATES_PER_PAGE = 9;
+const INITIAL_TEMPLATES_COUNT = 27;
 
 export const useTemplateFilters = (templates = []) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategories, setSelectedCategories] = useState([]);
     const [selectedApps, setSelectedApps] = useState([]);
     const [requireAllApps, setRequireAllApps] = useState(false);
-    const [visibleCount, setVisibleCount] = useState(TEMPLATES_PER_PAGE);
+    const [visibleCount, setVisibleCount] = useState(INITIAL_TEMPLATES_COUNT);
     const [customIndustry, setCustomIndustry] = useState('');
 
     const filteredTemplates = useMemo(() => {
@@ -92,7 +93,7 @@ export const useTemplateFilters = (templates = []) => {
         setSelectedCategories(newCategories || []);
         setSelectedApps(newApps || []);
         setRequireAllApps(!!newRequireAllApps);
-        setVisibleCount(TEMPLATES_PER_PAGE); // Reset visible count when filters change
+        setVisibleCount(INITIAL_TEMPLATES_COUNT); // Reset visible count when filters change
         setCustomIndustry(newCustomIndustry || '');
     }, []);
 
@@ -104,12 +105,12 @@ export const useTemplateFilters = (templates = []) => {
         setSearchTerm('');
         setSelectedCategories([]);
         setSelectedApps([]);
-        setVisibleCount(TEMPLATES_PER_PAGE);
+        setVisibleCount(INITIAL_TEMPLATES_COUNT);
     }, []);
 
     // Reset visible count when filtered results change
     useEffect(() => {
-        setVisibleCount(TEMPLATES_PER_PAGE);
+        setVisibleCount(INITIAL_TEMPLATES_COUNT);
     }, [filteredTemplates.length]);
 
     return {
