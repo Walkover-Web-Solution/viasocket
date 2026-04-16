@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
 import TemplateCard from '@/components/templateCard/templateCard';
 import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
@@ -14,16 +14,11 @@ import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
 
-const TEMPLATES_PER_PAGE = 6;
 
 export default function AutomationsClient({ pageData, hasToken }) {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [loading, setLoading] = useState(false);
-    
     // SearchInputHome integration
     const [filteredSearchTemplates, setFilteredSearchTemplates] = useState([]);
     const [showSearchTemplates, setShowSearchTemplates] = useState(false);
-    const [hasSearchResults, setHasSearchResults] = useState(false);
     const [selectedAppsFromSearch, setSelectedAppsFromSearch] = useState([]);
     const [selectedDepartmentsFromSearch, setSelectedDepartmentsFromSearch] = useState([]);
     const [selectedIndustriesFromSearch, setSelectedIndustriesFromSearch] = useState([]);
@@ -35,9 +30,6 @@ export default function AutomationsClient({ pageData, hasToken }) {
         selectedApps,
         visibleCount,
         filteredTemplates,
-        latestTemplates,
-        remainingTemplates,
-        hasMoreTemplates,
         totalFilters,
         hasResults,
         handleFilterChange,
@@ -45,21 +37,10 @@ export default function AutomationsClient({ pageData, hasToken }) {
         clearAllFilters,
     } = useTemplateFilters(pageData?.templateToShow || []);
 
-    useEffect(() => {
-        if (!pageData?.templateToShow?.length) return;
-
-        const interval = setInterval(() => {
-            setCurrentIndex((prev) => (prev + 1) % pageData.templateToShow.length);
-        }, 5000);
-
-        return () => clearInterval(interval);
-    }, [pageData?.templateToShow]);
-
     // Handlers for SearchInputHome (templates only)
     const handleTemplatesChange = useCallback((data) => {
         setFilteredSearchTemplates(data.filteredTemplates || []);
         setShowSearchTemplates(data.showTemplates || false);
-        setHasSearchResults(data.hasResults || false);
     }, []);
 
     const handleLoadingChange = useCallback(() => {
@@ -91,25 +72,8 @@ export default function AutomationsClient({ pageData, hasToken }) {
         });
     };
 
-    // Choose which list to display and sort featured first
     const templatesFromSearchActive = showSearchTemplates;
-    const featuredIds = (pageData?.featuredTemplatesData || []).map((item) => item.name);
-    
-    const sortByFeatured = (templates) => {
-        return [...templates].sort((a, b) => {
-            const aIsFeatured = featuredIds.includes(a.id);
-            const bIsFeatured = featuredIds.includes(b.id);
-            if (aIsFeatured && !bIsFeatured) return -1;
-            if (!aIsFeatured && bIsFeatured) return 1;
-            return 0;
-        });
-    };
-    
-    const displayTemplates = templatesFromSearchActive
-        ? sortByFeatured(filteredSearchTemplates)
-        : remainingTemplates.length > 0
-          ? sortByFeatured(remainingTemplates)
-          : sortByFeatured(filteredTemplates);
+    const displayTemplates = templatesFromSearchActive ? filteredSearchTemplates : filteredTemplates;
     const hasMoreToShow = visibleCount < displayTemplates.length;
 
     return (
@@ -198,14 +162,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                     )}
                 </div>
 
-                {loading ? (
-                    // Skeleton loader as before
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
-                        {[...Array(TEMPLATES_PER_PAGE)].map((_, index) => (
-                            <div key={index} className="skeleton bg-gray-100 h-[500px] rounded-none"></div>
-                        ))}
-                    </div>
-                ) : templatesFromSearchActive ? (
+                {templatesFromSearchActive ? (
                     displayTemplates.length > 0 ? (
                         (selectedAppsFromSearch.length > 0 ||
                             selectedDepartmentsFromSearch.length > 0 ||
@@ -236,7 +193,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                 </h2>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
+                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
                                     ))}
                                 </div>
                             </>
@@ -271,7 +228,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                             <>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={featuredIds.includes(template.id)} />
+                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
                                     ))}
                                 </div>
                                 {hasMoreToShow && (
