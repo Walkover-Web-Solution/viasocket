@@ -29,6 +29,43 @@ import { getBlogData } from '@/utils/getBlogData';
 import { getAppCount, getTemplates, getApps } from '@/utils/axiosCalls';
 import { fetchPluginData } from '@/utils/axiosCalls';
 
+const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
+
+function sortTemplatesForDisplay(templates = [], featuredTemplatesData = []) {
+    const featuredIds = new Set((featuredTemplatesData || []).map((item) => String(item.name)));
+    const now = Date.now();
+
+    const featuredTemplates = [];
+    const recentTemplates = [];
+    const olderTemplates = [];
+
+    templates.forEach((template) => {
+        const normalizedTemplate = {
+            ...template,
+            isFeatured: featuredIds.has(String(template.id)),
+        };
+
+        if (normalizedTemplate.isFeatured) {
+            featuredTemplates.push(normalizedTemplate);
+            return;
+        }
+
+        const updatedAt = new Date(normalizedTemplate.updatedAt).getTime();
+        const isRecent = Number.isFinite(updatedAt) && now - updatedAt <= THIRTY_DAYS_IN_MS;
+
+        if (isRecent) {
+            recentTemplates.push(normalizedTemplate);
+            return;
+        }
+
+        olderTemplates.push(normalizedTemplate);
+    });
+
+    recentTemplates.sort((a, b) => (b.usedCount || 0) - (a.usedCount || 0));
+
+    return [...featuredTemplates, ...recentTemplates, ...olderTemplates];
+}
+
 export async function getHomePageData() {
     try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
@@ -61,15 +98,10 @@ export async function getHomePageData() {
 
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-        const featuredIdSet = new Set((featuredTemplatesData || []).map((item) => String(item.name)));
-        const validTemplateData = templateData
-            .filter((t) => validStatuses.includes(t.verified))
-            .map((t) => ({ ...t, isFeatured: featuredIdSet.has(String(t.id)) }))
-            .sort((a, b) => {
-                if (a.isFeatured && !b.isFeatured) return -1;
-                if (!a.isFeatured && b.isFeatured) return 1;
-                return (b.usedCount || 0) - (a.usedCount || 0);
-            });
+        const validTemplateData = sortTemplatesForDisplay(
+            templateData.filter((t) => validStatuses.includes(t.verified)),
+            featuredTemplatesData
+        );
 
         const securityGridData = [
             {
