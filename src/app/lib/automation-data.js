@@ -35,8 +35,15 @@ export async function getAutomationsPageData() {
 
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-        const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
-
+        const featuredIds = new Set((featuredTemplatesData || []).map((item) => String(item.name)));
+        const validTemplateData = templateData
+            .filter((t) => validStatuses.includes(t.verified))
+            .map((t) => ({ ...t, isFeatured: featuredIds.has(String(t.id)) }))
+            .sort((a, b) => {
+                if (a.isFeatured && !b.isFeatured) return -1;
+                if (!a.isFeatured && b.isFeatured) return 1;
+                return (b.usedCount || 0) - (a.usedCount || 0);
+            });
         const categories = [
             ...new Set(templateData.flatMap((template) => template.category ?? []).filter((c) => c != null)),
         ];
@@ -95,7 +102,6 @@ export async function getAutomationsPageData() {
             initialApps: initialApps || [],
             marqueeApps: marqueeApps || [],
             marqueeCategories: marqueeCategories || [],
-            featuredTemplatesData: featuredTemplatesData || [],
         };
     } catch (error) {
         console.error('Error fetching automations page data:', error);
@@ -115,7 +121,6 @@ export async function getAutomationsPageData() {
             initialApps: [],
             marqueeApps: [],
             marqueeCategories: [],
-            featuredTemplatesData: [],
         };
     }
 }

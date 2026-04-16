@@ -8,7 +8,6 @@ import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
-import AbTestInit from '@/components/AbTestInit';
 
 export const runtime = 'edge';
 
@@ -39,7 +38,6 @@ export default async function HomePage() {
     navbarData,
     templateData,
     initialApps,
-    featuredTemplatesData,
   } = await getHomePageData();
   const hasToken = await getHasToken();
   return (
@@ -53,7 +51,6 @@ export default async function HomePage() {
         initialApps={initialApps} 
         templateData={templateData}
         hasToken={hasToken}
-        featuredTemplatesData={featuredTemplatesData}
       />
 
       <div className="custom-background-home-page"></div>

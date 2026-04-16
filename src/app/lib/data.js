@@ -61,7 +61,15 @@ export async function getHomePageData() {
 
         const validStatuses = ['verified_by_ai', 'verified'];
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
-        const validTemplateData = templateData.filter((t) => validStatuses.includes(t.verified));
+        const featuredIdSet = new Set((featuredTemplatesData || []).map((item) => String(item.name)));
+        const validTemplateData = templateData
+            .filter((t) => validStatuses.includes(t.verified))
+            .map((t) => ({ ...t, isFeatured: featuredIdSet.has(String(t.id)) }))
+            .sort((a, b) => {
+                if (a.isFeatured && !b.isFeatured) return -1;
+                if (!a.isFeatured && b.isFeatured) return 1;
+                return (b.usedCount || 0) - (a.usedCount || 0);
+            });
 
         const securityGridData = [
             {
@@ -118,7 +126,6 @@ export async function getHomePageData() {
             navbarData: navbarData || [],
             templateData: validTemplateData || [],
             initialApps: initialApps || [],
-            featuredTemplatesData: featuredTemplatesData || [],
         };
     } catch (error) {
         console.error('Error fetching home page data:', error);
