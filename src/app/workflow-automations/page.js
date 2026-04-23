@@ -93,8 +93,8 @@ export async function generateMetadata() {
     const { metaData } = await getWorkflowAutomationsPageData();
     
     return {
-        title: metaData?.title || 'Workflow Automations - ViaSocket',
-        description: metaData?.description || 'Automate your business workflows intelligently with ViaSocket',
+        title: metaData?.title || 'Workflow Automations - viaSocket',
+        description: metaData?.description || 'Automate your business workflows intelligently with viaSocket',
         keywords: metaData?.keywords,
         openGraph: {
             title: metaData?.title,
