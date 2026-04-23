@@ -231,7 +231,7 @@ export default async function TermsPage() {
                             <div className='space-y-4'>
                                 <p>We believe software should be easy to try and easy to walk away from.</p>
 
-                                <p>That said, ViaSocket includes both <strong>subscription access</strong> and <strong>usage-based credits</strong> (some of which are consumed via third-party services). To keep things fair for everyone, our refund policy is designed as follows:</p>
+                                <p>That said, viaSocket includes both <strong>subscription access</strong> and <strong>usage-based credits</strong> (some of which are consumed via third-party services). To keep things fair for everyone, our refund policy is designed as follows:</p>
 
                                 <p><strong>1. Subscription Refunds (No Questions Asked)</strong></p>
 
@@ -239,7 +239,7 @@ export default async function TermsPage() {
                                     • No justification required.<br />
                                     • Refunds will be processed to the original payment method.</p>
 
-                                <p>If ViaSocket isn't right for you, we don't want your money.</p>
+                                <p>If viaSocket isn't right for you, we don't want your money.</p>
 
                                 <p><strong>2. Usage-Based Credits (Fair & Practical)</strong></p>
 
@@ -273,7 +273,7 @@ export default async function TermsPage() {
                                     No forms. No friction. No drama.</p>
 
                                 <p><strong>Our intent is simple:</strong><br />
-                                    Try ViaSocket freely. Stay if it creates value. Leave easily if it doesn't.</p>
+                                    Try viaSocket freely. Stay if it creates value. Leave easily if it doesn't.</p>
 
                             </div>
                         </div>

@@ -1,6 +1,7 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import IntegrationsIndexClientComp from './IntegrationsIndexClientComp';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 
 export default function IntegrationsIndexComp({
     pageInfo,
@@ -22,7 +23,9 @@ export default function IntegrationsIndexComp({
             {!skipHeadComp && (
                 <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             )}
-            <NavbarServer navbarData={navbarData} utm={'/index'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/index'} />
+            </ConditionalNavbar>
             <IntegrationsIndexClientComp
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}

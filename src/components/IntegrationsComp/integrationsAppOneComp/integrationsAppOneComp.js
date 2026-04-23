@@ -1,6 +1,7 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppOneClientComp from './integrationsAppOneClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 
 export default async function IntegrationsAppOneComp({
     appOneDetails,
@@ -118,7 +119,9 @@ export default async function IntegrationsAppOneComp({
                 />
             )}
 
-            <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
+            </ConditionalNavbar>
 
             {!skipHeadComp && (
                 <IntegrationsHeadComp

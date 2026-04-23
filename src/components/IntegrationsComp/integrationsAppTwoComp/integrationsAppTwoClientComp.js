@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import { LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
@@ -504,7 +505,9 @@ export default function IntegrationsAppTwoClientComp({
                         </div>
                     </div>
 
-                    <Footer footerData={footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </div>
