@@ -19,6 +19,22 @@ export async function generateMetadata() {
     description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
     keywords: metaData?.keywords || '',
     openGraph: {
+      siteName: 'viaSocket',
+      title: metaData?.title || 'viaSocket - Automate Anything',
+      description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+      url: 'https://viasocket.com',
+      type: 'website',
+      images: [
+        {
+          url: 'https://files.msg91.com/342616/wnitwkyk',
+          width: 1200,
+          height: 630,
+          alt: 'viaSocket',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: metaData?.title || 'viaSocket - Automate Anything',
       description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
       images: ['https://files.msg91.com/342616/wnitwkyk'],
