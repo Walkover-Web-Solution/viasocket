@@ -13,6 +13,27 @@ export const metadata = {
         apple: [{ url: '/assets/brand/apple-touch-icon.png', sizes: '76x76' }],
     },
     manifest: '/site.webmanifest',
+    openGraph: {
+        siteName: 'viaSocket',
+        title: 'viaSocket',
+        description: 'Connect your apps and automate workflows with viaSocket',
+        url: 'https://viasocket.com',
+        type: 'website',
+        images: [
+            {
+                url: 'https://files.msg91.com/342616/wnitwkyk',
+                width: 1200,
+                height: 630,
+                alt: 'viaSocket',
+            },
+        ],
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'viaSocket',
+        description: 'Connect your apps and automate workflows with viaSocket',
+        images: ['https://files.msg91.com/342616/wnitwkyk'],
+    },
     other: {
         'msapplication-TileColor': '#da532c',
         'theme-color': '#ffffff',
@@ -23,6 +44,19 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="light">
             <head>
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'Organization',
+                            name: 'viaSocket',
+                            url: 'https://viasocket.com',
+                            logo: 'https://viasocket.com/assets/brand/logo.svg',
+                            description: 'Connect your apps and automate workflows with viaSocket',
+                        }),
+                    }}
+                />
                 <noscript>
                     <iframe
                         src="https://www.googletagmanager.com/ns.html?id=GTM-THTCRSLN"

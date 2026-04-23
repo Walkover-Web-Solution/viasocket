@@ -54,20 +54,15 @@ export default function MetaHeadComp({ metaData, page, plugin, pathSlugs }) {
             };
 
             updateMetaTag('description', description);
+            updateMetaTag('keywords', keywords);
             updateMetaTag('og:title', title, true);
             updateMetaTag('og:description', description, true);
-            updateMetaTag('keywords', keywords);
-
-            // Update og:image
-            let ogImageTag = document.querySelector('meta[property="og:image"]');
-            if (ogImageTag) {
-                ogImageTag.content = 'https://files.msg91.com/342616/wnitwkyk';
-            } else {
-                ogImageTag = document.createElement('meta');
-                ogImageTag.property = 'og:image';
-                ogImageTag.content = 'https://files.msg91.com/342616/wnitwkyk';
-                document.head.appendChild(ogImageTag);
-            }
+            updateMetaTag('og:site_name', 'viaSocket', true);
+            updateMetaTag('og:image', 'https://files.msg91.com/342616/wnitwkyk', true);
+            updateMetaTag('twitter:card', 'summary_large_image', false);
+            updateMetaTag('twitter:title', title, false);
+            updateMetaTag('twitter:description', description, false);
+            updateMetaTag('twitter:image', 'https://files.msg91.com/342616/wnitwkyk', false);
         }
     }, [metaData, plugin, pathSlugs]);
 
