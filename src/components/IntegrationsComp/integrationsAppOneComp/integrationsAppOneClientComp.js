@@ -5,6 +5,7 @@ import { MdAdd, MdKeyboardArrowDown, MdOpenInNew } from 'react-icons/md';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import { LinkText } from '@/components/uiComponents/buttons';
@@ -443,7 +444,9 @@ export default function IntegrationsAppOneClientComp({
                     </div>
                 </div>
 
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </div>
     );

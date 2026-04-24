@@ -1,6 +1,7 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "viaSocket",
+    "short_name": "viaSocket",
+    "description": "Connect your apps and automate workflows with viaSocket",
     "icons": [
         {
             "src": "/assets/brand/android-chrome-96x96.png",
@@ -10,5 +11,7 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "display": "standalone"
+    "display": "standalone",
+    "start_url": "/",
+    "scope": "/"
 }

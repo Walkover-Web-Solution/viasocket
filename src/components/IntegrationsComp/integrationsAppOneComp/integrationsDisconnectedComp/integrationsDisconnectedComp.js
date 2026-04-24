@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/md';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkText } from '@/components/uiComponents/buttons';
 import createURL from '@/utils/createURL';
@@ -30,7 +32,9 @@ export default function IntegrationsDisconnectedComp({
             }}
             className="cont gap-12 md:gap-16 lg:gap-20"
         >
-            <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
+            </ConditionalNavbar>
             <IntegrationsHeadComp
                 metaData={metaData}
                 page={'/integrations/AppOne'}
@@ -149,7 +153,9 @@ export default function IntegrationsDisconnectedComp({
                     </div>
                 </div>
 
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </div>
     );

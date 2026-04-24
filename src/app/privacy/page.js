@@ -9,8 +9,8 @@ export async function generateMetadata() {
     const { metaData } = await getPrivacyPageData();
 
     return {
-        title: metaData?.title || 'Privacy Policy - ViaSocket',
-        description: metaData?.description || 'Privacy policy for using ViaSocket services',
+        title: metaData?.title || 'Privacy Policy - viaSocket',
+        description: metaData?.description || 'Privacy policy for using viaSocket services',
         keywords: metaData?.keywords,
         openGraph: {
             title: metaData?.title,

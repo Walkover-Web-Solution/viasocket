@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { MdSearch } from 'react-icons/md';
 import Footer from '@/components/footer/footer';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useRef, useState } from 'react';
@@ -319,7 +320,9 @@ export default function IntegrationsIndexClientComp({
                     <AlphabeticalComponent />
                 </div>
                 <div className="container">
-                    <Footer footerData={footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </>

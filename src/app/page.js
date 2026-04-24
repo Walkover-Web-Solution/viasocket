@@ -8,7 +8,6 @@ import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
-import AbTestInit from '@/components/AbTestInit';
 
 export const runtime = 'edge';
 
@@ -20,6 +19,22 @@ export async function generateMetadata() {
     description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
     keywords: metaData?.keywords || '',
     openGraph: {
+      siteName: 'viaSocket',
+      title: metaData?.title || 'viaSocket - Automate Anything',
+      description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+      url: 'https://viasocket.com',
+      type: 'website',
+      images: [
+        {
+          url: 'https://files.msg91.com/342616/wnitwkyk',
+          width: 1200,
+          height: 630,
+          alt: 'viaSocket',
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
       title: metaData?.title || 'viaSocket - Automate Anything',
       description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
       images: ['https://files.msg91.com/342616/wnitwkyk'],
@@ -39,7 +54,6 @@ export default async function HomePage() {
     navbarData,
     templateData,
     initialApps,
-    featuredTemplatesData,
   } = await getHomePageData();
   const hasToken = await getHasToken();
   return (
@@ -53,7 +67,6 @@ export default async function HomePage() {
         initialApps={initialApps} 
         templateData={templateData}
         hasToken={hasToken}
-        featuredTemplatesData={featuredTemplatesData}
       />
 
       <div className="custom-background-home-page"></div>
