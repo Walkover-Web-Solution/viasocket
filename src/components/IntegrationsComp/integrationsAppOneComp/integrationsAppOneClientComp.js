@@ -104,7 +104,7 @@ export default function IntegrationsAppOneClientComp({
 
     return (
         <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
-            <div className="container flex flex-col justify-between gap-12">
+            <div className="container flex flex-col justify-between gap-12 mb-12">
                 <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
 
@@ -142,6 +142,7 @@ export default function IntegrationsAppOneClientComp({
             </div>
 
             <div className="container flex flex-col gap-8">
+                <h2 className="h2">Connect {appOneDetails?.name} with {appCount + 300}+ apps</h2> 
                 {appOneDetails?.events.length > 0 && (
                     <div
                         className="cont gap-10 pt-12 border custom-border"
