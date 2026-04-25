@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { MdChevronRight } from 'react-icons/md';
+import { ChevronRight } from 'lucide-react';
 
 const arrowIcon = (
     <svg viewBox="0 0 6 9" fill="none" xmlns="http://www.w3.org/2000/svg" className="arrow-icon">
@@ -29,7 +29,7 @@ export function BtnContWithIcon({ title }) {
     return (
         <>
             <span className="flex items-center gap-0 hover:gap-3 transition-all  ease-in-out w-fit">
-                {title} <MdChevronRight fontSize={22} />{' '}
+                {title} <ChevronRight className="w-5 h-5" />{' '}
             </span>
         </>
     );

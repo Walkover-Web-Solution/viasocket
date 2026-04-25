@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { GoArrowUpRight } from 'react-icons/go';
+import { ArrowUpRight } from 'lucide-react';
 
 function NavList({ navItems }) {
     return (
@@ -85,7 +85,7 @@ export default function Menubar({ open, onClose, navItems }) {
                        </div>
                         <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
                             <div className='whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
-                                Explore More <GoArrowUpRight />
+                                Explore More <ArrowUpRight className="w-3 h-3" />
                             </div>
                         </Link>
                     </div>

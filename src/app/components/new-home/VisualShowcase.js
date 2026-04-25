@@ -2,8 +2,7 @@
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import FlowRenderer from "@/components/flowComp/flowRenderer";
-import { IoMdArrowForward } from "react-icons/io";
-import { MdArrowOutward } from "react-icons/md";
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import ZoomableFlowContainer from "@/components/flowComp/zoomableFlowContainer";
 import Link from "next/link";
 
@@ -262,7 +261,7 @@ export default function VisualShowcase({
                       className="secondary-button"
                     >
                       Use this template
-                      <MdArrowOutward />
+                      <ArrowUpRight className="w-4 h-4" />
                     </Link>
                   </div>
                 </div>

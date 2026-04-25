@@ -1,6 +1,6 @@
 import AgencyList from '../components/experts/AgencyList';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import { MdChevronRight, MdOutlineArticle } from 'react-icons/md';
+import { ChevronRight, FileText } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
@@ -116,7 +116,7 @@ export default async function ExpertsPage() {
                             expertsHelp.map((expertsHelpBlog, index) => {
                                 return (
                                     <div key={index} className="flex flex-col gap-4 bg-white p-6 border custom-border">
-                                        <MdOutlineArticle color="#8F9396" fontSize={36} />
+                                        <FileText className="w-9 h-9 text-[#8F9396]" />
                                         <p className="text-xl ">{expertsHelpBlog?.description}</p>
                                         {expertsHelpBlog?.link && (
                                             <Link
@@ -124,7 +124,7 @@ export default async function ExpertsPage() {
                                                 href="https://viasocket.com/help/partners/experts-partner-program"
                                                 className="flex items-center mt-auto text-[#4485F2]"
                                             >
-                                                Learn More <MdChevronRight fontSize={22} />
+                                                Learn More <ChevronRight className="w-5 h-5" />
                                             </Link>
                                         )}
                                     </div>

@@ -1,4 +1,4 @@
-import { MdDateRange } from 'react-icons/md';
+import { Calendar } from 'lucide-react';
 import Date from './date';
 import { parseISO } from 'date-fns';
 
@@ -51,7 +51,7 @@ export default function PostItem({ post }) {
                         ))}
                     </div>
                     <span className="date">
-                        <MdDateRange /> <Date date={parseISO(post.date)} />
+                        <Calendar className="w-4 h-4" /> <Date date={parseISO(post.date)} />
                     </span>
                 </div>
             </div>

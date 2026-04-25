@@ -2,10 +2,7 @@
 
 import React, { useEffect, useMemo, useState, useRef } from 'react';
 import Link from 'next/link';
-import { RiSearchLine } from 'react-icons/ri';
-import { HiCurrencyRupee } from 'react-icons/hi2';
-import { FaBullhorn, FaUserGroup } from 'react-icons/fa6';
-import { MdManageAccounts, MdHeadset } from 'react-icons/md';
+import { Search, IndianRupee, Megaphone, Users, UserCog, Headphones } from 'lucide-react';
 import FlowRenderer from '../flowComp/flowRenderer';
 import ZoomableFlowContainer from '../flowComp/zoomableFlowContainer';
 
@@ -76,17 +73,17 @@ const IndexTemplateComp = ({ categories, templates }) => {
                                 <div className="flex items-center gap-2">
                                     <span className="flex items-center">
                                         {cat?.name === 'HR' ? (
-                                            <FaUserGroup size={24} />
+                                            <Users className="w-6 h-6" />
                                         ) : cat?.name === 'Marketing' ? (
-                                            <FaBullhorn size={24} />
+                                            <Megaphone className="w-6 h-6" />
                                         ) : cat?.name === 'Support' ? (
-                                            <MdHeadset size={24} />
+                                            <Headphones className="w-6 h-6" />
                                         ) : cat?.name === 'Finance' ? (
-                                            <HiCurrencyRupee size={24} />
+                                            <IndianRupee className="w-6 h-6" />
                                         ) : cat?.name === 'Project Management' ? (
-                                            <MdManageAccounts size={24} />
+                                            <UserCog className="w-6 h-6" />
                                         ) : (
-                                            <RiSearchLine size={24} />
+                                            <Search className="w-6 h-6" />
                                         )}
                                     </span>
                                     <span className="block">{cat?.name}</span>
@@ -156,17 +153,17 @@ const IndexTemplateComp = ({ categories, templates }) => {
                             >
                                 <span className="flex items-center">
                                     {cat?.name === 'HR' ? (
-                                        <FaUserGroup size={20} />
+                                        <Users className="w-5 h-5" />
                                     ) : cat?.name === 'Marketing' ? (
-                                        <FaBullhorn size={20} />
+                                        <Megaphone className="w-5 h-5" />
                                     ) : cat?.name === 'Support' ? (
-                                        <MdHeadset size={20} />
+                                        <Headphones className="w-5 h-5" />
                                     ) : cat?.name === 'Finance' ? (
-                                        <HiCurrencyRupee size={20} />
+                                        <IndianRupee className="w-5 h-5" />
                                     ) : cat?.name === 'Project Management' ? (
-                                        <MdManageAccounts size={20} />
+                                        <UserCog className="w-5 h-5" />
                                     ) : (
-                                        <RiSearchLine size={20} />
+                                        <Search className="w-5 h-5" />
                                     )}
                                 </span>
                                 <span className="text-xs text-center">{cat?.name}</span>

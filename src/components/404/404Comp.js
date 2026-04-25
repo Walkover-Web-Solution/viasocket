@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { MdArrowBackIos } from 'react-icons/md';
+import { ChevronLeft } from 'lucide-react';
 
 export default function ErrorComp() {
     const router = useRouter();
@@ -13,7 +13,7 @@ export default function ErrorComp() {
                 <h1 className="h1">404: Return to homepage.</h1>
                 <div className="flex gap-4">
                     <button className="btn btn-accent btn-md" onClick={() => router.back()}>
-                        <MdArrowBackIos />
+                        <ChevronLeft className="w-4 h-4" />
                         Back
                     </button>
                     <Link href="/">

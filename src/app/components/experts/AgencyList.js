@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
-import { MdCheckCircle, MdChevronRight } from 'react-icons/md';
+import { CheckCircle, ChevronRight } from 'lucide-react';
 import Script from 'next/script';
 import RequestMeetingComp from '@/components/requestMeetingComp/RequestMeetingComp';
 
@@ -55,7 +55,7 @@ const AgencyList = ({ agencies, type }) => {
                                         <div className="p-6 grid gap-1 h-full">
                                             <div className="flex items-center gap-2">
                                                 <h2 className="text-xl font-semibold">{agency?.name}</h2>
-                                                {agency?.verified && <MdCheckCircle className="" color="#2A81FC" />}
+                                                {agency?.verified && <CheckCircle className="" color="#2A81FC" />}
                                             </div>
 
                                             <p className="text-slate-400 font-light text-sm">
@@ -71,7 +71,7 @@ const AgencyList = ({ agencies, type }) => {
                                                 className="col-link text-blue-500 text-sm text-start flex items-center gap-1"
                                             >
                                                 Schedule a meet
-                                                <MdChevronRight fontSize={16} />
+                                                <ChevronRight className="w-4 h-4" />
                                             </button>
                                             <RequestMeetingComp agencyName={agency?.name} />
                                         </div>

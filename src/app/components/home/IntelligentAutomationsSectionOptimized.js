@@ -1,11 +1,9 @@
-import { FiServer } from 'react-icons/fi';
-import { LuBot, LuPuzzle, LuLayoutTemplate } from 'react-icons/lu';
-import { FaCode } from 'react-icons/fa6';
+import { Server, Bot, Puzzle, LayoutTemplate, Code } from 'lucide-react';
 import Link from 'next/link';
 
 export default function IntelligentAutomationsSectionOptimized({ appCount, isDepartmentPage = false }) {
     const automationItem = {
-        Icon: LuPuzzle,
+        Icon: Puzzle,
         title: 'Automations',
         description: 'Automate advanced workflows across ' + (+appCount + 300) + '+ apps',
         url: '/workflow-automations',
@@ -13,7 +11,7 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
 
     // Templates item - only shown on departments page at position 2
     const templatesItem = {
-        Icon: LuLayoutTemplate,
+        Icon: LayoutTemplate,
         title: 'Templates',
         description: 'Explore thousands of pre-built templates',
         url: '/automations',
@@ -22,13 +20,13 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
     // Other base items that are always shown
     const otherBaseItems = [
         {
-            Icon: LuBot,
+            Icon: Bot,
             title: 'AI agents',
             description: 'Create any AI assistant in minutes',
             url: '/integrations/category/ai-tools',
         },
         {
-            Icon: FiServer,
+            Icon: Server,
             title: 'MCP',
             description: 'Connect your AI to any app',
             url: '/mcp',
@@ -37,7 +35,7 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
 
     // Embed item - shown everywhere except departments page
     const embedItem = {
-        Icon: FaCode,
+        Icon: Code,
         title: 'Embed',
         description: 'One SDK, thousands of App Integrations',
         url: '/embed',
@@ -66,8 +64,7 @@ export default function IntelligentAutomationsSectionOptimized({ appCount, isDep
                             target="_blank"
                         >
                             <Icon
-                                size={30}
-                                className="text-gray-500 group-hover:text-accent transition-colors duration-300"
+                                className="w-8 h-8 text-gray-500 group-hover:text-accent transition-colors duration-300"
                             />
                             <h3 className="text-2xl">{title}</h3>
                             <p>{description}</p>

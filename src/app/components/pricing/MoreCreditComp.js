@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { formatCurrency, convertCurrency } from '@/utils/currencyConverter';
-import { FiMinus } from 'react-icons/fi';
-import { FiPlus } from 'react-icons/fi';
+import { Minus, Plus, Check } from 'lucide-react';
 import Link from 'next/link';
-import { GiCheckMark } from 'react-icons/gi';
 
 const MoreCreditComp = ({ selectedCountryData }) => {
     const [credits, setCredits] = useState(40000); // initial credits
@@ -66,7 +64,7 @@ const MoreCreditComp = ({ selectedCountryData }) => {
                                 onClick={handleDecrement}
                                 aria-label="Decrement credits"
                             >
-                                <FiMinus />
+                                <Minus className="w-4 h-4" />
                             </button>
 
                             <div className="px-8 h-11 flex items-center justify-center border custom-border text-2xl font-semibold text-center w-[200px]">
@@ -78,7 +76,7 @@ const MoreCreditComp = ({ selectedCountryData }) => {
                                 onClick={handleIncrement}
                                 aria-label="Increment credits"
                             >
-                                <FiPlus />
+                                <Plus className="w-4 h-4" />
                             </button>
                         </div>
                         <p className="text-lg text-gray-600">Select your credits</p>
@@ -89,17 +87,17 @@ const MoreCreditComp = ({ selectedCountryData }) => {
                         </div>
                         <ul className="space-y-3 text-md text-gray-700">
                             <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />
+                                <Check className="w-4 h-4 text-accent" />
                                 Used in paid built-in plugs
                             </li>
                             <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />1 credit = 2 tasks
+                                <Check className="w-4 h-4 text-accent" />1 credit = 2 tasks
                             </li>
                             <li className="flex items-center gap-3 ml-6">
                                 Use credits as tasks, When your tasks are consumed
                             </li>
                             <li className="flex items-center gap-3">
-                                <GiCheckMark className="text-accent" />
+                                <Check className="w-4 h-4 text-accent" />
                                 <Link
                                     href="https://viasocket.com/help/plans-and-pricing/what-are-credits"
                                     target="_blank"

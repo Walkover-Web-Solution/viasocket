@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdKeyboardArrowDown, MdOpenInNew } from 'react-icons/md';
+import { Plus, ChevronDown, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -20,7 +20,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
 import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
 import { APPERPAGE } from '@/const/integrations';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
@@ -116,7 +116,7 @@ export default function IntegrationsAppOneClientComp({
                             className="btn btn-outline"
                             rel="nofollow"
                         >
-                            Connect to {appOneDetails?.name} <MdOpenInNew />
+                            Connect to {appOneDetails?.name} <ExternalLinkIcon className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ export default function IntegrationsAppOneClientComp({
                                         height={20}
                                         alt={appOneDetails?.name}
                                     />
-                                    <MdAdd fontSize={30} color="white" />
+                                    <Plus className="w-8 h-8 text-white" />
                                 </div>
                                 <IntegrationSearchApps
                                     searchTerm={searchTerm}
@@ -178,12 +178,12 @@ export default function IntegrationsAppOneClientComp({
                     <div className="flex justify-end items-end gap-2 w-full">
                         {integrationsInfo?.page > 0 && (
                             <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
-                                <GrFormPreviousLink size={20} /> Prev
+                                <ChevronLeft className="w-5 h-5" /> Prev
                             </Link>
                         )}
                         {showNext && (
                             <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
-                                Next <GrFormNextLink size={20} />
+                                Next <ChevronRight className="w-5 h-5" />
                             </Link>
                         )}
                     </div>
@@ -247,7 +247,7 @@ export default function IntegrationsAppOneClientComp({
                                             }}
                                             className="btn btn-outline mt-2 flex ml-auto"
                                         >
-                                            Load More <MdKeyboardArrowDown fontSize={20} />
+                                            Load More <ChevronDown className="w-5 h-5" />
                                         </button>
                                     )}
                                 </div>
@@ -402,9 +402,13 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                         <ExternalLink
                             href={
-                                appOneDetails?.domain.startsWith('http')
-                                    ? appOneDetails?.domain
-                                    : 'http://' + appOneDetails?.domain
+                                (() => {
+                                    const baseUrl = appOneDetails?.domain.startsWith('http')
+                                        ? appOneDetails?.domain
+                                        : 'http://' + appOneDetails?.domain;
+                                    const separator = baseUrl.includes('?') ? '&' : '?';
+                                    return `${baseUrl}${separator}utm_source=viasocket`;
+                                })()
                             }
                             appSlugName={appOneDetails?.appslugname}
                             doFollowArray={getDoFollowUrlStatusArray}

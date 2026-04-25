@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdOutlineArrowForward } from 'react-icons/md';
+import { ArrowRight } from 'lucide-react';
 
 export default function TemplateSection(data) {
     return (
@@ -27,7 +27,7 @@ export default function TemplateSection(data) {
                                 <div className="p-2 flex flex-col h-[100px]">
                                     <h3 className="font-medium text-xl">{template?.name}</h3>
                                     <Link href="/" className="flex items-center gap-1 mt-auto " aria-label="Explore">
-                                        Explore <MdOutlineArrowForward />
+                                        Explore <ArrowRight className="w-4 h-4" />
                                     </Link>
                                 </div>
                             </div>

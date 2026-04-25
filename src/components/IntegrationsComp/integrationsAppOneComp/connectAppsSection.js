@@ -7,7 +7,7 @@ import { hexToRgb } from "./shared";
 import createURL from "@/utils/createURL";
 import IntegrationSearchApps from "../integrationsAppComp/integrationSearchApps";
 import { APPERPAGE } from "@/const/integrations";
-import { GrFormPreviousLink, GrFormNextLink } from "react-icons/gr";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // ─── Pair App Card ───────────────────────────────────────────────────
 function PairAppCard({ name, icon, href }) {
@@ -126,12 +126,12 @@ export default function ConnectAppsSection({ brandColor, appOneDetails, apps, pa
         <div className="flex justify-end items-end gap-2 w-full mt-4">
           {integrationsInfo?.page > 0 && (
             <Link className="outline-button gap-1 !px-5" href={createURL(goToPrev())}>
-              <GrFormPreviousLink size={20} /> Prev
+              <ChevronLeft className="w-5 h-5" /> Prev
             </Link>
           )}
           {showNext && (
             <Link className="outline-button gap-1 !px-5" href={createURL(goToNext())}>
-              Next <GrFormNextLink size={20} />
+              Next <ChevronRight className="w-5 h-5" />
             </Link>
           )}
         </div>
