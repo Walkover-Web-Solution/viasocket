@@ -122,7 +122,7 @@ export default function IntegrationsAppOneClientComp({
                 </div>
 
                 {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                    <div className="flex flex-col gap-12">
+                    <div className="flex flex-col gap-12 mb-8">
                         <div className=" flex flex-col gap-2">
                             <h1 className="h1">
                                 {appData?.headings?.h1 || `Automate ${appOneDetails?.name} with viaSocket`}
@@ -133,7 +133,14 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                     </div>
                 )}
+
+                <TemplateContainer
+                    selectedApps={[appOneDetails]}
+                    templateToShow={templateToShow}
+                    requireAllApps={true}
+                />
             </div>
+
             <div className="container flex flex-col gap-8">
                 {appOneDetails?.events.length > 0 && (
                     <div
@@ -272,12 +279,6 @@ export default function IntegrationsAppOneClientComp({
                         )}
                     </div>
 
-                    {/* Template Container */}
-                    <TemplateContainer
-                        selectedApps={[appOneDetails]}
-                        templateToShow={templateToShow}
-                        requireAllApps={true}
-                    />
                 </div>
             </div>
 
