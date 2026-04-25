@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowRight } from "react-icons/fa6";
+import { ArrowRight } from 'lucide-react';
 
 export default function TestimonialsOptimized({ reviewData, matchesFilter }) {
     return (
@@ -42,7 +42,7 @@ export default function TestimonialsOptimized({ reviewData, matchesFilter }) {
                                     <div className="flex items-center justify-between mt-auto gap-2">
                                         <p className="text-xs text-gray-400">{item?.date}</p>
                                         <button className="text-sm font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 whitespace-nowrap">
-                                            Read more <FaArrowRight className="text-xs" />
+                                            Read more <ArrowRight className="w-3 h-3" />
                                         </button>
                                     </div>
                                 </div>

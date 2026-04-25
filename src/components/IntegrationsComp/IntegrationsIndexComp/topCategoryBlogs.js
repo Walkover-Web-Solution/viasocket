@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { RiArrowRightSLine } from "react-icons/ri";
+import { ChevronRight } from "lucide-react";
 
 export default function TopCategoryBlogs({ categoryBlogs, categoryName = 'all' }) {
     return (
@@ -16,7 +16,7 @@ export default function TopCategoryBlogs({ categoryBlogs, categoryName = 'all' }
                                             <Link href={'https://viasocket.com/discovery/blog/' + blog?.id + '/' + blog?.meta?.categorySlug + '/' + blog?.slugName} target="_blank" className="transition-all duration-300 ease-in-out text-gray-500 hover:text-black group">
                                                 <p className="text-xl flex items-center">
                                                     <span>{blog?.title}</span>
-                                                    <span className="ml-2 group-hover:ml-4 transition-all"><RiArrowRightSLine size={20} /></span>
+                                                    <span className="ml-2 group-hover:ml-4 transition-all"><ChevronRight className="w-5 h-5" /></span>
                                                 </p>
                                             </Link>
                                         </div>

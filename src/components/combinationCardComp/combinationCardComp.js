@@ -1,6 +1,6 @@
 import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
-import { FiArrowUpRight, FiExternalLink } from 'react-icons/fi';
+import { ArrowUpRight, ExternalLink } from 'lucide-react';
 
 export default function CombinationCardComp({ trigger, action, description, link, showTopBorder }) {
     return (
@@ -19,7 +19,7 @@ export default function CombinationCardComp({ trigger, action, description, link
             </div>
             <p className="text-start">{description}</p>
 
-            <FiExternalLink className="ml-auto invisible group-hover:visible" />
+            <ExternalLink className="ml-auto invisible group-hover:visible w-4 h-4" />
         </button>
     );
 }

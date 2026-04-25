@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MdKeyboardArrowLeft, MdKeyboardArrowRight } from 'react-icons/md';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
     const [firstLine, setFirstLine] = useState('');
@@ -25,10 +25,10 @@ export default function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
                     Install Template
                 </button>
                 <button onClick={onPrev} className="btn btn-outline">
-                    <MdKeyboardArrowLeft size={32} />
+                    <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button onClick={onNext} className="btn btn-outline">
-                    <MdKeyboardArrowRight size={32} />
+                    <ChevronRight className="w-8 h-8" />
                 </button>
             </div>
         </div>
@@ -42,10 +42,10 @@ export default function TitleWithButtons({ title, onInstall, onPrev, onNext }) {
                     Install Template
                 </button>
                 <button onClick={onPrev} className="btn btn-outline">
-                    <MdKeyboardArrowLeft size={32} />
+                    <ChevronLeft className="w-8 h-8" />
                 </button>
                 <button onClick={onNext} className="btn btn-outline">
-                    <MdKeyboardArrowRight size={32} />
+                    <ChevronRight className="w-8 h-8" />
                 </button>
             </div>
         </div>

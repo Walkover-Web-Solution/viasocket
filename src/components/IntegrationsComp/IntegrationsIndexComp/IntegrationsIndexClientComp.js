@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdSearch } from 'react-icons/md';
+import { Search, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import style from './IntegrationsIndexComp.module.scss';
@@ -12,11 +12,9 @@ import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 import ErrorComp from '@/components/404/404Comp';
-import { GoArrowUpRight } from 'react-icons/go';
 import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 import TopCategoryBlogs from './topCategoryBlogs';
 
 export default function IntegrationsIndexClientComp({
@@ -134,7 +132,7 @@ export default function IntegrationsIndexClientComp({
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Build viaSocket integration <GoArrowUpRight />
+                            Build viaSocket integration <ArrowUpRight className="w-3 h-3" />
                         </Link>
                     </p>
                 </div>
@@ -168,7 +166,7 @@ export default function IntegrationsIndexClientComp({
                         )}
                     </div>
                     <label className="input border lg:min-w-[345px] lg:max-w-[400px] w-full  custom-border flex items-center gap-2 focus-within:outline-none">
-                        <MdSearch fontSize={20} />
+                        <Search className="w-5 h-5" />
                         <input
                             ref={searchInputRef}
                             value={searchTerm}
@@ -297,12 +295,12 @@ export default function IntegrationsIndexClientComp({
                     <div className="flex justify-end items-end w-full gap-2">
                         {integrationsInfo?.page > 0 && (
                             <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToPrev())}>
-                                <GrFormPreviousLink size={20} /> Prev
+                                <ChevronLeft className="w-5 h-5" /> Prev
                             </Link>
                         )}
                         {showNext && (
                             <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToNext())}>
-                                Next <GrFormNextLink size={20} />
+                                Next <ChevronRight className="w-5 h-5" />
                             </Link>
                         )}
                     </div>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import style from './FeatureGridComp.module.scss';
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { ArrowRight } from 'lucide-react';
 
 export default function FeatureGridComp({ features, pageInfo }) {
     function handleGridLayout(blockIndex) {
@@ -59,7 +59,7 @@ export default function FeatureGridComp({ features, pageInfo }) {
                                     </div>
                                     
                                     <div className="absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
-                                        <span>Know More</span> <span><FaLongArrowAltRight className="text-xl" /></span> 
+                                        <span>Know More</span> <span><ArrowRight className="w-5 h-5" /></span> 
                                     </div>
                                 </Link>
                             );

@@ -1,6 +1,6 @@
 'use client';
 
-import { MdSearch } from 'react-icons/md';
+import { Search } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import categories from '@/data/categories.json';
 import searchApps from '@/utils/searchApps';
@@ -81,7 +81,7 @@ const IntegrationSearchApps = ({
     return (
         <>
             <label className="input border w-full sm:w-auto md:min-w-[460px] custom-border flex items-center gap-2 focus-within:outline-none bg-white">
-                <MdSearch fontSize={20} />
+                <Search className="w-5 h-5" />
                 <input
                     value={searchTerm}
                     onChange={(e) => {

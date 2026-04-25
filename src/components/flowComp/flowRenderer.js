@@ -1,10 +1,6 @@
 import IconWrapper from './iconWrapper.js';
-import { MdApi, MdAutoAwesome, MdOutlineWebhook } from 'react-icons/md';
+import { Code2, Sparkles, Webhook, AlarmClock, FileCode, Plus, ArrowDown } from 'lucide-react';
 import Image from 'next/image';
-import { LuAlarmClock } from 'react-icons/lu';
-import { FaJs } from 'react-icons/fa';
-import { IoMdAdd } from 'react-icons/io';
-import { FaArrowDownLong } from 'react-icons/fa6';
 import { BlockTypes } from '@/enums.js';
 
 const Fab = ({ children }) => (
@@ -85,9 +81,9 @@ function FlowHeader({ trigger }) {
                         <IconWrapper
                             component={
                                 trigger?.triggerType === 'webhook' ? (
-                                    <MdOutlineWebhook size={20} />
+                                    <Webhook className="w-5 h-5" />
                                 ) : trigger?.triggerType === 'cron' ? (
-                                    <LuAlarmClock size={20} />
+                                    <AlarmClock className="w-5 h-5" />
                                 ) : (
                                     <IconWrapper
                                         iconUrl={
@@ -131,7 +127,7 @@ function FlowHeader({ trigger }) {
                 {trigger?.preCondition?.conditionEnabled && (
                     <div className="flex flex-col justify-center items-center mt-2">
                         <Fab>IF</Fab>
-                        <FaArrowDownLong />
+                        <ArrowDown className="w-4 h-4" />
                     </div>
                 )}
             </div>
@@ -160,11 +156,11 @@ function FlowSteps({ block, order, root = 'root' }) {
                             />
                         );
                     } else if (block?.[step]?.type === 'api') {
-                        return <IconWrapper component={<MdApi className="h-6 w-6 text-blue-500" />} />;
+                        return <IconWrapper component={<Code2 className="h-6 w-6 text-blue-500" />} />;
                     } else if (block?.[step]?.aistep) {
-                        return <IconWrapper component={<MdAutoAwesome className="h-6 w-6 text-green-500" />} />;
+                        return <IconWrapper component={<Sparkles className="h-6 w-6 text-green-500" />} />;
                     } else {
-                        return <IconWrapper component={<FaJs className="h-6 w-6 text-yellow-500" />} />;
+                        return <IconWrapper component={<FileCode className="h-6 w-6 text-yellow-500" />} />;
                     }
                 };
 
@@ -195,12 +191,12 @@ function FlowSteps({ block, order, root = 'root' }) {
                 <div className="flex flex-col items-center ">
                     <VerticalStick />
                     <div className="p-1 w-full flex justify-center border-2 flow-border-color bg-white">
-                        <IoMdAdd className="w-6 h-6 text-gray-500" />
+                        <Plus className="w-6 h-6 text-gray-500" />
                     </div>
                 </div>
             ) : (
                 <div className="w-full flex items-center justify-center mt-2 gap-2 border-2 flow-border-color bg-white">
-                    <IoMdAdd className="w-4 h-4 text-gray-500" />
+                    <Plus className="w-4 h-4 text-gray-500" />
                     <span className="whitespace-nowrap text-sm">Add Step</span>
                 </div>
             )}

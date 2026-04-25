@@ -1,9 +1,8 @@
 'use client';
 import Image from "next/image";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Headphones } from "lucide-react";
 import { GlassCard } from "./shared";
-import { MdSupportAgent } from "react-icons/md";
 
 export default function SupportSection() {
 
@@ -41,7 +40,7 @@ export default function SupportSection() {
             <div className="flex flex-col gap-4 px-4 py-5 pb-6">
               <div className="flex items-start gap-2.5">
                 <div className="w-8 h-8 shrink-0">
-                  <MdSupportAgent size={28} />
+                  <Headphones className="w-7 h-7" />
                 </div>
                 <div className="flex flex-col gap-0.5 pt-0.5">
                   <span className="text-xs font-semibold text-black">viaSocket</span>

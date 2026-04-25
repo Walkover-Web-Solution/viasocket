@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import { useState } from 'react';
-import { MdAdd, MdAdsClick, MdCheck, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
+import { Plus, MousePointer2, Check, X, ChevronDown, CheckCircle } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
@@ -67,7 +66,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             </div>
                                             {event.rowid === selectedTrigger?.rowid && (
                                                 <div className="text-green-600 flex h-full items-center justify-center">
-                                                    <MdCheck fontSize={24} />
+                                                    <Check className="w-6 h-6" />
                                                 </div>
                                             )}
                                         </div>
@@ -77,7 +76,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             onClick={() => setVisibleTriggers(visibleTriggers + 6)}
                                             className="btn btn-outline custom-border"
                                         >
-                                            Load More <MdKeyboardArrowDown fontSize={20} />
+                                            Load More <ChevronDown className="w-5 h-5" />
                                         </button>
                                     ) : (
                                         <RequestIntegrationPopupOpener
@@ -112,7 +111,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             </div>
                                             {event.rowid === selectedAction?.rowid && (
                                                 <div className="text-green-600 flex h-full items-center justify-center">
-                                                    <MdCheck fontSize={24} />
+                                                    <Check className="w-6 h-6" />
                                                 </div>
                                             )}
                                         </div>
@@ -122,7 +121,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                             onClick={() => setVisibleActions(visibleActions + 6)}
                                             className="btn btn-outline custom-border"
                                         >
-                                            Load More <MdKeyboardArrowDown fontSize={20} />
+                                            Load More <ChevronDown className="w-5 h-5" />
                                         </button>
                                     ) : (
                                         <RequestIntegrationPopupOpener
@@ -157,12 +156,12 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     className="w-fit hover:bg-black rounded-full p-1 hover:text-white cursor-pointer"
                                                     onClick={() => setSelectedTrigger()}
                                                 >
-                                                    <MdClose fontSize={20} />
+                                                    <X className="w-5 h-5" />
                                                 </span>
                                             </>
                                         )}
                                     </div>
-                                    <MdAdd fontSize={30} />
+                                    <Plus className="w-7 h-7" />
                                     <div className="flex items-center max-w-[800px] gap-2 border custom-border p-2 w-full min-h-12 min-w-[220px]">
                                         {selectedAction && (
                                             <>
@@ -178,7 +177,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                                     className="w-fit hover:bg-black rounded-full p-1 hover:text-white cursor-pointer"
                                                     onClick={() => setSelectedAction()}
                                                 >
-                                                    <MdClose fontSize={20} />
+                                                    <X className="w-5 h-5" />
                                                 </span>
                                             </>
                                         )}
@@ -222,7 +221,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                             <div className="cont gap-2 w-full">
                                 <h3 className="h3 flex flex-col gap-1">
                                     <p className="flex items-center gap-1">
-                                        <MdAdsClick fontSize={20} />
+                                        <MousePointer2 className="w-5 h-5" />
                                         When this happens
                                         <span className="bg-red-100 text-red-700 text-sm px-2 py-0.5 inline-flex items-center">
                                             Triggers
@@ -256,7 +255,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         onClick={() => setVisibleTriggers(visibleTriggers + 6)}
                                         className="btn btn-outline custom-border"
                                     >
-                                        Load More <MdKeyboardArrowDown fontSize={20} />
+                                        Load More <ChevronDown className="w-5 h-5" />
                                     </button>
                                 ) : (
                                     <RequestIntegrationPopupOpener
@@ -273,7 +272,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                             <div className="cont gap-2 w-full">
                                 <h3 className="h3 flex flex-col gap-1">
                                     <div className="flex items-center gap-2">
-                                        <IoMdCheckmarkCircleOutline fontSize={20} />
+                                        <CheckCircle className="w-5 h-5" />
                                         Do this
                                         <span className="bg-blue-100 text-blue-700 text-sm px-2 py-0.5 inline-flex items-center">
                                             Actions
@@ -310,7 +309,7 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         onClick={() => setVisibleActions(visibleActions + 6)}
                                         className="btn btn-outline custom-border self-end"
                                     >
-                                        Load More <MdKeyboardArrowDown fontSize={20} />
+                                        Load More <ChevronDown className="w-5 h-5" />
                                     </button>
                                 ) : (
                                     <RequestIntegrationPopupOpener

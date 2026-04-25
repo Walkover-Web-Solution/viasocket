@@ -1,5 +1,5 @@
 import { handleRedirect } from '@/utils/handleRedirection';
-import { GoArrowUpRight } from 'react-icons/go';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -50,7 +50,7 @@ export default function IndexBannerComp() {
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Generate with AI <GoArrowUpRight />
+                            Generate with AI <ArrowUpRight className="w-4 h-4" />
                         </Link>
                     </div>
 
@@ -61,7 +61,7 @@ export default function IndexBannerComp() {
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Hire an Expert <GoArrowUpRight />
+                            Hire an Expert <ArrowUpRight className="w-4 h-4" />
                         </Link>
                     </div>
                 </div>

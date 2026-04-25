@@ -1,15 +1,13 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MdSearch } from 'react-icons/md';
+import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles } from 'lucide-react';
 import Footer from '@/components/footer/footer';
 import { useEffect, useState } from 'react';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
 import FAQSection from '@/components/faqSection/faqSection';
-import { FaBalanceScale, FaLayerGroup, FaNetworkWired, FaPlug, FaShieldAlt, FaTools } from 'react-icons/fa';
-import { BsStars } from 'react-icons/bs';
 import style from './McpIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -19,7 +17,6 @@ import {
     AppVisual,
     RequestIntegrationPopupOpener,
 } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
 
 export default function McpIndexClientComp({
     pageInfo,
@@ -156,7 +153,7 @@ export default function McpIndexClientComp({
 
                 <div className="container cont gap-4">
                     <label className="input border max-w-[400px] custom-border flex items-center gap-2 focus-within:outline-none">
-                        <MdSearch fontSize={20} />
+                        <Search className="w-5 h-5" />
                         <input
                             value={searchTerm}
                             onChange={(e) => {
@@ -264,12 +261,12 @@ export default function McpIndexClientComp({
                         <div className="flex justify-end items-end w-full gap-2">
                             {integrationsInfo?.page > 0 && (
                                 <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToPrev())}>
-                                    <GrFormPreviousLink size={20} /> Prev
+                                    <ChevronLeft className="w-5 h-5" /> Prev
                                 </Link>
                             )}
                             {showNext && (
                                 <Link className="btn btn-outline !px-5 gap-1" href={createURL(goToNext())}>
-                                    Next <GrFormNextLink size={20} />
+                                    Next <ChevronRight className="w-5 h-5" />
                                 </Link>
                             )}
                         </div>
@@ -371,19 +368,19 @@ const FeaturesGrid = ({ featuresData }) => {
     const getIconComponent = (iconName) => {
         switch (iconName) {
             case 'network':
-                return <FaNetworkWired size={36} />;
+                return <Network className="w-9 h-9" />;
             case 'scale':
-                return <FaBalanceScale size={36} />;
+                return <Scale className="w-9 h-9" />;
             case 'shield':
-                return <FaShieldAlt size={36} />;
+                return <Shield className="w-9 h-9" />;
             case 'layers':
-                return <FaLayerGroup size={36} />;
+                return <Layers className="w-9 h-9" />;
             case 'plug':
-                return <FaPlug size={48} />;
+                return <Plug className="w-12 h-12" />;
             case 'tools':
-                return <FaTools size={48} />;
+                return <Wrench className="w-12 h-12" />;
             default:
-                return <FaNetworkWired size={36} />;
+                return <Network className="w-9 h-9" />;
         }
     };
     return (
@@ -391,7 +388,7 @@ const FeaturesGrid = ({ featuresData }) => {
             <div className="mb-20">
                 <div className="flex gap-4">
                     <h2 className="h2 mb-4">Don't just chat, Put your AI to work</h2>
-                    <BsStars size={42} />
+                    <Sparkles className="w-10 h-10" />
                 </div>
                 <h2 className="sub__h1 text-gray-300 max-w-[800px]">
                     viaSocket MCP lets your AI connect to 1,000+ apps with no complex APIs needed. Your AI can now send

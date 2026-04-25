@@ -1,20 +1,16 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdChevronLeft, MdChevronRight, MdSearch } from 'react-icons/md';
+import { ChevronLeft, ChevronRight, Search, Headphones, CheckCircle, User, Send } from 'lucide-react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
-import { IoMdCheckmarkCircleOutline } from 'react-icons/io';
-import { IoPersonOutline } from 'react-icons/io5';
-import { VscSend } from 'react-icons/vsc';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Cta from '@/components/CTA/Cta';
 import searchApps from '@/utils/searchApps';
-import { MdSupportAgent } from 'react-icons/md';
 import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 
 const APPERPAGE = 9;
@@ -111,7 +107,7 @@ export default function McpAppClientComp({
                                 <Link href={createURL(`/mcp`)} className="flex items-center gap-0 underline">
                                     MCP{' '}
                                 </Link>
-                                <MdChevronRight fontSize={22} />
+                                <ChevronRight className="w-5 h-5" />
                                 <div className="flex items-center gap-0 capitalize">{appOneDetails?.name}</div>
                             </div>
                         </div>
@@ -189,7 +185,7 @@ export default function McpAppClientComp({
                         </div>
                         <div className="border bg-white shadow-lg h-fit cont gap-4 md:gap-8 py-2 md:py-8 px-2 sm:px-8 w-full lg:w-fit lg:ml-auto">
                             <div className="flex gap-4 items-center">
-                                <MdSupportAgent size={28} />
+                                <Headphones className="w-7 h-7" />
                                 <div className="">
                                     <h2 className="font-semibold">AI Agent</h2>
                                     <h3 className="text-gray-500">What can I help you with?</h3>
@@ -198,7 +194,7 @@ export default function McpAppClientComp({
 
                             <div className="flex gap-4 items-center">
                                 <div className="bg-gray-300 p-2 h-fit">
-                                    <IoPersonOutline size={16} />
+                                    <User className="w-4 h-4" />
                                 </div>
                                 <div className="">
                                     <h2 className="font-semibold">You</h2>
@@ -213,7 +209,7 @@ export default function McpAppClientComp({
                                 </div>
                             </div>
                             <div className="flex gap-4 items-start">
-                                <MdSupportAgent size={28} />
+                                <Headphones className="w-7 h-7" />
 
                                 <div className="flex flex-col gap-2">
                                     <h2 className="flex items-center flex-wrap gap-2">
@@ -238,7 +234,7 @@ export default function McpAppClientComp({
                             </div>
                             <div className="border custom-border px-4 py-2 flex justify-between items-center">
                                 <p className="text-gray-300">Message your agent</p>
-                                <VscSend size={16} />
+                                <Send className="w-4 h-4" />
                             </div>
                         </div>
                     </div>
@@ -248,7 +244,7 @@ export default function McpAppClientComp({
                     <div className="container cont gap-4">
                         <div className="flex items-baseline gap-2">
                             <h2 className="h2">Supported Actions</h2>
-                            <IoMdCheckmarkCircleOutline fontSize={36} />
+                            <CheckCircle className="w-9 h-9" />
                         </div>
                         <McpEventComp appOneDetails={appOneDetails} />
                     </div>
@@ -290,7 +286,7 @@ export default function McpAppClientComp({
 
                     <div className="flex items-center max-w-[400px]">
                         <label className="input border flex-grow custom-border flex items-center gap-2 focus-within:outline-none">
-                            <MdSearch fontSize={20} color="black" />
+                            <Search className="w-5 h-5 text-black" />
                             <input
                                 value={searchTerm}
                                 onChange={(e) => {
@@ -368,14 +364,14 @@ export default function McpAppClientComp({
                             <div className="flex gap-4">
                                 {integrationsInfo?.page > 0 && (
                                     <Link className="btn btn-outline" href={createURL(goToPrev())}>
-                                        <MdChevronLeft size={18} />
+                                        <ChevronLeft className="w-4 h-4" />
                                         Prev
                                     </Link>
                                 )}
                                 {showNext && (
                                     <Link className="btn btn-outline" href={createURL(goToNext())}>
                                         Next
-                                        <MdChevronRight size={18} />
+                                        <ChevronRight className="w-4 h-4" />
                                     </Link>
                                 )}
                             </div>

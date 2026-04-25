@@ -1,17 +1,5 @@
 import Link from 'next/link';
-import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones } from 'lucide-react';
-import { MdGroups } from 'react-icons/md';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
-import { FaUserShield } from 'react-icons/fa6';
-import { MdDashboardCustomize } from 'react-icons/md';
-import { MdIntegrationInstructions } from 'react-icons/md';
-import { MdOutlineMobileFriendly } from 'react-icons/md';
-import { FaCogs } from 'react-icons/fa';
-import { IoRepeatSharp } from 'react-icons/io5';
-import { GrTrigger } from 'react-icons/gr';
-import { GrAction } from 'react-icons/gr';
-import { TbSettingsAutomation } from 'react-icons/tb';
-import { FaChartLine } from 'react-icons/fa';
+import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones, Users, CheckCircle, Shield, LayoutDashboard, Plug2, Smartphone, Settings, Repeat, Zap as TriggerIcon, Play, TrendingUp } from 'lucide-react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
@@ -26,66 +14,66 @@ export const runtime = 'edge';
 const getAutomationWorkIcon = (automationWork) => {
     switch (automationWork) {
         case 'Find repetitive tasks':
-            return <IoRepeatSharp size={32} />;
+            return <Repeat className="w-8 h-8" />;
         case 'Set up triggers':
-            return <GrTrigger size={32} />;
+            return <TriggerIcon className="w-8 h-8" />;
         case 'Define actions':
-            return <GrAction size={32} />;
+            return <Play className="w-8 h-8" />;
         case 'Let automation do the work':
-            return <TbSettingsAutomation size={32} />;
+            return <Settings className="w-8 h-8" />;
         case 'Track and improve':
-            return <FaChartLine size={32} />;
+            return <TrendingUp className="w-8 h-8" />;
         default:
-            return <Clock size={32} />;
+            return <Clock className="w-8 h-8" />;
     }
 };
 
 const getIconComponent = (iconName) => {
     switch (iconName) {
         case 'time':
-            return <Clock size={32} />;
+            return <Clock className="w-8 h-8" />;
         case 'error':
-            return <Ban size={32} />;
+            return <Ban className="w-8 h-8" />;
         case 'team':
-            return <MdGroups size={32} />;
+            return <Users className="w-8 h-8" />;
         case 'scale':
-            return <Rocket size={32} />;
+            return <Rocket className="w-8 h-8" />;
         default:
-            return <Clock size={32} />;
+            return <Clock className="w-8 h-8" />;
     }
 };
 
 const getCategoryIcon = (category) => {
     switch (category) {
         case 'Marketing':
-            return <Mail size={32} className="text-black" />;
+            return <Mail className="w-8 h-8 text-black" />;
         case 'Sales & CRM':
-            return <BarChart3 size={32} className="text-black" />;
+            return <BarChart3 className="w-8 h-8 text-black" />;
         case 'HR & Payroll':
-            return <UserPlus size={32} className="text-black" />;
+            return <UserPlus className="w-8 h-8 text-black" />;
         case 'IT & Support':
-            return <Headphones size={32} className="text-black" />;
+            return <Headphones className="w-8 h-8 text-black" />;
         default:
-            return <FileText size={32} className="text-black" />;
+            return <FileText className="w-8 h-8 text-black" />;
     }
 };
 
 const getToolsIcon = (tools) => {
     switch (tools) {
         case 'Ease of use':
-            return <AiOutlineCheckCircle size={32} className="text-black" />;
+            return <CheckCircle className="w-8 h-8 text-black" />;
         case 'Role-based controls':
-            return <FaUserShield size={32} className="text-black" />;
+            return <Shield className="w-8 h-8 text-black" />;
         case 'Dashboards & reports':
-            return <MdDashboardCustomize size={32} className="text-black" />;
+            return <LayoutDashboard className="w-8 h-8 text-black" />;
         case 'Seamless integrations':
-            return <MdIntegrationInstructions size={32} className="text-black" />;
+            return <Plug2 className="w-8 h-8 text-black" />;
         case 'Mobile support':
-            return <MdOutlineMobileFriendly size={32} className="text-black" />;
+            return <Smartphone className="w-8 h-8 text-black" />;
         case 'Extensibility':
-            return <FaCogs size={32} className="text-black" />;
+            return <Settings className="w-8 h-8 text-black" />;
         default:
-            return <AiOutlineCheckCircle size={32} className="text-black" />;
+            return <CheckCircle className="w-8 h-8 text-black" />;
     }
 };
 

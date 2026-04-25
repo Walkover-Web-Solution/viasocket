@@ -5,7 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';;
 import Marquee from "react-fast-marquee";
-import { GoArrowUpRight } from "react-icons/go";
+import { ArrowUpRight } from 'lucide-react';
 
 const FallbackImage = ({ src, fallbackSrc, alt, ...props }) => {
     const [imgSrc, setImgSrc] = useState(src);
@@ -54,7 +54,7 @@ export default function BlackFridaySaleClient({ blackFridaySaleData }) {
                         target="_blank"
                         className="text-accent text-xs flex items-center gap-1"
                     >
-                        Apply before 28th Nov 2025 <GoArrowUpRight />
+                        Apply before 28th Nov 2025 <ArrowUpRight className="w-4 h-4" />
                     </Link>
                 </p>
                 <div className='flex flex-col items-center justify-center border custom-border p-4 mx-8 md:mx-16 sm:p-8 md:p-16 bg-[#faf9f6] text-center'>
@@ -131,7 +131,7 @@ export default function BlackFridaySaleClient({ blackFridaySaleData }) {
                         target="_blank"
                         className="text-accent text-xs flex items-center gap-1"
                     >
-                        Apply before 28th Nov 2025 <GoArrowUpRight />
+                        Apply before 28th Nov 2025 <ArrowUpRight className="w-4 h-4" />
                     </Link>
                 </p>
                 <div className="grid md:grid-cols-[2fr_3fr] grid-cols-1 md:gap-12 gap-6 bg-white border custom-border">

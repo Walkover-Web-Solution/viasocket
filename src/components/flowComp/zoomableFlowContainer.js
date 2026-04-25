@@ -1,6 +1,4 @@
-import { FiMinus } from 'react-icons/fi';
-import { FiPlus } from 'react-icons/fi';
-import { MdCenterFocusStrong } from 'react-icons/md';
+import { Minus, Plus, Focus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
 const ZoomableFlowContainer = ({ setScale, contentRef, flowContainerRef, flowRendererHeight, setFlowRendererHeight, template, positionX, positionY }) => {
@@ -39,13 +37,13 @@ const ZoomableFlowContainer = ({ setScale, contentRef, flowContainerRef, flowRen
     return (
         <div className={`absolute ${positionX} ${positionY} flex z-10`}>
             <button onClick={zoomIn} className="px-2 py-1 text-xl">
-                <FiPlus />
+                <Plus className="w-5 h-5" />
             </button>
             <button onClick={zoomOut} className="px-2 py-1 text-xl">
-                <FiMinus />
+                <Minus className="w-5 h-5" />
             </button>
             <button onClick={resetZoom} className="px-2 py-1 text-xl">
-                <MdCenterFocusStrong />
+                <Focus className="w-5 h-5" />
             </button>
         </div>
     )

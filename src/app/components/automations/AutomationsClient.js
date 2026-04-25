@@ -3,7 +3,7 @@
 import React, { useState, useCallback } from 'react';
 import Image from 'next/image';
 import TemplateCard from '@/components/templateCard/templateCard';
-import { MdKeyboardArrowDown, MdClose } from 'react-icons/md';
+import { ChevronDown, X } from 'lucide-react';
 import AutomationSuggestionsClient from '../workflow-automation-ideas/AutomationSuggestionsClient';
 import { useTemplateFilters } from '@/hooks/useTemplateFilters';
 import { Webhook, Timer } from 'lucide-react';
@@ -113,7 +113,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                         className="ml-1"
                                         aria-label={`Remove ${category}`}
                                     >
-                                        <MdClose size={16} />
+                                        <X className="w-4 h-4" />
                                     </button>
                                 </span>
                             ))}
@@ -153,7 +153,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                             className="ml-1"
                                             aria-label={`Remove ${label}`}
                                         >
-                                            <MdClose size={16} />
+                                            <X className="w-4 h-4" />
                                         </button>
                                     </span>
                                 );
@@ -237,7 +237,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                             onClick={handleLoadMore}
                                             className="btn btn-outline border custom-border"
                                         >
-                                            Load More <MdKeyboardArrowDown size={24} />
+                                            Load More <ChevronDown className="w-6 h-6" />
                                         </button>
                                     </div>
                                 )}

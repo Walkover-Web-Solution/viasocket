@@ -1,10 +1,9 @@
 'use client'
 
-import { CgArrowTopRight } from 'react-icons/cg';
+import { ArrowUpRight, SquarePlus } from 'lucide-react';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
-import { CiSquarePlus } from 'react-icons/ci';
 
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -264,7 +263,7 @@ export default function AutomationSuggestionsClient() {
                                             className="flex h2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-4"
                                             onClick={() => setShowAppDropdown(true)}
                                         >
-                                            <CiSquarePlus size={30} />
+                                            <SquarePlus className="w-8 h-8" />
                                         </button>
                                     )}
                                 </div>
@@ -399,7 +398,7 @@ export default function AutomationSuggestionsClient() {
                                                                 {description}
                                                             </p>
                                                             <span className="text-gray-500 text-sm flex items-center text-nowrap">
-                                                                Try It <CgArrowTopRight />
+                                                                Try It <ArrowUpRight className="w-4 h-4" />
                                                             </span>
                                                         </div>
                                                     </a>

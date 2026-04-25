@@ -1,7 +1,7 @@
 'use client';
 
 import TemplateCard from '@/components/templateCard/templateCard';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import { ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CategoryTemplates({ categoryName, templates }) {
@@ -31,7 +31,7 @@ export default function CategoryTemplates({ categoryName, templates }) {
                     {hasMoreTemplates && (
                         <div className="flex justify-end w-full mt-4">
                             <button onClick={handleLoadMore} className="btn btn-outline border custom-border">
-                                Load More <MdKeyboardArrowDown size={24} />
+                                Load More <ChevronDown className="w-6 h-6" />
                             </button>
                         </div>
                     )}

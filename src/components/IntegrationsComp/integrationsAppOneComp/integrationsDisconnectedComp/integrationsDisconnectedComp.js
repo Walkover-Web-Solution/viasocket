@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdArrowOutward, MdChevronRight, MdOpenInNew } from 'react-icons/md';
+import { ChevronRight, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
@@ -49,7 +49,7 @@ export default function IntegrationsDisconnectedComp({
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
                         Integrations{' '}
                     </Link>
-                    <MdChevronRight fontSize={22} />
+                    <ChevronRight className="w-5 h-5" />
                     <Link
                         href={createURL(`/integrations/${appOneDetails?.appslugname}`)}
                         className="flex items-center gap-0 underline"
@@ -86,7 +86,7 @@ export default function IntegrationsDisconnectedComp({
                         rel="nofollow"
                     >
                         <button className="btn btn-primary">
-                            Reconnect {appOneDetails?.name} <MdOpenInNew />{' '}
+                            Reconnect {appOneDetails?.name} <ExternalLinkIcon className="w-4 h-4" />{' '}
                         </button>
                     </Link>
                 </div>

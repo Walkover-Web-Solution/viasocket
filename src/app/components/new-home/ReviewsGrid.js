@@ -1,6 +1,6 @@
 'use client';
 import { useState, useId, useEffect, useRef } from 'react';
-import { IoIosArrowForward } from "react-icons/io";
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -143,7 +143,7 @@ function ReviewCard({ review }) {
             }}
           >
             Read more
-            <IoIosArrowForward />
+            <ArrowRight className="w-4 h-4" />
           </span>
         </div>
       </div>

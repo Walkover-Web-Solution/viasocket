@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
-import { FaInstagramSquare, FaLinkedin } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { PiDiscordLogoFill } from "react-icons/pi";
+import { Instagram, Linkedin, X, MessageSquare } from 'lucide-react';
 import YouTubeIcon from "../../../components/footer/YouTubeIcon";
 import createURL from "@/utils/createURL";
 import { RequestIntegrationPopupOpener } from "@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp";
@@ -218,19 +216,19 @@ function SocialIcons() {
   return (
     <>
       <Link href="https://www.instagram.com/viasocket/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="instagram">
-        <FaInstagramSquare size={20} style={{ color: "#ffffff99" }} />
+        <Instagram className="w-5 h-5" style={{ color: "#ffffff99" }} />
       </Link>
       <Link href="https://www.linkedin.com/company/viasocket-walkover/" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="linkedin">
-        <FaLinkedin size={20} style={{ color: "#ffffff99" }} />
+        <Linkedin className="w-5 h-5" style={{ color: "#ffffff99" }} />
       </Link>
       <Link href="https://x.com/viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="twitter">
-        <FaSquareXTwitter size={20} style={{ color: "#ffffff99" }} />
+        <X className="w-5 h-5" style={{ color: "#ffffff99" }} />
       </Link>
       <Link href="https://www.youtube.com/@viasocket" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="youtube">
         <YouTubeIcon width={20} height={20} fill="#ffffff99" />
       </Link>
       <Link href="https://discord.com/invite/wqsSsMAkkz" target="_blank" className="hover:opacity-80 transition-opacity" aria-label="discord">
-        <PiDiscordLogoFill size={20} style={{ color: "#ffffff99" }} />
+        <MessageSquare className="w-5 h-5" style={{ color: "#ffffff99" }} />
       </Link>
     </>
   );

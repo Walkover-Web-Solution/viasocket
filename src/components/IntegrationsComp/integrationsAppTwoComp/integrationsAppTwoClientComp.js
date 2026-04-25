@@ -16,10 +16,8 @@ import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
-import { RiArrowDropDownLine, RiArrowDropUpLine } from 'react-icons/ri';
-import { MdKeyboardArrowDown } from 'react-icons/md';
-import { GoArrowSwitch } from 'react-icons/go';
-import { IoMdSearch } from 'react-icons/io';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowLeftRight, Search } from 'lucide-react';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
@@ -83,7 +81,7 @@ function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onT
                         )}
                     </div>
                     <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                        {isOpen ? <RiArrowDropUpLine size={36} /> : <RiArrowDropDownLine size={36} />}
+                        {isOpen ? <ChevronUp className="w-9 h-9" /> : <ChevronDown className="w-9 h-9" />}
                     </div>
                 </div>
             </div>
@@ -93,7 +91,7 @@ function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onT
                 onClick={(e) => e.stopPropagation()}
             >
                 <div className="sticky top-0 bg-white border-b flex items-center gap-2 p-2 z-30">
-                    <IoMdSearch className="text-gray-500" />
+                    <Search className="w-5 h-5 text-gray-500" />
                     <input
                         type="text"
                         value={search}
@@ -246,7 +244,7 @@ export default function IntegrationsAppTwoClientComp({
                             <div className="hidden md:flex items-center justify-center mt-6">
                                 <div className="w-16 border-t-2 border-dashed custom-border"></div>
                                 <button onClick={handleSwapApps} className="btn btn-outline rounded-full p-3 mx-4">
-                                    <GoArrowSwitch className="text-xl font-medium" />
+                                    <ArrowLeftRight className="w-5 h-5" />
                                 </button>
                                 <div className="w-16 border-t-2 border-dashed custom-border"></div>
                             </div>
@@ -354,7 +352,7 @@ export default function IntegrationsAppTwoClientComp({
                                     }}
                                     className="btn btn-outline border-t-0 border-2 border-gray-400"
                                 >
-                                    Load More <MdKeyboardArrowDown fontSize={20} />
+                                    Load More <ChevronDown className="w-5 h-5" />
                                 </button>
                             )}
                         </div>
@@ -456,9 +454,13 @@ export default function IntegrationsAppTwoClientComp({
                             </div>
                             <ExternalLink
                                 href={
-                                    appOneDetails?.domain?.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain
+                                    (() => {
+                                        const baseUrl = appOneDetails?.domain?.startsWith('http')
+                                            ? appOneDetails?.domain
+                                            : 'http://' + appOneDetails?.domain;
+                                        const separator = baseUrl.includes('?') ? '&' : '?';
+                                        return `${baseUrl}${separator}utm_source=viasocket`;
+                                    })()
                                 }
                                 appSlugName={appOneDetails?.appslugname}
                                 doFollowArray={getDoFollowUrlStatusArray}
@@ -493,9 +495,13 @@ export default function IntegrationsAppTwoClientComp({
                             </div>
                             <ExternalLink
                                 href={
-                                    appTwoDetails?.domain?.startsWith('http')
-                                        ? appTwoDetails?.domain
-                                        : 'http://' + appTwoDetails?.domain
+                                    (() => {
+                                        const baseUrl = appTwoDetails?.domain?.startsWith('http')
+                                            ? appTwoDetails?.domain
+                                            : 'http://' + appTwoDetails?.domain;
+                                        const separator = baseUrl.includes('?') ? '&' : '?';
+                                        return `${baseUrl}${separator}utm_source=viasocket`;
+                                    })()
                                 }
                                 appSlugName={appTwoDetails?.appslugname}
                                 doFollowArray={getDoFollowUrlStatusArray}
