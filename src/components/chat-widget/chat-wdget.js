@@ -1,5 +1,5 @@
 import style from './chat-widget.module.scss';
-import { IoChatboxEllipsesOutline } from "react-icons/io5";
+import { MessageSquare } from 'lucide-react';
 
 
 export default function ChatWidget() {
@@ -13,7 +13,7 @@ export default function ChatWidget() {
                 className={`${style.chat_widget} flex gap-2 items-center py-3 px-4 bg-black text-white border custom-border`}
                 aria-label="Talk to an expert"
             >
-                <IoChatboxEllipsesOutline color="white" fontSize={28} />
+                <MessageSquare className="w-7 h-7 text-white" />
                 <span className='text-xl font-semibold'>Chat</span>
             </button>
         </>

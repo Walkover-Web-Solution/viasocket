@@ -5,10 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { calculatePricing } from "@/utils/currencyConverter";
 import { detectUserCountry } from "@/utils/locationDetector";
-import { FaCrown, FaGem } from "react-icons/fa";
-import { IoMdSearch, IoMdInformationCircleOutline } from "react-icons/io";
+import { Crown, Gem, Search, Info, Check } from 'lucide-react';
 import MoreCreditComp from "./MoreCreditComp";
-import { GiCheckMark } from "react-icons/gi";
 
 export default function PricingTabsClient({ countries }) {
   const [activeTab, setActiveTab] = useState("yearly");
@@ -135,7 +133,7 @@ export default function PricingTabsClient({ countries }) {
               className="relative w-full custom-dropdown"
             >
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <IoMdSearch className="h-5 w-5" />
+                <Search className="h-5 w-5" />
               </span>
               <input
                 type="text"
@@ -194,7 +192,7 @@ export default function PricingTabsClient({ countries }) {
             <div className="lg:w-[60%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
               <div className="cont flex flex-col lg:flex-row items-center gap-2 justify-between">
                 <div className="flex gap-4">
-                  <div className="text-accent text-3xl mt-1"><FaGem /></div>
+                  <div className="text-accent text-3xl mt-1"><Gem className="w-8 h-8" /></div>
                   <h3 className="h2">Premium</h3>
                 </div>
                 <div className="relative flex items-center bg-gray-100 rounded-full p-1 w-[260px] border custom-border">
@@ -247,10 +245,10 @@ export default function PricingTabsClient({ countries }) {
                   <h4 className="text-base font-semibold mb-3">Premium plan includes:</h4>
                   <ul className="flex flex-col gap-2 text-md">
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent" />
+                      <Check className="w-4 h-4 text-accent" />
                       15k tasks/month
                       <div className="relative group inline-flex items-center">
-                        <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
+                        <Info className="w-4 h-4 text-gray-600 cursor-pointer" />
                         <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-50 w-[220px]">
                           <div className="relative">
                             <div className="rounded bg-black text-white text-sm px-3 py-2 shadow">
@@ -262,10 +260,10 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent" />
+                      <Check className="w-4 h-4 text-accent" />
                       5k Credits/month
                       <div className="relative group inline-flex items-center">
-                        <IoMdInformationCircleOutline className="text-gray-600 cursor-pointer" />
+                        <Info className="w-4 h-4 text-gray-600 cursor-pointer" />
                         <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 hidden group-hover:block z-50 w-[220px]">
                           <div className="relative">
                             <div className="rounded bg-black text-white text-sm px-3 py-2 shadow">
@@ -277,11 +275,11 @@ export default function PricingTabsClient({ countries }) {
                       </div>
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent" />
+                      <Check className="w-4 h-4 text-accent" />
                       50% extra credit when buying additional credits
                     </li>
                     <li className="flex items-center gap-2">
-                      <GiCheckMark className="text-accent" />
+                      <Check className="w-4 h-4 text-accent" />
                       Priority support
                     </li>
                   </ul>
@@ -332,7 +330,7 @@ export default function PricingTabsClient({ countries }) {
             <div className="lg:w-[40%] cont gap-8 border custom-border p-6 lg:p-12 bg-white">
 
               <div className="flex items-center gap-4">
-                <div className="text-accent text-3xl mt-1"><FaCrown /></div>
+                <div className="text-accent text-3xl mt-1"><Crown className="w-8 h-8" /></div>
                 <h3 className="h2">Enterprise</h3>
               </div>
               <p className="h3 text-accent">Custom</p>

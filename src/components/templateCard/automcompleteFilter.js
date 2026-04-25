@@ -2,8 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
-import { MdSearch, MdClose, MdKeyboardArrowDown } from 'react-icons/md';
-import { Webhook, Timer } from 'lucide-react';
+import { Search, X, ChevronDown, Webhook, Timer } from 'lucide-react';
 
 const AutocompleteFilter = ({
     categories = [],
@@ -202,7 +201,7 @@ const AutocompleteFilter = ({
             {/* Input Field */}
             <div className="relative">
                 <div className="input border custom-border flex items-center gap-2 focus-within:outline-none bg-white">
-                    <MdSearch fontSize={20} className="text-gray-400" />
+                    <Search className="w-5 h-5 text-gray-400" />
                     <input
                         ref={inputRef}
                         type="text"

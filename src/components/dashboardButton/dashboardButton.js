@@ -1,6 +1,6 @@
 "use client";
 
-import { FaArrowRightLong } from "react-icons/fa6";
+import { ArrowRight } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 
 const DashboardButton = ({ utm_src, className = "", hasToken }) => {
@@ -12,7 +12,7 @@ const DashboardButton = ({ utm_src, className = "", hasToken }) => {
                     className={`btn btn-accent z-50 ${className}`}
                     onClick={(e) => handleRedirect(e, `https://flow.viasocket.com?`, null, utm_src)}
                 >
-                    Dashboard <FaArrowRightLong />
+                    Dashboard <ArrowRight className="w-4 h-4" />
                 </button>
             ) : (
                 <button

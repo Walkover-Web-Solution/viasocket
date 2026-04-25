@@ -1,7 +1,7 @@
 'use client';
 
 import TestimonialsOptimized from './TestimonialsOptimized';
-import { IoMdHeart } from 'react-icons/io';
+import { Heart } from 'lucide-react';
 import ReviewFilters from './reviewFilters';
 import { useState, useEffect } from 'react';
 
@@ -27,7 +27,7 @@ export default function ReviewIframeOptimized({reviewData }) {
         <div className="iframe-main-wrapper py-12 pt-20 relative container">
             <div className="flex md:flex-row flex-col items-center justify-between gap-8 mb-12">
                 <h2 className="h2 flex items-center gap-1">
-                    <span>Reviews</span> <IoMdHeart className="text-red-700" />
+                    <span>Reviews</span> <Heart className="w-5 h-5 text-red-700" />
                 </h2>
                 <ReviewFilters filters={filters} onSelect={setSelectedFilter} selectedFilter={selectedFilter} />
             </div>

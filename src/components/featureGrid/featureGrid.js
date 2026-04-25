@@ -1,24 +1,22 @@
-import { FaBalanceScale, FaCheckCircle, FaMousePointer, FaShieldAlt } from 'react-icons/fa';
-import { FaPlug, FaRegClock } from 'react-icons/fa6';
-import { BsStars } from 'react-icons/bs';
+import { Scale, CheckCircle, MousePointer2, Shield, Plug, Clock, Sparkles } from 'lucide-react';
 
 const FeatureGrid = ({ featuresData }) => {
     const getIconComponent = (iconName) => {
         switch (iconName) {
             case 'clock':
-                return <FaRegClock size={36} />;
+                return <Clock className="w-9 h-9" />;
             case 'mouse':
-                return <FaMousePointer size={36} />;
+                return <MousePointer2 className="w-9 h-9" />;
             case 'shield':
-                return <FaShieldAlt size={36} />;
+                return <Shield className="w-9 h-9" />;
             case 'check':
-                return <FaCheckCircle size={36} />; // New icon for error-free
+                return <CheckCircle className="w-9 h-9" />; // New icon for error-free
             case 'scale':
-                return <FaBalanceScale size={36} />;
+                return <Scale className="w-9 h-9" />;
             case 'plug':
-                return <FaPlug size={36} />;
+                return <Plug className="w-9 h-9" />;
             default:
-                return <FaRegClock size={36} />;
+                return <Clock className="w-9 h-9" />;
         }
     };
     return (
@@ -26,7 +24,7 @@ const FeatureGrid = ({ featuresData }) => {
             <div className="p-12 py-20 bg-black text-white s">
                 <div className="flex gap-4">
                     <h2 className="h2 mb-12">Automation That Actually Works For Your Business</h2>
-                    <BsStars size={42} />
+                    <Sparkles className="w-10 h-10" />
                 </div>
 
                 <div className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-20 gap-x-12">

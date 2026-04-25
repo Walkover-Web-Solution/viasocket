@@ -2,14 +2,12 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { GoArrowUpRight } from 'react-icons/go';
-import { MdMenu } from 'react-icons/md';
+import { ArrowUpRight, Menu, ArrowRight } from 'lucide-react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Menubar from '@/components/navbar/menubar';
 import style from '@/components/navbar/navbar.module.scss';
-import { FaArrowRightLong } from "react-icons/fa6"
 
 const navItems = [
     {
@@ -80,7 +78,7 @@ export default function NavbarOptimized({
                             <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
                             <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
                                 <div className='bg-white rounded-full px-3 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors mx-2 !h-[20px] !text-xs'>
-                                    Explore More <GoArrowUpRight />
+                                    Explore More <ArrowUpRight className="w-3 h-3" />
                                 </div>
                             </Link>
                         </div>
@@ -102,7 +100,7 @@ export default function NavbarOptimized({
                             <div
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-gray-300 hidden lg:flex w-fit px-4 !h-[30px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
                             >
-                                Support <GoArrowUpRight />
+                                Support <ArrowUpRight className="w-3 h-3" />
                             </div>
                         </Link>
                     </div>
@@ -167,7 +165,7 @@ export default function NavbarOptimized({
                                     onClick={(e) => handleRedirect(e, pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
-                                    Dashboard <FaArrowRightLong className="ml-2" />
+                                    Dashboard <ArrowRight className="ml-2 w-4 h-4" />
                                 </button>
                             ) : (
                                 <button
@@ -185,7 +183,7 @@ export default function NavbarOptimized({
                                 className={`${borderClass} items-center outline-none flex lg:hidden`}
                                 aria-label="Menu"
                             >
-                                <MdMenu size={24} />
+                                <Menu className="w-6 h-6" />
                             </div>
                         </div>
                     </div>

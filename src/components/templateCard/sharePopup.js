@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaWhatsapp, FaCopy, FaTimes } from 'react-icons/fa';
+import { Twitter, Facebook, Linkedin, MessageCircle, Copy, X } from 'lucide-react';
 
 const SharePopup = ({ title, onClose }) => {
     const url = typeof window !== 'undefined' ? window.location.href : '';
@@ -12,22 +12,22 @@ const SharePopup = ({ title, onClose }) => {
     const shareLinks = [
         {
             name: 'Twitter',
-            icon: <FaTwitter size={20} />,
+            icon: <Twitter className="w-5 h-5" />,
             url: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
         },
         {
             name: 'Facebook',
-            icon: <FaFacebookF size={20} />,
+            icon: <Facebook className="w-5 h-5" />,
             url: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
         },
         {
             name: 'LinkedIn',
-            icon: <FaLinkedinIn size={20} />,
+            icon: <Linkedin className="w-5 h-5" />,
             url: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
         },
         {
             name: 'WhatsApp',
-            icon: <FaWhatsapp size={20} />,
+            icon: <MessageCircle className="w-5 h-5" />,
             url: `https://api.whatsapp.com/send?text=${encodedTitle}%0A${encodedUrl}`,
         },
     ];
@@ -48,14 +48,14 @@ const SharePopup = ({ title, onClose }) => {
                         className="p-1 hover:bg-gray-100 rounded transition-colors"
                         title="Close"
                     >
-                        <FaTimes size={16} />
+                        <X className="w-4 h-4" />
                     </button>
                 </div>
 
                 <div className="flex gap-2 justify-start items-center">
                     <div className="border custom-border transition flex items-center justify-center cursor-pointer bg-white h-[38px] relative">
                         <button onClick={handleCopy} className="flex items-center gap-2 p-2">
-                            <FaCopy fontSize={20} /> Copy
+                            <Copy className="w-5 h-5" /> Copy
                         </button>
                         {copied && (
                             <span className="absolute -bottom-7 right-0 bg-black text-white text-xs px-2 py-1 shadow">

@@ -5,7 +5,7 @@ import NavbarServer from '../components/navbar/NavbarServer';
 import PricingTabsClient from '../components/pricing/PricingTabsClient';
 import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
-import { GiCheckMark } from 'react-icons/gi';
+import { Check } from 'lucide-react';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import { getHasToken } from '../lib/getAuth';
 
@@ -72,12 +72,12 @@ export default async function PricingPage() {
                             {features.map((feature, index) =>
                                 index === 0 ? (
                                     <div key={index} className="flex items-center gap-2">
-                                        <GiCheckMark className="text-accent" />
+                                        <Check className="w-4 h-4 text-accent" />
                                         <p className="text-lg leading-tight">Connect to {+appCount + 300}+ apps</p>
                                     </div>
                                 ) : (
                                     <div key={index} className="flex items-center gap-2">
-                                        <GiCheckMark className="text-accent" />
+                                        <Check className="w-4 h-4 text-accent" />
                                         <p className="text-lg leading-tight">{feature.featurename}</p>
                                     </div>
                                 )

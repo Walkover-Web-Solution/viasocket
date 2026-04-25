@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa';
+import { X } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
@@ -161,7 +161,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                         className="absolute top-2 right-2 p-2 hover:bg-gray-200 rounded-full transition-colors duration-200"
                         aria-label="Close sticky bar"
                     >
-                        <FaTimes className="w-4 h-4 text-gray-600" />
+                        <X className="w-4 h-4 text-gray-600" />
                     </button>
                     <h2 className="h3">{template?.title}</h2>
                     <div className="flex items-center gap-4">

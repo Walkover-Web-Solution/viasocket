@@ -2,16 +2,8 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { MdStar } from 'react-icons/md';
+import { Star, Headphones, Users, Anchor, Phone, MessageSquare, CalendarCheck, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
-import { FaHeadset } from 'react-icons/fa';
-import { IoIosPeople } from 'react-icons/io';
-import { FaAnchor } from 'react-icons/fa';
-import { FaPhoneSquareAlt } from 'react-icons/fa';
-import { FaWhatsappSquare } from 'react-icons/fa';
-import { FaCalendarCheck } from 'react-icons/fa';
-import { MdEmail } from 'react-icons/md';
-import { FaArrowRight } from "react-icons/fa6";
 import LiveIcon from './LiveIcon';
 
 export default function SupportClient({ testimonials, isLiveSupportAvailable }) {
@@ -101,13 +93,13 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                     <p>Ask your questions — or just come say hi 👋</p>
                                 </div>
                                 <button className="btn btn-primary btn-accent w-fit" onClick={() => window.open('https://meet.google.com/hya-tdxd-mip', '_blank')}>
-                                    Take me to Google Meet <FaArrowRight />
+                                    Take me to Google Meet <ArrowRight className="w-4 h-4" />
                                 </button>
                             </div>
                         )}
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <FaHeadset size={32} />
+                            <Headphones className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Talk to Human</h3>
                                 <p>For quick questions or troubleshooting that doesn’t require a call.</p>
@@ -118,7 +110,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <IoIosPeople size={32} />
+                            <Users className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Search answers in Community</h3>
                                 <p>Connect with other users, get answers, and share automation tips.</p>
@@ -129,7 +121,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <FaAnchor size={32} />
+                            <Anchor className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">FAQ</h3>
                                 <p>Connect with other users, get answers, and share automation tips.</p>
@@ -199,7 +191,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <FaPhoneSquareAlt size={32} />
+                            <Phone className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Give us a call</h3>
                                 <p>If you'd prefer a detailed conversation or need more in-depth assistance.</p>
@@ -210,7 +202,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <FaWhatsappSquare size={32} />
+                            <MessageSquare className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Text us on WhatsApp</h3>
                                 <p>For quick questions or if you’re on the go and need a fast reply.</p>
@@ -221,7 +213,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <FaCalendarCheck size={32} />
+                            <CalendarCheck className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Book a Meeting</h3>
                                 <p>If your question needs more time or a detailed conversation, schedule a call</p>
@@ -235,7 +227,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <MdEmail size={32} />
+                            <Mail className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Email support</h3>
                                 <p>For any other questions or concerns, please email us at support@viasocket.com</p>
@@ -382,7 +374,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                 <div className="cont gap-2">
                                     <div className="flex gap-1">
                                         {[...Array(5)].map((_, index) => (
-                                            <MdStar key={index} fontSize={24} color="#FDE047" />
+                                            <Star key={index} className="w-6 h-6" fill="#FDE047" color="#FDE047" />
                                         ))}
                                     </div>
                                     <p className="text-md">{testimonials[0]?.testimonial}</p>

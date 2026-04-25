@@ -1,10 +1,7 @@
 import createURL from '@/utils/createURL';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaInstagramSquare } from 'react-icons/fa';
-import { FaLinkedin } from 'react-icons/fa';
-import { FaSquareXTwitter } from 'react-icons/fa6';
-import { PiDiscordLogoFill } from 'react-icons/pi';
+import { Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
 import YouTubeIcon from './YouTubeIcon';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 export default function Footer({ footerData, borderClass, isBlack = false }) {
@@ -99,14 +96,14 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     target="_blank"
                                     aria-label="instagram"
                                 >
-                                    <FaInstagramSquare size={20} />
+                                    <Instagram className="w-5 h-5" />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
                                     aria-label="facebook"
                                 >
-                                    <FaLinkedin size={20} />
+                                    <Linkedin className="w-5 h-5" />
                                 </Link>
 
                                 <Link
@@ -115,7 +112,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     className=""
                                     aria-label="twitter"
                                 >
-                                    <FaSquareXTwitter size={20} />
+                                    <Twitter className="w-5 h-5" />
                                 </Link>
                                 <Link
                                     href={`https://www.youtube.com/@viasocket`}
@@ -130,7 +127,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     target="_blank"
                                     aria-label="discord"
                                 >
-                                    <PiDiscordLogoFill size={20} />
+                                    <MessageCircle className="w-5 h-5" />
                                 </Link>
                             </div>
                         </div>

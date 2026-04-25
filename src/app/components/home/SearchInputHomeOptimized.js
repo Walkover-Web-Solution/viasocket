@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { IoMdSearch } from 'react-icons/io';
+import { Search } from 'lucide-react';
 import searchApps from '@/utils/searchApps';
 import { getIndustries, getDepartments } from '@/utils/axiosCalls';
 import { getVideoData } from '@/utils/getVideoData';
@@ -587,7 +587,7 @@ export default function SearchInputHomeOptimized({
                         }
                     }}
                 >
-                    <IoMdSearch />
+                    <Search className="w-5 h-5" />
 
                     {selectedApps?.map((app) => (
                         <div

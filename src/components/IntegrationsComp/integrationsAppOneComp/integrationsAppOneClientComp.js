@@ -1,7 +1,7 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { MdAdd, MdKeyboardArrowDown, MdOpenInNew } from 'react-icons/md';
+import { Plus, ChevronDown, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
@@ -20,7 +20,7 @@ import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
 import IntegrationSearchApps from '../integrationsAppComp/integrationSearchApps';
 import { APPERPAGE } from '@/const/integrations';
-import { GrFormPreviousLink, GrFormNextLink } from 'react-icons/gr';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
@@ -104,7 +104,7 @@ export default function IntegrationsAppOneClientComp({
 
     return (
         <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
-            <div className="container flex flex-col justify-between gap-12">
+            <div className="container flex flex-col justify-between gap-12 mb-12">
                 <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
 
@@ -116,13 +116,13 @@ export default function IntegrationsAppOneClientComp({
                             className="btn btn-outline"
                             rel="nofollow"
                         >
-                            Connect to {appOneDetails?.name} <MdOpenInNew />
+                            Connect to {appOneDetails?.name} <ExternalLinkIcon className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
 
                 {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                    <div className="flex flex-col gap-12">
+                    <div className="flex flex-col gap-12 mb-8">
                         <div className=" flex flex-col gap-2">
                             <h1 className="h1">
                                 {appData?.headings?.h1 || `Automate ${appOneDetails?.name} with viaSocket`}
@@ -133,8 +133,16 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                     </div>
                 )}
+
+                <TemplateContainer
+                    selectedApps={[appOneDetails]}
+                    templateToShow={templateToShow}
+                    requireAllApps={true}
+                />
             </div>
+
             <div className="container flex flex-col gap-8">
+                <h2 className="h2">Connect {appOneDetails?.name} with {appCount + 300}+ apps</h2> 
                 {appOneDetails?.events.length > 0 && (
                     <div
                         className="cont gap-10 pt-12 border custom-border"
@@ -150,7 +158,7 @@ export default function IntegrationsAppOneClientComp({
                                         height={20}
                                         alt={appOneDetails?.name}
                                     />
-                                    <MdAdd fontSize={30} color="white" />
+                                    <Plus className="w-8 h-8 text-white" />
                                 </div>
                                 <IntegrationSearchApps
                                     searchTerm={searchTerm}
@@ -178,12 +186,12 @@ export default function IntegrationsAppOneClientComp({
                     <div className="flex justify-end items-end gap-2 w-full">
                         {integrationsInfo?.page > 0 && (
                             <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
-                                <GrFormPreviousLink size={20} /> Prev
+                                <ChevronLeft className="w-5 h-5" /> Prev
                             </Link>
                         )}
                         {showNext && (
                             <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
-                                Next <GrFormNextLink size={20} />
+                                Next <ChevronRight className="w-5 h-5" />
                             </Link>
                         )}
                     </div>
@@ -247,7 +255,7 @@ export default function IntegrationsAppOneClientComp({
                                             }}
                                             className="btn btn-outline mt-2 flex ml-auto"
                                         >
-                                            Load More <MdKeyboardArrowDown fontSize={20} />
+                                            Load More <ChevronDown className="w-5 h-5" />
                                         </button>
                                     )}
                                 </div>
@@ -272,12 +280,6 @@ export default function IntegrationsAppOneClientComp({
                         )}
                     </div>
 
-                    {/* Template Container */}
-                    <TemplateContainer
-                        selectedApps={[appOneDetails]}
-                        templateToShow={templateToShow}
-                        requireAllApps={true}
-                    />
                 </div>
             </div>
 
@@ -402,9 +404,13 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                         <ExternalLink
                             href={
-                                appOneDetails?.domain.startsWith('http')
-                                    ? appOneDetails?.domain
-                                    : 'http://' + appOneDetails?.domain
+                                (() => {
+                                    const baseUrl = appOneDetails?.domain.startsWith('http')
+                                        ? appOneDetails?.domain
+                                        : 'http://' + appOneDetails?.domain;
+                                    const separator = baseUrl.includes('?') ? '&' : '?';
+                                    return `${baseUrl}${separator}utm_source=viasocket`;
+                                })()
                             }
                             appSlugName={appOneDetails?.appslugname}
                             doFollowArray={getDoFollowUrlStatusArray}

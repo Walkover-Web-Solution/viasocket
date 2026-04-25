@@ -1,7 +1,7 @@
 import { RequestIntegrationPopupOpener } from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
 import Image from 'next/image';
 import { useState } from 'react';
-import { MdKeyboardArrowDown } from 'react-icons/md';
+import { ChevronDown } from 'lucide-react';
 
 export default function McpEventComp({ appOneDetails }) {
     const [visibleEvents, setVisibleEvents] = useState(6);
@@ -71,7 +71,7 @@ export default function McpEventComp({ appOneDetails }) {
                         }}
                         className="btn border custom-border hover-bg-grey-100-text-black bg-white"
                     >
-                        Load More <MdKeyboardArrowDown fontSize={20} />
+                        Load More <ChevronDown className="w-5 h-5" />
                     </button>
                 </div>
             ) : (
