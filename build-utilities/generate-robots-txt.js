@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require ("path");
 function generateRobots() {
-    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod';
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && process.env.NEXT_PUBLIC_SUBDOMAIN !== 'integration';
 
     const robotsContent = isProd
         ? `User-agent: *
@@ -10,7 +10,6 @@ Sitemap: https://plugservice-api.viasocket.com/sitemap/index-page`
         : `User-agent: *
 Disallow: /`;
 
-
-    fs.writeFileSync(path.resolve("public/robots.txt"), robotsContent);
+    fs.writeFileSync(path.resolve('public/robots.txt'), robotsContent);
 }
 generateRobots();
