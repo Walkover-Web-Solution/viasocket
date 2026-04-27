@@ -24,7 +24,7 @@ export default function IntegrationsIndexComp({
                 <IntegrationsHeadComp metaData={categoryData} integrationsInfo={integrationsInfo} pageInfo={pageInfo} />
             )}
             <ConditionalNavbar>
-                <NavbarServer navbarData={navbarData} utm={'/index'} />
+                <NavbarServer navbarData={navbarData} utm={'/integrations'} />
             </ConditionalNavbar>
             <IntegrationsIndexClientComp
                 pageInfo={pageInfo}
