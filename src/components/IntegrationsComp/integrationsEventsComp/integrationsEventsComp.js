@@ -341,7 +341,7 @@ function NotFound({ type, appInfo }) {
             <h3 className="h3 flex items-center gap-2">
                 {type === 'trigger' ? (
                     <>
-                        <MdAdsClick fontSize={20} />
+                        <MousePointer2 size={20} />
                         When this happens
                         {showHeading}
                     </>
