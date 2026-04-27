@@ -26,11 +26,13 @@
         left: 0;
         width: 100%;
         height: 1px;
-        background-image: repeating-linear-gradient(to right,
-                var(--flow-border-color) 0px,
-                var(--flow-border-color) 10px,
-                transparent 10px,
-                transparent 20px);
+        background-image: repeating-linear-gradient(
+            to right,
+            var(--flow-border-color) 0px,
+            var(--flow-border-color) 10px,
+            transparent 10px,
+            transparent 20px
+        );
     }
 }
 
@@ -38,7 +40,7 @@
     @apply bg-black text-white;
 }
 
-.toggle:checked+.font-semibold.text-md {
+.toggle:checked + .font-semibold.text-md {
     @apply text-white;
 }
 
@@ -168,7 +170,7 @@
 
 /* Rotating Gradient Border for panel section */
 @property --angle {
-    syntax: "<angle>";
+    syntax: '<angle>';
     inherits: true;
     initial-value: 0turn;
 }
@@ -193,15 +195,17 @@
     background:
         /* inner background behind content */
         linear-gradient(#ffffff, #ffffff) content-box,
-
         /* animated border */
-        conic-gradient(from var(--angle),
-            #dcd6e0 0deg,
-            #f36fff 53deg,
-            #268aff 90deg,
-            #52eaea 126deg,
-            #dad7dc 178deg,
-            #e5e0e9 360deg) border-box;
+            conic-gradient(
+                from var(--angle),
+                #dcd6e0 0deg,
+                #f36fff 53deg,
+                #268aff 90deg,
+                #52eaea 126deg,
+                #dad7dc 178deg,
+                #e5e0e9 360deg
+            )
+            border-box;
 }
 
 // for t&c and privacy page
@@ -213,7 +217,6 @@
 .list-type-square {
     list-style-type: square;
 }
-
 
 //new home page --------------
 // .railColor{
@@ -233,7 +236,9 @@
     z-index: var(--vs-card-z-index);
     opacity: var(--vs-card-opacity);
     transform: var(--vs-card-transform);
-    transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1), opacity 320ms ease;
+    transition:
+        transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 320ms ease;
 }
 
 .primary-border {
@@ -258,10 +263,20 @@
     color: #ffffffe0;
 }
 
-.gray-heading{
+.gray-heading {
     color: #888888;
 }
 
-.bg-section{
+.bg-section {
     background-color: var(--bg-section);
+}
+
+// chatbot widget overrides
+#interfaceEmbed {
+    display: none !important;
+}
+
+#iframe-parent-container {
+    width: 380px !important;
+    height: 92% !important;
 }

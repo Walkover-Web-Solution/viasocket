@@ -107,25 +107,29 @@ export default function AppProvider({ children }) {
   }
 
   useEffect(() => {
-    const helloConfig = {
-      widgetToken: 'a13cc',
-      show_close_button: true,
-      hide_launcher: true,
-      urlsToOpenInIFrame: [
-        'https://viasocket.com/faq',
-        'https://viasocket.com/discovery',
-        'https://viasocket.com/blog',
-        'https://viasocket.com/community',
-      ],
+    const script = document.createElement('script');
+    script.id = 'chatbot-main-script';
+    script.src = 'https://chatbot.gtwy.ai/chatbot.js';
+    script.setAttribute('embedToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdfaWQiOiIxMjc3IiwiY2hhdGJvdF9pZCI6IjY2NTA2MjhhZDQ4ZTIwZTYxY2Y3MDFhMCIsInVzZXJfaWQiOiJ0ZXN0X3VzZXIifQ.pU9ms9HhiBUKhvJuBUDiue03F2lmFAqBuwd6FCSdvgI');
+    script.setAttribute('bridgeName', 'viasocket_chat');
+    script.setAttribute('threadId', 'test_thread_id');
+    script.async = true;
+
+    const handleLoad = () => {
+      if (window.Chatbot) {
+        window.Chatbot.sendData({
+          bridgeName: 'viasocket_chat',
+          threadId: 'test_thread_id',
+          hideIcon: true,
+        });
+      }
     };
 
-    const script = document.createElement('script');
-    script.src = 'https://blacksea.msg91.com/chat-widget.js';
-    script.onload = () => initChatWidget(helloConfig, 50);
-
+    window.addEventListener('load', handleLoad);
     document.head.appendChild(script);
 
     return () => {
+      window.removeEventListener('load', handleLoad);
       document.head.removeChild(script);
     };
   }, []);
