@@ -1,16 +1,11 @@
 const fs = require('fs');
 const path = require('path');
-
 function generateRobots() {
-    const hostname = process.env.HOSTNAME || 
-                     process.env.VERCEL_URL || 
-                     process.env.NEXT_PUBLIC_VERCEL_URL || 
-                     process.env.HOST || 
-                     '';
-    
+    // Check if subdomain contains 'integrate' or 'integration'
+    const hostname = process.env.HOSTNAME || process.env.VERCEL_URL || '';
     const isIntegrationSubdomain = hostname.includes('integrate') || hostname.includes('integration');
-    const isProduction = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod';
-    const isProd = isProduction && !isIntegrationSubdomain;
+    
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && !isIntegrationSubdomain;
 
     const robotsContent = isProd
         ? `User-agent: *
@@ -21,5 +16,4 @@ Disallow: /`;
 
     fs.writeFileSync(path.resolve('public/robots.txt'), robotsContent);
 }
-
 generateRobots();
