@@ -14,9 +14,10 @@ import { isIntegrationSubdomain } from '@/utils/domain';
  * - integrations.viasocket.com → Footer HIDDEN
  */
 export default function ConditionalFooter({ children }) {
-  const [shouldRender, setShouldRender] = useState(true);
+  const [shouldRender, setShouldRender] = useState(false); // Default to hidden to prevent flicker
 
   useEffect(() => {
+    // Only show footer if NOT an integration subdomain
     setShouldRender(!isIntegrationSubdomain());
   }, []);
 
