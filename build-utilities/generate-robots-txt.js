@@ -1,28 +1,16 @@
 const fs = require("fs");
-const path = require("path");
-
-/**
- * Generates a fallback static robots.txt for builds
- * 
- * NOTE: The dynamic route at /src/app/robots.txt/route.js will take precedence
- * and handle runtime subdomain detection. This is just a fallback for static builds.
- * 
- * Production: Allow indexing (dynamic route will handle integration subdomains)
- * Non-production: Block all indexing
- */
+const path = require ("path");
 function generateRobots() {
-  const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod';
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && 
+                   (!process.env.SUBDOMAIN || process.env.SUBDOMAIN !== 'integration');
 
-  const robotsContent = isProd
-    ? `User-agent: *
-Allow: /
+    const robotsContent = isProd
+        ? `User-agent: *
 Disallow: /admin/
-
-Sitemap: https://viasocket.com/sitemap.xml`
-    : `User-agent: *
+Sitemap: https://plugservice-api.viasocket.com/sitemap/index-page`
+        : `User-agent: *
 Disallow: /`;
 
-  fs.writeFileSync(path.resolve('public/robots.txt'), robotsContent);
+    fs.writeFileSync(path.resolve('public/robots.txt'), robotsContent);
 }
-
 generateRobots();
