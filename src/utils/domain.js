@@ -70,3 +70,32 @@ export function getIntegrationSubdomain() {
 
 // Backward compatibility alias
 export const getSubdomain = getIntegrationSubdomain;
+
+/**
+ * Server-side compatible function to check if hostname is an integration subdomain
+ * Works with Next.js headers() API
+ * 
+ * @param {string} hostname - The hostname to check
+ * @returns {boolean} true if integration subdomain, false otherwise
+ * 
+ * @example
+ * const hostname = headers().get('host') || '';
+ * const isIntegration = isIntegrationSubdomainSSR(hostname);
+ */
+export function isIntegrationSubdomainSSR(hostname) {
+  if (!hostname) {
+    return false;
+  }
+
+  const parts = hostname.split('.');
+
+  // Need at least 2 parts (subdomain.domain)
+  if (parts.length < 2) {
+    return false;
+  }
+
+  const subdomain = parts[0].toLowerCase();
+
+  // Check if subdomain contains "integration" or "integrate"
+  return subdomain.includes('integration') || subdomain.includes('integrate');
+}
