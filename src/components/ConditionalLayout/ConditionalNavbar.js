@@ -14,9 +14,10 @@ import { isIntegrationSubdomain } from '@/utils/domain';
  * - integrations.viasocket.com → Navbar HIDDEN
  */
 export default function ConditionalNavbar({ children }) {
-  const [shouldRender, setShouldRender] = useState(true);
+  const [shouldRender, setShouldRender] = useState(false); // Default to hidden to prevent flicker
 
   useEffect(() => {
+    // Only show navbar if NOT an integration subdomain
     setShouldRender(!isIntegrationSubdomain());
   }, []);
 
