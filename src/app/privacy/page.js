@@ -2,6 +2,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getPrivacyPageData } from '../lib/data';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 
 export const runtime = 'edge';
 
@@ -32,7 +34,9 @@ export default async function PrivacyPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/privacy'} />
-            <NavbarServer navbarData={navbarData} utm={'/privacy'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/privacy'} />
+            </ConditionalNavbar>
 
             <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <div>
@@ -464,7 +468,9 @@ export default async function PrivacyPage() {
                 </div>
             </div>
             <div className="container pt-16 pb-4">
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

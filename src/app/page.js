@@ -3,6 +3,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import NavbarServer from './components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import HeroContainer from './components/home/HeroContainer';
 import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
@@ -60,7 +62,9 @@ export default async function HomePage() {
     <>
       <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js"  />
       <MetaHeadComp metaData={metaData} page={'/'} />
-      <NavbarServer navbarData={navbarData} utm={'/index'} />
+      <ConditionalNavbar>
+        <NavbarServer navbarData={navbarData} utm={'/index'} />
+      </ConditionalNavbar>
       
       <HeroContainer 
         appCount={appCount}
@@ -84,7 +88,9 @@ export default async function HomePage() {
         
         <SecuritySection securityGridData={securityGridData} />
         <div className="container">
-          <Footer footerData={footerData} />
+          <ConditionalFooter>
+            <Footer footerData={footerData} />
+          </ConditionalFooter>
         </div>
       </div>
     </>
