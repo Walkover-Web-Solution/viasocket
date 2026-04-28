@@ -1,8 +1,9 @@
-const fs = require("fs");
-const path = require ("path");
+const fs = require('fs');
+const path = require('path');
 function generateRobots() {
-    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && 
-                   (!process.env.SUBDOMAIN || process.env.SUBDOMAIN !== 'integration');
+    const isProd =
+        process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' &&
+        (!process.env.SUBDOMAIN || process.env.SUBDOMAIN !== 'integration');
 
     const robotsContent = isProd
         ? `User-agent: *
