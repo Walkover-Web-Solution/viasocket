@@ -6,7 +6,7 @@ function generateRobots() {
     const hostnameParts = currentHost.split('.');
     const subdomain = hostnameParts.length >= 2 ? hostnameParts[0].toLowerCase() : '';
     const isIntegration = subdomain.includes('integration') || subdomain.includes('integrate');
-    const isProd = !isIntegration;
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && !isIntegration;
 
     const robotsContent = isProd
         ? `User-agent: *
@@ -15,6 +15,6 @@ Sitemap: https://plugservice-api.viasocket.com/sitemap/index-page`
         : `User-agent: *
 Disallow: /`;
 
-    fs.writeFileSync(path.resolve('public/robots.txt'), robotsContent);
+    fs.writeFileSync(path.resolve("public/robots.txt"), robotsContent);
 }
 generateRobots();
