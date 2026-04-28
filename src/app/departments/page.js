@@ -2,6 +2,8 @@ import { getMetaData } from '@/utils/getMetaData';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import Link from 'next/link';
 import FaqSection from '@/components/faqSection/faqSection';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
@@ -85,7 +87,9 @@ export default async function DepartmentsPage() {
     return (
         <>
             <div className="square-background">
-                <NavbarServer navbarData={navbarData} />
+                <ConditionalNavbar>
+                    <NavbarServer navbarData={navbarData} utm={'/departments'} />
+                </ConditionalNavbar>
                 <MetaHeadComp metaData={metaData} page={'/departments'} />
                 <div className="container mt-12 flex flex-col gap-12">
                     <div className="flex flex-col justify-center items-center">
@@ -206,9 +210,11 @@ export default async function DepartmentsPage() {
                     </div>
                     <ReviewIframeOptimized reviewData={reviewData} showless={false} />
                     <FaqSection faqData={faqData} />
-                    <Footer footerData={footerData} />
                 </div>
             </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

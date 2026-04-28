@@ -1,5 +1,7 @@
 import Footer from '@/components/footer/footer';
 import NavbarServer from '../../components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getAutomationSlugPageData } from '../../lib/automation-data';
 import AutomationSlugClient from '@/app/components/automations/AutomationSlugClient';
 import FaqSection from '@/components/faqSection/faqSection';
@@ -19,14 +21,18 @@ export default async function AutomationSlugPage({ params }) {
 
     return (
         <div className="dotted-background global-top-space">
-            <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
+            </ConditionalNavbar>
             <AutomationSlugClient pageData={pageData} hasToken={hasToken} />
             <div className="pt-20 pb-4">
                 {pageData.faqData?.length > 0 && (
                     <FaqSection faqData={pageData.faqData} faqName={'/automation'} />
                 )}
                 <div className="container">
-                    <Footer footerData={pageData.footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={pageData.footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </div>

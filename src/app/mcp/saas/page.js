@@ -2,6 +2,8 @@ import FAQSection from '@/components/faqSection/faqSection';
 import React from 'react';
 import NavbarServer from '../../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
@@ -36,7 +38,9 @@ export default async function MCPSaasPage() {
     return (
         <div className="cont pb-4 lg:gap-12 md:gap-12 gap-12">
             <MetaHeadComp metaData={metaData} page={'/mcp'} />
-            <NavbarServer navbarData={navbarData} utm={'/mcp'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/mcp'} />
+            </ConditionalNavbar>
             <div className="cont gap-8 global-top-space pt-12">
                 <div className="container ">
                     <div className="w-full flex flex-col md:flex-row justify-center items-center gap-4 mb-12">
@@ -155,7 +159,9 @@ export default async function MCPSaasPage() {
             <div>
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <div className="container">
-                    <Footer footerData={footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </div>

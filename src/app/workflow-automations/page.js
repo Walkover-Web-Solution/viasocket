@@ -3,6 +3,8 @@ import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphone
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import FAQSection from '@/components/faqSection/faqSection';
 import { getWorkflowAutomationsPageData } from '../lib/data';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
@@ -116,7 +118,9 @@ export default async function WorkflowAutomationsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/workflow-automations'} />
-            <NavbarServer navbarData={navbarData} utm={'/workflow-automations'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/workflow-automations'} />
+            </ConditionalNavbar>
 
             <div className="container cont gap-12 global-top-space">
                 <section className="py-12">
@@ -327,7 +331,9 @@ export default async function WorkflowAutomationsPage() {
 
                 <div className="pb-4">
                     {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/workflow-automations'} />}
-                    <Footer footerData={footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </>

@@ -2,6 +2,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Link from 'next/link';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getFreeAccessProgramsPageData } from '../lib/data';
 
 export const runtime = 'edge';
@@ -33,7 +35,9 @@ export default async function FreeAccessProgramsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/free-access-programs'} />
-            <NavbarServer navbarData={navbarData} utm={'/free-access-programs'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/free-access-programs'} />
+            </ConditionalNavbar>
 
             <div className="container cont py-12 cont__gap global-top-space">
                 <div className="cont gap-2">
@@ -142,7 +146,9 @@ export default async function FreeAccessProgramsPage() {
                 </div>
             </div>
             <div className="container pt-16 pb-4">
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

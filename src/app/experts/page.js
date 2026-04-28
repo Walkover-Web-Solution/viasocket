@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/footer/footer';
 import NavbarServer from '../components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getExpertsPageData } from '../lib/data';
 
 export const runtime = 'edge';
@@ -36,7 +38,9 @@ export default async function ExpertsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/experts'} />
-            <NavbarServer navbarData={navbarData} utm={'/experts'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/experts'} />
+            </ConditionalNavbar>
 
             <div className="global-top-space">
                 <div className="pt-12 container">
@@ -134,7 +138,9 @@ export default async function ExpertsPage() {
                 </div>
             </div>
             <div className="container pb-4">
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

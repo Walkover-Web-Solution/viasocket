@@ -2,6 +2,8 @@ import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import PricingTabsClient from '../components/pricing/PricingTabsClient';
 import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
@@ -39,7 +41,9 @@ export default async function PricingPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/pricing'} />
-            <NavbarServer navbarData={navbarData} utm={'/pricing'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/pricing'} />
+            </ConditionalNavbar>
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <div className="flex flex-col items-center">
@@ -117,7 +121,9 @@ export default async function PricingPage() {
                 </div>
                 {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
                 <div className="container">
-                    <Footer footerData={footerData} />
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
                 </div>
             </div>
         </>

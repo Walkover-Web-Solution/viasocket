@@ -1,5 +1,7 @@
 import Footer from '@/components/footer/footer';
 import NavbarServer from '../components/navbar/NavbarServer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getDataDeletionPolicyPageData } from '../lib/data';
 
@@ -32,7 +34,9 @@ export default async function DataDeletionPolicyPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/data-deletion-policy'} />
-            <NavbarServer navbarData={navbarData} utm={'/data-deletion-policy'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/data-deletion-policy'} />
+            </ConditionalNavbar>
 
             <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <h1 className="h1">
@@ -160,7 +164,9 @@ export default async function DataDeletionPolicyPage() {
                 </div>
             </div>
             <div className="container py-16">
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );
