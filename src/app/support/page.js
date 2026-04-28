@@ -1,6 +1,8 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getSupportPageData } from '../lib/support-data';
 import SupportClient from '../components/support/SupportClient';
 
@@ -69,12 +71,16 @@ export default async function SupportPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/support'} />
-            <NavbarServer navbarData={navbarData} utm={'/support'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/support'} />
+            </ConditionalNavbar>
 
             <SupportClient testimonials={testimonials} isLiveSupportAvailable={isLiveSupportAvailable} />
 
-            <div className="container py-8">
-                <Footer footerData={footerData} />
+            <div className="container py-16">
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );
