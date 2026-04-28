@@ -1,12 +1,8 @@
 const fs = require("fs");
 const path = require ("path");
 function generateRobots() {
-    // Direct subdomain detection matching domain.js logic
-    const currentHost = process.env.VERCEL_URL || 'plugservice-api.viasocket.com';
-    const hostnameParts = currentHost.split('.');
-    const subdomain = hostnameParts.length >= 2 ? hostnameParts[0].toLowerCase() : '';
-    const isIntegration = subdomain.includes('integration') || subdomain.includes('integrate');
-    const isProd = !isIntegration;
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && 
+                   (!process.env.SUBDOMAIN || process.env.SUBDOMAIN !== 'integration');
 
     const robotsContent = isProd
         ? `User-agent: *
