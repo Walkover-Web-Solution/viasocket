@@ -107,19 +107,25 @@ export default function AppProvider({ children }) {
   }
 
   useEffect(() => {
+    let threadId = localStorage.getItem('viasocket_chat_thread_id');
+    if (!threadId) {
+      threadId = crypto.randomUUID();
+      localStorage.setItem('viasocket_chat_thread_id', threadId);
+    }
+
     const script = document.createElement('script');
     script.id = 'chatbot-main-script';
     script.src = 'https://chatbot.gtwy.ai/chatbot.js';
     script.setAttribute('embedToken', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJvcmdfaWQiOiIxMjc3IiwiY2hhdGJvdF9pZCI6IjY2NTA2MjhhZDQ4ZTIwZTYxY2Y3MDFhMCIsInVzZXJfaWQiOiJ0ZXN0X3VzZXIifQ.pU9ms9HhiBUKhvJuBUDiue03F2lmFAqBuwd6FCSdvgI');
     script.setAttribute('bridgeName', 'viasocket_chat');
-    script.setAttribute('threadId', 'test_thread_id');
+    script.setAttribute('threadId', threadId);
     script.async = true;
 
     const handleLoad = () => {
       if (window.Chatbot) {
         window.Chatbot.sendData({
           bridgeName: 'viasocket_chat',
-          threadId: 'test_thread_id',
+          threadId: threadId,
           hideIcon: true,
         });
       }
