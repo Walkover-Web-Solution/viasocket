@@ -2,6 +2,8 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getTermsPageData } from '../lib/data';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
+import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 
 export const runtime = 'edge';
 
@@ -32,7 +34,9 @@ export default async function TermsPage() {
     return (
         <>
             <MetaHeadComp metaData={metaData} page={'/terms'} />
-            <NavbarServer navbarData={navbarData} utm={'/terms'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/terms'} />
+            </ConditionalNavbar>
 
             <div className="container mt-12 flex gap-16 flex-col global-top-space font-Arial">
                 <div>
@@ -552,7 +556,9 @@ export default async function TermsPage() {
                 </div>
             </div>
             <div className="container pt-16 pb-4">
-                <Footer footerData={footerData} />
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

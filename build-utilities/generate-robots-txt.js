@@ -1,8 +1,11 @@
-const fs = require("fs");
-const path = require ("path");
+const fs = require('fs');
+const path = require('path');
 function generateRobots() {
-    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && 
-                   (!process.env.SUBDOMAIN || process.env.SUBDOMAIN !== 'integration');
+    // Check if subdomain contains 'integrate' or 'integration'
+    const hostname = process.env.HOSTNAME || process.env.VERCEL_URL || '';
+    const isIntegrationSubdomain = hostname.includes('integrate') || hostname.includes('integration');
+
+    const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && !isIntegrationSubdomain;
 
     const robotsContent = isProd
         ? `User-agent: *
