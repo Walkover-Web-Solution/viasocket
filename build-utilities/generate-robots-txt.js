@@ -4,7 +4,7 @@ function generateRobots() {
     // Check if subdomain contains 'integrate' or 'integration'
     const hostname = process.env.HOSTNAME || process.env.VERCEL_URL || '';
     const isIntegrationSubdomain = hostname.includes('integrate') || hostname.includes('integration');
-    
+
     const isProd = process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod' && !isIntegrationSubdomain;
 
     const robotsContent = isProd
