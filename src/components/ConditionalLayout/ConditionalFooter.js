@@ -6,7 +6,7 @@ import { isIntegrationSubdomain } from '@/utils/domain';
 /**
  * ConditionalFooter - Hides footer ONLY on integration-related subdomains
  * Prevents flicker by hiding with CSS initially, then showing only if not integration subdomain
- * 
+ *
  * Behavior:
  * - viasocket.com → Footer VISIBLE
  * - app.viasocket.com → Footer VISIBLE
@@ -15,24 +15,20 @@ import { isIntegrationSubdomain } from '@/utils/domain';
  * - integrations.viasocket.com → Footer HIDDEN
  */
 export default function ConditionalFooter({ children }) {
-  const [mounted, setMounted] = useState(false);
-  const [shouldShow, setShouldShow] = useState(false);
+    const [isChecked, setIsChecked] = useState(false);
+    const [shouldRender, setShouldRender] = useState(false);
 
-  useEffect(() => {
-    const show = !isIntegrationSubdomain();
-    setShouldShow(show);
-    setMounted(true);
-  }, []);
+    useEffect(() => {
+        const isIntegration = isIntegrationSubdomain();
+        setShouldRender(!isIntegration);
+        setIsChecked(true);
+    }, []);
 
-  // Don't render at all if it's integration subdomain after mount
-  if (mounted && !shouldShow) {
-    return null;
-  }
+    // Don't render at all if it's an integration subdomain
+    if (isChecked && !shouldRender) {
+        return null;
+    }
 
-  // Use CSS to hide initially to prevent flicker
-  return (
-    <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
-      {children}
-    </div>
-  );
+    // Hide with CSS until check is complete to prevent flicker
+    return <div style={{ display: isChecked ? 'block' : 'none' }}>{children}</div>;
 }
