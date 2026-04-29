@@ -71,17 +71,20 @@ export default function NavbarOptimized({
                 {/* Top navigation bar */}
                 <div className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
                     <div className="items-center justify-end flex !h-[30px]">
-                        <div
-                            className={`hidden lg:flex cursor-pointer w-full bg-[#5CD2A2]/90 supports-[backdrop-filter]:bg-[#5CD2A2]/80 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[30px] items-center justify-center gap-2 !text-sm`}
-                        >
-                            <span>MCP is now</span>
-                            <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
-                            <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
-                                <div className='bg-white rounded-full px-3 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors mx-2 !h-[20px] !text-xs'>
-                                    Explore More <ArrowUpRight className="w-3 h-3" />
-                                </div>
-                            </Link>
-                        </div>
+                        {/* MCP Banner - Only show on hero/home page */}
+                        {utm === '/index' && (
+                            <div
+                                className={`hidden lg:flex cursor-pointer w-full bg-[#5CD2A2]/90 supports-[backdrop-filter]:bg-[#5CD2A2]/80 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[30px] items-center justify-center gap-2 !text-sm`}
+                            >
+                                <span>MCP is now</span>
+                                <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
+                                <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
+                                    <div className='bg-white rounded-full px-3 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors mx-2 !h-[20px] !text-xs'>
+                                        Explore More <ArrowUpRight className="w-3 h-3" />
+                                    </div>
+                                </Link>
+                            </div>
+                        )}
                         <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer">
                             <div
                                 className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[18px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}

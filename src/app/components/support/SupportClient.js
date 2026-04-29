@@ -64,7 +64,6 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
         }
     };
 
-    /** open chat widget */
     const openChatWidget = () => {
         window.chatWidget.open();
     };
@@ -92,7 +91,10 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                     <p>Experts are live — jump in!</p>
                                     <p>Ask your questions — or just come say hi 👋</p>
                                 </div>
-                                <button className="btn btn-primary btn-accent w-fit" onClick={() => window.open('https://meet.google.com/hya-tdxd-mip', '_blank')}>
+                                <button
+                                    className="btn btn-primary btn-accent w-fit"
+                                    onClick={() => window.open('https://meet.google.com/hya-tdxd-mip', '_blank')}
+                                >
                                     Take me to Google Meet <ArrowRight className="w-4 h-4" />
                                 </button>
                             </div>
