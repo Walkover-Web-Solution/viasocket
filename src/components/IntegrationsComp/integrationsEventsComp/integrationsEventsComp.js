@@ -347,7 +347,7 @@ function NotFound({ type, appInfo }) {
                     </>
                 ) : (
                     <>
-                        <IoMdCheckmarkCircleOutline fontSize={20} />
+                        <CheckCircle size={20} />
                         Do this
                         {showHeading}
                     </>
