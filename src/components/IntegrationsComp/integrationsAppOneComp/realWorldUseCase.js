@@ -80,7 +80,7 @@ const AnimatedDot = ({ delay }) => (
     />
 );
 
-const RealWorldUseCase = ({ appOneDetails }) => {
+const RealWorldUseCase = ({ appOneDetails, combosData }) => {
     const handleImageError = useCallback((e, fallbackSrc) => {
         e.currentTarget.src = fallbackSrc;
         e.currentTarget.onerror = null;
@@ -88,6 +88,29 @@ const RealWorldUseCase = ({ appOneDetails }) => {
 
     const appIcon = useMemo(() => appOneDetails?.iconurl || DEFAULT_ICON, [appOneDetails?.iconurl]);
     const appName = useMemo(() => appOneDetails?.name || 'App', [appOneDetails?.name]);
+
+    // Get dynamic app icons from combosData
+    const dynamicApps = useMemo(() => {
+        if (!combosData?.plugins) return INTEGRATION_APPS;
+        
+        const plugins = Object.values(combosData.plugins)
+            .filter(plugin => plugin?.appslugname !== appOneDetails?.appslugname) // Exclude current app
+            .slice(0, 6) // Get top 6 apps
+            .map((plugin, index) => ({
+                name: plugin?.name || 'App',
+                icon: plugin?.iconurl || `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
+                fallback: `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
+                delay: `${index * 60}ms`,
+            }));
+        
+        // If we have less than 6 apps, fill with static ones
+        if (plugins.length < 6) {
+            const remaining = INTEGRATION_APPS.slice(0, 6 - plugins.length);
+            return [...plugins, ...remaining];
+        }
+        
+        return plugins;
+    }, [combosData, appOneDetails]);
     return (
         <section className="flex flex-col gap-6 mx-auto container">
             <div className="flex flex-col gap-1">
@@ -139,7 +162,7 @@ const RealWorldUseCase = ({ appOneDetails }) => {
 
                         <div className="flex flex-col items-center gap-4 shrink-0">
                             <div className="grid grid-cols-2 gap-3">
-                                {INTEGRATION_APPS.map((app, index) => (
+                                {dynamicApps.map((app, index) => (
                                     <AppTile key={index} app={app} onError={handleImageError} />
                                 ))}
                             </div>

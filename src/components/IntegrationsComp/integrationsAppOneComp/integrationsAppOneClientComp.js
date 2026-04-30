@@ -13,7 +13,6 @@ import { useState, useCallback, useEffect } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -301,7 +300,7 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            <RealWorldUseCase appOneDetails={appOneDetails} />
+            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} />
 
             <div className="container">
                 <div className="cont gap-8">
@@ -361,9 +360,6 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container">
-                {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
             </div>
 
             <div className="container">

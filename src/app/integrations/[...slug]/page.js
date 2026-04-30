@@ -1,5 +1,4 @@
-import { notFound } from 'next/navigation';
-import ErrorComp from '@/components/404/404Comp';
+import { notFound, redirect } from 'next/navigation';
 import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../../lib/getAuth';
@@ -65,16 +64,17 @@ export default async function IntegrationsPage({ params, searchParams }) {
     const slug = resolvedParams?.slug || [];
     const hasToken = await getHasToken();
     
-    try {
-        const data = await getIntegrationsPageData(slug, resolvedSearchParams);
-        
-        if (data.noData) {
-            return <ErrorComp footerData={data.footerData} />;
-        }
-
-        return <IntegrationsMain data={data} hasToken={hasToken} />;
-    } catch (error) {
-        console.error('Error rendering Integrations page:', error);
-        return notFound();
+    const data = await getIntegrationsPageData(slug, resolvedSearchParams);
+    
+    // Only redirect if there's a slug (prevents infinite loop on base /integrations page)
+    if (data.noData && slug.length > 0) {
+        redirect('/integrations');
     }
+    
+    // If base integrations page has noData, show 404
+    if (data.noData) {
+        notFound();
+    }
+
+    return <IntegrationsMain data={data} hasToken={hasToken} />;
 }

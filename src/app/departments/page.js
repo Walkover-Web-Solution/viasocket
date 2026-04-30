@@ -91,7 +91,7 @@ export default async function DepartmentsPage() {
                     <NavbarServer navbarData={navbarData} utm={'/departments'} />
                 </ConditionalNavbar>
                 <MetaHeadComp metaData={metaData} page={'/departments'} />
-                <div className="container mt-12 flex flex-col gap-12">
+                <div className="container mt-12 flex flex-col gap-12 global-top-space">
                     <div className="flex flex-col justify-center items-center">
                         <h1 className="h1 text-center">
                             Automation for every <span className="text-accent">team</span>

@@ -48,7 +48,7 @@ export default function EmbedSection() {
     return (
         <div className="bg-[#1c1c1c] py-24">
             <div className="container flex lg:flex-row flex-col gap-12 items-center justify-between mb-6">
-                <div className="flex-1 max-w-xl">
+                <div className="flex-1 max-w-4xl">
                     <p className="inline-flex items-center bg-[rgba(160,30,30,0.35)] border border-[rgba(220,80,80,0.55)] rounded-full px-3.5 py-1.5 text-[#e06060] text-sm font-semibold tracking-widest uppercase mb-3 shadow-[0_0_16px_rgba(196,80,80,0.2)]">
                         For SaaS &amp; AI products
                     </p>
