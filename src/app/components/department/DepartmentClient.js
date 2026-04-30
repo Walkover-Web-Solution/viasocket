@@ -19,7 +19,7 @@ export default function DepartmentClient({ data, hasToken }) {
                 utm={department?.slug ? `/departments/${department.slug}` : '/departments'}
             />
 
-            <div className="relative overflow-hidden pt-16 pb-12">
+            <div className="relative overflow-hidden pt-16 pb-12 global-top-space">
                 <div className="container relative z-10">
                     {/* Breadcrumb */}
                     <Breadcrumb parent="Departments" child1={department?.name} parentLink="/departments" />

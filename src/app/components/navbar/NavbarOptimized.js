@@ -66,7 +66,7 @@ export default function NavbarOptimized({
     return (
         <>
             <div
-                className={`sticky top-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
+                className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
             >
                 {/* Top navigation bar */}
                 <div className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}>
@@ -94,7 +94,7 @@ export default function NavbarOptimized({
                         </Link>
                         <Link href="https://cal.id/team/viasocket/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer">
                             <div
-                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[22px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
+                                className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit px-[21.4px] !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                             >
                                Hire an expert
                             </div>
