@@ -67,9 +67,9 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
         }
     }, []);
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 container">
             <div className='container'>{showHeading && <h2 className="h2">Step by step guides to integrate {appOneName} {appTwoName ? 'and' : ''} {appTwoName}</h2>}</div>
-            <div className='px-6 md:px-12 relative'>
+            <div className='relative'>
                 {isScrollable && (
                     <>
                         <button
@@ -98,20 +98,18 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                         return (
                             <div
                                 key={index}
-                                className={`snap-center shrink-0 px-1 sm:px-2 transition-transform duration-300 ease-out`}
-                                style={{ minWidth: videoData.length === 1 ? '100%' : '75%' }}
+                                className={`snap-center shrink-0 transition-transform duration-300 ease-out overflow-hidden h-full px-4`}
+                                style={{ minWidth: videoData.length === 1 ? '100%' : '50%' }}
                             >
-                                <div className={`border overflow-hidden transition-all duration-300 ${isActive ? 'scale-100' : 'scale-90 opacity-80'}`}>
-                                    <iframe
-                                        className="w-full aspect-video border"
-                                        src={video.links}
-                                        title={`YouTube video player ${index + 1}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerPolicy="strict-origin-when-cross-origin"
-                                        allowFullScreen
-                                    />
-                                </div>
+                                <iframe
+                                    className="w-full aspect-video border"
+                                    src={video.links}
+                                    title={`YouTube video player ${index + 1}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    allowFullScreen
+                                />
                             </div>
                         );
                     })}

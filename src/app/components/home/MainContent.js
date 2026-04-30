@@ -3,6 +3,7 @@ import IndexTemplateComp from '@/components/indexComps/indexTemplateComp';
 import ShowDepartmentOptimized from './ShowDepartmentOptimized';
 import ReviewIframeOptimized from './ReviewIframeOptimized';
 import ShowBadges from './ShowBadges';
+import EmbedSection from '@/app/components/home/EmbedSection';
 // import PanelSectionOptimized from './PanelSectionOptimized';
 
 export default function MainContent({
@@ -39,6 +40,8 @@ export default function MainContent({
       </div>
 
       <ShowDepartmentOptimized />
+
+      <EmbedSection />
 
       <div className="bg-white">
         <ShowBadges />
