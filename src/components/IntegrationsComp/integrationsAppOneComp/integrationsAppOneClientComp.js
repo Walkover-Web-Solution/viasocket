@@ -13,7 +13,6 @@ import { useState, useCallback, useEffect } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import UseCaseList from '@/components/useCaseList/UseCaseList';
 import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -23,6 +22,7 @@ import { APPERPAGE } from '@/const/integrations';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
+import RealWorldUseCase from './realWorldUseCase';
 
 export default function IntegrationsAppOneClientComp({
     appOneDetails,
@@ -39,7 +39,7 @@ export default function IntegrationsAppOneClientComp({
     videoData,
     appCount,
     getDoFollowUrlStatusArray,
-    templateToShow
+    templateToShow,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -128,7 +128,8 @@ export default function IntegrationsAppOneClientComp({
                                 {appData?.headings?.h1 || `Automate ${appOneDetails?.name} with viaSocket`}
                             </h1>
                             <p className="sub__h1">
-                                {appData?.headings?.subheadline || `Eliminate repetitive tasks and manual data entry. Build automated workflows with viaSocket's AI agents and serverless logic — no code required.`}
+                                {appData?.headings?.subheadline ||
+                                    `Eliminate repetitive tasks and manual data entry. Build automated workflows with viaSocket's AI agents and serverless logic — no code required.`}
                             </p>
                         </div>
                     </div>
@@ -142,7 +143,9 @@ export default function IntegrationsAppOneClientComp({
             </div>
 
             <div className="container flex flex-col gap-8">
-                <h2 className="h2">Connect {appOneDetails?.name} with {appCount + 300}+ apps</h2> 
+                <h2 className="h2">
+                    Connect {appOneDetails?.name} with {appCount + 300}+ apps
+                </h2>
                 {appOneDetails?.events.length > 0 && (
                     <div
                         className="cont gap-10 pt-12 border custom-border"
@@ -211,15 +214,13 @@ export default function IntegrationsAppOneClientComp({
                                                 ',' +
                                                 combosData?.plugins[combo?.actions[0]?.name]?.rowid;
 
-                                            const triggerName = combosData?.plugins[
-                                                combo?.trigger?.name
-                                            ]?.events?.find((event) => event?.rowid === combo?.trigger?.id)?.name;
+                                            const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
+                                                (event) => event?.rowid === combo?.trigger?.id
+                                            )?.name;
 
                                             const actionName = combosData?.plugins[
                                                 combo?.actions[0]?.name
-                                            ]?.events?.find(
-                                                (event) => event?.rowid === combo?.actions[0]?.id
-                                            )?.name;
+                                            ]?.events?.find((event) => event?.rowid === combo?.actions[0]?.id)?.name;
 
                                             return (
                                                 <CombinationCardComp
@@ -279,7 +280,6 @@ export default function IntegrationsAppOneClientComp({
                             </>
                         )}
                     </div>
-
                 </div>
             </div>
 
@@ -290,8 +290,8 @@ export default function IntegrationsAppOneClientComp({
                             <div className="cont gap-2">
                                 <h2 className="h2">Triggers and Actions in {appOneDetails?.name} Automations</h2>
                                 <p className="sub__h1">
-                                    viaSocket makes it simple to connect {appOneDetails?.name} and automate
-                                    repetitive tasks.
+                                    viaSocket makes it simple to connect {appOneDetails?.name} and automate repetitive
+                                    tasks.
                                 </p>
                             </div>
                             <IntegrationsEventsComp appOneDetails={appOneDetails} />
@@ -299,11 +299,14 @@ export default function IntegrationsAppOneClientComp({
                     )}
                 </div>
             </div>
+
+            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} />
+
             <div className="container">
                 <div className="cont gap-8">
                     <div className="bg-white p-6 md:p-12 flex flex-col gap-10 border custom-border">
                         <div className="flex md:flex-row flex-col gap-8">
-                            <div className="w-full md:w-3/5 cont gap-8 md:gap-20 justify-start">
+                            <div className="w-full md:w-3/5 cont gap-8 justify-start">
                                 <h2 className="h2">How to get started with {appOneDetails?.name} automations</h2>
                                 <div className="cont gap-8 h-full">
                                     <div className="cont gap-2">
@@ -314,8 +317,8 @@ export default function IntegrationsAppOneClientComp({
                                     </div>
                                     <div className="cont gap-2">
                                         <p className="font-semibold sub__h1">
-                                            Take action in {appOneDetails?.name} when something happens in an app or
-                                            you want to add step in flow
+                                            Take action in {appOneDetails?.name} when something happens in an app or you
+                                            want to add step in flow
                                         </p>
                                         <p className="sub__h1">{`Login -> Create new flow -> Select action -> Search ${appOneDetails?.name} -> Choose the action from the list`}</p>
                                     </div>
@@ -328,8 +331,9 @@ export default function IntegrationsAppOneClientComp({
                                     >
                                         <p>Trigger</p>
                                         <Image
-                                            className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 1 ? 'opacity-100' : 'opacity-0'
-                                                }`}
+                                            className={`bg-white border p-1 transition-opacity duration-500 ${
+                                                activeStep === 1 ? 'opacity-100' : 'opacity-0'
+                                            }`}
                                             src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                             width={36}
                                             height={36}
@@ -342,8 +346,9 @@ export default function IntegrationsAppOneClientComp({
                                     >
                                         <p>Action</p>
                                         <Image
-                                            className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 2 ? 'opacity-100' : 'opacity-0'
-                                                }`}
+                                            className={`bg-white border p-1 transition-opacity duration-500 ${
+                                                activeStep === 2 ? 'opacity-100' : 'opacity-0'
+                                            }`}
                                             src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                             width={36}
                                             height={36}
@@ -355,9 +360,6 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="container">
-                {useCaseData?.length > 0 && <UseCaseList useCaseData={useCaseData} appname={appOneDetails.name} />}
             </div>
 
             <div className="container">
@@ -393,9 +395,7 @@ export default function IntegrationsAppOneClientComp({
                             {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
                                 <Link
                                     key={index}
-                                    href={createURL(
-                                        `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                    )}
+                                    href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
                                     className="mb-2"
                                 >
                                     <span className="btn btn-outline">{cat}</span>
@@ -403,15 +403,13 @@ export default function IntegrationsAppOneClientComp({
                             ))}
                         </div>
                         <ExternalLink
-                            href={
-                                (() => {
-                                    const baseUrl = appOneDetails?.domain.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain;
-                                    const separator = baseUrl.includes('?') ? '&' : '?';
-                                    return `${baseUrl}${separator}utm_source=viasocket`;
-                                })()
-                            }
+                            href={(() => {
+                                const baseUrl = appOneDetails?.domain.startsWith('http')
+                                    ? appOneDetails?.domain
+                                    : 'http://' + appOneDetails?.domain;
+                                const separator = baseUrl.includes('?') ? '&' : '?';
+                                return `${baseUrl}${separator}utm_source=viasocket`;
+                            })()}
                             appSlugName={appOneDetails?.appslugname}
                             doFollowArray={getDoFollowUrlStatusArray}
                         >
@@ -430,11 +428,11 @@ export default function IntegrationsAppOneClientComp({
                             <h3 className="h3 font-bold pt-5">About viaSocket</h3>
                         </div>
                         <p className="text-sm sm:text-lg text-black h-full">
-                            viaSocket is an AI-powered, workflow automation platform that helps people and
-                            businesses connect apps and automate repetitive tasks. With thousands of integrations,
-                            anyone can build workflows to move data, cut manual work, and save time. Whether for
-                            simple tasks or large-scale processes, viaSocket makes automation easy and helps teams
-                            focus on what matters most.
+                            viaSocket is an AI-powered, workflow automation platform that helps people and businesses
+                            connect apps and automate repetitive tasks. With thousands of integrations, anyone can build
+                            workflows to move data, cut manual work, and save time. Whether for simple tasks or
+                            large-scale processes, viaSocket makes automation easy and helps teams focus on what matters
+                            most.
                         </p>
                         <div className="flex flex-wrap gap-3">
                             <Link href="/" className="mb-2">

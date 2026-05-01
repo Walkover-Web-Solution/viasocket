@@ -1,0 +1,190 @@
+/* ── Center box animation ── */
+.center-box {
+    animation: gentle-pulse 4s ease-in-out infinite;
+}
+
+/* ── Pulse ring animations ── */
+.ring1 {
+    animation: pulse-ring 3.5s ease-in-out infinite;
+}
+
+.ring2 {
+    animation: pulse-ring 3.5s ease-in-out infinite 0.7s;
+}
+
+.ring3 {
+    animation: pulse-ring 3.5s ease-in-out infinite 1.4s;
+}
+
+/* ── Orbit animations ── */
+.o1 {
+    animation: orbit1 22s linear infinite;
+}
+
+.o2 {
+    animation: orbit2 22s linear infinite;
+}
+
+.o3 {
+    animation: orbit3 22s linear infinite;
+}
+
+.o4 {
+    animation: orbit4 16s linear infinite reverse;
+}
+
+.o5 {
+    animation: orbit5 16s linear infinite reverse;
+}
+
+.o6 {
+    animation: orbit6 16s linear infinite reverse;
+}
+
+/* ── Keyframes ── */
+@keyframes orbit1 {
+    0% {
+        transform: rotate(0deg) translateX(160px) rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg) translateX(160px) rotate(-360deg);
+    }
+}
+
+@keyframes orbit2 {
+    0% {
+        transform: rotate(120deg) translateX(160px) rotate(-120deg);
+    }
+    100% {
+        transform: rotate(480deg) translateX(160px) rotate(-480deg);
+    }
+}
+
+@keyframes orbit3 {
+    0% {
+        transform: rotate(240deg) translateX(160px) rotate(-240deg);
+    }
+    100% {
+        transform: rotate(600deg) translateX(160px) rotate(-600deg);
+    }
+}
+
+@keyframes orbit4 {
+    0% {
+        transform: rotate(60deg) translateX(120px) rotate(-60deg);
+    }
+    100% {
+        transform: rotate(420deg) translateX(120px) rotate(-420deg);
+    }
+}
+
+@keyframes orbit5 {
+    0% {
+        transform: rotate(180deg) translateX(120px) rotate(-180deg);
+    }
+    100% {
+        transform: rotate(540deg) translateX(120px) rotate(-540deg);
+    }
+}
+
+@keyframes orbit6 {
+    0% {
+        transform: rotate(300deg) translateX(120px) rotate(-300deg);
+    }
+    100% {
+        transform: rotate(660deg) translateX(120px) rotate(-660deg);
+    }
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.12);
+        opacity: 0.35;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes gentle-pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.04);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ── Accessibility ── */
+@media (prefers-reduced-motion: reduce) {
+    .o1, .o2, .o3, .o4, .o5, .o6,
+    .pulse-ring,
+    .center-box {
+        animation: none !important;
+    }
+}
+
+/* ── Responsive orbit adjustments ── */
+@media (max-width: 768px) {
+    @keyframes orbit1 {
+        0% {
+            transform: rotate(0deg) translateX(140px) rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg) translateX(140px) rotate(-360deg);
+        }
+    }
+
+    @keyframes orbit2 {
+        0% {
+            transform: rotate(120deg) translateX(140px) rotate(-120deg);
+        }
+        100% {
+            transform: rotate(480deg) translateX(140px) rotate(-480deg);
+        }
+    }
+
+    @keyframes orbit3 {
+        0% {
+            transform: rotate(240deg) translateX(140px) rotate(-240deg);
+        }
+        100% {
+            transform: rotate(600deg) translateX(140px) rotate(-600deg);
+        }
+    }
+
+    @keyframes orbit4 {
+        0% {
+            transform: rotate(60deg) translateX(105px) rotate(-60deg);
+        }
+        100% {
+            transform: rotate(420deg) translateX(105px) rotate(-420deg);
+        }
+    }
+
+    @keyframes orbit5 {
+        0% {
+            transform: rotate(180deg) translateX(105px) rotate(-180deg);
+        }
+        100% {
+            transform: rotate(540deg) translateX(105px) rotate(-540deg);
+        }
+    }
+
+    @keyframes orbit6 {
+        0% {
+            transform: rotate(300deg) translateX(105px) rotate(-300deg);
+        }
+        100% {
+            transform: rotate(660deg) translateX(105px) rotate(-660deg);
+        }
+    }
+}

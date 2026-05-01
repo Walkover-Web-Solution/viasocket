@@ -67,24 +67,24 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
         }
     }, []);
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 container">
             <div className='container'>{showHeading && <h2 className="h2">Step by step guides to integrate {appOneName} {appTwoName ? 'and' : ''} {appTwoName}</h2>}</div>
-            <div className='px-6 md:px-12 relative'>
+            <div className='relative'>
                 {isScrollable && (
                     <>
                         <button
                             aria-label="Scroll left"
                             onClick={() => scrollByAmount(-1)}
-                            className="hidden sm:flex items-center justify-center absolute left-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full border-2 border-accent shadow-xl hover:bg-accent hover:scale-110 hover:shadow-2xl transition-all duration-300"
                         >
-                            <ChevronLeft className="w-6 h-6" />
+                            <ChevronLeft className="w-7 h-7 text-accent" />
                         </button>
                         <button
                             aria-label="Scroll right"
                             onClick={() => scrollByAmount(1)}
-                            className="hidden sm:flex items-center justify-center absolute right-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full border-2 border-accent shadow-xl hover:bg-accent hover:scale-110 hover:shadow-2xl transition-all duration-300"
                         >
-                            <ChevronRight className="w-6 h-6" />
+                            <ChevronRight className="w-7 h-7 text-accent" />
                         </button>
                     </>
                 )}
@@ -98,20 +98,18 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                         return (
                             <div
                                 key={index}
-                                className={`snap-center shrink-0 px-1 sm:px-2 transition-transform duration-300 ease-out`}
-                                style={{ minWidth: videoData.length === 1 ? '100%' : '75%' }}
+                                className={`snap-center shrink-0 transition-transform duration-300 ease-out overflow-hidden h-full px-4`}
+                                style={{ minWidth: videoData.length === 1 ? '100%' : '50%' }}
                             >
-                                <div className={`border overflow-hidden transition-all duration-300 ${isActive ? 'scale-100' : 'scale-90 opacity-80'}`}>
-                                    <iframe
-                                        className="w-full aspect-video border"
-                                        src={video.links}
-                                        title={`YouTube video player ${index + 1}`}
-                                        frameBorder="0"
-                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                        referrerPolicy="strict-origin-when-cross-origin"
-                                        allowFullScreen
-                                    />
-                                </div>
+                                <iframe
+                                    className="w-full aspect-video border"
+                                    src={video.links}
+                                    title={`YouTube video player ${index + 1}`}
+                                    frameBorder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerPolicy="strict-origin-when-cross-origin"
+                                    allowFullScreen
+                                />
                             </div>
                         );
                     })}

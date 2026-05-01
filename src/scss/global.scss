@@ -57,6 +57,17 @@
     background: none;
 }
 
+/** Fixed navbar spacing */
+.global-top-space {
+    padding-top: 48px;
+}
+
+@media screen and (min-width: 1024px) {
+    .global-top-space {
+        padding-top: 88px;
+    }
+}
+
 /** Customized the container padding */
 @media screen and (width <=576px) {
     body {

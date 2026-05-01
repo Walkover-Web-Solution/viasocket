@@ -66,6 +66,9 @@ export default async function HomePage() {
         <NavbarServer navbarData={navbarData} utm={'/index'} />
       </ConditionalNavbar>
       
+      {/* Spacer for fixed navbar */}
+      <div className="h-[48px] lg:h-[78px]"></div>
+      
       <HeroContainer 
         appCount={appCount}
         initialApps={initialApps} 
