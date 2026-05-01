@@ -75,16 +75,16 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                         <button
                             aria-label="Scroll left"
                             onClick={() => scrollByAmount(-1)}
-                            className="hidden sm:flex items-center justify-center absolute left-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full border-2 border-accent shadow-xl hover:bg-accent hover:scale-110 hover:shadow-2xl transition-all duration-300"
                         >
-                            <ChevronLeft className="w-6 h-6" />
+                            <ChevronLeft className="w-7 h-7 text-accent" />
                         </button>
                         <button
                             aria-label="Scroll right"
                             onClick={() => scrollByAmount(1)}
-                            className="hidden sm:flex items-center justify-center absolute right-[5%] top-1/2 -translate-y-1/2 z-10 h-10 w-10 bg-white rounded-full border"
+                            className="hidden sm:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full border-2 border-accent shadow-xl hover:bg-accent hover:scale-110 hover:shadow-2xl transition-all duration-300"
                         >
-                            <ChevronRight className="w-6 h-6" />
+                            <ChevronRight className="w-7 h-7 text-accent" />
                         </button>
                     </>
                 )}
