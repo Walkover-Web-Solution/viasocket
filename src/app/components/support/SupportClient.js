@@ -65,7 +65,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
     };
 
     const openChatWidget = () => {
-        window.chatWidget.open();
+        window.Chatbot?.open();
     };
 
     return (
