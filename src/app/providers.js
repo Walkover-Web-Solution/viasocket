@@ -107,11 +107,7 @@ export default function AppProvider({ children }) {
   }
 
   useEffect(() => {
-    let threadId = localStorage.getItem('viasocket_chat_thread_id');
-    if (!threadId) {
-      threadId = crypto.randomUUID();
-      localStorage.setItem('viasocket_chat_thread_id', threadId);
-    }
+    const threadId = crypto.randomUUID();
 
     const script = document.createElement('script');
     script.id = 'chatbot-main-script';
