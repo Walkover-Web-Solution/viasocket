@@ -103,7 +103,18 @@ export default function AppProvider({ children }) {
     }
 
     useEffect(() => {
-        const threadId = crypto.randomUUID();
+        const THREAD_TTL_MS = 60 * 60 * 1000;
+        const stored = JSON.parse(localStorage.getItem('viasocket_chat_thread') || 'null');
+        let threadId;
+        if (stored && stored.id && Date.now() - stored.createdAt < THREAD_TTL_MS) {
+            threadId = stored.id;
+        } else {
+            threadId = crypto.randomUUID();
+            localStorage.setItem(
+                'viasocket_chat_thread',
+                JSON.stringify({ id: threadId, createdAt: Date.now() })
+            );
+        }
 
         const script = document.createElement('script');
         script.id = 'chatbot-main-script';
