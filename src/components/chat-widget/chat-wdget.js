@@ -3,7 +3,7 @@ import { MessageSquare } from 'lucide-react';
 
 export default function ChatWidget() {
     const openChatWidget = () => {
-        window.chatWidget.open();
+        window.Chatbot?.open();
     };
     return (
         <>
