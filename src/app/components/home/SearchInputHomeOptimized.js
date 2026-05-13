@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
@@ -30,9 +30,11 @@ const getFirstSuggestion = (apps, industries, departments, search) => {
         return name.toLowerCase().startsWith(lower) ? { suggestion: name, type } : null;
     };
 
-    return checkStartsWith(apps, 'app') ||
+    return (
+        checkStartsWith(apps, 'app') ||
         checkStartsWith(industries, 'industry') ||
-        checkStartsWith(departments, 'department');
+        checkStartsWith(departments, 'department')
+    );
 };
 
 export default function SearchInputHomeOptimized({
@@ -95,8 +97,10 @@ export default function SearchInputHomeOptimized({
     const fetchIndustriesData = useCallback(async () => await getIndustries(window?.location?.href), []);
     const fetchDepartmentsData = useCallback(async () => await getDepartments(window?.location?.href), []);
 
-    const filterSelectedApps = useCallback((apps) =>
-        apps?.filter((app) => !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname)) || [],
+    const filterSelectedApps = useCallback(
+        (apps) =>
+            apps?.filter((app) => !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname)) ||
+            [],
         [selectedApps]
     );
 
@@ -261,10 +265,13 @@ export default function SearchInputHomeOptimized({
         }
     };
 
-    const getAiResponse = async (apps = selectedApps, industries = selectedIndustries, departments = selectedDepartments) => {
+    const getAiResponse = async (
+        apps = selectedApps,
+        industries = selectedIndustries,
+        departments = selectedDepartments
+    ) => {
         const shouldShowAiResponse =
-            (apps.length >= 1 && (industries.length >= 1 || departments.length >= 1)) ||
-            (apps.length >= 1);
+            (apps.length >= 1 && (industries.length >= 1 || departments.length >= 1)) || apps.length >= 1;
 
         if (!shouldShowAiResponse) {
             setShowAiResponse(false);
@@ -333,45 +340,48 @@ export default function SearchInputHomeOptimized({
         });
     };
 
-    const handleSearch = useCallback(async (value) => {
-        setSearchTerm(value);
-        setShowDropdown(true);
-        setCurrentSuggestion('');
-        setSuggestionText('');
+    const handleSearch = useCallback(
+        async (value) => {
+            setSearchTerm(value);
+            setShowDropdown(true);
+            setCurrentSuggestion('');
+            setSuggestionText('');
 
-        if (!value.trim()) {
-            if (!allAppsCache.current) {
-                const apps = initialApps;
-                allAppsCache.current = apps;
+            if (!value.trim()) {
+                if (!allAppsCache.current) {
+                    const apps = initialApps;
+                    allAppsCache.current = apps;
+                }
+                setSearchData(filterSelectedApps(allAppsCache.current));
+                setFilteredIndustries(allIndustries);
+                setFilteredDepartments(allDepartments);
+                return;
             }
-            setSearchData(filterSelectedApps(allAppsCache.current));
-            setFilteredIndustries(allIndustries);
-            setFilteredDepartments(allDepartments);
-            return;
-        }
 
-        try {
-            const result = await searchApps(value);
-            const filteredApps = filterSelectedApps(result);
-            // Sort the app results to prioritize exact matches
-            const sortedApps = sortSearchResults(filteredApps, value);
-            setSearchData(sortedApps);
+            try {
+                const result = await searchApps(value);
+                const filteredApps = filterSelectedApps(result);
+                // Sort the app results to prioritize exact matches
+                const sortedApps = sortSearchResults(filteredApps, value);
+                setSearchData(sortedApps);
 
-            const matchingIndustries = filterListByName(allIndustries, value);
-            const matchingDepartments = filterListByName(allDepartments, value);
+                const matchingIndustries = filterListByName(allIndustries, value);
+                const matchingDepartments = filterListByName(allDepartments, value);
 
-            setFilteredIndustries(matchingIndustries);
-            setFilteredDepartments(matchingDepartments);
+                setFilteredIndustries(matchingIndustries);
+                setFilteredDepartments(matchingDepartments);
 
-            const firstSuggestion = getFirstSuggestion(sortedApps, matchingIndustries, matchingDepartments, value);
-            if (firstSuggestion && firstSuggestion.suggestion.toLowerCase() !== value.toLowerCase()) {
-                setCurrentSuggestion(firstSuggestion.suggestion);
-                setSuggestionText(firstSuggestion.suggestion.slice(value.length));
+                const firstSuggestion = getFirstSuggestion(sortedApps, matchingIndustries, matchingDepartments, value);
+                if (firstSuggestion && firstSuggestion.suggestion.toLowerCase() !== value.toLowerCase()) {
+                    setCurrentSuggestion(firstSuggestion.suggestion);
+                    setSuggestionText(firstSuggestion.suggestion.slice(value.length));
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
-        }
-    }, [allIndustries, allDepartments, filterSelectedApps]);
+        },
+        [allIndustries, allDepartments, filterSelectedApps]
+    );
 
     const handleKeyPress = (e) => {
         if (e.key === 'Tab' && currentSuggestion) {
@@ -436,7 +446,7 @@ export default function SearchInputHomeOptimized({
                                         const shouldShowAiResponse =
                                             (selectedApps.length >= 1 &&
                                                 (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                                            (selectedApps.length >= 1);
+                                            selectedApps.length >= 1;
                                         if (shouldShowAiResponse) {
                                             getAiResponse();
                                         } else {
@@ -455,8 +465,9 @@ export default function SearchInputHomeOptimized({
                 // Check AI response condition
                 if (enableAi) {
                     const shouldShowAiResponse =
-                        (selectedApps.length >= 1 && (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
-                        (selectedApps.length >= 1);
+                        (selectedApps.length >= 1 &&
+                            (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                        selectedApps.length >= 1;
                     if (shouldShowAiResponse) {
                         getAiResponse();
                     } else {
@@ -658,13 +669,24 @@ export default function SearchInputHomeOptimized({
                             ref={inputRef}
                             type="text"
                             className="w-full bg-transparent outline-none text-base relative z-10"
-                            placeholder={selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0 ? '' : 'Search ready-made automations'}
+                            placeholder={
+                                selectedApps.length > 0 ||
+                                selectedIndustries.length > 0 ||
+                                selectedDepartments.length > 0
+                                    ? ''
+                                    : 'Search ready-made automations'
+                            }
                             value={searchTerm}
                             onChange={(e) => handleSearch(e.target.value)}
                             onFocus={() => {
                                 setHasBrowserFocus(true);
                                 setShouldShowCaret(true);
-                                if (searchTerm || selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) {
+                                if (
+                                    searchTerm ||
+                                    selectedApps.length > 0 ||
+                                    selectedIndustries.length > 0 ||
+                                    selectedDepartments.length > 0
+                                ) {
                                     setShowDropdown(true);
                                 }
                             }}
@@ -713,7 +735,7 @@ export default function SearchInputHomeOptimized({
                                             alt={app?.name}
                                             className="rounded"
                                         />
-                                        <span className="text-sm">{app?.name}</span>
+                                        <span className="text-sm capitalize">{app?.name}</span>
                                     </div>
                                 ))
                             ) : (
