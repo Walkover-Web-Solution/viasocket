@@ -244,7 +244,7 @@ export default function IntegrationsIndexClientComp({
                                                             fill
                                                         />
                                                     </div>
-                                                    <h2>{app?.name}</h2>
+                                                    <h2 className="capitalize">{app?.name}</h2>
                                                 </div>
                                                 <p className={style?.app__des}>{app?.description}</p>
                                             </Link>
