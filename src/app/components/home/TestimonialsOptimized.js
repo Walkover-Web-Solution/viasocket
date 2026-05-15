@@ -5,14 +5,18 @@ import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
 export default function TestimonialsOptimized({ reviewData, matchesFilter }) {
+    const filteredReviews = (reviewData || []).filter((item) => {
+        if (!item) return false;
+        const hasContent = (item?.user_name?.trim() !== '') || (item?.subtitle?.trim() !== '') || (item?.description?.trim() !== '');
+        if (!hasContent) return false;
+        return matchesFilter(item);
+    }).slice(0, 6);
+
     return (
         <>
             <div className="mb-8 grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4">
                 {
-                    reviewData?.map((item, index) => {
-                        if (item?.user_name?.trim() === '' && item?.subtitle?.trim() === '' && item?.description?.trim() === '') return null;
-                        const isVisible = matchesFilter(item);
-                        if (!isVisible) return null;
+                    filteredReviews.map((item, index) => {
                         return (
                             <Link href={item?.link || '#'} target="_blank" key={item?.name + "-" + index}>
                                 <div className="bg-white md:p-12 p-6 flex flex-col gap-4 border custom-border h-[320px] group hover:shadow-md transition-shadow">
