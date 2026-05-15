@@ -1,19 +1,22 @@
 'use client';
 
 import TestimonialsOptimized from './TestimonialsOptimized';
-import { Heart } from 'lucide-react';
+import { Heart, Linkedin, Twitter } from 'lucide-react';
 import ReviewFilters from './reviewFilters';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 const filters = [
-    { id: 'all', label: 'All' },
-    { id: 'linkedin', label: 'Linkedin' },
-    { id: 'twitter', label: 'Twitter' },
-    { id: 'g2', label: 'G2' },
-    { id: 'capterra', label: 'Capterra' },
+    { id: 'linkedin', label: 'Linkedin', Icon: Linkedin, color: '#0A66C2' },
+    { id: 'twitter', label: 'Twitter', Icon: Twitter, color: '#1DA1F2' },
+    { id: 'g2', label: 'G2', logo: 'https://cdn.simpleicons.org/g2/FF492C' },
+    {
+        id: 'capterra',
+        label: 'Capterra',
+        logo: 'https://gdm-localsites-assets-gfprod.imgix.net/images/capterra/og_logo-e5a8c001ed0bd1bb922639230fcea71a.png?auto=format%2Cenhance%2Ccompress',
+    },
 ];
 
-export default function ReviewIframeOptimized({reviewData }) {
+export default function ReviewIframeOptimized({ reviewData }) {
     const [selectedFilter, setSelectedFilter] = useState('all');
 
     const selectedFilterObj = selectedFilter ? filters.find((f) => f.id === selectedFilter) : null;
