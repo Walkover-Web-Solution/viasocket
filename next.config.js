@@ -12,6 +12,19 @@ const nextConfig = {
         ],
     },
 
+    async rewrites() {
+        return [
+            {
+                source: '/feedback-satisfied',
+                destination: '/feedback?variant=satisfied',
+            },
+            {
+                source: '/feedback-unsatisfied',
+                destination: '/feedback?variant=unsatisfied',
+            },
+        ];
+    },
+
     async redirects() {
         return [
             {
