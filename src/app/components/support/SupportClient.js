@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Star, Headphones, Users, Headset, Phone, MessageSquare, CalendarCheck, Mail, ArrowRight } from 'lucide-react';
+import { Star, Headphones, Users, BookOpen, Phone, MessageSquare, CalendarCheck, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import LiveIcon from './LiveIcon';
 
@@ -123,7 +123,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <Headset className="w-8 h-8" />
+                            <BookOpen className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
                                 <h3 className="h3">Help & Documentation</h3>
                                 <p>
