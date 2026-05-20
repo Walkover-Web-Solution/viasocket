@@ -26,10 +26,49 @@ import {
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getBlogData } from '@/utils/getBlogData';
-import { getAppCount, getTemplates, getApps } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getApps, getClientStories } from '@/utils/axiosCalls';
 import { fetchPluginData } from '@/utils/axiosCalls';
 
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
+
+function buildClientStories(pages = {}) {
+    const targetSlug = 'client-story';
+    const blogBaseUrl = 'https://viasocket.com/blog';
+    const maxStories = 6;
+
+    const slugify = (value) =>
+        (value || '').toString().trim().toLowerCase().replace(/\s+/g, '-');
+
+    const formatTag = (tag) =>
+        (tag || targetSlug)
+            .split('-')
+            .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+            .join(' ');
+
+    const isClientStory = (page) => {
+        const meta = page?.meta;
+        if (!meta) return false;
+        if (slugify(meta.category) === targetSlug) return true;
+        return Array.isArray(meta.tags) && meta.tags.some((t) => slugify(t) === targetSlug);
+    };
+
+    return Object.values(pages || {})
+        .filter((p) => p?.isPublished && isClientStory(p))
+        .slice(0, maxStories)
+        .map((page, index) => {
+            const meta = page?.meta || {};
+            const rawTag = meta.category || meta.tags?.[0] || targetSlug;
+            return {
+                id: page?.id ?? index,
+                tag: formatTag(slugify(rawTag)),
+                headline: meta.ai_title || meta.title || page?.publishedPage?.name || page?.name || '',
+                teaser: meta.ai_description || meta.description || '',
+                image: meta.featureImage?.url || null,
+                link: page?.urlName ? `${blogBaseUrl}/${page.urlName}` : '#',
+            };
+        })
+        .reverse();
+}
 
 function sortTemplatesForDisplay(templates = [], featuredTemplatesData = []) {
     const featuredIds = new Set((featuredTemplatesData || []).map((item) => String(item.name)));
@@ -83,6 +122,7 @@ export async function getHomePageData() {
             templates,
             initialApps,
             featuredTemplatesData,
+            clientStoriesPages,
         ] = await Promise.all([
             getFaqData('/index', pageUrl),
             getMetaData('/', pageUrl),
@@ -94,6 +134,7 @@ export async function getHomePageData() {
             getTemplates(pageUrl),
             getApps({ limit: 50 }, pageUrl),
             getFeaturedTemplatesData(FEATUREDTEMPLATES_FIELDS, '', pageUrl),
+            getClientStories(pageUrl),
         ]);
 
         const validStatuses = ['verified_by_ai', 'verified'];
@@ -158,6 +199,7 @@ export async function getHomePageData() {
             navbarData: navbarData || [],
             templateData: validTemplateData || [],
             initialApps: initialApps || [],
+            clientStories: buildClientStories(clientStoriesPages),
         };
     } catch (error) {
         console.error('Error fetching home page data:', error);
@@ -173,6 +215,7 @@ export async function getHomePageData() {
             navbarData: [],
             templateData: [],
             initialApps: [],
+            clientStories: [],
         };
     }
 }

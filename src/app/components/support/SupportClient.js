@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
-import { Star, Headphones, Users, Anchor, Phone, MessageSquare, CalendarCheck, Mail, ArrowRight } from 'lucide-react';
+import { Star, Headphones, Users, BookOpen, Phone, MessageSquare, CalendarCheck, Mail, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
 import LiveIcon from './LiveIcon';
 
@@ -123,13 +123,16 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                         </div>
 
                         <div className="flex flex-col border custom-border p-6 bg-white justify-between">
-                            <Anchor className="w-8 h-8" />
+                            <BookOpen className="w-8 h-8" />
                             <div className="flex flex-col min-h-[100px]">
-                                <h3 className="h3">FAQ</h3>
-                                <p>Connect with other users, get answers, and share automation tips.</p>
+                                <h3 className="h3">Help & Documentation</h3>
+                                <p>
+                                    Step-by-step guides, integration tutorials, and answers to common questions related
+                                    to viaSocket
+                                </p>
                             </div>
                             <Link href="https://viasocket.com/help" className="btn btn-outline w-fit">
-                                Start learning with viaSocket FAQ
+                                Visit Help Center
                             </Link>
                         </div>
                     </div>
