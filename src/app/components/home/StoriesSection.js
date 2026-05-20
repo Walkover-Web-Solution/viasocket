@@ -3,7 +3,14 @@
 import { useCallback, useMemo, useState } from 'react';
 import StoryCard from './stories/StoryCard';
 import StoriesPagination from './stories/StoriesPagination';
-import { chunkIntoPages } from './stories/constants';
+
+const pageSize = 3;
+
+const chunkIntoPages = (items, size = pageSize) => {
+    const out = [];
+    for (let i = 0; i + size <= items.length; i += size) out.push(items.slice(i, i + size));
+    return out;
+};
 
 export default function StoriesSection({ stories = [] }) {
     const [page, setPage] = useState(0);

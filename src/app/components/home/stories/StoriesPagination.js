@@ -2,7 +2,9 @@
 
 import { memo } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { navBtnClass } from './constants';
+
+const navBtnClass =
+    'w-9 h-9 flex items-center justify-center border custom-border rounded-full transition-all duration-200 hover:border-accent hover:text-accent disabled:opacity-25 disabled:cursor-not-allowed';
 
 const PageDot = memo(function PageDot({ active, onClick, index }) {
     return (

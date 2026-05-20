@@ -1,7 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { initialCount, rotationInterval } from './constants';
+
+const initialCount = 6;
+const rotationInterval = 5000;
 
 /**
  * Maintains an array of `initialCount` indices into a list of `total` items,
