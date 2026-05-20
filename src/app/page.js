@@ -56,6 +56,7 @@ export default async function HomePage() {
     navbarData,
     templateData,
     initialApps,
+    clientStories,
   } = await getHomePageData();
   const hasToken = await getHasToken();
   return (
@@ -83,6 +84,7 @@ export default async function HomePage() {
         indexTemplateData={indexTemplateData}
         templateData={templateData}
         reviewData={reviewData}
+        clientStories={clientStories}
       />
 
       {/* FAQ Section */}

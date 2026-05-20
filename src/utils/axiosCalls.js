@@ -283,6 +283,26 @@ export async function getAppCount(pageUrl) {
     }
 }
 
+export async function getClientStories(pageUrl) {
+    const url = `https://api.docstar.io/p/getSideBarData?collectionId=EVBBQjKlmMxW`;
+    try {
+        const response = await axiosWithCache.get(url, {
+            cache: {
+                ttl: 1000 * 60 * 20, // cache for 20 min
+                interpretHeader: false,
+            },
+        });
+        return response?.data?.pages || {};
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return {};
+    }
+}
+
 export async function getCategoryBlogs(query, pageUrl) {
     const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name.toLowerCase() === 'all' ? '' : query?.categoryData[0]?.name : '';
     const searchQuery = category.replace(/-/g, " ");
