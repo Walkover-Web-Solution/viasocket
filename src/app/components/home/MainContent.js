@@ -6,7 +6,7 @@ import EmbedSection from '@/app/components/home/EmbedSection';
 import StoriesSection from './StoriesSection';
 import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 
-export default function MainContent({ indexTemplateData, templateData, reviewData }) {
+export default function MainContent({ indexTemplateData, templateData, reviewData, clientStories }) {
     return (
         <>
             {/* Template Section - Only show when user is not searching */}
@@ -41,7 +41,7 @@ export default function MainContent({ indexTemplateData, templateData, reviewDat
                 <ShowBadges />
             </div>
 
-            <StoriesSection />
+            <StoriesSection stories={clientStories} />
 
             {/* Review Section */}
             <div className="bg-[#f9f6f1]">
