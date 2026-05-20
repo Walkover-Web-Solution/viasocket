@@ -4,7 +4,8 @@ import { useCallback, useMemo, useState } from 'react';
 import ReviewCard from './testimonials/ReviewCard';
 import ShowMoreButton from './testimonials/ShowMoreButton';
 import useRotatingSlots from './testimonials/useRotatingSlots';
-import { initialCount } from './testimonials/constants';
+
+const initialCount = 6;
 
 const hasReviewContent = (item) =>
     !!item &&

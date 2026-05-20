@@ -2,7 +2,10 @@
 
 import { memo, useEffect, useRef, useState } from 'react';
 import CardContent from './CardContent';
-import { fadeTransition } from './constants';
+
+const fadeDuration = 1200;
+const easing = 'cubic-bezier(0.4, 0, 0.2, 1)';
+const fadeTransition = `opacity ${fadeDuration}ms ${easing}`;
 
 const getItemKey = (item) => item?.id ?? item?.link ?? item?.name ?? '';
 
