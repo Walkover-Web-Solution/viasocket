@@ -13,7 +13,6 @@ import { useState, useCallback, useEffect } from 'react';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
@@ -23,6 +22,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import RealWorldUseCase from './realWorldUseCase';
+import GetStarted from '@/components/getStarted/GetStarted';
 
 export default function IntegrationsAppOneClientComp({
     appOneDetails,
