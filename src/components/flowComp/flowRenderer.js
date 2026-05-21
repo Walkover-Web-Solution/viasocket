@@ -1,13 +1,11 @@
 import IconWrapper from './iconWrapper.js';
-import { Code2, Sparkles, Webhook, AlarmClock, FileCode, Plus, ArrowDown } from 'lucide-react';
+import { Code2, Sparkles, Webhook, AlarmClock, FileCode, ArrowDown } from 'lucide-react';
 import Image from 'next/image';
 import { BlockTypes } from '@/enums.js';
 
 const Fab = ({ children }) => (
     <div className="bg-[#5f5e5b] text-white rounded-full shadow-lg px-5 py-3">{children}</div>
 );
-
-const Chip = ({ label }) => <div className="text-xs border px-2 py-1 bg-gray-200">{label}</div>;
 
 function replaceUnderscoreWithSpace(str) {
     if (!str) return '';
@@ -76,7 +74,16 @@ function FlowHeader({ trigger }) {
             <div className="font-semibold text-base">When</div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="py-1 px-2 flex w-full max-w-[300px] border-2 flow-border-color bg-white">
+                <div className="relative group py-1 px-2 flex w-full max-w-[300px] border-2 flow-border-color bg-white">
+                    {trigger?.serviceName && (
+                        <div
+                            role="tooltip"
+                            className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 z-10 inline-block whitespace-nowrap px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+                        >
+                            {trigger.serviceName}
+                            <span className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-2 rotate-45 bg-gray-900" />
+                        </div>
+                    )}
                     <div className="py-1">
                         <IconWrapper
                             component={
@@ -109,16 +116,9 @@ function FlowHeader({ trigger }) {
                             <div className="text-base">{trigger?.meaning}</div>
                         ) : (
                             <div className="flex flex-col gap-1">
-                                <div className="text-base">{trigger?.serviceName}</div>
-                                <Chip
-                                    label={
-                                        trigger?.triggerType === 'hook'
-                                            ? 'Instant Trigger'
-                                            : trigger?.triggerType === 'manual_webhook'
-                                              ? 'Manual Trigger'
-                                              : `Runs Every ${trigger?.selectedValues?.inputData?.scheduledTime || '15'} Minutes`
-                                    }
-                                />
+                                <div className="text-base">
+                                    {replaceUnderscoreWithSpace(trigger?.actionName) || trigger?.serviceName}
+                                </div>
                             </div>
                         )}
                     </div>
@@ -186,20 +186,6 @@ function FlowSteps({ block, order, root = 'root' }) {
                     </div>
                 );
             })}
-
-            {root === 'root' ? (
-                <div className="flex flex-col items-center ">
-                    <VerticalStick />
-                    <div className="p-1 w-full flex justify-center border-2 flow-border-color bg-white">
-                        <Plus className="w-6 h-6 text-gray-500" />
-                    </div>
-                </div>
-            ) : (
-                <div className="w-full flex items-center justify-center mt-2 gap-2 border-2 flow-border-color bg-white">
-                    <Plus className="w-4 h-4 text-gray-500" />
-                    <span className="whitespace-nowrap text-sm">Add Step</span>
-                </div>
-            )}
         </div>
     );
 }
@@ -243,7 +229,6 @@ function IfGroup({ block, order, step, index = 0 }) {
                     </li>
                 </ul>
             </div>
-            <div className="custom-flow-border mt-4 w-full text-center">Continue from here</div>
         </div>
     );
 }
