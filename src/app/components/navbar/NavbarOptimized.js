@@ -164,7 +164,7 @@ export default function NavbarOptimized({
                             {/* Dynamic login/panel button based on token */}
                             {hasToken ? (
                                 <button
-                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                                     onClick={(e) => handleRedirect(e, pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : 'https://flow.viasocket.com?')}
                                     rel="nofollow"
                                 >
@@ -172,7 +172,7 @@ export default function NavbarOptimized({
                                 </button>
                             ) : (
                                 <button
-                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
+                                    className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent h-full !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                                     onClick={(e) => handleRedirect(e, pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : '/signup?')}
                                 >
                                     Login/Sign Up
