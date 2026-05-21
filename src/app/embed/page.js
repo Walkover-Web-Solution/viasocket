@@ -1,6 +1,7 @@
 import BlogGrid from '../components/blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
+import GetStarted from '../components/common/GetStarted';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +10,6 @@ import Cta from '@/components/CTA/Cta';
 import { getEmbedPageData } from '../lib/data';
 import Table from '../components/embed/Table';
 import EmbedImageSelector from '../components/embed/EmbedImageSelector';
-import GetStarted from '@/components/getStarted/GetStarted';
 
 export const runtime = 'edge';
 
@@ -251,7 +251,7 @@ export default async function EmbedPage() {
                 <div className="pb-4">
                     {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/embed'} />}
 
-                    <div className="container mb-8">
+                    <div className="container">
                         <GetStarted />
                     </div>
 
