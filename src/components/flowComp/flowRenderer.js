@@ -1,7 +1,6 @@
 import IconWrapper from './iconWrapper.js';
 import { Code2, Sparkles, Webhook, AlarmClock, FileCode, ArrowDown } from 'lucide-react';
 import Image from 'next/image';
-import { BlockTypes } from '@/enums.js';
 
 const Fab = ({ children }) => (
     <div className="bg-[#5f5e5b] text-white rounded-full shadow-lg px-5 py-3">{children}</div>
@@ -116,7 +115,7 @@ function FlowHeader({ trigger }) {
                             <div className="text-base">{trigger?.meaning}</div>
                         ) : (
                             <div className="flex flex-col gap-1">
-                                <div className="text-base">
+                                <div className="text-base capitalize">
                                     {replaceUnderscoreWithSpace(trigger?.actionName) || trigger?.serviceName}
                                 </div>
                             </div>
@@ -174,11 +173,7 @@ function FlowSteps({ block, order, root = 'root' }) {
                                 <div className="flex items-center p-2 w-auto border-2 flow-border-color bg-white">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
-                                        <span className="font-400">
-                                            {block[step]?.type === BlockTypes.PLUG
-                                                ? replaceUnderscoreWithSpace(step)
-                                                : step}
-                                        </span>
+                                        <span className="font-400 capitalize">{replaceUnderscoreWithSpace(step)}</span>
                                     </div>
                                 </div>
                             </>
