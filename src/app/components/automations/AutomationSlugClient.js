@@ -77,11 +77,14 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
         <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative rounded-xl">
             <div ref={triggerRef} className="flex flex-col gap-4 border custom-border rounded-xl">
                 <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 rounded-xl">
-                    <div ref={contentRef} className="w-full lg:w-[55%] flex flex-col justify-between gap-6 p-6">
-                        <div className="cont gap-6">
-                            <h1 className="h1 !text-4xl !font-semibold">{template?.title}</h1>
-                            <h2 className="h3 !text-lg !text-gray-600">{template?.description}</h2>
-                            <div className="flex items-center gap-4">
+                    <div
+                        ref={contentRef}
+                        className="w-full lg:w-[55%] flex flex-col justify-between gap-6 px-6 pt-6 pb-4"
+                    >
+                        <div className="cont gap-2">
+                            <h1 className="h1 !text-[40px] !leading-[1.2em] !font-semibold">{template?.title}</h1>
+                            <h2 className="h3 !text-lg !text-gray-500">{template?.description}</h2>
+                            <div className="flex items-center gap-4 mt-6">
                                 <button
                                     className="btn btn-accent"
                                     onClick={(e) =>
@@ -95,12 +98,14 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                 </button>
                             </div>
                         </div>
-                        <div className="flex items-center gap-4 border-t pt-6">
+                        <div className="flex items-center gap-4 border-t pt-4">
                             <TemplateCardIcons template={template} rounded />
                             <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                            <h3 className="text-sm">By {template?.userName}</h3>
+                            <h3 className="text-xs text-gray-400 tracking-[1px]">By {template?.userName}</h3>
                             <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
-                            <h3 className="text-xs">Installed by {template?.usedCount} users</h3>
+                            <h3 className="text-xs text-gray-400 tracking-[1px]">
+                                Installed by {template?.usedCount} users
+                            </h3>
                         </div>
                     </div>
                     <div

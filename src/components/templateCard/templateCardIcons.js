@@ -9,13 +9,13 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
 
     const shownIcons = new Set();
     const elements = [];
-    const roundedClass = rounded ? ' rounded-full' : '';
+    const roundedClass = rounded ? '' : '';
 
     // Trigger Icon
     if (triggerIcon && !shownIcons.has(triggerIcon)) {
         shownIcons.add(triggerIcon);
         elements.push(
-            <div key="trigger" className={`w-10 h-10 relative bg-gray-50 border${roundedClass}`}>
+            <div key="trigger" className={`w-8 h-8 relative bg-gray-50 border${roundedClass}`}>
                 <Image
                     src={triggerIcon}
                     alt="trigger"
@@ -29,7 +29,7 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
     } else if (!triggerIcon) {
         if (triggerType === 'webhook') {
             elements.push(
-                <div key="webhook" className={`w-10 h-10 relative bg-gray-50 border${roundedClass}`}>
+                <div key="webhook" className={`w-8 h-8 relative bg-gray-50 border${roundedClass}`}>
                     <Webhook
                         size={16}
                         className="object-contain p-1"
@@ -39,7 +39,7 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
             );
         } else if (triggerType === 'cron') {
             elements.push(
-                <div key="cron" className={`w-10 h-10 relative bg-gray-50 border${roundedClass}`}>
+                <div key="cron" className={`w-8 h-8 relative bg-gray-50 border${roundedClass}`}>
                     <Timer
                         size={16}
                         className="object-contain p-1"
@@ -57,10 +57,7 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
             shownIcons.add(icon);
             if (i < maxIcons) {
                 elements.push(
-                    <div
-                        key={`app-icon-wrapper-${i}`}
-                        className={`h-10 w-10 relative bg-gray-50 border${roundedClass}`}
-                    >
+                    <div key={`app-icon-wrapper-${i}`} className={`h-8 w-8 relative bg-gray-50 border${roundedClass}`}>
                         <Image
                             key={`app-icon-${i}`}
                             src={icon}
@@ -76,7 +73,7 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
                 elements.push(
                     <div
                         key="app-icon-wrapper-more"
-                        className={`text-black w-10 h-10 bg-gray-50 flex items-center justify-center border${roundedClass}`}
+                        className={`text-black w-8 h-8 bg-gray-50 flex items-center justify-center border${roundedClass}`}
                     >
                         <span>+{appIcons.length - maxIcons}</span>
                     </div>
@@ -89,11 +86,11 @@ const TemplateCardIcons = ({ template, rounded = true, maxIcons = 4, overlap = t
     if (overlap) {
         const stacked = elements.map((el, idx) =>
             cloneElement(el, {
-                className: `${el.props.className} ring-2 ring-white${idx > 0 ? ' -ml-3' : ''}`,
+                className: `${el.props.className} ${idx > 0 ? ' ' : ''}`,
                 style: { ...(el.props.style || {}), zIndex: elements.length - idx },
             })
         );
-        return <div className="flex items-center">{stacked}</div>;
+        return <div className="flex items-center gap-2 mr-2">{stacked}</div>;
     }
 
     return <div className="flex items-center gap-2">{elements}</div>;
