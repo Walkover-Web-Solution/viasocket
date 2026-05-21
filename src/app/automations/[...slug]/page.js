@@ -20,7 +20,7 @@ export default async function AutomationSlugPage({ params }) {
     }
 
     return (
-        <div className="bg-[#faf9f6] global-top-space">
+        <div className="dotted-background global-top-space">
             <ConditionalNavbar>
                 <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
             </ConditionalNavbar>
