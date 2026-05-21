@@ -12,6 +12,7 @@ import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
+import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
@@ -22,7 +23,6 @@ import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
-import GetStarted from '@/components/getStarted/GetStarted';
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
