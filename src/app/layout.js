@@ -1,5 +1,7 @@
 import '@/scss/global.scss';
+import { headers, cookies } from 'next/headers';
 import AppProvider from './providers';
+import { trackRedditEvent } from '@/utils/axiosCalls';
 
 export const metadata = {
     title: 'viaSocket',
@@ -40,7 +42,18 @@ export const metadata = {
     },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    // Reddit Conversion API — fire PageVisit server-side on every page (incl. dynamic routes)
+    const headerList = await headers();
+    const cookieStore = await cookies();
+    const pathname = headerList.get('x-pathname') || '/';
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
+    const pageUrl = `${baseUrl.replace(/\/$/, '')}${pathname}`;
+    const click_id = cookieStore.get('rdt_cid')?.value;
+
+    // fire-and-forget — never block render
+    trackRedditEvent('page-visit', { event_source_url: pageUrl, click_id }, pageUrl);
+
     return (
         <html lang="en" data-theme="light">
             <head>
@@ -65,6 +78,13 @@ export default function RootLayout({ children }) {
                         style={{ display: 'none', visibility: 'hidden' }}
                     />
                 </noscript>
+                {/* Reddit Pixel */}
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `!function(w,d){if(!w.rdt){var p=w.rdt=function(){p.sendEvent?p.sendEvent.apply(p,arguments):p.callQueue.push(arguments)};p.callQueue=[];var t=d.createElement("script");t.src="https://www.redditstatic.com/ads/pixel.js",t.async=!0;var s=d.getElementsByTagName("script")[0];s.parentNode.insertBefore(t,s)}}(window,document);rdt('init','a2_xxxxxxxxxxxxx');rdt('track', 'PageVisit');`,
+                    }}
+                />
+                {/* End Reddit Pixel */}
             </head>
             <body>
                 <div id="__next">

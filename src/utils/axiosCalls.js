@@ -28,8 +28,7 @@ export async function getDataFromTable(table, query, pageUrl) {
 export async function getLiveSupportData(pageUrl) {
     const url = `https://plugservice-api.viasocket.com/get-support-data`;
     try {
-        const response = await axiosWithCache.get(url, {
-        });
+        const response = await axiosWithCache.get(url, {});
         return response?.data?.count?.rows || [];
     } catch (error) {
         sendErrorMessage({
@@ -303,9 +302,29 @@ export async function getClientStories(pageUrl) {
     }
 }
 
+export async function trackRedditEvent(eventName, { event_source_url, click_id } = {}, pageUrl) {
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/${eventName}`;
+    try {
+        const { data } = await axios.post(
+            url,
+            { event_source_url, click_id },
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+        return data;
+    } catch (error) {
+        sendErrorMessage({ error, pageUrl: pageUrl || event_source_url, source: url });
+        return null;
+    }
+}
+
 export async function getCategoryBlogs(query, pageUrl) {
-    const category = query?.categoryData?.length > 0 ? query?.categoryData[0]?.name.toLowerCase() === 'all' ? '' : query?.categoryData[0]?.name : '';
-    const searchQuery = category.replace(/-/g, " ");
+    const category =
+        query?.categoryData?.length > 0
+            ? query?.categoryData[0]?.name.toLowerCase() === 'all'
+                ? ''
+                : query?.categoryData[0]?.name
+            : '';
+    const searchQuery = category.replace(/-/g, ' ');
     const fetchUrl = `https://viasocket.com/discovery/api/blog?search=${encodeURIComponent(searchQuery)}`;
     try {
         const response = await axiosWithCache.get(fetchUrl, {
