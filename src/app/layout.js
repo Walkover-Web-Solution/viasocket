@@ -3,6 +3,8 @@ import { headers, cookies } from 'next/headers';
 import AppProvider from './providers';
 import { trackRedditEvent } from '@/utils/axiosCalls';
 
+export const runtime = 'edge';
+
 export const metadata = {
     title: 'viaSocket',
     description: 'Connect your apps and automate workflows with viaSocket',
