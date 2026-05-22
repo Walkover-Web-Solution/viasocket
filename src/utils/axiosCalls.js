@@ -303,10 +303,7 @@ export async function getClientStories(pageUrl) {
 }
 
 export async function trackRedditEvent(eventName, { event_source_url, click_id } = {}, pageUrl) {
-    const baseUrl = process.env.NEXT_PUBLIC_INTEGRATION_URL;
-    if (!baseUrl || !eventName || !event_source_url) return null;
-
-    const url = `${baseUrl.replace(/\/$/, '')}/api/reddit/${eventName}`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/${eventName}`;
     try {
         const { data } = await axios.post(
             url,
