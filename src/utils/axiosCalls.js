@@ -303,6 +303,10 @@ export async function getClientStories(pageUrl) {
 }
 
 export async function trackRedditEvent(eventName, { event_source_url, click_id } = {}, pageUrl) {
+    // Only fire Reddit Conversion API in production; skip on local/test
+    if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod') {
+        return null;
+    }
     const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/${eventName}`;
     try {
         const { data } = await axios.post(
