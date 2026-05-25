@@ -26,20 +26,23 @@ export function middleware(request) {
     }
 
     // Reddit Conversion API — fire PageVisit server-side on every request (Edge-native fetch)
-    const pageUrl = request.url;
-    const clickId = incomingClickId || request.cookies.get(RDT_CID_COOKIE)?.value;
-    const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/page-visit`;
+    // Only run in production environment; skip on local/test
+    if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod') {
+        const pageUrl = request.url;
+        const clickId = incomingClickId || request.cookies.get(RDT_CID_COOKIE)?.value;
+        const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/page-visit`;
 
-    const payload = { event_source_url: pageUrl, click_id: clickId || undefined };
+        const payload = { event_source_url: pageUrl, click_id: clickId || undefined };
 
-    // fire-and-forget; do not block the response
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-    }).catch((err) => {
-        console.error('[Reddit CAPI] tracking error:', err);
-    });
+        // fire-and-forget; do not block the response
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+        }).catch((err) => {
+            console.error('[Reddit CAPI] tracking error:', err);
+        });
+    }
 
     return response;
 }

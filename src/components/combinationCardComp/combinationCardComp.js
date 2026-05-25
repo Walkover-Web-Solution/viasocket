@@ -1,6 +1,6 @@
 import { handleRedirect } from '@/utils/handleRedirection';
 import Image from 'next/image';
-import { ArrowUpRight, ExternalLink } from 'lucide-react';
+import { ExternalLink } from 'lucide-react';
 
 export default function CombinationCardComp({ trigger, action, description, link, showTopBorder }) {
     return (
