@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server';
 
 const RDT_CID_COOKIE = 'rdt_cid';
-const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30; // 30 days
+const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
-export function middleware(request) {
+const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+
+const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
+
+export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
-    // Block direct access to /home — redirect to /
+    // Redirect /home → /
     if (pathname === '/home') {
         const url = request.nextUrl.clone();
         url.pathname = '/';
@@ -15,39 +19,60 @@ export function middleware(request) {
 
     const response = NextResponse.next();
 
-    // Persist Reddit click id from URL into a first-party cookie for subsequent navigations
-    const incomingClickId = searchParams.get('rdt_cid');
+    // Read click id from URL
+    const rawIncomingClickId = searchParams.get('rdt_cid');
+
+    const incomingClickId = isValidRdtCid(rawIncomingClickId) ? rawIncomingClickId : null;
+
+    // Save valid click id in cookie
     if (incomingClickId) {
         response.cookies.set(RDT_CID_COOKIE, incomingClickId, {
             maxAge: RDT_CID_MAX_AGE,
             path: '/',
             sameSite: 'lax',
         });
+    } else if (rawIncomingClickId && !isValidRdtCid(rawIncomingClickId)) {
+        response.cookies.delete(RDT_CID_COOKIE);
     }
 
-    // Reddit Conversion API — fire PageVisit server-side on every request (Edge-native fetch)
-    // Only run in production environment; skip on local/test
+    // Reddit tracking
     if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod') {
-        const pageUrl = request.url;
-        const clickId = incomingClickId || request.cookies.get(RDT_CID_COOKIE)?.value;
-        const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/page-visit`;
+        try {
+            const pageUrl = request.url;
 
-        const payload = { event_source_url: pageUrl, click_id: clickId || undefined };
+            const cookieClickId = request.cookies.get(RDT_CID_COOKIE)?.value;
 
-        // fire-and-forget; do not block the response
-        fetch(apiUrl, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        }).catch((err) => {
-            console.error('[Reddit CAPI] tracking error:', err);
-        });
+            const clickId = incomingClickId || (isValidRdtCid(cookieClickId) ? cookieClickId : null);
+
+            // IMPORTANT
+            // const apiUrl = 'http://127.0.0.1:3000/api/reddit/page-visit';
+            const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/page-visit`;
+
+            const payload = {
+                event_source_url: pageUrl,
+            };
+
+            if (clickId) {
+                payload.click_id = clickId;
+            }
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            }).catch((err) => {
+                console.error('[Reddit CAPI] tracking error:', err);
+            });
+        } catch (err) {
+            console.error('Middleware error:', err);
+        }
     }
 
     return response;
 }
 
 export const config = {
-    // Run on all app routes; skip Next internals, API, and static assets
     matcher: ['/((?!_next/|api/|.*\\..*).*)'],
 };
