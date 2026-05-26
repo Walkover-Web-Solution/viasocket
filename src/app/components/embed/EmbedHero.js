@@ -1,16 +1,16 @@
 import Link from 'next/link';
 
 const HERO_ICONS = [
-    { src: 'https://cdn.svgporn.com/logos/google-sheets.svg', alt: 'Google Sheets' },
-    { src: 'https://cdn.svgporn.com/logos/hubspot.svg', alt: 'HubSpot' },
-    { src: 'https://cdn.svgporn.com/logos/google-gmail.svg', alt: 'Gmail' },
-    { src: 'https://cdn.svgporn.com/logos/salesforce.svg', alt: 'Salesforce' },
+    { src: 'https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png', alt: 'Google Sheets' },
+    { src: 'https://stuff.thingsofbrand.com/hubspot.com/images/img3_hubspot.png', alt: 'HubSpot' },
+    { src: 'https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg', alt: 'Gmail' },
+    { src: 'https://stuff.thingsofbrand.com/salesforce.com/images/img1_salesforce.png', alt: 'Salesforce' },
 ];
 
 export default function EmbedHero({ appCount }) {
     return (
         <div className="flex flex-col gap-6 p-12">
-            <p className="text-sm text-gray-700">
+            <p className="text-lg text-gray-700">
                 <span className="font-medium">MCP-Native</span>
                 <span className="mx-2">·</span>
                 <span className="font-medium">SOC2-Ready</span>

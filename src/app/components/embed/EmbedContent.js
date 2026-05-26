@@ -22,11 +22,11 @@ export default function EmbedContent({
     appCount,
 }) {
     return (
-        <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space">
-            <div className="w-full container border mt-12">
-                <div className="bg-[#C8EAD2] text-center py-3 text-sm text-gray-800">
+        <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space container">
+            <div className="w-full border mt-12">
+                <div className="bg-[#C8EAD2] text-center py-3 text-lg text-green-800">
                     Pay For Month 1. Get 5 Free.{' '}
-                    <Link href="/signup?utm_source=/embed" className="font-bold italic underline underline-offset-2">
+                    <Link href="/signup?utm_source=/embed" className="font-bold ml-2 italic text-black underline underline-offset-2">
                         GET STARTED →
                     </Link>
                 </div>

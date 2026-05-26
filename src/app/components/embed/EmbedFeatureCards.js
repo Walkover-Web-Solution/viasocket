@@ -30,11 +30,11 @@ export default function EmbedFeatureCards() {
                     href={card.href}
                     className={`${card.bg} text-white p-8 flex flex-col gap-4 min-h-[180px] relative group`}
                 >
-                    <div className="absolute top-6 right-6 w-9 h-9 rounded-full bg-transparent text-white flex items-center justify-center text-lg border border-white/30 group-hover:bg-white group-hover:text-gray-900 group-hover:border-white transition-colors duration-300">
+                    {/* <div className="absolute top-6 right-6 w-9 h-9 rounded-full bg-transparent text-white flex items-center justify-center text-lg border border-white/30 group-hover:bg-white group-hover:text-gray-900 group-hover:border-white transition-colors duration-300">
                         ↗
-                    </div>
-                    <h3 className="text-2xl font-medium pr-12">{card.title}</h3>
-                    <p className="text-base text-white/80">{card.desc}</p>
+                    </div> */}
+                    <h3 className="text-3xl font-medium pr-12">{card.title}</h3>
+                    <p className="text-lg text-white/80">{card.desc}</p>
                 </Link>
             ))}
         </div>

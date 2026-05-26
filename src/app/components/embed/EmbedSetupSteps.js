@@ -53,9 +53,7 @@ function CodeBlock({ code, label, tokens }) {
                     <div key={i}>{line ? highlight(line) : '\u00A0'}</div>
                 ))}
             </pre>
-            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">
-                {label}
-            </div>
+            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">{label}</div>
         </div>
     );
 }
@@ -72,20 +70,20 @@ export default function EmbedSetupSteps() {
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-                    <div className="border p-6 flex flex-col gap-3 h-full">
-                        <span className="text-xs font-bold tracking-wider text-red-600">STEP 01</span>
-                        <h3 className="text-xl font-bold">Generate the embed token</h3>
-                        <p className="text-gray-600">
+                    <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
+                        <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 01</span>
+                        <h3 className="text-2xl font-medium">Generate the embed token</h3>
+                        <p className="text-gray-600 mb-4">
                             Sign a JWT server-side with your org, project and a unique identifier. The identifier scopes
                             the embed to each user.
                         </p>
                         <CodeBlock code={jwtPayload} label="JSON PAYLOAD" />
                     </div>
 
-                    <div className="border p-6 flex flex-col gap-3 h-full">
-                        <span className="text-xs font-bold tracking-wider text-red-600">STEP 02</span>
-                        <h3 className="text-xl font-bold">Add the embed script</h3>
-                        <p className="text-gray-600">
+                    <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
+                        <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 02</span>
+                        <h3 className="text-2xl font-medium">Add the embed script</h3>
+                        <p className="text-gray-600 mb-4">
                             Paste a single script tag into your frontend with the generated token. The embed renders
                             inside your application.
                         </p>

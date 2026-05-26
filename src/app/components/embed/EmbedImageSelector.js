@@ -30,21 +30,21 @@ const FEATURES = [
 const STEPS = [
     { num: 1, color: 'text-rose-500', label: 'Create Contact' },
     { num: 2, color: 'text-red-500', label: 'Send Email' },
-    { num: 3, color: 'text-emerald-500', label: 'Update Record' },
+    { num: 3, color: 'text-green-500', label: 'Update Record' },
 ];
 
 const EmbedImageSelector = () => {
     return (
         <div className="container">
             <div className="flex flex-col gap-6">
-                <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
                     Everything you need to own the integration layer
                 </h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className="bg-[#EFEAFE] p-8 md:p-12 flex flex-col gap-8 justify-between">
+                    <div className="bg-[#EFEAFE] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
                         <div className="flex flex-col gap-4">
-                            <h3 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight">
+                            <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
                                 Give your users the access to build Multi-step flows
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
@@ -55,12 +55,12 @@ const EmbedImageSelector = () => {
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-4">
                             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center shadow-lg shrink-0">
                                 <Plus className="text-white" size={28} strokeWidth={2.5} />
                             </div>
                             <div className="border-t border-dashed border-gray-400 w-6 shrink-0" />
-                            <div className="bg-white rounded-lg shadow-md px-4 py-3 flex-1 max-w-xs">
+                            <div className="bg-white rounded-lg shadow-md px-4 py-3 flex-1">
                                 {STEPS.map((s) => (
                                     <div key={s.num} className="flex items-center gap-3 py-1 text-sm">
                                         <span className="text-gray-400">{s.num}.</span>
@@ -69,7 +69,7 @@ const EmbedImageSelector = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div className="w-7 h-7 rounded-full bg-emerald-500 flex items-center justify-center shrink-0">
+                            <div className="w-9 h-9 p-1 rounded-full bg-green-500 flex items-center justify-center shrink-0">
                                 <Check className="text-white" size={16} strokeWidth={3} />
                             </div>
                         </div>
@@ -79,16 +79,13 @@ const EmbedImageSelector = () => {
                         {FEATURES.map((f, i) => {
                             const Icon = f.icon;
                             return (
-                                <div
-                                    key={i}
-                                    className="bg-white border border-gray-200 p-6 flex flex-col gap-3"
-                                >
+                                <div key={i} className="bg-white border border-gray-200 p-6 flex flex-col gap-3">
                                     <div
                                         className={`w-10 h-10 rounded-lg flex items-center justify-center ${f.iconBg}`}
                                     >
                                         <Icon size={20} />
                                     </div>
-                                    <h4 className="font-bold text-gray-900 text-base">{f.title}</h4>
+                                    <h4 className="font-medium text-gray-900 text-lg">{f.title}</h4>
                                     <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
                                 </div>
                             );

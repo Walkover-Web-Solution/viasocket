@@ -45,20 +45,20 @@ const plans = [
 function PlanCard({ plan }) {
     return (
         <div
-            className={`flex flex-col gap-5 bg-white p-6 ${
+            className={`flex flex-col gap-5 bg-[#FAFAFA] p-6 ${
                 plan.highlight ? 'border-2 border-black' : 'border border-gray-200'
             }`}
         >
             <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-xs tracking-widest text-gray-700">
+                <div className="flex items-center gap-2 text-xs tracking-widest">
                     <span>{plan.name}</span>
                     {plan.nameIcon}
                 </div>
                 <div className="flex items-baseline gap-1">
                     <h3 className="text-3xl font-bold text-black">{plan.price}</h3>
-                    {plan.priceSuffix && <span className="text-sm text-gray-500">{plan.priceSuffix}</span>}
+                    {plan.priceSuffix && <span className="text-sm">{plan.priceSuffix}</span>}
                 </div>
-                <p className="text-sm text-gray-600">{plan.description}</p>
+                <p className="text-sm text-gray-500">{plan.description}</p>
             </div>
 
             <div className="border-t border-gray-200" />
@@ -99,8 +99,8 @@ export default function EmbedPricing() {
         <div className="container" id="pricing">
             <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
-                    <h2 className="text-3xl font-semibold text-black">Embed Pricing</h2>
-                    <p className="text-gray-600">Simple, transparent pricing that grows with you.</p>
+                    <h2 className="text-4xl font-medium text-black">Embed Pricing</h2>
+                    <p className="text-gray-600 text-lg">Simple, transparent pricing that grows with you.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
