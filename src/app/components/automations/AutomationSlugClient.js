@@ -3,13 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
+import TemplateCardIcons from '@/components/templateCard/templateCardIcons';
 import ReactMarkdown from 'react-markdown';
 import style from '@/components/templateCard/template.module.scss';
 import SharePopup from '@/components/templateCard/sharePopup';
-import TemplateIcons from '@/components/templateCard/templateIcons';
 import FlowRenderer from '@/components/flowComp/flowRenderer';
 import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates';
-import Link from 'next/link';
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 import TemplateCard from '@/components/templateCard/templateCard';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
@@ -18,7 +17,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
-    const [flowRendererHeight, setFlowRendererHeight] = useState('600px');
+    const [flowRendererHeight, setFlowRendererHeight] = useState('440px');
 
     const triggerRef = useRef(null);
     const [isSticky, setIsSticky] = useState(false);
@@ -65,9 +64,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
             <div className="container cont lg:gap-20 md:gap-16 gap-12">
                 <div className="cont gap-4 pt-20 text-center">
                     <h1 className="h1">Template Not Found</h1>
-                    <p className="text-gray-600">
-                        The template you're looking for doesn't exist or has been removed.
-                    </p>
+                    <p className="text-gray-600">The template you're looking for doesn't exist or has been removed.</p>
                     <a href="/automations" className="btn btn-accent">
                         Browse All Templates
                     </a>
@@ -77,60 +74,43 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
     }
 
     return (
-        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative">
-            <div ref={triggerRef} className="flex flex-col gap-4 border custom-border">
-                <div className="dotted-background flex flex-col lg:flex-row lg:gap-1">
-                    <div ref={contentRef} className="w-full lg:w-[55%] bg-[#faf9f6] flex flex-col  justify-between gap-6 p-6">
-                        <div className="cont gap-4">
-                            <h1 className="h1">{template?.title}</h1>
-                            <h2 className="h3">{template?.description}</h2>
-                            <h2 className="h3">Apps used</h2>
-                            <TemplateIcons template={template} />
-                            {template?.category?.length > 0 && (
-                                <div className="cont gap-2 mt-4">
-                                    <h2 className="h3">Categories</h2>
-                                    <div className="flex flex-wrap gap-3">
-                                        {template?.category?.map((cat, idx) => (
-                                            <Link
-                                                key={idx}
-                                                href={`/automations/${encodeURIComponent(
-                                                    cat.toLowerCase().replace(/\s+/g, '-')
-                                                )}`}
-                                                className="cursor-pointer px-2 py-1 bg-white text-sm border"
-                                            >
-                                                {cat}
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                        <div className=" flex items-center gap-12 justify-between">
-                            <div className="flex items-center gap-4">
+        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative rounded-xl">
+            <div ref={triggerRef} className="flex flex-col gap-4 border custom-border rounded-xl">
+                <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 rounded-xl">
+                    <div
+                        ref={contentRef}
+                        className="w-full lg:w-[55%] flex flex-col justify-between gap-6 px-6 pt-6 pb-4"
+                    >
+                        <div className="cont gap-2">
+                            <h1 className="h1 !text-[40px] !leading-[1.2em] !font-semibold">{template?.title}</h1>
+                            <h2 className="h3 !text-lg !text-gray-500">{template?.description}</h2>
+                            <div className="flex items-center gap-4 mt-6">
                                 <button
                                     className="btn btn-accent"
                                     onClick={(e) =>
-                                        handleRedirect(
-                                            e,
-                                            `https://flow.viasocket.com/template/${template?.id}?`
-                                        )
+                                        handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
                                     }
                                 >
                                     Install Template
                                 </button>
-                                <button className='btn btn-outline' onClick={handleShareTemplate}>
+                                <button className="btn btn-outline" onClick={handleShareTemplate}>
                                     Share Template
                                 </button>
                             </div>
-                            <div className="flex gap-1 flex-col">
-                                <h3 className="text-sm">Created by {template?.userName}</h3>
-                                <h3 className="text-xs ml-auto">Installed by {template?.usedCount} users</h3>
-                            </div>
+                        </div>
+                        <div className="flex items-center gap-4 border-t pt-4">
+                            <TemplateCardIcons template={template} rounded />
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                            <h3 className="text-xs text-gray-400 tracking-[1px]">By {template?.userName}</h3>
+                            <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
+                            <h3 className="text-xs text-gray-400 tracking-[1px]">
+                                Installed by {template?.usedCount} users
+                            </h3>
                         </div>
                     </div>
                     <div
                         ref={flowContainerRef}
-                        className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start border-t lg:border-t-0 lg:border-l custom-border p-6 relative dotted-background"
+                        className="lg:w-1/2 ml-auto w-full overflow-hidden flex justify-center items-start border-t lg:border-t-0 rounded-tr-xl rounded-br-xl custom-border p-6 relative dotted-background"
                         style={{ height: flowRendererHeight }}
                     >
                         <ZoomableFlowContainer
@@ -151,8 +131,11 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
             </div>
 
             <div
-                className={`fixed bottom-[80px] sm:bottom-[10px] left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out container ${isSticky && isStickyVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
-                    }`}
+                className={`fixed bottom-[80px] sm:bottom-[10px] left-1/2 transform -translate-x-1/2 transition-all duration-300 ease-in-out container ${
+                    isSticky && isStickyVisible
+                        ? 'opacity-100 translate-y-0'
+                        : 'opacity-0 -translate-y-4 pointer-events-none'
+                }`}
                 style={{ zIndex: 100 }}
             >
                 <div className="container border custom-border bg-[#faf9f6] gap-2 flex flex-col items-center justify-between pt-2 sm:pt-6 md:px-12 relative">
@@ -167,13 +150,11 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                     <div className="flex items-center gap-4">
                         <button
                             className="btn btn-accent my-4"
-                            onClick={(e) =>
-                                handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)
-                            }
+                            onClick={(e) => handleRedirect(e, `https://flow.viasocket.com/template/${template?.id}?`)}
                         >
                             Install Template
                         </button>
-                        <button className='btn btn-outline' onClick={handleShareTemplate}>
+                        <button className="btn btn-outline" onClick={handleShareTemplate}>
                             Share Template
                         </button>
                     </div>
@@ -211,16 +192,10 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                         <h1 {...props} className="text-3xl font-bold mb-4 text-black-900" />
                                     ),
                                     h2: ({ node, ...props }) => (
-                                        <h2
-                                            {...props}
-                                            className="text-2xl font-bold mb-3 mt-6 text-black-900"
-                                        />
+                                        <h2 {...props} className="text-2xl font-bold mb-3 mt-6 text-black-900" />
                                     ),
                                     h3: ({ node, ...props }) => (
-                                        <h3
-                                            {...props}
-                                            className="text-lg font-semibold mb-2 mt-5 text-black-900"
-                                        />
+                                        <h3 {...props} className="text-lg font-semibold mb-2 mt-5 text-black-900" />
                                     ),
                                     p: ({ node, ...props }) => (
                                         <p {...props} className="text-black-700 leading-7 mb-4" />
@@ -228,9 +203,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                     strong: ({ node, ...props }) => (
                                         <strong {...props} className="font-bold text-black-900" />
                                     ),
-                                    em: ({ node, ...props }) => (
-                                        <em {...props} className="italic text-black-800" />
-                                    ),
+                                    em: ({ node, ...props }) => <em {...props} className="italic text-black-800" />,
                                     ul: ({ node, ordered, ...props }) => (
                                         <ul {...props} className="list-disc pl-6 space-y-2 mb-4" />
                                     ),
@@ -245,11 +218,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                             {...props}
                                             className="text-accent hover:border-b-2 border-b-accent"
                                             target={props.href?.startsWith('http') ? '_blank' : undefined}
-                                            rel={
-                                                props.href?.startsWith('http')
-                                                    ? 'noopener noreferrer'
-                                                    : undefined
-                                            }
+                                            rel={props.href?.startsWith('http') ? 'noopener noreferrer' : undefined}
                                         />
                                     ),
                                     hr: ({ node, ...props }) => (
@@ -262,10 +231,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                         />
                                     ),
                                     code: ({ node, inline, ...props }) => (
-                                        <code
-                                            {...props}
-                                            className="w-full overflow-auto rounded  text-black text-sm"
-                                        />
+                                        <code {...props} className="w-full overflow-auto rounded  text-black text-sm" />
                                     ),
                                     pre: ({ node, ...props }) => (
                                         <pre

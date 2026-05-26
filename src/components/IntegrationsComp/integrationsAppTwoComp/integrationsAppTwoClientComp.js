@@ -12,7 +12,6 @@ import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
 import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
-import GetStarted from '@/components/getStarted/getStarted';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import { handleRedirect } from '@/utils/handleRedirection';
 import ExternalLink from '@/utils/ExternalLink';
@@ -23,6 +22,8 @@ import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import GetStarted from '@/components/getStarted/getStarted';
+
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
@@ -274,9 +275,12 @@ export default function IntegrationsAppTwoClientComp({
                                 className="btn btn-accent mt-10 px-8 py-3"
                             >
                                 Connect these apps for free
-                            </button>) : (
+                            </button>
+                        ) : (
                             <DashboardButton
-                                utm_src={"/integrations/" + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname}
+                                utm_src={
+                                    '/integrations/' + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname
+                                }
                                 hasToken={hasToken}
                             />
                         )}
@@ -293,8 +297,9 @@ export default function IntegrationsAppTwoClientComp({
                             </h2>
 
                             <div
-                                className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${combosData?.combinations?.length > 1 ? 'border-t' : ''
-                                    }`}
+                                className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${
+                                    combosData?.combinations?.length > 1 ? 'border-t' : ''
+                                }`}
                             >
                                 {combosData?.combinations
                                     ?.filter(
@@ -313,9 +318,9 @@ export default function IntegrationsAppTwoClientComp({
                                             (event) => event?.rowid === combo?.trigger?.id
                                         )?.name;
 
-                                        const actionName = combosData?.plugins[
-                                            combo?.actions[0]?.name
-                                        ]?.events?.find((event) => event?.rowid === combo?.actions[0]?.id)?.name;
+                                        const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
+                                            (event) => event?.rowid === combo?.actions[0]?.id
+                                        )?.name;
 
                                         return (
                                             <CombinationCardComp
@@ -364,25 +369,25 @@ export default function IntegrationsAppTwoClientComp({
 
                             {((!combosData?.combinations?.length && appOneDetails?.events?.length > 0) ||
                                 (!combosData?.combinations?.length && appTwoDetails?.events?.length > 0)) && (
-                                    <div className="cont gap-6">
-                                        <div className="cont gap-2">
-                                            <h2 className="h2">
-                                                Enable Integrations or automations with these events of{' '}
-                                                <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                                <span className="text-accent">{appTwoDetails?.name}</span>
-                                            </h2>
-                                            <p className="sub__h1">
-                                                {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                                            </p>
-                                        </div>
-
-                                        <IntegrationsEventsComp
-                                            combosData={combosData}
-                                            appOneDetails={appOneDetails}
-                                            appTwoDetails={appTwoDetails}
-                                        />
+                                <div className="cont gap-6">
+                                    <div className="cont gap-2">
+                                        <h2 className="h2">
+                                            Enable Integrations or automations with these events of{' '}
+                                            <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                            <span className="text-accent">{appTwoDetails?.name}</span>
+                                        </h2>
+                                        <p className="sub__h1">
+                                            {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
+                                        </p>
                                     </div>
-                                )}
+
+                                    <IntegrationsEventsComp
+                                        combosData={combosData}
+                                        appOneDetails={appOneDetails}
+                                        appTwoDetails={appTwoDetails}
+                                    />
+                                </div>
+                            )}
                         </>
                     )}
 
@@ -416,11 +421,7 @@ export default function IntegrationsAppTwoClientComp({
             )}
 
             {videoData?.length > 0 && (
-                <VideoGrid
-                    videoData={videoData}
-                    appOneName={appOneDetails?.name}
-                    appTwoName={appTwoDetails?.name}
-                />
+                <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
             )}
 
             {faqData && <FAQSection faqData={faqData} />}
@@ -453,15 +454,13 @@ export default function IntegrationsAppTwoClientComp({
                                 ))}
                             </div>
                             <ExternalLink
-                                href={
-                                    (() => {
-                                        const baseUrl = appOneDetails?.domain?.startsWith('http')
-                                            ? appOneDetails?.domain
-                                            : 'http://' + appOneDetails?.domain;
-                                        const separator = baseUrl.includes('?') ? '&' : '?';
-                                        return `${baseUrl}${separator}utm_source=viasocket`;
-                                    })()
-                                }
+                                href={(() => {
+                                    const baseUrl = appOneDetails?.domain?.startsWith('http')
+                                        ? appOneDetails?.domain
+                                        : 'http://' + appOneDetails?.domain;
+                                    const separator = baseUrl.includes('?') ? '&' : '?';
+                                    return `${baseUrl}${separator}utm_source=viasocket`;
+                                })()}
                                 appSlugName={appOneDetails?.appslugname}
                                 doFollowArray={getDoFollowUrlStatusArray}
                             >
@@ -494,15 +493,13 @@ export default function IntegrationsAppTwoClientComp({
                                 ))}
                             </div>
                             <ExternalLink
-                                href={
-                                    (() => {
-                                        const baseUrl = appTwoDetails?.domain?.startsWith('http')
-                                            ? appTwoDetails?.domain
-                                            : 'http://' + appTwoDetails?.domain;
-                                        const separator = baseUrl.includes('?') ? '&' : '?';
-                                        return `${baseUrl}${separator}utm_source=viasocket`;
-                                    })()
-                                }
+                                href={(() => {
+                                    const baseUrl = appTwoDetails?.domain?.startsWith('http')
+                                        ? appTwoDetails?.domain
+                                        : 'http://' + appTwoDetails?.domain;
+                                    const separator = baseUrl.includes('?') ? '&' : '?';
+                                    return `${baseUrl}${separator}utm_source=viasocket`;
+                                })()}
                                 appSlugName={appTwoDetails?.appslugname}
                                 doFollowArray={getDoFollowUrlStatusArray}
                             >
