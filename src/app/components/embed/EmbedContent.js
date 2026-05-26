@@ -1,9 +1,7 @@
 import BlogGrid from '../blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import Image from 'next/image';
 import Link from 'next/link';
-import Cta from '@/components/CTA/Cta';
 import EmbedSetupSteps from './EmbedSetupSteps';
 import EmbedImageSelector from './EmbedImageSelector';
 import EmbedHero from './EmbedHero';
@@ -17,8 +15,6 @@ export default function EmbedContent({
     footerData,
     faqData,
     embedData,
-    tableData,
-    howItWorksData,
     appCount,
 }) {
     return (
