@@ -1,0 +1,137 @@
+import Link from 'next/link';
+import { Check, Lock, Sparkles } from 'lucide-react';
+
+const plans = [
+    {
+        name: 'STARTER',
+        price: 'Free',
+        priceSuffix: '',
+        description: 'Everything you need to get started.',
+        usage: ['50 active users', '10k invocations / month'],
+        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        ctaLabel: 'Get started free',
+        ctaLink: '/signup?utm_source=/embed',
+        ctaClass: 'btn btn-primary',
+        highlight: false,
+    },
+    {
+        name: 'PRO',
+        nameIcon: <Sparkles size={14} className="text-black" />,
+        price: '$99',
+        priceSuffix: '/ month',
+        description: 'Scale up with higher limits and full platform access.',
+        usage: ['250 active users', '750k invocations / month'],
+        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        ctaLabel: 'Get started',
+        ctaLink: '/signup?utm_source=/embed',
+        ctaClass: 'btn btn-accent',
+        highlight: true,
+    },
+    {
+        name: 'ENTERPRISE',
+        nameIcon: <Lock size={12} className="text-black" />,
+        price: 'Custom',
+        priceSuffix: '',
+        description: 'Tailored for security, compliance, and unlimited scale.',
+        usage: ['Custom users', 'Custom invocations'],
+        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        ctaLabel: 'Contact Sales',
+        ctaLink: 'https://cal.id/team/viasocket/embed',
+        ctaClass: 'btn btn-primary',
+        highlight: false,
+    },
+];
+
+function PlanCard({ plan }) {
+    return (
+        <div
+            className={`flex flex-col gap-5 bg-white p-6 ${
+                plan.highlight ? 'border-2 border-black' : 'border border-gray-200'
+            }`}
+        >
+            <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2 text-xs tracking-widest text-gray-700">
+                    <span>{plan.name}</span>
+                    {plan.nameIcon}
+                </div>
+                <div className="flex items-baseline gap-1">
+                    <h3 className="text-3xl font-bold text-black">{plan.price}</h3>
+                    {plan.priceSuffix && <span className="text-sm text-gray-500">{plan.priceSuffix}</span>}
+                </div>
+                <p className="text-sm text-gray-600">{plan.description}</p>
+            </div>
+
+            <div className="border-t border-gray-200" />
+
+            <div className="flex flex-col gap-2">
+                <span className="text-xs tracking-widest text-gray-500">USAGE</span>
+                <ul className="flex flex-col gap-2">
+                    {plan.usage.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
+                            <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <div className="flex flex-col gap-2">
+                <span className="text-xs tracking-widest text-gray-500">SUPPORT</span>
+                <ul className="flex flex-col gap-2">
+                    {plan.support.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
+                            <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
+                            {item}
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
+            <Link href={plan.ctaLink} className={`w-full ${plan.ctaClass}`}>
+                {plan.ctaLabel}
+            </Link>
+        </div>
+    );
+}
+
+export default function EmbedPricing() {
+    return (
+        <div className="container" id="pricing">
+            <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">
+                <div className="flex flex-col gap-1">
+                    <h2 className="text-3xl font-semibold text-black">Embed Pricing</h2>
+                    <p className="text-gray-600">Simple, transparent pricing that grows with you.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {plans.map((plan) => (
+                        <PlanCard key={plan.name} plan={plan} />
+                    ))}
+                </div>
+
+                <div className="border border-gray-200 bg-[#FAFAFA] p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                    <div className="flex flex-col gap-1">
+                        <h4 className="font-semibold text-black">Beyond your plan limits</h4>
+                        <p className="text-sm text-gray-600">
+                            Mix and match based on what you need. Pay per user, per invocations, or both.
+                        </p>
+                    </div>
+                    <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold text-[#B91C1C]">$1</span>
+                            <span className="text-sm text-gray-700">/ user</span>
+                        </div>
+                        <p className="text-sm text-gray-600">Per additional active user beyond your plan tier.</p>
+                    </div>
+                    <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
+                        <div className="flex items-baseline gap-2">
+                            <span className="text-3xl font-bold text-[#B91C1C]">$1</span>
+                            <span className="text-sm text-gray-700">/ 2,500 invocations</span>
+                        </div>
+                        <p className="text-sm text-gray-600">Per block of 2,500 invocations beyond your plan tier.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
