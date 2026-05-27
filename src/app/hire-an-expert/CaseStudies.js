@@ -10,7 +10,7 @@ const CASE_STUDIES = [
         desc: 'Automated ticket routing across Gmail, Slack, and CRM.',
         metric: '99.9%',
         sub: 'Faster response time',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img7_image-10.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-4.png',
     },
     {
         tint: 'cream',
@@ -52,19 +52,25 @@ export default function CaseStudies() {
             title="Workflows built for real operations"
             subtitle="Explore automation workflows designed to reduce manual effort, improve response times, and streamline operations."
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[18px]">
+            <div className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-[18px]">
                 {CASE_STUDIES.map((c) => (
-                    <div
+                    <article
                         key={c.tag}
+                        data-tint={c.tint}
                         className="bg-white border border-[#ececec] p-6 flex flex-col shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
                     >
                         <span className="inline-flex items-center gap-2 text-[#A8200D] text-xs font-semibold tracking-wider uppercase mb-4">
                             <Tag className="w-3.5 h-3.5" /> {c.tag}
                         </span>
                         <div
-                            className={`w-full mb-5 flex items-center justify-center min-h-[200px] border overflow-hidden ${TINTS[c.tint]}`}
+                            className={`w-full mb-5 px-5 py-6 flex items-center justify-center min-h-[200px] border overflow-hidden ${TINTS[c.tint]}`}
                         >
-                            <img src={c.image} alt={c.tag} className="w-full h-full object-contain" loading="lazy" />
+                            <img
+                                src={c.image}
+                                alt={c.tag}
+                                className="max-w-full max-h-[220px] object-contain"
+                                loading="lazy"
+                            />
                         </div>
                         <p className="text-sm text-[#6b7280] leading-[1.5] mb-6">{c.desc}</p>
                         <div className="flex items-baseline gap-2.5 mt-auto">
@@ -73,7 +79,7 @@ export default function CaseStudies() {
                             </span>
                             <span className="text-[15px] font-medium">{c.sub}</span>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </div>
         </Section>
