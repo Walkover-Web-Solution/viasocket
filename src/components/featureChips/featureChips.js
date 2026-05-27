@@ -4,7 +4,7 @@ export default function FeatureChips({ chips = [] }) {
       {chips.map((chip) => (
         <div
           key={chip.label}
-          className="relative flex items-center gap-2 px-4 py-2 rounded-full text-[13px] font-semibold overflow-hidden"
+          className="relative flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold overflow-hidden"
           style={chip.ai ? {
             background: "linear-gradient(135deg, rgba(168,85,247,0.12) 0%, rgba(99,102,241,0.1) 50%, rgba(59,130,246,0.08) 100%)",
             border: "1px solid rgba(168,85,247,0.3)",

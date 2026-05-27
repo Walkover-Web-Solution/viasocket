@@ -3,7 +3,7 @@ export default function Section({ eyebrow, title, subtitle, align = 'center', ch
         <section className="container py-24">
             <div className={`mb-14 ${align === 'center' ? 'text-center' : ''}`}>
                 {eyebrow && (
-                    <span className="inline-block text-accent text-[13px] font-semibold uppercase tracking-wider mb-3.5">
+                    <span className="inline-block text-accent text-xs font-semibold uppercase tracking-wider mb-3.5">
                         {eyebrow}
                     </span>
                 )}

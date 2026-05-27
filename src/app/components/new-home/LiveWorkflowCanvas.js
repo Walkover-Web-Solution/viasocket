@@ -680,7 +680,7 @@ function FlowNode({
 
       {/* Label */}
       <span
-        className={`${isSmall ? "text-[11.5px]" : "text-[13px]"} truncate transition-colors duration-300`}
+        className={`${isSmall ? "text-[11.5px]" : "text-xs"} truncate transition-colors duration-300`}
         style={{ color: textColor }}
       >
         {step.label}

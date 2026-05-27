@@ -13,7 +13,7 @@ export default function Hero({ onHire }) {
     return (
         <section className="container pt-20 pb-24 grid lg:grid-cols-[1.35fr_1fr] grid-cols-1 gap-14 items-center">
             <div>
-                <span className="inline-block text-accent text-[13px] font-semibold uppercase tracking-wider mb-3">
+                <span className="inline-block text-accent text-xs font-semibold uppercase tracking-wider mb-3">
                     Workflow Automation Services
                 </span>
 

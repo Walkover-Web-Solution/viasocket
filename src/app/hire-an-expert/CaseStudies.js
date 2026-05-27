@@ -1,36 +1,40 @@
 'use client';
 
-import { Sparkles, Tag } from 'lucide-react';
+import { Tag } from 'lucide-react';
 import Section from './Section';
 
 const CASE_STUDIES = [
     {
         tint: 'red',
-        tag: 'SaaS · CRM SYNC',
-        desc: 'Automated lead routing between HubSpot, Slack and Notion — replaced 4 spreadsheets and 2 weekly meetings.',
-        metric: '92%',
-        sub: 'manual work removed',
+        tag: 'Customer Support Automation',
+        desc: 'Automated ticket routing across Gmail, Slack, and CRM.',
+        metric: '99.9%',
+        sub: 'Faster response time',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-4.png',
     },
     {
         tint: 'cream',
-        tag: 'E-COMMERCE · OPS',
-        desc: 'Shopify → ShipStation → Klaviyo flow that updates inventory, tags customers, and sends post-purchase emails.',
-        metric: '3.4x',
-        sub: 'fulfilment speed',
+        tag: 'Lead Routing Automation',
+        desc: 'Qualified and routed inbound leads automatically.',
+        metric: '3x',
+        sub: 'Faster lead assignment',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img7_image-10.png',
     },
     {
         tint: 'neutral',
-        tag: 'AGENCY · REPORTING',
-        desc: 'Client reporting pipeline pulling from Google Ads, Meta and GA4 into a single Airtable dashboard.',
-        metric: '18h',
-        sub: 'saved per week',
+        tag: 'Approval Workflow Automation',
+        desc: 'Automated approvals with real-time status tracking.',
+        metric: '85%',
+        sub: 'Faster approval cycle',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img0_image-6.png',
     },
     {
         tint: 'blue',
-        tag: 'FINTECH · COMPLIANCE',
-        desc: 'KYC documents auto-validated, routed to reviewers, and archived to S3 with full audit trail.',
-        metric: '99.6%',
-        sub: 'audit pass rate',
+        tag: 'Internal Operations Automation',
+        desc: 'Reduced repetitive operational tasks across teams.',
+        metric: '18hrs%',
+        sub: 'Saved weekly',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img0_image-6.png',
     },
 ];
 
@@ -45,22 +49,28 @@ export default function CaseStudies() {
     return (
         <Section
             eyebrow="Case studies"
-            title="Real outcomes from real teams"
-            subtitle="A small sample of what our experts have shipped this quarter."
+            title="Workflows built for real operations"
+            subtitle="Explore automation workflows designed to reduce manual effort, improve response times, and streamline operations."
         >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-[18px]">
+            <div className="mx-auto grid grid-cols-1 md:grid-cols-2 gap-[18px]">
                 {CASE_STUDIES.map((c) => (
-                    <div
+                    <article
                         key={c.tag}
+                        data-tint={c.tint}
                         className="bg-white border border-[#ececec] p-6 flex flex-col shadow-[0_1px_2px_rgba(15,23,42,0.03)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
                     >
                         <span className="inline-flex items-center gap-2 text-[#A8200D] text-xs font-semibold tracking-wider uppercase mb-4">
                             <Tag className="w-3.5 h-3.5" /> {c.tag}
                         </span>
                         <div
-                            className={`w-full mb-5 px-5 py-6 flex items-center justify-center min-h-[200px] border ${TINTS[c.tint]}`}
+                            className={`w-full mb-5 px-5 py-6 flex items-center justify-center min-h-[200px] border overflow-hidden ${TINTS[c.tint]}`}
                         >
-                            <Sparkles className="w-16 h-16 text-accent/30" />
+                            <img
+                                src={c.image}
+                                alt={c.tag}
+                                className="max-w-full max-h-[220px] object-contain"
+                                loading="lazy"
+                            />
                         </div>
                         <p className="text-sm text-[#6b7280] leading-[1.5] mb-6">{c.desc}</p>
                         <div className="flex items-baseline gap-2.5 mt-auto">
@@ -69,7 +79,7 @@ export default function CaseStudies() {
                             </span>
                             <span className="text-[15px] font-medium">{c.sub}</span>
                         </div>
-                    </div>
+                    </article>
                 ))}
             </div>
         </Section>

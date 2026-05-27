@@ -1,28 +1,31 @@
 'use client';
 
-import { Sparkles } from 'lucide-react';
 import Section from './Section';
 
 const HOW_STEPS = [
     {
         step: '01',
         title: 'Describe your workflow',
-        desc: 'Tell us what you want to automate in plain English — apps, triggers, outcomes.',
+        desc: 'Tell us what you want to automate and the tools involved.',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-4.png',
     },
     {
         step: '02',
-        title: 'Get an AI-scoped plan',
-        desc: 'We instantly draft scope, timeline and a fixed price tailored to your project.',
+        title: 'AI analysis & call booking',
+        desc: 'Get an instant workflow assessment and schedule a consultation.',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img6_image-1.png',
     },
     {
         step: '03',
-        title: 'Pick add-ons & pay',
-        desc: 'Add monitoring, training or priority support. Secure checkout, money-back guarantee.',
+        title: 'Talk to a Viasocket expert',
+        desc: 'Review the workflow, implementation scope, and delivery plan together.',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-2.png',
     },
     {
         step: '04',
-        title: 'Book your kickoff',
-        desc: 'Choose a slot. Your dedicated expert ships a working automation in days, not weeks.',
+        title: 'Approve & get it built',
+        desc: 'Confirm pricing and let our experts handle the automation setup.',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-3.png',
     },
 ];
 
@@ -42,12 +45,10 @@ export default function HowItWorks() {
                         <span className="self-start text-accent text-sm font-semibold tracking-wide mb-3.5">
                             {s.step}
                         </span>
-                        <div className="w-full aspect-[3/2] mb-[18px] bg-[#faf9f4] flex items-center justify-center text-[#94a3b8] text-xs">
-                            <Sparkles className="w-8 h-8 text-accent/40" />
+                        <div className="w-full aspect-[3/2] mb-[18px] bg-[#faf9f4] overflow-hidden">
+                            <img src={s.image} alt={s.title} className="w-full h-full object-cover" loading="lazy" />
                         </div>
-                        <h3 className="text-[17px] font-semibold leading-tight mb-2 tracking-[-0.2px]">
-                            {s.title}
-                        </h3>
+                        <h3 className="text-[17px] font-semibold leading-tight mb-2 tracking-[-0.2px]">{s.title}</h3>
                         <p className="text-[13.5px] text-[#555] leading-[1.5]">{s.desc}</p>
                     </div>
                 ))}

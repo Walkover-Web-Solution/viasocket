@@ -6,27 +6,27 @@ import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 const TESTIMONIALS = [
     {
         rating: 5,
-        heading: 'Shipped in 4 days flat.',
-        body: 'The AI scope was eerily accurate. We approved, paid, and had a working integration before the next sprint started.',
-        name: 'Priya Sharma',
-        role: 'Head of Ops, Lumen',
-        initials: 'PS',
+        heading: 'Fast implementation and reliable support',
+        body: 'We moved from manual lead assignment to a fully automated workflow within days. The expert guidance made the process simple.',
+        name: 'Riya Kapoor',
+        role: 'Growth Manager at Sprintly',
+        initials: 'RK',
     },
     {
         rating: 5,
-        heading: 'Replaced our previous agency.',
-        body: 'Fixed price, no scope creep, and the expert understood our messy HubSpot setup on day one. Best onboarding ever.',
-        name: 'Marcus Liu',
-        role: 'Founder, Pillar HQ',
-        initials: 'ML',
+        heading: 'Much easier than managing workflows ourselves',
+        body: 'Instead of spending time debugging automations, our team could focus entirely on operations while Viasocket handled the setup.',
+        name: 'Daniel Thomas',
+        role: 'Operations Manager at NovaDesk',
+        initials: 'DT',
     },
     {
         rating: 5,
-        heading: 'Worth every rupee.',
-        body: 'We compared three freelancers and viaSocket. The AI quote alone saved us a week of back-and-forth.',
-        name: 'Anita Verma',
-        role: 'COO, Stackline',
-        initials: 'AV',
+        heading: 'Automation setup felt effortless',
+        body: 'The Viasocket team handled the workflow planning, implementation, and testing smoothly. Our team saved hours of repetitive work every week.',
+        name: 'Aarav Mehta',
+        role: 'Operations Lead at Scaleflow',
+        initials: 'AM',
     },
 ];
 
@@ -42,12 +42,12 @@ function TestimonialCard({ t, className, style, onClick }) {
             <p className="text-sm text-[#6b7280] leading-[1.6] mb-5 flex-1">{t.body}</p>
             <hr className="border-t border-[#ececec] mb-4" />
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fdf6f4] to-[#f3c8be] text-accent flex items-center justify-center text-[13px] font-semibold flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fdf6f4] to-[#f3c8be] text-accent flex items-center justify-center text-xs font-semibold flex-shrink-0">
                     {t.initials}
                 </div>
                 <div>
                     <div className="text-sm font-semibold">{t.name}</div>
-                    <div className="text-[12.5px] text-[#6b7280] mt-px">{t.role}</div>
+                    <div className="text-xs text-[#6b7280] mt-px">{t.role}</div>
                 </div>
             </div>
         </div>
@@ -63,10 +63,12 @@ export default function TestimonialsCarousel() {
     return (
         <section className="container py-24">
             <div className="text-center mb-14">
-                <span className="inline-block text-accent text-[13px] font-semibold uppercase tracking-wider mb-3.5">
-                    Testimonials
+                <span className="inline-block text-accent text-xs font-semibold uppercase tracking-wider mb-3.5">
+                    client feedback
                 </span>
-                <h2 className="text-2xl font-bold tracking-[-1.2px] leading-[1.15] mb-3.5">Loved by busy operators</h2>
+                <h2 className="text-2xl font-bold tracking-[-1.2px] leading-[1.15] mb-3.5">
+                    What teams say about working with Viasocket
+                </h2>
                 <p className="text-[17px] text-[#555]">From founders, ops leads and agencies shipping fast.</p>
             </div>
 

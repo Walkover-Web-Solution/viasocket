@@ -241,7 +241,7 @@ export default function HeroHub() {
             </div>
 
             {/* Live status badge */}
-            <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+40px)] inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-[0_8px_22px_rgba(15,23,42,0.09)] text-[13px] font-semibold text-[#1A1A1F] whitespace-nowrap z-20">
+            <div className="absolute left-1/2 -translate-x-1/2 top-[calc(100%+40px)] inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full shadow-[0_8px_22px_rgba(15,23,42,0.09)] text-xs font-semibold text-[#1A1A1F] whitespace-nowrap z-20">
                 <span className="w-2 h-2 rounded-full bg-green-600 shadow-[0_0_0_3px_rgba(22,163,74,0.16)] animate-pulse" />
                 Automation Live
             </div>
