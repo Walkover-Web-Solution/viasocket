@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function EmbedChatbotAction({ appCount }) {
     const totalApps = appCount ? `${+appCount + 300}+` : '2500+';
@@ -27,9 +28,11 @@ export default function EmbedChatbotAction({ appCount }) {
                 </div>
 
                 <div className="w-full lg:w-1/2 flex items-center justify-center">
-                    <img
-                        src="/assets/img/Workflow item container.svg"
+                    <Image
+                        src="/assets/img/workflow-item-container.svg"
                         alt="Workflow item container"
+                        width={600}
+                        height={400}
                         className="w-full h-auto"
                     />
                 </div>

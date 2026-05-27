@@ -7,7 +7,7 @@ const plans = [
         price: 'Free',
         priceSuffix: '',
         description: 'Everything you need to get started.',
-        usage: ['50 active users', '10k invocations / month'],
+        usage: ['50 active users', '100k invocations / month'],
         support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
         ctaLabel: 'Get started free',
         ctaLink: '/signup?utm_source=/embed',
