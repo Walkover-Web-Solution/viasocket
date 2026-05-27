@@ -22,7 +22,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import RealWorldUseCase from './realWorldUseCase';
-import GetStarted from '@/components/getStarted/getStarted';
+import GetStarted from '@/components/GetStarted/GetStarted';
 
 export default function IntegrationsAppOneClientComp({
     appOneDetails,

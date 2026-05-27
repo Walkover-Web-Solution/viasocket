@@ -6,9 +6,7 @@ import HowItWorks from './HowItWorks';
 import Comparison from './Comparison';
 import CaseStudies from './CaseStudies';
 import TestimonialsCarousel from './TestimonialsCarousel';
-import ShowBadges from '../components/home/ShowBadges';
 import HireModal from './hire-modal/HireModal';
-import SecuritySection from '../components/SecuritySection';
 
 export default function HireExpertClient({ securityGridData }) {
     const [modalOpen, setModalOpen] = useState(false);
@@ -21,8 +19,6 @@ export default function HireExpertClient({ securityGridData }) {
             <Comparison onHire={openModal} />
             <CaseStudies />
             <TestimonialsCarousel />
-            <ShowBadges />
-            <SecuritySection securityGridData={securityGridData} />
             {modalOpen && <HireModal onClose={() => setModalOpen(false)} />}
         </div>
     );
