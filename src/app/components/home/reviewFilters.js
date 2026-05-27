@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const ReviewFilters = ({ filters, onSelect, selectedFilter }) => {
     return (
         <div className="inline-flex flex-wrap gap-3 md:justify-start justify-center items-center">
@@ -24,11 +22,9 @@ const ReviewFilters = ({ filters, onSelect, selectedFilter }) => {
                                 strokeWidth={2}
                             />
                         ) : filter.logo ? (
-                            <Image
+                            <img
                                 src={filter.logo}
                                 alt={filter.label}
-                                width={24}
-                                height={24}
                                 className="w-6 h-6 object-contain"
                             />
                         ) : (

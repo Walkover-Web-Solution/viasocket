@@ -63,12 +63,10 @@ const AppTile = ({ app, onError }) => (
         className="border border-gray-300 bg-white p-2.5 flex items-center justify-center transition-all duration-180 ease-out hover:shadow-[0_2px_8px_rgba(0,0,0,0.09)] hover:-translate-y-[1px] app-tile"
         style={{ animationDelay: app.delay }}
     >
-        <Image
+        <img
             className="w-[52px] h-[52px] object-contain block"
             src={app.icon}
             alt={app.name}
-            width={52}
-            height={52}
             loading="lazy"
             onError={(e) => onError(e, app.fallback)}
         />

@@ -1,27 +1,32 @@
 import BlogGrid from '../blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
+import Image from 'next/image';
 import Link from 'next/link';
+import Cta from '@/components/CTA/Cta';
 import EmbedSetupSteps from './EmbedSetupSteps';
 import EmbedImageSelector from './EmbedImageSelector';
 import EmbedHero from './EmbedHero';
 import EmbedFeatureCards from './EmbedFeatureCards';
+import GetStarted from '@/components/getStarted/getStarted';
 import EmbedPricing from './EmbedPricing';
 import EmbedChatbotAction from './EmbedChatbotAction';
-import ShowBadges from '../home/ShowBadges';
-import SecuritySection from '../SecuritySection';
-import GetStarted from '@/components/GetStarted/GetStarted';
 
-export default function EmbedContent({ blogData, footerData, faqData, embedData, appCount, securityGridData }) {
+export default function EmbedContent({
+    blogData,
+    footerData,
+    faqData,
+    embedData,
+    tableData,
+    howItWorksData,
+    appCount,
+}) {
     return (
         <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space container">
             <div className="w-full border mt-12">
                 <div className="bg-[#C8EAD2] text-center py-3 text-lg text-green-800">
                     Pay For Month 1. Get 5 Free.{' '}
-                    <Link
-                        href="/signup?utm_source=/embed"
-                        className="font-bold ml-2 italic text-black underline underline-offset-2"
-                    >
+                    <Link href="/signup?utm_source=/embed" className="font-bold ml-2 italic text-black underline underline-offset-2">
                         GET STARTED →
                     </Link>
                 </div>
@@ -35,9 +40,6 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
             <EmbedPricing />
             <EmbedChatbotAction appCount={appCount} />
 
-            <ShowBadges />
-            <SecuritySection securityGridData={securityGridData} />
-
             {blogData?.length > 0 && (
                 <div className="container">
                     <BlogGrid posts={blogData} />
@@ -47,7 +49,7 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/embed'} />}
 
                 <div className="container mb-8">
-                    <GetStarted/>
+                    <GetStarted />
                 </div>
 
                 <div className="container">

@@ -9,6 +9,7 @@ import ReviewsGrid from '../components/new-home/ReviewsGrid';
 import FAQs from '../components/new-home/FAQs';
 import SecuritySectionNew from '../components/new-home/SecuritySectionNew';
 import FooterNew from '../components/new-home/FooterNew';
+import AbTestInit from '@/components/AbTestInit';
 
 export const runtime = 'edge';
 
@@ -50,7 +51,7 @@ export default async function HomePage() {
       <VisualShowcase categoryData={indexTemplateData} templateData={templateData} />
       <ReviewsGrid reviewData={reviewData}/>
       {faqData?.length > 0 && <FAQs faqData={faqData} isHomepage={true} />}
-      <SecuritySectionNew securityGridData={securityGridData} />
+      <SecuritySectionNew securityGridData={securityGridData}/>
       <FooterNew footerData={footerData} />
     </div>
   );
