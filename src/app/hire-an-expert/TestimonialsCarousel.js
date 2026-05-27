@@ -42,12 +42,12 @@ function TestimonialCard({ t, className, style, onClick }) {
             <p className="text-sm text-[#6b7280] leading-[1.6] mb-5 flex-1">{t.body}</p>
             <hr className="border-t border-[#ececec] mb-4" />
             <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fdf6f4] to-[#f3c8be] text-accent flex items-center justify-center text-[13px] font-semibold flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#fdf6f4] to-[#f3c8be] text-accent flex items-center justify-center text-xs font-semibold flex-shrink-0">
                     {t.initials}
                 </div>
                 <div>
                     <div className="text-sm font-semibold">{t.name}</div>
-                    <div className="text-[12.5px] text-[#6b7280] mt-px">{t.role}</div>
+                    <div className="text-xs text-[#6b7280] mt-px">{t.role}</div>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@ export default function TestimonialsCarousel() {
     return (
         <section className="container py-24">
             <div className="text-center mb-14">
-                <span className="inline-block text-accent text-[13px] font-semibold uppercase tracking-wider mb-3.5">
+                <span className="inline-block text-accent text-xs font-semibold uppercase tracking-wider mb-3.5">
                     Testimonials
                 </span>
                 <h2 className="text-2xl font-bold tracking-[-1.2px] leading-[1.15] mb-3.5">Loved by busy operators</h2>

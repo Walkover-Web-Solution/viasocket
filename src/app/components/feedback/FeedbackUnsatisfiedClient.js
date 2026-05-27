@@ -144,7 +144,7 @@ export default function FeedbackUnsatisfiedClient() {
 
                         <div
                             aria-live="polite"
-                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-[13px] transition-colors ${STATUS_VARIANTS[status]}`}
+                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-xs transition-colors ${STATUS_VARIANTS[status]}`}
                         >
                             <span
                                 className={`relative inline-flex w-2 h-2 rounded-full shrink-0 ${DOT_VARIANTS[status]}`}
@@ -175,7 +175,7 @@ export default function FeedbackUnsatisfiedClient() {
                                     <span className="text-[14.5px] font-semibold text-white">
                                         Share what needs to change
                                     </span>
-                                    <span className="text-[13px] text-[#b8b8b8] leading-[1.45]">
+                                    <span className="text-xs text-[#b8b8b8] leading-[1.45]">
                                         2-minute form. We&apos;ll ship a fix within 24 hours.
                                     </span>
                                 </span>
@@ -201,7 +201,7 @@ export default function FeedbackUnsatisfiedClient() {
                                     <span className="text-[14.5px] font-semibold text-[#0c0c0c]">
                                         Book a 15-min call
                                     </span>
-                                    <span className="text-[13px] text-[#555555] leading-[1.45]">
+                                    <span className="text-xs text-[#555555] leading-[1.45]">
                                         Walk through it live with the team that built it.
                                     </span>
                                 </span>

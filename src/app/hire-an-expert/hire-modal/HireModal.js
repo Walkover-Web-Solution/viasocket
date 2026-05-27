@@ -1,21 +1,24 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight, Check, ChevronLeft, Lock, X } from 'lucide-react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
-import { ADDON_PRICES } from './addons';
+import Step6 from './Step6';
+
+const DEFAULT_TITLE = {
+    title: 'Hire a workflow expert',
+    sub: 'Get your automation workflow designed, fixed, or fully managed by Viasocket experts.',
+};
 
 const TITLES = {
-    1: { title: 'Tell us about your project', sub: "We'll use this to generate a tailored scope and quote." },
-    2: { title: 'Analysing your project…', sub: 'Our AI is matching your needs with the right expert.' },
-    3: { title: 'Your tailored assessment', sub: 'Review the proposed scope and pick optional add-ons.' },
-    4: { title: 'Secure checkout', sub: 'Payment is held in escrow until you approve the kickoff.' },
     5: { title: 'Book your kickoff call', sub: 'Pick a time that works — your expert will join you.' },
 };
+
+const getTitle = (step) => TITLES[step] || DEFAULT_TITLE;
 
 export default function HireModal({ onClose }) {
     const [step, setStep] = useState(1);
@@ -26,7 +29,6 @@ export default function HireModal({ onClose }) {
         budget: '',
         timeline: '',
     });
-    const [selectedAddons, setSelectedAddons] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
 
@@ -47,15 +49,8 @@ export default function HireModal({ onClose }) {
         }
     }, [step]);
 
-    const basePrice = 799;
-    const addonTotal = useMemo(
-        () => selectedAddons.reduce((sum, id) => sum + (ADDON_PRICES[id] || 0), 0),
-        [selectedAddons]
-    );
-    const total = basePrice + addonTotal;
-
-    const toggleAddon = (id) =>
-        setSelectedAddons((curr) => (curr.includes(id) ? curr.filter((x) => x !== id) : [...curr, id]));
+    const basePrice = 320;
+    const total = basePrice;
 
     return (
         <div
@@ -70,24 +65,26 @@ export default function HireModal({ onClose }) {
                 <div className="flex items-start justify-between gap-6 px-8 pt-7 pb-6 border-b border-[#ececec]">
                     <div>
                         <h2 className="text-[22px] font-bold tracking-[-0.4px] text-[#111] mb-1.5 leading-tight">
-                            {TITLES[step].title}
+                            {getTitle(step).title}
                         </h2>
-                        <p className="text-sm text-[#555] leading-[1.55]">{TITLES[step].sub}</p>
+                        <p className="text-sm text-[#555] leading-[1.55]">{getTitle(step).sub}</p>
                         {/* Stepper */}
-                        <div className="flex items-center gap-1.5 mt-4">
-                            {[1, 2, 3, 4, 5].map((n) => (
-                                <span
-                                    key={n}
-                                    className={`h-1 rounded-full transition-all ${
-                                        n === step
-                                            ? 'w-6 bg-accent'
-                                            : n < step
-                                              ? 'w-3 bg-accent/40'
-                                              : 'w-3 bg-[#ececec]'
-                                    }`}
-                                />
-                            ))}
-                        </div>
+                        {step !== 6 && (
+                            <div className="flex items-center gap-1.5 mt-4">
+                                {[1, 2, 3, 4, 5].map((n) => (
+                                    <span
+                                        key={n}
+                                        className={`h-1 rounded-full transition-all ${
+                                            n === step
+                                                ? 'w-6 bg-accent'
+                                                : n < step
+                                                  ? 'w-3 bg-accent/40'
+                                                  : 'w-3 bg-[#ececec]'
+                                        }`}
+                                    />
+                                ))}
+                            </div>
+                        )}
                     </div>
                     <button
                         onClick={onClose}
@@ -102,15 +99,9 @@ export default function HireModal({ onClose }) {
                 <div className="px-8 pt-7">
                     {step === 1 && <Step1 project={project} setProject={setProject} />}
                     {step === 2 && <Step2 />}
-                    {step === 3 && (
-                        <Step3
-                            selectedAddons={selectedAddons}
-                            toggleAddon={toggleAddon}
-                            basePrice={basePrice}
-                            total={total}
-                        />
-                    )}
-                    {step === 4 && <Step4 total={total} selectedAddons={selectedAddons} basePrice={basePrice} />}
+                    {step === 3 && <Step3 basePrice={basePrice} total={total} />}
+                    {step === 4 && <Step4 total={total} basePrice={basePrice} />}
+                    {step === 6 && <Step6 />}
                     {step === 5 && (
                         <Step5
                             selectedDate={selectedDate}
@@ -123,10 +114,10 @@ export default function HireModal({ onClose }) {
 
                 {/* Footer */}
                 <div className="px-8 py-5 pb-7">
-                    {step > 1 && step !== 2 && (
+                    {step > 1 && step !== 2 && step !== 6 && (
                         <button
                             onClick={() => setStep(step - 1)}
-                            className="inline-flex items-center gap-1.5 text-accent text-[13px] font-semibold mb-4 hover:underline"
+                            className="inline-flex items-center gap-1 text-accent text-xs font-semibold mb-5 ml-2 hover:underline"
                         >
                             <ChevronLeft className="w-4 h-4" /> Back
                         </button>
@@ -135,34 +126,33 @@ export default function HireModal({ onClose }) {
                         <button
                             disabled={!project.title || !project.description}
                             onClick={() => setStep(2)}
-                            className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 bg-accent hover:bg-[#8a1a0a] disabled:bg-[#e6e6e6] disabled:text-[#999] text-white rounded-full text-sm font-semibold transition-colors"
+                            className="w-full btn btn-accent"
                         >
-                            Generate my scope <ArrowRight className="w-4 h-4" />
+                            Generate AI Consultation Report <ArrowRight className="w-4 h-4" />
                         </button>
                     )}
                     {step === 3 && (
-                        <button
-                            onClick={() => setStep(4)}
-                            className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 bg-accent hover:bg-[#8a1a0a] text-white rounded-full text-sm font-semibold transition-colors"
-                        >
-                            Continue to payment · ${total} <ArrowRight className="w-4 h-4" />
+                        <button onClick={() => setStep(4)} className="w-full btn btn-accent">
+                            Continue to Payment <Lock className="w-4 h-4" />
                         </button>
                     )}
                     {step === 4 && (
-                        <button
-                            onClick={() => setStep(5)}
-                            className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 bg-accent hover:bg-[#8a1a0a] text-white rounded-full text-sm font-semibold transition-colors"
-                        >
-                            Pay ${total} securely <Lock className="w-4 h-4" />
+                        <button onClick={() => setStep(5)} className="w-full btn btn-accent">
+                            Assign an Expert <ArrowRight className="w-4 h-4" />
                         </button>
                     )}
                     {step === 5 && (
                         <button
                             disabled={!selectedDate || !selectedTime}
-                            onClick={onClose}
-                            className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 bg-accent hover:bg-[#8a1a0a] disabled:bg-[#e6e6e6] disabled:text-[#999] text-white rounded-full text-sm font-semibold transition-colors"
+                            onClick={() => setStep(6)}
+                            className="w-full btn btn-accent"
                         >
-                            Confirm kickoff <Check className="w-4 h-4" />
+                            Confirm meeting <Check className="w-4 h-4" />
+                        </button>
+                    )}
+                    {step === 6 && (
+                        <button onClick={onClose} className="w-full btn btn-accent">
+                            Got it
                         </button>
                     )}
                 </div>

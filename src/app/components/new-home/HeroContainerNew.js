@@ -239,7 +239,7 @@ export default function HeroContainerNew() {
               {/* Social Proof */}
               <div className="pt-8 space-y-4">
                 <p
-                  className="text-[13px] uppercase tracking-[0.08em]"
+                  className="text-xs uppercase tracking-[0.08em]"
                   style={{ color: "rgba(0,0,0,0.4)" }}
                 >
                   Trusted by Teams Using

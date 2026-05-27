@@ -4,17 +4,17 @@ import { ArrowRight, Check } from 'lucide-react';
 import Section from './Section';
 
 const COMPARISON = [
-    { feature: 'Vetted automation experts', freelancer: 'Hit or miss', viasocket: 'Top 3% only' },
-    { feature: 'Fixed, upfront pricing', freelancer: 'Hourly creep', viasocket: 'AI-scoped quote' },
-    { feature: 'Time to delivery', freelancer: '3–6 weeks', viasocket: '3–7 days' },
-    { feature: 'Money-back guarantee', freelancer: 'Rarely', viasocket: '14 days' },
-    { feature: 'Ongoing monitoring', freelancer: 'Extra cost', viasocket: 'Optional add-on' },
+    { feature: 'Workflow Setup', freelancer: 'DIY setup', viasocket: 'Done-for-you implementation' },
+    { feature: 'Technical Knowledge', freelancer: 'Requires technical knowledge', viasocket: 'Expert-built workflows' },
+    { feature: 'Support', freelancer: 'Limited support', viasocket: 'Dedicated expert support' },
+    { feature: 'Offering', freelancer: 'Tool only', viasocket: 'Complete solution' },
+    { feature: 'Maintenance', freelancer: 'No maintenance', viasocket: 'Monitoring & maintenance included' },
 ];
 
 export default function Comparison({ onHire }) {
     return (
         <Section
-            eyebrow="Why viaSocket"
+            eyebrow="what makes us different"
             title="Most platforms give you tools. We deliver solutions."
             subtitle=""
             align="left"
@@ -44,7 +44,7 @@ export default function Comparison({ onHire }) {
                 ))}
 
                 <div className="mt-10 flex items-center gap-5 flex-wrap">
-                    <p className="text-base font-medium m-0">Ready to skip the freelancer roulette?</p>
+                    <p className="text-base font-medium m-0">Need help with a custom workflow?</p>
                     <button
                         onClick={onHire}
                         className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] hover:bg-black text-white text-sm font-semibold rounded-full transition-colors group"

@@ -134,7 +134,7 @@ export default function FeedbackSatisfiedClient() {
 
                         <div
                             aria-live="polite"
-                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-[13px] transition-colors ${STATUS_VARIANTS[status]}`}
+                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-xs transition-colors ${STATUS_VARIANTS[status]}`}
                         >
                             <span
                                 className={`relative inline-flex w-2 h-2 rounded-full shrink-0 ${DOT_VARIANTS[status]}`}
