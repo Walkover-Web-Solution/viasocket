@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import { securityGridData as DEFAULT_SECURITY_GRID } from '@/app/lib/securityGridData';
 
 export default function SecuritySection({ securityGridData }) {
+  const items = Array.isArray(securityGridData) && securityGridData.length > 0 ? securityGridData : DEFAULT_SECURITY_GRID;
   return (
     <div className="container">
       <div className="border custom-border p-6 md:p-12 border-b-0 bg-[#376F5B] cont gap-8 text-white">
@@ -18,7 +20,7 @@ export default function SecuritySection({ securityGridData }) {
           </div>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">
-          {securityGridData.map((item, index) => (
+          {items.map((item, index) => (
             <div key={index} className="cont gap-1 py-12 px-8 border border-white border-b-0 border-l-0 ">
               <h4 className="h3">{item.title}</h4>
               <p className="sub__h2 text-gray-300">{item.description}</p>
