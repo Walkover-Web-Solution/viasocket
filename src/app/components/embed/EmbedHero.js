@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 
 const HERO_ICONS = [
     { src: 'https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png', alt: 'Google Sheets' },
@@ -20,12 +19,10 @@ export default function EmbedHero({ appCount }) {
                 <span>Your product. {+appCount + 300}+ apps.</span>
                 <span className="inline-flex items-center gap-2 align-middle">
                     {HERO_ICONS.map((ic) => (
-                        <Image
+                        <img
                             key={ic.alt}
                             src={ic.src}
                             alt={ic.alt}
-                            width={44}
-                            height={44}
                             className="w-10 h-10 md:w-11 md:h-11 inline-block border p-1"
                         />
                     ))}

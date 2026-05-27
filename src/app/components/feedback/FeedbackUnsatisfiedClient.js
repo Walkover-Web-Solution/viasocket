@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, Calendar, PenLine } from 'lucide-react';
-import Image from 'next/image';
 
 const WEBHOOK_URL = 'https://flow.sokt.io/func/scri74yGAo9Z';
 const FEEDBACK = 'unsatisfied';
@@ -102,11 +101,9 @@ export default function FeedbackUnsatisfiedClient() {
         <div className="flex flex-col min-h-screen bg-[#f3f1ee] text-[#0c0c0c] antialiased font-sans">
             <header className="flex items-center justify-between px-5 py-4 sm:px-7 sm:py-5">
                 <a href="https://viasocket.com" aria-label="viaSocket home">
-                    <Image
+                    <img
                         src="https://viasocket.com/assets/brand/socketsvg.png"
                         alt="viaSocket"
-                        width={96}
-                        height={32}
                         className="block max-w-[96px] h-auto"
                     />
                 </a>

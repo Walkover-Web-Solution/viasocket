@@ -22,7 +22,7 @@ import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
-import GetStarted from '@/components/GetStarted/GetStarted';
+import GetStarted from '@/components/getStarted/getStarted';
 
 
 function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
