@@ -219,7 +219,7 @@ export default function FeedbackUnsatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Plugin
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.plugin || '—'}
                                 </p>
                             </div>
@@ -227,7 +227,7 @@ export default function FeedbackUnsatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Action / Trigger
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.action_trigger || '—'}
                                 </p>
                             </div>

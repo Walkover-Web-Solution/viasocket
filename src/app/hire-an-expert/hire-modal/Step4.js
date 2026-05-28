@@ -8,9 +8,9 @@ export default function Step4({ total, basePrice }) {
 
     return (
         <div className="animate-[hireStepFade_0.32s_cubic-bezier(0.2,0.7,0.2,1)]">
-            <div className="flex items-start gap-2.5 px-3.5 py-3 bg-[rgba(168,32,13,0.04)] border border-[rgba(168,32,13,0.18)] rounded-[10px] mb-3.5 text-xs text-[#6b1d10] leading-[1.5]">
-                <Lock className="w-4 h-4 flex-shrink-0 text-accent mt-0.5" />
-                Payment is held in escrow. Released only when you approve the delivered workflow.
+            <div className="flex items-center gap-2 p-3 bg-[rgba(168,32,13,0.04)] border border-[rgba(168,32,13,0.18)] rounded-[10px] mb-3.5 text-xs text-[#6b1d10] leading-[1.5]">
+                <Lock className="w-4 h-4 flex-shrink-0 text-accent" />
+                This amount will be charged once your workflow is built and delivered by our expert team.
             </div>
 
             <div className="border border-[#ececec] rounded-xl p-5 mb-3.5">
@@ -29,24 +29,24 @@ export default function Step4({ total, basePrice }) {
                         <input className={inp} placeholder="123" />
                     </div>
                 </div>
-                <div className="inline-flex items-center gap-1.5 mt-2 text-xs text-[#555]">
+                <div className="inline-flex items-center gap-1.5 mt-2 text-xs text-gray-500">
                     <Lock className="w-3 h-3" /> Secured by Stripe · 256-bit TLS
                 </div>
             </div>
 
             <div className="bg-[#faf9f4] rounded-xl px-5 py-[18px]">
                 <h4 className="text-[15px] font-bold text-gray-500 mb-3">Payment summary</h4>
-                <div className="flex justify-between items-center py-1 text-[13.5px] text-gray-500">
+                <div className="flex justify-between items-center py-1 text-xs text-gray-500">
                     <span>Expert consultation</span>
-                    <span className="text-gray-500 font-semibold">$320</span>
+                    <span className="text-gray-500">$320</span>
                 </div>
-                <div className="flex justify-between items-center py-1 text-[13.5px] text-gray-500">
+                <div className="flex justify-between items-center py-1 text-xs text-gray-500">
                     <span>3 months of monitoring & maintenance</span>
-                    <span className="text-gray-500 font-semibold">$100</span>
+                    <span className="text-gray-500">$100</span>
                 </div>
-                <div className="flex justify-between items-center py-1 text-[13.5px] text-[#555]">
+                <div className="flex justify-between items-center py-1 text-xs text-gray-500">
                     <span>Estimated tax</span>
-                    <span className="text-gray-500 font-semibold">$26</span>
+                    <span className="text-gray-500">$26</span>
                 </div>
                 <div className="flex justify-between items-center pt-3 mt-3 border-t border-[#ececec] text-[15px] font-bold text-gray-500">
                     <span>Total</span>

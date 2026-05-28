@@ -7,7 +7,7 @@ const HOW_STEPS = [
         step: '01',
         title: 'Describe your workflow',
         desc: 'Tell us what you want to automate and the tools involved.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-4.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img9_image-11.png',
     },
     {
         step: '02',
@@ -49,7 +49,7 @@ export default function HowItWorks() {
                             <img src={s.image} alt={s.title} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <h3 className="text-[17px] font-semibold leading-tight mb-2 tracking-[-0.2px]">{s.title}</h3>
-                        <p className="text-[13.5px] text-[#555] leading-[1.5]">{s.desc}</p>
+                        <p className="text-xs text-gray-500 leading-[1.5]">{s.desc}</p>
                     </div>
                 ))}
             </div>

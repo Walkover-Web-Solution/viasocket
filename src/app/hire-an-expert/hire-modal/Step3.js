@@ -9,7 +9,7 @@ export default function Step3({ basePrice, total }) {
                 <Sparkles className="w-[22px] h-[22px] text-accent" />
                 <h3 className="text-[17px] font-bold tracking-[-0.2px]">AI workflow assessment</h3>
             </div>
-            <p className="text-[13.5px] text-[#555] mb-4 leading-[1.55]">
+            <p className="text-xs text-gray-500 mb-4 leading-[1.55]">
                 Based on what you described, here's how our AI sized up the work.
             </p>
 
@@ -29,20 +29,14 @@ export default function Step3({ basePrice, total }) {
             <div className="border border-[#ececec] rounded-xl mb-3 overflow-hidden">
                 <div className="flex items-center justify-between p-4 gap-3">
                     <div className="flex items-center gap-2.5 text-sm font-semibold">
-                        <FileText className="w-4 h-4 text-[#555] flex-shrink-0" /> Your Requirements Documents
+                        <FileText className="w-4 h-4 text-gray-500 flex-shrink-0" /> Your Requirements Documents
                     </div>
-                    <ChevronDown className="w-3.5 h-3.5 text-[#555]" />
+                    <ChevronDown className="w-3.5 h-3.5 text-gray-500" />
                 </div>
             </div>
 
             {/* Pricing card */}
             <div className="border border-[#ececec] rounded-xl mb-3">
-                <div className="flex items-center justify-between p-4 border-b border-[#ececec]">
-                    <div className="flex items-center gap-2.5 text-sm font-bold">
-                        <Tag className="w-4 h-4 text-accent" /> Final consultation pricing
-                    </div>
-                    <div className="text-[22px] font-bold text-accent tracking-[-0.5px]">${total}</div>
-                </div>
                 <div className="px-4 py-3.5">
                     <div className="flex justify-between items-center py-2 text-xs text-gray-500">
                         <span>Expert consultation fee</span>
@@ -58,6 +52,12 @@ export default function Step3({ basePrice, total }) {
                         <span className="text-gray-500">3–5 business days</span>
                     </div>
                 </div>
+                <div className="flex items-center justify-between p-4 border-t border-[#ececec]">
+                    <div className="flex items-center gap-2.5 text-sm font-bold">
+                        <Tag className="w-4 h-4 text-accent" /> Final consultation pricing
+                    </div>
+                    <div className="text-[22px] font-bold text-accent tracking-[-0.5px]">${total}</div>
+                </div>
             </div>
 
             <div className="border border-[#ececec] rounded-xl mb-3 p-4">
@@ -68,15 +68,15 @@ export default function Step3({ basePrice, total }) {
                         +$100
                     </span>
                 </div>
-                <div className="ml-6 mt-3 flex items-center gap-4 text-xs text-gray-500">
+                <div className="ml-8 mt-1 flex items-center gap-2 text-xs text-gray-500">
                     <span>Workflow monitoring</span>
-                    <span className="text-accent font-bold mr-1.5">•</span>
+                    <span className="text-accent font-bold">•</span>
                     <span>Maintenance coverage</span>
-                    <span className="text-accent font-bold mr-1.5">•</span>
+                    <span className="text-accent font-bold">•</span>
                     <span>Priority support</span>
-                    {/* <span className="text-accent font-bold mr-1.5">•</span>
+                    {/* <span className="text-accent font-bold">•</span>
                     <span>Optimization recommendations</span> */}
-                    {/* <span className="text-accent font-bold mr-1.5">•</span>
+                    {/* <span className="text-accent font-bold">•</span>
                     <span>Error handling support</span> */}
                 </div>
             </div>

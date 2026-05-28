@@ -21,13 +21,13 @@ export default function Step5({ selectedDate, setSelectedDate, selectedTime, set
                 <div className="flex gap-1">
                     <button
                         onClick={() => setMonthOffset((m) => Math.max(0, m - 1))}
-                        className="w-8 h-8 border border-[#ececec] bg-white rounded-lg flex items-center justify-center text-[#555] hover:border-accent hover:text-accent transition-colors"
+                        className="w-8 h-8 border border-[#ececec] bg-white rounded-lg flex items-center justify-center text-gray-500 hover:border-accent hover:text-accent transition-colors"
                     >
                         <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button
                         onClick={() => setMonthOffset((m) => m + 1)}
-                        className="w-8 h-8 border border-[#ececec] bg-white rounded-lg flex items-center justify-center text-[#555] hover:border-accent hover:text-accent transition-colors"
+                        className="w-8 h-8 border border-[#ececec] bg-white rounded-lg flex items-center justify-center text-gray-500 hover:border-accent hover:text-accent transition-colors"
                     >
                         <ChevronRight className="w-4 h-4" />
                     </button>

@@ -9,7 +9,7 @@ export default function Step2() {
                 <Sparkles className="w-9 h-9 text-accent" />
                 <div>
                     <h3 className="text-base font-bold text-[#111] tracking-[-0.2px]">AI is analysing your project</h3>
-                    <p className="text-xs text-[#555]">Matching with available experts, drafting scope…</p>
+                    <p className="text-xs text-gray-500">Matching with available experts, drafting scope…</p>
                 </div>
             </div>
 
@@ -17,7 +17,7 @@ export default function Step2() {
                 <div className="absolute inset-y-0 left-0 bg-accent rounded-full animate-[hireProgress_3.8s_cubic-bezier(0.4,0,0.2,1)_forwards]" />
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-[#555] mb-[18px]">
+            <div className="flex items-center gap-2 text-xs text-gray-500 mb-[18px]">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                 Reviewing similar past projects…
             </div>
