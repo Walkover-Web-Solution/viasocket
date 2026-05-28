@@ -6,6 +6,7 @@ import HowItWorks from './HowItWorks';
 import Comparison from './Comparison';
 import CaseStudies from './CaseStudies';
 import TestimonialsCarousel from './TestimonialsCarousel';
+import ReadyToAutomate from './ReadyToAutomate';
 import HireModal from './hire-modal/HireModal';
 
 export default function HireExpertClient({ securityGridData }) {
@@ -18,6 +19,7 @@ export default function HireExpertClient({ securityGridData }) {
             <HowItWorks />
             <Comparison onHire={openModal} />
             <CaseStudies />
+            <ReadyToAutomate onHire={openModal} />
             <TestimonialsCarousel />
             {modalOpen && <HireModal onClose={() => setModalOpen(false)} />}
         </div>

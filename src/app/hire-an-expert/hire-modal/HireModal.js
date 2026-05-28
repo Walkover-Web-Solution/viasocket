@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { ArrowRight, Check, ChevronLeft, Lock, X } from 'lucide-react';
+import { ArrowRight, Check, ArrowLeft, Lock, X } from 'lucide-react';
 import Step1 from './Step1';
 import Step2 from './Step2';
 import Step3 from './Step3';
@@ -96,7 +96,16 @@ export default function HireModal({ onClose }) {
                 </div>
 
                 {/* Body */}
-                <div className="px-8 pt-7">
+                <div className="px-8 pt-4">
+                    {step > 1 && step !== 2 && step !== 6 && (
+                        <button
+                            onClick={() => setStep(step - 1)}
+                            className="inline-flex items-center gap-1 text-accent text-xs font-semibold mb-6 hover:underline"
+                        >
+                            <ArrowLeft className="w-4 h-4 transition-transform group-hover:translate-x-0.5" /> Update
+                            Automation Setup
+                        </button>
+                    )}
                     {step === 1 && <Step1 project={project} setProject={setProject} />}
                     {step === 2 && <Step2 />}
                     {step === 3 && <Step3 basePrice={basePrice} total={total} />}
@@ -113,15 +122,7 @@ export default function HireModal({ onClose }) {
                 </div>
 
                 {/* Footer */}
-                <div className="px-8 py-5 pb-7">
-                    {step > 1 && step !== 2 && step !== 6 && (
-                        <button
-                            onClick={() => setStep(step - 1)}
-                            className="inline-flex items-center gap-1 text-accent text-xs font-semibold mb-5 ml-2 hover:underline"
-                        >
-                            <ChevronLeft className="w-4 h-4" /> Back
-                        </button>
-                    )}
+                <div className="px-8 pt-2 pb-7">
                     {step === 1 && (
                         <button
                             disabled={!project.description}
