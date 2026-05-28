@@ -8,7 +8,7 @@ export default function Section({ eyebrow, title, subtitle, align = 'center', ch
                     </span>
                 )}
                 <h2 className="text-4xl font-bold mb-3">{title}</h2>
-                {subtitle && <p className="text-[17px] text-[#555] leading-[1.5]">{subtitle}</p>}
+                {subtitle && <p className="text-[17px] text-gray-500 leading-[1.5]">{subtitle}</p>}
             </div>
             {children}
         </section>

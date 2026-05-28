@@ -8,6 +8,7 @@ import Step3 from './Step3';
 import Step4 from './Step4';
 import Step5 from './Step5';
 import Step6 from './Step6';
+import '../hire-expert.scss';
 
 const DEFAULT_TITLE = {
     title: 'Hire a workflow expert',
@@ -23,7 +24,6 @@ const getTitle = (step) => TITLES[step] || DEFAULT_TITLE;
 export default function HireModal({ onClose }) {
     const [step, setStep] = useState(1);
     const [project, setProject] = useState({
-        title: '',
         description: '',
         apps: '',
         budget: '',
@@ -67,7 +67,7 @@ export default function HireModal({ onClose }) {
                         <h2 className="text-[22px] font-bold tracking-[-0.4px] text-[#111] mb-1.5 leading-tight">
                             {getTitle(step).title}
                         </h2>
-                        <p className="text-sm text-[#555] leading-[1.55]">{getTitle(step).sub}</p>
+                        <p className="text-sm text-gray-500 leading-[1.55]">{getTitle(step).sub}</p>
                         {/* Stepper */}
                         {step !== 6 && (
                             <div className="flex items-center gap-1.5 mt-4">
@@ -124,7 +124,7 @@ export default function HireModal({ onClose }) {
                     )}
                     {step === 1 && (
                         <button
-                            disabled={!project.title || !project.description}
+                            disabled={!project.description}
                             onClick={() => setStep(2)}
                             className="w-full btn btn-accent"
                         >
@@ -157,19 +157,6 @@ export default function HireModal({ onClose }) {
                     )}
                 </div>
             </div>
-
-            <style jsx global>{`
-                @keyframes hireModalIn {
-                    from {
-                        opacity: 0;
-                        transform: translateY(12px);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: translateY(0);
-                    }
-                }
-            `}</style>
         </div>
     );
 }

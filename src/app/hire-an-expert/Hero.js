@@ -20,7 +20,7 @@ export default function Hero({ onHire }) {
                 <h1 className="text-[44px] md:text-[60px] font-bold leading-[1.08] tracking-[-1px] mb-6">
                     Get your use cases automated by experts
                 </h1>
-                <p className="text-[17px] md:text-[19px] text-[#555] leading-[1.6] mb-7 max-w-[520px]">
+                <p className="text-[17px] md:text-[19px] text-gray-500 leading-[1.6] mb-7 max-w-[520px]">
                     Share your workflow challenges and our team will plan, build, and manage the right automation setup
                     for you.
                 </p>

@@ -69,7 +69,7 @@ export default function TestimonialsCarousel() {
                 <h2 className="text-2xl font-bold tracking-[-1.2px] leading-[1.15] mb-3.5">
                     What teams say about working with Viasocket
                 </h2>
-                <p className="text-[17px] text-[#555]">From founders, ops leads and agencies shipping fast.</p>
+                <p className="text-[17px] text-gray-500">From founders, ops leads and agencies shipping fast.</p>
             </div>
 
             <div className="relative md:h-[340px] flex md:block flex-col items-center gap-4">

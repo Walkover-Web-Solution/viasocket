@@ -34,7 +34,7 @@ const CASE_STUDIES = [
         desc: 'Reduced repetitive operational tasks across teams.',
         metric: '18hrs%',
         sub: 'Saved weekly',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img0_image-6.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgb_image-111.png',
     },
 ];
 
