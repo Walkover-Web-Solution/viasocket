@@ -7,7 +7,7 @@ const plans = [
         price: 'Free',
         priceSuffix: '',
         description: 'Everything you need to get started.',
-        usage: ['50 active users', '100k invocations / month'],
+        usage: ['25 active users', '25k tasks / month', '2200+ apps', 'Multi step flows'],
         support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
         ctaLabel: 'Get started free',
         ctaLink: '/signup?utm_source=/embed',
@@ -20,7 +20,7 @@ const plans = [
         price: '$99',
         priceSuffix: '/ month',
         description: 'Scale up with higher limits and full platform access.',
-        usage: ['250 active users', '750k invocations / month'],
+        usage: ['250 active users', '250k tasks / month', '2200+ apps', 'Multi step flows'],
         support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
         ctaLabel: 'Get started',
         ctaLink: '/signup?utm_source=/embed',
@@ -33,7 +33,7 @@ const plans = [
         price: 'Custom',
         priceSuffix: '',
         description: 'Tailored for security, compliance, and unlimited scale.',
-        usage: ['Custom users', 'Custom invocations'],
+        usage: ['Custom users', 'Custom tasks', '2200+ apps', 'Multi step flows'],
         support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
         ctaLabel: 'Contact Sales',
         ctaLink: 'https://cal.id/team/viasocket/embed',
@@ -75,7 +75,7 @@ function PlanCard({ plan }) {
                 </ul>
             </div>
 
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
                 <span className="text-xs tracking-widest text-gray-500">SUPPORT</span>
                 <ul className="flex flex-col gap-2">
                     {plan.support.map((item, i) => (
@@ -85,7 +85,7 @@ function PlanCard({ plan }) {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div> */}
 
             <Link href={plan.ctaLink} className={`w-full ${plan.ctaClass}`}>
                 {plan.ctaLabel}
@@ -113,7 +113,7 @@ export default function EmbedPricing() {
                     <div className="flex flex-col gap-1">
                         <h4 className="font-semibold text-black">Beyond your plan limits</h4>
                         <p className="text-sm text-gray-600">
-                            Mix and match based on what you need. Pay per user, per invocations, or both.
+                            Mix and match based on what you need. Pay per user, per tasks, or both.
                         </p>
                     </div>
                     <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
@@ -126,9 +126,9 @@ export default function EmbedPricing() {
                     <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
                         <div className="flex items-baseline gap-2">
                             <span className="text-3xl font-bold text-[#B91C1C]">$1</span>
-                            <span className="text-sm text-gray-700">/ 2,500 invocations</span>
+                            <span className="text-sm text-gray-700">/ 2,500 tasks</span>
                         </div>
-                        <p className="text-sm text-gray-600">Per block of 2,500 invocations beyond your plan tier.</p>
+                        <p className="text-sm text-gray-600">Per block of 2,500 tasks beyond your plan tier.</p>
                     </div>
                 </div>
             </div>
