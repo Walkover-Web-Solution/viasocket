@@ -1,5 +1,3 @@
-'use client';
-
 import { Lock } from 'lucide-react';
 
 export default function Step4({ total, basePrice }) {

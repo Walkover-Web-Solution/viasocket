@@ -1,5 +1,3 @@
-'use client';
-
 import Section from './Section';
 
 const HOW_STEPS = [

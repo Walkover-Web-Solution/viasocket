@@ -1,13 +1,11 @@
-'use client';
-
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import style from '@/components/navbar/navbar.module.scss';
 
 export default function TopNavLinks({ borderClass = '', backgroundClass = '', utm = '' }) {
-    const MCPPadding = utm === '/embed' ? 'px-[21.5px] gini' : 'px-[21.4px] ragini-ji';
-    const EmbedPadding = utm === '/embed' ? 'px-[18px] ragini' : 'px-[18.4px] ragi';
-    
+    const MCPPadding = utm === '/embed' ? 'px-[21.5px]' : 'px-[21.4px]';
+    const EmbedPadding = utm === '/embed' ? 'px-[18px]' : 'px-[18.4px]';
+
     return (
         <>
             <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer">
@@ -18,7 +16,8 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
                 </div>
             </Link>
             <Link
-                href="/hire-an-expert"
+                href="https://cal.id/team/viasocket/hire-an-expert"
+                target="_blank"
                 rel="nofollow noopener noreferrer"
             >
                 <div

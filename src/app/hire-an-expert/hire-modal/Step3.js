@@ -1,5 +1,3 @@
-'use client';
-
 import { CheckCircle2, ChevronDown, FileText, Sparkles, Tag } from 'lucide-react';
 
 export default function Step3({ basePrice, total }) {
