@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { AlertTriangle, Calendar, PenLine } from 'lucide-react';
+import Image from 'next/image';
 
 const WEBHOOK_URL = 'https://flow.sokt.io/func/scri74yGAo9Z';
 const FEEDBACK = 'unsatisfied';
@@ -101,9 +102,11 @@ export default function FeedbackUnsatisfiedClient() {
         <div className="flex flex-col min-h-screen bg-[#f3f1ee] text-[#0c0c0c] antialiased font-sans">
             <header className="flex items-center justify-between px-5 py-4 sm:px-7 sm:py-5">
                 <a href="https://viasocket.com" aria-label="viaSocket home">
-                    <img
+                    <Image
                         src="https://viasocket.com/assets/brand/socketsvg.png"
                         alt="viaSocket"
+                        width={96}
+                        height={32}
                         className="block max-w-[96px] h-auto"
                     />
                 </a>
@@ -141,7 +144,7 @@ export default function FeedbackUnsatisfiedClient() {
 
                         <div
                             aria-live="polite"
-                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-[13px] transition-colors ${STATUS_VARIANTS[status]}`}
+                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-xs transition-colors ${STATUS_VARIANTS[status]}`}
                         >
                             <span
                                 className={`relative inline-flex w-2 h-2 rounded-full shrink-0 ${DOT_VARIANTS[status]}`}
@@ -172,7 +175,7 @@ export default function FeedbackUnsatisfiedClient() {
                                     <span className="text-[14.5px] font-semibold text-white">
                                         Share what needs to change
                                     </span>
-                                    <span className="text-[13px] text-[#b8b8b8] leading-[1.45]">
+                                    <span className="text-xs text-[#b8b8b8] leading-[1.45]">
                                         2-minute form. We&apos;ll ship a fix within 24 hours.
                                     </span>
                                 </span>
@@ -198,7 +201,7 @@ export default function FeedbackUnsatisfiedClient() {
                                     <span className="text-[14.5px] font-semibold text-[#0c0c0c]">
                                         Book a 15-min call
                                     </span>
-                                    <span className="text-[13px] text-[#555555] leading-[1.45]">
+                                    <span className="text-xs text-[#555555] leading-[1.45]">
                                         Walk through it live with the team that built it.
                                     </span>
                                 </span>
@@ -216,7 +219,7 @@ export default function FeedbackUnsatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Plugin
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.plugin || '—'}
                                 </p>
                             </div>
@@ -224,7 +227,7 @@ export default function FeedbackUnsatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Action / Trigger
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.action_trigger || '—'}
                                 </p>
                             </div>

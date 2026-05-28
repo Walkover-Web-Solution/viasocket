@@ -1,0 +1,49 @@
+/* Shared styles for the Hire an Expert section */
+
+/* HeroHub animations */
+@keyframes hireFloat {
+    0%,
+    100% {
+        transform: translate(-50%, -50%);
+    }
+    50% {
+        transform: translate(-50%, calc(-50% - 5px));
+    }
+}
+
+@keyframes hubAura {
+    0%,
+    100% {
+        opacity: 0.55;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+.hero-hub g[data-line]:hover use {
+    stroke: #a8200d;
+    stroke-opacity: 1;
+    filter: drop-shadow(0 0 3px rgba(168, 32, 13, 0.4));
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-hub *,
+    .hero-hub * * {
+        animation: none !important;
+    }
+}
+
+/* HireModal animation */
+@keyframes hireModalIn {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

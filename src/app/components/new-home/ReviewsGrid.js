@@ -113,7 +113,7 @@ function ReviewCard({ review }) {
 
         {/* Review body */}
         <p
-          className="text-[13px] leading-[1.75] flex-1 overflow-hidden"
+          className="text-xs leading-[1.75] flex-1 overflow-hidden"
           style={{
             color: "rgba(0,0,0,0.72)",
             display: "-webkit-box",

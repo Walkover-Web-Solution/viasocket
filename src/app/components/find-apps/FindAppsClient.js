@@ -1,5 +1,3 @@
-'use client';
-
 import AlphabetComp from '@/components/aZComp/alphabetComp/alphabetComp';
 
 export default function FindAppsClient({ data }) {

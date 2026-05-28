@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Check } from 'lucide-react';
+import Image from 'next/image';
 
 const WEBHOOK_URL = 'https://flow.sokt.io/func/scri74yGAo9Z';
 const FEEDBACK = 'satisfied';
@@ -91,9 +92,11 @@ export default function FeedbackSatisfiedClient() {
         <div className="flex flex-col min-h-screen bg-[#f3f1ee] text-[#0c0c0c] antialiased font-sans">
             <header className="flex items-center justify-between px-5 py-4 sm:px-7 sm:py-5">
                 <a href="https://viasocket.com" aria-label="viaSocket home">
-                    <img
+                    <Image
                         src="https://viasocket.com/assets/brand/socketsvg.png"
                         alt="viaSocket"
+                        width={96}
+                        height={32}
                         className="block max-w-[96px] h-auto"
                     />
                 </a>
@@ -131,7 +134,7 @@ export default function FeedbackSatisfiedClient() {
 
                         <div
                             aria-live="polite"
-                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-[13px] transition-colors ${STATUS_VARIANTS[status]}`}
+                            className={`flex items-center gap-2.5 px-3.5 py-2.5 mb-7 border text-xs transition-colors ${STATUS_VARIANTS[status]}`}
                         >
                             <span
                                 className={`relative inline-flex w-2 h-2 rounded-full shrink-0 ${DOT_VARIANTS[status]}`}
@@ -148,7 +151,7 @@ export default function FeedbackSatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Plugin
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.plugin || '—'}
                                 </p>
                             </div>
@@ -156,7 +159,7 @@ export default function FeedbackSatisfiedClient() {
                                 <p className="m-0 mb-1 text-[10.5px] tracking-[1px] uppercase text-[#888888] font-semibold">
                                     Action / Trigger
                                 </p>
-                                <p className="m-0 text-[13.5px] text-[#2a2a2a] leading-[1.45] break-words">
+                                <p className="m-0 text-xs text-[#2a2a2a] leading-[1.45] break-words">
                                     {mailContent.action_trigger || '—'}
                                 </p>
                             </div>

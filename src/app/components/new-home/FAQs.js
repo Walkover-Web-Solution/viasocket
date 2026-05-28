@@ -160,7 +160,7 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
                   >
                     {/* Number */}
                     <span
-                      className="text-[13px] mt-0.5 flex-shrink-0 w-6 tabular-nums"
+                      className="text-xs mt-0.5 flex-shrink-0 w-6 tabular-nums"
                       style={{
                         color: isOpen ? "#2563EB" : "rgba(0,0,0,0.35)",
                         fontWeight: 600,
