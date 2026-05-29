@@ -1,0 +1,64 @@
+/* AI Workflows animations */
+@keyframes aiwfFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+@keyframes aiwfGlowPulse {
+    from { opacity: 0.6; transform: scale(1); }
+    to { opacity: 1; transform: scale(1.08); }
+}
+@keyframes aiwfDotPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+@keyframes aiwfBlink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+.aiwf-float { animation: aiwfFloat 6s ease-in-out infinite; }
+.aiwf-glow-pulse { animation: aiwfGlowPulse 5s ease-in-out infinite alternate; }
+.aiwf-dot-pulse { animation: aiwfDotPulse 2s ease-in-out infinite; }
+.aiwf-blink { animation: aiwfBlink 0.65s steps(1) infinite; }
+
+/* Lifetime Deal animations */
+@keyframes ltd-ring-spin { to { transform: rotate(360deg); } }
+@keyframes ltd-breath {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.045); }
+}
+@keyframes ltd-marquee-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+}
+@keyframes ltd-marquee-right {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
+}
+.ltd-ring-spin { animation: ltd-ring-spin 60s linear infinite; }
+.ltd-breath { animation: ltd-breath 4s ease-in-out infinite; }
+.ltd-marquee-left { animation: ltd-marquee-left 48s linear infinite; }
+.ltd-marquee-right { animation: ltd-marquee-right 44s linear infinite; }
+
+/* Final CTA animations */
+@keyframes fctaFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+.fcta-float { animation: fctaFloat 8s ease-in-out infinite; }
+
+/* Testimonials marquee */
+@keyframes testimonialsMarquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-25% - 4px)); }
+}
+.testimonials-marquee { animation: testimonialsMarquee 50s linear infinite; }
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .aiwf-float,
+    .aiwf-glow-pulse,
+    .ltd-ring-spin,
+    .ltd-breath,
+    .ltd-marquee-left,
+    .ltd-marquee-right { animation: none; }
+}
