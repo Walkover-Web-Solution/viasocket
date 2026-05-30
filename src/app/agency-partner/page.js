@@ -5,6 +5,7 @@ import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar'
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import HeroSection from '@/components/agencyPartner/HeroSection';
 import { getAgencyPartnerPageData } from '../lib/data';
+import { getAppCount } from '@/utils/axiosCalls';
 import WhyAgenciesSection from '@/components/agencyPartner/WhyAgenciesSection';
 import HowItWorksSection from '@/components/agencyPartner/HowItWorksSection';
 import FAQSection from '@/components/agencyPartner/FAQSection';
@@ -41,6 +42,7 @@ export async function generateMetadata() {
 
 export default async function AgencyPartnerPage() { 
     const { metaData, footerData, navbarData, blogData = [], securityGridData = [] } = await getAgencyPartnerPageData();
+    const appCount = await getAppCount();
 
     return (
         <>
@@ -49,14 +51,14 @@ export default async function AgencyPartnerPage() {
                 <NavbarServer navbarData={navbarData} utm={'/agency-partner'} />
             </ConditionalNavbar>
 
-            <HeroSection />
+            <HeroSection appCount={appCount} />
             <WhyAgenciesSection />
             <HowItWorksSection />
             <FAQSection />
             <ShowBadges />
             <SecuritySection securityGridData={securityGridData} />
             {blogData?.length > 0 && (
-                <div className="container pt-12">
+                <div className="container pt-12 mt-12">
                     <BlogGrid posts={blogData} />
                 </div>
             )}
