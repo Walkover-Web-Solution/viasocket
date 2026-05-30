@@ -93,9 +93,9 @@ export default function Hero() {
                         <span className="text-accent">forever</span>.
                     </h1>
 
-                    <p className="text-[17px] md:text-[18px] text-gray-500 leading-[1.65] max-w-[620px] m-0 mb-9 md:mb-9">
+                    <p className="text-[17px] md:text-[18px] text-gray-500 leading-[1.65] max-w-[620px] m-0 mb-9">
                         One payment for viaSocket Team &mdash; instead of{' '}
-                        <strong className="text-gray-900 font-bold">$840+ every single year</strong> other automation
+                        <strong className="text-gray-900 font-bold">$840+ every single year</strong> to other automation 
                         tools
                         <br />
                         15,000 tasks &middot; 5,000 AI credits &middot; 2,200+ integrations included.
@@ -118,7 +118,7 @@ export default function Hero() {
                         className="flex items-center gap-[18px] md:gap-3 flex-wrap text-[14px] md:text-[13px] text-gray-500"
                         role="list"
                     >
-                        {['30-day refund', 'One-time payment', 'Secured by Stripe'].map((t, i) => (
+                        {['30-day refund', 'One-time payment'].map((t, i) => (
                             <span key={t} className="contents">
                                 <span role="listitem" className="inline-flex items-center gap-2 font-medium">
                                     <svg
@@ -135,7 +135,7 @@ export default function Hero() {
                                     </svg>
                                     {t}
                                 </span>
-                                {i < 2 && (
+                                {i === 0 && (
                                     <span aria-hidden className="w-1 h-1 rounded-full bg-black/20 flex-shrink-0" />
                                 )}
                             </span>
