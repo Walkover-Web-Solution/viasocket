@@ -10,7 +10,7 @@ import Testimonials from './Testimonials';
 import Faq from './Faq';
 import FinalCta from './FinalCta';
 
-export default function LifetimeDealClient() {
+export default function LifetimeDealClient({ reviewData = [] }) {
     return (
         <div className="font-sans text-gray-900 bg-white">
             <Navbar />
@@ -21,7 +21,7 @@ export default function LifetimeDealClient() {
             <Pricing />
             <Unlock />
             <Comparison />
-            <Testimonials />
+            <Testimonials reviewData={reviewData} />
             <Faq />
             <FinalCta />
         </div>

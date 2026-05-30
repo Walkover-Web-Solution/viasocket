@@ -31,9 +31,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     Most Popular
                 </div>
             )}
-            <div className="flex justify-between items-center mb-4">
-                <span className="text-[11.5px] font-bold tracking-[0.16em] uppercase text-gray-500">{eyebrow}</span>
-            </div>
+            <span className="block text-[11.5px] font-bold tracking-[0.16em] uppercase text-gray-500 mb-4">{eyebrow}</span>
             <div className="mb-4">
                 <div className="flex items-baseline gap-2 mb-1">
                     <span className="text-lg text-gray-500 line-through font-medium">{oldPrice}</span>
@@ -72,8 +70,8 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
 
 export default function Pricing() {
     return (
-        <section id="pricing" className="relative bg-[#F5EBEB] py-[110px] overflow-hidden border-t border-accent/10">
-            <div className="max-w-[1180px] mx-auto px-8">
+        <section id="pricing" className="relative bg-[#FAFAFA] py-[110px] overflow-hidden border-t border-accent/10">
+            <div className="container px-8">
                 <div className="text-center mb-13">
                     <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-7">PRICING</div>
                     <h2 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold leading-[1.05] tracking-[-1.4px] mb-12">
@@ -81,7 +79,7 @@ export default function Pricing() {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[540px] md:max-w-[1180px] mx-auto">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card eyebrow="SOLO PLAN" oldPrice="$599" price="$399" cta="Get Solo Plan"
                         features={[
                             { label: '5,000 tasks/month' }, { label: '2,000 AI credits' },

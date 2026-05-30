@@ -76,7 +76,7 @@ export default function Faq() {
             id="faq"
         >
             <div className="container mx-auto px-4">
-                <div className="text-center max-w-[1100px] mx-auto mb-8">
+                <div className="text-center mb-8">
                     <div className="inline-block text-[#a8200d] text-[11px] font-bold tracking-[0.16em] uppercase mb-[22px]">
                         FAQs
                     </div>
@@ -127,7 +127,7 @@ export default function Faq() {
                     </div>
                 </div>
 
-                <div className="max-w-[740px] mx-auto flex flex-col gap-2.5 px-4 md:px-0">
+                <div className="flex flex-col gap-2.5 px-4 md:px-0">
                     {FAQS.map((item, i) => {
                         const isOpen = openIndex === i;
                         return (

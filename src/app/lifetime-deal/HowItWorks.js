@@ -37,7 +37,7 @@ export default function HowItWorks() {
     return (
         <section id="howitworks" className="relative bg-[#FFFCF4] py-[100px] border-t border-black/5">
             <div className="container mx-auto px-8">
-                <div className="max-w-[1040px] mx-auto mb-24 text-center">
+                <div className="mb-24 text-center">
                     <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-7">HOW IT WORKS</div>
                     <h2 className="text-3xl sm:text-4xl lg:text-[52px] font-extrabold leading-[1.08] tracking-[-1.3px]">
                         From manual work to automated workflows<br />

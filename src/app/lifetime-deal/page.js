@@ -25,7 +25,7 @@ export async function generateMetadata() {
 }
 
 export default async function LifetimeDealPage() {
-    const { faqData, metaData } = await getLifetimeDealPageData();
+    const { faqData, metaData, reviewData } = await getLifetimeDealPageData();
 
-    return <LifetimeDealClient faqData={faqData} />;
+    return <LifetimeDealClient faqData={faqData} reviewData={reviewData} />;
 }

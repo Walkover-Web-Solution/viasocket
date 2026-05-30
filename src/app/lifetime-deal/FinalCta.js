@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 export default function FinalCta() {
     return (
         <section
@@ -69,7 +71,7 @@ export default function FinalCta() {
                 />
             </svg>
 
-            <div className="max-w-[1200px] mx-auto px-6 relative z-[1]">
+            <div className="container mx-auto px-6 relative z-[1]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div>
                         <h2 className="text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.06] tracking-[-0.9px] md:tracking-[-1.5px] text-[#0a0a0a] mb-[22px]">
@@ -98,15 +100,15 @@ export default function FinalCta() {
                         </a>
                     </div>
 
-                    <div>
-                        <div className="bg-white rounded-[20px] shadow-[0_2px_8px_rgba(0,0,0,0.04),0_16px_48px_rgba(0,0,0,0.07),0_32px_80px_rgba(0,0,0,0.04)] p-9 fcta-float">
+                    <div className="bg-white rounded-[20px] shadow-[0_2px_8px_rgba(0,0,0,0.04),0_16px_48px_rgba(0,0,0,0.07),0_32px_80px_rgba(0,0,0,0.04)] p-9 fcta-float">
                             <div className="flex items-center gap-4 mb-[22px]">
-                                <div
-                                    className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 bg-[#f0f0f0] flex items-center justify-center text-xl font-extrabold text-[#a8200d] border-2 border-black/[0.06] tracking-[-0.5px]"
-                                    aria-hidden="true"
-                                >
-                                    PA
-                                </div>
+                                <Image
+                                    src="https://images.contactout.com/profiles/1d4c2fa861915fecc3f5002b63cd33f9"
+                                    alt="Pushpendra Agrawal"
+                                    width={56}
+                                    height={56}
+                                    className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 object-cover border-2 border-black/[0.06]"
+                                />
                                 <div>
                                     <p className="text-[17px] font-bold text-[#0a0a0a] tracking-[-0.2px] mb-[3px]">
                                         Pushpendra Agrawal
@@ -151,7 +153,6 @@ export default function FinalCta() {
                         </div>
                     </div>
                 </div>
-            </div>
 
         </section>
     );

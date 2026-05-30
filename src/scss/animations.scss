@@ -51,7 +51,7 @@
     from { transform: translateX(0); }
     to { transform: translateX(calc(-25% - 4px)); }
 }
-.testimonials-marquee { animation: testimonialsMarquee 50s linear infinite; }
+.testimonials-marquee { animation: testimonialsMarquee 80s linear infinite; }
 
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {

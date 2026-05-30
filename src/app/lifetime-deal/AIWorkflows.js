@@ -87,6 +87,7 @@ export default function AIWorkflows() {
     const [canvasOn, setCanvasOn] = useState(false);
     const [nodesVisible, setNodesVisible] = useState(0); // counts nodes + connectors interleaved
     const [publishOn, setPublishOn] = useState(false);
+    const [repeatTrigger, setRepeatTrigger] = useState(0);
 
     // Start animation when section enters viewport
     useEffect(() => {
@@ -137,13 +138,26 @@ export default function AIWorkflows() {
                         }
                         // 6) Publish button
                         timers.push(setTimeout(() => setPublishOn(true), totalStepsTime + 700 + items * 360 + 300));
+                        // 7) Loop
+                        timers.push(
+                            setTimeout(() => {
+                                setTyped('');
+                                setShowAiIntro(false);
+                                setStepsVisible(0);
+                                setChatExiting(false);
+                                setCanvasOn(false);
+                                setNodesVisible(0);
+                                setPublishOn(false);
+                                setRepeatTrigger((t) => t + 1);
+                            }, totalStepsTime + 700 + items * 360 + 300 + 3500)
+                        );
                     }, 450)
                 );
             }
         };
         timers.push(setTimeout(typeStep, 600));
         return () => timers.forEach(clearTimeout);
-    }, [started]);
+    }, [started, repeatTrigger]);
 
     // Auto scroll chat
     useEffect(() => {
@@ -156,7 +170,7 @@ export default function AIWorkflows() {
         <section
             ref={sectionRef}
             id="ai-workflows"
-            className="relative bg-white text-[#111] py-[120px] lg:py-[130px] overflow-hidden"
+            className="relative bg-white text-[#111] py-[120px] lg:py-[130px] overflow-hidden container"
         >
             {/* Grid bg */}
             <div
@@ -173,13 +187,13 @@ export default function AIWorkflows() {
                 }}
             />
 
-            <div className="relative z-10 max-w-[1040px] mx-auto px-5 lg:px-10 text-center">
+            <div className="relative z-10 px-5 lg:px-10 text-center">
                 <div className="inline-block text-accent text-[11px] font-bold tracking-[0.16em] uppercase mb-5">
                     AI WORKFLOWS
                 </div>
                 <h2 className="text-[30px] sm:text-[40px] lg:text-[52px] font-extrabold leading-[1.1] tracking-[-1.4px] mb-[52px]">
-                    Build powerful workflows.<br />
-                    In seconds, <span className="text-accent">with AI.</span>
+                    Build powerful workflows.
+                    In seconds, <br /> <span className="text-accent">with AI.</span>
                 </h2>
 
                 {/* Window */}

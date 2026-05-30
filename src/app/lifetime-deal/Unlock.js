@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const CARDS = [
     {
         title: 'No Monthly Fees',
@@ -79,19 +81,21 @@ export default function Unlock() {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-8">
                     <div className="flex flex-col sm:flex-row items-center gap-6">
                         <div className="flex flex-shrink-0">
-                            {['women/44', 'men/32', 'women/68', 'men/45'].map((p, i) => (
+                            {[
+                                'https://cdn.simpleicons.org/g2/FF492C',
+                                'https://gdm-localsites-assets-gfprod.imgix.net/images/capterra/og_logo-e5a8c001ed0bd1bb922639230fcea71a.png?auto=format%2Cenhance%2Ccompress',
+                            ].map((src, i) => (
                                 <div
-                                    key={p}
-                                    className="w-12 h-12 rounded-full overflow-hidden bg-white relative"
-                                    style={{ border: '3px solid #FFFCFC', marginLeft: i === 0 ? 0 : -14 }}
+                                    key={src}
+                                    className="w-12 border h-12 rounded-full overflow-hidden bg-white relative flex items-center justify-center p-1.5"
+                                    style={{ marginLeft: i === 0 ? 0 : -14 }}
                                 >
-                                    <img
-                                        src={`https://randomuser.me/api/portraits/${p}.jpg`}
+                                    <Image
+                                        src={src}
                                         alt=""
-                                        loading="lazy"
-                                        width="48"
-                                        height="48"
-                                        className="w-full h-full object-cover block"
+                                        width={48}
+                                        height={48}
+                                        className="w-full h-full object-contain block"
                                     />
                                 </div>
                             ))}
