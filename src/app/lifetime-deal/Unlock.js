@@ -101,11 +101,13 @@ export default function Unlock() {
                             ))}
                         </div>
                         <div className="flex flex-col gap-1.5 text-center sm:text-left">
-                            <div className="flex items-center gap-2 justify-center sm:justify-start">
-                                <span className="text-accent text-[13.5px] tracking-[1.5px]" aria-label="4.9 out of 5 stars">
-                                    ★★★★★
+                            <div className="flex items-center gap-3 justify-center sm:justify-start">
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
+                                    G2 — 4.6
                                 </span>
-                                <span className="font-bold text-sm text-[var(--text,#0A0A0A)] tracking-[-0.1px]">4.9/5</span>
+                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
+                                    Capterra — 4.8
+                                </span>
                             </div>
                             <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4]">
                                 Trusted by 2,000+ growing teams

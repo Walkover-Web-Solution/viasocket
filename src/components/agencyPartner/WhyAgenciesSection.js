@@ -127,13 +127,7 @@ export default function WhyAgenciesSection() {
             <div className="container mx-auto px-5 md:px-8">
                 {/* Section Header */}
                 <div className="flex flex-col items-center text-center mb-[72px]">
-                    <span className="text-[11px] font-bold tracking-[0.18em] uppercase text-[#a8200d] mb-4">
-                        Why Agencies Choose viaSocket
-                    </span>
-                    <h2
-                        className="text-[clamp(30px,4vw,52px)] font-bold leading-[1.08] tracking-[-0.02em] text-[#111] mb-4"
-                        style={{ fontFamily: 'Inter Tight, sans-serif' }}
-                    >
+                    <h2 className="text-[clamp(30px,4vw,52px)] font-bold leading-[1.08] tracking-[-0.02em] text-[#111] mb-4">
                         Why Agencies Choose viaSocket
                     </h2>
                     <p className="max-w-[640px] text-[17px] leading-[1.6] text-[#555]">
@@ -150,7 +144,7 @@ export default function WhyAgenciesSection() {
                 ${i < 5 ? 'border-b' : 'border-b-0'} border-gray-200
                 ${i === 0 || i === 1 || i === 3 || i === 4 ? 'md:border-r' : ''}
                 ${i === 2 || i === 5 ? 'md:border-r-0' : ''}
-                ${i >= 3 ? 'md:border-b-0' : 'md:border-b'}
+                ${i >= 3 ? 'md:border-b' : 'md:border-b'}
               `}
                         >
                             <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
