@@ -18,7 +18,7 @@ function Card({ item, hidden }) {
             <div className="font-serif text-[28px] leading-[0.5] font-bold text-[#fbb5a4] mb-[6px] h-[12px] tracking-[-0.02em]" aria-hidden="true">
                 &ldquo;
             </div>
-            <p className="text-xs text-[#1a1a1a] leading-[1.45] line-clamp-8 tracking-[-0.05px] mb-2 flex-grow">
+            <p className="text-xs text-[#1a1a1a] leading-[1.45] line-clamp-6 tracking-[-0.05px] mb-2 flex-grow">
                 {item.body}
             </p>
             <div className="text-[#f5b400] tracking-[2px] text-[12px] mb-[6px] leading-none" aria-label="5 out of 5 stars">

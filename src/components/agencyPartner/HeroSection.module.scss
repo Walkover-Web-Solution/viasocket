@@ -1,0 +1,14 @@
+@keyframes nodeFlow {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+.gnode {
+  opacity: 0;
+  animation: nodeFlow 4.5s ease-in-out infinite;
+}

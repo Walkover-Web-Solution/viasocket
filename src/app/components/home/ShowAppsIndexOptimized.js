@@ -1,3 +1,4 @@
+import TrustMarquee from '@/components/agencyPartner/TrustMarquee';
 import Image from 'next/image';
 import Marquee from 'react-fast-marquee';
 
@@ -107,13 +108,13 @@ const APPSTWO = [
     },
 ];
 
-export default function ShowAppsIndexOptimized({ isHomePage = false }) {
+export default function ShowAppsIndexOptimized({ isHomePage = false, isTrustMarquee = false }) {
     return (
         <div className="flex flex-col gap-6 container py-12 px-4">
-            {isHomePage ? (
+            {isHomePage || isTrustMarquee ? (
                 <>
-                    <div className="flex flex-col items-center justify-center gap-12 py-20">
-                        <h2 className="h2">Trusted by Teams Using These Apps</h2>
+                    <div className={`flex flex-col items-center justify-center gap-12 ${isHomePage ? 'py-20' : ''}`}>
+                        {isHomePage && <h2 className="h2">Trusted by Teams Using These Apps</h2>}
                         <Marquee
                             direction="left"
                             speed={40}
