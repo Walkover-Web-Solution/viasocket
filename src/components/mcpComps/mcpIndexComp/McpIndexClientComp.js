@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles } from 'lucide-react';
+import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles, ChevronRight } from 'lucide-react';
 import Footer from '@/components/footer/footer';
 import { useEffect, useState } from 'react';
 import BlogGrid from '@/app/components/blog/BlogGrid';

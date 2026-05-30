@@ -645,6 +645,46 @@ export async function getDataDeletionPolicyPageData() {
     }
 }
 
+export async function getAgencyPartnerPageData() {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
+        const pageUrl = `${baseUrl}/agency-partner`;
+
+        // Fetch dynamic data in parallel
+        const [metaData, footerData, pageData, verifiedAgencies, navbarData, blogs] = await Promise.all([
+            getMetaData('/agency-partner', pageUrl),
+            getFooterData(FOOTER_FIELDS, '', pageUrl),
+            getPageData(PAGEDATA_FIELDS, '', pageUrl),
+            getAgencies(AGENCIES_FIELDS, 'filter=verified=true', pageUrl),
+            getNavbarData(NAVBAR_FIELDS, '', pageUrl),
+            getBlogData({ tag1: 'agency-partner' }, pageUrl),
+        ]);
+
+        return {
+            verifiedAgencies: verifiedAgencies || [],
+            pageData: (pageData?.length > 0 && pageData[0]) || {},
+            metaData: metaData || {},
+            expertsHelp: blogs || [],
+            blogData: blogs || [],
+            footerData: footerData || [],
+            navbarData: navbarData || [],
+            trustLabel: pageData?.[0]?.trustLabel || '',
+        };
+    } catch (error) {
+        console.error('Error fetching agency partner page data:', error);
+        return {
+            verifiedAgencies: [],
+            pageData: {},
+            metaData: {},
+            expertsHelp: [],
+            blogData: [],
+            footerData: [],
+            navbarData: [],
+            trustLabel: '',
+        };
+    }
+}
+
 export async function getFindAppsPageData(slug = []) {
     try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
