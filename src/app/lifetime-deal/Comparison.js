@@ -7,6 +7,7 @@ const COMPETITORS = [
         plan: '15,000 tasks/month',
         metric: 'no AI credits in plan',
         logo: 'zapier.com',
+        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgf_zapier.svg',
         price: '$7,488',
     },
     {
@@ -15,6 +16,7 @@ const COMPETITORS = [
         plan: '10,000 executions/month',
         metric: 'no native AI credits',
         logo: 'n8n.io',
+        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_n8n-icon.svg',
         price: '$2,160',
     },
 ];
@@ -91,12 +93,13 @@ export default function Comparison() {
                                     className="bg-gray-100 rounded-[14px] border border-black/5 p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:bg-gray-200"
                                 >
                                     <div className="flex items-center gap-2 mb-4">
-                                        <img
+                                        <Image
                                             className="object-contain rounded-md"
-                                            src={`https://logo.clearbit.com/${c.logo}`}
+                                            src={c.logoUrl}
                                             alt={c.name}
+                                            width={26}
+                                            height={26}
                                             loading="lazy"
-                                            style={{ width: 26, height: 26 }}
                                         />
                                         <span className="text-[13px] font-semibold text-gray-500">{c.brand}</span>
                                     </div>

@@ -7,8 +7,8 @@ const plans = [
         price: 'Free',
         priceSuffix: '',
         description: 'Everything you need to get started.',
-        usage: ['25 active users', '25k tasks / month', '2200+ apps', 'Multi step flows'],
-        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        usage: ['25 active users', '25k tasks / month'],
+        support: ['Docs & Community'],
         ctaLabel: 'Get started free',
         ctaLink: '/signup?utm_source=/embed',
         ctaClass: 'btn btn-primary',
@@ -20,8 +20,8 @@ const plans = [
         price: '$99',
         priceSuffix: '/ month',
         description: 'Scale up with higher limits and full platform access.',
-        usage: ['250 active users', '250k tasks / month', '2200+ apps', 'Multi step flows'],
-        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        usage: ['250 active users', '250k tasks / month'],
+        support: ['Email & priority tickets support'],
         ctaLabel: 'Get started',
         ctaLink: '/signup?utm_source=/embed',
         ctaClass: 'btn btn-accent',
@@ -33,8 +33,8 @@ const plans = [
         price: 'Custom',
         priceSuffix: '',
         description: 'Tailored for security, compliance, and unlimited scale.',
-        usage: ['Custom users', 'Custom tasks', '2200+ apps', 'Multi step flows'],
-        support: ['Multi-step flows as single AI tools', 'Works with any LLM'],
+        usage: ['Custom users', 'Custom tasks'],
+        support: ['Dedicated 1-on-1 support'],
         ctaLabel: 'Contact Sales',
         ctaLink: 'https://cal.id/team/viasocket/embed',
         ctaClass: 'btn btn-primary',
@@ -75,7 +75,7 @@ function PlanCard({ plan }) {
                 </ul>
             </div>
 
-            {/* <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
                 <span className="text-xs tracking-widest text-gray-500">SUPPORT</span>
                 <ul className="flex flex-col gap-2">
                     {plan.support.map((item, i) => (
@@ -85,7 +85,7 @@ function PlanCard({ plan }) {
                         </li>
                     ))}
                 </ul>
-            </div> */}
+            </div>
 
             <Link href={plan.ctaLink} className={`w-full ${plan.ctaClass}`}>
                 {plan.ctaLabel}
@@ -107,6 +107,36 @@ export default function EmbedPricing() {
                     {plans.map((plan) => (
                         <PlanCard key={plan.name} plan={plan} />
                     ))}
+                </div>
+
+                <div className="bg-[#FAFAFA] text-black p-8 border">
+                    <h4 className="font-semibold text-black mb-6">Every plan includes</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">2,500+ apps</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">Multi-step flows as AI tools</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">All three embed modes</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">Managed OAuth</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">Whitelabel theming</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
+                            <span className="text-sm">SOC 2 & ISO 27001</span>
+                        </div>
+                    </div>
                 </div>
 
                 <div className="border border-gray-200 bg-[#FAFAFA] p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
