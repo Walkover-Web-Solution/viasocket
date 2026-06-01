@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 
 const PLANS = {
     starter: {
@@ -60,7 +62,7 @@ export default function PricingCard() {
 
     return (
         <aside
-            className="relative group max-w-[480px] w-full justify-self-center lg:justify-self-end bg-white/70 backdrop-blur-2xl backdrop-saturate-150 border border-black/[0.06] rounded-[20px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.03),0_12px_32px_-8px_rgba(0,0,0,0.08),0_24px_64px_-16px_rgba(0,0,0,0.10)] hover:shadow-[0_1px_3px_rgba(0,0,0,0.04),0_16px_40px_-10px_rgba(0,0,0,0.10),0_32px_80px_-20px_rgba(0,0,0,0.14)] hover:-translate-y-0.5 transition-all duration-300"
+            className="relative group lg:max-w-[480px] w-full justify-self-center lg:justify-self-end bg-white/70 backdrop-blur-2xl backdrop-saturate-150 border border-black/[0.06] rounded-[20px] overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.03),0_12px_32px_-8px_rgba(0,0,0,0.08),0_24px_64px_-16px_rgba(0,0,0,0.10)] hover:shadow-[0_1px_3px_rgba(0,0,0,0.04),0_16px_40px_-10px_rgba(0,0,0,0.10),0_32px_80px_-20px_rgba(0,0,0,0.14)] hover:-translate-y-0.5 transition-all duration-300"
             aria-label="View pricing plans"
         >
             {/* macOS chrome */}
@@ -187,7 +189,7 @@ export default function PricingCard() {
 
                 <div className="h-px bg-black/[0.06] mb-5" aria-hidden />
 
-                <ul className="space-y-2.5 mb-6">
+                <ul className="space-y-2.5">
                     {plan.features.map((f) => (
                         <li key={f} className="flex items-center gap-3 text-[14px] text-gray-800">
                             <svg
@@ -208,25 +210,13 @@ export default function PricingCard() {
                 </ul>
 
                 <div className="flex justify-end">
-                    <a
+                    <Link
                         href="#pricing"
                         aria-label="Continue with selected plan"
                         className="w-12 h-12 rounded-full border border-accent/30 text-accent flex items-center justify-center group-hover:bg-[#A8200D] group-hover:text-white group-hover:-translate-y-0.5 transition-all duration-300"
                     >
-                        <svg
-                            viewBox="0 0 24 24"
-                            className="w-[18px] h-[18px]"
-                            fill="none"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            aria-hidden
-                        >
-                            <line x1="7" y1="17" x2="17" y2="7" />
-                            <polyline points="9 7 17 7 17 15" />
-                        </svg>
-                    </a>
+                        <ArrowUpRight className="w-[18px] h-[18px]" />
+                    </Link>
                 </div>
             </div>
         </aside>

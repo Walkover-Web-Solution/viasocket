@@ -1,4 +1,4 @@
-import Navbar from './Navbar';
+
 import Hero from './Hero';
 import HowItWorks from './HowItWorks';
 import AIWorkflows from './AIWorkflows';
@@ -9,11 +9,11 @@ import Comparison from './Comparison';
 import Testimonials from './Testimonials';
 import Faq from './Faq';
 import FinalCta from './FinalCta';
+import LifetimeDealFooter from './LifetimeDealFooter';
 
-export default function LifetimeDealClient({ reviewData = [] }) {
+export default function LifetimeDealClient({ reviewData = [], appCount = 0 }) {
     return (
         <div className="font-sans text-gray-900 bg-white">
-            <Navbar />
             <Hero />
             <HowItWorks />
             <AIWorkflows />
@@ -24,6 +24,7 @@ export default function LifetimeDealClient({ reviewData = [] }) {
             <Testimonials reviewData={reviewData} />
             <Faq />
             <FinalCta />
+            <LifetimeDealFooter appCount={appCount} />
         </div>
     );
 }

@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const hasReviewContent = (item) =>
     !!item &&
     (!!item.user_name?.trim() || !!item.subtitle?.trim() || !!item.description?.trim());
@@ -27,13 +29,12 @@ function Card({ item, hidden }) {
             <div className="h-px bg-black/[0.08] mb-[6px]"></div>
             <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-[#f3f3f3]">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                         src={item.img}
                         alt={hidden ? '' : `${item.name} headshot`}
                         loading="lazy"
-                        width="32"
-                        height="32"
+                        width={32}
+                        height={32}
                         className="w-full h-full object-cover block"
                     />
                 </div>

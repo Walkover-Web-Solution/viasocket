@@ -6,6 +6,7 @@ import {
 import { getMetaData } from '@/utils/getMetaData';
 import { getFooterData, getNavbarData, getReviewSectionData } from '@/utils/getData';
 import { getFaqData } from '@/utils/getFaqData';
+import { getAppCount } from '@/utils/axiosCalls';
 
 export async function getLifetimeDealPageData() {
     try {
@@ -13,12 +14,13 @@ export async function getLifetimeDealPageData() {
         const pageUrl = `${baseUrl}/lifetime-deal`;
 
         // Fetch dynamic data in parallel
-        const [metaData, footerData, faqData, navbarData, reviewData] = await Promise.all([
+        const [metaData, footerData, faqData, navbarData, reviewData, appCount] = await Promise.all([
             getMetaData('/lifetime-deal', pageUrl),
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getFaqData('/lifetime-deal', pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl),
+            getAppCount(pageUrl),
         ]);
 
         return {
@@ -27,6 +29,7 @@ export async function getLifetimeDealPageData() {
             faqData: faqData || [],
             navbarData: navbarData || [],
             reviewData: reviewData || [],
+            appCount: appCount || 0,
         };
     } catch (error) {
         console.error('Error fetching lifetime deal page data:', error);
@@ -36,6 +39,7 @@ export async function getLifetimeDealPageData() {
             faqData: [],
             navbarData: [],
             reviewData: [],
+            appCount: 0,
         };
     }
 }

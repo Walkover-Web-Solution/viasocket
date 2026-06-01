@@ -3,11 +3,11 @@ import Image from 'next/image';
 const COMPETITORS = [
     {
         name: 'Zapier Team',
-        brand: 'zapier',
+        // brand: 'zapier',
         plan: '15,000 tasks/month',
         metric: 'no AI credits in plan',
         logo: 'zapier.com',
-        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgf_zapier.svg',
+        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/img6_Zapier_idMPnFrbc7_0.svg',
         price: '$7,488',
     },
     {
@@ -97,8 +97,8 @@ export default function Comparison() {
                                             className="object-contain rounded-md"
                                             src={c.logoUrl}
                                             alt={c.name}
-                                            width={26}
-                                            height={26}
+                                            width={c.name.includes('Zapier') ? 60 : 40}
+                                            height={c.name.includes('Zapier') ? 60 : 40}
                                             loading="lazy"
                                         />
                                         <span className="text-[13px] font-semibold text-gray-500">{c.brand}</span>
