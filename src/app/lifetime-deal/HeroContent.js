@@ -1,13 +1,21 @@
 'use client';
-
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function HeroContent() {
     return (
         <div className="relative z-[2] flex flex-col items-start text-left max-w-[760px] min-w-0 flex-1">
-            <div className="inline-flex items-center gap-2.5 bg-white border border-black/10 rounded-full px-3.5 py-[7px] text-xs text-gray-500 mb-7 md:mb-6">
-                <span aria-hidden className="w-2 h-2 rounded-full bg-[#16A34A]" />
-                <span className="text-gray-900 font-bold tracking-[0.13em] text-[11px]">LIMITED LIFETIME OFFER</span>
+            <div className="relative z-10 mb-4 flex items-center">
+                <Link href="/" rel="nofollow noopener noreferrer" className="inline-flex" aria-label="viaSocket home">
+                    <Image
+                        src="https://viasocket.com/assets/brand/logo.svg"
+                        alt="viaSocket"
+                        width={118}
+                        height={35}
+                        className="h-7 w-auto block"
+                        unoptimized
+                    />
+                </Link>
             </div>
 
             <h1 className="h1 !font-semibold">

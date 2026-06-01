@@ -20,19 +20,6 @@ export default function Hero() {
                 className="absolute inset-0 pointer-events-none [background:radial-gradient(ellipse_40%_35%_at_50%_30%,rgba(168,32,13,0.10),transparent_70%)]"
             />
 
-            <div className="relative z-10 container mx-auto px-8 flex items-center">
-                <Link href="/" rel="nofollow noopener noreferrer" className="inline-flex" aria-label="viaSocket home">
-                    <Image
-                        src="https://viasocket.com/assets/brand/logo.svg"
-                        alt="viaSocket"
-                        width={118}
-                        height={35}
-                        className="h-7 w-auto block"
-                        unoptimized
-                    />
-                </Link>
-            </div>
-
             <div className="relative z-10 container mx-auto px-8 flex-1 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] py-10 lg:py-2 gap-16 items-center">
                 <HeroContent />
                 <PricingCard />

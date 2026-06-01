@@ -1,7 +1,6 @@
 import BlogGrid from '../blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
-import Link from 'next/link';
 import EmbedSetupSteps from './EmbedSetupSteps';
 import EmbedImageSelector from './EmbedImageSelector';
 import EmbedHero from './EmbedHero';

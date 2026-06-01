@@ -1,8 +1,8 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import AiMessage from './components/AiMessage';
-import WorkflowCanvas from './components/WorkflowCanvas';
-import InputArea from './components/InputArea';
+import AiMessage from './AiMessage';
+import WorkflowCanvas from './WorkflowCanvas';
+import InputArea from './InputArea';
 
 const USER_PROMPT = 'Auto close inactive connections';
 const AI_INTRO = "I'll build that workflow for you. Setting it up now...";

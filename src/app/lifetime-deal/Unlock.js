@@ -103,10 +103,44 @@ export default function Unlock() {
                         <div className="flex flex-col gap-1.5 text-center sm:text-left">
                             <div className="flex items-center gap-3 justify-center sm:justify-start">
                                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
-                                    G2 — 4.6
+                                    G2
+                                    <span className="inline-flex items-center">
+                                        {[1,2,3,4].map((s) => (
+                                            <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                            </svg>
+                                        ))}
+                                        <span className="relative inline-block w-3 h-3">
+                                            <svg className="w-3 h-3 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                            </svg>
+                                            <span className="absolute top-0 left-0 h-full overflow-hidden" style={{ width: '60%' }}>
+                                                <svg className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                                </svg>
+                                            </span>
+                                        </span>
+                                    </span>
                                 </span>
                                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
-                                    Capterra — 4.8
+                                    Capterra
+                                    <span className="inline-flex items-center">
+                                        {[1,2,3,4].map((s) => (
+                                            <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                            </svg>
+                                        ))}
+                                        <span className="relative inline-block w-3 h-3">
+                                            <svg className="w-3 h-3 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                            </svg>
+                                            <span className="absolute top-0 left-0 h-full overflow-hidden" style={{ width: '80%' }}>
+                                                <svg className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                                </svg>
+                                            </span>
+                                        </span>
+                                    </span>
                                 </span>
                             </div>
                             <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4]">
@@ -127,7 +161,7 @@ export default function Unlock() {
                     <button
                         type="button"
                         aria-label="Choose a plan"
-                        className="group inline-flex items-center justify-center gap-2.5 bg-accent hover:bg-[#8A1A0B] text-white px-[26px] py-3.5 rounded-full text-[15px] font-semibold cursor-pointer flex-shrink-0 tracking-[-0.1px] hover:-translate-y-px hover:shadow-[0_8px_22px_-6px_rgba(168,32,13,0.35)] transition-all duration-[220ms] ease-in-out motion-reduce:transition-none motion-reduce:hover:translate-y-0"
+                        className="btn btn-accent"
                     >
                         Choose a plan
                         <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform duration-[220ms] group-hover:translate-x-[3px] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
