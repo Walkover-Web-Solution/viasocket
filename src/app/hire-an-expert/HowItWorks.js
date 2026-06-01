@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Section from './Section';
 
 const HOW_STEPS = [
@@ -44,7 +45,7 @@ export default function HowItWorks() {
                             {s.step}
                         </span>
                         <div className="w-full aspect-[3/2] mb-[18px] bg-[#faf9f4] overflow-hidden">
-                            <img src={s.image} alt={s.title} className="w-full h-full object-cover" loading="lazy" />
+                            <Image src={s.image} alt={s.title} width={600} height={400} className="w-full h-full object-cover" loading="lazy" />
                         </div>
                         <h3 className="text-[17px] font-semibold leading-tight mb-2 tracking-[-0.2px]">{s.title}</h3>
                         <p className="text-xs text-gray-500 leading-[1.5]">{s.desc}</p>

@@ -66,7 +66,7 @@ export default function HeroSection({
     };
 
     return (
-        <section className="relative overflow-hidden bg-[#fafafa] min-h-screen flex" ref={sectionRef}>
+        <section className="relative overflow-hidden bg-[#fafafa] min-h-[100dvh] flex flex-col pt-[48px] lg:pt-[78px]" ref={sectionRef}>
             {/* Cursor glow layer */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 <div
@@ -91,9 +91,7 @@ export default function HeroSection({
                     </span>
                 )}
 
-                <h1 className="font-['Inter_Tight',sans-serif] text-[clamp(42px,6.5vw,76px)] font-black leading-[1.03] tracking-[-0.025em] text-[#111] mb-6">
-                    {renderTitle()}
-                </h1>
+                <h1 className="h1">{renderTitle()}</h1>
 
                 {subtitle && (
                     <p className="max-w-[720px] text-[clamp(16px,1.8vw,19px)] leading-[1.65] text-[#555] mb-10">
@@ -106,10 +104,7 @@ export default function HeroSection({
                         Become a partner
                     </Link>
 
-                    <Link
-                        href="/contact"
-                        className="btn btn-outline"
-                    >
+                    <Link href="/contact" className="btn btn-outline">
                         Talk to sales
                         <span className="inline-block transition-transform duration-150 group-hover:translate-x-1">
                             →

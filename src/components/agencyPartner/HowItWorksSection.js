@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import React from 'react';
 // Tailwind-only component — no custom CSS needed
 
@@ -51,9 +52,11 @@ export default function HowItWorksSection() {
           {steps.map((step) => (
             <div key={step.title} className="flex flex-col items-center text-center gap-[14px]">
               <div className="w-full aspect-[4/3] flex items-center justify-center overflow-hidden">
-                <img
+                <Image
                   src={step.img}
                   alt={step.alt}
+                  width={500}
+                  height={375}
                   className="w-full h-full object-contain mix-blend-multiply"
                   onError={(e) => {
                     e.currentTarget.parentElement.style.display = 'none';

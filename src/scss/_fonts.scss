@@ -8,7 +8,7 @@ body {
     @apply md:text-6xl text-4xl;
     font-family: 'Inter Tight';
     line-height: 1.1em;
-    font-weight: 400;
+    font-weight: 600;
     color: #222222;
 
     &__b {
@@ -19,14 +19,14 @@ body {
 .h2 {
     @apply md:text-3xl text-2xl;
     font-family: 'Inter Tight';
-    font-weight: 400;
+    font-weight: 500;
     font-size: clamp(24px, -3.0704225352px + 9.014084507vw, 38px);
 }
 
 .h3 {
     @apply md:text-2xl text-xl;
     font-family: 'Inter Tight';
-    font-weight: 400;
+    font-weight: 500;
     // font-size: clamp(16px, -3.0704225352px + 9.014084507vw, 20px) !important;
 }
 

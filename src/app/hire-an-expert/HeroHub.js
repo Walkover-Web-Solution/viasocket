@@ -41,7 +41,7 @@ const ICON_URLS = {
 const ICONS = Object.fromEntries(
     Object.entries(ICON_URLS).map(([key, url]) => [
         key,
-        <img key={key} src={url} alt={LABELS[key]} className="w-full h-full object-contain" />,
+        <Image key={key} src={url} alt={LABELS[key]} width={64} height={64} className="w-full h-full object-contain" />,
     ])
 );
 
