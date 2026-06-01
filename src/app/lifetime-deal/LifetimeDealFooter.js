@@ -15,12 +15,12 @@ export default function LifetimeDealFooter({ appCount }) {
         },
         {
             name: 'LinkedIn',
-            href: 'https://linkedin.com/company/viasocket',
+            href: 'https://www.linkedin.com/company/viasocket-walkover/',
             icon: <Linkedin className="w-4 h-4" aria-hidden="true" />,
         },
         {
             name: 'YouTube',
-            href: 'https://youtube.com/@viasocket',
+            href: 'https://www.youtube.com/@viasocket',
             icon: <Youtube className="w-4 h-4" aria-hidden="true" />,
         },
         {
