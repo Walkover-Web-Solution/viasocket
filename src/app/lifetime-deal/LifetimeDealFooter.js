@@ -23,11 +23,6 @@ export default function LifetimeDealFooter({ appCount }) {
             href: 'https://www.youtube.com/@viasocket',
             icon: <Youtube className="w-4 h-4" aria-hidden="true" />,
         },
-        {
-            name: 'GitHub',
-            href: 'https://github.com/walkover101',
-            icon: <Github className="w-4 h-4" aria-hidden="true" />,
-        },
     ];
 
     return (
