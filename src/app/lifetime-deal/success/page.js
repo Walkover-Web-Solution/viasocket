@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Script from 'next/script';
 import SuccessContent from './SuccessContent';
 import LifetimeDealFooter from '../LifetimeDealFooter';
 
@@ -40,6 +41,21 @@ export default function SuccessPage() {
 
                 <SuccessContent />
             </div>
+            {/* Event snippet for Purchase - Life Time Deal conversion page */}
+            <Script
+                id="gtag-conversion"
+                strategy="afterInteractive"
+                dangerouslySetInnerHTML={{
+                    __html: `
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-16852796533/rnD8CJHc2bMcEPWIheQ-',
+                            'value': 1.0,
+                            'currency': 'USD',
+                            'transaction_id': ''
+                        });
+                    `,
+                }}
+            />
             <LifetimeDealFooter />
         </>
     );
