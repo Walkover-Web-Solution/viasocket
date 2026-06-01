@@ -46,13 +46,6 @@ export default function HeroContent() {
                         &rarr;
                     </span>
                 </Link>
-                <Link
-                    href="#pricing"
-                    className="text-gray-900 font-semibold text-[14.5px] hover:underline"
-                    rel="nofollow noopener noreferrer"
-                >
-                    See what&rsquo;s inside
-                </Link>
             </div>
 
             <div
