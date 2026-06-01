@@ -3,9 +3,10 @@ import Link from 'next/link';
 import Script from 'next/script';
 import SuccessContent from './SuccessContent';
 import LifetimeDealFooter from '../LifetimeDealFooter';
+import { getLifetimeDealPageData } from '../../lib/lifetime-deal-data';
 
-
-export default function SuccessPage() {
+export default async function SuccessPage() {
+    const { appCount } = await getLifetimeDealPageData();
     return (
         <>
             <div className="relative flex flex-col justify-center min-h-dvh overflow-hidden isolate bg-[#fafafa] font-inter-tight text-[#0a0a0a] text-base leading-normal antialiased">
@@ -27,7 +28,12 @@ export default function SuccessPage() {
 
                 {/* Top-left logo */}
                 <div className="relative z-10 max-w-[720px] w-full mx-auto pt-8 px-6 max-[600px]:pt-[22px] max-[600px]:px-5">
-                    <Link href="/" rel="nofollow noopener noreferrer" className="inline-flex" aria-label="viaSocket home">
+                    <Link
+                        href="/"
+                        rel="nofollow noopener noreferrer"
+                        className="inline-flex"
+                        aria-label="viaSocket home"
+                    >
                         <Image
                             src="https://viasocket.com/assets/brand/logo.svg"
                             alt="viaSocket"
@@ -56,7 +62,7 @@ export default function SuccessPage() {
                     `,
                 }}
             />
-            <LifetimeDealFooter />
+            <LifetimeDealFooter appCount={appCount} containerClassName="max-w-[720px] mx-auto w-full" />
         </>
     );
 }

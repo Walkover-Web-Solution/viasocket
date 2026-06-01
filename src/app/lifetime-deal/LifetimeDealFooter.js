@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Linkedin, Youtube, Github, ArrowUpRight } from 'lucide-react';
+import { Linkedin, Youtube, ArrowUpRight } from 'lucide-react';
 
-export default function LifetimeDealFooter({ appCount }) {
+export default function LifetimeDealFooter({ appCount = 0, containerClassName = 'container mx-auto' }) {
     const socialLinks = [
         {
             name: 'X',
@@ -27,7 +27,7 @@ export default function LifetimeDealFooter({ appCount }) {
 
     return (
         <footer className="bg-[#0a0a0a] text-white">
-            <div className="container mx-auto px-6 py-16 md:py-20">
+            <div className={`${containerClassName} px-6 py-16 md:py-20`}>
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
                     {/* Left section — brand */}
                     <div className="lg:col-span-5">
@@ -117,7 +117,7 @@ export default function LifetimeDealFooter({ appCount }) {
 
             {/* Bottom bar */}
             <div className="border-t border-white/[0.08]">
-                <div className="container mx-auto px-6 py-5">
+                <div className={`${containerClassName} px-6 py-5`}>
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/40">
                         <span>© 2026 viaSocket. All rights reserved.</span>
                         <span>Made for teams who automate at scale.</span>
