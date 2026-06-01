@@ -29,14 +29,16 @@ function Card({ item, hidden }) {
             <div className="h-px bg-black/[0.08] mb-[6px]"></div>
             <div className="flex items-center gap-2.5">
                 <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 bg-[#f3f3f3]">
-                    <Image
-                        src={item.img}
-                        alt={hidden ? '' : `${item.name} headshot`}
-                        loading="lazy"
-                        width={32}
-                        height={32}
-                        className="w-full h-full object-cover block"
-                    />
+                    {item.img && (
+                        <Image
+                            src={item.img}
+                            alt={hidden ? '' : `${item.name} headshot`}
+                            loading="lazy"
+                            width={32}
+                            height={32}
+                            className="w-full h-full object-cover block"
+                        />
+                    )}
                 </div>
                 <div>
                     <p className="text-[13px] font-bold text-[#1a1a1a] tracking-[-0.1px] mb-0">{item.name}</p>

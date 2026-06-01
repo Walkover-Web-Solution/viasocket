@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { Linkedin, Youtube, Github } from 'lucide-react';
+import Link from 'next/link';
+import { Linkedin, Youtube, Github, ArrowUpRight } from 'lucide-react';
 
 export default function LifetimeDealFooter({ appCount }) {
     const socialLinks = [
@@ -34,7 +35,7 @@ export default function LifetimeDealFooter({ appCount }) {
             <div className="container mx-auto px-6 py-16 md:py-20">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8">
                     {/* Left section — brand */}
-                    <div className="lg:col-span-6">
+                    <div className="lg:col-span-5">
                         <div className="mb-6">
                             <Image
                                 src="https://viasocket.com/assets/brand/logo.svg"
@@ -57,24 +58,63 @@ export default function LifetimeDealFooter({ appCount }) {
                         </div>
                     </div>
 
-                    {/* Follow Us */}
-                    <div className="lg:col-span-6">
-                        <h3 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
-                            Follow Us
-                        </h3>
-                        <div className="flex items-center gap-3">
-                            {socialLinks.map((social) => (
-                                <a
-                                    key={social.name}
-                                    href={social.href}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label={social.name}
-                                    className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-200"
-                                >
-                                    {social.icon}
-                                </a>
-                            ))}
+                    {/* Right section — Resources + Follow Us */}
+                    <div className="lg:col-span-7 flex flex-col sm:flex-row gap-10 sm:gap-0">
+                        {/* Resources */}
+                        <div className="sm:pr-12 sm:border-r sm:border-white/10">
+                            <h3 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
+                                Resources
+                            </h3>
+                            <ul className="flex flex-col gap-2.5">
+                                <li>
+                                    <Link
+                                        href="/help"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="group inline-flex items-center gap-1.5 text-[13.5px] text-white/70 hover:text-white transition-colors duration-200"
+                                    >
+                                        Help Docs
+                                        <ArrowUpRight
+                                            size={12}
+                                            strokeWidth={2.5}
+                                            className="text-[#a8200d] opacity-80 group-hover:opacity-100 transition-opacity"
+                                        />
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        href="/support"
+                                        className="group inline-flex items-center gap-1.5 text-[13.5px] text-white/70 hover:text-white transition-colors duration-200"
+                                    >
+                                        Contact Support
+                                        <ArrowUpRight
+                                            size={12}
+                                            strokeWidth={2.5}
+                                            className="text-[#a8200d] opacity-80 group-hover:opacity-100 transition-opacity"
+                                        />
+                                    </Link>
+                                </li>
+                            </ul>
+                        </div>
+                        {/* Follow Us */}
+                        <div className="sm:pl-12">
+                            <h3 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
+                                Follow Us
+                            </h3>
+                            <div className="flex items-center gap-3">
+                                {socialLinks.map((social) => (
+                                    <a
+                                        key={social.name}
+                                        href={social.href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={social.name}
+                                        className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/70 hover:text-white hover:border-white/40 hover:bg-white/5 transition-all duration-200"
+                                    >
+                                        {social.icon}
+                                    </a>
+                                ))}
+                            </div>
                         </div>
                     </div>
                 </div>
