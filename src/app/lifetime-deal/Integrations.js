@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const ROW1 = [['Notion','notion.so'],['WhatsApp','whatsapp.com'],['Google Sheets','sheets.google.com'],['Stripe','stripe.com'],['Gmail','gmail.com'],['Slack','slack.com'],['Shopify','shopify.com'],['HubSpot','hubspot.com'],['Salesforce','salesforce.com'],['Twilio','twilio.com'],['Calendly','calendly.com'],['Google Drive','drive.google.com'],['Mailchimp','mailchimp.com'],['ChatGPT','openai.com'],['Razorpay','razorpay.com']];
 const ROW2 = [['Facebook','facebook.com'],['Dropbox','dropbox.com'],['Asana','asana.com'],['Airtable','airtable.com'],['ClickUp','clickup.com'],['Linear','linear.app'],['Trello','trello.com'],['Discord','discord.com'],['X','x.com'],['Monday.com','monday.com'],['Zoho CRM','zoho.com'],['Jira','atlassian.com'],['Outlook','outlook.com'],['GitHub','github.com'],['Pipedrive','pipedrive.com']];
 
@@ -7,7 +9,7 @@ function Strip({ apps, dir }) {
         <div className={`flex gap-2.5 w-max will-change-transform hover:[animation-play-state:paused] ${dir === 'left' ? 'ltd-marquee-left' : 'ltd-marquee-right'}`}>
             {items.map(([name, domain], i) => (
                 <div key={`${name}-${i}`} className="flex items-center gap-2.5 pl-3 pr-5 py-2.5 bg-white/[0.055] border border-white/10 rounded-[13px] whitespace-nowrap shrink-0" aria-hidden={i >= apps.length}>
-                    <img className="w-7 h-7 rounded-md object-contain shrink-0" src={`https://thingsofbrand.com/api/icon/${domain}`} alt={i >= apps.length ? '' : name} loading="lazy" />
+                    <Image className="w-7 h-7 rounded-md object-contain shrink-0" src={`https://thingsofbrand.com/api/icon/${domain}`} alt={i >= apps.length ? '' : name} width={28} height={28} loading="lazy" />
                     <span className="text-[13.5px] font-medium text-white/80">{name}</span>
                 </div>
             ))}

@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Tag } from 'lucide-react';
 import Section from './Section';
 
@@ -63,9 +64,11 @@ export default function CaseStudies() {
                         <div
                             className={`w-full mb-5 px-5 py-6 flex items-center justify-center min-h-[200px] border overflow-hidden ${TINTS[c.tint]}`}
                         >
-                            <img
+                            <Image
                                 src={c.image}
                                 alt={c.tag}
+                                width={500}
+                                height={400}
                                 className="max-w-full max-h-[220px] object-contain"
                                 loading="lazy"
                             />
