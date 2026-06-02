@@ -3,21 +3,17 @@ import Image from 'next/image';
 const COMPETITORS = [
     {
         name: 'Zapier Team',
-        // brand: 'zapier',
-        plan: '15,000 tasks/month',
-        metric: 'no AI credits in plan',
+        brand: 'zapier',
+        plan: '10,000 tasks/month',
         logo: 'zapier.com',
-        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/img6_Zapier_idMPnFrbc7_0.svg',
-        price: '$7,488',
+        price: '$6,084',
     },
     {
         name: 'n8n Cloud Pro',
         brand: 'n8n',
         plan: '10,000 executions/month',
-        metric: 'no native AI credits',
         logo: 'n8n.io',
-        logoUrl: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_n8n-icon.svg',
-        price: '$2,160',
+        price: '$1800',
     },
 ];
 
@@ -56,6 +52,7 @@ export default function Comparison() {
                         <div className="text-6xl font-extrabold text-[#D71C1C] tracking-[-3px] leading-none mb-1">
                             $799
                         </div>
+                        <div className="text-[13px] text-white/60">15,000 tasks/month</div>
                         <div className="text-[13px] text-white/60">one-time · no renewals</div>
                         <div className="mt-auto pt-5 flex justify-end">
                             <a
@@ -92,24 +89,11 @@ export default function Comparison() {
                                     key={c.name}
                                     className="bg-gray-100 rounded-[14px] border border-black/5 p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:bg-gray-200"
                                 >
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <Image
-                                            className="object-contain rounded-md"
-                                            src={c.logoUrl}
-                                            alt={c.name}
-                                            width={c.name.includes('Zapier') ? 60 : 40}
-                                            height={c.name.includes('Zapier') ? 60 : 40}
-                                            loading="lazy"
-                                        />
-                                        <span className="text-[13px] font-semibold text-gray-500">{c.brand}</span>
-                                    </div>
+                                    <span className="text-[13px] font-semibold text-gray-500 mb-4 block">{c.brand}</span>
                                     <div className="text-[15.5px] font-bold tracking-[-0.3px] mb-1">{c.name}</div>
                                     <div className="text-xs text-gray-500">{c.plan}</div>
-                                    <div className="text-xs text-gray-500 flex-1">{c.metric}</div>
                                     <div className="h-px bg-black/5 mt-4 mb-3.5" />
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="text-[26px] font-extrabold tracking-[-0.8px]">{c.price}</span>
-                                    </div>
+                                    <span className="text-[26px] font-extrabold tracking-[-0.8px] block">{c.price}</span>
                                     <div className="mt-1 text-[11px] font-semibold tracking-wider uppercase text-gray-500">
                                         3-year cost
                                     </div>

@@ -8,13 +8,13 @@ export async function generateMetadata() {
     const { metaData } = await getLifetimeDealPageData();
 
     return {
-        title: metaData?.title || 'viaSocket Embed | Embedded Integration Platform for SaaS and AI',
+        title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
         description:
             metaData?.description ||
             'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
         keywords: metaData?.keywords || '',
         openGraph: {
-            title: metaData?.title || 'viaSocket Embed | Embedded Integration Platform for SaaS and AI',
+            title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description:
                 metaData?.description ||
                 'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
@@ -22,7 +22,7 @@ export async function generateMetadata() {
         },
         twitter: {
             card: 'summary_large_image',
-            title: metaData?.title || 'viaSocket Embed | Embedded Integration Platform for SaaS and AI',
+            title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description:
                 metaData?.description ||
                 'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
