@@ -1,4 +1,3 @@
-
 import Hero from './Hero';
 import HowItWorks from './HowItWorks';
 import AIWorkflows from './AIWorkflows';
@@ -18,9 +17,9 @@ export default function LifetimeDealClient({ reviewData = [], appCount = 0 }) {
             <HowItWorks />
             <AIWorkflows />
             <Integrations />
+            <Comparison />
             <Pricing />
             <Unlock />
-            <Comparison />
             <Testimonials reviewData={reviewData} />
             <Faq />
             <FinalCta />
