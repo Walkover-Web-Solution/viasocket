@@ -5,8 +5,13 @@ import SuccessContent from './SuccessContent';
 import LifetimeDealFooter from '../LifetimeDealFooter';
 import { getLifetimeDealPageData } from '../../lib/lifetime-deal-data';
 
+export const metadata = {
+    title: 'Lifetime License Activated | viaSocket',
+};
+
 export default async function SuccessPage() {
     const { appCount } = await getLifetimeDealPageData();
+
     return (
         <>
             <div className="relative flex flex-col justify-center min-h-dvh overflow-hidden isolate bg-[#fafafa] font-inter-tight text-[#0a0a0a] text-base leading-normal antialiased">
