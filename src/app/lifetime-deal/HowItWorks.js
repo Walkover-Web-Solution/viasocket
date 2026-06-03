@@ -5,13 +5,13 @@ const STEPS = [
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img4_image-12.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_image-16.png',
     },
     {
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_image-16.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img6_image-17.png',
     },
     {
         num: '3.',
