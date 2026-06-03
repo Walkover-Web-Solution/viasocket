@@ -19,10 +19,10 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                 <EmbedFeatureCards />
             </div>
 
-            <EmbedImageSelector embedData={embedData} />
+            <EmbedImageSelector embedData={embedData} appCount={appCount} />
 
             <EmbedSetupSteps />
-            <EmbedPricing />
+            <EmbedPricing appCount={appCount} />
             <EmbedChatbotAction appCount={appCount} />
 
             <ShowBadges />

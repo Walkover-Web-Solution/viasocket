@@ -33,13 +33,19 @@ const STEPS = [
     { num: 3, color: 'text-green-500', label: 'Update Record' },
 ];
 
-const EmbedImageSelector = () => {
+const EmbedImageSelector = ({ appCount }) => {
+    const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
     return (
         <div className="container">
             <div className="flex flex-col gap-6">
-                <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
-                    Everything you need to own the integration layer
-                </h2>
+                <div className="flex flex-col gap-1">
+                    <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
+                        Everything you need to own the integration layer
+                    </h2>
+                    <p className="text-gray-600 text-xl leading-relaxed">
+                        Your users connect their apps, and automate across them, all inside your product.
+                    </p>
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-[#EFEAFE] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
@@ -49,7 +55,7 @@ const EmbedImageSelector = () => {
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
                                 Embed the visual builder and let your users chain triggers, actions and conditions
-                                across 2,500+ apps.
+                                across {totalApps} apps.
                                 <br />
                                 No code, no support tickets, no waiting on your roadmap.
                             </p>

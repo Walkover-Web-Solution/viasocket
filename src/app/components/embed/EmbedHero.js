@@ -11,13 +11,8 @@ const HERO_ICONS = [
 export default function EmbedHero({ appCount }) {
     return (
         <div className="flex flex-col gap-6 p-12">
-            <p className="text-lg text-gray-700">
-                <span className="font-medium">MCP-Native</span>
-                <span className="mx-2">·</span>
-                <span className="font-medium">SOC2-Ready</span>
-            </p>
             <h1 className="text-4xl md:text-6xl font-normal text-gray-900 flex flex-wrap items-center gap-x-4 gap-y-2">
-                <span>Your product. {+appCount + 300}+ apps.</span>
+                <span>Give your users {+appCount + 300}+ integrations</span>
                 <span className="inline-flex items-center gap-2 align-middle">
                     {HERO_ICONS.map((ic) => (
                         <Image
@@ -30,11 +25,18 @@ export default function EmbedHero({ appCount }) {
                         />
                     ))}
                 </span>
-                <span className="w-full">One embed.</span>
+                <p className="text-2xl">
+                    viaSocket Embed drops an integration layer into your SaaS or AI product. <br /> Your users connect
+                    their apps and build workflows inside your UI.
+                </p>
             </h1>
-            <div>
+
+            <div className="flex items-center gap-2">
                 <Link href="/signup?utm_source=/embed" className="btn btn-accent">
                     Get Started →
+                </Link>
+                <Link href="https://cal.id/team/viasocket/embed" className="btn btn-outline" target="_blank">
+                    Contact Sales
                 </Link>
             </div>
         </div>
