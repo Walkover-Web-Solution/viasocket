@@ -4,26 +4,26 @@ const FEATURES = [
     {
         icon: Lock,
         iconBg: 'bg-emerald-50 text-emerald-600',
-        title: 'End-user auth inside your product',
-        desc: 'Users connect via OAuth without leaving your product. Secure, isolated, and seamless.',
+        title: 'Built-in app authentication',
+        desc: 'Let users securely connect their apps without leaving your platform.',
     },
     {
         icon: Box,
         iconBg: 'bg-indigo-50 text-indigo-600',
         title: 'Connect any app in minutes',
-        desc: 'Pre-built connectors and OAuth flows to thousands of apps.',
+        desc: 'Connect to thousands of apps using pre-built connectors and built-in authentication.',
     },
     {
         icon: FileText,
         iconBg: 'bg-amber-50 text-amber-600',
-        title: 'Designed to feel built-in',
-        desc: 'Match the embed to your brand identity. It renders natively inside your product.',
+        title: 'Make automation feel native',
+        desc: 'Embed automation directly into your product with a fully customizable experience.',
     },
     {
         icon: Zap,
         iconBg: 'bg-violet-50 text-violet-600',
-        title: 'Built-in observability',
-        desc: 'Per-action metrics, failure rates. See what\u2019s running, what\u2019s failing, and what to fix. No extra setup.',
+        title: 'Built-in monitoring',
+        desc: 'Track every action in one place. See what\u2019s working, what\u2019s failing, and what needs attention.',
     },
 ];
 
@@ -45,13 +45,11 @@ const EmbedImageSelector = () => {
                     <div className="bg-[#EFEAFE] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
                         <div className="flex flex-col gap-4">
                             <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                                Give your users the access to build Multi-step flows
+                                Enable your users to build multi-step workflows
                             </h3>
                             <p className="text-gray-600 text-base leading-relaxed">
-                                Embed the visual builder and let your users chain triggers, actions and conditions
-                                across 2,500+ apps.
-                                <br />
-                                No code, no support tickets, no waiting on your roadmap.
+                                Embed a visual automation builder that enables users to create multi-step workflows
+                                using triggers, actions, and conditions across 2,500+ apps.
                             </p>
                         </div>
 

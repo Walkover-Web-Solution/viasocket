@@ -66,19 +66,7 @@ function PlanCard({ plan }) {
             <div className="flex flex-col gap-2">
                 <span className="text-xs tracking-widest text-gray-500">USAGE</span>
                 <ul className="flex flex-col gap-2">
-                    {plan.usage.map((item, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
-                            <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
-                            {item}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <span className="text-xs tracking-widest text-gray-500">SUPPORT</span>
-                <ul className="flex flex-col gap-2">
-                    {plan.support.map((item, i) => (
+                    {[...plan.usage, ...plan.support].map((item, i) => (
                         <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
                             <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
                             {item}
@@ -100,7 +88,7 @@ export default function EmbedPricing() {
             <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
                     <h2 className="text-4xl font-medium text-black">Embed Pricing</h2>
-                    <p className="text-gray-600 text-lg">Simple, transparent pricing that grows with you.</p>
+                    <p className="text-gray-600 text-lg">Choose the perfect plan that fits your need.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
