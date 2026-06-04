@@ -63,10 +63,9 @@ export default function EmbedSetupSteps() {
         <div className="container">
             <div className="border bg-white p-8 md:p-12">
                 <h2 className="h2">Set up the embed in two steps</h2>
-                <p className="sub__h1 mt-2">
-                    Sign a JWT on your server, then drop a single script tag into your frontend.
-                    <br />
-                    No OAuth boilerplate, no webhook infrastructure to maintain.
+                <p className="sub__h1 mt-6">
+                    Generate a token, add a script, and you&apos;re ready to go. No OAuth flows or webhook
+                    infrastructure needed.
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">

@@ -11,13 +11,13 @@ export async function generateMetadata() {
         title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
         description:
             metaData?.description ||
-            'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
+            'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
         keywords: metaData?.keywords || '',
         openGraph: {
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description:
                 metaData?.description ||
-                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
+                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
             images: metaData?.image ? [{ url: metaData.image }] : undefined,
         },
         twitter: {
@@ -25,7 +25,7 @@ export async function generateMetadata() {
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description:
                 metaData?.description ||
-                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2-ready.',
+                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
             images: metaData?.image ? [metaData.image] : undefined,
         },
     };

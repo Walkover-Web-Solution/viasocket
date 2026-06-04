@@ -97,7 +97,7 @@ export default function Pricing() {
                     <Card
                         eyebrow="SOLO PLAN"
                         oldPrice="$599"
-                        price="$399"
+                        price="$390"
                         cta="Get Solo Plan"
                         features={[
                             { label: '5,000 tasks/month' },
@@ -112,7 +112,7 @@ export default function Pricing() {
                     <Card
                         eyebrow="TEAM PLAN"
                         oldPrice="$1,099"
-                        price="$799"
+                        price="$790"
                         cta="Get Team Plan"
                         featured
                         features={[
@@ -146,7 +146,7 @@ export default function Pricing() {
                     <Card
                         eyebrow="PREMIUM PLAN"
                         oldPrice="$1,399"
-                        price="$999"
+                        price="$990"
                         cta="Get Premium Plan"
                         features={[
                             {

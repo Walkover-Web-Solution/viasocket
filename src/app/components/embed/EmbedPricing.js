@@ -66,19 +66,7 @@ function PlanCard({ plan }) {
             <div className="flex flex-col gap-2">
                 <span className="text-xs tracking-widest text-gray-500">USAGE</span>
                 <ul className="flex flex-col gap-2">
-                    {plan.usage.map((item, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
-                            <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
-                            {item}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <div className="flex flex-col gap-2">
-                <span className="text-xs tracking-widest text-gray-500">SUPPORT</span>
-                <ul className="flex flex-col gap-2">
-                    {plan.support.map((item, i) => (
+                    {[...plan.usage, ...plan.support].map((item, i) => (
                         <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
                             <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
                             {item}
@@ -94,49 +82,20 @@ function PlanCard({ plan }) {
     );
 }
 
-export default function EmbedPricing() {
+export default function EmbedPricing({ appCount }) {
+    const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
     return (
         <div className="container" id="pricing">
             <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
                     <h2 className="text-4xl font-medium text-black">Embed Pricing</h2>
-                    <p className="text-gray-600 text-lg">Simple, transparent pricing that grows with you.</p>
+                    <p className="text-gray-600 text-lg">Choose the perfect plan that fits your need.</p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {plans.map((plan) => (
                         <PlanCard key={plan.name} plan={plan} />
                     ))}
-                </div>
-
-                <div className="bg-[#FAFAFA] text-black p-8 border">
-                    <h4 className="font-semibold text-black mb-6">Every plan includes</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-8 gap-y-4">
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">2,500+ apps</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">Multi-step flows as AI tools</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">All three embed modes</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">Managed OAuth</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">Whitelabel theming</span>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Check size={16} className="text-green-500 shrink-0" strokeWidth={3} />
-                            <span className="text-sm">SOC 2 & ISO 27001</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div className="border border-gray-200 bg-[#FAFAFA] p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
