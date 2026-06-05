@@ -9,6 +9,7 @@ export const handleRedirect = (e, url, router, customSource) => {
     if (router && url.startsWith('/')) {
         router.push(finalUrl);
     } else {
-        window.open(finalUrl, '_blank');
+        const target = url.includes('signup') ? '_self' : '_blank';
+        window.open(finalUrl, target);
     }
 };
