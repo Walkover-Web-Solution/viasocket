@@ -3,7 +3,7 @@ import { Check as CheckIcon, X } from 'lucide-react';
 const Check = () => <CheckIcon size={15} strokeWidth={2.5} className="text-green-500 shrink-0" aria-hidden />;
 const Cross = () => <X size={14} strokeWidth={2} className="text-gray-300 shrink-0" aria-hidden />;
 
-function Card({ eyebrow, oldPrice, price, features, support, cta, featured = false }) {
+function Card({ eyebrow, oldPrice, price, savings, features, support, cta, featured = false }) {
     return (
         <article className="relative bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
             <span className="block text-xs font-bold tracking-widest uppercase text-gray-400 mb-1">
@@ -15,6 +15,9 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     <span className="text-sm text-gray-400 line-through ml-2">{oldPrice}</span>
                 </div>
                 <span className="text-xs text-accent font-medium">one-time payment</span>
+                {savings && (
+                    <div className="text-xs text-green-600 font-medium mt-0.5">You save {savings}</div>
+                )}
             </div>
             <div className="h-px bg-gray-100 mb-4" />
             <ul className="flex flex-col gap-3 flex-1">
@@ -55,10 +58,11 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card
-                        eyebrow="SOLO PLAN"
+                        eyebrow="BASIC PLAN"
                         oldPrice="$599"
                         price="$390"
-                        cta="Get Solo Plan"
+                        savings="$209"
+                        cta="Get Basic Plan"
                         features={[
                             { label: '5,000 tasks/month' },
                             { label: '2,000 AI credits' },
@@ -73,6 +77,7 @@ export default function Pricing() {
                         eyebrow="TEAM PLAN"
                         oldPrice="$1,099"
                         price="$790"
+                        savings="$309"
                         cta="Get Team Plan"
                         featured
                         features={[
@@ -104,10 +109,11 @@ export default function Pricing() {
                         support="Priority ticket support"
                     />
                     <Card
-                        eyebrow="PREMIUM PLAN"
+                        eyebrow="ADVANCED PLAN"
                         oldPrice="$1,399"
                         price="$990"
-                        cta="Get Premium Plan"
+                        savings="$409"
+                        cta="Get Advanced Plan"
                         features={[
                             {
                                 label: (
