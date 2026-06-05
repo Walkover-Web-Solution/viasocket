@@ -46,9 +46,6 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     <span className="text-lg text-gray-500 line-through font-medium">{oldPrice}</span>
                     <span className="text-[44px] font-extrabold tracking-[-1.6px] leading-none">{price}</span>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[12.5px] text-accent font-medium">one-time payment</span>
-                </div>
             </div>
             <div className="h-px bg-black/5 my-4" />
             <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
@@ -62,9 +59,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     </li>
                 ))}
             </ul>
-            <div className="h-px bg-black/5 my-4" />
-            <div className="mb-[18px]">
-                <div className="text-[10px] font-bold tracking-[0.16em] uppercase text-gray-400 mb-2.5">SUPPORT</div>
+            <div className="mb-8 mt-4">
                 <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
                     <li className="flex items-center gap-2.5 text-[13.5px]">
                         <Check />
@@ -95,10 +90,10 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card
-                        eyebrow="SOLO PLAN"
+                        eyebrow="BASIC PLAN"
                         oldPrice="$599"
                         price="$390"
-                        cta="Get Solo Plan"
+                        cta="Get Basic Plan"
                         features={[
                             { label: '5,000 tasks/month' },
                             { label: '2,000 AI credits' },
@@ -144,10 +139,10 @@ export default function Pricing() {
                         support="Priority ticket support"
                     />
                     <Card
-                        eyebrow="PREMIUM PLAN"
+                        eyebrow="ADVANCED PLAN"
                         oldPrice="$1,399"
                         price="$990"
-                        cta="Get Premium Plan"
+                        cta="Get Advanced Plan"
                         features={[
                             {
                                 label: (

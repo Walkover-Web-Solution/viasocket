@@ -24,13 +24,14 @@ export default function Comparison() {
                 <span className="block text-center text-[11px] font-bold tracking-[0.2em] uppercase text-accent mb-[22px]">
                     THE MATH IS THE PITCH
                 </span>
-                <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-extrabold tracking-[-2px] leading-[1.06] text-center mb-16">
-                    Automation should scale your work.
-                    <br />
-                    Not your <span className="text-accent">bills.</span>
+                <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-extrabold tracking-[-2px] leading-[1.06] text-center mb-4">
+                    Why keep paying every year?
                 </h2>
+                <p className="text-center text-gray-500 text-lg mb-16">
+                    Comparable automation platforms require ongoing annual subscriptions.
+                </p>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[310px_1fr] gap-6 items-stretch max-w-[540px] lg:max-w-none mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 items-stretch max-w-[540px] lg:max-w-none mx-auto">
                     {/* Left dark card */}
                     <div className="bg-[#111] rounded-[22px] border border-white/10 p-7 pb-6 flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] hover:border-white/20">
                         <div className="flex items-center gap-2.5 mb-7">
@@ -95,7 +96,7 @@ export default function Comparison() {
                                     <div className="h-px bg-black/5 mt-4 mb-3.5" />
                                     <span className="text-[26px] font-extrabold tracking-[-0.8px] block">{c.price}</span>
                                     <div className="mt-1 text-[11px] font-semibold tracking-wider uppercase text-gray-500">
-                                        3-year cost
+                                        {c.priceLabel || '3-year cost'}
                                     </div>
                                 </div>
                             ))}
