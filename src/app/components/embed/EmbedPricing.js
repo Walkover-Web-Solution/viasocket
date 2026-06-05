@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Check, Lock, Sparkles } from 'lucide-react';
+import { Check } from 'lucide-react';
 
 const plans = [
     {
@@ -16,7 +16,6 @@ const plans = [
     },
     {
         name: 'PRO',
-        nameIcon: <Sparkles size={14} className="text-black" />,
         price: '$99',
         priceSuffix: '/ month',
         description: 'Scale up with higher limits and full platform access.',
@@ -29,7 +28,6 @@ const plans = [
     },
     {
         name: 'ENTERPRISE',
-        nameIcon: <Lock size={12} className="text-black" />,
         price: 'Custom',
         priceSuffix: '',
         description: 'Tailored for security, compliance, and unlimited scale.',
@@ -39,45 +37,48 @@ const plans = [
         ctaLink: 'https://cal.id/team/viasocket/embed',
         ctaClass: 'btn btn-primary',
         highlight: false,
+        badge: true,
     },
 ];
 
 function PlanCard({ plan }) {
     return (
-        <div
-            className={`flex flex-col gap-5 bg-[#FAFAFA] p-6 ${
-                plan.highlight ? 'border-2 border-black' : 'border border-gray-200'
-            }`}
-        >
-            <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2 text-xs tracking-widest">
-                    <span>{plan.name}</span>
-                    {plan.nameIcon}
+        <div className={`relative flex flex-col bg-[#FAFAFA] h-full ${plan.highlight ? 'border-2 border-accent' : 'border border-gray-200'}`}>
+            {(plan.highlight || plan.badge) && (
+                <div className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}>
+                    Buy 1 month, get 5 free
                 </div>
-                <div className="flex items-baseline gap-1">
-                    <h3 className="text-3xl font-bold text-black">{plan.price}</h3>
-                    {plan.priceSuffix && <span className="text-sm">{plan.priceSuffix}</span>}
+            )}
+            <div className="flex flex-col gap-5 p-6 flex-1" style={plan.highlight ? { paddingTop: '2.25rem' } : plan.badge ? { paddingTop: '3rem' } : {}}>
+                <div className="flex flex-col gap-2">
+                    <div className="flex items-center gap-2 text-xs tracking-widest">
+                        <span>{plan.name}</span>
+                    </div>
+                    <div className="flex items-baseline gap-1">
+                        <h3 className="text-3xl font-bold text-black">{plan.price}</h3>
+                        {plan.priceSuffix && <span className="text-sm">{plan.priceSuffix}</span>}
+                    </div>
+<p className="text-sm text-gray-500">{plan.description}</p>
                 </div>
-                <p className="text-sm text-gray-500">{plan.description}</p>
+
+                <div className="border-t border-gray-200" />
+
+                <div className="flex flex-col gap-2">
+                    <span className="text-xs tracking-widest text-gray-500">USAGE</span>
+                    <ul className="flex flex-col gap-2">
+                        {[...plan.usage, ...plan.support].map((item, i) => (
+                            <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
+                                <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
+                                {item}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                <Link href={plan.ctaLink} className={`w-full mt-auto ${plan.ctaClass}`}>
+                    {plan.ctaLabel}
+                </Link>
             </div>
-
-            <div className="border-t border-gray-200" />
-
-            <div className="flex flex-col gap-2">
-                <span className="text-xs tracking-widest text-gray-500">USAGE</span>
-                <ul className="flex flex-col gap-2">
-                    {[...plan.usage, ...plan.support].map((item, i) => (
-                        <li key={i} className="flex items-center gap-2 text-sm text-gray-800">
-                            <Check size={16} className="text-green-600 shrink-0" strokeWidth={3} />
-                            {item}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-
-            <Link href={plan.ctaLink} className={`w-full ${plan.ctaClass}`}>
-                {plan.ctaLabel}
-            </Link>
         </div>
     );
 }
@@ -100,9 +101,9 @@ export default function EmbedPricing({ appCount }) {
 
                 <div className="border border-gray-200 bg-[#FAFAFA] p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
                     <div className="flex flex-col gap-1">
-                        <h4 className="font-semibold text-black">Beyond your plan limits</h4>
+                        <h4 className="font-semibold text-black">Need more than your plan includes?</h4>
                         <p className="text-sm text-gray-600">
-                            Mix and match based on what you need. Pay per user, per tasks, or both.
+                            Add extra users or tasks as you grow. Only pay for what you use.
                         </p>
                     </div>
                     <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
@@ -110,14 +111,14 @@ export default function EmbedPricing({ appCount }) {
                             <span className="text-3xl font-bold text-[#B91C1C]">$1</span>
                             <span className="text-sm text-gray-700">/ user</span>
                         </div>
-                        <p className="text-sm text-gray-600">Per additional active user beyond your plan tier.</p>
+                        <p className="text-sm text-gray-600">For each additional active user.</p>
                     </div>
                     <div className="flex flex-col gap-1 md:border-l md:border-gray-200 md:pl-6">
                         <div className="flex items-baseline gap-2">
                             <span className="text-3xl font-bold text-[#B91C1C]">$1</span>
                             <span className="text-sm text-gray-700">/ 2,500 tasks</span>
                         </div>
-                        <p className="text-sm text-gray-600">Per block of 2,500 tasks beyond your plan tier.</p>
+                        <p className="text-sm text-gray-600">For every 2,500 extra tasks.</p>
                     </div>
                 </div>
             </div>

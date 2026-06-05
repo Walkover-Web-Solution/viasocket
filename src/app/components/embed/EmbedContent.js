@@ -14,7 +14,7 @@ import SecuritySection from '../SecuritySection';
 export default function EmbedContent({ blogData, footerData, faqData, embedData, appCount, securityGridData }) {
     return (
         <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space container">
-            <div className="w-full border mt-12">
+            <div className="w-full mt-12">
                 <EmbedHero appCount={appCount} />
                 <EmbedFeatureCards />
             </div>
