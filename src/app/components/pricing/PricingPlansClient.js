@@ -6,9 +6,26 @@ import { Check, X } from 'lucide-react';
 
 const plans = [
     {
+        name: 'FREE PLAN',
+        monthly: { price: '$0', period: '/month' },
+        annual: { price: '$0', period: '/year', savings: '' },
+        features: [
+            { text: '2,000 tasks/month', included: true },
+            { text: '500 AI credits included', included: true },
+            { text: '1,500+ app connections', included: true },
+            { text: 'All basic built-in tools', included: true },
+            { text: 'Advanced AI models', included: false },
+            { text: 'Team members', included: false },
+            { text: 'Community support', included: true },
+        ],
+        ctaLink: '/signup?utm_source=pricing/free',
+        highlight: false,
+        ctaLabel: 'Get started free',
+    },
+    {
         name: 'BASIC PLAN',
-        monthly: { price: '$39', period: '/month' },
-        annual: { price: '$293', period: '/year', savings: 'Save $97 by switching to annual' },
+        monthly: { price: '$29', period: '/month' },
+        annual: { price: '$293', period: '/year', savings: 'Save $78 by switching to annual' },
         features: [
             { text: '5,000 tasks/month', included: true },
             { text: '2,000 AI credits included', included: true },
@@ -23,8 +40,8 @@ const plans = [
     },
     {
         name: 'TEAM PLAN',
-        monthly: { price: '$79', period: '/month' },
-        annual: { price: '$593', period: '/year', savings: 'Save $197 by switching to annual' },
+        monthly: { price: '$59', period: '/month' },
+        annual: { price: '$593', period: '/year', savings: 'Save $158 by switching to annual' },
         features: [
             { text: '15,000 tasks/month', included: true },
             { text: '5,000 AI credits included', included: true },
@@ -35,12 +52,12 @@ const plans = [
             { text: 'Priority ticket support', included: true },
         ],
         ctaLink: '/signup?utm_source=pricing/team',
-        highlight: true,
+        highlight: false,
     },
     {
         name: 'ADVANCED PLAN',
-        monthly: { price: '$99', period: '/month' },
-        annual: { price: '$743', period: '/year', savings: 'Save $247 by switching to annual' },
+        monthly: { price: '$74', period: '/month' },
+        annual: { price: '$743', period: '/year', savings: 'Save $198 by switching to annual' },
         features: [
             { text: '25,000 tasks/month', included: true },
             { text: '10,000 AI credits included', included: true },
@@ -68,7 +85,7 @@ function PlanCard({ plan, isAnnual }) {
                         <span className="text-4xl font-bold text-black">{pricing.price}</span>
                         <span className="text-sm text-gray-500">{pricing.period}</span>
                     </div>
-                    {isAnnual && (
+                    {isAnnual && plan.annual.savings && (
                         <span className="text-sm text-green-600 font-medium">{plan.annual.savings}</span>
                     )}
                 </div>
@@ -92,7 +109,7 @@ function PlanCard({ plan, isAnnual }) {
                     href={plan.ctaLink}
                     className={`w-full mt-auto text-center ${plan.highlight ? 'btn btn-accent' : 'btn btn-outline'}`}
                 >
-                    Select Plan
+                    {plan.ctaLabel || 'Select Plan'}
                 </Link>
             </div>
         </div>
@@ -116,22 +133,17 @@ export default function PricingPlansClient() {
                         onClick={() => setIsAnnual(true)}
                         className={`px-5 py-2 text-sm rounded-full transition-all whitespace-nowrap ${isAnnual ? 'bg-white shadow text-black font-semibold' : 'text-gray-500'}`}
                     >
-                        Annual <span className={isAnnual ? 'text-green-600 font-semibold' : 'text-green-500'}>(Save 12%)</span>
+                        Yearly <span className="text-green-600 font-semibold">(Save upto 17%)</span>
                     </button>
                 </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-stretch">
                 {plans.map((plan) => (
                     <PlanCard key={plan.name} plan={plan} isAnnual={isAnnual} />
                 ))}
             </div>
 
-            <div className="flex items-center justify-center pt-2">
-                <Link href="/signup" className="btn btn-primary">
-                    Start Free Plan
-                </Link>
-            </div>
         </div>
     );
 }
