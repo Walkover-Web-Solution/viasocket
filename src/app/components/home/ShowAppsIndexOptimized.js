@@ -117,35 +117,32 @@ export default function ShowAppsIndexOptimized({
     const list = (apps && apps.length ? apps : fallback).filter((a) => a?.iconurl).slice(0, 40);
 
     const renderMarquee = (items, direction = 'left') => (
-        <Marquee
-            direction={direction}
-            speed={40}
-            autoFill
-            gradient
-            gradientColor={[245, 245, 240]}
-            gradientWidth={120}
-        >
-            <div className="inline-flex py-4 gap-4">
-                {items.map((app, i) => (
-                    <div
-                        key={`${app.iconurl}-${i}`}
-                        className="flex items-center bg-white border-[1.5px] border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
-                    >
-                        <Image
-                            src={app.iconurl}
-                            alt={app.name || 'app icon'}
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 object-contain rounded"
-                        />
-                    </div>
-                ))}
-            </div>
-        </Marquee>
+        <div className="relative w-full">
+            <Marquee direction={direction} speed={40} autoFill>
+                <div className="inline-flex py-4 gap-4">
+                    {items.map((app, i) => (
+                        <div
+                            key={`${app.iconurl}-${i}`}
+                            className="flex items-center bg-white border-[1.5px] border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
+                        >
+                            <Image
+                                src={app.iconurl}
+                                alt={app.name || 'app icon'}
+                                width={24}
+                                height={24}
+                                className="w-6 h-6 object-contain rounded"
+                            />
+                        </div>
+                    ))}
+                </div>
+            </Marquee>
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-24 backdrop-blur-[3px] [mask-image:linear-gradient(to_right,black,transparent)] z-10" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-24 backdrop-blur-[3px] [mask-image:linear-gradient(to_left,black,transparent)] z-10" />
+        </div>
     );
 
     return (
-        <div className="flex flex-col gap-6 container px-4">
+        <div className="flex flex-col gap-6 container">
             {isHomePage || isTrustMarquee ? (
                 <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-20' : 'gap-8 my-12'}`}>
                     {appCount ? (
