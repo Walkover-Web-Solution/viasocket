@@ -8,7 +8,7 @@ const PLANS = {
     starter: {
         name: 'Solo',
         badge: '',
-        price: '$399',
+        price: '$390',
         desc: 'Perfect for solo automators getting started.',
         features: [
             '5,000 tasks/month',
@@ -24,7 +24,7 @@ const PLANS = {
     team: {
         name: 'Team',
         badge: 'MOST POPULAR',
-        price: '$799',
+        price: '$790',
         desc: 'Built for teams running automations daily.',
         features: [
             '15,000 tasks/month',
@@ -40,7 +40,7 @@ const PLANS = {
     premium: {
         name: 'Premium',
         badge: 'PREMIUM',
-        price: '$999',
+        price: '$990',
         desc: 'For scale: real-time and unlimited team.',
         features: [
             '25,000 tasks/month',
@@ -79,9 +79,7 @@ export default function PricingCard() {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-3.5 mb-[22px]">
                     <div>
-                        <h3 className="text-[17px] font-bold text-gray-900 tracking-[-0.3px] mb-1">
-                            Choose your plan
-                        </h3>
+                        <h3 className="text-[17px] font-bold text-gray-900 tracking-[-0.3px] mb-1">Choose your plan</h3>
                         <p className="text-[12.5px] text-gray-500 tracking-[-0.1px]">
                             One-time payment. Lifetime access.
                         </p>
@@ -130,9 +128,7 @@ export default function PricingCard() {
                                 <polyline points="17 11 19 13 23 9" />
                             </svg>
                         </span>
-                        <span className="flex-1 text-left text-[15px] font-semibold text-gray-900">
-                            {plan.name}
-                        </span>
+                        <span className="flex-1 text-left text-[15px] font-semibold text-gray-900">{plan.name}</span>
                         <svg
                             className={`transition-transform ${open ? 'rotate-180' : ''}`}
                             viewBox="0 0 24 24"
