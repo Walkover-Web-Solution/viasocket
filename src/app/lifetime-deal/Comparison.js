@@ -31,7 +31,7 @@ export default function Comparison() {
                     Comparable automation platforms require ongoing annual subscriptions.
                 </p>
 
-                <div className="grid grid-cols-1 lg:grid-cols-[310px_1fr] gap-6 items-stretch max-w-[540px] lg:max-w-none mx-auto">
+                <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 items-stretch max-w-[540px] lg:max-w-none mx-auto">
                     {/* Left dark card */}
                     <div className="bg-[#111] rounded-[22px] border border-white/10 p-7 pb-6 flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] hover:border-white/20">
                         <div className="flex items-center gap-2.5 mb-7">
