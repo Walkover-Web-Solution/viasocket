@@ -12,9 +12,7 @@ function Card({ eyebrow, oldPrice, price, savings, features, support, cta, featu
             <div className="mb-4">
                 <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold text-black">{price}</span>
-                    <span className="text-sm text-gray-400 line-through ml-2">{oldPrice}</span>
                 </div>
-                <span className="text-xs text-accent font-medium">one-time payment</span>
                 {savings && (
                     <div className="text-xs text-green-600 font-medium mt-0.5">You save {savings}</div>
                 )}
