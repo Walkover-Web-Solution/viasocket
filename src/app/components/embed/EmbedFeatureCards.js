@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Sparkles, Webhook, Puzzle } from 'lucide-react';
 
 const CARDS = [
@@ -8,7 +7,6 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#1a0b3d] to-[#2d0f5e]',
         iconBg: 'bg-white/10 text-white',
         icon: Sparkles,
-        href: '#ai_agent',
     },
     {
         title: 'Actions via Webhook',
@@ -16,7 +14,6 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
         iconBg: 'bg-white/10 text-white',
         icon: Webhook,
-        href: '#pricing',
     },
     {
         title: 'App Integrations',
@@ -24,7 +21,6 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
         iconBg: 'bg-white/10 text-white',
         icon: Puzzle,
-        href: '#pricing',
     },
 ];
 
@@ -34,9 +30,8 @@ export default function EmbedFeatureCards() {
             {CARDS.map((card, i) => {
                 const Icon = card.icon;
                 return (
-                    <Link
+                    <div
                         key={i}
-                        href={card.href}
                         className={`${card.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg`}
                     >
                         <div
@@ -48,7 +43,7 @@ export default function EmbedFeatureCards() {
                             <h3 className="text-2xl font-semibold">{card.title}</h3>
                             <p className="text-base text-white/70">{card.desc}</p>
                         </div>
-                    </Link>
+                    </div>
                 );
             })}
         </div>

@@ -44,7 +44,7 @@ export default async function PricingPage() {
                 <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             </ConditionalNavbar>
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                <div className="flex flex-col items-center gap-6 w-full max-w-6xl mx-auto">
+                <div className="flex flex-col items-center gap-12 w-full mt-12">
                     <div className="flex flex-col items-center text-center gap-2 pt-8">
                         <h1 className="text-4xl font-bold">
                             Choose the Plan That Fits <span className="text-accent">Your Needs</span>
@@ -56,28 +56,20 @@ export default async function PricingPage() {
                     <PricingPlansClient />
                 </div>
 
-                <div className="cont flex items-center justify-center w-full">
-                    <div className="cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center access-program text-white">
-                        <div className="flex items-center justify-center">
-                            <h2 className="h2 w-full">We Empower Impactful Organizations</h2>
-                        </div>
-                        <div className="sub__h2 text-center">
-                            We support organizations driving change with 3x more access to our automation solutions
-                        </div>
-                        <div className="flex justify-center">
-                            <a href="/free-access-programs" target="_blank" className="btn btn-accent">
-                                Get 3x more
-                            </a>
-                        </div>
+                <div className="cont w-full flex flex-col items-center gap-8 bg-white border custom-border p-6 md:p-12 text-center access-program text-white">
+                    <h2 className="h2 w-full">We Empower Impactful Organizations</h2>
+                    <div className="sub__h2 text-center">
+                        We support organizations driving change with 3x more access to our automation solutions
                     </div>
+                    <a href="/free-access-programs" target="_blank" className="btn btn-accent">
+                        Get 3x more
+                    </a>
                 </div>
                 {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
             </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }
