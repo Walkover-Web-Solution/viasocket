@@ -1,4 +1,5 @@
-import { Lock, Box, FileText, Zap, Plus, Check } from 'lucide-react';
+import { Lock, Box, FileText, Zap } from 'lucide-react';
+import WorkflowIllustration from './WorkflowIllustration';
 
 const FEATURES = [
     {
@@ -27,12 +28,6 @@ const FEATURES = [
     },
 ];
 
-const STEPS = [
-    { num: 1, color: 'text-rose-500', label: 'Create Contact' },
-    { num: 2, color: 'text-red-500', label: 'Send Email' },
-    { num: 3, color: 'text-green-500', label: 'Update Record' },
-];
-
 const EmbedImageSelector = ({ appCount }) => {
     const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
     return (
@@ -59,24 +54,7 @@ const EmbedImageSelector = ({ appCount }) => {
                             </p>
                         </div>
 
-                        <div className="flex items-center gap-4">
-                            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-500 to-violet-700 flex items-center justify-center shadow-lg shrink-0">
-                                <Plus className="text-white" size={28} strokeWidth={2.5} />
-                            </div>
-                            <div className="border-t border-dashed border-gray-400 w-6 shrink-0" />
-                            <div className="bg-white rounded-lg shadow-md px-4 py-3 flex-1">
-                                {STEPS.map((s) => (
-                                    <div key={s.num} className="flex items-center gap-3 py-1 text-sm">
-                                        <span className="text-gray-400">{s.num}.</span>
-                                        <span className={`${s.color}`}>●</span>
-                                        <span className="text-gray-800">{s.label}</span>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="w-9 h-9 p-1 rounded-full bg-green-500 flex items-center justify-center shrink-0">
-                                <Check className="text-white" size={16} strokeWidth={3} />
-                            </div>
-                        </div>
+                        <WorkflowIllustration />
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -89,8 +67,8 @@ const EmbedImageSelector = ({ appCount }) => {
                                     >
                                         <Icon size={20} />
                                     </div>
-                                    <h4 className="font-medium text-gray-900 text-lg">{f.title}</h4>
-                                    <p className="text-sm text-gray-600 leading-relaxed">{f.desc}</p>
+                                    <h4 className="font-medium text-gray-900 text-xl">{f.title}</h4>
+                                    <p className="text-lg text-gray-600 leading-relaxed">{f.desc}</p>
                                 </div>
                             );
                         })}

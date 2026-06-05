@@ -1,0 +1,115 @@
+import UseCaseAnimationStyles from './UseCaseAnimationStyles';
+
+export default function UseCaseSection() {
+    return (
+        <section id="use-case" className="bg-[#f7f7f8] border p-6 container">
+            <UseCaseAnimationStyles />
+            <div className="grid md:grid-cols-[1fr_1.05fr] grid-cols-1 gap-14 md:gap-14 items-start">
+                {/* Left */}
+                <div>
+                    <div className="inline-flex items-center gap-1.5 bg-[#fef2f1] border border-accent/30 text-accent text-[10.5px] font-bold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">
+                        See it in action
+                    </div>
+                    <h2 className="text-[32px] font-extrabold tracking-tight leading-tight text-[#0a0a0a] mb-3">
+                        Context in. Action out.
+                    </h2>
+                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                        Other platforms make you hard-wire every tool by hand. With Actions for AI, your agent reads
+                        the situation and <strong className="text-[#0a0a0a] font-bold">decides what to do on its own</strong>{' '}
+                        — no fixed workflows, no prompt-engineered tool routing.
+                    </p>
+                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                        Here&apos;s a real flow. A lead just submitted a form. Watch your agent read it, choose three
+                        actions, and run them across three apps in under two seconds.
+                    </p>
+                    <a
+                        href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                        className="inline-block bg-accent hover:bg-accent/90 text-white px-5 py-2.5 text-xs font-semibold rounded-md mt-2 transition-colors"
+                    >
+                        Start building
+                    </a>
+                </div>
+
+                {/* Right Panel */}
+                <div className="bg-white border border-gray-200 shadow-sm">
+                    {/* Step 1 */}
+                    <div className="uc-step flex gap-4 items-start px-6 py-5 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                        <div className="uc-step-ico w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold bg-blue-50 text-blue-700">
+                            →
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="text-[10.5px] font-bold tracking-wider uppercase text-gray-500 mb-[5px]">
+                                Input
+                            </div>
+                            <div className="text-sm font-semibold text-[#0a0a0a] leading-[1.5] mb-2">
+                                New lead from website form
+                            </div>
+                            <div className="text-[12.5px] text-gray-500 leading-[1.65]">
+                                Acme Corp · enterprise plan · submitted by Sarah Chen, VP Ops
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Step 2 */}
+                    <div className="uc-step flex gap-4 items-start px-6 py-5 border-b border-gray-200 hover:bg-gray-50 transition-colors">
+                        <div className="uc-step-ico w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold bg-[#fef2f1] text-accent">
+                            AI
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="text-[10.5px] font-bold tracking-wider uppercase text-gray-500 mb-[5px]">
+                                Agent decision
+                            </div>
+                            <div className="text-sm font-semibold text-[#0a0a0a] leading-[1.5] mb-2">
+                                Three actions selected
+                            </div>
+                            <div className="flex flex-col gap-[5px] mt-2">
+                                {[
+                                    'Log lead in HubSpot',
+                                    'Notify sales lead in Slack',
+                                    'Hold a demo slot in Google Calendar',
+                                ].map((item) => (
+                                    <div
+                                        key={item}
+                                        className="uc-decision-item flex items-center gap-2 text-xs text-gray-700 font-medium"
+                                    >
+                                        <span className="text-accent font-bold">→</span> {item}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Step 3 */}
+                    <div className="uc-step flex gap-4 items-start px-6 py-5 hover:bg-gray-50 transition-colors">
+                        <div className="uc-step-ico w-8 h-8 rounded-full flex-shrink-0 flex items-center justify-center text-xs font-bold bg-green-100 text-green-700">
+                            ✓
+                        </div>
+                        <div className="flex-1 min-w-0">
+                            <div className="text-[10.5px] font-bold tracking-wider uppercase text-gray-500 mb-[5px]">
+                                Executed
+                            </div>
+                            <div className="flex flex-col gap-1.5 mt-2">
+                                {[
+                                    { app: 'HubSpot', detail: 'Deal #4821 created' },
+                                    { app: 'Slack', detail: 'Posted to #enterprise-deals' },
+                                    { app: 'Calendar', detail: 'Thursday 2pm · invite drafted' },
+                                ].map(({ app, detail }) => (
+                                    <div
+                                        key={app}
+                                        className="uc-action flex items-center gap-2.5 px-[11px] py-[7px] bg-gray-50 border border-gray-200 text-xs flex-wrap"
+                                    >
+                                        <span className="font-bold text-[#0a0a0a] min-w-[70px]">{app}</span>
+                                        <span className="flex-1 text-gray-500 text-[11.5px]">{detail}</span>
+                                        <span className="uc-action-status text-[9.5px] font-bold text-green-700 bg-green-100 px-2 py-0.5 rounded-full tracking-wide">
+                                            DONE
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    );
+}

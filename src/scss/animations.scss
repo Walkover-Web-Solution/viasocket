@@ -1,64 +1,117 @@
-/* AI Workflows animations */
-@keyframes aiwfFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+@keyframes featSparkGlow {
+    0%, 100% {
+        box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    }
+    50% {
+        box-shadow: 0 10px 26px rgba(124, 58, 237, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.22), 0 0 0 6px rgba(124, 58, 237, 0.06);
+    }
 }
-@keyframes aiwfGlowPulse {
-    from { opacity: 0.6; transform: scale(1); }
-    to { opacity: 1; transform: scale(1.08); }
-}
-@keyframes aiwfDotPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-}
-@keyframes aiwfBlink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-.aiwf-float { animation: aiwfFloat 6s ease-in-out infinite; }
-.aiwf-glow-pulse { animation: aiwfGlowPulse 5s ease-in-out infinite alternate; }
-.aiwf-dot-pulse { animation: aiwfDotPulse 2s ease-in-out infinite; }
-.aiwf-blink { animation: aiwfBlink 0.65s steps(1) infinite; }
 
-/* Lifetime Deal animations */
-@keyframes ltd-ring-spin { to { transform: rotate(360deg); } }
-@keyframes ltd-breath {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.045); }
+@keyframes featSparkHalo {
+    0%, 100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.95;
+        transform: scale(1.18);
+    }
 }
-@keyframes ltd-marquee-left {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-}
-@keyframes ltd-marquee-right {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-}
-.ltd-ring-spin { animation: ltd-ring-spin 60s linear infinite; }
-.ltd-breath { animation: ltd-breath 4s ease-in-out infinite; }
-.ltd-marquee-left { animation: ltd-marquee-left 48s linear infinite; }
-.ltd-marquee-right { animation: ltd-marquee-right 44s linear infinite; }
 
-/* Final CTA animations */
-@keyframes fctaFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+@keyframes featSparkFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0);
+    }
+    25% {
+        transform: translateY(-1.5px) rotate(7deg);
+    }
+    75% {
+        transform: translateY(1.5px) rotate(-7deg);
+    }
 }
-.fcta-float { animation: fctaFloat 8s ease-in-out infinite; }
 
-/* Testimonials marquee */
-@keyframes testimonialsMarquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(calc(-25% - 4px)); }
+@keyframes featConnectorFlow {
+    from {
+        background-position: 0 50%;
+    }
+    to {
+        background-position: 12px 50%;
+    }
 }
-.testimonials-marquee { animation: testimonialsMarquee 80s linear infinite; }
 
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    .aiwf-float,
-    .aiwf-glow-pulse,
-    .ltd-ring-spin,
-    .ltd-breath,
-    .ltd-marquee-left,
-    .ltd-marquee-right { animation: none; }
+@keyframes featItemPulse {
+    0%, 4% {
+        opacity: 0.25;
+        transform: translateX(-3px);
+    }
+    14%, 84% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    94%, 100% {
+        opacity: 0.25;
+        transform: translateX(-3px);
+    }
+}
+
+@keyframes featCheckCycle {
+    0%, 30% {
+        transform: scale(0.85);
+        border-color: #d1d5db;
+        color: #d1d5db;
+        background-color: #fff;
+        box-shadow: none;
+    }
+    45% {
+        transform: scale(1.2);
+        border-color: #22c55e;
+        color: #fff;
+        background-color: #22c55e;
+        box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.2);
+    }
+    60%, 88% {
+        transform: scale(1);
+        border-color: #22c55e;
+        color: #fff;
+        background-color: #22c55e;
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+    96%, 100% {
+        transform: scale(0.85);
+        border-color: #d1d5db;
+        color: #d1d5db;
+        background-color: #fff;
+    }
+}
+
+.animate-feat-spark-glow {
+    animation: featSparkGlow 2.6s ease-in-out infinite;
+}
+
+.animate-feat-spark-halo {
+    animation: featSparkHalo 2.6s ease-in-out infinite;
+}
+
+.animate-feat-spark-float {
+    animation: featSparkFloat 3.4s ease-in-out infinite;
+}
+
+.animate-feat-connector-flow {
+    animation: featConnectorFlow 0.9s linear infinite;
+}
+
+.animate-feat-item-pulse {
+    animation: featItemPulse 4s ease-in-out infinite;
+}
+
+.animate-feat-check-cycle {
+    animation: featCheckCycle 4s ease-in-out infinite;
+}
+
+.animate-feat-item-pulse-delay-1 {
+    animation-delay: 0.45s;
+}
+
+.animate-feat-item-pulse-delay-2 {
+    animation-delay: 0.9s;
 }

@@ -60,6 +60,7 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                     <div className="items-center justify-end flex !h-[30px]">
                         {utm === '/index' && <MCPBanner />}
                         {/* {utm === '/embed' && <EmbedBanner />} */}
+                        {utm === '/embed/action-for-ai' && <EmbedBanner />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
                     </div>
                 </div>
