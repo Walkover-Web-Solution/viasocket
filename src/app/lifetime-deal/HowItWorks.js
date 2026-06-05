@@ -17,7 +17,7 @@ const STEPS = [
         num: '3.',
         title: 'Automate at scale',
         desc: 'Run approvals, AI actions, notifications, and operations automatically.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img8_templage.png',
+        image: '/assets/bg-img/3.svg',
     },
 ];
 
