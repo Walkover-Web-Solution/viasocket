@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import CTAButtons from './CTAButtons';
 
@@ -75,21 +76,27 @@ export default function HeroSection({ hasToken }) {
                     <CTAButtons hasToken={hasToken} />
                     <Link href="/experts" className="group flex items-center gap-2.5 cursor-pointer no-underline">
                         <div className="flex items-center">
-                            <img
+                            <Image
                                 className={AVATAR_BASE}
                                 src="https://randomuser.me/api/portraits/women/44.jpg"
                                 alt="Expert"
+                                width={40}
+                                height={40}
                             />
-                            <img
+                            <Image
                                 className={`${AVATAR_BASE} -ml-2.5`}
                                 src="https://randomuser.me/api/portraits/men/32.jpg"
                                 alt="Expert"
+                                width={40}
+                                height={40}
                             />
                             <span className="relative inline-flex shrink-0 -ml-2.5">
-                                <img
+                                <Image
                                     className={AVATAR_BASE}
                                     src="https://randomuser.me/api/portraits/men/46.jpg"
                                     alt="Expert"
+                                    width={40}
+                                    height={40}
                                 />
                                 <span className="absolute bottom-0.5 right-0.5 w-[13px] h-[13px] rounded-full bg-[#22c55e] border-[2.5px] border-white z-[2] animate-pulse-dot" />
                             </span>
