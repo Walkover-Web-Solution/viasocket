@@ -1,23 +1,23 @@
 import Image from 'next/image';
-import WorkflowDiagram from './WorkflowDiagram';
-import AppFlowDiagram from './AppFlowDiagram';
 
 const STEPS = [
     {
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_image-16.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img4_connection.png',
     },
     {
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img3_trigger-action.png',
     },
     {
         num: '3.',
         title: 'Automate at scale',
         desc: 'Run approvals, AI actions, notifications, and operations automatically.',
+        image: '/assets/bg-img/3.svg',
     },
 ];
 
@@ -40,19 +40,13 @@ export default function HowItWorks() {
                     {STEPS.map((s) => (
                         <div key={s.num} className="flex flex-col items-center text-center justify-between">
                             <div className="w-full relative aspect-[16/10]">
-                                {s.num === '2.' ? (
-                                    <WorkflowDiagram />
-                                ) : s.num === '3.' ? (
-                                    <AppFlowDiagram />
-                                ) : (
-                                    <Image
-                                        src={s.image}
-                                        alt={s.title}
-                                        fill
-                                        className="object-cover"
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                    />
-                                )}
+                                <Image
+                                    src={s.image}
+                                    alt={s.title}
+                                    fill
+                                    className="object-contain"
+                                    sizes="(max-width: 768px) 100vw, 400px"
+                                />
                             </div>
                             <h3 className="flex flex-col gap-1">
                                 <h3 className="text-lg font-bold">
