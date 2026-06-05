@@ -4,10 +4,9 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
-import PricingTabsClient from '../components/pricing/PricingTabsClient';
+import PricingPlansClient from '../components/pricing/PricingPlansClient';
 import { getPricingPageData } from '../lib/pricing-data';
 import Link from 'next/link';
-import { Check } from 'lucide-react';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import { getHasToken } from '../lib/getAuth';
 
@@ -35,7 +34,7 @@ export async function generateMetadata() {
 }
 
 export default async function PricingPage() {
-    const { footerData, faqData, metaData, features, countries, appCount, navbarData } = await getPricingPageData();
+    const { footerData, faqData, metaData, navbarData } = await getPricingPageData();
     const hasToken = await getHasToken();
 
     return (
@@ -45,64 +44,17 @@ export default async function PricingPage() {
                 <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             </ConditionalNavbar>
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                <div className="cont flex flex-col items-center text-center gap-6">
-                    <div className="flex flex-col items-center">
+                <div className="flex flex-col items-center gap-6 w-full max-w-4xl mx-auto">
+                    <div className="flex flex-col items-center text-center gap-2">
                         <h1 className="text-6xl">
                             Start <span className="text-accent">free</span> and pay as you go
                         </h1>
-                        <h2 className="text-2xl max-w-[650px]">
-                            Top up with{' '}
-                            <Link href="#pricingTabs" className="border-b-2 custom-border border-dotted">
-                                <span>credits</span>
-                            </Link>{' '}
-                            anytime. Use them for paid built-in plugs or extra tasks to keep your automations running.
-                        </h2>
+                        <p className="text-lg text-gray-500 whitespace-nowrap">
+                            Keep your automations running smoothly with flexible credits for plugins and extra usage.
+                        </p>
                     </div>
-                    <div className="cont lg:flex-row items-center gap-2 mt-4">
-                        <DashboardButton utm_src={"/pricing/hero"} hasToken={hasToken} />
-                        <Link
-                            href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                            className="btn btn-outline"
-                            target="_blank"
-                        >
-                            Free call with automation experts
-                        </Link>
-                    </div>
+                    <PricingPlansClient />
                 </div>
-
-                <div className="flex items-center justify-center">
-                    <div className="gap-8 border custom-border p-6 md:p-12 bg-[#faf9f6] mt-4 max-w-[1000px]">
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-[max-content_max-content_max-content] gap-4 gap-x-20">
-                            {features.map((feature, index) =>
-                                index === 0 ? (
-                                    <div key={index} className="flex items-center gap-2">
-                                        <Check className="w-4 h-4 text-accent" />
-                                        <p className="text-lg leading-tight">Connect to {+appCount + 300}+ apps</p>
-                                    </div>
-                                ) : (
-                                    <div key={index} className="flex items-center gap-2">
-                                        <Check className="w-4 h-4 text-accent" />
-                                        <p className="text-lg leading-tight">{feature.featurename}</p>
-                                    </div>
-                                )
-                            )}
-                            <div className="flex items-start gap-1">
-                                <p className="text-accent">+</p>
-                                <Link
-                                    href="/features"
-                                    target="_blank"
-                                    className="text-lg text-accent hover:underline w-fit"
-                                >
-                                    See all features
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {/* <div id="pricingTabs">
-                    <PricingTabsClient countries={countries} />
-                </div> */}
 
                 <div className="cont flex items-center justify-center w-full">
                     <div className="cont w-full flex flex-col items-center gap-8 justify-center bg-white border custom-border p-6 md:p-12 text-center access-program text-white">
