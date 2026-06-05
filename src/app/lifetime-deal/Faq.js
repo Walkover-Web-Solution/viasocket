@@ -4,64 +4,20 @@ import { useState } from 'react';
 
 const FAQS = [
     {
-        q: 'Is this really a one-time payment?',
-        a: <p>Yes. $250 once. No monthly bill, no annual renewal, no auto-charges.</p>,
+        q: 'Is this a one-time purchase?',
+        a: <p>Yes. One-time payment. No monthly bill, no annual renewal, no auto-charges.</p>,
     },
     {
-        q: 'What counts as a “task”?',
-        a: (
-            <p>
-                A task is one action step in a workflow when it executes successfully. Triggers and internal logic steps
-                (conditions, formatters, filters) don’t count against your task limit.
-            </p>
-        ),
-    },
-    {
-        q: 'Can I buy multiple lifetime licenses?',
+        q: 'Can I purchase more than one lifetime license?',
         a: <p>One lifetime license per customer during this offer. Each license is tied to a single account.</p>,
     },
     {
-        q: 'What counts as an “AI credit”?',
-        a: (
-            <p>
-                One AI credit is one AI action call — summarizing, classifying, generating, or extracting content using
-                our built-in models.
-            </p>
-        ),
-    },
-    {
-        q: 'Refunds?',
+        q: 'Do you offer refunds?',
         a: <p>Full refund within 30 days, no questions asked. After 30 days the purchase is final.</p>,
     },
     {
-        q: 'What if I exceed 15,000 tasks or 5,000 credits?',
-        a: <p>Add extra tasks or credits anytime, at standard rates. Your lifetime access doesn’t change.</p>,
-    },
-    {
-        q: 'Is this offer coming back?',
-        a: <p>This is a one-time launch offer for early adopters. We have no plans to repeat it at this price point.</p>,
-    },
-    {
-        q: 'Will I get future features?',
-        a: (
-            <p>
-                Yes. All future updates to the Team plan are included — new triggers, integrations, AI models, and
-                workflow tools.
-            </p>
-        ),
-    },
-    {
-        q: 'Can I upgrade to Premium later?',
-        a: <p>Yes. You can move to a Premium plan anytime — your lifetime credit applies toward the difference.</p>,
-    },
-    {
-        q: 'What if viaSocket shuts down?',
-        a: (
-            <p>
-                “Lifetime” means for as long as viaSocket operates. We’re profitable, growing, and built for the long
-                term — but we want to be honest about what lifetime can promise.
-            </p>
-        ),
+        q: 'What happens if I exceed my task or credit limits?',
+        a: <p>Add extra tasks or credits anytime, at standard rates. Your lifetime access doesn't change.</p>,
     },
 ];
 

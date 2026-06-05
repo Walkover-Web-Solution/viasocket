@@ -1,80 +1,40 @@
-import { Check as CheckIcon, X, ArrowUpRight } from 'lucide-react';
+import { Check as CheckIcon, X } from 'lucide-react';
 
-const Check = () => (
-    <span
-        className="w-5 h-5 rounded-full border-[1.4px] border-accent flex items-center justify-center shrink-0"
-        aria-hidden
-    >
-        <CheckIcon size={10} strokeWidth={2.2} className="text-[#A8200D]" />
-    </span>
-);
-const Cross = () => (
-    <span
-        className="w-5 h-5 rounded-full border-[1.4px] border-gray-500 flex items-center justify-center shrink-0"
-        aria-hidden
-    >
-        <X size={10} strokeWidth={2} className="text-[#6b7280]" />
-    </span>
-);
-const Arrow = () => (
-    <ArrowUpRight
-        size={14}
-        strokeWidth={2}
-        className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-        aria-hidden
-    />
-);
+const Check = () => <CheckIcon size={15} strokeWidth={2.5} className="text-green-500 shrink-0" aria-hidden />;
+const Cross = () => <X size={14} strokeWidth={2} className="text-gray-300 shrink-0" aria-hidden />;
 
 function Card({ eyebrow, oldPrice, price, features, support, cta, featured = false }) {
     return (
-        <article
-            className={`relative bg-white rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${featured ? 'border-[1.5px] border-accent/20 shadow-[0_8px_28px_-8px_rgba(168,32,13,0.10),0_24px_56px_-16px_rgba(168,32,13,0.10)]' : 'border border-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_6px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.10)]'}`}
-        >
-            {featured && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-1.5 px-3 py-1 bg-accent text-white rounded-full text-[10px] font-bold tracking-[0.1em] uppercase whitespace-nowrap shadow-[0_2px_6px_rgba(168,32,13,0.32)]">
-                    <svg viewBox="0 0 12 12" className="w-2.5 h-2.5 fill-white/90" aria-hidden>
-                        <path d="M6 1l1.18 2.39 2.64.38-1.91 1.86.45 2.63L6 7.05l-2.36 1.21.45-2.63L2.18 3.77l2.64-.38z" />
-                    </svg>
-                    Most Popular
-                </div>
-            )}
-            <span className="block text-[11.5px] font-bold tracking-[0.16em] uppercase text-gray-500 mb-4">
+        <article className="relative bg-white rounded-2xl border border-gray-200 p-6 flex flex-col">
+            <span className="block text-xs font-bold tracking-widest uppercase text-gray-400 mb-1">
                 {eyebrow}
             </span>
             <div className="mb-4">
-                <div className="flex items-baseline gap-2 mb-1">
-                    <span className="text-lg text-gray-500 line-through font-medium">{oldPrice}</span>
-                    <span className="text-[44px] font-extrabold tracking-[-1.6px] leading-none">{price}</span>
+                <div className="flex items-baseline gap-1">
+                    <span className="text-4xl font-bold text-black">{price}</span>
+                    <span className="text-sm text-gray-400 line-through ml-2">{oldPrice}</span>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[12.5px] text-accent font-medium">one-time payment</span>
-                </div>
+                <span className="text-xs text-accent font-medium">one-time payment</span>
             </div>
-            <div className="h-px bg-black/5 my-4" />
-            <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
+            <div className="h-px bg-gray-100 mb-4" />
+            <ul className="flex flex-col gap-3 flex-1">
                 {features.map((f, i) => (
-                    <li
-                        key={i}
-                        className={`flex items-center gap-2.5 text-[13.5px] leading-[1.4] ${f.excluded ? 'text-gray-500' : ''}`}
-                    >
+                    <li key={i} className={`flex items-center gap-2 text-sm ${f.excluded ? 'text-gray-300' : 'text-gray-700'}`}>
                         {f.excluded ? <Cross /> : <Check />}
                         <span className={f.excluded ? 'line-through' : ''}>{f.label}</span>
                     </li>
                 ))}
+                <li className="flex items-center gap-2 text-sm text-gray-700">
+                    <Check />
+                    <span>{support}</span>
+                </li>
             </ul>
-            <div className="h-px bg-black/5 my-4" />
-            <div className="mb-[18px]">
-                <div className="text-[10px] font-bold tracking-[0.16em] uppercase text-gray-400 mb-2.5">SUPPORT</div>
-                <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
-                    <li className="flex items-center gap-2.5 text-[13.5px]">
-                        <Check />
-                        <span>{support}</span>
-                    </li>
-                </ul>
-            </div>
-            <button type="button" aria-label={cta} className={`btn w-full ${featured ? 'btn-accent' : 'btn-outline'}`}>
-                <span>{cta}</span>
-                <Arrow />
+            <button
+                type="button"
+                aria-label={cta}
+                className="mt-6 w-full py-3 px-4 rounded-full border border-gray-300 text-sm font-bold text-black bg-white hover:bg-gray-50 transition-colors"
+            >
+                {cta}
             </button>
         </article>
     );
