@@ -44,12 +44,12 @@ export default async function PricingPage() {
                 <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             </ConditionalNavbar>
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                <div className="flex flex-col items-center gap-6 w-full max-w-4xl mx-auto">
-                    <div className="flex flex-col items-center text-center gap-2">
-                        <h1 className="text-6xl">
-                            Start <span className="text-accent">free</span> and pay as you go
+                <div className="flex flex-col items-center gap-6 w-full max-w-6xl mx-auto">
+                    <div className="flex flex-col items-center text-center gap-2 pt-8">
+                        <h1 className="text-4xl font-bold">
+                            Choose the Plan That Fits <span className="text-accent">Your Needs</span>
                         </h1>
-                        <p className="text-lg text-gray-500 whitespace-nowrap">
+                        <p className="text-lg text-gray-500">
                             Keep your automations running smoothly with flexible credits for plugins and extra usage.
                         </p>
                     </div>
