@@ -14,90 +14,88 @@ import { getHasToken } from './lib/getAuth';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-  const { metaData } = await getHomePageData();
-  
-  return {
-    title: metaData?.title || 'viaSocket - Automate Anything',
-    description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
-    keywords: metaData?.keywords || '',
-    openGraph: {
-      siteName: 'viaSocket',
-      title: metaData?.title || 'viaSocket - Automate Anything',
-      description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
-      url: 'https://viasocket.com',
-      type: 'website',
-      images: [
-        {
-          url: 'https://files.msg91.com/342616/wnitwkyk',
-          width: 1200,
-          height: 630,
-          alt: 'viaSocket',
+    const { metaData } = await getHomePageData();
+
+    return {
+        title: metaData?.title || 'viaSocket - Automate Anything',
+        description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+        keywords: metaData?.keywords || '',
+        openGraph: {
+            siteName: 'viaSocket',
+            title: metaData?.title || 'viaSocket - Automate Anything',
+            description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+            url: 'https://viasocket.com',
+            type: 'website',
+            images: [
+                {
+                    url: 'https://files.msg91.com/342616/wnitwkyk',
+                    width: 1200,
+                    height: 630,
+                    alt: 'viaSocket',
+                },
+            ],
         },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: metaData?.title || 'viaSocket - Automate Anything',
-      description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
-      images: ['https://files.msg91.com/342616/wnitwkyk'],
-    },
-  };
+        twitter: {
+            card: 'summary_large_image',
+            title: metaData?.title || 'viaSocket - Automate Anything',
+            description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+            images: ['https://files.msg91.com/342616/wnitwkyk'],
+        },
+    };
 }
 
 export default async function HomePage() {
-  const {
-    metaData,
-    faqData,
-    footerData,
-    securityGridData,
-    appCount,
-    indexTemplateData,
-    reviewData,
-    navbarData,
-    templateData,
-    initialApps,
-    clientStories,
-  } = await getHomePageData();
-  const hasToken = await getHasToken();
-  return (
-    <>
-      <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js"  />
-      <MetaHeadComp metaData={metaData} page={'/'} />
-      <ConditionalNavbar>
-        <NavbarServer navbarData={navbarData} utm={'/index'} />
-      </ConditionalNavbar>
-      
-      {/* Spacer for fixed navbar */}
-      <div className="h-[48px] lg:h-[78px]"></div>
-      
-      <HeroContainer 
-        appCount={appCount}
-        initialApps={initialApps} 
-        templateData={templateData}
-        hasToken={hasToken}
-      />
+    const {
+        metaData,
+        faqData,
+        footerData,
+        securityGridData,
+        appCount,
+        indexTemplateData,
+        reviewData,
+        navbarData,
+        templateData,
+        initialApps,
+        clientStories,
+    } = await getHomePageData();
+    const hasToken = await getHasToken();
+    return (
+        <>
+            <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
+            <MetaHeadComp metaData={metaData} page={'/'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/index'} />
+            </ConditionalNavbar>
 
-      <div className="custom-background-home-page"></div>
+            {/* Spacer for fixed navbar */}
+            <div className="h-[48px] lg:h-[78px]"></div>
 
-      <MainContent 
-        appCount={appCount}
-        indexTemplateData={indexTemplateData}
-        templateData={templateData}
-        reviewData={reviewData}
-        clientStories={clientStories}
-      />
+            <HeroContainer
+                appCount={appCount}
+                initialApps={initialApps}
+                templateData={templateData}
+                hasToken={hasToken}
+            />
 
-      {/* FAQ Section */}
-      <div className="py-12 bg-[#FAF9F6]">
-        {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
-        
-        <SecuritySection securityGridData={securityGridData} />
-        <div className="container">
-          <ConditionalFooter>
-            <Footer footerData={footerData} />
-          </ConditionalFooter>
-        </div>
-      </div>
-    </>
-  );
+            <MainContent
+                appCount={appCount}
+                indexTemplateData={indexTemplateData}
+                templateData={templateData}
+                reviewData={reviewData}
+                clientStories={clientStories}
+            />
+
+            {/* FAQ Section */}
+            <div className="py-12 bg-[#FAF9F6]">
+                {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
+
+                <SecuritySection securityGridData={securityGridData} />
+                <div className="container">
+                    <ConditionalFooter>
+                        <Footer footerData={footerData} />
+                    </ConditionalFooter>
+                </div>
+            </div>
+        </>
+    );
 }
