@@ -25,7 +25,7 @@ const Arrow = () => (
     />
 );
 
-function Card({ eyebrow, oldPrice, price, features, support, cta, featured = false }) {
+function Card({ eyebrow, oldPrice, price, features, support, cta, href, featured = false }) {
     return (
         <article
             className={`relative bg-white rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${featured ? 'border-[1.5px] border-accent/20 shadow-[0_8px_28px_-8px_rgba(168,32,13,0.10),0_24px_56px_-16px_rgba(168,32,13,0.10)]' : 'border border-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_6px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.10)]'}`}
@@ -46,9 +46,6 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     <span className="text-lg text-gray-500 line-through font-medium">{oldPrice}</span>
                     <span className="text-[44px] font-extrabold tracking-[-1.6px] leading-none">{price}</span>
                 </div>
-                <div className="flex items-center gap-2 mt-1">
-                    <span className="text-[12.5px] text-accent font-medium">one-time payment</span>
-                </div>
             </div>
             <div className="h-px bg-black/5 my-4" />
             <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
@@ -62,9 +59,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     </li>
                 ))}
             </ul>
-            <div className="h-px bg-black/5 my-4" />
-            <div className="mb-[18px]">
-                <div className="text-[10px] font-bold tracking-[0.16em] uppercase text-gray-400 mb-2.5">SUPPORT</div>
+            <div className="mb-8 mt-4">
                 <ul className="list-none p-0 m-0 flex flex-col gap-[11px]">
                     <li className="flex items-center gap-2.5 text-[13.5px]">
                         <Check />
@@ -72,10 +67,16 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     </li>
                 </ul>
             </div>
-            <button type="button" aria-label={cta} className={`btn w-full ${featured ? 'btn-accent' : 'btn-outline'}`}>
+            <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={cta}
+                className={`btn w-full ${featured ? 'btn-accent' : 'btn-outline'}`}
+            >
                 <span>{cta}</span>
                 <Arrow />
-            </button>
+            </a>
         </article>
     );
 }
@@ -95,10 +96,10 @@ export default function Pricing() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <Card
-                        eyebrow="SOLO PLAN"
+                        eyebrow="BASIC PLAN"
                         oldPrice="$599"
                         price="$390"
-                        cta="Get Solo Plan"
+                        cta="Get Basic Plan"
                         features={[
                             { label: '5,000 tasks/month' },
                             { label: '2,000 AI credits' },
@@ -108,6 +109,7 @@ export default function Pricing() {
                             { label: '15-min polling interval' },
                         ]}
                         support="Standard ticket support"
+                        href="https://buy.stripe.com/14AfZhad66qD6JjfM72go12"
                     />
                     <Card
                         eyebrow="TEAM PLAN"
@@ -142,6 +144,7 @@ export default function Pricing() {
                             { label: '5-min polling interval' },
                         ]}
                         support="Priority ticket support"
+                        href="https://buy.stripe.com/fZuaEXfxqg1daZz8jF2go13"
                     />
                     <Card
                         eyebrow="PREMIUM PLAN"
@@ -175,6 +178,7 @@ export default function Pricing() {
                             { label: '1-min polling (real-time)' },
                         ]}
                         support="1-on-1 live expert support"
+                        href="https://buy.stripe.com/cNi14n992dT55Ff6bx2go14"
                     />
                 </div>
 
