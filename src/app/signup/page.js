@@ -28,8 +28,7 @@ export async function generateMetadata() {
 
 export default async function SignupPage({ searchParams }) {
     const { appCount } = await getSignupPageData();
-    const params = await searchParams;
-    const redirect_to = params?.redirect_to || '';
+    const redirect_to = searchParams?.redirect_to || '';
 
     return (
         <>
