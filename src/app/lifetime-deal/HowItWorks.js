@@ -39,7 +39,7 @@ export default function HowItWorks() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
                     {STEPS.map((s) => (
                         <div key={s.num} className="flex flex-col items-center text-center justify-between">
-                            <div className="w-full relative aspect-[16/10]">
+                            <div className="w-full relative aspect-[16/8]">
                                 <Image
                                     src={s.image}
                                     alt={s.title}

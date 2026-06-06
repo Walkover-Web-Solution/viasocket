@@ -20,7 +20,7 @@ export default function Hero() {
                     className="absolute inset-0 pointer-events-none [background:radial-gradient(ellipse_40%_35%_at_50%_30%,rgba(168,32,13,0.10),transparent_70%)]"
                 />
 
-                <div className="relative z-10 container mx-auto px-8 flex-1 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] py-10 lg:py-2 gap-16 items-center">
+                <div className="relative z-10 container mx-auto px-8 flex-1 grid grid-cols-1 lg:grid-cols-[1.1fr_1fr] py-20 lg:py-2 gap-16 items-center">
                     <HeroContent />
                     <PricingCard />
                 </div>

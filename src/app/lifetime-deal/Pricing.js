@@ -25,7 +25,7 @@ const Arrow = () => (
     />
 );
 
-function Card({ eyebrow, oldPrice, price, features, support, cta, featured = false }) {
+function Card({ eyebrow, oldPrice, price, features, support, cta, href, featured = false }) {
     return (
         <article
             className={`relative bg-white rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${featured ? 'border-[1.5px] border-accent/20 shadow-[0_8px_28px_-8px_rgba(168,32,13,0.10),0_24px_56px_-16px_rgba(168,32,13,0.10)]' : 'border border-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_6px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.10)]'}`}
@@ -67,10 +67,16 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
                     </li>
                 </ul>
             </div>
-            <button type="button" aria-label={cta} className={`btn w-full ${featured ? 'btn-accent' : 'btn-outline'}`}>
+            <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={cta}
+                className={`btn w-full ${featured ? 'btn-accent' : 'btn-outline'}`}
+            >
                 <span>{cta}</span>
                 <Arrow />
-            </button>
+            </a>
         </article>
     );
 }
@@ -103,6 +109,7 @@ export default function Pricing() {
                             { label: '15-min polling interval' },
                         ]}
                         support="Standard ticket support"
+                        href="https://buy.stripe.com/14AfZhad66qD6JjfM72go12"
                     />
                     <Card
                         eyebrow="TEAM PLAN"
@@ -137,12 +144,13 @@ export default function Pricing() {
                             { label: '5-min polling interval' },
                         ]}
                         support="Priority ticket support"
+                        href="https://buy.stripe.com/fZuaEXfxqg1daZz8jF2go13"
                     />
                     <Card
-                        eyebrow="ADVANCED PLAN"
+                        eyebrow="PREMIUM PLAN"
                         oldPrice="$1,399"
                         price="$990"
-                        cta="Get Advanced Plan"
+                        cta="Get Premium Plan"
                         features={[
                             {
                                 label: (
@@ -170,6 +178,7 @@ export default function Pricing() {
                             { label: '1-min polling (real-time)' },
                         ]}
                         support="1-on-1 live expert support"
+                        href="https://buy.stripe.com/cNi14n992dT55Ff6bx2go14"
                     />
                 </div>
 
