@@ -135,8 +135,8 @@ const RealWorldUseCase = ({ appOneDetails, combosData }) => {
                     <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_center,rgba(15,157,88,0.13)_0%,transparent_68%)]"></div>
 
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-[34%]">
-                        <div className="absolute rounded-full border-[1.5px] border-[#0f9d58]/20 pulse-ring w-[210px] h-[210px]"></div>
-                        <div className="absolute rounded-full border-[1.5px] border-[#0f9d58]/20 pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]"></div>
+                        <div className="absolute rounded-full border border-[#0f9d58]/20 pulse-ring w-[210px] h-[210px]"></div>
+                        <div className="absolute rounded-full border border-[#0f9d58]/20 pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]"></div>
                     </div>
 
                     <div className="relative h-full flex items-center justify-center gap-8 lg:gap-14 p-8 lg:p-12 z-10">

@@ -129,7 +129,7 @@ export default function ShowAppsIndexOptimized({
                 {items.map((app, i) => (
                     <div
                         key={`${app.iconurl}-${i}`}
-                        className="flex items-center bg-white border-[1.5px] border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
+                        className="flex items-center bg-white border border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
                     >
                         <Image
                             src={app.iconurl}
@@ -145,12 +145,12 @@ export default function ShowAppsIndexOptimized({
     );
 
     return (
-        <div className="flex flex-col gap-6 container">
+        <div className="flex flex-col gap-6">
             {isHomePage || isTrustMarquee ? (
                 <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-20' : 'gap-8 my-12'}`}>
                     {appCount ? (
                         <p className="text-center text-[13px] font-semibold tracking-[0.1em] text-[#999] uppercase">
-                            <strong className="text-[#555] font-extrabold">{appCount}+</strong> applications integrated
+                            <strong className="text-[#555] font-extrabold">{appCount + 300}+</strong> applications integrated
                         </p>
                     ) : (
                         isHomePage && <h2 className="h2">Trusted by Teams Using These Apps</h2>

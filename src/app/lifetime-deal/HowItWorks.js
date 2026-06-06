@@ -6,7 +6,7 @@ const STEPS = [
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_image-16.png',
+        image: '/assets/bg-img/1.svg',
     },
     {
         num: '2.',

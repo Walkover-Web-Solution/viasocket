@@ -23,7 +23,7 @@ export default function SuccessContent() {
 
             {/* 2. Code delivery - dominant element */}
             <section
-                className="flex items-start gap-3.5 bg-white border-[1.5px] border-[rgba(168,32,13,0.22)] rounded-[20px] p-4 px-5 mb-5.5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-18px_rgba(168,32,13,0.18)] max-[560px]:flex-col max-[560px]:gap-3 max-[560px]:p-[18px]"
+                className="flex items-start gap-3.5 bg-white border border-[rgba(168,32,13,0.22)] rounded-[20px] p-4 px-5 mb-5.5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-18px_rgba(168,32,13,0.18)] max-[560px]:flex-col max-[560px]:gap-3 max-[560px]:p-[18px]"
                 aria-labelledby="sxDeliverTitle"
             >
                 <span
@@ -65,10 +65,8 @@ export default function SuccessContent() {
                     'Go to viasocket.com and create your account (or log in if you already have one)',
                     'Complete the quick workspace setup',
                     'When prompted for billing, paste your redemption code',
-                    <>
-                        Your <b className="text-[#0a0a0a] font-semibold mx-[3px]">Lifetime</b> plan activates
-                        instantly
-                    </>,
+                    'Choose your plan and add your payment details to activate it.',
+                    'Your lifetime plan is now active on your workspace.'
                 ].map((step, i) => (
                     <li
                         key={i}
@@ -100,7 +98,7 @@ export default function SuccessContent() {
 
             {/* 4. Reassurance blocks (below the fold) */}
             <div className="flex flex-col gap-3.5 mb-2">
-                <div className="flex items-start gap-4 bg-white border-[1.5px] border-[#d4d4d4] rounded-[18px] p-5 px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-20px_rgba(10,10,10,0.14)]">
+                <div className="flex items-start gap-4 bg-white border border-[#d4d4d4] rounded-[18px] p-5 px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-20px_rgba(10,10,10,0.14)]">
                     <span className="text-2xl leading-none flex-shrink-0 mt-px" aria-hidden="true">
                         &#128274;
                     </span>
@@ -111,7 +109,7 @@ export default function SuccessContent() {
                         </p>
                     </div>
                 </div>
-                <div className="flex items-start gap-4 bg-white border-[1.5px] border-[#d4d4d4] rounded-[18px] p-5 px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-20px_rgba(10,10,10,0.14)]">
+                <div className="flex items-start gap-4 bg-white border border-[#d4d4d4] rounded-[18px] p-5 px-6 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_18px_44px_-20px_rgba(10,10,10,0.14)]">
                     <span className="text-2xl leading-none flex-shrink-0 mt-px" aria-hidden="true">
                         &#128172;
                     </span>

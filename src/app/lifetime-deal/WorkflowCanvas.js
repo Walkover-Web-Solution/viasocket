@@ -33,7 +33,7 @@ export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, node
                     return (
                         <div key={n.id}>
                             <div
-                                className={`flex items-center gap-[13px] w-full bg-white border-[1.5px] border-black/[0.07] rounded-xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-[400ms] ${
+                                className={`flex items-center gap-[13px] w-full bg-white border border-black/[0.07] rounded-xl px-4 py-3 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.08)] transition-all duration-[400ms] ${
                                     nodeOn ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
                                 }`}
                             >

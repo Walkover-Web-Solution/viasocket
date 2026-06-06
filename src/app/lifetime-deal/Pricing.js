@@ -28,7 +28,7 @@ const Arrow = () => (
 function Card({ eyebrow, oldPrice, price, features, support, cta, href, featured = false }) {
     return (
         <article
-            className={`relative bg-white rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${featured ? 'border-[1.5px] border-accent/20 shadow-[0_8px_28px_-8px_rgba(168,32,13,0.10),0_24px_56px_-16px_rgba(168,32,13,0.10)]' : 'border border-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_6px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.10)]'}`}
+            className={`relative bg-white rounded-[20px] p-7 flex flex-col transition-all duration-300 hover:-translate-y-1 ${featured ? 'border border-accent/20 shadow-[0_8px_28px_-8px_rgba(168,32,13,0.10),0_24px_56px_-16px_rgba(168,32,13,0.10)]' : 'border border-black/5 shadow-[0_1px_2px_rgba(0,0,0,0.02),0_6px_20px_-6px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_40px_-10px_rgba(0,0,0,0.10)]'}`}
         >
             {featured && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 inline-flex items-center gap-1.5 px-3 py-1 bg-accent text-white rounded-full text-[10px] font-bold tracking-[0.1em] uppercase whitespace-nowrap shadow-[0_2px_6px_rgba(168,32,13,0.32)]">
