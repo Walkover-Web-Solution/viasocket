@@ -586,10 +586,10 @@ export default function SearchInputHomeOptimized({
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
     return (
-        <div className="relative max-w-lg mx-auto mt-8 mb-2 search-bar" ref={dropdownRef}>
+        <div className="relative w-full max-w-xl search-bar" ref={dropdownRef}>
             <div className="relative">
                 <div
-                    className={`w-full min-h-[48px] px-6 py-3 text-base bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-wrap items-center gap-2 z-index-1 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
+                    className={`w-full h-[48px] px-6 py-2 text-base bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-nowrap items-center gap-2 overflow-x-auto overflow-y-hidden no-scrollbar z-50 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}
                     onClick={() => {
                         if (inputRef.current) {
                             inputRef.current.focus();
@@ -603,7 +603,7 @@ export default function SearchInputHomeOptimized({
                     {selectedApps?.map((app) => (
                         <div
                             key={app?.appslugname}
-                            className="flex items-center bg-white border custom-border px-2 py-1 text-sm"
+                            className="flex items-center bg-white border custom-border px-2 py-1 text-sm shrink-0 whitespace-nowrap"
                         >
                             <Image
                                 src={app.iconurl || 'https://placehold.co/16x16'}
@@ -627,7 +627,7 @@ export default function SearchInputHomeOptimized({
                     {selectedIndustries?.map((industry) => (
                         <div
                             key={industry}
-                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm shrink-0 whitespace-nowrap"
                         >
                             <span>{industry}</span>
                             <button
@@ -644,7 +644,7 @@ export default function SearchInputHomeOptimized({
                     {selectedDepartments?.map((department) => (
                         <div
                             key={department}
-                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm"
+                            className="flex items-center border bg-white custom-border px-2 py-1 text-sm shrink-0 whitespace-nowrap"
                         >
                             <span>{department}</span>
                             <button
@@ -658,7 +658,7 @@ export default function SearchInputHomeOptimized({
                             </button>
                         </div>
                     ))}
-                    <div className="relative flex-1 min-w-[200px]">
+                    <div className="relative flex-1 min-w-[120px] shrink-0">
                         {suggestionText && (
                             <div className="absolute inset-0 pointer-events-none text-base text-gray-400 flex items-center whitespace-pre">
                                 <span style={{ color: 'transparent' }}>{searchTerm}</span>

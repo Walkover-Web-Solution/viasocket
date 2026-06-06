@@ -23,6 +23,9 @@ module.exports = {
             animation: {
                 shimmer: 'shimmer 1.5s infinite',
                 blink: 'blink 1s infinite',
+                'dot-bounce': 'dotBounce 1.4s ease-in-out infinite',
+                'pulse-dot': 'pulseDot 1.6s ease-in-out infinite',
+                'marquee-scroll': 'marqueeScroll 38s linear infinite',
             },
             keyframes: {
                 shimmer: {
@@ -32,6 +35,18 @@ module.exports = {
                 blink: {
                     '0%, 50%': { opacity: '1' },
                     '51%, 100%': { opacity: '0' },
+                },
+                dotBounce: {
+                    '0%, 60%, 100%': { transform: 'translateY(0)' },
+                    '30%': { transform: 'translateY(-3px)' },
+                },
+                marqueeScroll: {
+                    from: { transform: 'translateX(0)' },
+                    to: { transform: 'translateX(-50%)' },
+                },
+                pulseDot: {
+                    '0%, 100%': { boxShadow: '0 0 0 0 rgba(34,197,94,0.6)' },
+                    '50%': { boxShadow: '0 0 0 6px rgba(34,197,94,0)' },
                 },
             },
         },

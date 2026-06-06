@@ -4,6 +4,7 @@ import TemplateCard from '@/components/templateCard/templateCard';
 import VideoGrid from '@/components/videoGrid/videoGrid';
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import ReactMarkdown from 'react-markdown';
+import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 
 export default function ResultSectionOptimized({
     // Template props
@@ -29,38 +30,29 @@ export default function ResultSectionOptimized({
     // Blog props
     showBlogs,
     loadingBlogs,
-    blogs = []
+    blogs = [],
+
+    // Search input props
+    initialApps,
+    templateData,
+    onTemplatesChange,
+    onVideosChange,
+    onBlogsChange,
+    onAiResponseChange,
+    onLoadingChange,
+    onSelectionChange,
 }) {
     const noSearchActive = !showTemplates && !showAiResponse && !showVideos && !showBlogs;
     const latestDefaultTemplates = defaultTemplates.slice(0, 6); //when no search is active
     const sortedFilteredTemplates = filteredTemplates.slice(0, 6); //when search/filter is active
 
     return (
-        <div className="bg-[#faf9f6] result-section text-left">
-            {/* Default Templates Section - show when no search is active */}
-            {noSearchActive && latestDefaultTemplates.length > 0 && (
-                <div className="container mx-auto px-4 py-12 relative z-index-1">
-                    <h2 className="h2 mb-8 text-left">Top ready to use templates</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
-                        {latestDefaultTemplates.map((template, index) => (
-                            <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
-                        ))}
-                    </div>
-
-                    <div className="flex justify-end w-full mt-4">
-                        <Link href="/automations" className="btn btn-outline">
-                            Explore all templates
-                        </Link>
-                    </div>
-                </div>
-            )}
-
-            {/* Template Results Section */}
-            {showTemplates && (loadingTemplates || hasTemplateResults) && (
-                <div className="container mx-auto px-4 py-12 relative z-index-1">
-                    {(loadingTemplates || hasTemplateResults) && (
-                        <h2 className="h2 mb-8 text-left">
+        <div className="result-section text-left container">
+            {/* Persistent header row: heading on left, search on right. Search is rendered once so internal state is preserved across branch switches */}
+            <div className="container mx-auto relative z-50 flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-8">
+                <h2 className="h2 text-left mb-0">
+                    {showTemplates && (loadingTemplates || hasTemplateResults) ? (
+                        <>
                             Top{' '}
                             {selectedApps.map((app, index) => (
                                 <span key={app.appslugname}>
@@ -82,9 +74,48 @@ export default function ResultSectionOptimized({
                                     <span>{industry}</span>
                                 </span>
                             ))}
-                        </h2>
+                        </>
+                    ) : (
+                        'Top ready to use templates'
                     )}
+                </h2>
+                <SearchInputHomeOptimized
+                    onTemplatesChange={onTemplatesChange}
+                    onVideosChange={onVideosChange}
+                    onBlogsChange={onBlogsChange}
+                    onAiResponseChange={onAiResponseChange}
+                    onLoadingChange={onLoadingChange}
+                    onSelectionChange={onSelectionChange}
+                    initialApps={initialApps}
+                    templates={templateData}
+                />
+            </div>
 
+            {/* Default Templates Section - show when no search is active */}
+            {noSearchActive && latestDefaultTemplates.length > 0 && (
+                <div className="container mx-auto pb-12 relative z-index-1">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+                        {latestDefaultTemplates.map((template, index) => (
+                            <TemplateCard
+                                key={template.id}
+                                index={index}
+                                template={template}
+                                isFeatured={template.isFeatured}
+                            />
+                        ))}
+                    </div>
+
+                    <div className="flex justify-end w-full mt-4">
+                        <Link href="/automations" className="btn btn-outline">
+                            Explore all templates
+                        </Link>
+                    </div>
+                </div>
+            )}
+
+            {/* Template Results Section */}
+            {showTemplates && (loadingTemplates || hasTemplateResults) && (
+                <div className="container mx-auto px-4 pb-12 relative z-index-1">
                     {loadingTemplates ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8">
                             {[...Array(6)].map((_, index) => (
@@ -94,7 +125,12 @@ export default function ResultSectionOptimized({
                     ) : hasTemplateResults ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                             {sortedFilteredTemplates.map((template, index) => (
-                                <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
+                                <TemplateCard
+                                    key={template.id}
+                                    index={index}
+                                    template={template}
+                                    isFeatured={template.isFeatured}
+                                />
                             ))}
                         </div>
                     ) : null}
@@ -103,20 +139,18 @@ export default function ResultSectionOptimized({
 
             {/* AI Response Section */}
             {showAiResponse && (
-                <div className="container mx-auto px-4 py-12 relative z-index-1">
+                <div className="container mx-auto px-4 relative z-index-1">
                     <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
 
-                    <div className="w-full">
-                        {loadingAiResponse ? (
-                            <div className="bg-white border custom-border p-8">
-                                <div className="space-y-4">Creating ideas for you...</div>
-                            </div>
-                        ) : aiResponse ? (
-                            <div className="bg-white border custom-border p-8 ai-agent-response">
-                                <ReactMarkdown>{aiResponse}</ReactMarkdown>
-                            </div>
-                        ) : null}
-                    </div>
+                    {loadingAiResponse ? (
+                        <div className="bg-white border custom-border p-8">
+                            <div className="space-y-4">Creating ideas for you...</div>
+                        </div>
+                    ) : aiResponse ? (
+                        <div className="bg-white border custom-border p-8 ai-agent-response">
+                            <ReactMarkdown>{aiResponse}</ReactMarkdown>
+                        </div>
+                    ) : null}
                 </div>
             )}
 
@@ -135,8 +169,8 @@ export default function ResultSectionOptimized({
                                                 selectedIndustries.length === 0 &&
                                                 selectedDepartments.length === 0 && (
                                                     <p>
-                                                        Give more details about your business, department you want
-                                                        to automate and your industry to receive more personalized
+                                                        Give more details about your business, department you want to
+                                                        automate and your industry to receive more personalized
                                                         automation ideas.
                                                     </p>
                                                 )}
@@ -146,32 +180,30 @@ export default function ResultSectionOptimized({
                                                         {selectedIndustries.length > 0 &&
                                                             selectedDepartments.length === 0 && (
                                                                 <>
-                                                                    Give more details about your business, apps you
-                                                                    use and your department to receive more
-                                                                    personalized automation ideas.
+                                                                    Give more details about your business, apps you use
+                                                                    and your department to receive more personalized
+                                                                    automation ideas.
                                                                 </>
                                                             )}
                                                         {selectedDepartments.length > 0 &&
                                                             selectedIndustries.length === 0 && (
                                                                 <>
-                                                                    Give more details about your business, apps you
-                                                                    use and your industry to receive more
-                                                                    personalized automation ideas.
+                                                                    Give more details about your business, apps you use
+                                                                    and your industry to receive more personalized
+                                                                    automation ideas.
                                                                 </>
                                                             )}
                                                         {selectedIndustries.length > 0 &&
                                                             selectedDepartments.length > 0 && (
                                                                 <>
-                                                                    Give more details about your business and apps
-                                                                    you use to receive more personalized automation
-                                                                    ideas.
+                                                                    Give more details about your business and apps you
+                                                                    use to receive more personalized automation ideas.
                                                                 </>
                                                             )}
                                                     </p>
                                                 )}
                                             {selectedApps.length === 1 &&
-                                                (selectedIndustries.length > 0 ||
-                                                    selectedDepartments.length > 0) && (
+                                                (selectedIndustries.length > 0 || selectedDepartments.length > 0) && (
                                                     <p>
                                                         Great start! Select one more <strong>app</strong> to unlock
                                                         AI-powered automation ideas.
@@ -189,7 +221,9 @@ export default function ResultSectionOptimized({
             {showVideos && (loadingVideos || videos.length > 0) && (
                 <div className="mx-auto px-4 py-12 relative z-index-1">
                     {(loadingVideos || videos.length > 0) && (
-                        <div className='container'><h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2></div>
+                        <div className="container">
+                            <h2 className="h2 mb-8 text-left">Quick step-by-step tutorials </h2>
+                        </div>
                     )}
 
                     {loadingVideos ? (
@@ -206,7 +240,7 @@ export default function ResultSectionOptimized({
 
             {/* Blog Results Section */}
             {showBlogs && (loadingBlogs || blogs.length > 0) && (
-                <div className="container mx-auto px-4 py-12 relative z-index-1">
+                <div className="container mx-auto px-4 pb-12 relative z-index-1">
                     {(loadingBlogs || blogs.length > 0) && (
                         <h2 className="h2 mb-8 text-left">Automation insights & tips </h2>
                     )}
