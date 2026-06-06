@@ -4,13 +4,10 @@ import ReviewIframeOptimized from './ReviewIframeOptimized';
 import ShowBadges from './ShowBadges';
 import EmbedSection from '@/app/components/home/EmbedSection';
 import StoriesSection from './StoriesSection';
-import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 
 export default function MainContent({ indexTemplateData, templateData, reviewData, clientStories }) {
     return (
         <>
-            {/* Template Section - Only show when user is not searching */}
-            <ShowAppsIndexOptimized isHomePage={true} />
             <div
                 className="py-20 relative overflow-hidden"
                 style={{

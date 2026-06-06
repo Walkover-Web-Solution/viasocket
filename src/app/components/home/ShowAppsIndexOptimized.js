@@ -1,4 +1,3 @@
-import TrustMarquee from '@/components/agencyPartner/TrustMarquee';
 import Image from 'next/image';
 import Marquee from 'react-fast-marquee';
 
@@ -108,101 +107,65 @@ const APPSTWO = [
     },
 ];
 
-export default function ShowAppsIndexOptimized({ isHomePage = false, isTrustMarquee = false }) {
-    return (
-        <div className="flex flex-col gap-6 container py-12 px-4">
-            {isHomePage || isTrustMarquee ? (
-                <>
-                    <div className={`flex flex-col items-center justify-center gap-12 ${isHomePage ? 'py-20' : ''}`}>
-                        {isHomePage && <h2 className="h2">Trusted by Teams Using These Apps</h2>}
-                        <Marquee
-                            direction="left"
-                            speed={40}
-                            autoFill
-                            gradient
-                            gradientColor={[250, 249, 246]}
-                            gradientWidth={96}
-                        >
-                            <div className="inline-flex py-4 gap-20 h-[62px]">
-                                {[...APPSONE, ...APPSTWO].map((app, index) => (
-                                    <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                        <div className="h-10 w-10 relative bg-gray-50 border">
-                                            <Image
-                                                src={app.src}
-                                                alt={app.alt}
-                                                width={20}
-                                                height={20}
-                                                className="object-contain p-1"
-                                                style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
-                                            />
-                                        </div>
-                                        <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Marquee>
+export default function ShowAppsIndexOptimized({
+    isHomePage = false,
+    isTrustMarquee = false,
+    apps,
+    appCount,
+}) {
+    const fallback = [...APPSONE, ...APPSTWO].map((a) => ({ iconurl: a.src, name: a.alt }));
+    const list = (apps && apps.length ? apps : fallback).filter((a) => a?.iconurl).slice(0, 40);
+
+    const renderMarquee = (items, direction = 'left') => (
+        <Marquee
+            direction={direction}
+            speed={40}
+            autoFill
+            gradient
+            gradientColor={[245, 245, 240]}
+            gradientWidth={120}
+        >
+            <div className="inline-flex py-4 gap-4">
+                {items.map((app, i) => (
+                    <div
+                        key={`${app.iconurl}-${i}`}
+                        className="flex items-center bg-white border-[1.5px] border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
+                    >
+                        <Image
+                            src={app.iconurl}
+                            alt={app.name || 'app icon'}
+                            width={24}
+                            height={24}
+                            className="w-6 h-6 object-contain rounded"
+                        />
                     </div>
-                </>
+                ))}
+            </div>
+        </Marquee>
+    );
+
+    return (
+        <div className="flex flex-col gap-6 container">
+            {isHomePage || isTrustMarquee ? (
+                <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-20' : 'gap-8 my-12'}`}>
+                    {appCount ? (
+                        <p className="text-center text-[13px] font-semibold tracking-[0.1em] text-[#999] uppercase">
+                            <strong className="text-[#555] font-extrabold">{appCount}+</strong> applications integrated
+                        </p>
+                    ) : (
+                        isHomePage && <h2 className="h2">Trusted by Teams Using These Apps</h2>
+                    )}
+                    {renderMarquee(list, 'left')}
+                </div>
             ) : (
                 <>
                     <div className="flex items-center gap-8">
                         <p className="text-center text-gray-500 min-w-fit ms-4 uppercase">
                             Trusted by Teams Using These Apps
                         </p>
-                        <Marquee
-                            direction="left"
-                            speed={40}
-                            autoFill
-                            gradient
-                            gradientColor={[250, 249, 246]}
-                            gradientWidth={96}
-                        >
-                            <div className="inline-flex py-4 gap-20">
-                                {APPSONE.map((app, index) => (
-                                    <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                        <div className="h-10 w-10 relative bg-gray-50 border">
-                                            <Image
-                                                src={app.src}
-                                                alt={app.alt}
-                                                width={20}
-                                                height={20}
-                                                className="object-contain p-1"
-                                                style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
-                                            />
-                                        </div>
-                                        <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Marquee>
+                        {renderMarquee(list.slice(0, Math.ceil(list.length / 2)), 'left')}
                     </div>
-                    <Marquee
-                        direction="right"
-                        speed={40}
-                        autoFill
-                        gradient
-                        gradientColor={[250, 249, 246]}
-                        gradientWidth={96}
-                        className="ms-4"
-                    >
-                        <div className="inline-flex py-4 gap-20">
-                            {APPSTWO.map((app, index) => (
-                                <div key={app.src} className={`flex items-center gap-2 ${index === 0 ? 'ml-20' : ''}`}>
-                                    <div className="h-10 w-10 relative bg-gray-50 border">
-                                        <Image
-                                            src={app.src}
-                                            alt={app.alt}
-                                            width={20}
-                                            height={20}
-                                            className="object-contain p-1"
-                                            style={{ position: 'absolute', height: '100%', width: '100%', inset: '0px' }}
-                                        />
-                                    </div>
-                                    <p className="text-center font-medium text-lg text-gray-500">{app.IconName}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </Marquee>
+                    {renderMarquee(list.slice(Math.ceil(list.length / 2)), 'right')}
                 </>
             )}
         </div>
