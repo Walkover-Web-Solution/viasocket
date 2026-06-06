@@ -1,7 +1,9 @@
 'use client'
 
 import { useState, useCallback, useEffect } from 'react';
+import SearchInputHomeOptimized from './SearchInputHomeOptimized';
 import ResultSectionOptimized from './ResultSectionOptimized';
+import CTAButtons from './CTAButtons';
 
 export default function SearchAndResults({ initialApps, templateData, onSearchStateChange, hasToken }) {
   const [templates, setTemplates] = useState([]);
@@ -67,16 +69,21 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
     }
   }, [hasActiveSearch, onSearchStateChange]);
   return (
-    <ResultSectionOptimized
-        // Search input props
-        initialApps={initialApps}
-        templateData={templateData}
+    <>
+      <SearchInputHomeOptimized
         onTemplatesChange={handleTemplatesChange}
         onVideosChange={handleVideosChange}
         onBlogsChange={handleBlogsChange}
         onAiResponseChange={handleAiResponseChange}
         onLoadingChange={handleLoadingChange}
         onSelectionChange={handleSelectionChange}
+        initialApps={initialApps}
+        templates={templateData}
+      />
+
+       <CTAButtons hasToken={hasToken} />
+
+      <ResultSectionOptimized
         // Template props
         showTemplates={showTemplates}
         loadingTemplates={loadingTemplates}
@@ -98,6 +105,7 @@ export default function SearchAndResults({ initialApps, templateData, onSearchSt
         showBlogs={showBlogs}
         loadingBlogs={loadingBlogs}
         blogs={blogs}
-    />
+      />
+    </>
   );
 }
