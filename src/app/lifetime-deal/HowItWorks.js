@@ -1,17 +1,18 @@
 import Image from 'next/image';
+import TriggerActionDiagram from '@/components/TriggerActionDiagram/TriggerActionDiagram';
 
 const STEPS = [
     {
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img4_connection.png',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imgd_image-16.png',
     },
     {
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
-        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img3_trigger-action.png',
+        isDiagram: true,
     },
     {
         num: '3.',
@@ -39,14 +40,18 @@ export default function HowItWorks() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
                     {STEPS.map((s) => (
                         <div key={s.num} className="flex flex-col items-center text-center justify-between">
-                            <div className="w-full relative aspect-[16/8]">
-                                <Image
-                                    src={s.image}
-                                    alt={s.title}
-                                    fill
-                                    className="object-contain"
-                                    sizes="(max-width: 768px) 100vw, 400px"
-                                />
+                            <div className="w-full relative aspect-[16/10]">
+                                {s.isDiagram ? (
+                                    <TriggerActionDiagram />
+                                ) : (
+                                    <Image
+                                        src={s.image}
+                                        alt={s.title}
+                                        fill
+                                        className="object-contain"
+                                        sizes="(max-width: 768px) 100vw, 400px"
+                                    />
+                                )}
                             </div>
                             <h3 className="flex flex-col gap-1">
                                 <h3 className="text-lg font-bold">
