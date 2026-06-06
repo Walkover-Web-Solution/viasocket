@@ -713,7 +713,7 @@ function IfCircle({
           ? "border-2 border-[#F59E0B]/70 bg-[#F59E0B]/[0.1] shadow-[0_0_16px_rgba(245,158,11,0.2)]"
           : completed
             ? "border-2 border-[#F59E0B]/50 bg-[#F59E0B]/[0.06]"
-            : "border-[1.5px] border-[#F59E0B]/30 bg-[#F59E0B]/[0.03]"
+            : "border border-[#F59E0B]/30 bg-[#F59E0B]/[0.03]"
       }`}
     >
       <span

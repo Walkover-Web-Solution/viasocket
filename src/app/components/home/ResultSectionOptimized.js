@@ -47,7 +47,7 @@ export default function ResultSectionOptimized({
     const sortedFilteredTemplates = filteredTemplates.slice(0, 6); //when search/filter is active
 
     return (
-        <div className="result-section text-left">
+        <div className="result-section text-left container">
             {/* Persistent header row: heading on left, search on right. Search is rendered once so internal state is preserved across branch switches */}
             <div className="container mx-auto relative z-50 flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-8">
                 <h2 className="h2 text-left mb-0">

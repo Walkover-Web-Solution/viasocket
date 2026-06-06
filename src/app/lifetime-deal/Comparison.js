@@ -58,7 +58,7 @@ export default function Comparison() {
                         <div className="mt-auto pt-5 flex justify-end">
                             <a
                                 href="#pricing"
-                                className="w-10 h-10 rounded-full border-[1.5px] border-white/25 bg-transparent group-hover:bg-accent group-hover:border-accent flex items-center justify-center"
+                                className="w-10 h-10 rounded-full border border-white/25 bg-transparent group-hover:bg-accent group-hover:border-accent flex items-center justify-center"
                                 aria-label="See pricing"
                             >
                                 <svg

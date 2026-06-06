@@ -19,7 +19,7 @@ export default function HeroSection({ hasToken }) {
     }, []);
 
     return (
-        <section className="flex flex-col items-center justify-center text-center bg-transparent px-6">
+        <section className="flex flex-col items-center justify-center text-center bg-transparent container">
             <div className="flex flex-col items-center justify-center w-full text-center">
                 <h1 className="h1 mb-12 whitespace-normal lg:whitespace-nowrap">
                     Automate Anything with AI Agents.

@@ -17,7 +17,7 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
 
     return (
         <div className={`${containerClasses} px-4 mx-auto relative global-top-space dotted-background`}>
-            <div className="text-center container">
+            <div className="text-center">
                 <HeroSection appCount={appCount} hasToken={hasToken} />
 
                 <ShowAppsIndexOptimized isHomePage apps={initialApps} appCount={appCount} />

@@ -67,7 +67,7 @@ export default function EmbedSection() {
                 <div className="flex-shrink-0 flex items-center justify-center">
                     <div className="w-[360px] h-[360px] md:w-[320px] md:h-[320px] relative" aria-hidden="true">
                         <div className="absolute top-1/2 left-1/2">
-                            <div className={`absolute rounded-full pointer-events-none w-[200px] h-[200px] -top-[100px] -left-[100px] md:w-60 md:h-60 md:-top-[120px] md:-left-[120px] border-[1.5px] border-[rgba(220,90,90,0.65)] ${style.ring1}`} />
+                            <div className={`absolute rounded-full pointer-events-none w-[200px] h-[200px] -top-[100px] -left-[100px] md:w-60 md:h-60 md:-top-[120px] md:-left-[120px] border border-[rgba(220,90,90,0.65)] ${style.ring1}`} />
                             <div className={`absolute rounded-full pointer-events-none w-[280px] h-[280px] -top-[140px] -left-[140px] md:w-80 md:h-80 md:-top-40 md:-left-40 border border-[rgba(220,90,90,0.35)] ${style.ring2}`} />
                             <div className={`absolute rounded-full pointer-events-none w-[350px] h-[350px] -top-[175px] -left-[175px] md:w-[400px] md:h-[400px] md:-top-[200px] md:-left-[200px] border border-[rgba(220,90,90,0.15)] ${style.ring3}`} />
 

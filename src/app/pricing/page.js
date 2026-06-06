@@ -44,7 +44,7 @@ export default async function PricingPage() {
                 <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             </ConditionalNavbar>
             <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                <div className="flex flex-col items-center gap-12 w-full mt-12">
+                {/* <div className="flex flex-col items-center gap-12 w-full mt-12">
                     <div className="flex flex-col items-center text-center gap-2 pt-8">
                         <h1 className="text-4xl font-bold">
                             Choose the Plan That Fits <span className="text-accent">Your Needs</span>
@@ -54,7 +54,7 @@ export default async function PricingPage() {
                         </p>
                     </div>
                     <PricingPlansClient />
-                </div>
+                </div> */}
 
                 <div className="cont w-full flex flex-col items-center gap-8 bg-white border custom-border p-6 md:p-12 text-center access-program text-white">
                     <h2 className="h2 w-full">We Empower Impactful Organizations</h2>
