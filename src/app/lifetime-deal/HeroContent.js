@@ -41,7 +41,7 @@ export default function HeroContent() {
             <div className="flex items-center gap-6 flex-wrap mb-8">
                 <Link href="#pricing" className="btn btn-accent" rel="nofollow noopener noreferrer">
                     <span>Get Lifetime Access</span>
-                    <span className="hidden sm:inline text-[13px] font-semibold opacity-90">from $399</span>
+                    <span className="hidden sm:inline text-[13px] font-semibold opacity-90">from $390</span>
                     <span aria-hidden className="text-lg leading-none">
                         &rarr;
                     </span>
