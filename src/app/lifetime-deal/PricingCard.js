@@ -175,7 +175,7 @@ export default function PricingCard() {
                 )}
 
                 <div className="flex items-baseline gap-2.5 mb-2">
-                    <span className="text-[48px] font-medium leading-none tracking-[-1.5px] text-gray-900">
+                    <span className="text-[48px] font-extrabold leading-none tracking-[-1.5px] text-gray-900">
                         {plan.price}
                     </span>
                     <span className="text-[13px] font-semibold text-accent">one-time payment</span>

@@ -17,7 +17,7 @@ export default function SuccessContent() {
                     <polyline points="20 6 9 17 4 12" />
                 </svg>
             </div>
-            <h1 className="text-[30px] font-medium leading-[1.12] tracking-[-0.9px] mb-6 text-[#0a0a0a] max-[600px]:text-[25px] max-[600px]:tracking-[-0.6px] max-[600px]:mb-5">
+            <h1 className="text-[30px] font-extrabold leading-[1.12] tracking-[-0.9px] mb-6 text-[#0a0a0a] max-[600px]:text-[25px] max-[600px]:tracking-[-0.6px] max-[600px]:mb-5">
                 Payment successful. Welcome to viaSocket Lifetime.
             </h1>
 

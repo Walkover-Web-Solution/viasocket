@@ -24,7 +24,7 @@ export default function Comparison() {
                 <span className="block text-center text-[11px] font-bold tracking-[0.2em] uppercase text-accent mb-[22px]">
                     THE MATH IS THE PITCH
                 </span>
-                <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-medium tracking-[-2px] leading-[1.06] text-center mb-4">
+                <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-extrabold tracking-[-2px] leading-[1.06] text-center mb-4">
                     Why keep paying every year?
                 </h2>
                 <p className="text-center text-gray-500 text-lg mb-16">
@@ -45,12 +45,12 @@ export default function Comparison() {
                             />{' '}
                             <span className="text-white">viaSocket</span>
                         </div>
-                        <div className="text-[26px] font-medium text-white tracking-[-0.7px] mb-2">
+                        <div className="text-[26px] font-extrabold text-white tracking-[-0.7px] mb-2">
                             Team Plan Lifetime
                         </div>
                         <div className="text-[13.5px] text-white/60 mb-5">Pay once. Use forever.</div>
                         <div className="h-px bg-white/15 mb-5" />
-                        <div className="text-6xl font-medium text-[#D71C1C] tracking-[-3px] leading-none mb-1">
+                        <div className="text-6xl font-extrabold text-[#D71C1C] tracking-[-3px] leading-none mb-1">
                             $799
                         </div>
                         <div className="text-[13px] text-white/60">15,000 tasks/month</div>
@@ -94,7 +94,7 @@ export default function Comparison() {
                                     <div className="text-[15.5px] font-bold tracking-[-0.3px] mb-1">{c.name}</div>
                                     <div className="text-xs text-gray-500">{c.plan}</div>
                                     <div className="h-px bg-black/5 mt-4 mb-3.5" />
-                                    <span className="text-[26px] font-medium tracking-[-0.8px] block">{c.price}</span>
+                                    <span className="text-[26px] font-extrabold tracking-[-0.8px] block">{c.price}</span>
                                     <div className="mt-1 text-[11px] font-semibold tracking-wider uppercase text-gray-500">
                                         {c.priceLabel || '3-year cost'}
                                     </div>

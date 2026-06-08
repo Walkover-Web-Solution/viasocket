@@ -43,27 +43,22 @@ const plans = [
 
 function PlanCard({ plan }) {
     return (
-        <div
-            className={`relative flex flex-col bg-[#FAFAFA] h-full ${plan.highlight ? 'border-2 border-accent' : 'border border-gray-200'}`}
-        >
+        <div className={`relative flex flex-col bg-[#FAFAFA] h-full ${plan.highlight ? 'border-2 border-accent' : 'border border-gray-200'}`}>
             {(plan.highlight || plan.badge) && (
-                <div
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
-                >
+                <div className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}>
                     Buy 1 month, get 5 free
                 </div>
             )}
-            <div
-                className="flex flex-col gap-5 p-6 flex-1"
-                style={plan.highlight ? { paddingTop: '2.25rem' } : plan.badge ? { paddingTop: '3rem' } : {}}
-            >
+            <div className="flex flex-col gap-5 p-6 flex-1" style={plan.highlight ? { paddingTop: '2.25rem' } : plan.badge ? { paddingTop: '3rem' } : {}}>
                 <div className="flex flex-col gap-2">
-                    <span className="text-xs tracking-widest">{plan.name}</span>
+                    <div className="flex items-center gap-2 text-xs tracking-widest">
+                        <span>{plan.name}</span>
+                    </div>
                     <div className="flex items-baseline gap-1">
                         <h3 className="text-3xl font-bold text-black">{plan.price}</h3>
                         {plan.priceSuffix && <span className="text-sm">{plan.priceSuffix}</span>}
                     </div>
-                    <p className="text-sm text-gray-500">{plan.description}</p>
+<p className="text-sm text-gray-500">{plan.description}</p>
                 </div>
 
                 <div className="border-t border-gray-200" />
