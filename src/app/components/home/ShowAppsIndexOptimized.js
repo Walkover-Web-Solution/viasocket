@@ -150,7 +150,7 @@ export default function ShowAppsIndexOptimized({
                 <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-20' : 'gap-8 my-12'}`}>
                     {appCount ? (
                         <p className="text-center text-[13px] font-semibold tracking-[0.1em] text-[#999] uppercase">
-                            <strong className="text-[#555] font-extrabold">{appCount + 300}+</strong> applications integrated
+                            <strong className="text-[#555] font-medium">{appCount + 300}+</strong> applications integrated
                         </p>
                     ) : (
                         isHomePage && <h2 className="h2">Trusted by Teams Using These Apps</h2>
