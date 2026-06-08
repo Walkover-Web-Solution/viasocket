@@ -24,7 +24,7 @@ export default function Integrations() {
             <div aria-hidden className="absolute inset-0 pointer-events-none [background:radial-gradient(ellipse_55%_45%_at_50%_60%,rgba(168,32,13,0.22)_0%,transparent_70%)]" />
             <div className="relative z-10 px-5 lg:px-20 container mx-auto">
                 <div className="inline-block text-[11px] font-bold tracking-[0.17em] uppercase mb-[22px]" style={{ color: '#E45656' }}>2,200+ APP INTEGRATIONS</div>
-                <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-extrabold leading-[1.08] tracking-[-1.4px] mb-5 text-white">
+                <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-medium leading-[1.08] tracking-[-1.4px] mb-5 text-white">
                     One Platform. Endless Connections.<br />
                     Power Every Workflow with viaSocket.
                 </h2>

@@ -18,7 +18,7 @@ export default function HeroContent() {
                 </Link>
             </div>
 
-            <h1 className="h1 !font-semibold">
+            <h1 className="h1 !font-semibold mb-2">
                 Stop paying{' '}
                 <span className="font-bold relative inline-block mx-2">
                     $70/mo.
@@ -32,7 +32,7 @@ export default function HeroContent() {
             </h1>
 
             <p className="text-[17px] md:text-[18px] text-gray-500 leading-[1.65] max-w-[620px] m-0 mb-9">
-                One payment for viaSocket Team &mdash; instead of{' '}
+                One payment for viaSocket &mdash; instead of{' '}
                 <strong className="text-gray-900 font-bold">$840+ every single year</strong> to other automation tools
                 <br />
                 15,000 tasks &middot; 5,000 AI credits &middot; 2,200+ integrations included.

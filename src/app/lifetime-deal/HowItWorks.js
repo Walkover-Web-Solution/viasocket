@@ -30,7 +30,7 @@ export default function HowItWorks() {
                     <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         HOW IT WORKS
                     </div>
-                    <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold leading-[1.1] tracking-[-1.3px]">
+                    <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-medium leading-[1.1] tracking-[-1.3px]">
                         From manual work to automated workflows
                         <br />
                         <span className="text-accent mt-2 inline-block">in minutes.</span>
