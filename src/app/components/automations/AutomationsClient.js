@@ -78,11 +78,12 @@ export default function AutomationsClient({ pageData, hasToken }) {
 
     return (
         <div className="w-full cont gap-12 pt-12 overflow-x-hidden dotted-background global-top-space">
-            <div className="container">
-                <h1 className="h1 text-center">
+            <div className="container mt-10">
+                <h1 className="h1 text-center mb-12">
                     <span className="text-accent">Search</span> ready to use automations
                 </h1>
                 <SearchInputHomeOptimized
+                    className="mx-auto"
                     onTemplatesChange={handleTemplatesChange}
                     onLoadingChange={handleLoadingChange}
                     onSelectionChange={handleSelectionChange}

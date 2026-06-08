@@ -49,6 +49,7 @@ export default function SearchInputHomeOptimized({
     enableBlogs = true,
     enableAi = true,
     templates,
+    className = '',
 }) {
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
@@ -586,7 +587,7 @@ export default function SearchInputHomeOptimized({
     }, [selectedApps, selectedIndustries, selectedDepartments, onSelectionChange]);
 
     return (
-        <div className="relative w-full max-w-xl search-bar" ref={dropdownRef}>
+        <div className={`relative w-full max-w-xl search-bar ${className}`} ref={dropdownRef}>
             <div className="relative">
                 <div
                     className={`w-full h-[48px] px-6 py-2 text-base bg-white border custom-border focus-within:outline-none focus-within:ring-blue-500/20 pr-16 flex flex-nowrap items-center gap-2 overflow-x-auto overflow-y-hidden no-scrollbar z-50 relative cursor-text ${showDropdown ? 'rounded-t-3xl rounded-b-none' : 'rounded-full'}`}

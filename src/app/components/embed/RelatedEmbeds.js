@@ -17,9 +17,9 @@ const ArrowIcon = () => (
 
 const ALL_ITEMS = [
     {
-        slug: 'action-for-ai',
-        href: '/embed/action-for-ai',
-        title: 'Action for AI',
+        slug: 'actions-for-ai',
+        href: '/embed/actions-for-ai',
+        title: 'Actions for AI',
         description: 'Turn your product into an AI-ready platform.',
         tint: 'purple',
     },

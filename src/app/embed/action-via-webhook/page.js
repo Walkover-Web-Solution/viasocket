@@ -8,7 +8,7 @@ import WebhookHero from './WebhookHero';
 import WebhookUseCase from './WebhookUseCase';
 import WebhookSetup from './WebhookSetup';
 import EmbedPricing from '@/app/components/embed/EmbedPricing';
-import DarkCta from '../action-for-ai/DarkCta';
+import DarkCta from '../actions-for-ai/DarkCta';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import WebhookFeatureHighlights from './WebhookFeatureHighlights';
 

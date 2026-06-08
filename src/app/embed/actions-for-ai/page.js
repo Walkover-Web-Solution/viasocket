@@ -17,8 +17,8 @@ export const runtime = 'edge';
 
 export async function generateMetadata() {
     return {
-        title: 'Action for AI - viaSocket',
-        description: 'Action for AI - viaSocket',
+        title: 'Actions for AI - viaSocket',
+        description: 'Actions for AI - viaSocket',
     };
 }
 
@@ -27,7 +27,7 @@ export default async function ActionForAiPage() {
 
     return (
         <>
-            <NavbarServer navbarData={navbarData} utm={'/embed/action-for-ai'} />
+            <NavbarServer navbarData={navbarData} utm={'/embed/actions-for-ai'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
                 <HeroAurora />
                 <EmbedImageSelector />
@@ -36,7 +36,7 @@ export default async function ActionForAiPage() {
                 <HowFlowBecomesAiTool />
                 <EmbedPricing />
                 <DarkCta />
-                <RelatedEmbeds currentPage="action-for-ai" />
+                <RelatedEmbeds currentPage="actions-for-ai" />
                 <ShowBadges />
                 <SecuritySection securityGridData={securityGridData} />
 
