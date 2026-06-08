@@ -64,7 +64,7 @@ export default function Testimonials({ reviewData = [] }) {
                     <span className="inline-block text-[#a8200d] text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         LOVED BY TEAMS
                     </span>
-                    <h2 className="text-[34px] md:text-[44px] lg:text-[60px] font-medium leading-[1.06] tracking-[-0.6px] md:tracking-[-1px] lg:tracking-[-1.6px] text-[#1a1a1a] mx-auto max-w-[1100px] m-0">
+                    <h2 className="text-[34px] md:text-[44px] lg:text-[60px] font-extrabold leading-[1.06] tracking-[-0.6px] md:tracking-[-1px] lg:tracking-[-1.6px] text-[#1a1a1a] mx-auto max-w-[1100px] m-0">
                         Real teams. Real results.
                         <br />
                         Real <span className="text-[#a8200d]">automation impact.</span>
@@ -76,7 +76,7 @@ export default function Testimonials({ reviewData = [] }) {
                         <div className="font-serif text-[88px] lg:text-[120px] leading-[0.7] text-[#a8200d]/[0.18] font-bold mb-3 tracking-[-0.02em]" aria-hidden="true">
                             &ldquo;
                         </div>
-                        <h3 className="text-2xl lg:text-[30px] font-medium tracking-[-0.6px] leading-[1.15] text-[#1a1a1a] mb-7 lg:mb-10">
+                        <h3 className="text-2xl lg:text-[30px] font-extrabold tracking-[-0.6px] leading-[1.15] text-[#1a1a1a] mb-7 lg:mb-10">
                             What our customers
                             <br />
                             are <span className="text-[#a8200d]">saying</span>

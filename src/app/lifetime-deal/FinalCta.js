@@ -74,7 +74,7 @@ export default function FinalCta() {
             <div className="container mx-auto px-6 relative z-[1]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div>
-                        <h2 className="text-[34px] md:text-[42px] lg:text-[56px] font-medium leading-[1.06] tracking-[-0.9px] md:tracking-[-1.5px] text-[#0a0a0a] mb-[22px]">
+                        <h2 className="text-[34px] md:text-[42px] lg:text-[56px] font-extrabold leading-[1.06] tracking-[-0.9px] md:tracking-[-1.5px] text-[#0a0a0a] mb-[22px]">
                             Ready to automate
                             <br />
                             <span className="text-[#a8200d]">smarter,</span> not harder?

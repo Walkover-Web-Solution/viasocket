@@ -47,7 +47,7 @@ export default function Unlock() {
                     <span className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         WHAT YOU&rsquo;LL UNLOCK
                     </span>
-                    <h2 className="text-[34px] sm:text-[42px] lg:text-[52px] font-medium leading-[1.1] tracking-[-1.3px] text-[var(--text,#0A0A0A)] m-0">
+                    <h2 className="text-[34px] sm:text-[42px] lg:text-[52px] font-extrabold leading-[1.1] tracking-[-1.3px] text-[var(--text,#0A0A0A)] m-0">
                         Effortless Process, <span className="text-accent">Continuous Supply.</span>
                     </h2>
                 </div>
