@@ -122,7 +122,7 @@ export default function FinalCta() {
                             <div className="h-px bg-black/[0.08] mb-6" aria-hidden="true"></div>
 
                             <span
-                                className="block font-serif text-[52px] leading-[0.75] text-[#a8200d] opacity-75 mb-[18px]"
+                                className="block font-serif text-[40px] leading-[0.75] text-[#a8200d] opacity-75 mb-[-6px]"
                                 aria-hidden="true"
                             >
                                 &ldquo;

@@ -78,7 +78,7 @@ export default function Unlock() {
                     ))}
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-8">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-8">
                     <div className="flex flex-col sm:flex-row items-center gap-6">
                         <div className="flex flex-shrink-0">
                             {[
@@ -146,7 +146,7 @@ export default function Unlock() {
                             <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4]">
                                 Trusted by 2,000+ growing teams
                             </p>
-                            <div className="flex gap-2 mt-1.5 flex-wrap justify-center sm:justify-start">
+                            {/* <div className="flex gap-2 mt-1.5 flex-wrap justify-center sm:justify-start">
                                 {['Reliable', 'Scalable', 'AI-powered'].map((t) => (
                                     <span
                                         key={t}
@@ -155,10 +155,10 @@ export default function Unlock() {
                                         {t}
                                     </span>
                                 ))}
-                            </div>
+                            </div> */}
                         </div>
                     </div>
-                    <button
+                    {/* <button
                         type="button"
                         aria-label="Choose a plan"
                         className="btn btn-accent"
@@ -168,7 +168,7 @@ export default function Unlock() {
                             <line x1="5" y1="12" x2="19" y2="12" />
                             <polyline points="13 6, 19 12, 13 18" />
                         </svg>
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </section>
