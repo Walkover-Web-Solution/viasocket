@@ -8,8 +8,7 @@ export default function DarkCta() {
                     Ship an AI agent that actually does things
                 </h2>
                 <p className="mx-auto mb-8 max-w-[500px] text-[14px] font-normal leading-[1.75] text-white/50">
-                    Stop describing what your AI could do. Wire it to one MCP endpoint and let it act — on every app
-                    your users have connected.
+                    Ship every integration your users will ever ask for — without building any of them yourself.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-3">
                     <Link
@@ -18,14 +17,11 @@ export default function DarkCta() {
                     >
                         Get started
                     </Link>
-                </div>
-                <div className="mt-5 flex items-center gap-2 justify-center text-xs text-white/55">
-                    Just want it for yourself?{' '}
                     <Link
-                        href="https://mushrooms.viasocket.com/"
-                        className="border-b border-white/30 font-semibold text-white/85 transition-colors duration-150 hover:border-white hover:text-white"
+                        href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                        className="btn btn-outline"
                     >
-                        Try Mushrooms free →
+                        Talk to engineering{' '}
                     </Link>
                 </div>
             </div>

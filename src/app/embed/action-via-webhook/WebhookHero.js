@@ -176,35 +176,31 @@ export default function WebhookHero() {
                     />
 
                     {/* Content */}
-                    <div className="relative z-10 py-24 px-12 max-w-[1400px] w-full grid grid-cols-2 gap-12 items-center max-[960px]:grid-cols-1 max-[960px]:gap-16 max-[960px]:py-[72px] max-[960px]:px-6">
+                    <div className="relative z-10 px-12 w-full grid grid-cols-2 gap-12 items-center max-[960px]:grid-cols-1 max-[960px]:gap-16 max-[960px]:py-[72px] max-[960px]:px-6">
                         {/* Left */}
-                        <div className="flex flex-col items-start text-left max-[960px]:items-center max-[960px]:text-center">
-                            <h1 className="text-[54px] font-extrabold tracking-[-2px] leading-[1.2] text-white mb-6 flex flex-col items-start gap-3.5 max-[960px]:items-center max-[768px]:text-[32px] max-[768px]:tracking-[-1px] max-[768px]:gap-2">
-                                <span className="flex flex-wrap items-center gap-3.5 max-[768px]:gap-2">
-                                    Trigger real actions when
-                                </span>
-                                <span className="flex flex-wrap items-center gap-3.5 max-[768px]:gap-2">
+                        <div className="flex flex-col gap-2 items-start text-left max-[960px]:items-center max-[960px]:text-center">
+                            <h1 className="h1 !text-white flex flex-wrap items-center gap-1 mb-4">
+                                Trigger real actions when
+                                <span
+                                    className={`inline-flex items-center gap-2.5 bg-white py-1.5 pl-2.5 pr-[22px] shadow-[0_8px_28px_rgba(0,0,0,0.32)] text-[40px] font-bold tracking-[-1.5px] text-[#0a0a0a] leading-[1.1] justify-start transition-opacity duration-[250ms] will-change-opacity rounded-[10px] min-w-[260px] max-[768px]:text-[26px] max-[768px]:min-w-[200px] max-[768px]:py-1 max-[768px]:pl-1.5 max-[768px]:pr-3.5 max-[768px]:gap-2 ${fade ? 'opacity-0' : 'opacity-100'}`}
+                                >
                                     <span
-                                        className={`inline-flex items-center gap-2.5 bg-white py-1.5 pl-2.5 pr-[22px] shadow-[0_8px_28px_rgba(0,0,0,0.32)] text-[40px] font-bold tracking-[-1.5px] text-[#0a0a0a] leading-[1.1] justify-start transition-opacity duration-[250ms] will-change-opacity rounded-[10px] min-w-[260px] max-[768px]:text-[26px] max-[768px]:min-w-[200px] max-[768px]:py-1 max-[768px]:pl-1.5 max-[768px]:pr-3.5 max-[768px]:gap-2 ${fade ? 'opacity-0' : 'opacity-100'}`}
+                                        className="w-[42px] h-[42px] flex items-center justify-center shrink-0 rounded-md overflow-hidden max-[768px]:w-[34px] max-[768px]:h-[34px]"
+                                        style={{ backgroundColor: event.iconColor + '15' }}
                                     >
-                                        <span
-                                            className="w-[42px] h-[42px] flex items-center justify-center shrink-0 rounded-md overflow-hidden max-[768px]:w-[34px] max-[768px]:h-[34px]"
-                                            style={{ backgroundColor: event.iconColor + '15' }}
+                                        <svg
+                                            className="w-7 h-7 max-[768px]:w-6 max-[768px]:h-6"
+                                            viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke={event.iconColor}
+                                            strokeWidth="2"
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
                                         >
-                                            <svg
-                                                className="w-7 h-7 max-[768px]:w-6 max-[768px]:h-6"
-                                                viewBox="0 0 24 24"
-                                                fill="none"
-                                                stroke={event.iconColor}
-                                                strokeWidth="2"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                            >
-                                                <path d={event.iconSvg} />
-                                            </svg>
-                                        </span>
-                                        <span>{event.text}</span>
+                                            <path d={event.iconSvg} />
+                                        </svg>
                                     </span>
+                                    <span>{event.text}</span>
                                 </span>
                             </h1>
 
@@ -238,7 +234,7 @@ export default function WebhookHero() {
                                 {/* Left: POST request card */}
                                 <div className="bg-[#0d0d14] w-[196px] shrink-0 flex flex-col border-r border-white/[0.09] max-[768px]:w-[155px]">
                                     <div className="flex items-center gap-[7px] py-[11px] px-[13px] border-b border-white/[0.08] shrink-0">
-                                        <span className="bg-[#059669] text-white text-[8.5px] font-extrabold tracking-[0.6px] py-[3px] px-[7px] rounded font-sans shrink-0">
+                                        <span className="bg-[#059669] text-white text-[8.5px] font-medium tracking-[0.6px] py-[3px] px-[7px] rounded font-sans shrink-0">
                                             POST
                                         </span>
                                         <span className="font-mono text-[8.5px] text-white/[0.32] overflow-hidden text-ellipsis whitespace-nowrap flex-1">
@@ -297,7 +293,7 @@ export default function WebhookHero() {
                                                 </div>
                                             </div>
                                             <span
-                                                className={`text-[7.5px] font-extrabold py-0.5 px-1.5 rounded-full font-sans tracking-[0.4px] shrink-0 transition-colors duration-300 ${fade ? 'bg-[#f3f4f6] text-[#9ca3af]' : 'bg-[#dcfce7] text-[#16a34a]'}`}
+                                                className={`text-[7.5px] font-medium py-0.5 px-1.5 rounded-full font-sans tracking-[0.4px] shrink-0 transition-colors duration-300 ${fade ? 'bg-[#f3f4f6] text-[#9ca3af]' : 'bg-[#dcfce7] text-[#16a34a]'}`}
                                             >
                                                 {fade ? 'WAIT' : 'DONE'}
                                             </span>

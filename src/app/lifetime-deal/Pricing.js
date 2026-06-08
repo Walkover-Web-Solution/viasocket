@@ -44,7 +44,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, featured = fal
             <div className="mb-4">
                 <div className="flex items-baseline gap-2 mb-1">
                     <span className="text-lg text-gray-500 line-through font-medium">{oldPrice}</span>
-                    <span className="text-[44px] font-extrabold tracking-[-1.6px] leading-none">{price}</span>
+                    <span className="text-[44px] font-medium tracking-[-1.6px] leading-none">{price}</span>
                 </div>
             </div>
             <div className="h-px bg-black/5 my-4" />
@@ -83,7 +83,7 @@ export default function Pricing() {
                     <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-7">
                         PRICING
                     </div>
-                    <h2 className="text-4xl sm:text-5xl lg:text-[54px] font-extrabold leading-[1.05] tracking-[-1.4px] mb-12">
+                    <h2 className="text-4xl sm:text-5xl lg:text-[54px] font-medium leading-[1.05] tracking-[-1.4px] mb-12">
                         Flexible pricing. <span className="text-accent">Built to scale.</span>
                     </h2>
                 </div>
@@ -114,7 +114,7 @@ export default function Pricing() {
                             {
                                 label: (
                                     <>
-                                        <span className="font-extrabold text-accent">3× Solo</span> tasks{' '}
+                                        <span className="font-medium text-accent">3× Solo</span> tasks{' '}
                                         <span className="text-gray-500 font-medium text-xs ml-0.5 whitespace-nowrap">
                                             (15,000/mo)
                                         </span>
@@ -124,7 +124,7 @@ export default function Pricing() {
                             {
                                 label: (
                                     <>
-                                        <span className="font-extrabold text-accent">2.5× Solo</span> AI credits{' '}
+                                        <span className="font-medium text-accent">2.5× Solo</span> AI credits{' '}
                                         <span className="text-gray-500 font-medium text-xs ml-0.5 whitespace-nowrap">
                                             (6,000/mo)
                                         </span>
@@ -147,7 +147,7 @@ export default function Pricing() {
                             {
                                 label: (
                                     <>
-                                        <span className="font-extrabold text-accent">5× Solo</span> tasks{' '}
+                                        <span className="font-medium text-accent">5× Solo</span> tasks{' '}
                                         <span className="text-gray-500 font-medium text-xs ml-0.5 whitespace-nowrap">
                                             (25,000/mo)
                                         </span>
@@ -157,7 +157,7 @@ export default function Pricing() {
                             {
                                 label: (
                                     <>
-                                        <span className="font-extrabold text-accent">5× Solo</span> AI credits{' '}
+                                        <span className="font-medium text-accent">5× Solo</span> AI credits{' '}
                                         <span className="text-gray-500 font-medium text-xs ml-0.5 whitespace-nowrap">
                                             (10,000/mo)
                                         </span>
@@ -205,7 +205,7 @@ export default function Pricing() {
                         className="hidden sm:flex shrink-0 w-16 h-16 rounded-full border-2 border-dashed border-green-600 flex-col items-center justify-center text-green-600 leading-none"
                         aria-hidden
                     >
-                        <span className="text-[22px] font-extrabold">30</span>
+                        <span className="text-[22px] font-medium">30</span>
                         <span className="text-[9px] font-bold tracking-[0.16em] mt-0.5">DAYS</span>
                     </div>
                 </div>

@@ -64,7 +64,7 @@ export default function RelatedEmbeds({
         <section className="w-full container bg-white p-6">
             <div className="max-w-[1180px] mx-auto p-6">
                 <div className="mb-10 text-center">
-                    <h3 className="text-[26px] md:text-[34px] font-extrabold text-[#0a0a0a] tracking-[-0.7px] mb-2 leading-[1.2]">
+                    <h3 className="text-[26px] md:text-[34px] font-medium text-[#0a0a0a] tracking-[-0.7px] mb-2 leading-[1.2]">
                         {heading}
                     </h3>
                     <p className="text-[15px] text-gray-500 font-normal">{subheading}</p>

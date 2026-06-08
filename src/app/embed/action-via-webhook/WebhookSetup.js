@@ -2,7 +2,7 @@ export default function WebhookSetup() {
     return (
         <section id="how" className="sec-white container">
             <div className="max-w-[680px] mb-10">
-                <h2 className="text-4xl font-extrabold tracking-tight leading-tight text-gray-900 mb-3.5">
+                <h2 className="text-4xl font-medium tracking-tight leading-tight text-gray-900 mb-3.5">
                     Set up the embed in two steps
                 </h2>
                 <p className="text-[15px] text-gray-500 leading-relaxed font-normal">
@@ -17,7 +17,7 @@ export default function WebhookSetup() {
                     <span className="text-[11px] font-bold tracking-[1.4px] uppercase text-green-600 leading-none mb-2">
                         Step 01
                     </span>
-                    <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-snug mb-1">
+                    <h3 className="text-2xl font-medium text-gray-900 tracking-tight leading-snug mb-1">
                         Get the user's webhook URL
                     </h3>
                     <p className="text-sm text-gray-500 leading-relaxed font-normal mb-7 max-w-[500px]">
@@ -54,7 +54,7 @@ export default function WebhookSetup() {
                     <span className="text-[11px] font-bold tracking-[1.4px] uppercase text-green-600 leading-none mb-2">
                         Step 02
                     </span>
-                    <h3 className="text-2xl font-extrabold text-gray-900 tracking-tight leading-snug mb-1">
+                    <h3 className="text-2xl font-medium text-gray-900 tracking-tight leading-snug mb-1">
                         POST your event
                     </h3>
                     <p className="text-sm text-gray-500 leading-relaxed font-normal mb-7 max-w-[500px]">

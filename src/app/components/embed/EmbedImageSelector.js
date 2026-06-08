@@ -33,17 +33,12 @@ const EmbedImageSelector = ({ appCount }) => {
     return (
         <div className="container">
             <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-1">
-                    <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
-                        Everything you need to own the integration layer
-                    </h2>
-                    {/* <p className="text-gray-600 text-xl leading-relaxed">
-                        Your users connect their apps, and automate across them, all inside your product.
-                    </p> */}
-                </div>
+                <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
+                    Everything you need to own the integration layer
+                </h2>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    <div className="bg-[#EFEAFE] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
+                    <div className="bg-[#EFEAFE] border p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
                         <div className="flex flex-col gap-4">
                             <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
                                 Multi-step flows as single AI tools

@@ -5,7 +5,7 @@ import { ArrowRight } from 'lucide-react';
 export default function HeroContent({ agent }) {
     return (
         <div className="flex flex-col items-start text-left">
-            <h1 className="flex flex-col items-start gap-[14px] text-white font-extrabold leading-[1.2] tracking-[-2px] mb-6 text-[32px] sm:text-[42px] lg:text-[54px]">
+            <h1 className="flex flex-col items-start gap-[14px] text-white font-medium leading-[1.2] tracking-[-2px] mb-6 text-[32px] sm:text-[42px] lg:text-[54px]">
                 <span className="flex flex-wrap items-center gap-[14px]">Give real hands</span>
                 <span className="flex flex-wrap items-center gap-[14px]">
                     <span>to</span>
