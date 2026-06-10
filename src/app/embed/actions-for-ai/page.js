@@ -23,14 +23,14 @@ export async function generateMetadata() {
 }
 
 export default async function ActionForAiPage() {
-    const { navbarData, footerData, blogData, securityGridData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount } = await getEmbedPageData();
 
     return (
         <>
             <NavbarServer navbarData={navbarData} utm={'/embed/actions-for-ai'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
-                <HeroAurora />
-                <EmbedImageSelector />
+                <HeroAurora appCount={appCount} />
+                <EmbedImageSelector appCount={appCount} />
                 <UseCaseSection />
                 <EmbedSetupSteps />
                 <HowFlowBecomesAiTool />

@@ -5,12 +5,12 @@ import createURL from '@/utils/createURL';
 const Breadcrumb = ({parent, child1, child2, child3, parentLink, child1Link, child2Link}) => {
     return (
         <div className="flex items-center gap-2">
-            <Link href={createURL(parentLink)} className="flex items-center gap-0 underline">
+            <Link href={createURL(parentLink)} className="flex items-center gap-0">
                 {parent} {' '}
             </Link>
             <ChevronRight className="w-5 h-5" />
             {child1Link ? (
-                <Link href={createURL(child1Link)} className="flex items-center gap-0 underline">
+                <Link href={createURL(child1Link)} className="flex items-center gap-0">
                     {child1} {' '}
                 </Link>
             ) : (
@@ -19,7 +19,7 @@ const Breadcrumb = ({parent, child1, child2, child3, parentLink, child1Link, chi
             {child2 && (child2Link ? (
                 <>
                 <ChevronRight className="w-5 h-5" />
-                <Link href={createURL(child2Link)} className="flex items-center gap-0 underline">
+                <Link href={createURL(child2Link)} className="flex items-center gap-0">
                     {child2} {' '}
                 </Link>
                 </>

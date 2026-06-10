@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const APP_ICONS = [
@@ -95,29 +96,16 @@ export default function AgentDiagram({ agent }) {
                     {agent.icon}
                 </div>
 
-                <div className="absolute top-[165px] left-1/2 -translate-x-1/2 w-14 h-14 flex items-center justify-center rounded-[10px] bg-[#150a3d] border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.35)] [&_svg]:w-9 [&_svg]:h-9">
-                    <svg viewBox="0 0 32 32" fill="none">
-                        <rect
-                            x="5"
-                            y="5"
-                            width="22"
-                            height="22"
-                            rx="1.8"
-                            stroke="#fff"
-                            strokeWidth="2"
-                            strokeLinejoin="round"
-                        />
-                        <circle cx="11.5" cy="13" r="1.6" fill="#fff" />
-                        <circle cx="19.5" cy="13" r="1.6" fill="#fff" />
-                        <path
-                            d="M11 19.5 Q15 22 19 20"
-                            stroke="#fff"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            fill="none"
-                        />
-                        <path d="M22 21h4M24 19.5v3" stroke="#fff" strokeWidth="2" strokeLinecap="round" />
-                    </svg>
+                <div className="absolute top-[165px] left-1/2 -translate-x-1/2 w-14 h-14 flex items-center justify-center rounded-[10px] bg-[#150a3d] border border-white/25 shadow-[0_6px_18px_rgba(0,0,0,0.35)]">
+                    <Image
+                        src="https://viasocket.com/assets/brand/socketIcon.svg"
+                        alt=""
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 object-contain"
+                        style={{ filter: 'invert(1) brightness(1.7)' }}
+                        unoptimized
+                    />
                 </div>
 
                 {icons.map((src, i) => (

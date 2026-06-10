@@ -21,7 +21,7 @@ const COMPETITORS = [
 export default function Comparison() {
     return (
         <section id="comparison" className="relative bg-[#EFF3F8] py-[120px] overflow-hidden border-t border-black/5">
-            <div className="container px-10">
+            <div className="max-w-7xl mx-auto px-10">
                 
                 <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-medium tracking-[-2px] leading-[1.06] text-center mb-4">
                     Why keep paying every year?
@@ -82,7 +82,7 @@ export default function Comparison() {
                     </div>
 
                     {/* Right side */}
-                    <div className="flex flex-col justify-center gap-3.5 max-w-2xl">
+                    <div className="flex flex-col justify-center gap-3.5">
                         <div className="text-lg text-gray-900">
                             Other automation tools keep charging you — billed annually, every year:
                         </div>

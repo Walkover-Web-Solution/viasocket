@@ -16,15 +16,15 @@ import DarkCta from '@/app/embed/app-integrations/DarkCta';
 export const runtime = 'edge';
 
 export default async function AppIntegrationsPage() {
-    const { navbarData, footerData, blogData, securityGridData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount } = await getEmbedPageData();
 
     return (
         <>
             <NavbarServer navbarData={navbarData} utm={'/embed/app-integrations'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
-                <HeroAurora />
-                <WhyFeatures />
-                <UseCaseSection />
+                <HeroAurora appCount={appCount} />
+                <WhyFeatures appCount={appCount} />
+                <UseCaseSection appCount={appCount} />
                 <EmbedSetup />
                 <ComparisonTable />
                 <EmbedPricing />

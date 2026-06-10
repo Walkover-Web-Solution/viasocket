@@ -2,7 +2,7 @@
 
 import { Star, FileText, Check, LayoutTemplate, Package, Lock, LayoutGrid } from 'lucide-react';
 
-export default function WhyFeatures() {
+export default function WhyFeatures({ appCount }) {
     return (
         <div className="container flex flex-col gap-6">
             <h2 className="h2">Everything you need to make your app a native part of every workflow</h2>
@@ -92,7 +92,7 @@ export default function WhyFeatures() {
                         <div className="w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 bg-[#dbeafe] text-[#2563eb]">
                             <Package className="w-[22px] h-[22px]" strokeWidth={2} />
                         </div>
-                        <h4 className="font-medium text-gray-900 text-xl">2,500+ apps ready to use</h4>
+                        <h4 className="font-medium text-gray-900 text-xl"> {appCount + 300}+ apps ready to use</h4>
                         <p className="text-lg text-gray-600 leading-relaxed">
                             Every popular SaaS — Gmail, Slack, HubSpot, Notion, Salesforce — pre-built and ready. Your
                             users connect them in seconds.
@@ -117,7 +117,7 @@ export default function WhyFeatures() {
                         <h4 className="font-medium text-gray-900 text-xl">List your app via Plug Builder</h4>
                         <p className="text-lg text-gray-600 leading-relaxed">
                             Define your triggers and actions once. Your app becomes a native node in every user&apos;s
-                            workflow — alongside the 2,500+ catalog.
+                            workflow — alongside the  {appCount + 300}+ catalog.
                         </p>
                     </div>
                 </div>

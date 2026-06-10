@@ -1,35 +1,35 @@
 import { Lock, Box, FileText, Zap } from 'lucide-react';
 import WorkflowIllustration from './WorkflowIllustration';
 
-const FEATURES = [
-    {
-        icon: Lock,
-        iconBg: 'bg-emerald-50 text-emerald-600',
-        title: 'Build in User Authentication',
-        desc: 'Users connect apps securely without leaving you product.',
-    },
-    {
-        icon: Box,
-        iconBg: 'bg-indigo-50 text-indigo-600',
-        title: '2,220+ Apps Integrations',
-        desc: 'Pre-build integrations and OAuth flows included.',
-    },
-    {
-        icon: FileText,
-        iconBg: 'bg-amber-50 text-amber-600',
-        title: 'Work with any AI Model',
-        desc: 'Compatible with OpenAI, Claude, Gemini, and more.',
-    },
-    {
-        icon: Zap,
-        iconBg: 'bg-violet-50 text-violet-600',
-        title: 'AI Tool Calling',
-        desc: 'Give AI access to connected apps with one endpoint',
-    },
-];
-
 const EmbedImageSelector = ({ appCount }) => {
-    // const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
+    const totalApps = appCount ? `${appCount + 300}+` : '2,200+';
+
+    const FEATURES = [
+        {
+            icon: Lock,
+            iconBg: 'bg-emerald-50 text-emerald-600',
+            title: 'Build in User Authentication',
+            desc: 'Users connect apps securely without leaving you product.',
+        },
+        {
+            icon: Box,
+            iconBg: 'bg-indigo-50 text-indigo-600',
+            title: `${totalApps} Apps Integrations`,
+            desc: 'Pre-build integrations and OAuth flows included.',
+        },
+        {
+            icon: FileText,
+            iconBg: 'bg-amber-50 text-amber-600',
+            title: 'Work with any AI Model',
+            desc: 'Compatible with OpenAI, Claude, Gemini, and more.',
+        },
+        {
+            icon: Zap,
+            iconBg: 'bg-violet-50 text-violet-600',
+            title: 'AI Tool Calling',
+            desc: 'Give AI access to connected apps with one endpoint',
+        },
+    ];
     return (
         <div className="container">
             <div className="flex flex-col gap-6">

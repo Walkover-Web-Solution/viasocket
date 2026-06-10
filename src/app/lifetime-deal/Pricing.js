@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Check as CheckIcon, X, ArrowUpRight } from 'lucide-react';
 
 const Check = () => (
@@ -67,7 +68,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, href, featured
                     </li>
                 </ul>
             </div>
-            <a
+            <Link
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -76,7 +77,7 @@ function Card({ eyebrow, oldPrice, price, features, support, cta, href, featured
             >
                 <span>{cta}</span>
                 <Arrow />
-            </a>
+            </Link>
         </article>
     );
 }
