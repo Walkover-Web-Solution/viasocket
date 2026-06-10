@@ -29,7 +29,13 @@ const FEATURES = [
     },
 ];
 
-export default function WebhookFeatureHighlights() {
+export default function WebhookFeatureHighlights({ appCount }) {
+    const features = FEATURES.map((f) =>
+        f.title === 'Connect any app in minutes'
+            ? { ...f, desc: `Pre-build connectors to ${appCount + 300}+ apps. Your webhook payload maps to any action across every connected app.` }
+            : f
+    );
+
     return (
         <div className="container flex flex-col gap-6">
             <h2 className="h2">Everything you need to trigger app actions from your server</h2>
@@ -74,7 +80,7 @@ export default function WebhookFeatureHighlights() {
                     </div>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                    {FEATURES.map((f, i) => {
+                    {features.map((f, i) => {
                         const Icon = f.icon;
                         return (
                             <div key={i} className="bg-white border border-gray-200 p-6 flex flex-col gap-3">

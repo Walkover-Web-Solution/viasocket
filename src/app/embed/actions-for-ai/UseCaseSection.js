@@ -2,22 +2,22 @@ import styles from '../action-via-webhook/WebhookUseCase.module.css';
 
 export default function UseCaseSection() {
     return (
-        <section id="use-case" className="bg-[#f7f7f8] border p-6 container">
-            <div className="grid md:grid-cols-[1fr_1.05fr] grid-cols-1 gap-14 md:gap-14 items-start">
+        <section id="use-case" className="bg-white border p-6 md:py-12 md:px-20 container">
+            <div className="grid md:grid-cols-[1fr_1.05fr] grid-cols-1 gap-14 md:gap-20 items-start">
                 {/* Left */}
                 <div>
-                    <div className="inline-flex items-center gap-1.5 bg-[#fef2f1] border border-accent/30 text-accent text-[10.5px] font-bold px-3 py-1 rounded-full mb-4 tracking-wider uppercase">
+                    <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">
                         See it in action
                     </div>
                     <h2 className="text-[32px] font-medium tracking-tight leading-tight text-[#0a0a0a] mb-3">
                         Context in. Action out.
                     </h2>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                    <p className="text-[14.5px] leading-[1.75] mb-[18px] font-normal">
                         Other platforms require you to define every step upfront. With Actions for AI ,{' '}
                         <strong>your agent understands the context and chooses the right actions automatically</strong>
                         <br /> No rigid workflows. No manual tool routing.
                     </p>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                    <p className="text-[14.5px] leading-[1.75] mb-[18px] font-normal">
                         Here&apos;s a real example: a new lead submits a form. The agent analyzes the information,
                         selects the required actions, and executes them across multiple apps in seconds
                     </p>

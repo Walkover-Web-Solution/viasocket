@@ -2,7 +2,7 @@
 
 import styles from '@/app/embed/action-via-webhook/WebhookUseCase.module.css';
 
-export default function UseCaseSection() {
+export default function UseCaseSection({ appCount }) {
     return (
         <section className="py-20 bg-[#f8f9fc] container border px-12 max-[768px]:px-6 max-[480px]:px-4" id="use-case">
             <div className="grid grid-cols-[1fr_1.05fr] gap-14 items-start">
@@ -46,7 +46,7 @@ export default function UseCaseSection() {
                                     "Add Workflow" → Choose trigger
                                 </div>
                                 <div className="text-[12.5px] text-gray-500 leading-[1.65] font-normal">
-                                    Embed slider opens · 2,500+ apps + your app shown as native option
+                                    Embed slider opens ·  {appCount + 300}+ apps  your app shown as native option
                                 </div>
                             </div>
                         </div>

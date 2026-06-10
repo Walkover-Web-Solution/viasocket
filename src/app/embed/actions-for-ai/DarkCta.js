@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function DarkCta() {
     return (
-        <section className="bg-black container py-16 text-center">
+        <section className="bg-black py-16 text-center">
             <div className="container mx-auto px-4">
                 <h2 className="mx-auto mb-3 max-w-[560px] text-[30px] font-medium leading-[1.25] tracking-[-0.7px] text-white">
                     Ship an AI agent that actually does things
@@ -19,7 +19,7 @@ export default function DarkCta() {
                         Get started
                     </Link>
                 </div>
-                <div className="mt-5 flex items-center gap-2 justify-center text-xs text-white/55">
+                {/* <div className="mt-5 flex items-center gap-2 justify-center text-xs text-white/55">
                     Just want it for yourself?{' '}
                     <Link
                         href="https://mushrooms.viasocket.com/"
@@ -27,7 +27,7 @@ export default function DarkCta() {
                     >
                         Try Mushrooms free →
                     </Link>
-                </div>
+                </div> */}
             </div>
         </section>
     );

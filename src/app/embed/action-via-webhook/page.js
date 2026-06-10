@@ -15,14 +15,14 @@ import WebhookFeatureHighlights from './WebhookFeatureHighlights';
 export const runtime = 'edge';
 
 export default async function ActionViaWebhookPage() {
-    const { navbarData, footerData, blogData, securityGridData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount } = await getEmbedPageData();
 
     return (
         <>
             <NavbarServer navbarData={navbarData} utm={'/embed/action-via-webhook'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
                 <WebhookHero />
-                <WebhookFeatureHighlights />
+                <WebhookFeatureHighlights appCount={appCount} />
                 <WebhookUseCase />
                 <WebhookSetup />
                 <EmbedPricing />

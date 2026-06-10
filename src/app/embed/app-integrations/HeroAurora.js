@@ -16,7 +16,7 @@ const APPS = [
     { name: 'Stripe', icon: 'https://thingsofbrand.com/api/icon/stripe.com' },
 ];
 
-export default function HeroAurora() {
+export default function HeroAurora({ appCount }) {
     const [activeApp, setActiveApp] = useState(APPS[0]);
     const [isFading, setIsFading] = useState(false);
     const intervalRef = useRef(null);
@@ -77,7 +77,7 @@ export default function HeroAurora() {
                             </h1>
 
                             <p className="text-base text-white/[0.72] max-w-[480px] mb-8 leading-[1.55] font-normal max-lg:mx-auto">
-                                Embed a visual workflow builder in your product. Your users link your app with 2,500+
+                                Embed a visual workflow builder in your product. Your users link your app with {appCount + 300}+
                                 others including Slack, HubSpot, and Notion. No code required.
                             </p>
 
