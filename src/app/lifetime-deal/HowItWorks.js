@@ -1,26 +1,23 @@
 import Image from 'next/image';
-import TriggerActionDiagram from '@/components/TriggerActionDiagram/TriggerActionDiagram';
-import WorkflowAutomationDiagram from '@/components/WorkflowAutomationDiagram/WorkflowAutomationDiagram';
-import ConnectToolsDiagram from '@/components/ConnectToolsDiagram/ConnectToolsDiagram';
 
 const STEPS = [
     {
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: '/assets/bg-img/1.svg',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img0_image-19.png',
     },
     {
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
-        isDiagram: 'trigger',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imga_image-20.png',
     },
     {
         num: '3.',
         title: 'Automate at scale',
         desc: 'Run approvals, AI actions, notifications, and operations automatically.',
-        isDiagram: 'workflow',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-21.png',
     },
 ];
 
@@ -43,18 +40,10 @@ export default function HowItWorks() {
                     {STEPS.map((s) => (
                         <div
                             key={s.num}
-                            className="bg-[#F5F5F5] rounded-xl border border-black/5 p-4 flex flex-col items-center text-center gap-6 h-full w-[380px]"
-                        > 
-                            <div className="flex-1 flex items-center justify-center min-h-0 mb-3 relative w-full">
-                                {s.isDiagram === 'trigger' ? (
-                                    <TriggerActionDiagram />
-                                ) : s.isDiagram === 'workflow' ? (
-                                    <WorkflowAutomationDiagram />
-                                ) : s.image === 'connect' ? (
-                                    <ConnectToolsDiagram />
-                                ) : (
-                                    <Image src={s.image} alt={s.title} fill className="object-contain h-full" />
-                                )}
+                            className="bg-[#F5F5F5] rounded-xl border border-black/5 p-5 flex flex-col items-center text-center gap-6 h-full w-[380px]"
+                        >
+                            <div className="flex-1 flex items-center justify-center min-h-[280px] max-h-[280px] mb-3 relative w-full">
+                                <Image src={s.image} alt={s.title} fill className="object-contain h-full" />
                             </div>
                             <div className="flex flex-col gap-1 shrink-0">
                                 <p className="text-[14px] font-bold">

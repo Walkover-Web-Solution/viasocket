@@ -86,9 +86,6 @@ export default function Pricing() {
         <section id="pricing" className="relative bg-[#FAFAFA] py-[110px] overflow-hidden border-t border-accent/10">
             <div className="container px-8">
                 <div className="text-center mb-13">
-                    <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-7">
-                        PRICING
-                    </div>
                     <h2 className="text-4xl sm:text-5xl lg:text-[54px] font-medium leading-[1.05] tracking-[-1.4px] mb-12">
                         Flexible pricing. <span className="text-accent">Built to scale.</span>
                     </h2>
@@ -184,24 +181,14 @@ export default function Pricing() {
 
                 <div
                     role="note"
-                    className="flex flex-col sm:flex-row items-center gap-5 max-w-[840px] mx-auto mt-10 p-6 sm:px-8 bg-white border border-black/10 rounded-[18px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_14px_38px_-16px_rgba(10,10,10,0.10)] text-center sm:text-left"
+                    className="flex flex-col sm:flex-row items-center gap-5 max-w-[800px] mx-auto mt-10 p-6 sm:px-8 bg-white border border-black/10 rounded-[18px] shadow-[0_1px_2px_rgba(0,0,0,0.02),0_14px_38px_-16px_rgba(10,10,10,0.10)] text-center sm:text-left"
                 >
                     <div
-                        className="w-13 h-13 rounded-2xl bg-green-100 flex items-center justify-center shrink-0"
+                        className="hidden sm:flex shrink-0 w-16 h-16 rounded-full border-2 border-dashed border-green-600 flex-col items-center justify-center text-green-600 leading-none"
                         aria-hidden
                     >
-                        <svg
-                            viewBox="0 0 24 24"
-                            className="w-6 h-6"
-                            fill="none"
-                            stroke="#16A34A"
-                            strokeWidth="1.9"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5z" />
-                            <polyline points="9 12 11.2 14.2 15 10.4" />
-                        </svg>
+                        <span className="text-[22px] font-medium">30</span>
+                        <span className="text-[9px] font-bold tracking-[0.16em] mt-0.5">DAYS</span>
                     </div>
                     <div className="flex-1">
                         <h3 className="text-[17px] font-bold mb-1 tracking-[-0.3px]">30-day money-back guarantee</h3>
@@ -209,13 +196,6 @@ export default function Pricing() {
                             Try viaSocket risk-free. If it’s not right for your team, email us within 30 days for a full
                             refund
                         </p>
-                    </div>
-                    <div
-                        className="hidden sm:flex shrink-0 w-16 h-16 rounded-full border-2 border-dashed border-green-600 flex-col items-center justify-center text-green-600 leading-none"
-                        aria-hidden
-                    >
-                        <span className="text-[22px] font-medium">30</span>
-                        <span className="text-[9px] font-bold tracking-[0.16em] mt-0.5">DAYS</span>
                     </div>
                 </div>
             </div>

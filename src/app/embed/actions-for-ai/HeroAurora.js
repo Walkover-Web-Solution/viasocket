@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import AgentDiagram from './AgentDiagram';
 import HeroContent from './HeroContent';
 import EmbedBreadcrumbs from '../EmbedBreadcrumbs';
@@ -9,40 +10,48 @@ const AI_AGENTS = [
     {
         name: 'Claude',
         icon: (
-            <img
+            <Image
                 src="https://stuff.thingsofbrand.com/claude.ai/images/img6_claude.png"
                 alt="Claude"
-                className="w-full h-full object-cover rounded-full"
+                fill
+                unoptimized
+                className="object-cover rounded-full p-2"
             />
         ),
     },
     {
         name: 'ChatGPT',
         icon: (
-            <img
+            <Image
                 src="https://stuff.thingsofbrand.com/openai.com/images/img6299ba7193_openai.jpg"
                 alt="ChatGPT"
-                className="w-full h-full object-cover rounded-full"
+                fill
+                unoptimized
+                className="object-cover rounded-full p-2"
             />
         ),
     },
     {
         name: 'Gemini',
         icon: (
-            <img
+            <Image
                 src="https://stuff.thingsofbrand.com/google.com/images/img6_googleaistudioicon.png"
                 alt="Gemini"
-                className="w-full h-full object-cover rounded-full"
+                fill
+                unoptimized
+                className="object-cover rounded-full p-2"
             />
         ),
     },
     {
         name: 'Copilot',
         icon: (
-            <img
+            <Image
                 src="https://stuff.thingsofbrand.com/copilot.com/images/img6788164702_copilot.jpg"
                 alt="Copilot"
-                className="w-full h-full object-cover rounded-full"
+                fill
+                unoptimized
+                className="object-cover rounded-full p-2"
             />
         ),
     },

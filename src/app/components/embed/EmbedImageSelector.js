@@ -5,26 +5,26 @@ const FEATURES = [
     {
         icon: Lock,
         iconBg: 'bg-emerald-50 text-emerald-600',
-        title: 'Emd-user auth inside your product',
-        desc: 'Users connect via QAuth without leaving you product. Secure, isolated, and seamless.',
+        title: 'Build in User Authentication',
+        desc: 'Users connect apps securely without leaving you product.',
     },
     {
         icon: Box,
         iconBg: 'bg-indigo-50 text-indigo-600',
-        title: 'Connect any app in minutes',
-        desc: 'Pre-build connectors and OAuth flows to 2500+ apps. Your AI gets them as callable toold instantly.',
+        title: '2,220+ Apps Integrations',
+        desc: 'Pre-build integrations and OAuth flows included.',
     },
     {
         icon: FileText,
         iconBg: 'bg-amber-50 text-amber-600',
-        title: 'Works with any LLM',
-        desc: 'Standard MCP spec. Drop into claude, GPT. Gemini, or your own model with one config block.',
+        title: 'Work with any AI Model',
+        desc: 'Compatible with OpenAI, Claude, Gemini, and more.',
     },
     {
         icon: Zap,
         iconBg: 'bg-violet-50 text-violet-600',
-        title: 'AI tool calling out of the box',
-        desc: 'One MCP endpoint gives your AI agent access to every connected app.',
+        title: 'AI Tool Calling',
+        desc: 'Give AI access to connected apps with one endpoint',
     },
 ];
 
@@ -33,9 +33,12 @@ const EmbedImageSelector = ({ appCount }) => {
     return (
         <div className="container">
             <div className="flex flex-col gap-6">
-                <h2 className="text-2xl md:text-4xl font-semibold text-gray-900">
-                    Everything you need to own the integration layer
-                </h2>
+                <div className="flex flex-col gap-1">
+                    <h2 className="h2">Built-In Cappabilities for AI Agents</h2>
+                    <p className="text-xl">
+                        The building blocks that enable AI agents to securely connect, decide, and take action.
+                    </p>
+                </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div className="bg-[#EFEAFE] border p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
