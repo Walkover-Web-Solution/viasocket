@@ -64,28 +64,21 @@ export default function EmbedSetupSteps() {
             <div className="border bg-white p-8 md:p-12">
                 <h2 className="h2">Set up the embed in two steps</h2>
                 <p className="sub__h1 mt-6">
-                    Generate a token, add a script, and you&apos;re ready to go. No OAuth flows or webhook
-                    infrastructure needed.
+                    Add integrations to your product in minutes - no OAuth or webhook infrastructure required.
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 01</span>
                         <h3 className="text-2xl font-medium">Generate the embed token</h3>
-                        <p className="text-gray-600 mb-4">
-                            Sign a JWT server-side with your org, project and a unique identifier. The identifier scopes
-                            the embed to each user.
-                        </p>
+                        <p className="text-gray-600 mb-4">Generate a secure token for each user.</p>
                         <CodeBlock code={jwtPayload} label="JSON PAYLOAD" />
                     </div>
 
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 02</span>
                         <h3 className="text-2xl font-medium">Add the embed script</h3>
-                        <p className="text-gray-600 mb-4">
-                            Paste a single script tag into your frontend with the generated token. The embed renders
-                            inside your application.
-                        </p>
+                        <p className="text-gray-600 mb-4">Generate a secure token for each user.</p>
                         <CodeBlock code={embedScript} label="HTML" />
                     </div>
                 </div>

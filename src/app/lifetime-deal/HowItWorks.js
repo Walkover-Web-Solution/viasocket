@@ -1,24 +1,23 @@
 import Image from 'next/image';
-import TriggerActionDiagram from '@/components/TriggerActionDiagram/TriggerActionDiagram';
 
 const STEPS = [
     {
         num: '1.',
         title: 'Connect your tools',
         desc: 'Connect Slack, Gmail, Notion, HubSpot, Stripe, and thousands more.',
-        image: '/assets/bg-img/1.svg',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img0_image-19.png',
     },
     {
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
-        isDiagram: true,
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imga_image-20.png',
     },
     {
         num: '3.',
         title: 'Automate at scale',
         desc: 'Run approvals, AI actions, notifications, and operations automatically.',
-        image: '/assets/bg-img/3.svg',
+        image: 'https://stuff.thingsofbrand.com/viasocket.com/images/imge_image-21.png',
     },
 ];
 
@@ -30,35 +29,29 @@ export default function HowItWorks() {
                     <div className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         HOW IT WORKS
                     </div>
-                    <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-extrabold leading-[1.1] tracking-[-1.3px]">
+                    <h2 className="text-3xl sm:text-4xl lg:text-[48px] font-medium leading-[1.1] tracking-[-1.3px]">
                         From manual work to automated workflows
                         <br />
                         <span className="text-accent mt-2 inline-block">in minutes.</span>
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 w-full justify-items-center gap-6 lg:gap-20">
                     {STEPS.map((s) => (
-                        <div key={s.num} className="flex flex-col items-center text-center justify-between">
-                            <div className="w-full relative aspect-[16/10]">
-                                {s.isDiagram ? (
-                                    <TriggerActionDiagram />
-                                ) : (
-                                    <Image
-                                        src={s.image}
-                                        alt={s.title}
-                                        fill
-                                        className="object-contain"
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                    />
-                                )}
+                        <div
+                            key={s.num}
+                            className="bg-[#F5F5F5] rounded-xl border border-black/5 p-5 flex flex-col items-center text-center gap-6 h-full w-[380px]"
+                        >
+                            <div className="flex-1 flex items-center justify-center min-h-[280px] max-h-[280px] mb-3 relative w-full">
+                                <Image src={s.image} alt={s.title} fill className="object-contain h-full" />
                             </div>
-                            <h3 className="flex flex-col gap-1">
-                                <h3 className="text-lg font-bold">
-                                    {s.num} {s.title}
-                                </h3>
-                                <p className="text-xs text-gray-500 leading-[1.55] max-w-[300px]">{s.desc}</p>
-                            </h3>
+                            <div className="flex flex-col gap-1 shrink-0">
+                                <p className="text-[14px] font-bold">
+                                    <span className="text-accent">{s.num}</span>{' '}
+                                    <span className="text-gray-900">{s.title}</span>
+                                </p>
+                                <p className="text-[12px] text-gray-500 leading-[1.5] max-w-[240px]">{s.desc}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

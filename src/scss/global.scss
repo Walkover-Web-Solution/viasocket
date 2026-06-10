@@ -256,6 +256,24 @@
     border-color: var(--border-color) !important;
 }
 
+@keyframes ltd-marquee-left {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes ltd-marquee-right {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+}
+
+.ltd-marquee-left {
+    animation: ltd-marquee-left 40s linear infinite;
+}
+
+.ltd-marquee-right {
+    animation: ltd-marquee-right 40s linear infinite;
+}
+
 .reviews-marquee-fade {
     height: 48px;
     z-index: 2;

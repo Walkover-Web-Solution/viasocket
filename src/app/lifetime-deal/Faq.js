@@ -36,7 +36,7 @@ export default function Faq() {
                     <div className="inline-block text-[#a8200d] text-[11px] font-bold tracking-[0.16em] uppercase mb-[22px]">
                         FAQs
                     </div>
-                    <h2 className="text-[34px] md:text-[42px] lg:text-[52px] font-extrabold leading-[1.1] tracking-[-0.6px] md:tracking-[-1px] lg:tracking-[-1.3px] text-[#111] mb-7">
+                    <h2 className="text-[34px] md:text-[42px] lg:text-[52px] font-medium leading-[1.1] tracking-[-0.6px] md:tracking-[-1px] lg:tracking-[-1.3px] text-[#111] mb-7">
                         Questions buyers ask before they <span className="text-[#a8200d]">commit.</span>
                     </h2>
 

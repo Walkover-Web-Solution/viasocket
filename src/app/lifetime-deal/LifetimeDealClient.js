@@ -14,10 +14,10 @@ export default function LifetimeDealClient({ reviewData = [], appCount = 0 }) {
     return (
         <div className="font-sans text-gray-900 bg-white">
             <Hero />
+            <Comparison />
             <HowItWorks />
             <AIWorkflows />
             <Integrations />
-            <Comparison />
             <Pricing />
             <Unlock />
             <Testimonials reviewData={reviewData} />
