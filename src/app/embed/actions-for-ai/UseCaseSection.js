@@ -2,8 +2,8 @@ import styles from '../action-via-webhook/WebhookUseCase.module.css';
 
 export default function UseCaseSection() {
     return (
-        <section id="use-case" className="bg-white border p-6 md:py-12 md:px-20 container">
-            <div className="grid md:grid-cols-[1fr_1.05fr] grid-cols-1 gap-14 md:gap-20 items-start">
+        <section id="use-case" className="container">
+            <div className="grid md:grid-cols-[1fr_1.05fr] grid-cols-1 gap-14 md:gap-20 items-start bg-white border p-6 md:py-12 md:px-20">
                 {/* Left */}
                 <div>
                     <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">
