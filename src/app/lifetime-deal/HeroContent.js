@@ -31,20 +31,18 @@ export default function HeroContent() {
                 Pay <span className="text-accent">once</span>. Automate <span className="text-accent">forever</span>.
             </h1>
 
-            <p className="text-[17px] md:text-[18px] text-gray-500 leading-[1.65] max-w-[620px] m-0 mb-9">
+            <p className="text-[17px] md:text-[18px] leading-[1.65] max-w-[620px] m-0 mb-6">
                 One payment for viaSocket &mdash; instead of{' '}
-                <strong className="text-gray-900 font-bold">$840+ every single year</strong> to other automation tools
+                <strong className="font-semibold">$840+ every single year</strong> to other automation tools
                 <br />
-                15,000 tasks &middot; 5,000 AI credits &middot; 2,200+ integrations included.
+                <span className="font-semibold mt-3 block">
+                    15,000 tasks &middot; 5,000 AI credits &middot; 2,200+ integrations included.
+                </span>
             </p>
 
             <div className="flex items-center gap-6 flex-wrap mb-8">
                 <Link href="#pricing" className="btn btn-accent" rel="nofollow noopener noreferrer">
-                    <span>Get Lifetime Access</span>
-                    <span className="hidden sm:inline text-[13px] font-semibold opacity-90">from $390</span>
-                    <span aria-hidden className="text-lg leading-none">
-                        &rarr;
-                    </span>
+                    Get Lifetime Access
                 </Link>
             </div>
 
