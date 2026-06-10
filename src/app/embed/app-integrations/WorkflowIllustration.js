@@ -39,9 +39,9 @@ export default function WorkflowIllustration() {
                         style={{ background: 'linear-gradient(180deg, #f0fdf4 0%, #fff 100%)' }}
                     >
                         <Image
-                            src="/assets/brand/socket.png"
+                            src="/assets/brand/socketIcon.svg"
                             alt="viaSocket"
-                            width={96}
+                            width={24}
                             height={24}
                             className="h-6 w-auto object-contain"
                         />

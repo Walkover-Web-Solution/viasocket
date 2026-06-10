@@ -78,97 +78,66 @@ export default function Unlock() {
                     ))}
                 </div>
 
-                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-8">
-                    <div className="flex flex-col sm:flex-row items-center gap-6">
-                        <div className="flex flex-shrink-0">
-                            {[
-                                'https://cdn.simpleicons.org/g2/FF492C',
-                                'https://gdm-localsites-assets-gfprod.imgix.net/images/capterra/og_logo-e5a8c001ed0bd1bb922639230fcea71a.png?auto=format%2Cenhance%2Ccompress',
-                            ].map((src, i) => (
-                                <div
-                                    key={src}
-                                    className="w-12 border h-12 rounded-full overflow-hidden bg-white relative flex items-center justify-center p-1.5"
-                                    style={{ marginLeft: i === 0 ? 0 : -14 }}
-                                >
-                                    <Image
-                                        src={src}
-                                        alt=""
-                                        width={48}
-                                        height={48}
-                                        className="w-full h-full object-contain block"
-                                    />
-                                </div>
-                            ))}
-                        </div>
-                        <div className="flex flex-col gap-1.5 text-center sm:text-left">
-                            <div className="flex items-center gap-3 justify-center sm:justify-start">
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
-                                    G2
-                                    <span className="inline-flex items-center">
-                                        {[1,2,3,4].map((s) => (
-                                            <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                            </svg>
-                                        ))}
-                                        <span className="relative inline-block w-3 h-3">
-                                            <svg className="w-3 h-3 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                            </svg>
-                                            <span className="absolute top-0 left-0 h-full overflow-hidden" style={{ width: '60%' }}>
-                                                <svg className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                </svg>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
-                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5">
-                                    Capterra
-                                    <span className="inline-flex items-center">
-                                        {[1,2,3,4].map((s) => (
-                                            <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                            </svg>
-                                        ))}
-                                        <span className="relative inline-block w-3 h-3">
-                                            <svg className="w-3 h-3 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                            </svg>
-                                            <span className="absolute top-0 left-0 h-full overflow-hidden" style={{ width: '80%' }}>
-                                                <svg className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                                                </svg>
-                                            </span>
-                                        </span>
-                                    </span>
-                                </span>
+                <div className="flex flex-col items-center gap-4">
+                    <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4] text-center">
+                        Trusted by 2,000+ growing teams
+                    </p>
+                    <div className="flex items-center justify-center gap-4 flex-wrap">
+                        {/* G2 */}
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-11 h-11 rounded-full bg-white border border-gray-100 flex items-center justify-center shadow-sm p-2">
+                                <Image
+                                    src="https://cdn.simpleicons.org/g2/FF492C"
+                                    alt="G2"
+                                    width={44}
+                                    height={44}
+                                    className="w-full h-full object-contain"
+                                />
                             </div>
-                            <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4]">
-                                Trusted by 2,000+ growing teams
-                            </p>
-                            {/* <div className="flex gap-2 mt-1.5 flex-wrap justify-center sm:justify-start">
-                                {['Reliable', 'Scalable', 'AI-powered'].map((t) => (
-                                    <span
-                                        key={t}
-                                        className="inline-flex items-center px-3 py-1 rounded-full bg-white text-[11.5px] font-semibold text-black/75 border border-black/5"
-                                    >
-                                        {t}
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5 shadow-sm">
+                                G2
+                                <span className="inline-flex items-center">
+                                    {[1,2,3,4].map((s) => (
+                                        <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                        </svg>
+                                    ))}
+                                    <span className="relative inline-block w-3 h-3">
+                                        <svg className="w-3 h-3 text-gray-200" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                        </svg>
+                                        <span className="absolute top-0 left-0 h-full overflow-hidden" style={{ width: '50%' }}>
+                                            <svg className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                            </svg>
+                                        </span>
                                     </span>
-                                ))}
-                            </div> */}
+                                </span>
+                            </span>
+                        </div>
+                        {/* Capterra */}
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-11 h-11 rounded-full bg-white border border-gray-100 flex items-center justify-center shadow-sm p-2">
+                                <Image
+                                    src="https://gdm-localsites-assets-gfprod.imgix.net/images/capterra/og_logo-e5a8c001ed0bd1bb922639230fcea71a.png?auto=format%2Cenhance%2Ccompress"
+                                    alt="Capterra"
+                                    width={44}
+                                    height={44}
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5 shadow-sm">
+                                Capterra
+                                <span className="inline-flex items-center">
+                                    {[1,2,3,4,5].map((s) => (
+                                        <svg key={s} className="w-3 h-3 text-[#FFB800]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                                        </svg>
+                                    ))}
+                                </span>
+                            </span>
                         </div>
                     </div>
-                    {/* <button
-                        type="button"
-                        aria-label="Choose a plan"
-                        className="btn btn-accent"
-                    >
-                        Choose a plan
-                        <svg viewBox="0 0 24 24" className="w-4 h-4 transition-transform duration-[220ms] group-hover:translate-x-[3px] motion-reduce:transition-none motion-reduce:group-hover:translate-x-0" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                            <line x1="5" y1="12" x2="19" y2="12" />
-                            <polyline points="13 6, 19 12, 13 18" />
-                        </svg>
-                    </button> */}
                 </div>
             </div>
         </section>

@@ -38,9 +38,8 @@ export default function ShowBadges() {
     return (
         <div className="container py-20">
             <div className="flex flex-col items-center gap-4 mb-14 text-center">
-                <h2 className="text-4xl md:text-5xl font-semibold text-gray-900 leading-tight max-w-3xl">
+                <h2 className="h2">
                     Trusted by Thousands.
-                    <br />
                     <span className="text-accent">Recognized</span> by the Best.
                 </h2>
                 <p className="text-gray-600 text-lg max-w-2xl">
@@ -67,7 +66,6 @@ export default function ShowBadges() {
                     </Link>
                 ))}
             </div>
-
         </div>
     );
 }

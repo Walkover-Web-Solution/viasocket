@@ -78,6 +78,7 @@ export default function RelatedEmbeds({
                                 href={item.href}
                                 className="group relative overflow-hidden no-underline text-white rounded-lg min-h-[150px] md:min-h-[180px] px-[30px] md:px-[42px] py-7 md:py-[38px] flex flex-col justify-between gap-[18px] transition-[transform,filter,box-shadow] duration-[250ms] ease hover:-translate-y-[3px] hover:brightness-[1.15] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)]"
                                 style={{ background: tint.background }}
+                                target="_blank"
                             >
                                 <span
                                     className="absolute w-[520px] h-[520px] rounded-full -bottom-[280px] -right-[180px] pointer-events-none"
@@ -99,7 +100,6 @@ export default function RelatedEmbeds({
                     })}
                 </div>
             </div>
-
         </section>
     );
 }

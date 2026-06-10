@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import TriggerActionDiagram from '@/components/TriggerActionDiagram/TriggerActionDiagram';
+import WorkflowAutomationDiagram from '@/components/WorkflowAutomationDiagram/WorkflowAutomationDiagram';
+import ConnectToolsDiagram from '@/components/ConnectToolsDiagram/ConnectToolsDiagram';
 
 const STEPS = [
     {
@@ -12,13 +14,13 @@ const STEPS = [
         num: '2.',
         title: 'Add the action apps',
         desc: 'Select the destination apps where you want the data to flow. Add as many steps as you need.',
-        isDiagram: true,
+        isDiagram: 'trigger',
     },
     {
         num: '3.',
         title: 'Automate at scale',
         desc: 'Run approvals, AI actions, notifications, and operations automatically.',
-        image: '/assets/bg-img/3.svg',
+        isDiagram: 'workflow',
     },
 ];
 
@@ -37,28 +39,30 @@ export default function HowItWorks() {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-3 w-full justify-items-center gap-6 lg:gap-20">
                     {STEPS.map((s) => (
-                        <div key={s.num} className="flex flex-col items-center text-center justify-between">
-                            <div className="w-full relative aspect-[16/10]">
-                                {s.isDiagram ? (
+                        <div
+                            key={s.num}
+                            className="bg-[#F5F5F5] rounded-xl border border-black/5 p-4 flex flex-col items-center text-center gap-6 h-full w-[380px]"
+                        > 
+                            <div className="flex-1 flex items-center justify-center min-h-0 mb-3 relative w-full">
+                                {s.isDiagram === 'trigger' ? (
                                     <TriggerActionDiagram />
+                                ) : s.isDiagram === 'workflow' ? (
+                                    <WorkflowAutomationDiagram />
+                                ) : s.image === 'connect' ? (
+                                    <ConnectToolsDiagram />
                                 ) : (
-                                    <Image
-                                        src={s.image}
-                                        alt={s.title}
-                                        fill
-                                        className="object-contain"
-                                        sizes="(max-width: 768px) 100vw, 400px"
-                                    />
+                                    <Image src={s.image} alt={s.title} fill className="object-contain h-full" />
                                 )}
                             </div>
-                            <h3 className="flex flex-col gap-1">
-                                <h3 className="text-lg font-bold">
-                                    {s.num} {s.title}
-                                </h3>
-                                <p className="text-xs text-gray-500 leading-[1.55] max-w-[300px]">{s.desc}</p>
-                            </h3>
+                            <div className="flex flex-col gap-1 shrink-0">
+                                <p className="text-[14px] font-bold">
+                                    <span className="text-accent">{s.num}</span>{' '}
+                                    <span className="text-gray-900">{s.title}</span>
+                                </p>
+                                <p className="text-[12px] text-gray-500 leading-[1.5] max-w-[240px]">{s.desc}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
