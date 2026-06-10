@@ -2,18 +2,19 @@ import Image from 'next/image';
 
 const COMPETITORS = [
     {
-        name: 'Zapier Team',
-        brand: 'zapier',
-        plan: '10,000 tasks/month',
-        logo: 'zapier.com',
+        name: 'Zapier - Team',
+        plan: '10,000 tasks / month',
         price: '$6,084',
     },
     {
-        name: 'n8n Cloud Pro',
-        brand: 'n8n',
-        plan: '10,000 executions/month',
-        logo: 'n8n.io',
-        price: '$1800',
+        name: 'n8n Cloud - Pro',
+        plan: '10,000 executions / month',
+        price: '$1,800',
+    },
+    {
+        name: 'Gumloop - Pro',
+        plan: '10,000 credits / month',
+        price: '$1,332',
     },
 ];
 
@@ -42,19 +43,25 @@ export default function Comparison() {
                                 height={22}
                                 className="h-[22px] w-auto"
                                 style={{ filter: 'invert(1) brightness(1.7)' }}
-                            />{' '}
-                            <span className="text-white">viaSocket</span>
+                            />
+                            <span className="text-white text-[13px] font-semibold tracking-wide">SOCKET</span>
                         </div>
                         <div className="text-[26px] font-medium text-white tracking-[-0.7px] mb-2">
                             Team Plan Lifetime
                         </div>
                         <div className="text-[13.5px] text-white/60 mb-5">Pay once. Use forever.</div>
                         <div className="h-px bg-white/15 mb-5" />
-                        <div className="text-6xl font-medium text-[#D71C1C] tracking-[-3px] leading-none mb-1">
-                            $799
+                        <div className="flex items-baseline gap-2 mb-5">
+                            <span className="text-[56px] font-medium text-green-500 tracking-[-3px] leading-none">
+                                $799
+                            </span>
+                            <span className="text-[13px] text-white/60">/ one-time · no renewals</span>
                         </div>
-                        <div className="text-[13px] text-white/60">15,000 tasks/month</div>
-                        <div className="text-[13px] text-white/60">one-time · no renewals</div>
+                        <div className="text-[13px] text-white/60 space-y-1">
+                            <div>15,000 tasks/month</div>
+                            <div>2,200+ integrations</div>
+                            <div>Unlimited team members</div>
+                        </div>
                         <div className="mt-auto pt-5 flex justify-end">
                             <a
                                 href="#pricing"
@@ -76,31 +83,32 @@ export default function Comparison() {
                         </div>
                     </div>
 
-                    {/* Right competitor cards */}
-                    <div className="bg-white rounded-[22px] border border-black/5 p-7 shadow-[0_1px_3px_rgba(0,0,0,0.03),0_12px_40px_-12px_rgba(0,0,0,0.07)] flex flex-col">
-                        <div className="text-xl font-bold tracking-[-0.4px] mb-1">
-                            Other automation tools keep charging you.
+                    {/* Right side */}
+                    <div className="flex flex-col justify-center gap-3.5">
+                        <div className="text-lg text-gray-900">
+                            Other automation tools keep charging you — billed annually, every year:
                         </div>
-                        <div className="text-[13.5px] text-gray-500 mb-5">
-                            Comparable plans &mdash; billed annually, every year.
-                        </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 flex-1">
-                            {COMPETITORS.map((c) => (
-                                <div
-                                    key={c.name}
-                                    className="bg-gray-100 rounded-[14px] border border-black/5 p-5 flex flex-col transition-all duration-300 hover:-translate-y-1 hover:bg-gray-200"
-                                >
-                                    <span className="text-[13px] font-semibold text-gray-500 mb-4 block">{c.brand}</span>
-                                    <div className="text-[15.5px] font-bold tracking-[-0.3px] mb-1">{c.name}</div>
-                                    <div className="text-xs text-gray-500">{c.plan}</div>
-                                    <div className="h-px bg-black/5 mt-4 mb-3.5" />
-                                    <span className="text-[26px] font-medium tracking-[-0.8px] block">{c.price}</span>
-                                    <div className="mt-1 text-[11px] font-semibold tracking-wider uppercase text-gray-500">
-                                        {c.priceLabel || '3-year cost'}
+                        {COMPETITORS.map((c) => (
+                            <div
+                                key={c.name}
+                                className="bg-[#E5E5E5] rounded-[14px] p-5 flex items-center justify-between transition-all duration-300 hover:-translate-y-0.5"
+                            >
+                                <div>
+                                    <div className="text-lg font-bold tracking-[-0.3px] text-gray-900 mb-1">
+                                        {c.name}
+                                    </div>
+                                    <div className="text-sm text-gray-500">{c.plan}</div>
+                                </div>
+                                <div className="text-right">
+                                    <span className="text-2xl font-medium tracking-[-0.8px] block text-gray-900">
+                                        {c.price}
+                                    </span>
+                                    <div className="mt-1 text-xs font-semibold tracking-wider uppercase text-gray-500">
+                                        3-year cost
                                     </div>
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

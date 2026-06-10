@@ -30,7 +30,7 @@ export default function HowFlowBecomesAiTool() {
             <div className="border border-gray-200 p-8 md:p-12">
                 <div className="text-center mb-10">
                     <div className="text-xs font-semibold tracking-[0.2em] text-rose-600 mb-3">HOW IT WORKS</div>
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900">How a flow becomes an AI tool</h2>
+                    <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-2">
