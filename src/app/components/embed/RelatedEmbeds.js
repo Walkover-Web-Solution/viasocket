@@ -35,8 +35,8 @@ export default function RelatedEmbeds({
 }) {
     const items = ALL_ITEMS.filter((item) => item.slug !== currentPage);
     return (
-        <section className="w-full container bg-white p-6">
-            <div className="max-w-[1180px] mx-auto p-6">
+        <section className="container">
+            <div className="max-w-[1180px] mx-auto p-6 bg-white">
                 <div className="mb-10 text-center">
                     <h3 className="text-[26px] md:text-[34px] font-medium text-[#0a0a0a] tracking-[-0.7px] mb-2 leading-[1.2]">
                         {heading}

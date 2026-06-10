@@ -26,8 +26,8 @@ const AppIcon = ({ src, alt, bg = 'bg-white' }) => (
 
 export default function HowFlowBecomesAiTool() {
     return (
-        <section className="container bg-white">
-            <div className="border border-gray-200 p-8 md:p-12">
+        <section className="container">
+            <div className="border border-gray-200 p-8 md:p-12 bg-white">
                 <div className="text-center mb-10">
                     <div className="text-xs font-semibold tracking-[0.2em] text-rose-600 mb-3">HOW IT WORKS</div>
                     <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
