@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import EmbedBreadcrumbs from '../EmbedBreadcrumbs';
+import '@/components/WebhookAnimations/WebhookAnimations.module.scss';
 
 const events = [
     {
@@ -305,24 +306,6 @@ export default function WebhookHero() {
                     </div>
                 </div>
 
-                <style>{`
-                @keyframes blobFloat1 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    50% { transform: translate(30px, 20px) scale(1.05); }
-                }
-                @keyframes blobFloat2 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    50% { transform: translate(-20px, 30px) scale(1.08); }
-                }
-                @keyframes blobFloat3 {
-                    0%, 100% { transform: translate(0, 0) scale(1); }
-                    50% { transform: translate(20px, -20px) scale(1.06); }
-                }
-                @keyframes whDot {
-                    0%, 100% { opacity: 0.3; transform: scale(0.8); }
-                    50% { opacity: 1; transform: scale(1); }
-                }
-            `}</style>
             </section>
         </>
     );

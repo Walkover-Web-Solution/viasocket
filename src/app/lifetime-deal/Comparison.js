@@ -22,9 +22,7 @@ export default function Comparison() {
     return (
         <section id="comparison" className="relative bg-[#EFF3F8] py-[120px] overflow-hidden border-t border-black/5">
             <div className="container px-10">
-                <span className="block text-center text-[11px] font-bold tracking-[0.2em] uppercase text-accent mb-[22px]">
-                    THE MATH IS THE PITCH
-                </span>
+                
                 <h2 className="text-3xl sm:text-5xl lg:text-[58px] font-medium tracking-[-2px] leading-[1.06] text-center mb-4">
                     Why keep paying every year?
                 </h2>
@@ -35,7 +33,7 @@ export default function Comparison() {
                 <div className="grid grid-cols-1 lg:grid-cols-[40%_60%] gap-6 items-stretch max-w-[540px] lg:max-w-none mx-auto">
                     {/* Left dark card */}
                     <div className="bg-[#111] rounded-[22px] border border-white/10 p-7 pb-6 flex flex-col group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5)] hover:border-white/20">
-                        <div className="flex items-center gap-2.5 mb-7">
+                        <div className="flex items-center gap-2.5 mb-5">
                             <Image
                                 src="/assets/brand/socketIcon.svg"
                                 alt="viaSocket"
@@ -53,19 +51,19 @@ export default function Comparison() {
                         <div className="h-px bg-white/15 mb-5" />
                         <div className="flex items-baseline gap-2 mb-5">
                             <span className="text-[56px] font-medium text-green-500 tracking-[-3px] leading-none">
-                                $799
+                                $790
                             </span>
                             <span className="text-[13px] text-white/60">/ one-time · no renewals</span>
                         </div>
-                        <div className="text-[13px] text-white/60 space-y-1">
-                            <div>15,000 tasks/month</div>
-                            <div>2,200+ integrations</div>
-                            <div>Unlimited team members</div>
-                        </div>
-                        <div className="mt-auto pt-5 flex justify-end">
+                        <div className="flex items-end justify-between">
+                            <div className="text-[13px] text-white/60 space-y-1">
+                                <div>15,000 tasks/month</div>
+                                <div>2,200+ integrations</div>
+                                <div>Unlimited team members</div>
+                            </div>
                             <a
                                 href="#pricing"
-                                className="w-10 h-10 rounded-full border border-white/25 bg-transparent group-hover:bg-accent group-hover:border-accent flex items-center justify-center"
+                                className="w-10 h-10 rounded-full border border-white/25 bg-transparent group-hover:bg-accent group-hover:border-accent flex items-center justify-center shrink-0"
                                 aria-label="See pricing"
                             >
                                 <svg
@@ -84,7 +82,7 @@ export default function Comparison() {
                     </div>
 
                     {/* Right side */}
-                    <div className="flex flex-col justify-center gap-3.5">
+                    <div className="flex flex-col justify-center gap-3.5 max-w-2xl">
                         <div className="text-lg text-gray-900">
                             Other automation tools keep charging you — billed annually, every year:
                         </div>

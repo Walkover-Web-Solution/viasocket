@@ -91,9 +91,9 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">Configure your flow</h3>
+                            <h3 className="font-bold text-gray-900 mb-1">Build Your workflow</h3>
                             <p className="text-sm text-gray-600">
-                                Design the automation using your favourite apps and actions.
+                                Connect apps and define the actions you want to automate.{' '}
                             </p>
                         </div>
                     </div>
@@ -130,7 +130,7 @@ export default function HowFlowBecomesAiTool() {
                         <div className="mt-5">
                             <h3 className="font-bold text-gray-900 mb-1">viaSocket turns it into a tool</h3>
                             <p className="text-sm text-gray-600">
-                                We handle auth, schema, and orchestration and expose it as one AI tool.
+                                We handle authentication, schemas, and orchestration behind the scenes.
                             </p>
                         </div>
                     </div>
@@ -171,7 +171,7 @@ export default function HowFlowBecomesAiTool() {
                         <div className="mt-5">
                             <h3 className="font-bold text-gray-900 mb-1">Call it from your AI</h3>
                             <p className="text-sm text-gray-600">
-                                Your AI calls one simple tool to run the entire workflow
+                                Your AI calls one tool and the entire workflow runs automatically.
                             </p>
                         </div>
                     </div>

@@ -1,19 +1,5 @@
 import Link from 'next/link';
-
-const ArrowIcon = () => (
-    <svg
-        width="14"
-        height="14"
-        viewBox="0 0 14 14"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.8"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-    >
-        <path d="M4 10L10 4M5 4h5v5" />
-    </svg>
-);
+import { Sparkles, Webhook, Puzzle, ArrowUpRight } from 'lucide-react';
 
 const ALL_ITEMS = [
     {
@@ -21,38 +7,26 @@ const ALL_ITEMS = [
         href: '/embed/actions-for-ai',
         title: 'Actions for AI',
         description: 'Turn your product into an AI-ready platform.',
-        tint: 'purple',
+        bg: 'bg-gradient-to-br from-[#1a0b3d] to-[#2d0f5e]',
+        icon: Sparkles,
     },
     {
         slug: 'action-via-webhook',
         href: '/embed/action-via-webhook',
         title: 'Actions via Webhook',
         description: 'Need server-to-server automation?',
-        tint: 'blue',
+        bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
+        icon: Webhook,
     },
     {
         slug: 'app-integrations',
         href: '/embed/app-integrations',
         title: 'App Integration',
         description: 'Want to make your SaaS AI-ready?',
-        tint: 'teal',
+        bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
+        icon: Puzzle,
     },
 ];
-
-const TINTS = {
-    blue: {
-        background: 'linear-gradient(135deg, #0c1d3d 0%, #0a1632 60%, #08122a 100%)',
-        glow: 'rgba(59, 130, 246, 0.3)',
-    },
-    teal: {
-        background: 'linear-gradient(135deg, #0a2418 0%, #08291d 60%, #072719 100%)',
-        glow: 'rgba(34, 197, 94, 0.24)',
-    },
-    purple: {
-        background: 'linear-gradient(135deg, #1e1038 0%, #1a0d2e 60%, #160927 100%)',
-        glow: 'rgba(168, 85, 247, 0.3)',
-    },
-};
 
 export default function RelatedEmbeds({
     heading = 'Building something different?',
@@ -71,30 +45,24 @@ export default function RelatedEmbeds({
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     {items.map((item) => {
-                        const tint = TINTS[item.tint] || TINTS.blue;
+                        const Icon = item.icon;
                         return (
                             <Link
                                 key={item.href}
                                 href={item.href}
-                                className="group relative overflow-hidden no-underline text-white rounded-lg min-h-[150px] md:min-h-[180px] px-[30px] md:px-[42px] py-7 md:py-[38px] flex flex-col justify-between gap-[18px] transition-[transform,filter,box-shadow] duration-[250ms] ease hover:-translate-y-[3px] hover:brightness-[1.15] hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)]"
-                                style={{ background: tint.background }}
+                                className={`${item.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg no-underline transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_40px_rgba(0,0,0,0.25)] overflow-hidden`}
                                 target="_blank"
                             >
-                                <span
-                                    className="absolute w-[520px] h-[520px] rounded-full -bottom-[280px] -right-[180px] pointer-events-none"
-                                    style={{
-                                        background: `radial-gradient(circle, ${tint.glow} 0%, transparent 60%)`,
-                                    }}
-                                />
-                                <span className="absolute top-[30px] right-[30px] md:top-[38px] md:right-[38px] w-[42px] h-[42px] rounded-full border-[1.5px] border-white/55 bg-transparent flex items-center justify-center text-white/90 transition-all duration-200 z-[2] group-hover:bg-white group-hover:text-[#0a0a0a] group-hover:border-white group-hover:translate-x-[3px] group-hover:-translate-y-[3px]">
-                                    <ArrowIcon />
-                                </span>
-                                <h4 className="relative z-[1] m-0 text-2xl md:text-[30px] font-semibold text-white leading-[1.2] tracking-[-0.6px] pr-[54px] md:pr-16">
-                                    {item.title}
-                                </h4>
-                                <p className="relative z-[1] m-0 text-[15px] text-white/70 leading-[1.5] font-normal">
-                                    {item.description}
-                                </p>
+                                <div className="w-14 h-14 rounded-xl bg-white/10 flex items-center justify-center shrink-0">
+                                    <Icon size={26} className="text-white" />
+                                </div>
+                                <div className="flex flex-col gap-1 flex-1">
+                                    <h4 className="text-2xl font-semibold text-white">{item.title}</h4>
+                                    <p className="text-base text-white/70">{item.description}</p>
+                                </div>
+                                <div className="absolute top-6 right-6 transition-all bg-white p-2 rounded-full duration-300 transform translate-x-2 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 text-[#0a0a0a]">
+                                    <ArrowUpRight size={20} />
+                                </div>
                             </Link>
                         );
                     })}

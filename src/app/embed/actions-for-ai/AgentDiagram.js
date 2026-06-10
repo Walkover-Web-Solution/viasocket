@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 const APP_ICONS = [
     'https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg',
     'https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png',
@@ -20,7 +22,25 @@ const LINE_PATHS = [
 
 const HUB_OUT_LEFTS = ['left-0', 'left-[108px]', 'left-[216px]', 'left-[324px]', 'left-[432px]', 'left-[540px]'];
 
+function shuffleArray(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+}
+
 export default function AgentDiagram({ agent }) {
+    const [icons, setIcons] = useState(APP_ICONS);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setIcons((prev) => shuffleArray(prev));
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div className="relative hidden lg:flex items-center justify-center">
             <div className="relative w-full max-w-[600px] h-[380px]" aria-hidden="true">
@@ -34,7 +54,7 @@ export default function AgentDiagram({ agent }) {
                         y1="60"
                         x2="300"
                         y2="160"
-                        stroke="rgba(255,255,255,0.18)"
+                        stroke="rgba(255,255,255,0.55)"
                         strokeWidth="1.5"
                         strokeDasharray="4 5"
                         fill="none"
@@ -44,7 +64,7 @@ export default function AgentDiagram({ agent }) {
                         y1="60"
                         x2="300"
                         y2="160"
-                        stroke="rgba(255,255,255,0.85)"
+                        stroke="rgba(255,255,255,1)"
                         strokeWidth="1.8"
                         strokeDasharray="8 200"
                         fill="none"
@@ -54,14 +74,14 @@ export default function AgentDiagram({ agent }) {
                         <g key={d}>
                             <path
                                 d={d}
-                                stroke="rgba(255,255,255,0.18)"
+                                stroke="rgba(255,255,255,0.55)"
                                 strokeWidth="1.5"
                                 strokeDasharray="4 5"
                                 fill="none"
                             />
                             <path
                                 d={d}
-                                stroke="rgba(255,255,255,0.85)"
+                                stroke="rgba(255,255,255,1)"
                                 strokeWidth="1.8"
                                 strokeDasharray="8 200"
                                 fill="none"
@@ -100,13 +120,13 @@ export default function AgentDiagram({ agent }) {
                     </svg>
                 </div>
 
-                {APP_ICONS.map((src, i) => (
+                {icons.map((src, i) => (
                     <div
                         key={i}
                         className={`absolute top-[322px] ${HUB_OUT_LEFTS[i]} w-14 h-14 flex items-center justify-center rounded-[10px] bg-white shadow-[0_6px_18px_rgba(0,0,0,0.35)]`}
                     >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={src} alt="" className="w-8 h-8 object-contain" />
+                        <img src={src} alt="" className="w-8 h-8 object-contain" loading="eager" />
                     </div>
                 ))}
             </div>
