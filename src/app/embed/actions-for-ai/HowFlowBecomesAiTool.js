@@ -6,7 +6,7 @@ const StepLabel = ({ children }) => (
 
 const StepCard = ({ children }) => (
     <div className="flex-1 w-full">
-        <div className="bg-white border border-gray-200 rounded-md p-6 min-h-[220px] flex items-center justify-center">
+        <div className="bg-white border border-gray-200 rounded-md p-6 h-full flex items-center justify-center">
             {children}
         </div>
     </div>
@@ -91,7 +91,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">Build Your workflow</h3>
+                            <h3 className="font-medium text-lg">Build Your workflow</h3>
                             <p className="text-sm text-gray-600">
                                 Connect apps and define the actions you want to automate.{' '}
                             </p>
@@ -128,7 +128,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">viaSocket turns it into a tool</h3>
+                            <h3 className="font-medium text-lg">viaSocket turns it into a tool</h3>
                             <p className="text-sm text-gray-600">
                                 We handle authentication, schemas, and orchestration behind the scenes.
                             </p>
@@ -169,7 +169,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">Call it from your AI</h3>
+                            <h3 className="font-medium text-lg">Call it from your AI</h3>
                             <p className="text-sm text-gray-600">
                                 Your AI calls one tool and the entire workflow runs automatically.
                             </p>

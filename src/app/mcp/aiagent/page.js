@@ -127,14 +127,12 @@ export default async function MCPAiAgentPage() {
             <div className="container">
                 <BlogGrid posts={blogData} />
             </div>
-            <div>
+            <>
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
-            </div>
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
+            </>
         </div>
     );
 }

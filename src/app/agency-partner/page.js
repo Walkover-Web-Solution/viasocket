@@ -63,11 +63,9 @@ export default async function AgencyPartnerPage() {
                 </div>
             )}
 
-            <div className="container pt-12">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

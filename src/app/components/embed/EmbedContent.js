@@ -40,9 +40,7 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                     <GetStarted />
                 </div>
 
-                <div className="container">
-                    <Footer footerData={footerData} />
-                </div>
+                <Footer footerData={footerData} />
             </div>
         </div>
     );

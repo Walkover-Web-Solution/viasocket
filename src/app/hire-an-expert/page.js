@@ -46,12 +46,9 @@ export default async function HireAnExpertPage() {
             <div className="global-top-space bg-[#faf9f4]">
                 <HireExpertClient />
             </div>
-
-            <div className="container pb-4">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

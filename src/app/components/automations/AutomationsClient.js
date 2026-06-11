@@ -285,9 +285,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                     {pageData.faqData?.length > 0 && (
                         <FaqSection faqData={pageData.faqData} faqName={'/automations'} />
                     )}
-                    <div className="container">
-                        <Footer footerData={pageData.footerData} />
-                    </div>
+                    <Footer footerData={pageData.footerData} />
                 </div>
             </div>
         </div>

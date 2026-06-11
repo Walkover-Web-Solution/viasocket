@@ -77,11 +77,11 @@ export default async function SupportPage() {
 
             <SupportClient testimonials={testimonials} isLiveSupportAvailable={isLiveSupportAvailable} />
 
-            <div className="container py-16">
+
                 <ConditionalFooter>
                     <Footer footerData={footerData} />
                 </ConditionalFooter>
-            </div>
+    
         </>
     );
 }

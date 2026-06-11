@@ -119,11 +119,10 @@ export default async function PricingPage() {
                     </div>
                 </div>
                 {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
+
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );
