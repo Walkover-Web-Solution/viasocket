@@ -29,11 +29,9 @@ export default async function AutomationSlugPage({ params }) {
                 {pageData.faqData?.length > 0 && (
                     <FaqSection faqData={pageData.faqData} faqName={'/automation'} />
                 )}
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={pageData.footerData} />
-                    </ConditionalFooter>
-                </div>
+                <ConditionalFooter>
+                    <Footer footerData={pageData.footerData} />
+                </ConditionalFooter>
             </div>
         </div>
     );

@@ -145,11 +145,9 @@ export default async function FreeAccessProgramsPage() {
                         })}
                 </div>
             </div>
-            <div className="container pt-16 pb-4">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

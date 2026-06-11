@@ -90,11 +90,9 @@ export default async function HomePage() {
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
 
                 <SecuritySection securityGridData={securityGridData} />
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

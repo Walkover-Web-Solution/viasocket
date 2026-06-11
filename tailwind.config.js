@@ -26,6 +26,14 @@ module.exports = {
                 'dot-bounce': 'dotBounce 1.4s ease-in-out infinite',
                 'pulse-dot': 'pulseDot 1.6s ease-in-out infinite',
                 'marquee-scroll': 'marqueeScroll 38s linear infinite',
+                fadeSlideIn: 'fadeSlideIn 0.35s ease forwards',
+                flowDecisionDots: 'flowDecisionDots 10s ease-in-out infinite',
+                flowDecisionText: 'flowDecisionText 10s ease-in-out infinite',
+                flowCheckmark: 'flowCheckmark 10s ease-in-out infinite',
+                flowExecutedDots: 'flowExecutedDots 10s ease-in-out infinite',
+                flowAction1: 'flowAction1 10s ease-in-out infinite',
+                flowAction2: 'flowAction2 10s ease-in-out infinite',
+                flowAction3: 'flowAction3 10s ease-in-out infinite',
             },
             keyframes: {
                 shimmer: {
@@ -47,6 +55,38 @@ module.exports = {
                 pulseDot: {
                     '0%, 100%': { boxShadow: '0 0 0 0 rgba(34,197,94,0.6)' },
                     '50%': { boxShadow: '0 0 0 6px rgba(34,197,94,0)' },
+                },
+                fadeSlideIn: {
+                    from: { opacity: '0', transform: 'translateY(6px)' },
+                    to: { opacity: '1', transform: 'translateY(0)' },
+                },
+                flowDecisionDots: {
+                    '0%, 22%': { opacity: '1' },
+                    '26%, 100%': { opacity: '0' },
+                },
+                flowDecisionText: {
+                    '0%, 24%': { opacity: '0', transform: 'translateY(4px)' },
+                    '28%, 100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                flowCheckmark: {
+                    '0%, 30%': { opacity: '0', transform: 'scale(0.8)' },
+                    '34%, 100%': { opacity: '1', transform: 'scale(1)' },
+                },
+                flowExecutedDots: {
+                    '0%, 50%': { opacity: '1' },
+                    '54%, 100%': { opacity: '0' },
+                },
+                flowAction1: {
+                    '0%, 52%': { opacity: '0', transform: 'translateY(6px)' },
+                    '56%, 100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                flowAction2: {
+                    '0%, 56%': { opacity: '0', transform: 'translateY(6px)' },
+                    '60%, 100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                flowAction3: {
+                    '0%, 60%': { opacity: '0', transform: 'translateY(6px)' },
+                    '64%, 100%': { opacity: '1', transform: 'translateY(0)' },
                 },
             },
         },

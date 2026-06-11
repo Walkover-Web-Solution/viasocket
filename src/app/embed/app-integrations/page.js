@@ -1,4 +1,5 @@
 import NavbarServer from '../../components/navbar/NavbarServer';
+import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getEmbedPageData } from '../../lib/data';
 import Footer from '@/components/footer/footer';
 import ShowBadges from '@/app/components/home/ShowBadges';
@@ -15,11 +16,33 @@ import DarkCta from '@/app/embed/app-integrations/DarkCta';
 
 export const runtime = 'edge';
 
+export async function generateMetadata() {
+    const { metaData } = await getEmbedPageData();
+
+    return {
+        title: metaData?.title || 'App Integrations | Embedded iPaaS for SaaS | viaSocket Embed',
+        description: metaData?.description || ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
+        keywords: metaData?.keywords || '',
+        openGraph: {
+            title: metaData?.title || 'App Integrations | Embedded iPaaS for SaaS | viaSocket Embed',
+            description: metaData?.description || ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
+            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: metaData?.title,
+            description: metaData?.description,
+            images: metaData?.image ? [metaData.image] : undefined,
+        },
+    };
+}
+
 export default async function AppIntegrationsPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData();
 
     return (
         <>
+            <MetaHeadComp metaData={metaData} page={'/embed/app-integrations'} />
             <NavbarServer navbarData={navbarData} utm={'/embed/app-integrations'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
                 <HeroAurora appCount={appCount} />

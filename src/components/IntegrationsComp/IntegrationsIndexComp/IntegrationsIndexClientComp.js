@@ -307,7 +307,7 @@ export default function IntegrationsIndexClientComp({
                 )}
             </div>
 
-            <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName}/>
+            <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName} />
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
@@ -317,11 +317,10 @@ export default function IntegrationsIndexClientComp({
                 <div className="container cont">
                     <AlphabeticalComponent />
                 </div>
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
+
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );
