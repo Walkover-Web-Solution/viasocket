@@ -5,15 +5,15 @@ const StepLabel = ({ children }) => (
 );
 
 const StepCard = ({ children }) => (
-    <div className="flex-1 w-full">
-        <div className="bg-white border border-gray-200 rounded-md p-6 h-full flex items-center justify-center">
+    <div className="flex-1 w-full flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-md p-6 flex items-center justify-center min-h-[260px] max-h-[260px]">
             {children}
         </div>
     </div>
 );
 
 const Arrow = () => (
-    <div className="hidden md:flex items-center justify-center px-2 text-gray-400">
+    <div className="hidden lg:flex items-center justify-center px-2 text-gray-400">
         <ArrowRight size={24} />
     </div>
 );
@@ -33,12 +33,12 @@ export default function HowFlowBecomesAiTool() {
                     <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-2">
+                <div className="flex flex-col lg:flex-row items-stretch gap-6 md:gap-2">
                     {/* Step 1 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 01</StepLabel>
                         <StepCard>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
                                 {[
                                     {
                                         icon: (
@@ -101,7 +101,7 @@ export default function HowFlowBecomesAiTool() {
                     <Arrow />
 
                     {/* Step 2 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 02</StepLabel>
                         <StepCard>
                             <div className="w-full">
@@ -117,7 +117,7 @@ export default function HowFlowBecomesAiTool() {
                                     </span>
                                     <span className="text-sm font-mono text-gray-800">create_new_customer</span>
                                 </div>
-                                <pre className="text-xs font-mono text-gray-700 bg-transparent leading-relaxed">
+                                <pre className="text-xs font-mono text-gray-700 bg-transparent leading-relaxed overflow-x-auto whitespace-pre-wrap break-words">
                                     {`{
   "name": "string",
   "email": "string",
@@ -138,7 +138,7 @@ export default function HowFlowBecomesAiTool() {
                     <Arrow />
 
                     {/* Step 3 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 03</StepLabel>
                         <StepCard>
                             <div className="w-full space-y-3">
@@ -150,11 +150,11 @@ export default function HowFlowBecomesAiTool() {
                                         <span className="text-white text-sm">✦</span>
                                     </div>
                                     <div className="flex-1 bg-white border border-gray-200 rounded-md p-3">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <span className="text-xs text-gray-700">
+                                        <div className="flex items-center justify-between gap-2 mb-2">
+                                            <span className="text-xs text-gray-700 break-words">
                                                 Calling tool: <span className="font-mono">create_new_customer</span>
                                             </span>
-                                            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
+                                            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
                                                 <Check size={10} className="text-white" strokeWidth={3} />
                                             </div>
                                         </div>
