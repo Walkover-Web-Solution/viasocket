@@ -15,7 +15,7 @@ export default function HeroContent({ appCount }) {
                 <span className="text-gray-700 font-medium text-sm">Get 6 months for the price of 1</span>
                 <ChevronRight size={14} className="text-gray-500" />
             </Link>
-            <h1 className="h1 !text-white mb-2">Give your AI Agents Real hands</h1>
+            <h1 className="h1 !text-white mb-2">Give your AI Agents the Power to Act</h1>
 
             <p className="text-xl leading-[1.55] text-white/80 mb-8 max-w-[460px]">
                 Connect your agent to {appCount + 300}+ apps and let it take action across your tools.
