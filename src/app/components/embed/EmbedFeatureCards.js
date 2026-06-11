@@ -26,7 +26,7 @@ const CARDS = [
 
 export default function EmbedFeatureCards() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {CARDS.map((card, i) => {
                 const Icon = card.icon;
                 return (
