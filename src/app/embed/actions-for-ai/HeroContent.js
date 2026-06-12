@@ -18,7 +18,7 @@ export default function HeroContent({ appCount }) {
             <h1 className="h1 !text-white mb-2">Give your AI Agents the Power to Act</h1>
 
             <p className="text-xl leading-[1.55] text-white/80 mb-8 max-w-[460px]">
-                Connect your agent to {appCount + 300}+ apps and let it take action across your tools.
+                Your users connect {appCount + 300}+ apps, <br /> callable by your AI as tools or MCP servers
             </p>
 
             <div className="flex items-center gap-6">

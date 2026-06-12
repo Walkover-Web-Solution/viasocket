@@ -2,17 +2,14 @@ export default function EmbedSetup() {
     return (
         <div className="container">
             <div className="max-w-[680px] mb-10">
-                <h2 className="h2 mb-2">
-                    Set up the embed in two steps
-                </h2>
+                <h2 className="h2 mb-2">Set up the embed in two steps</h2>
                 <p className="text-[15px] text-[#6b7280] leading-[1.7] font-normal">
-                    Sign a JWT on your server, then drop a single script tag with a launch button into your frontend. No
-                    OAuth boilerplate to wire, no UI to build.
+                    Create a user token and add one script tag. Your users can start connecting apps in minuts
                 </p>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-[#f9fafb] border border-[#e5e7eb] pt-8 px-8 flex flex-col gap-2 overflow-hidden">
+                <div className="bg-[#f9fafb] border border-[#e5e7eb] pt-8 px-8 flex flex-col overflow-hidden">
                     <span className="text-[11px] font-bold tracking-[1.4px] uppercase text-[#2563eb] leading-none mb-2">
                         Step 01
                     </span>
@@ -20,8 +17,7 @@ export default function EmbedSetup() {
                         Generate the embed token
                     </h3>
                     <p className="text-sm text-[#6b7280] leading-[1.65] font-normal mb-7 max-w-[500px]">
-                        Sign a JWT server-side with your org, project and the user&apos;s ID. The user ID scopes the
-                        embed to that one person — their connections, their flows, their data.
+                        Generate a secure token for each user.
                     </p>
                     <div className="bg-[#0d0d14] flex flex-col -mx-8 min-h-[375px] max-h-[375px]">
                         <pre className="font-mono text-[13px] leading-[1.85] text-[#e5e7eb] flex-1 overflow-x-auto m-0 py-[22px] px-7 whitespace-pre">
@@ -53,7 +49,7 @@ export default function EmbedSetup() {
                     </div>
                 </div>
 
-                <div className="bg-[#f9fafb] border border-[#e5e7eb] pt-8 px-8 flex flex-col gap-2 overflow-hidden">
+                <div className="bg-[#f9fafb] border border-[#e5e7eb] pt-8 px-8 flex flex-col overflow-hidden">
                     <span className="text-[11px] font-bold tracking-[1.4px] uppercase text-[#2563eb] leading-none mb-2">
                         Step 02
                     </span>
@@ -61,8 +57,7 @@ export default function EmbedSetup() {
                         Add the embed script
                     </h3>
                     <p className="text-sm text-[#6b7280] leading-[1.65] font-normal mb-7 max-w-[500px]">
-                        Paste the script tag and a launch button anywhere in your frontend. The embed opens as a modal,
-                        slider, or full-screen — your choice.
+                        Add the script to your application and launch the embed anywhere in your UI.
                     </p>
                     <div className="bg-[#0d0d14] flex flex-col -mx-8 max-h-[375px]">
                         <pre className="font-mono text-[13px] leading-[1.85] text-[#e5e7eb] flex-1 overflow-x-auto m-0 py-[22px] px-7 whitespace-pre">

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Sparkles, Webhook, Puzzle } from 'lucide-react';
+import { Sparkles, Webhook, Puzzle, ArrowUpRight } from 'lucide-react';
 
 const ALL_ITEMS = [
     {
@@ -64,6 +64,9 @@ export default function RelatedEmbeds({
                                 <h3 className="text-2xl font-semibold">{item.title}</h3>
                                 <p className="text-base text-white/70">{item.description}</p>
                             </div>
+                            <span className="absolute top-4 right-4 w-8 h-8 p-2 rounded-full bg-white text-gray-900 flex items-center justify-center opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-200">
+                                <ArrowUpRight size={16} strokeWidth={2.2} />
+                            </span>
                         </Link>
                     );
                 })}

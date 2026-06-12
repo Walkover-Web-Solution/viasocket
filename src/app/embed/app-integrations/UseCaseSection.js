@@ -10,17 +10,17 @@ export default function UseCaseSection({ appCount }) {
                     <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">
                         See it in action
                     </div>
-                    <h2 className="text-[32px] font-medium tracking-[-0.6px] leading-[1.2] text-[#111827] mb-3">
-                        User opens. User builds. User ships.
+                    <h2 className="text-[32px] font-medium tracking-[-0.6px] leading-[1.2] mb-3">
+                        User opens. Uset Connects Uset Automations.
                     </h2>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
-                        Other platforms ship you a wrapper around their own product. With App Integration, your users{' '}
-                        <strong>build workflows inside your UI</strong> — using
-                        your app as a first-class trigger and action.
+                    <p className="text-[14.5px] leading-[1.75] mb-[18px] font-normal">
+                        Embed a complete integrations and automation experience into your product. Users can connect
+                        their apps and build workflows <strong>without ever leaving your platform.</strong> <br />
+                        No redirects. No separate tools. No integration work for your team.
                     </p>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
-                        Here's a real flow. A user inside your CRM wants to automate post-deal-won. They click "Add
-                        Workflow", pick a trigger, drop two actions — done in under a minute, never left your product.
+                    <p className="text-[14.5px] leading-[1.75] mb-[18px] font-normal">
+                        In this example. a CRM user creates a workflow that triggers when a deal is won, sends an email
+                        via Gmail, and posts an update to Slack.
                     </p>
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/app-integration"

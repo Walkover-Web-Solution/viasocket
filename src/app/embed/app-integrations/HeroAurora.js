@@ -34,11 +34,10 @@ export default function HeroAurora({ appCount }) {
                                 </span>
                                 <ArrowRight size={14} strokeWidth={2.2} />
                             </Link>
-                            <h1 className="h1 !text-white">Make your app work with {appCount + 300}+ apps</h1>
+                            <h1 className="h1 !text-white">Integrate {appCount + 300}+ apps with your product</h1>
 
                             <p className="text-xl text-white/[0.72] max-w-[480px] mb-8 leading-[1.55] font-normal max-lg:mx-auto">
-                                Embed the workflow builder that turns your app into a trigger, action, and automation
-                                hub.
+                                Give users the ability to connect the tools they use with your product and automate it.
                             </p>
                             <div className="flex gap-6 items-center">
                                 <Link

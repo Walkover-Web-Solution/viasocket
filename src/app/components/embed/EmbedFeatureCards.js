@@ -1,4 +1,5 @@
-import { Sparkles, Webhook, Puzzle } from 'lucide-react';
+import Link from 'next/link';
+import { Sparkles, Webhook, Puzzle, ArrowUpRight } from 'lucide-react';
 
 const CARDS = [
     {
@@ -7,6 +8,7 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#1a0b3d] to-[#2d0f5e]',
         iconBg: 'bg-white/10 text-white',
         icon: Sparkles,
+        href: '/embed/actions-for-ai',
     },
     {
         title: 'Actions via Webhook',
@@ -14,6 +16,7 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
         iconBg: 'bg-white/10 text-white',
         icon: Webhook,
+        href: '/embed/actions-via-webhook',
     },
     {
         title: 'App Integrations',
@@ -21,6 +24,7 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
         iconBg: 'bg-white/10 text-white',
         icon: Puzzle,
+        href: '/embed/app-integrations',
     },
 ];
 
@@ -30,9 +34,10 @@ export default function EmbedFeatureCards() {
             {CARDS.map((card, i) => {
                 const Icon = card.icon;
                 return (
-                    <div
+                    <Link
                         key={i}
-                        className={`${card.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg`}
+                        href={card.href}
+                        className={`${card.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg overflow-hidden`}
                     >
                         <div
                             className={`w-14 h-14 rounded-xl ${card.iconBg} flex items-center justify-center shrink-0`}
@@ -43,7 +48,10 @@ export default function EmbedFeatureCards() {
                             <h3 className="text-2xl font-semibold">{card.title}</h3>
                             <p className="text-base text-white/70">{card.desc}</p>
                         </div>
-                    </div>
+                        <span className="absolute top-4 right-4 w-8 h-8 p-2 rounded-full bg-white text-gray-900 flex items-center justify-center opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-200">
+                            <ArrowUpRight size={16} strokeWidth={2.2} />
+                        </span>
+                    </Link>
                 );
             })}
         </div>

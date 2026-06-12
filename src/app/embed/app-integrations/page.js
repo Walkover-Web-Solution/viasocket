@@ -13,6 +13,7 @@ import EmbedSetup from '@/app/embed/app-integrations/EmbedSetup';
 import ComparisonTable from '@/app/embed/app-integrations/ComparisonTable';
 import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import DarkCta from '@/app/embed/app-integrations/DarkCta';
+import HowAppIntegrationBecomes from './HowAppIntegrationBecomes';
 
 export const runtime = 'edge';
 
@@ -50,6 +51,7 @@ export default async function AppIntegrationsPage() {
                 <UseCaseSection appCount={appCount} />
                 <EmbedSetup />
                 <ComparisonTable />
+                <HowAppIntegrationBecomes />
                 <EmbedPricing />
                 <DarkCta />
                 <RelatedEmbeds currentPage="app-integrations" />

@@ -12,6 +12,7 @@ import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import DarkCta from '../actions-for-ai/DarkCta';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import WebhookFeatureHighlights from './WebhookFeatureHighlights';
+import HowWebhookBecomes from './HowWebhookBecomes';
 
 export const runtime = 'edge';
 
@@ -54,6 +55,7 @@ export default async function ActionViaWebhookPage() {
                 <WebhookFeatureHighlights appCount={appCount} />
                 <WebhookUseCase />
                 <WebhookSetup />
+                <HowWebhookBecomes />
                 <EmbedPricing />
                 <DarkCta />
                 <RelatedEmbeds currentPage="actions-via-webhook" />
