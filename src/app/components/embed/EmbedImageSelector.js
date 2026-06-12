@@ -34,7 +34,7 @@ const EmbedImageSelector = ({ appCount }) => {
         <div className="container">
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
-                    <h2 className="h2">Built-In Cappabilities for AI Agents</h2>
+                    <h2 className="h2">Built-In Capabilities for AI Agents</h2>
                     <p className="text-xl">
                         The building blocks that enable AI agents to securely connect, decide, and take action.
                     </p>

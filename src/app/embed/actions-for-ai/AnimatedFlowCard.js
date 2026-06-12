@@ -29,7 +29,7 @@ const actionAnimationClasses = [
 
 export default function AnimatedFlowCard() {
   return (
-    <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm divide-y divide-gray-100">
+    <div className="border rounded-xl overflow-hidden shadow-sm divide-y divide-gray-100 bg-white">
       {/* INPUT */}
       <div className="px-6 py-5">
         <p className="text-[10px] font-semibold tracking-widest uppercase text-gray-400 mb-2">Input</p>
