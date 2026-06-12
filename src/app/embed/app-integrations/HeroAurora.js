@@ -1,39 +1,10 @@
-'use client';
-
-import { useEffect, useRef, useState } from 'react';
 import EmbedBreadcrumbs from '../EmbedBreadcrumbs';
 import './HeroAurora.scss';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
-import Image from 'next/image';
+import { ArrowRight, Gift } from 'lucide-react';
 import WorkflowIllustration from './WorkflowIllustration';
 
-const APPS = [
-    { name: 'Gmail', icon: 'https://thingsofbrand.com/api/icon/gmail.com' },
-    { name: 'Slack', icon: 'https://thingsofbrand.com/api/icon/slack.com' },
-    { name: 'HubSpot', icon: 'https://thingsofbrand.com/api/icon/hubspot.com' },
-    { name: 'Notion', icon: 'https://thingsofbrand.com/api/icon/notion.com' },
-    { name: 'Stripe', icon: 'https://thingsofbrand.com/api/icon/stripe.com' },
-];
-
 export default function HeroAurora({ appCount }) {
-    const [activeApp, setActiveApp] = useState(APPS[0]);
-    const [isFading, setIsFading] = useState(false);
-    const intervalRef = useRef(null);
-
-    useEffect(() => {
-        let idx = 0;
-        intervalRef.current = setInterval(() => {
-            setIsFading(true);
-            setTimeout(() => {
-                idx = (idx + 1) % APPS.length;
-                setActiveApp(APPS[idx]);
-                setIsFading(false);
-            }, 250);
-        }, 3000);
-        return () => clearInterval(intervalRef.current);
-    }, []);
-
     return (
         <>
             <section className="container relative max-md:px-6 max-sm:px-4">
@@ -50,44 +21,40 @@ export default function HeroAurora({ appCount }) {
                     <div className="absolute rounded-full blur-[100px] pointer-events-none w-[520px] h-[520px] bg-[#063826] left-[40%] -bottom-[18%] opacity-18 max-md:blur-[60px]" />
                     <div className="aurora-grid-bg" />
 
-                    <div className="relative z-[2] w-full grid grid-cols-2 gap-12 items-center max-lg:grid-cols-1 max-lg:gap-16 p-6 md:p-12">
+                    <div className="relative z-[2] w-full grid grid-cols-1 items-center md:grid-cols-[3fr_2fr] gap-12 p-12 lg:p-20">
                         <div className="flex flex-col items-start text-left max-lg:items-center max-lg:text-center">
-                            <h1 className="h1 !text-white">
-                                <span className="flex flex-wrap items-center gap-[14px] max-md:gap-2">
-                                    Let users connect
-                                </span>
-                                <span className="flex flex-wrap items-center gap-[14px] max-md:gap-2">
-                                    <span>your app to</span>
-                                    <span
-                                        className={`inline-flex items-center gap-[10px] bg-white px-[22px] py-[6px] pl-[10px] shadow-[0_8px_28px_rgba(0,0,0,.32)] font-sans text-[40px] font-bold tracking-[-1.5px] text-[#0a0a0a] leading-[1.1] justify-start transition-opacity duration-[250ms] ease-[ease] rounded-[10px] min-w-[240px] max-md:text-[26px] max-md:min-w-[180px] max-md:px-[14px] max-md:py-1 max-md:pl-[6px] max-md:gap-2 ${isFading ? 'opacity-0' : 'opacity-100'}`}
-                                    >
-                                        <span className="w-[42px] h-[42px] flex items-center justify-center shrink-0 rounded-md overflow-hidden bg-[#f8fafc] max-md:w-[34px] max-md:h-[34px]">
-                                            <Image
-                                                src={activeApp.icon}
-                                                alt={activeApp.name}
-                                                width={30}
-                                                height={30}
-                                                className="w-[30px] h-[30px] object-contain max-md:w-[22px] max-md:h-[22px]"
-                                                unoptimized
-                                            />
-                                        </span>
-                                        <span>{activeApp.name}</span>
-                                    </span>
-                                </span>
-                            </h1>
-
-                            <p className="text-base text-white/[0.72] max-w-[480px] mb-8 leading-[1.55] font-normal max-lg:mx-auto">
-                                Embed a visual workflow builder in your product. Your users link your app with {appCount + 300}+
-                                others including Slack, HubSpot, and Notion. No code required.
-                            </p>
-
                             <Link
-                                href="https://viasocket.com/signup?utm_source=/embed/app-integration"
-                                className="btn btn-outline"
+                                href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                                className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-sm px-4 py-1.5 mb-4 text-sm border border-white/20 shadow-sm hover:bg-white hover:shadow-md transition-all"
                             >
-                                Get Started
+                                <Gift size={16} className="text-accent" />
+                                <span className="font-medium text-accent tracking-wide">LIMITED-TIME OFFER</span>
+                                <span className="text-gray-700 font-medium text-sm">
+                                    Get 6 months for the price of 1
+                                </span>
                                 <ArrowRight size={14} strokeWidth={2.2} />
                             </Link>
+                            <h1 className="h1 !text-white">Make your app work with {appCount + 300}+ apps</h1>
+
+                            <p className="text-xl text-white/[0.72] max-w-[480px] mb-8 leading-[1.55] font-normal max-lg:mx-auto">
+                                Embed the workflow builder that turns your app into a trigger, action, and automation
+                                hub.
+                            </p>
+                            <div className="flex gap-6 items-center">
+                                <Link
+                                    href="https://viasocket.com/signup?utm_source=/embed/app-integration"
+                                    className="btn btn-outline"
+                                >
+                                    Get Started
+                                    <ArrowRight size={14} strokeWidth={2.2} />
+                                </Link>
+                                <Link
+                                    href="https://cal.id/team/viasocket/sales-team"
+                                    className="text-white/80 hover:text-white underline text-lg"
+                                >
+                                    Contact Sales
+                                </Link>
+                            </div>
                         </div>
 
                         <WorkflowIllustration />

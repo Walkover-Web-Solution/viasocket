@@ -47,16 +47,16 @@ export default async function ActionViaWebhookPage() {
 
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/embed/action-via-webhook'} />
-            <NavbarServer navbarData={navbarData} utm={'/embed/action-via-webhook'} />
+            <MetaHeadComp metaData={metaData} page={'/embed/actions-via-webhook'} />
+            <NavbarServer navbarData={navbarData} utm={'/embed/actions-via-webhook'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
-                <WebhookHero />
+                <WebhookHero appCount={appCount} />
                 <WebhookFeatureHighlights appCount={appCount} />
                 <WebhookUseCase />
                 <WebhookSetup />
                 <EmbedPricing />
                 <DarkCta />
-                <RelatedEmbeds currentPage="action-via-webhook" />
+                <RelatedEmbeds currentPage="actions-via-webhook" />
 
                 <ShowBadges />
                 <SecuritySection securityGridData={securityGridData} />

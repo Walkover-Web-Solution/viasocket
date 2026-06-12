@@ -2,55 +2,49 @@
 
 import { Star, Phone, Mail, User, MessageSquare, Check, Lock, TrendingUp, Code2, Package } from 'lucide-react';
 
-const FEATURES = [
-    {
-        icon: Lock,
-        iconBg: 'bg-green-100 text-green-600',
-        title: 'Per-user isolation',
-        desc: "Each webhook URL is scoped to a single users connected apps. Your POST to user A never touches user B's data.",
-    },
-    {
-        icon: TrendingUp,
-        iconBg: 'bg-blue-100 text-blue-600',
-        title: 'Reliable delivery with retries',
-        desc: 'Automatic retries with exponential backoff ensure every event reaches its destination, even when downstream apps are slow.',
-    },
-    {
-        icon: Code2,
-        iconBg: 'bg-amber-100 text-amber-600',
-        title: 'Work with any backend or language',
-        desc: 'A plain HTTP POST, use cURL Python, Node.js, Go or any language that can make HTTP requests.',
-    },
-    {
-        icon: Package,
-        iconBg: 'bg-purple-100 text-purple-600',
-        title: 'Connect any app in minutes',
-        desc: 'Pre-build connectors to 2500+ apps. Your webhook payload maps to any action across every connected app.',
-    },
-];
-
 export default function WebhookFeatureHighlights({ appCount }) {
-    const features = FEATURES.map((f) =>
-        f.title === 'Connect any app in minutes'
-            ? { ...f, desc: `Pre-build connectors to ${appCount + 300}+ apps. Your webhook payload maps to any action across every connected app.` }
-            : f
-    );
-
+    const features = [
+        {
+            icon: Lock,
+            iconBg: 'bg-green-100 text-green-600',
+            title: 'User-Level Data Isolation',
+            desc: 'Each webhook is scoped to a single users connected apps and data.',
+        },
+        {
+            icon: TrendingUp,
+            iconBg: 'bg-blue-100 text-blue-600',
+            title: 'Reliable Event Delivery',
+            desc: 'Automatic retries ensure events reach their destination, even during temporary failures.',
+        },
+        {
+            icon: Code2,
+            iconBg: 'bg-amber-100 text-amber-600',
+            title: 'Work with Any Stack',
+            desc: 'Send HTTP requests from any backend, language, or framework',
+        },
+        {
+            icon: Package,
+            iconBg: 'bg-purple-100 text-purple-600',
+            title: `${appCount + 300}+ Connected Apps`,
+            desc: 'Sent one webhook and trigger actions across thousands of apps',
+        },
+    ];
     return (
         <div className="container flex flex-col gap-6">
-            <h2 className="h2">Everything you need to trigger app actions from your server</h2>
+            <div className="flex flex-col gap-1">
+                <h2 className="h2">Built-In Capabilities for Webhook Actions</h2>
+                <p className="text-2xl">
+                    The infrastructure that turns applications events into actions across you users connected apps.
+                </p>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="bg-[#eff6ff] border border-[#dbeafe] p-8 flex flex-col gap-3">
-                    <span className="inline-flex items-center gap-1.5 bg-white border border-[#bfdbfe] text-[#1d4ed8] text-xs font-medium py-1 px-3 rounded-full w-fit">
-                        <Star size={13} className="text-[#0d9488]" />
-                        Our Differentiator
-                    </span>
                     <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                        One webhook call. Unlimited automations.
+                        One webhook call. Endless Possibilities.
                     </h3>
                     <p className="text-gray-600 text-lg leading-relaxed">
-                        POST a single event and viaSocket fans it out across every automation your user has configured.{' '}
-                        <br /> across any app, any step count.
+                        Send a single event and trigger actions across your users
+                        <br /> connected apps automatically.
                     </p>
                     <div className="flex items-center gap-4 mt-auto">
                         <div className="relative">

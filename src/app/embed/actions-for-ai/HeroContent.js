@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowRight, Gift, ChevronRight } from 'lucide-react';
+import { ArrowRight, Gift } from 'lucide-react';
 import Link from 'next/link';
 
 export default function HeroContent({ appCount }) {
@@ -13,7 +13,7 @@ export default function HeroContent({ appCount }) {
                 <Gift size={16} className="text-accent" />
                 <span className="font-medium text-accent tracking-wide">LIMITED-TIME OFFER</span>
                 <span className="text-gray-700 font-medium text-sm">Get 6 months for the price of 1</span>
-                <ChevronRight size={14} className="text-gray-500" />
+                <ArrowRight size={14} strokeWidth={2.2} />
             </Link>
             <h1 className="h1 !text-white mb-2">Give your AI Agents the Power to Act</h1>
 

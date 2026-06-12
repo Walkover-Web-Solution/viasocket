@@ -12,8 +12,8 @@ const ALL_ITEMS = [
         icon: Sparkles,
     },
     {
-        slug: 'action-via-webhook',
-        href: '/embed/action-via-webhook',
+        slug: 'actions-via-webhook',
+        href: '/embed/actions-via-webhook',
         title: 'Actions via Webhook',
         description: 'Trigger workflows instantly from webhook events and automate backend processes.',
         bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
