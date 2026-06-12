@@ -155,18 +155,12 @@ export default function WebhookHero({ appCount }) {
     }, [cycle]);
 
     const scenario = scenarios[index % scenarios.length];
-    const event = events[index];
 
     return (
         <>
             <section className="pt-3 mx-auto bg-transparent relative container max-[768px]:px-6 max-[480px]:px-4">
                 <EmbedBreadcrumbs currentPage="Action via Webhook" />
-                <div className="relative flex items-center justify-center overflow-hidden bg-[radial-gradient(ellipse_at_85%_60%,#0f3a3a_0%,#071e2e_30%,#050f1f_60%,#030a14_100%)] border border-white/10">
-                    {/* Aurora blobs */}
-                    <div className="absolute rounded-full blur-[100px] pointer-events-none w-[620px] h-[620px] bg-[#0a4a4a] -left-[8%] -top-[10%] opacity-55 animate-[blobFloat1_8s_ease-in-out_infinite] max-[768px]:blur-[60px]" />
-                    <div className="absolute rounded-full blur-[100px] pointer-events-none w-[540px] h-[540px] bg-[#0d6e6e] -right-[6%] top-[30%] opacity-45 animate-[blobFloat2_10s_ease-in-out_infinite] max-[768px]:blur-[60px]" />
-                    <div className="absolute rounded-full blur-[100px] pointer-events-none w-[520px] h-[520px] bg-[#0a3d5c] left-[40%] -bottom-[18%] opacity-40 animate-[blobFloat3_12s_ease-in-out_infinite] max-[768px]:blur-[60px]" />
-
+                <div className="relative flex items-center justify-center overflow-hidden bg-[#0A1A38] border border-white/10">
                     {/* Grid overlay */}
                     <div
                         className="absolute inset-0 pointer-events-none"

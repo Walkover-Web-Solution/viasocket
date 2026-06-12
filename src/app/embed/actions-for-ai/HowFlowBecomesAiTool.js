@@ -38,7 +38,7 @@ export default function HowFlowBecomesAiTool() {
                     <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 01</StepLabel>
                         <StepCard>
-                            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-4">
+                            <div className="flex flex-wrap items-start justify-center gap-3 md:gap-4">
                                 {[
                                     {
                                         icon: (
@@ -47,7 +47,6 @@ export default function HowFlowBecomesAiTool() {
                                             </div>
                                         ),
                                         title: 'Trigger',
-                                        sub: 'New form submission',
                                     },
                                     {
                                         icon: (
@@ -57,7 +56,6 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Create contact',
-                                        sub: 'in HubSpot',
                                     },
                                     {
                                         icon: (
@@ -67,7 +65,6 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Send welcome',
-                                        sub: 'email',
                                     },
                                     {
                                         icon: (
@@ -77,10 +74,9 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Notify team',
-                                        sub: 'on Slack',
                                     },
                                 ].map((item, i) => (
-                                    <div key={i} className="flex flex-col items-center text-center w-[72px]">
+                                    <div key={i} className="flex flex-col items-center text-center w-[72px] gap-2">
                                         {item.icon}
                                         <div className="text-[11px] font-semibold text-gray-800 mt-2 leading-tight">
                                             {item.title}

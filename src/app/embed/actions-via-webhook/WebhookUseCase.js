@@ -13,7 +13,7 @@ export default function WebhookUseCase() {
                         See it in action
                     </div>
                     <h2 className="h2">Event in. Actions out.</h2>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                    <p className="text-sm leading-[1.75] mb-[18px] font-normal">
                         Other platforms require custom integrations for every action. With Actions via Webhook,{' '}
                         <strong>
                             a sigle event from your application can trigger workflow across your users connected apps.
@@ -23,7 +23,7 @@ export default function WebhookUseCase() {
                         In this example. a user completes onboarding. One event creates a HubSpot deal, sends a welcome
                         email, and notigies the team in Slack.
                     </p>
-                    <p className="text-[14.5px] text-gray-500 leading-[1.75] mb-[18px] font-normal">
+                    <p className="text-sm leading-[1.75] mb-[18px] font-normal">
                         Here's a real flow. A new customer just completed onboarding. Watch your server POST one event
                         and viaSocket execute three app actions in under two seconds.
                     </p>
