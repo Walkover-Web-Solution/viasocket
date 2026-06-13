@@ -6,13 +6,13 @@ import ShowBadges from '@/app/components/home/ShowBadges';
 import SecuritySection from '@/app/components/SecuritySection';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
-import HeroAurora from '@/app/embed/app-integrations/HeroAurora';
-import WhyFeatures from '@/app/embed/app-integrations/WhyFeatures';
-import UseCaseSection from '@/app/embed/app-integrations/UseCaseSection';
-import EmbedSetup from '@/app/embed/app-integrations/EmbedSetup';
-import ComparisonTable from '@/app/embed/app-integrations/ComparisonTable';
+import HeroAurora from '@/app/embed/app-integration/HeroAurora';
+import WhyFeatures from '@/app/embed/app-integration/WhyFeatures';
+import UseCaseSection from '@/app/embed/app-integration/UseCaseSection';
+import EmbedSetup from '@/app/embed/app-integration/EmbedSetup';
+import ComparisonTable from '@/app/embed/app-integration/ComparisonTable';
 import EmbedPricing from '@/app/components/embed/EmbedPricing';
-import DarkCta from '@/app/embed/app-integrations/DarkCta';
+import DarkCta from '@/app/embed/app-integration/DarkCta';
 import HowAppIntegrationBecomes from './HowAppIntegrationBecomes';
 
 export const runtime = 'edge';
@@ -43,8 +43,8 @@ export default async function AppIntegrationsPage() {
 
     return (
         <>
-            <MetaHeadComp metaData={metaData} page={'/embed/app-integrations'} />
-            <NavbarServer navbarData={navbarData} utm={'/embed/app-integrations'} />
+            <MetaHeadComp metaData={metaData} page={'/embed/app-integration'} />
+            <NavbarServer navbarData={navbarData} utm={'/embed/app-integration'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
                 <HeroAurora appCount={appCount} />
                 <WhyFeatures appCount={appCount} />
@@ -54,7 +54,7 @@ export default async function AppIntegrationsPage() {
                 <HowAppIntegrationBecomes />
                 <EmbedPricing />
                 <DarkCta />
-                <RelatedEmbeds currentPage="app-integrations" />
+                <RelatedEmbeds currentPage="app-integration" />
                 <ShowBadges />
                 <SecuritySection securityGridData={securityGridData} />
 

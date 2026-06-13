@@ -60,7 +60,7 @@ export default function HeroSection({
                         Become a partner
                     </Link>
 
-                    <Link href="/contact" className="btn btn-outline">
+                    <Link href="/support" target="_blank" className="btn btn-outline">
                         Talk to sales
                         <span className="inline-block transition-transform duration-150 group-hover:translate-x-1">
                             →

@@ -7,8 +7,6 @@ const APPS_LIST = [
     { name: 'Gmail', icon: 'https://thingsofbrand.com/api/icon/gmail.com' },
     { name: 'Slack', icon: 'https://thingsofbrand.com/api/icon/slack.com' },
     { name: 'Google Sheets', icon: 'https://thingsofbrand.com/api/icon/google.com', short: 'Sheets' },
-    { name: 'Notion', icon: 'https://thingsofbrand.com/api/icon/notion.com' },
-    { name: 'HubSpot', icon: 'https://thingsofbrand.com/api/icon/hubspot.com' },
 ];
 
 const TOOLS_LIST = [
@@ -74,7 +72,7 @@ export default function WorkflowIllustration() {
                     <div className="grid grid-cols-[1fr_180px] h-[360px] max-sm:grid-cols-1">
                         {/* LEFT: vertical workflow canvas */}
                         <div
-                            className="px-[22px] p-1 flex flex-col relative flow-canvas-bg"
+                            className="px-[22px] p-1 flex flex-col justify-center relative flow-canvas-bg"
                             style={{
                                 background:
                                     'radial-gradient(circle at 30% 20%, rgba(5,150,105,.05) 0%, transparent 55%), linear-gradient(180deg, #fafafa 0%, #fff 100%)',
@@ -171,32 +169,6 @@ export default function WorkflowIllustration() {
                             </div>
                             <div className="relative h-[22px] -my-[2px] mx-auto w-[14px] flex items-center justify-center fc-conn" />
 
-                            {/* Slack: notify team */}
-                            <div
-                                className="bg-white border rounded-lg p-1 flex items-center gap-2 relative animate-[fnBob_4.5s_ease-in-out_infinite]"
-                                style={{ animationDelay: '1.35s' }}
-                            >
-                                <div className="absolute -inset-[2px] rounded-[12px] border-2 border-[rgba(5,150,105,.25)] animate-[fnPulseRing_2.5s_ease-in-out_infinite] pointer-events-none" />
-                                <div className="w-9 h-9 rounded-lg bg-[#f4f4f5] border flex items-center justify-center shrink-0 overflow-hidden">
-                                    <Image
-                                        src="https://thingsofbrand.com/api/icon/slack.com"
-                                        alt="Slack"
-                                        width={22}
-                                        height={22}
-                                        className="w-[22px] h-[22px] object-contain"
-                                        unoptimized
-                                    />
-                                </div>
-                                <div className="flex-1 min-w-0 flex flex-col gap-[3px]">
-                                    <span className="text-[8.5px] font-medium tracking-[0.6px] uppercase text-[#9ca3af] leading-none">
-                                        Action
-                                    </span>
-                                    <span className="text-[12.5px] font-bold text-[#0a0a0a] leading-[1.25] truncate">
-                                        Notify #sales channel
-                                    </span>
-                                </div>
-                            </div>
-                            <div className="relative h-[22px] -my-[2px] mx-auto w-[14px] flex items-center justify-center fc-conn" />
 
                             {/* Google Sheets: log signup */}
                             <div
@@ -234,8 +206,7 @@ export default function WorkflowIllustration() {
 
                         {/* RIGHT: Add a Step panel */}
                         <div
-                            className="border-l border-black/[0.08] px-[13px] py-[18px] flex flex-col gap-[10px] overflow-y-auto max-sm:border-l-0 max-sm:border-t max-sm:border-black/[0.08]"
-                            style={{ background: 'linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)' }}
+                            className="border-l border-black/[0.08] px-[13px] py-[18px] flex flex-col gap-[10px] overflow-y-auto bg-gradient-to-b from-[#f9fafb] to-[#f3f4f6] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-sm:border-l-0 max-sm:border-t max-sm:border-black/[0.08]"
                         >
                             <div className="flex items-center justify-between">
                                 <span className="text-xs font-medium text-[#0a0a0a] tracking-[-0.2px]">

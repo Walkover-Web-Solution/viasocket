@@ -3,7 +3,7 @@ import AnimatedFlowCard from "./AnimatedFlowCard";
 export default function UseCaseSection() {
   return (
     <section id="use-case" className="container">
-      <div className="grid md:grid-cols-[40%_40%] grid-cols-1 justify-center gap-14 md:gap-20 items-start bg-white border p-6 md:py-12 md:px-20">
+      <div className="grid md:grid-cols-[40%_40%] grid-cols-1 items-center justify-center gap-14 md:gap-20 items-start bg-white border p-6 md:py-12 md:px-20">
         {/* Left */}
         <div>
           <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">

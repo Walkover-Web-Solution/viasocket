@@ -43,18 +43,15 @@ export default function ComparisonTable() {
     ];
 
     const cell = 'p-3 text-left align-top border-b border-r';
-    const headCell = `${cell} text-sm font-medium text-gray-900 tracking-tight bg-white whitespace-nowrap`;
-    const firstCol =
-        'sticky left-0 z-[2] bg-white min-w-[148px] font-semibold text-[12px] text-gray-900';
+    const headCell = `${cell} text-sm font-medium text-gray-900 tracking-tight whitespace-nowrap`;
+    const firstCol = 'sticky left-0 z-[2] bg-white min-w-[148px] font-semibold text-[12px] text-gray-900';
 
     return (
         <section className="container" id="compare">
             <div className="mb-10">
                 <div className="text-xs font-medium text-accent uppercase tracking-wider mb-3">Compare</div>
-                <h2 className="text-3xl font-medium text-gray-900">
-                    How App Integrations compares
-                </h2>
-                <p className="text-base text-gray-500"  >
+                <h2 className="text-3xl font-medium text-gray-900">How App Integrations compares</h2>
+                <p className="text-base text-gray-500">
                     Three other embedded iPaaS platforms — and the alternative of building it yourself.
                 </p>
             </div>
@@ -69,22 +66,22 @@ export default function ComparisonTable() {
                             ></th>
                             <th
                                 scope="col"
-                                className={`${headCell} bg-gray-100 border-t-[2.5px] border-t-[#a8200d] text-gray-900`}
+                                className={`${headCell} !bg-[#fef2f1] border-t-[2.5px] border-t-[#a8200d] !text-accent`}
                             >
                                 viaSocket
                                 <br />
                                 App Integrations
                             </th>
-                            <th scope="col" className={headCell}>
+                            <th scope="col" className={`${headCell} bg-white`}>
                                 Paragon
                             </th>
-                            <th scope="col" className={headCell}>
+                            <th scope="col" className={`${headCell} bg-white`}>
                                 Prismatic
                             </th>
-                            <th scope="col" className={headCell}>
+                            <th scope="col" className={`${headCell} bg-white`}>
                                 Zapier Embed
                             </th>
-                            <th scope="col" className={`${headCell} border-r-0`}>
+                            <th scope="col" className={`${headCell} bg-white border-r-0`}>
                                 Build in-house
                             </th>
                         </tr>
@@ -95,7 +92,7 @@ export default function ComparisonTable() {
                                 <th scope="row" className={`${cell} ${firstCol}`}>
                                     {row.label}
                                 </th>
-                                <td className={`${cell} bg-gray-100`}>{row.vs}</td>
+                                <td className={`${cell} bg-[#fef2f1]`}>{row.vs}</td>
                                 <td className={`${cell}`}>{row.paragon}</td>
                                 <td className={`${cell}`}>{row.prismatic}</td>
                                 <td className={`${cell}`}>{row.zapier}</td>
