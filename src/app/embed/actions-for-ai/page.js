@@ -13,6 +13,7 @@ import BlogGrid from '@/app/components/blog/BlogGrid';
 import DarkCta from './DarkCta';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import HowFlowBecomesAiTool from './HowFlowBecomesAiTool';
+import AIComparisonTable from './AIComparisonTable';
 
 export const runtime = 'edge';
 
@@ -57,6 +58,7 @@ export default async function ActionForAiPage() {
                 <EmbedImageSelector appCount={appCount} />
                 <UseCaseSection />
                 <EmbedSetupSteps />
+                <AIComparisonTable />
                 <HowFlowBecomesAiTool />
                 <EmbedPricing />
                 <DarkCta />

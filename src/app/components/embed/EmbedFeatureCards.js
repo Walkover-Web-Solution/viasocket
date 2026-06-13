@@ -24,7 +24,7 @@ const CARDS = [
         bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
         iconBg: 'bg-white/10 text-white',
         icon: Puzzle,
-        href: '/embed/app-integrations',
+        href: '/embed/app-integration',
     },
 ];
 

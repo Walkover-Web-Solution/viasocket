@@ -21,8 +21,8 @@ const ALL_ITEMS = [
         icon: Webhook,
     },
     {
-        slug: 'app-integrations',
-        href: '/embed/app-integrations',
+        slug: 'app-integration',
+        href: '/embed/app-integration',
         title: 'App Integrations',
         description: 'Give users access to 2,200+ apps and powerful workflow automation.',
         bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
