@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useEffect, useRef } from 'react';
-import TrustMarquee from './TrustMarquee';
+import React from 'react';
 import WorkflowNetwork from './WorkflowNetwork';
+import ShowAppsIndexOptimized from '@/app/components/home/ShowAppsIndexOptimized';
 
 export default function HeroSection({
     eyebrow = 'Agency Partner Program',
@@ -12,36 +12,6 @@ export default function HeroSection({
     subtitle = 'One account, unlimited client workspaces, and everything you need to build and manage automations for every client you work with.',
     appCount,
 }) {
-    const glowRef = useRef(null);
-    const sectionRef = useRef(null);
-
-    useEffect(() => {
-        const section = sectionRef.current;
-        const dot = glowRef.current;
-        if (!section || !dot) return;
-
-        const handleMouseMove = (e) => {
-            const rect = section.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            dot.style.left = `${x}px`;
-            dot.style.top = `${y}px`;
-            dot.style.opacity = '1';
-        };
-
-        const handleMouseLeave = () => {
-            dot.style.opacity = '0';
-        };
-
-        section.addEventListener('mousemove', handleMouseMove);
-        section.addEventListener('mouseleave', handleMouseLeave);
-
-        return () => {
-            section.removeEventListener('mousemove', handleMouseMove);
-            section.removeEventListener('mouseleave', handleMouseLeave);
-        };
-    }, []);
-
     const renderTitle = () => {
         if (typeof titleLine1 === 'string' && typeof titleLine2 === 'string') {
             return (
@@ -66,21 +36,7 @@ export default function HeroSection({
     };
 
     return (
-        <section className="relative overflow-hidden bg-[#fafafa] min-h-[100dvh] flex flex-col pt-[48px] lg:pt-[78px]" ref={sectionRef}>
-            {/* Cursor glow layer */}
-            <div className="absolute inset-0 z-0 overflow-hidden">
-                <div
-                    ref={glowRef}
-                    className="absolute w-[600px] h-[600px] rounded-full pointer-events-none opacity-0 transition-opacity duration-300"
-                    style={{
-                        transform: 'translate(-50%, -50%)',
-                        background:
-                            'radial-gradient(circle, rgba(168, 32, 13, 0.08) 0%, rgba(168, 32, 13, 0.03) 35%, transparent 70%)',
-                        filter: 'blur(40px)',
-                    }}
-                />
-            </div>
-
+        <section className="relative overflow-hidden bg-[#fafafa] min-h-[100dvh] flex flex-col pt-[48px] lg:pt-[78px]">
             {/* Workflow network background */}
             <WorkflowNetwork />
 
@@ -104,15 +60,15 @@ export default function HeroSection({
                         Become a partner
                     </Link>
 
-                    <Link href="/contact" className="btn btn-outline">
+                    <Link href="/support" target="_blank" className="btn btn-outline">
                         Talk to sales
                         <span className="inline-block transition-transform duration-150 group-hover:translate-x-1">
                             →
                         </span>
                     </Link>
                 </div>
-                <TrustMarquee appCount={appCount} />
             </div>
+            <ShowAppsIndexOptimized isHomePage appCount={appCount} />
         </section>
     );
 }

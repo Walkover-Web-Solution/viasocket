@@ -5,7 +5,7 @@ import ShowBadges from './ShowBadges';
 import EmbedSection from '@/app/components/home/EmbedSection';
 import StoriesSection from './StoriesSection';
 
-export default function MainContent({ indexTemplateData, templateData, reviewData, clientStories }) {
+export default function MainContent({ indexTemplateData, templateData, reviewData, clientStories, appCount }) {
     return (
         <>
             <div
@@ -32,7 +32,7 @@ export default function MainContent({ indexTemplateData, templateData, reviewDat
 
             <ShowDepartmentOptimized />
 
-            <EmbedSection />
+            <EmbedSection appCount={appCount} />
 
             <div className="bg-white">
                 <ShowBadges />

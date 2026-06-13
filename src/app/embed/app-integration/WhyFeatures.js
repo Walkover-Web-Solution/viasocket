@@ -1,24 +1,50 @@
 'use client';
 
-import { Star, FileText, Check, LayoutTemplate, Package, Lock, LayoutGrid } from 'lucide-react';
+import { FileText, Check, LayoutTemplate, Package, Lock, LayoutGrid } from 'lucide-react';
 
 export default function WhyFeatures({ appCount }) {
+    const features = [
+        {
+            icon: LayoutTemplate,
+            iconBg: 'bg-[#d1fae5] text-[#059669]',
+            title: 'Visual Workflows Builder',
+            desc: 'A drag-and-drop builder for creating workflows without code.',
+        },
+        {
+            icon: Package,
+            iconBg: 'bg-[#dbeafe] text-[#2563eb]',
+            title: `${appCount + 300}+ apps ready to use`,
+            desc: 'Connect popular apps instantly with pre-built integrations.',
+        },
+        {
+            icon: Lock,
+            iconBg: 'bg-[#dcfce7] text-[#16a34a]',
+            title: 'Built-In user Authentication',
+            desc: 'Users securely connect their own accounts without leaving your product.',
+        },
+        {
+            icon: LayoutGrid,
+            iconBg: 'bg-[#fef3c7] text-[#d97706]',
+            title: 'Plugin Builder',
+            desc: 'Add your app as a trigger or action in user workflows.',
+        },
+    ];
     return (
         <div className="container flex flex-col gap-6">
-            <h2 className="h2">Everything you need to make your app a native part of every workflow</h2>
+            <div className="flex flex-col gap-1">
+                <h2 className="h2">Built-In Capabilities for Embedded Integrations</h2>
+                <p className="text-xl">
+                    The Building blocks that enable users to connect apps, build workflows, and automate your product.
+                </p>
+            </div>
             <div className="grid grid-cols-[1fr_1.15fr] gap-7 items-stretch max-[880px]:grid-cols-1 max-[880px]:gap-5">
                 {/* LEFT: differentiator hero card */}
                 <div className="bg-[#ecfdf5] border border-gray-200 p-8 flex flex-col gap-[10px] relative overflow-hidden max-[480px]:p-[22px] max-[480px]:gap-2">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-medium tracking-wider uppercase text-[#059669] bg-white rounded-full border border-[#a7f3d0] px-2.5 py-1 leading-none w-fit">
-                        <Star size={14} fill="currentColor" strokeWidth={0} />
-                        Our Differentiator
-                    </span>
                     <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                        Your users build the integrations themselves.
+                        Users build automations inside your product
                     </h3>
                     <p className="text-gray-600 text-lg leading-relaxed">
-                        Stop being the integration bottleneck. Embed the visual builder and your users connect their
-                        tools to your app — no support tickets, no roadmap requests.
+                        Let users connect their apps and build workflows without leaving your product.
                     </p>
 
                     <div className="mt-auto flex items-center gap-4 pt-8">
@@ -77,49 +103,23 @@ export default function WhyFeatures({ appCount }) {
 
                 {/* RIGHT: 2x2 grid */}
                 <div className="grid grid-cols-2 grid-rows-[1fr_1fr] gap-4 max-[560px]:grid-cols-1">
-                    <div className="bg-white border border-gray-200 p-[28px_26px] flex flex-col gap-2.5 transition-all duration-150 hover:border-black/[0.14] hover:shadow-[0_4px_14px_rgba(0,0,0,0.04)]">
-                        <div className="w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 bg-[#d1fae5] text-[#059669]">
-                            <LayoutTemplate className="w-[22px] h-[22px]" strokeWidth={2} />
-                        </div>
-                        <h4 className="font-medium text-gray-900 text-xl">Visual no-code builder</h4>
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                            Drag-and-drop flow editor. Your users wire triggers to actions with branches, filters and
-                            delays — no developer required.
-                        </p>
-                    </div>
-
-                    <div className="bg-white border border-gray-200 p-[28px_26px] flex flex-col gap-2.5 transition-all duration-150 hover:border-black/[0.14] hover:shadow-[0_4px_14px_rgba(0,0,0,0.04)]">
-                        <div className="w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 bg-[#dbeafe] text-[#2563eb]">
-                            <Package className="w-[22px] h-[22px]" strokeWidth={2} />
-                        </div>
-                        <h4 className="font-medium text-gray-900 text-xl"> {appCount + 300}+ apps ready to use</h4>
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                            Every popular SaaS — Gmail, Slack, HubSpot, Notion, Salesforce — pre-built and ready. Your
-                            users connect them in seconds.
-                        </p>
-                    </div>
-
-                    <div className="bg-white border border-gray-200 p-[28px_26px] flex flex-col gap-2.5 transition-all duration-150 hover:border-black/[0.14] hover:shadow-[0_4px_14px_rgba(0,0,0,0.04)]">
-                        <div className="w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 bg-[#dcfce7] text-[#16a34a]">
-                            <Lock className="w-[22px] h-[22px]" strokeWidth={2} />
-                        </div>
-                        <h4 className="font-medium text-gray-900 text-xl">End-user OAuth, built-in</h4>
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                            Users connect their own accounts inside your product. Scoped tokens, isolated per user,
-                            never touching your auth system.
-                        </p>
-                    </div>
-
-                    <div className="bg-white border border-gray-200 p-[28px_26px] flex flex-col gap-2.5 transition-all duration-150 hover:border-black/[0.14] hover:shadow-[0_4px_14px_rgba(0,0,0,0.04)]">
-                        <div className="w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 bg-[#fef3c7] text-[#d97706]">
-                            <LayoutGrid className="w-[22px] h-[22px]" strokeWidth={2} />
-                        </div>
-                        <h4 className="font-medium text-gray-900 text-xl">List your app via Plug Builder</h4>
-                        <p className="text-lg text-gray-600 leading-relaxed">
-                            Define your triggers and actions once. Your app becomes a native node in every user&apos;s
-                            workflow — alongside the  {appCount + 300}+ catalog.
-                        </p>
-                    </div>
+                    {features.map((f, i) => {
+                        const Icon = f.icon;
+                        return (
+                            <div
+                                key={i}
+                                className="bg-white border border-gray-200 p-[28px_26px] flex flex-col gap-2.5 transition-all duration-150 hover:border-black/[0.14] hover:shadow-[0_4px_14px_rgba(0,0,0,0.04)]"
+                            >
+                                <div
+                                    className={`w-11 h-11 rounded-[10px] flex items-center justify-center mb-2 shrink-0 ${f.iconBg}`}
+                                >
+                                    <Icon className="w-[22px] h-[22px]" strokeWidth={2} />
+                                </div>
+                                <h4 className="font-medium text-gray-900 text-xl">{f.title}</h4>
+                                <p className="text-lg text-gray-600 leading-relaxed">{f.desc}</p>
+                            </div>
+                        );
+                    })}
                 </div>
             </div>
         </div>

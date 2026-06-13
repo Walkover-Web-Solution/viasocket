@@ -353,12 +353,10 @@ export default function McpIndexClientComp({
                     <BlogGrid posts={blogsData} />
                 </div>
 
-                <div className="">
+                <>
                     {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
-                    <div className="container">
-                        <Footer footerData={footerData} />
-                    </div>
-                </div>
+                    <Footer footerData={footerData} />
+                </>
             </>
         );
     }

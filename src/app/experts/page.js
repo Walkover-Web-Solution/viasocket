@@ -137,11 +137,9 @@ export default async function ExpertsPage() {
                     </div>
                 </div>
             </div>
-            <div className="container pb-4">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

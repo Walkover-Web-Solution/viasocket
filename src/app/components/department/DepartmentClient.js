@@ -63,9 +63,7 @@ export default function DepartmentClient({ data, hasToken }) {
                 <DepartmentFAQ faqJson={department?.faqs} />
             </div>
 
-            <div className="mt-8 container">
-                <Footer footerData={footerData} />
-            </div>
+            <Footer footerData={footerData} />
         </div>
     );
 }

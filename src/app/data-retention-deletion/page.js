@@ -163,11 +163,9 @@ export default async function DataRetentionDeletionPolicyPage() {
                     </div>
                 </div>
             </div>
-            <div className="container py-16">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

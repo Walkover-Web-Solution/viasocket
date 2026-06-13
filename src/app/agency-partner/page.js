@@ -40,7 +40,7 @@ export async function generateMetadata() {
     };
 }
 
-export default async function AgencyPartnerPage() { 
+export default async function AgencyPartnerPage() {
     const { metaData, footerData, navbarData, blogData = [], securityGridData = [] } = await getAgencyPartnerPageData();
     const appCount = await getAppCount();
 
@@ -55,6 +55,7 @@ export default async function AgencyPartnerPage() {
             <WhyAgenciesSection />
             <HowItWorksSection />
             <FAQSection />
+
             <ShowBadges />
             <SecuritySection securityGridData={securityGridData} />
             {blogData?.length > 0 && (
@@ -63,11 +64,9 @@ export default async function AgencyPartnerPage() {
                 </div>
             )}
 
-            <div className="container pt-12">
-                <ConditionalFooter>
-                    <Footer footerData={footerData} />
-                </ConditionalFooter>
-            </div>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </>
     );
 }

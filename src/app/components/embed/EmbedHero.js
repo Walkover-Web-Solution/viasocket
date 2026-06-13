@@ -5,7 +5,7 @@ export default function EmbedHero({ appCount }) {
     const totalApps = +appCount + 300;
 
     return (
-        <div className="relative flex flex-col items-start text-left gap-4 p-8 overflow-hidden">
+        <div className="relative flex flex-col items-start text-left gap-4 py-8 overflow-hidden">
             {/* Subtle dot grid fading in from the right */}
             <div
                 aria-hidden="true"

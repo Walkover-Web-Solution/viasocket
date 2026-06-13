@@ -307,7 +307,7 @@ export default function IntegrationsIndexClientComp({
                 )}
             </div>
 
-            <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName}/>
+            <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName} />
 
             <div className="container my-6">
                 <BlogGrid posts={blogsData} />
@@ -317,11 +317,10 @@ export default function IntegrationsIndexClientComp({
                 <div className="container cont">
                     <AlphabeticalComponent />
                 </div>
-                <div className="container">
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
-                </div>
+
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );
@@ -333,7 +332,7 @@ export function AppVisual({ app, index, redirectPart }) {
         <Link
             key={index || app?.rowid}
             href={createURL(`/${redirectPart}/${app?.appslugname}`)}
-            className={`${style.app} hover-bg-grey-100-text-black custom-border flex align-center justify-center`}
+            className={`${style.app} hover-bg-grey-100-text-black custom-border flex items-center justify-center`}
         >
             <div className="flex items-center gap-2">
                 <div className="h-8 w-8 relative border">

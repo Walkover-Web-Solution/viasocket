@@ -1,19 +1,19 @@
 import { Zap, Check, ArrowRight } from 'lucide-react';
 
 const StepLabel = ({ children }) => (
-    <div className="text-center text-xs font-semibold tracking-[0.2em] text-rose-600 mb-4">{children}</div>
+    <div className="text-center text-xs font-semibold tracking-[0.2em] text-accent mb-4">{children}</div>
 );
 
 const StepCard = ({ children }) => (
-    <div className="flex-1 w-full">
-        <div className="bg-white border border-gray-200 rounded-md p-6 min-h-[220px] flex items-center justify-center">
+    <div className="flex-1 w-full flex flex-col">
+        <div className="bg-white border border-gray-200 rounded-md p-6 flex items-center justify-center min-h-[260px] max-h-[260px]">
             {children}
         </div>
     </div>
 );
 
 const Arrow = () => (
-    <div className="hidden md:flex items-center justify-center px-2 text-gray-400">
+    <div className="hidden lg:flex items-center justify-center px-2 text-gray-400">
         <ArrowRight size={24} />
     </div>
 );
@@ -29,16 +29,16 @@ export default function HowFlowBecomesAiTool() {
         <section className="container">
             <div className="border border-gray-200 p-8 md:p-12 bg-white">
                 <div className="text-center mb-10">
-                    <div className="text-xs font-semibold tracking-[0.2em] text-rose-600 mb-3">HOW IT WORKS</div>
+                    <div className="text-xs font-semibold tracking-[0.2em] text-accent mb-3">HOW IT WORKS</div>
                     <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-2">
+                <div className="flex flex-col lg:flex-row items-stretch gap-6 md:gap-2">
                     {/* Step 1 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 01</StepLabel>
                         <StepCard>
-                            <div className="flex items-center gap-3">
+                            <div className="flex flex-wrap items-start justify-center gap-3 md:gap-4">
                                 {[
                                     {
                                         icon: (
@@ -47,7 +47,6 @@ export default function HowFlowBecomesAiTool() {
                                             </div>
                                         ),
                                         title: 'Trigger',
-                                        sub: 'New form submission',
                                     },
                                     {
                                         icon: (
@@ -57,7 +56,6 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Create contact',
-                                        sub: 'in HubSpot',
                                     },
                                     {
                                         icon: (
@@ -67,7 +65,6 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Send welcome',
-                                        sub: 'email',
                                     },
                                     {
                                         icon: (
@@ -77,10 +74,9 @@ export default function HowFlowBecomesAiTool() {
                                             />
                                         ),
                                         title: 'Notify team',
-                                        sub: 'on Slack',
                                     },
                                 ].map((item, i) => (
-                                    <div key={i} className="flex flex-col items-center text-center w-[72px]">
+                                    <div key={i} className="flex flex-col items-center text-center w-[72px] gap-2">
                                         {item.icon}
                                         <div className="text-[11px] font-semibold text-gray-800 mt-2 leading-tight">
                                             {item.title}
@@ -91,7 +87,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">Build Your workflow</h3>
+                            <h3 className="font-medium text-lg">Build Your workflow</h3>
                             <p className="text-sm text-gray-600">
                                 Connect apps and define the actions you want to automate.{' '}
                             </p>
@@ -101,7 +97,7 @@ export default function HowFlowBecomesAiTool() {
                     <Arrow />
 
                     {/* Step 2 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 02</StepLabel>
                         <StepCard>
                             <div className="w-full">
@@ -117,7 +113,7 @@ export default function HowFlowBecomesAiTool() {
                                     </span>
                                     <span className="text-sm font-mono text-gray-800">create_new_customer</span>
                                 </div>
-                                <pre className="text-xs font-mono text-gray-700 bg-transparent leading-relaxed">
+                                <pre className="text-xs font-mono text-gray-700 bg-transparent leading-relaxed overflow-x-auto whitespace-pre-wrap break-words">
                                     {`{
   "name": "string",
   "email": "string",
@@ -128,7 +124,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">viaSocket turns it into a tool</h3>
+                            <h3 className="font-medium text-lg">viaSocket turns it into a tool</h3>
                             <p className="text-sm text-gray-600">
                                 We handle authentication, schemas, and orchestration behind the scenes.
                             </p>
@@ -138,7 +134,7 @@ export default function HowFlowBecomesAiTool() {
                     <Arrow />
 
                     {/* Step 3 */}
-                    <div className="flex-1 flex flex-col">
+                    <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 03</StepLabel>
                         <StepCard>
                             <div className="w-full space-y-3">
@@ -150,11 +146,11 @@ export default function HowFlowBecomesAiTool() {
                                         <span className="text-white text-sm">✦</span>
                                     </div>
                                     <div className="flex-1 bg-white border border-gray-200 rounded-md p-3">
-                                        <div className="flex items-center justify-between mb-2">
-                                            <span className="text-xs text-gray-700">
+                                        <div className="flex items-center justify-between gap-2 mb-2">
+                                            <span className="text-xs text-gray-700 break-words">
                                                 Calling tool: <span className="font-mono">create_new_customer</span>
                                             </span>
-                                            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center">
+                                            <div className="w-4 h-4 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
                                                 <Check size={10} className="text-white" strokeWidth={3} />
                                             </div>
                                         </div>
@@ -169,7 +165,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-bold text-gray-900 mb-1">Call it from your AI</h3>
+                            <h3 className="font-medium text-lg">Call it from your AI</h3>
                             <p className="text-sm text-gray-600">
                                 Your AI calls one tool and the entire workflow runs automatically.
                             </p>
