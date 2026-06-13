@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { ArrowRight } from 'lucide-react';
 
 const StepLabel = ({ children }) => (
-    <div className="text-center text-xs font-semibold tracking-[0.2em] text-rose-600 mb-4">{children}</div>
+    <div className="text-center text-xs font-semibold tracking-[0.2em] text-accent mb-4">{children}</div>
 );
 
 const StepCard = ({ children }) => <div className="flex-1 w-full flex flex-col">{children}</div>;
@@ -43,7 +43,7 @@ export default function HowWebhookBecomes() {
         <section className="container">
             <div className="border border-gray-200 p-8 md:p-12 bg-white">
                 <div className="text-center mb-10">
-                    <div className="text-xs font-semibold tracking-[0.2em] text-rose-600 mb-3">HOW IT WORKS</div>
+                    <div className="text-xs font-semibold tracking-[0.2em] text-accent mb-3">HOW IT WORKS</div>
                     <h2 className="h2">How a Webhook becomes an integration</h2>
                 </div>
 

@@ -1,7 +1,7 @@
 import { Zap, Check, ArrowRight } from 'lucide-react';
 
 const StepLabel = ({ children }) => (
-    <div className="text-center text-xs font-semibold tracking-[0.2em] text-rose-600 mb-4">{children}</div>
+    <div className="text-center text-xs font-semibold tracking-[0.2em] text-accent mb-4">{children}</div>
 );
 
 const StepCard = ({ children }) => (
@@ -29,7 +29,7 @@ export default function HowFlowBecomesAiTool() {
         <section className="container">
             <div className="border border-gray-200 p-8 md:p-12 bg-white">
                 <div className="text-center mb-10">
-                    <div className="text-xs font-semibold tracking-[0.2em] text-rose-600 mb-3">HOW IT WORKS</div>
+                    <div className="text-xs font-semibold tracking-[0.2em] text-accent mb-3">HOW IT WORKS</div>
                     <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
                 </div>
 

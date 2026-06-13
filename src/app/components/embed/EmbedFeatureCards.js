@@ -37,6 +37,7 @@ export default function EmbedFeatureCards() {
                     <Link
                         key={i}
                         href={card.href}
+                        target="_blank"
                         className={`${card.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg overflow-hidden`}
                     >
                         <div
