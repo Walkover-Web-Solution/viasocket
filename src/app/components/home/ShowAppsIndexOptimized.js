@@ -6,6 +6,7 @@ const APPSONE = [
         src: 'https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg',
         alt: 'slack icon',
         IconName: 'Slack',
+        className: '!ml-8',
     },
     {
         src: 'https://thingsofbrand.com/api/icon/teams.microsoft.com',
@@ -113,7 +114,7 @@ export default function ShowAppsIndexOptimized({
     apps,
     appCount,
 }) {
-    const fallback = [...APPSONE, ...APPSTWO].map((a) => ({ iconurl: a.src, name: a.alt }));
+    const fallback = [...APPSONE, ...APPSTWO].map((a) => ({ iconurl: a.src, name: a.alt, className: a.className }));
     const list = (apps && apps.length ? apps : fallback).filter((a) => a?.iconurl).slice(0, 40);
 
     const renderMarquee = (items, direction = 'left') => (
@@ -129,7 +130,7 @@ export default function ShowAppsIndexOptimized({
                 {items.map((app, i) => (
                     <div
                         key={`${app.iconurl}-${i}`}
-                        className="flex items-center bg-white border border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4"
+                        className={`flex items-center bg-white border border-[#e8e8e8] rounded-xl px-3 py-2.5 whitespace-nowrap shadow-[0_1px_4px_rgba(0,0,0,0.05)] shrink-0 ml-4 ${app.className || ''}`}
                     >
                         <Image
                             src={app.iconurl}
@@ -147,7 +148,7 @@ export default function ShowAppsIndexOptimized({
     return (
         <div className="flex flex-col gap-6">
             {isHomePage || isTrustMarquee ? (
-                <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-20' : 'gap-8 my-12'}`}>
+                <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-12' : 'gap-8 my-8'}`}>
                     {appCount ? (
                         <p className="text-center text-[13px] font-semibold tracking-[0.1em] text-[#999] uppercase">
                             <strong className="text-[#555] font-medium">{appCount + 300}+</strong> applications integrated

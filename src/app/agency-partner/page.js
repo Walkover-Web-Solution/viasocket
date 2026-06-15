@@ -12,6 +12,7 @@ import FAQSection from '@/components/agencyPartner/FAQSection';
 import ShowBadges from '../components/home/ShowBadges';
 import SecuritySection from '../components/SecuritySection';
 import BlogGrid from '../components/blog/BlogGrid';
+import AgencyPricing from '@/components/agencyPartner/AgencyPricing';
 
 export const runtime = 'edge';
 
@@ -51,18 +52,21 @@ export default async function AgencyPartnerPage() {
                 <NavbarServer navbarData={navbarData} utm={'/agency-partner'} />
             </ConditionalNavbar>
 
-            <HeroSection appCount={appCount} />
-            <WhyAgenciesSection />
-            <HowItWorksSection />
-            <FAQSection />
+            {/* <div className=""> */}
+                <HeroSection appCount={appCount} />
+                <WhyAgenciesSection />
+                <HowItWorksSection />
+                <AgencyPricing />
+                <FAQSection />
 
-            <ShowBadges />
-            <SecuritySection securityGridData={securityGridData} />
-            {blogData?.length > 0 && (
-                <div className="container pt-12 mt-12">
-                    <BlogGrid posts={blogData} />
-                </div>
-            )}
+                <ShowBadges />
+                <SecuritySection securityGridData={securityGridData} />
+                {blogData?.length > 0 && (
+                    <div className="container pt-12 mt-12">
+                        <BlogGrid posts={blogData} />
+                    </div>
+                )}
+            {/* </div> */}
 
             <ConditionalFooter>
                 <Footer footerData={footerData} />
