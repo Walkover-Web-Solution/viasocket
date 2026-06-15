@@ -51,22 +51,19 @@ export default async function AgencyPartnerPage() {
             <ConditionalNavbar>
                 <NavbarServer navbarData={navbarData} utm={'/agency-partner'} />
             </ConditionalNavbar>
+            <HeroSection appCount={appCount} />
+            <WhyAgenciesSection />
+            <HowItWorksSection />
+            <AgencyPricing />
+            <FAQSection />
 
-            {/* <div className=""> */}
-                <HeroSection appCount={appCount} />
-                <WhyAgenciesSection />
-                <HowItWorksSection />
-                <AgencyPricing />
-                <FAQSection />
-
-                <ShowBadges />
-                <SecuritySection securityGridData={securityGridData} />
-                {blogData?.length > 0 && (
-                    <div className="container pt-12 mt-12">
-                        <BlogGrid posts={blogData} />
-                    </div>
-                )}
-            {/* </div> */}
+            <ShowBadges />
+            <SecuritySection securityGridData={securityGridData} />
+            {blogData?.length > 0 && (
+                <div className="container pt-12 mt-12">
+                    <BlogGrid posts={blogData} />
+                </div>
+            )}
 
             <ConditionalFooter>
                 <Footer footerData={footerData} />

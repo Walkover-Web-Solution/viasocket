@@ -30,7 +30,7 @@ const whyCards = [
 export default function WhyAgenciesSection() {
     return (
         <section className="w-full bg-white py-20">
-            <div className="container mx-auto px-5 md:px-8 py-12 bg-white">
+            <div className="container">
                 {/* Section Header */}
                 <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-12">
                     <div>

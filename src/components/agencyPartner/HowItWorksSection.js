@@ -38,7 +38,7 @@ export default function HowItWorksSection() {
         <div className="absolute rounded-full border border-[rgba(168,32,13,0.05)] w-[400px] h-[400px] -bottom-12 -right-12" />
       </div>
 
-      <div className="w-full container mx-auto px-6 relative z-10">
+      <div className="w-full container relative z-10">
         <div className="text-center mb-16">
           <span className="inline-block text-xs font-semibold tracking-[0.1em] uppercase text-[#a8200d] mb-3">How It Works</span>
           <h2 className="h2 mb-4">How the Partner Program Works</h2>
