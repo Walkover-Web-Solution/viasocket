@@ -41,7 +41,7 @@ export default function HowItWorksSection() {
       <div className="w-full container mx-auto px-6 relative z-10">
         <div className="text-center mb-16">
           <span className="inline-block text-xs font-semibold tracking-[0.1em] uppercase text-[#a8200d] mb-3">How It Works</span>
-          <h2 className="text-[clamp(36px,4.5vw,56px)] font-black leading-[1.05] tracking-[-0.02em] mx-auto mb-4">How the Partner Program Works</h2>
+          <h2 className="h2 mb-4">How the Partner Program Works</h2>
           <p className="text-lg leading-[1.65] text-black/55 max-w-[560px] mx-auto">
             Get started in minutes and manage every client automation from a
             single partner account.
