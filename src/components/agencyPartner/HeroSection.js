@@ -39,13 +39,10 @@ const HeroSection = ({ appCount }) => {
                     </Link>
                 </div>
 
-                {/* Trusted By Section */}
-                <div className="">
-                    <p className="text-xs font-medium tracking-[0.15em] uppercase text-gray-400">
-                        Trusted by {appCount + 300}+ automation agencies worldwide
-                    </p>
-                    <ShowAppsIndexOptimized isTrustMarquee={true} />
-                </div>
+                <p className="text-xs font-medium tracking-[0.15em] uppercase text-gray-400">
+                    Trusted by {appCount + 300}+ automation agencies worldwide
+                </p>
+                <ShowAppsIndexOptimized isTrustMarquee={true} />
             </div>
         </section>
     );
