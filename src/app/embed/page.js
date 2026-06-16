@@ -2,6 +2,7 @@ import NavbarServer from '../components/navbar/NavbarServer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getEmbedPageData } from '../lib/data';
 import EmbedContent from '../components/embed/EmbedContent';
+import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 
 export const runtime = 'edge';
 
@@ -32,6 +33,7 @@ export default async function EmbedPage() {
 
     return (
         <>
+            <RedditPixel />
             <MetaHeadComp metaData={metaData} page={'/embed'} />
             <NavbarServer navbarData={navbarData} utm={'/embed'} />
 

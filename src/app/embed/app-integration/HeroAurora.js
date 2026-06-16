@@ -50,6 +50,7 @@ export default function HeroAurora({ appCount }) {
                                 <Link
                                     href="https://cal.id/team/viasocket/sales-team"
                                     className="text-white/80 hover:text-white underline text-lg"
+                                    target="_blank"
                                 >
                                     Contact Sales
                                 </Link>

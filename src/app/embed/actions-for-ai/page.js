@@ -14,6 +14,7 @@ import DarkCta from './DarkCta';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import HowFlowBecomesAiTool from './HowFlowBecomesAiTool';
 import AIComparisonTable from './AIComparisonTable';
+import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 
 export const runtime = 'edge';
 
@@ -51,6 +52,7 @@ export default async function ActionForAiPage() {
 
     return (
         <>
+            <RedditPixel />
             <MetaHeadComp metaData={metaData} page={'/embed/actions-for-ai'} />
             <NavbarServer navbarData={navbarData} utm={'/embed/actions-for-ai'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
