@@ -79,7 +79,7 @@ const AgencyPricing = () => {
 
                         {/* CTA Button */}
                         <Link
-                            href="https://buy.stripe.com/fZuaEXfxqg1daZz8jF2go13"
+                            href="https://buy.stripe.com/aFafZhgBudT51oZbvR2go15"
                             className="btn btn-accent mb-8 w-full"
                             target="_blank"
                             rel="noopener noreferrer"
