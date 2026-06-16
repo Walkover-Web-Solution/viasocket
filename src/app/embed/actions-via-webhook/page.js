@@ -12,6 +12,7 @@ import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import DarkCta from '../actions-for-ai/DarkCta';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import WebhookFeatureHighlights from './WebhookFeatureHighlights';
+import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 import HowWebhookBecomes from './HowWebhookBecomes';
 
 export const runtime = 'edge';
@@ -48,6 +49,7 @@ export default async function ActionViaWebhookPage() {
 
     return (
         <>
+            <RedditPixel />
             <MetaHeadComp metaData={metaData} page={'/embed/actions-via-webhook'} />
             <NavbarServer navbarData={navbarData} utm={'/embed/actions-via-webhook'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">

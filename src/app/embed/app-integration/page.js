@@ -7,6 +7,7 @@ import SecuritySection from '@/app/components/SecuritySection';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import HeroAurora from '@/app/embed/app-integration/HeroAurora';
+import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 import WhyFeatures from '@/app/embed/app-integration/WhyFeatures';
 import UseCaseSection from '@/app/embed/app-integration/UseCaseSection';
 import EmbedSetup from '@/app/embed/app-integration/EmbedSetup';
@@ -43,6 +44,7 @@ export default async function AppIntegrationsPage() {
 
     return (
         <>
+            <RedditPixel />
             <MetaHeadComp metaData={metaData} page={'/embed/app-integration'} />
             <NavbarServer navbarData={navbarData} utm={'/embed/app-integration'} />
             <main className="global-top-space mt-8 flex flex-col lg:gap-20 md:gap-16 gap-12 ">
