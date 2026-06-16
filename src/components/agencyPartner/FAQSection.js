@@ -89,13 +89,13 @@ export default function FAQSection() {
     };
 
     return (
-        <section className="bg-white py-24 pb-28">
-            <div className="container mx-auto px-5 md:px-8">
+        <section className="bg-white py-24">
+            <div className="container">
                 <div className="text-center mb-16">
                     <span className="inline-block text-[11px] font-bold tracking-[0.18em] uppercase text-[#a8200d] mb-4">
                         FAQ
                     </span>
-                    <h2 className="font-['Inter_Tight',sans-serif] text-[clamp(32px,4.5vw,64px)] font-black leading-[1.1] tracking-[-0.025em] text-[#111] mb-4">
+                    <h2 className="h2 mb-4">
                         Frequently Asked Questions
                     </h2>
                     <p className="text-[clamp(16px,1.8vw,19px)] leading-[1.65] text-[#555] max-w-[600px] mx-auto">

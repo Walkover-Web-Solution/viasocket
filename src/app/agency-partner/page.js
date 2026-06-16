@@ -12,6 +12,7 @@ import FAQSection from '@/components/agencyPartner/FAQSection';
 import ShowBadges from '../components/home/ShowBadges';
 import SecuritySection from '../components/SecuritySection';
 import BlogGrid from '../components/blog/BlogGrid';
+import AgencyPricing from '@/components/agencyPartner/AgencyPricing';
 
 export const runtime = 'edge';
 
@@ -50,10 +51,10 @@ export default async function AgencyPartnerPage() {
             <ConditionalNavbar>
                 <NavbarServer navbarData={navbarData} utm={'/agency-partner'} />
             </ConditionalNavbar>
-
             <HeroSection appCount={appCount} />
             <WhyAgenciesSection />
             <HowItWorksSection />
+            <AgencyPricing />
             <FAQSection />
 
             <ShowBadges />
