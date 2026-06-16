@@ -11,6 +11,10 @@
     }
 }
 
+body, html {
+    overflow-x: hidden;
+}
+
 //check import file for imports
 @import '_import';
 

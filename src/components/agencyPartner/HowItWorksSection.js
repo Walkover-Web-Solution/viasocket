@@ -10,21 +10,21 @@ const steps = [
     alt: 'Apply',
     title: '1. Apply & Set Up Your Agency',
     description:
-      'Tell us about your agency, services, and the types of clients you work with. Complete your partner profile to get started.',
+      'Tell us about your agency, services, and the clients you work with.',
   },
   {
     img: 'https://stuff.thingsofbrand.com/viasocket.com/images/img1_image-123.png',
     alt: 'Connect',
     title: '2. Connect Your Client Stack',
     description:
-      'Choose the apps, tools, and platforms your clients use most to build automations faster.',
+      'Choose the tools your clients rely on. Build automations faster.',
   },
   {
     img: 'https://stuff.thingsofbrand.com/viasocket.com/images/img7_image-124.png',
     alt: 'Launch',
     title: '3. Launch & Scale Client Automations',
     description:
-      'Access unlimited workspaces, premium features, dedicated support, and agency-first pricing as you grow.',
+      'Unlimited workspaces, premium features, and partner pricing from day one.',
   },
 ];
 

@@ -46,12 +46,12 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
             }
         });
     return (
-        <div className="container">
+        <div className="container overflow-hidden">
             <div
-                className={`viasocket-footer-wrapper bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border ${borderTheme} ${borderClass}`}
+                className={`viasocket-footer-wrapper bg-white grid lg:grid-rows-1 md:grid-cols-2 lg:grid-cols-4 grid-rows-1  ms:grid-cols-4 grid-cols-1 border overflow-hidden ${borderTheme} ${borderClass}`}
             >
                 <div
-                    className={`row-span-1 justify-center col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col `}
+                    className={`row-span-1 justify-center col-span-4 lg:col-span-1 order-last lg:order-first md:p-10 p-4 h-full lg:border-r border-r-0 ${borderTheme} flex flex-col overflow-hidden`}
                 >
                     <p className="rotate-viasocket font-bold w-full flex justify-center items-center text-[6vw]">
                         viaSocket
