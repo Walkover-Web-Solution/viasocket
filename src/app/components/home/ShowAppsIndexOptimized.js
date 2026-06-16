@@ -148,7 +148,7 @@ export default function ShowAppsIndexOptimized({
     return (
         <div className="flex flex-col gap-6">
             {isHomePage || isTrustMarquee ? (
-                <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-12' : 'gap-8 my-8'}`}>
+                <div className={`flex flex-col items-center justify-center ${isHomePage ? 'gap-2 my-12' : 'gap-8 my-2'}`}>
                     {appCount ? (
                         <p className="text-center text-[13px] font-semibold tracking-[0.1em] text-[#999] uppercase">
                             <strong className="text-[#555] font-medium">{appCount + 300}+</strong> applications integrated
