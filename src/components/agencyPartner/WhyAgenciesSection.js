@@ -3,40 +3,39 @@ import { Users, DollarSign, Layers, Star, Headphones, BarChart3 } from 'lucide-r
 const whyCards = [
     {
         title: '1. Unlimited Client Workspaces',
-        description: 'Manage every client from one partner account with dedicated workspaces for each business.',
+        description: 'One account, unlimited clients. Each gets a separate workspace.',
         icon: <Users size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '2. Keep 100% of What You Charge',
-        description: 'Set your own pricing, package your services your way, and keep every dollar you earn.',
+        title: '2. Keep 100% of Revenue',
+        description: 'Set your own rates. No platform commission.',
         icon: <DollarSign size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
         title: '3. Shared Task Pool',
-        description: 'All client workspaces draw from a single shared task pool, with no per-workspace limits.',
+        description: 'One shared pool across all clients. Use it where needed.',
         icon: <Layers size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '4. Premium Features Included',
-        description: 'Access real-time automations, advanced AI, priority processing, and every premium feature.',
+        title: '4. Full Premium Features',
+        description: 'Real-time automation, advanced AI, and priority processing.',
         icon: <Star size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '5. Dedicated Partner Support',
-        description:
-            'Get direct access to our team with fast, personalized support and expert guidance whenever you need it.',
+        title: '5. Dedicated Support',
+        description: 'Direct access to our team, plus partner-specific docs.',
         icon: <Headphones size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '6. Pricing Built for Agencies',
-        description: 'Pay for usage, not seats, clients, or workspaces. Scale without unpredictable costs.',
+        title: '6. Usage-Based Pricing',
+        description: 'Pay for tasks, not seats or clients. Scale freely.',
         icon: <BarChart3 size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
 ];
 
 export default function WhyAgenciesSection() {
     return (
-        <section className="w-full bg-white py-24 pb-28 mt-16">
+        <section className="w-full bg-white py-20">
             <div className="container mx-auto px-5 md:px-8">
                 {/* Section Header */}
                 <div className="flex flex-col items-center text-center mb-[72px]">

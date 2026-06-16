@@ -36,7 +36,7 @@ const AgencyPricing = () => {
                         {stats.map((stat, index) => (
                             <div
                                 key={index}
-                                className={`flex items-start gap-4 py-5 ${index !== stats.length - 1 ? 'border-b border-gray-200' : ''}`}
+                                className={`flex items-center gap-4 py-5 ${index !== stats.length - 1 ? 'border-b border-gray-200' : ''}`}
                             >
                                 <span className="text-2xl font-bold text-gray-400 w-16 flex-shrink-0">
                                     {stat.number}
