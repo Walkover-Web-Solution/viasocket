@@ -41,17 +41,17 @@ export default async function ExpertAreLivePage() {
                 <NavbarServer navbarData={navbarData} utm={'/experts-are-live'} />
             </ConditionalNavbar>
 
-            <div className="global-top-space min-h-[calc(100vh-200px)] flex flex-col items-center justify-center">
+            <div className="global-top-space min-h-[100vh] flex flex-col items-center justify-center">
                 <div className="container flex flex-col items-center justify-center py-12 gap-12">
                     {/* Hero Section */}
                     <div className="flex flex-col items-center gap-6 text-center">
-                        <div className="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
+                        {/* <div className="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full text-sm font-medium">
                             <span className="relative flex h-2 w-2">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                             </span>
                             Experts are Available now
-                        </div>
+                        </div> */}
                         <h1 className="h1">
                             Get instant help from <span className="text-accent">Live Experts</span>
                         </h1>
@@ -60,14 +60,14 @@ export default async function ExpertAreLivePage() {
                             troubleshoot issues, and optimize your processes.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center gap-4">
-                            <Link
+                            {/* <Link
                                 href="https://meet.google.com/hya-tdxd-mip"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="btn btn-accent"
                             >
                                 Join Google Meet
-                            </Link>
+                            </Link> */}
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 target="_blank"
@@ -77,7 +77,7 @@ export default async function ExpertAreLivePage() {
                                 Book a Meeting
                             </Link>
                         </div>
-                        <div className="flex items-start gap-3 bg-[#f9f7f2] border border-gray-200 rounded-lg p-4 max-w-lg">
+                        {/* <div className="flex items-start gap-3 bg-[#f9f7f2] border border-gray-200 rounded-lg p-4 max-w-lg">
                             <Lightbulb className="w-7 h-7 text-yellow-500 flex-shrink-0 mt-0.5" />
                             <div>
                                 <p className="text-sm text-gray-800 font-medium">
@@ -85,7 +85,7 @@ export default async function ExpertAreLivePage() {
                                     connected to a live expert
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Support Options */}
@@ -133,7 +133,10 @@ export default async function ExpertAreLivePage() {
                                     Questions or concerns? Our inbox is always open.
                                 </p>
                             </div>
-                            <Link href="mailto:support@viasocket.com" className="btn btn-outline w-fit text-sm min-w-[120px]">
+                            <Link
+                                href="mailto:support@viasocket.com"
+                                className="btn btn-outline w-fit text-sm min-w-[120px]"
+                            >
                                 Email Support
                             </Link>
                         </div>

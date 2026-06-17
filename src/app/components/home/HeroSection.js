@@ -106,7 +106,7 @@ export default function HeroSection({ hasToken }) {
                             </span>
                         </div>
                         <span className="text-base font-medium text-accent flex items-center gap-1.5 -tracking-[0.01em]">
-                            Experts are live{' '}
+                            Talk to an experts
                             <span className="text-[17px] transition-transform duration-200 group-hover:translate-x-1">
                                 →
                             </span>
