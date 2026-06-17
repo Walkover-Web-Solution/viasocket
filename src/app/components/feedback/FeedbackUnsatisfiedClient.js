@@ -110,7 +110,7 @@ export default function FeedbackUnsatisfiedClient() {
                         className="block max-w-[96px] h-auto"
                     />
                 </a>
-                <div className="hidden sm:block text-[11px] tracking-[0.9px] uppercase text-[#888888] font-semibold">
+                <div className="hidden sm:block text-sm tracking-[0.9px] uppercase text-[#888888] font-semibold">
                     Plugin feedback
                 </div>
             </header>
@@ -130,7 +130,7 @@ export default function FeedbackUnsatisfiedClient() {
                             <AlertTriangle className="w-[26px] h-[26px]" strokeWidth={2.4} />
                         </div>
 
-                        <p className="m-0 mb-2.5 text-[11px] tracking-[1.4px] uppercase text-[#8a5a1f] font-semibold">
+                        <p className="m-0 mb-2.5 text-sm tracking-[1.4px] uppercase text-[#8a5a1f] font-semibold">
                             Let&apos;s get it right
                         </p>
                         <h1 className="m-0 mb-3.5 text-2xl sm:text-3xl leading-[1.16] font-semibold tracking-[-0.5px] text-[#0c0c0c]">
@@ -156,7 +156,7 @@ export default function FeedbackUnsatisfiedClient() {
                             <span>{STATUS_LABELS[status]}</span>
                         </div>
 
-                        <p className="m-0 mb-3.5 text-[11px] tracking-[1.3px] uppercase text-[#888888] font-semibold">
+                        <p className="m-0 mb-3.5 text-sm tracking-[1.3px] uppercase text-[#888888] font-semibold">
                             What&apos;s next?
                         </p>
 

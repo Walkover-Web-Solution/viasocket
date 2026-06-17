@@ -19,7 +19,7 @@ function PairAppCard({ name, icon, href }) {
       <div className="relative shrink-0 overflow-hidden w-[34px] h-[34px] bg-white border primary-border shadow-sm transition-all duration-200">
         <Image alt={name} src={icon || 'https://placehold.co/40x40'} width={32} height={32} className="absolute inset-[10%] w-[80%] h-[80%] object-contain" />
       </div>
-      <span className="min-w-0 text-[15px] font-semibold text-[#1f2937] truncate transition-colors duration-200 group-hover:text-[#0a0a0a]">{name}</span>
+      <span className="min-w-0 text-base font-semibold text-[#1f2937] truncate transition-colors duration-200 group-hover:text-[#0a0a0a]">{name}</span>
       <ArrowRight size={16} className="ml-auto shrink-0 text-[#d1d5db] opacity-50 transition-all duration-200 group-hover:text-[var(--bc)] group-hover:opacity-100 group-hover:translate-x-[2px]" />
     </Link>
   );

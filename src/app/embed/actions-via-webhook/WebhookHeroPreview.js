@@ -15,7 +15,7 @@ export default function WebhookHeroPreview({ scenario, fade }) {
                         </span>
                     </div>
                     <div
-                        className={`py-[13px] px-[13px] flex-1 font-mono text-[11px] leading-[1.9] text-[#e2e8f0] transition-opacity duration-[250ms] whitespace-pre-wrap max-[768px]:text-[9.5px] max-[768px]:p-[10px] ${fade ? 'opacity-0' : 'opacity-100'}`}
+                        className={`py-[13px] px-[13px] flex-1 font-mono text-sm leading-[1.9] text-[#e2e8f0] transition-opacity duration-[250ms] whitespace-pre-wrap max-[768px]:text-[9.5px] max-[768px]:p-[10px] ${fade ? 'opacity-0' : 'opacity-100'}`}
                     >
                         <span className="text-[#86efac]">&quot;event&quot;</span>:{' '}
                         <span className="text-[#fbbf24]">&quot;{scenario.event}&quot;</span>,{'\n'}
@@ -53,7 +53,7 @@ export default function WebhookHeroPreview({ scenario, fade }) {
                                 <img className="w-4 h-4 object-contain" src={row.img} alt="" loading="lazy" />
                             </div>
                             <div className="flex-1 min-w-0">
-                                <div className="text-[11px] font-bold text-[#111] font-sans whitespace-nowrap overflow-hidden text-ellipsis leading-[1.2]">
+                                <div className="text-sm font-bold text-[#111] font-sans whitespace-nowrap overflow-hidden text-ellipsis leading-[1.2]">
                                     {row.name}
                                 </div>
                                 <div className="text-[9.5px] text-[#9ca3af] font-sans whitespace-nowrap overflow-hidden text-ellipsis mt-px leading-[1.2]">

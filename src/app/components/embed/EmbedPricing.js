@@ -48,7 +48,7 @@ function PlanCard({ plan }) {
         >
             {(plan.highlight || plan.badge) && (
                 <div
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-[11px] font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
+                    className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-sm font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
                 >
                     Buy 1 month, get 5 free
                 </div>

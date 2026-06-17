@@ -33,7 +33,7 @@ export default function WebhookFlowCard() {
                         Webhook POST from your server
                     </p>
                     <p className="text-sm font-semibold text-gray-900 mb-2">Onboarding completed event</p>
-                    <div className="bg-[#0d0d12] rounded-md py-3 px-3.5 font-mono text-[11px] leading-[1.7] text-gray-300 whitespace-pre">
+                    <div className="bg-[#0d0d12] rounded-md py-3 px-3.5 font-mono text-sm leading-[1.7] text-gray-300 whitespace-pre">
                         {'{'}
                         {'\n  '}
                         <span className="text-[#86efac]">&quot;event&quot;</span>:{' '}

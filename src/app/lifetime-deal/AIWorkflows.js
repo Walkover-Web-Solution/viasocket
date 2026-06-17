@@ -191,10 +191,10 @@ export default function AIWorkflows() {
             />
 
             <div className="relative z-10 px-5 lg:px-10 text-center">
-                <div className="inline-block text-accent text-[11px] font-bold tracking-[0.16em] uppercase mb-5">
+                <div className="inline-block text-accent text-sm font-bold tracking-[0.16em] uppercase mb-5">
                     AI WORKFLOWS
                 </div>
-                <h2 className="text-[30px] sm:text-[40px] lg:text-[52px] font-medium leading-[1.1] tracking-[-1.4px] mb-[52px]">
+                <h2 className="h2">
                     Build powerful workflows.
                     In seconds, <br /> <span className="text-accent">with AI.</span>
                 </h2>

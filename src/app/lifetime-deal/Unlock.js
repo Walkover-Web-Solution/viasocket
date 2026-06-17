@@ -47,7 +47,7 @@ export default function Unlock() {
                     <span className="inline-block text-accent text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         WHAT YOU&rsquo;LL UNLOCK
                     </span>
-                    <h2 className="text-[34px] sm:text-[42px] lg:text-[52px] font-medium leading-[1.1] tracking-[-1.3px] text-[var(--text,#0A0A0A)] m-0">
+                    <h2 className="h2">
                         Effortless Process, <span className="text-accent">Continuous Supply.</span>
                     </h2>
                 </div>
@@ -64,7 +64,7 @@ export default function Unlock() {
                                 ['--bd-hover']: c.borderHover,
                             }}
                         >
-                            <h3 className="text-[22px] font-bold leading-[1.2] tracking-[-0.5px] text-[var(--text,#0A0A0A)] m-0 mb-6">
+                            <h3 className="text-xl font-bold leading-[1.2] tracking-[-0.5px] text-[var(--text,#0A0A0A)] m-0 mb-6">
                                 {c.title}
                             </h3>
                             <div

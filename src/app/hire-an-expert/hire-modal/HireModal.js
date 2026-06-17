@@ -64,7 +64,7 @@ export default function HireModal({ onClose }) {
                 {/* Header */}
                 <div className="flex items-start justify-between gap-6 px-8 pt-7 pb-6 border-b border-[#ececec]">
                     <div>
-                        <h2 className="text-[22px] font-bold tracking-[-0.4px] text-[#111] mb-1.5 leading-tight">
+                        <h2 className="h2">
                             {getTitle(step).title}
                         </h2>
                         <p className="text-sm text-gray-500 leading-[1.55]">{getTitle(step).sub}</p>

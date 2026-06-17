@@ -534,7 +534,7 @@ export function LiveWorkflowCanvas({ usecases, onActiveChange }) {
 
             {/* Title */}
             <h2
-              className="relative text-[28px] md:text-[34px] lg:text-[38px] leading-[normal] font-semibold tracking-[-0.95px]"
+              className="relative h2"
               style={{ color: gt.glassTitleColor, fontFamily: "'Inter', sans-serif" }}
             >
               {currentTitle}

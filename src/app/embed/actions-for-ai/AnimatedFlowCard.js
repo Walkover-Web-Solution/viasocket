@@ -83,7 +83,7 @@ export default function AnimatedFlowCard() {
                   <span className="text-gray-400 font-normal">{a.app} · </span>
                   {a.action}
                 </p>
-                <p className="text-[11px] text-gray-500 mt-0.5">{a.detail}</p>
+                <p className="text-sm text-gray-500 mt-0.5">{a.detail}</p>
               </div>
             </div>
           ))}

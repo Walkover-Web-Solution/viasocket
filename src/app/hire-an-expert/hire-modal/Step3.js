@@ -54,7 +54,7 @@ export default function Step3({ basePrice, total }) {
                     <div className="flex items-center gap-2.5 text-sm font-bold">
                         <Tag className="w-4 h-4 text-accent" /> Final consultation pricing
                     </div>
-                    <div className="text-[22px] font-bold text-accent tracking-[-0.5px]">${total}</div>
+                    <div className="text-xl font-bold text-accent tracking-[-0.5px]">${total}</div>
                 </div>
             </div>
 

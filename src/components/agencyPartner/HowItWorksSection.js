@@ -64,7 +64,7 @@ export default function HowItWorksSection() {
                             <h3 className="font-['Inter_Tight',sans-serif] text-[19px] font-bold leading-[1.3]">
                                 {step.title}
                             </h3>
-                            <p className="text-[15px] leading-[1.65] text-black/65 max-w-[300px]">{step.description}</p>
+                            <p className="text-base leading-[1.65] text-black/65 max-w-[300px]">{step.description}</p>
                         </div>
                     ))}
                 </div>
