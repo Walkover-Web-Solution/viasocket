@@ -50,7 +50,7 @@ export default function ComparisonTable() {
         <section className="container" id="compare">
             <div className="mb-10">
                 <div className="text-xs font-medium text-accent uppercase tracking-wider mb-3">Compare</div>
-                <h2 className="text-3xl font-medium text-gray-900">How App Integrations compares</h2>
+                <h2 className="text-2xl md:text-3xl font-medium text-gray-900">How App Integrations compares</h2>
                 <p className="text-base text-gray-500">
                     Three other embedded iPaaS platforms — and the alternative of building it yourself.
                 </p>

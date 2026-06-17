@@ -33,7 +33,7 @@ export default function WhyFeatures({ appCount }) {
         <div className="container flex flex-col gap-6">
             <div className="flex flex-col gap-1">
                 <h2 className="h2">Built-In Capabilities for Embedded Integrations</h2>
-                <p className="text-xl">
+                <p className="text-lg md:text-xl">
                     The Building blocks that enable users to connect apps, build workflows, and automate your product.
                 </p>
             </div>
@@ -44,7 +44,7 @@ export default function WhyFeatures({ appCount }) {
                         <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
                             Users build automations inside your product
                         </h3>
-                        <p className="text-gray-600 text-lg leading-relaxed">
+                        <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
                             Let users connect their apps and build workflows without leaving your product.
                         </p>
                     </div>
@@ -104,7 +104,7 @@ export default function WhyFeatures({ appCount }) {
                 </div>
 
                 {/* RIGHT: 2x2 grid */}
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {features.map((f, i) => {
                         const Icon = f.icon;
                         return (
@@ -117,8 +117,8 @@ export default function WhyFeatures({ appCount }) {
                                 >
                                     <Icon className="w-[22px] h-[22px]" strokeWidth={2} />
                                 </div>
-                                <h4 className="font-medium text-gray-900 text-xl">{f.title}</h4>
-                                <p className="text-lg text-gray-600 leading-relaxed">{f.desc}</p>
+                                <h4 className="font-medium text-gray-900 text-lg sm:text-xl">{f.title}</h4>
+                                <p className="text-base sm:text-lg text-gray-600 leading-relaxed">{f.desc}</p>
                             </div>
                         );
                     })}

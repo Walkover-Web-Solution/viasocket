@@ -6,7 +6,7 @@ import WebhookFlowCard from './WebhookFlowCard';
 export default function WebhookUseCase() {
     return (
         <div className="container">
-            <div className="grid md:grid-cols-[40%_40%] grid-cols-1 items-center justify-center gap-14 md:gap-20 items-start bg-white border p-6 md:py-12 md:px-20">
+            <div className="grid md:grid-cols-[40%_40%] grid-cols-1 items-center justify-center gap-14 md:gap-20 items-start bg-white border p-6 md:p-10 lg:py-12 lg:px-20">
                 {/* Left */}
                 <div className="flex flex-col gap-4">
                     <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full tracking-wider uppercase">

@@ -45,14 +45,14 @@ export default function RelatedEmbeds({
                 </h3>
                 <p className="text-base text-gray-500 font-normal">{subheading}</p>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-12 px-0 sm:px-6 md:px-12">
                 {items.map((item) => {
                     const Icon = item.icon;
                     return (
                         <Link
                             key={item.href}
                             href={item.href}
-                            className={`${item.bg} text-white p-6 py-9 flex items-start gap-5 relative group rounded-lg no-underline`}
+                            className={`${item.bg} text-white p-5 py-7 sm:p-6 sm:py-9 flex items-start gap-4 sm:gap-5 relative group rounded-lg no-underline`}
                             target="_blank"
                         >
                             <div
@@ -61,7 +61,7 @@ export default function RelatedEmbeds({
                                 <Icon size={26} />
                             </div>
                             <div className="flex flex-col gap-1 flex-1">
-                                <h3 className="text-2xl font-semibold">{item.title}</h3>
+                                <h3 className="text-xl sm:text-2xl font-semibold">{item.title}</h3>
                                 <p className="text-base text-white/70">{item.description}</p>
                             </div>
                             <span className="absolute top-4 right-4 w-8 h-8 p-2 rounded-full bg-white text-gray-900 flex items-center justify-center opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-200">

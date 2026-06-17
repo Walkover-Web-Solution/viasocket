@@ -4,7 +4,7 @@ import AppIntegrationFlowCard from './AppIntegrationFlowCard';
 export default function UseCaseSection({ appCount }) {
     return (
         <div className="container">
-            <div className="grid md:grid-cols-[40%_40%] grid-cols-1 items-center justify-center gap-14 md:gap-20 bg-white border p-6 md:py-12 md:px-20">
+            <div className="grid md:grid-cols-[40%_40%] grid-cols-1 items-center justify-center gap-14 md:gap-20 bg-white border p-6 md:p-10 lg:py-12 lg:px-20">
                 {/* Left */}
                 <div>
                     <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">

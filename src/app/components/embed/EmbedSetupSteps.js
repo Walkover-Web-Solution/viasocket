@@ -70,14 +70,14 @@ export default function EmbedSetupSteps() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 01</span>
-                        <h3 className="text-2xl font-medium">Generate the embed token</h3>
+                        <h3 className="text-xl md:text-2xl font-medium">Generate the embed token</h3>
                         <p className="text-gray-600 mb-4">Generate a secure token for each user.</p>
                         <CodeBlock code={jwtPayload} label="JSON PAYLOAD" />
                     </div>
 
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 02</span>
-                        <h3 className="text-2xl font-medium">Add the embed script</h3>
+                        <h3 className="text-xl md:text-2xl font-medium">Add the embed script</h3>
                         <p className="text-gray-600 mb-4">Generate a secure token for each user.</p>
                         <CodeBlock code={embedScript} label="HTML" />
                     </div>

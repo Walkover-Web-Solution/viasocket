@@ -174,30 +174,30 @@ export default function WebhookHero({ appCount }) {
                     />
 
                     {/* Content */}
-                    <div className="relative z-10 p-12 lg:p-20 w-full min-h-[520px] grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-12 items-center">
+                    <div className="relative z-10 p-6 sm:p-8 md:p-12 lg:p-20 w-full min-h-[420px] sm:min-h-[480px] md:min-h-[520px] grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-8 sm:gap-10 md:gap-12 items-center">
                         {/* Left */}
                         <div className="flex flex-col gap-2 items-start text-left max-[960px]:items-center max-[960px]:text-center">
                             <Link
                                 href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
-                                className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-sm px-4 py-1.5 mb-4 text-sm border border-white/20 shadow-sm hover:bg-white hover:shadow-md transition-all"
+                                className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-sm px-3 py-1.5 mb-4 text-xs md:text-sm border border-white/20 shadow-sm hover:bg-white hover:shadow-md transition-all max-w-full"
                             >
-                                <Gift size={16} className="text-accent" />
-                                <span className="font-medium text-accent tracking-wide">LIMITED-TIME OFFER</span>
-                                <span className="text-gray-700 font-medium text-sm">
+                                <Gift size={14} className="text-accent shrink-0" />
+                                <span className="font-medium text-accent tracking-wide whitespace-nowrap">LIMITED-TIME OFFER</span>
+                                <span className="text-gray-700 font-medium">
                                     Get 6 months for the price of 1
                                 </span>
-                                <ArrowRight size={14} strokeWidth={2.2} />
+                                <ArrowRight size={14} strokeWidth={2.2} className="shrink-0" />
                             </Link>
                             <h1 className="h1 !text-white flex flex-wrap items-center gap-1 mb-4">
                                 The Fastest Way to Add Intgrations to Your Product
                             </h1>
 
-                            <p className="text-xl text-white/70 max-w-[480px] mb-8 leading-[1.55] font-normal max-[960px]:mx-auto">
+                            <p className="text-base sm:text-lg md:text-xl text-white/70 max-w-[480px] mb-6 md:mb-8 leading-[1.55] font-normal max-[960px]:mx-auto">
                                 Connect your product to {appCount + 300}+ apps with one simple connection. No custom
                                 integraton required{' '}
                             </p>
 
-                            <div className="flex items-center gap-6">
+                            <div className="flex gap-3 sm:gap-4 md:gap-6 items-center justify-center md:justify-start w-full">
                                 <Link
                                     href="https://viasocket.com/signup?utm_source=/embed/actions-via-webhook"
                                     className="btn btn-outline"
@@ -207,7 +207,7 @@ export default function WebhookHero({ appCount }) {
                                 </Link>
                                 <Link
                                     href="https://cal.id/team/viasocket/sales-team"
-                                    className="text-white/80 hover:text-white underline text-lg"
+                                    className="text-white/80 hover:text-white underline"
                                     target="_blank"
                                 >
                                     Contact Sales

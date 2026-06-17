@@ -6,7 +6,7 @@ const StepLabel = ({ children }) => (
 
 const StepCard = ({ children }) => (
     <div className="flex-1 w-full flex flex-col">
-        <div className="bg-white border border-gray-200 rounded-md p-6 flex items-center justify-center min-h-[260px] max-h-[260px]">
+        <div className="bg-white border border-gray-200 rounded-md p-6 flex items-center justify-center min-h-[200px] sm:min-h-[260px] max-h-none sm:max-h-[260px]">
             {children}
         </div>
     </div>
@@ -33,7 +33,7 @@ export default function HowFlowBecomesAiTool() {
                     <h2 className="text-3xl md:text-4xl font-medium text-gray-900">How a flow becomes an AI tool</h2>
                 </div>
 
-                <div className="flex flex-col lg:flex-row items-stretch gap-6 md:gap-2">
+                <div className="flex flex-col lg:flex-row items-stretch gap-4 md:gap-2">
                     {/* Step 1 */}
                     <div className="flex-1 flex flex-col justify-between">
                         <StepLabel>STEP 01</StepLabel>
@@ -87,7 +87,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-medium text-lg">Build Your workflow</h3>
+                            <h3 className="font-medium text-base sm:text-lg">Build Your workflow</h3>
                             <p className="text-sm text-gray-600">
                                 Connect apps and define the actions you want to automate.{' '}
                             </p>
@@ -124,7 +124,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-medium text-lg">viaSocket turns it into a tool</h3>
+                            <h3 className="font-medium text-base sm:text-lg">viaSocket turns it into a tool</h3>
                             <p className="text-sm text-gray-600">
                                 We handle authentication, schemas, and orchestration behind the scenes.
                             </p>
@@ -165,7 +165,7 @@ export default function HowFlowBecomesAiTool() {
                             </div>
                         </StepCard>
                         <div className="mt-5">
-                            <h3 className="font-medium text-lg">Call it from your AI</h3>
+                            <h3 className="font-medium text-base sm:text-lg">Call it from your AI</h3>
                             <p className="text-sm text-gray-600">
                                 Your AI calls one tool and the entire workflow runs automatically.
                             </p>
