@@ -74,7 +74,11 @@ export default function HeroSection({ hasToken }) {
 
                 <div className="flex items-center gap-8 flex-wrap justify-center">
                     <CTAButtons hasToken={hasToken} />
-                    <Link href="/support" className="group flex items-center gap-2.5 cursor-pointer no-underline">
+                    <Link
+                        href="/expert-are-live"
+                        target="_blank"
+                        className="group flex items-center gap-2.5 cursor-pointer no-underline"
+                    >
                         <div className="flex items-center">
                             <Image
                                 className={AVATAR_BASE}
