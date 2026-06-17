@@ -105,8 +105,8 @@ export default function HeroSection({ hasToken }) {
                                 <span className="absolute bottom-0.5 right-0.5 w-[13px] h-[13px] rounded-full bg-[#22c55e] border-[2.5px] border-white z-[2] animate-pulse-dot" />
                             </span>
                         </div>
-                        <span className="text-[15px] font-medium text-accent flex items-center gap-1.5 -tracking-[0.01em]">
-                            Experts are live{' '}
+                        <span className="text-base font-medium text-accent flex items-center gap-1.5 -tracking-[0.01em]">
+                            Talk to an experts
                             <span className="text-[17px] transition-transform duration-200 group-hover:translate-x-1">
                                 →
                             </span>

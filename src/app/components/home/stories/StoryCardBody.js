@@ -13,7 +13,7 @@ const StoryCardBody = memo(function StoryCardBody({ headline, teaser, featured }
     return (
         <div className={`flex flex-col flex-1 min-w-0 ${featured ? 'p-8' : 'p-4'}`}>
             <h3
-                className={`font-semibold leading-snug ${featured ? 'text-[22px] mb-3' : 'text-[14px] mb-2'}`}
+                className={`font-semibold leading-snug ${featured ? 'text-xl mb-3' : 'text-[14px] mb-2'}`}
                 style={featured ? { color: 'rgba(0,0,0,0.85)' } : clampedHeadlineStyle}
             >
                 {headline}

@@ -301,7 +301,7 @@ function ReviewBadge({
       <div className="text-[12px] text-nowrap" style={{ color: theme.reviewText }}>
         <span className="font-medium" style={{ color: theme.reviewHighlight }}>{rating}</span> on {platform}
       </div>
-      <div className="text-[11px]" style={{ color: theme.reviewCount }}>({reviews})</div>
+      <div className="text-sm" style={{ color: theme.reviewCount }}>({reviews})</div>
     </div>
   );
 }

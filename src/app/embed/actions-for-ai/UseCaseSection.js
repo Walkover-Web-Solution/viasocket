@@ -9,7 +9,7 @@ export default function UseCaseSection() {
           <div className="inline-flex items-center gap-1.5 text-accent text-base font-bold py-1 rounded-full mb-4 tracking-wider uppercase">
             See it in action
           </div>
-          <h2 className="text-[32px] font-medium tracking-tight leading-tight text-[#0a0a0a] mb-3">
+          <h2 className="h2">
             Context in. Action out.
           </h2>
           <p className="text-[14.5px] leading-[1.75] mb-[18px] font-normal">

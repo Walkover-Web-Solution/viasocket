@@ -4,7 +4,7 @@ export default function DarkCta() {
     return (
         <section className="bg-black py-16 text-center">
             <div className="container mx-auto px-4">
-                <h2 className="mx-auto mb-3 max-w-[560px] text-[30px] font-medium leading-[1.25] tracking-[-0.7px] text-white">
+                <h2 className="h2 text-white">
                     Ship an AI agent that actually does things
                 </h2>
                 <p className="mx-auto mb-8 max-w-[500px] text-[14px] font-normal leading-[1.75] text-white/50">

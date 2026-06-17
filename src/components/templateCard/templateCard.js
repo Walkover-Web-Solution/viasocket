@@ -25,7 +25,7 @@ const TemplateCard = ({ template, preventClick, isFeatured }) => {
                 <TemplateCardIcons template={template} />
 
                 <div className="flex-1 flex items-center">
-                    <h4 className={`line-clamp-3 font-[Inter,sans-serif] text-[30px] font-[720] leading-[38px] tracking-[-0.5px] m-0`}>{template?.title}</h4>
+                    <h4 className={`line-clamp-3 font-[Inter,sans-serif] text-3xl font-[720] leading-[38px] tracking-[-0.5px] m-0`}>{template?.title}</h4>
                 </div>
 
                 <div className="flex items-center justify-between mt-auto">

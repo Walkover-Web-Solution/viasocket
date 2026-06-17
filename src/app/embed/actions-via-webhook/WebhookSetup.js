@@ -35,7 +35,7 @@ export default function WebhookSetup() {
                                     {'// https://flow.viasocket.com/webhook/{token}'}
                                 </span>
                             </pre>
-                            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">
+                            <div className="px-6 py-2 text-sm tracking-wider text-gray-500 border-t border-white/5">
                                 JSON PAYLOAD
                             </div>
                         </div>
@@ -59,7 +59,7 @@ export default function WebhookSetup() {
                                     {'\n'} &quot;amount&quot;: 49.99{'\n'} &apos;
                                 </span>
                             </pre>
-                            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">
+                            <div className="px-6 py-2 text-sm tracking-wider text-gray-500 border-t border-white/5">
                                 cURL
                             </div>
                         </div>

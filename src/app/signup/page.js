@@ -227,7 +227,7 @@ export default async function SignupPage({ searchParams }) {
                         {/* Trusted by section - centered */}
                         <div className="flex flex-col items-center justify-center w-full">
                             <p className="text-gray-600n text-sm mb-4">Trusted by 4,000+ companies around the world</p>
-                            <div className="flex flex-wrap justify-center gap-12 text-[11px] sm:text-xs">
+                            <div className="flex flex-wrap justify-center gap-12 text-sm sm:text-xs">
                                 <div className="flex items-center gap-2">
                                     <span className="text-3xl">4.8</span>
                                     <div className="flex items-center flex-col gap-1">

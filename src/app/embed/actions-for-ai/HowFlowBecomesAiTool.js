@@ -78,7 +78,7 @@ export default function HowFlowBecomesAiTool() {
                                 ].map((item, i) => (
                                     <div key={i} className="flex flex-col items-center text-center w-[72px] gap-2">
                                         {item.icon}
-                                        <div className="text-[11px] font-semibold text-gray-800 mt-2 leading-tight">
+                                        <div className="text-sm font-semibold text-gray-800 mt-2 leading-tight">
                                             {item.title}
                                         </div>
                                         <div className="text-[10px] text-gray-500 leading-tight">{item.sub}</div>
@@ -108,7 +108,7 @@ export default function HowFlowBecomesAiTool() {
                                     <span className="text-xs text-gray-500">/mcp</span>
                                 </div>
                                 <div className="flex items-start gap-2 mb-3">
-                                    <span className="text-[11px] font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
+                                    <span className="text-sm font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded">
                                         Tool
                                     </span>
                                     <span className="text-sm font-mono text-gray-800">create_new_customer</span>
@@ -154,7 +154,7 @@ export default function HowFlowBecomesAiTool() {
                                                 <Check size={10} className="text-white" strokeWidth={3} />
                                             </div>
                                         </div>
-                                        <div className="text-[11px] text-green-600 font-semibold flex items-center gap-1">
+                                        <div className="text-sm text-green-600 font-semibold flex items-center gap-1">
                                             <Check size={11} strokeWidth={3} /> Completed
                                         </div>
                                         <div className="text-[10px] text-gray-500 mt-0.5">

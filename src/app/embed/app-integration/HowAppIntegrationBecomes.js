@@ -27,7 +27,7 @@ const STEPS = [
         image: 'https://stuff.thingsofbrand.com/viasocket.com/images/img7_image-26.png',
         alt: 'Build workflows',
         title: 'Build workflows',
-        desc: 'Usets connect your app with tools they already use.',
+        desc: 'Users connect your app with tools they already use.',
     },
     {
         label: 'STEP 03',

@@ -69,7 +69,7 @@ function AIAgentVisual() {
           </div>
         </div>
         <div className="px-2.5 py-1.5 bg-[#faf8ff]">
-          <span className="text-[11px] block text-[#7c3aed] font-medium">
+          <span className="text-sm block text-[#7c3aed] font-medium">
             Priority: High · Sentiment: Frustrated
           </span>
         </div>
@@ -268,7 +268,7 @@ function TablesVisual() {
           className={`grid px-2.5 py-1.5 items-center [grid-template-columns:1.2fr_1.2fr_0.8fr] ${idx < arr.length - 1 ? "border-b border-[rgba(0,0,0,0.05)]" : ""
             }`}
         >
-          <span className="text-[11px] truncate pr-2 text-[#1f2937] font-semibold">
+          <span className="text-sm truncate pr-2 text-[#1f2937] font-semibold">
             {r.name}
           </span>
           <span className="text-[10px] truncate pr-2 text-[#6b7280]">
@@ -398,7 +398,7 @@ export function CoreCapabilities() {
                             />
                           </div>
                           <span
-                            className="text-[20px] md:text-[22px] lg:text-[24px] tracking-[-0.4px] font-semibold"
+                            className="text-lg md:text-xl lg:text-xl tracking-[-0.4px] font-semibold"
                             style={{
                               color: q.accent,
                             }}
@@ -409,7 +409,7 @@ export function CoreCapabilities() {
 
                         {/* Bold headline */}
                         <p
-                          className="text-center sm:text-start leading-[1.2] tracking-[-0.4px] text-[22px] -mt-1 font-bold"
+                          className="text-center sm:text-start leading-[1.2] tracking-[-0.4px] text-xl -mt-1 font-bold"
                         >
                           {q.headline}
                         </p>

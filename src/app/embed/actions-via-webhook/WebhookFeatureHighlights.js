@@ -37,15 +37,17 @@ export default function WebhookFeatureHighlights({ appCount }) {
                     The infrastructure that turns applications events into actions across you users connected apps.
                 </p>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="bg-[#eff6ff] border border-[#dbeafe] p-8 flex flex-col gap-3">
-                    <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                        One webhook call. Endless Possibilities.
-                    </h3>
-                    <p className="text-gray-600 text-lg leading-relaxed">
-                        Send a single event and trigger actions across your users
-                        <br /> connected apps automatically.
-                    </p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-[#eff6ff] border border-[#dbeafe] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
+                            One webhook call. Endless Possibilities.
+                        </h3>
+                        <p className="text-gray-600 text-lg leading-relaxed">
+                            Send a single event and trigger actions across your users
+                            <br /> connected apps automatically.
+                        </p>
+                    </div>
                     <div className="flex items-center gap-4 mt-auto">
                         <div className="relative">
                             <div className="w-12 h-12 bg-gradient-to-br from-[#0d9488] via-[#34d399] to-[#6ee7b7] flex items-center justify-center rounded-lg animate-feat-spark-glow relative z-10">

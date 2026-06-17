@@ -37,15 +37,17 @@ export default function WhyFeatures({ appCount }) {
                     The Building blocks that enable users to connect apps, build workflows, and automate your product.
                 </p>
             </div>
-            <div className="grid grid-cols-[1fr_1.15fr] gap-7 items-stretch max-[880px]:grid-cols-1 max-[880px]:gap-5">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* LEFT: differentiator hero card */}
-                <div className="bg-[#ecfdf5] border border-gray-200 p-8 flex flex-col gap-[10px] relative overflow-hidden max-[480px]:p-[22px] max-[480px]:gap-2">
-                    <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                        Users build automations inside your product
-                    </h3>
-                    <p className="text-gray-600 text-lg leading-relaxed">
-                        Let users connect their apps and build workflows without leaving your product.
-                    </p>
+                <div className="bg-[#ecfdf5] border border-[#a7f3d0] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
+                            Users build automations inside your product
+                        </h3>
+                        <p className="text-gray-600 text-lg leading-relaxed">
+                            Let users connect their apps and build workflows without leaving your product.
+                        </p>
+                    </div>
 
                     <div className="mt-auto flex items-center gap-4 pt-8">
                         <div className="w-[54px] h-[54px] bg-gradient-to-br from-[#059669] via-[#10b981] to-[#34d399] flex items-center justify-center shrink-0 rounded-[10px] relative animate-feat-spark-glow">
@@ -67,7 +69,7 @@ export default function WhyFeatures({ appCount }) {
                         />
                         <div className="flex-1 bg-white border border-[#a7f3d0] p-4 flex flex-col gap-2 rounded-md shadow-[0_4px_14px_rgba(5,150,105,0.1)]">
                             <div className="flex items-center gap-2 text-base text-gray-700 font-medium leading-none animate-feat-item-pulse">
-                                <span className="text-gray-500 font-normal text-[11px] min-w-[14px]">1.</span>
+                                <span className="text-gray-500 font-normal text-sm min-w-[14px]">1.</span>
                                 <span className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="#059669">
                                         <rect x="3" y="3" width="18" height="18" rx="2" />
@@ -77,7 +79,7 @@ export default function WhyFeatures({ appCount }) {
                                 Trigger: New record
                             </div>
                             <div className="flex items-center gap-2 text-base text-gray-700 font-medium leading-none animate-feat-item-pulse animate-feat-item-pulse-delay-1">
-                                <span className="text-gray-500 font-normal text-[11px] min-w-[14px]">2.</span>
+                                <span className="text-gray-500 font-normal text-sm min-w-[14px]">2.</span>
                                 <span className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="#ea4335">
                                         <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
@@ -86,7 +88,7 @@ export default function WhyFeatures({ appCount }) {
                                 Send via Gmail
                             </div>
                             <div className="flex items-center gap-2 text-base text-gray-700 font-medium leading-none animate-feat-item-pulse animate-feat-item-pulse-delay-2">
-                                <span className="text-gray-500 font-normal text-[11px] min-w-[14px]">3.</span>
+                                <span className="text-gray-500 font-normal text-sm min-w-[14px]">3.</span>
                                 <span className="w-3.5 h-3.5 flex items-center justify-center shrink-0">
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="#4A154B">
                                         <path d="M5 15a2.5 2.5 0 11-2.5-2.5H5V15zm1.25 0a2.5 2.5 0 115 0v6.5a2.5 2.5 0 11-5 0V15zM8.75 5a2.5 2.5 0 11-2.5 2.5V5h2.5zM8.75 6.25a2.5 2.5 0 110 5h-6.25a2.5 2.5 0 110-5h6.25z" />
@@ -102,7 +104,7 @@ export default function WhyFeatures({ appCount }) {
                 </div>
 
                 {/* RIGHT: 2x2 grid */}
-                <div className="grid grid-cols-2 grid-rows-[1fr_1fr] gap-4 max-[560px]:grid-cols-1">
+                <div className="grid grid-cols-2 gap-4">
                     {features.map((f, i) => {
                         const Icon = f.icon;
                         return (

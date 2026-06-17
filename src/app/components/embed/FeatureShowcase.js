@@ -1,42 +1,42 @@
 import { Lock, Box, FileText, Zap } from 'lucide-react';
 import WorkflowIllustration from './WorkflowIllustration';
 
-const EmbedImageSelector = ({ appCount }) => {
+const FeatureShowcase = ({ appCount }) => {
     const totalApps = appCount ? `${appCount + 300}+` : '2,200+';
 
     const FEATURES = [
         {
             icon: Lock,
             iconBg: 'bg-emerald-50 text-emerald-600',
-            title: 'Build in User Authentication',
-            desc: 'Users connect apps securely without leaving you product.',
+            title: 'Build in app Authentication',
+            desc: 'Let users securely connect their apps without leaving your platform.',
         },
         {
             icon: Box,
             iconBg: 'bg-indigo-50 text-indigo-600',
-            title: `${totalApps} Apps Integrations`,
-            desc: 'Pre-build integrations and OAuth flows included.',
+            title: `Connect any app in minutes`,
+            desc: 'Connect to thousands of apps using pre-built connectors and built-in authentication',
         },
         {
             icon: FileText,
             iconBg: 'bg-amber-50 text-amber-600',
-            title: 'Work with any AI Model',
-            desc: 'Compatible with OpenAI, Claude, Gemini, and more.',
+            title: 'Make automatuon feel native',
+            desc: 'Embed automation directly into your product with a fully customizable experience.',
         },
         {
             icon: Zap,
             iconBg: 'bg-violet-50 text-violet-600',
-            title: 'AI Tool Calling',
-            desc: 'Give AI access to connected apps with one endpoint',
+            title: 'Built-in monitoring',
+            desc: "Track every action in one place. See what's working, what's failing, and what needs attention.",
         },
     ];
     return (
         <div className="container">
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
-                    <h2 className="h2">Built-In Capabilities for AI Agents</h2>
+                    <h2 className="h2">Everything you need to own the integration layer</h2>
                     <p className="text-xl">
-                        The building blocks that enable AI agents to securely connect, decide, and take action.
+                        Your users connect their apps, and automatuon across them, all inside your product.
                     </p>
                 </div>
 
@@ -44,11 +44,11 @@ const EmbedImageSelector = ({ appCount }) => {
                     <div className="bg-[#EFEAFE] border border-[#d8ccf7] p-8 md:px-12 md:py-20 flex flex-col gap-8 justify-between">
                         <div className="flex flex-col gap-4">
                             <h3 className="text-3xl md:text-4xl font-medium text-gray-900 leading-tight">
-                                Multi-step flows as single AI tools
+                                Enable your users to build multi-step workflows
                             </h3>
                             <p className="text-gray-600 text-lg leading-relaxed">
-                                Your AI calls the entire workflow as a one tool <br />
-                                No complex chaining, no context switching.
+                                Embed a visual automation builder that enables users to create multi-step workflows
+                                using triggers, actions, and conditions across {appCount + 300}+ apps.
                             </p>
                         </div>
 
@@ -77,4 +77,4 @@ const EmbedImageSelector = ({ appCount }) => {
     );
 };
 
-export default EmbedImageSelector;
+export default FeatureShowcase;
