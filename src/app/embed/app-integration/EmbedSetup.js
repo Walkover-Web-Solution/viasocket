@@ -29,12 +29,12 @@ export default function EmbedSetup() {
                                 <span className="text-[#86efac]">&quot;your_org_id&quot;</span>,{'\n'}{' '}
                                 <span className="text-[#86efac]">&quot;project_id&quot;</span>:{' '}
                                 <span className="text-[#86efac]">&quot;your_project_id&quot;</span>,{'\n'}{' '}
-                                <span className="text-[#86efac]">&quot;user_id&quot;</span>:{' '}
+                                <span className="text-[#86efac]">&quot;unique_identifier&quot;</span>:{' '}
                                 <span className="text-[#86efac]">&quot;unique_user_id&quot;</span>
                                 {'\n'}
                                 {'}'}
                             </pre>
-                            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">
+                            <div className="px-6 py-2 text-sm tracking-wider text-gray-500 border-t border-white/5">
                                 JSON PAYLOAD
                             </div>
                         </div>
@@ -75,7 +75,7 @@ export default function EmbedSetup() {
                                 {'\n'}
                                 <span className="text-[#fb7185]">&lt;/script&gt;</span>
                             </pre>
-                            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">
+                            <div className="px-6 py-2 text-sm tracking-wider text-gray-500 border-t border-white/5">
                                 HTML
                             </div>
                         </div>

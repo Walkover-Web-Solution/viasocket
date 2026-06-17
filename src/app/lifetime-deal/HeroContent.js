@@ -31,7 +31,7 @@ export default function HeroContent() {
                 Pay <span className="text-accent">once</span>. Automate <span className="text-accent">forever</span>.
             </h1>
 
-            <p className="text-[17px] md:text-[18px] leading-[1.65] max-w-[620px] m-0 mb-6">
+            <p className="text-[17px] md:text-lg leading-[1.65] max-w-[620px] m-0 mb-6">
                 One payment for viaSocket &mdash; instead of{' '}
                 <strong className="font-semibold">$840+ every single year</strong> to other automation tools
                 <br />

@@ -12,7 +12,7 @@ export default function Step4({ total, basePrice }) {
             </div>
 
             <div className="border border-[#ececec] rounded-xl p-5 mb-3.5">
-                <h4 className="text-[15px] font-bold text-[#111] mb-3.5">Card details</h4>
+                <h4 className="text-base font-bold text-[#111] mb-3.5">Card details</h4>
                 <div className="mb-3.5">
                     <label className="block text-xs font-semibold text-[#111] mb-2">Card number</label>
                     <input className={inp} placeholder="4242 4242 4242 4242" />
@@ -33,7 +33,7 @@ export default function Step4({ total, basePrice }) {
             </div>
 
             <div className="bg-[#faf9f4] rounded-xl px-5 py-[18px]">
-                <h4 className="text-[15px] font-bold text-gray-500 mb-3">Payment summary</h4>
+                <h4 className="text-base font-bold text-gray-500 mb-3">Payment summary</h4>
                 <div className="flex justify-between items-center py-1 text-xs text-gray-500">
                     <span>Expert consultation</span>
                     <span className="text-gray-500">$320</span>
@@ -46,7 +46,7 @@ export default function Step4({ total, basePrice }) {
                     <span>Estimated tax</span>
                     <span className="text-gray-500">$26</span>
                 </div>
-                <div className="flex justify-between items-center pt-3 mt-3 border-t border-[#ececec] text-[15px] font-bold text-gray-500">
+                <div className="flex justify-between items-center pt-3 mt-3 border-t border-[#ececec] text-base font-bold text-gray-500">
                     <span>Total</span>
                     <strong className="text-accent text-xl tracking-[-0.4px]">$346</strong>
                 </div>

@@ -2,7 +2,6 @@ import BlogGrid from '../blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import EmbedSetupSteps from './EmbedSetupSteps';
-import EmbedImageSelector from './EmbedImageSelector';
 import EmbedHero from './EmbedHero';
 import EmbedFeatureCards from './EmbedFeatureCards';
 import GetStarted from '@/components/getStarted/getStarted';
@@ -10,6 +9,7 @@ import EmbedPricing from './EmbedPricing';
 import EmbedChatbotAction from './EmbedChatbotAction';
 import ShowBadges from '../home/ShowBadges';
 import SecuritySection from '../SecuritySection';
+import FeatureShowcase from './FeatureShowcase';
 
 export default function EmbedContent({ blogData, footerData, faqData, embedData, appCount, securityGridData }) {
     return (
@@ -19,7 +19,7 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                 <EmbedFeatureCards />
             </div>
 
-            <EmbedImageSelector embedData={embedData} appCount={appCount} />
+            <FeatureShowcase embedData={embedData} appCount={appCount} />
 
             <EmbedSetupSteps />
             <EmbedPricing appCount={appCount} />

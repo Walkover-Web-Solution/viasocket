@@ -41,7 +41,7 @@ export default function LifetimeDealFooter({ appCount = 0, containerClassName = 
                                 unoptimized
                             />
                         </div>
-                        <p className="text-[15px] text-white/70 leading-[1.7] max-w-[340px] mb-6">
+                        <p className="text-base text-white/70 leading-[1.7] max-w-[340px] mb-6">
                             Automate smarter with AI-powered workflows and {appCount + 300}+ app integrations.
                         </p>
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-[13px] text-white/50">
@@ -57,7 +57,7 @@ export default function LifetimeDealFooter({ appCount = 0, containerClassName = 
                     <div className="lg:col-span-7 flex flex-col sm:flex-row gap-10 sm:gap-0">
                         {/* Resources */}
                         <div className="sm:pr-12 sm:border-r sm:border-white/10">
-                            <h3 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
+                            <h3 className="text-sm font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
                                 Resources
                             </h3>
                             <ul className="flex flex-col gap-2.5">
@@ -93,7 +93,7 @@ export default function LifetimeDealFooter({ appCount = 0, containerClassName = 
                         </div>
                         {/* Follow Us */}
                         <div className="sm:pl-12">
-                            <h3 className="text-[11px] font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
+                            <h3 className="text-sm font-semibold tracking-[0.12em] uppercase text-white/40 mb-5">
                                 Follow Us
                             </h3>
                             <div className="flex items-center gap-3">

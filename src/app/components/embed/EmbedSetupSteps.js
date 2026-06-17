@@ -53,7 +53,7 @@ function CodeBlock({ code, label, tokens }) {
                     <div key={i}>{line ? highlight(line) : '\u00A0'}</div>
                 ))}
             </pre>
-            <div className="px-6 py-2 text-[11px] tracking-wider text-gray-500 border-t border-white/5">{label}</div>
+            <div className="px-6 py-2 text-sm tracking-wider text-gray-500 border-t border-white/5">{label}</div>
         </div>
     );
 }

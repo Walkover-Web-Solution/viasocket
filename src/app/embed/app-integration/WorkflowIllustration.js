@@ -54,15 +54,15 @@ export default function WorkflowIllustration() {
                     <div className="flex items-center justify-between px-[18px] py-[10px] border-b bg-white">
                         <div className="flex-1" />
                         <div className="flex gap-[2px] bg-[#f3f4f6] rounded-lg p-[3px]">
-                            <span className="text-[11px] font-semibold text-[#0a0a0a] px-[14px] py-[5px] rounded-md leading-none bg-white shadow-[0_1px_3px_rgba(0,0,0,.08)]">
+                            <span className="text-sm font-semibold text-[#0a0a0a] px-[14px] py-[5px] rounded-md leading-none bg-white shadow-[0_1px_3px_rgba(0,0,0,.08)]">
                                 Integrations
                             </span>
-                            <span className="text-[11px] font-semibold text-[#6b7280] px-[14px] py-[5px] rounded-md leading-none">
+                            <span className="text-sm font-semibold text-[#6b7280] px-[14px] py-[5px] rounded-md leading-none">
                                 History
                             </span>
                         </div>
                         <div className="flex-1 flex justify-end">
-                            <span className="text-[11px] font-semibold text-[#059669] bg-[#ecfdf5] border border-[#a7f3d0] rounded-md px-[10px] py-[5px] leading-none">
+                            <span className="text-sm font-semibold text-[#059669] bg-[#ecfdf5] border border-[#a7f3d0] rounded-md px-[10px] py-[5px] leading-none">
                                 + New workflow
                             </span>
                         </div>
@@ -226,7 +226,7 @@ export default function WorkflowIllustration() {
                                 {APPS_LIST.map((app) => (
                                     <div
                                         key={app.name}
-                                        className="flex items-center gap-2 text-[11px] font-semibold text-[#374151] bg-white border rounded-[7px] px-2 py-[6px] leading-none"
+                                        className="flex items-center gap-2 text-sm font-semibold text-[#374151] bg-white border rounded-[7px] px-2 py-[6px] leading-none"
                                     >
                                         <div className="w-6 h-6 rounded-md flex items-center justify-center shrink-0 overflow-hidden bg-[#f4f4f5] border">
                                             <Image
@@ -252,7 +252,7 @@ export default function WorkflowIllustration() {
                                     return (
                                         <div
                                             key={tool.name}
-                                            className="flex items-center gap-2 text-[11px] font-semibold text-[#374151] bg-white border rounded-[7px] px-2 py-[6px] leading-none"
+                                            className="flex items-center gap-2 text-sm font-semibold text-[#374151] bg-white border rounded-[7px] px-2 py-[6px] leading-none"
                                         >
                                             <div
                                                 className="w-6 h-6 rounded-md flex items-center justify-center shrink-0 overflow-hidden text-[9px] font-medium"

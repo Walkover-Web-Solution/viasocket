@@ -128,7 +128,7 @@ export default function PricingCard() {
                                 <polyline points="17 11 19 13 23 9" />
                             </svg>
                         </span>
-                        <span className="flex-1 text-left text-[15px] font-semibold text-gray-900">{plan.name}</span>
+                        <span className="flex-1 text-left text-base font-semibold text-gray-900">{plan.name}</span>
                         <svg
                             className={`transition-transform ${open ? 'rotate-180' : ''}`}
                             viewBox="0 0 24 24"
@@ -169,7 +169,7 @@ export default function PricingCard() {
 
                 {/* Plan details */}
                 {plan.badge && (
-                    <span className="inline-block px-2.5 py-1 bg-accent/10 text-accent text-[11px] font-bold tracking-wider rounded mb-3">
+                    <span className="inline-block px-2.5 py-1 bg-accent/10 text-accent text-sm font-bold tracking-wider rounded mb-3">
                         {plan.badge}
                     </span>
                 )}

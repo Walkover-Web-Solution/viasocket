@@ -17,7 +17,7 @@ export default function Step5({ selectedDate, setSelectedDate, selectedTime, set
     return (
         <div className="animate-[hireStepFade_0.32s_cubic-bezier(0.2,0.7,0.2,1)]">
             <div className="flex items-center justify-between mb-3.5">
-                <div className="text-[15px] font-bold text-[#111] tracking-[-0.2px]">{monthLabel}</div>
+                <div className="text-base font-bold text-[#111] tracking-[-0.2px]">{monthLabel}</div>
                 <div className="flex gap-1">
                     <button
                         onClick={() => setMonthOffset((m) => Math.max(0, m - 1))}
@@ -34,7 +34,7 @@ export default function Step5({ selectedDate, setSelectedDate, selectedTime, set
                 </div>
             </div>
 
-            <div className="grid grid-cols-7 gap-1 mb-2 text-center text-[11px] font-semibold text-[#888] uppercase tracking-wide">
+            <div className="grid grid-cols-7 gap-1 mb-2 text-center text-sm font-semibold text-[#888] uppercase tracking-wide">
                 {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((d) => (
                     <div key={d} className="py-1.5">
                         {d}
@@ -75,7 +75,7 @@ export default function Step5({ selectedDate, setSelectedDate, selectedTime, set
 
             {selectedDate && (
                 <>
-                    <h4 className="text-[15px] font-bold text-[#111] mb-3 tracking-[-0.2px]">Pick a time (IST)</h4>
+                    <h4 className="text-base font-bold text-[#111] mb-3 tracking-[-0.2px]">Pick a time (IST)</h4>
                     <div className="grid grid-cols-3 gap-2 mb-2">
                         {times.map((t) => {
                             const selected = selectedTime === t;

@@ -17,7 +17,7 @@ function Card({ item, hidden }) {
             className="flex-[0_0_260px] sm:flex-[0_0_290px] lg:flex-[0_0_320px] bg-white rounded-[16px] border border-black/[0.05] hover:border-[#a8200d]/30 px-[18px] py-[10px] lg:px-[22px] lg:pt-[14px] lg:pb-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_10px_24px_-12px_rgba(0,0,0,0.1)] hover:shadow-[0_1px_3px_rgba(0,0,0,0.03),0_0_0_1px_rgba(168,32,13,0.12),0_14px_32px_-10px_rgba(0,0,0,0.11)] hover:-translate-y-[3px] transition-all duration-[280ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] flex flex-col motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             aria-hidden={hidden || undefined}
         >
-            <div className="font-serif text-[28px] leading-[0.5] font-bold text-[#fbb5a4] mb-[6px] h-[12px] tracking-[-0.02em]" aria-hidden="true">
+            <div className="font-serif text-2xl leading-[0.5] font-bold text-[#fbb5a4] mb-[6px] h-[12px] tracking-[-0.02em]" aria-hidden="true">
                 &ldquo;
             </div>
             <p className="text-xs text-[#1a1a1a] leading-[1.45] line-clamp-6 tracking-[-0.05px] mb-2 flex-grow">
@@ -64,7 +64,7 @@ export default function Testimonials({ reviewData = [] }) {
                     <span className="inline-block text-[#a8200d] text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
                         LOVED BY TEAMS
                     </span>
-                    <h2 className="text-[34px] md:text-[44px] lg:text-[60px] font-medium leading-[1.06] tracking-[-0.6px] md:tracking-[-1px] lg:tracking-[-1.6px] text-[#1a1a1a] mx-auto max-w-[1100px] m-0">
+                    <h2 className="h2">
                         Real teams. Real results.
                         <br />
                         Real <span className="text-[#a8200d]">automation impact.</span>
@@ -76,7 +76,7 @@ export default function Testimonials({ reviewData = [] }) {
                         <div className="font-serif text-[88px] lg:text-[120px] leading-[0.7] text-[#a8200d]/[0.18] font-bold mb-3 tracking-[-0.02em]" aria-hidden="true">
                             &ldquo;
                         </div>
-                        <h3 className="text-2xl lg:text-[30px] font-medium tracking-[-0.6px] leading-[1.15] text-[#1a1a1a] mb-7 lg:mb-10">
+                        <h3 className="text-2xl lg:text-3xl font-medium tracking-[-0.6px] leading-[1.15] text-[#1a1a1a] mb-7 lg:mb-10">
                             What our customers
                             <br />
                             are <span className="text-[#a8200d]">saying</span>

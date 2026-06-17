@@ -92,7 +92,7 @@ export default function FAQSection() {
         <section className="bg-white py-24">
             <div className="container">
                 <div className="text-center mb-16">
-                    <span className="inline-block text-[11px] font-bold tracking-[0.18em] uppercase text-[#a8200d] mb-4">
+                    <span className="inline-block text-sm font-bold tracking-[0.18em] uppercase text-[#a8200d] mb-4">
                         FAQ
                     </span>
                     <h2 className="h2 mb-4">
@@ -120,7 +120,7 @@ export default function FAQSection() {
                             <div
                                 className={`overflow-hidden transition-all duration-300 ease-in-out ${openIndex === index ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'}`}
                             >
-                                <div className="pb-6 text-[15px] leading-[1.7] text-black/50 max-w-[720px] [&_ul]:mt-3 [&_ul]:list-none [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-2 [&_ul]:pl-0 [&_li]:relative [&_li]:pl-4 [&_li]:before:content-[''] [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[10px] [&_li]:before:w-[5px] [&_li]:before:h-[5px] [&_li]:before:rounded-full [&_li]:before:bg-[#a8200d] [&_p]:mt-3">
+                                <div className="pb-6 text-base leading-[1.7] text-black/50 max-w-[720px] [&_ul]:mt-3 [&_ul]:list-none [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-2 [&_ul]:pl-0 [&_li]:relative [&_li]:pl-4 [&_li]:before:content-[''] [&_li]:before:absolute [&_li]:before:left-0 [&_li]:before:top-[10px] [&_li]:before:w-[5px] [&_li]:before:h-[5px] [&_li]:before:rounded-full [&_li]:before:bg-[#a8200d] [&_p]:mt-3">
                                     {item.answer}
                                 </div>
                             </div>

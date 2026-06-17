@@ -188,7 +188,7 @@ export default function Pricing() {
                         className="hidden sm:flex shrink-0 w-16 h-16 rounded-full border-2 border-dashed border-green-600 flex-col items-center justify-center text-green-600 leading-none"
                         aria-hidden
                     >
-                        <span className="text-[22px] font-medium">30</span>
+                        <span className="text-xl font-medium">30</span>
                         <span className="text-[9px] font-bold tracking-[0.16em] mt-0.5">DAYS</span>
                     </div>
                     <div className="flex-1">

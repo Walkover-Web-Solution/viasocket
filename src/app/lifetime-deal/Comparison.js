@@ -44,7 +44,7 @@ export default function Comparison() {
                             />
                             <span className="text-white text-[13px] font-semibold tracking-wide">SOCKET</span>
                         </div>
-                        <div className="text-[26px] font-medium text-white tracking-[-0.7px] mb-2">
+                        <div className="text-2xl font-medium text-white tracking-[-0.7px] mb-2">
                             Team Plan Lifetime
                         </div>
                         <div className="text-[13.5px] text-white/60 mb-5">Pay once. Use forever.</div>

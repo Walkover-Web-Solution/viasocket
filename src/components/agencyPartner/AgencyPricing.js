@@ -53,12 +53,12 @@ const AgencyPricing = () => {
                 <div className="w-full lg:w-[400px] flex-shrink-0">
                     <div className="relative bg-[#fafafa] rounded-2xl p-6 pt-10 border border-gray-200">
                         {/* Badge */}
-                        <span className="absolute -top-3 left-6 inline-block text-[11px] font-semibold text-white bg-gray-900 rounded-full px-3 py-1.5">
+                        <span className="absolute -top-3 left-6 inline-block text-sm font-semibold text-white bg-gray-900 rounded-full px-3 py-1.5">
                             25% partner discount
                         </span>
 
                         {/* Plan Name */}
-                        <p className="text-[11px] font-bold tracking-[0.15em] text-[#A8200D] uppercase mb-3">
+                        <p className="text-sm font-bold tracking-[0.15em] text-[#A8200D] uppercase mb-3">
                             Agency Partner Plan
                         </p>
 

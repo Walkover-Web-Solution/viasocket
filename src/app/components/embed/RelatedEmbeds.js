@@ -40,10 +40,10 @@ export default function RelatedEmbeds({
     return (
         <section className="container p-6 md:p-12 bg-white">
             <div className="mb-10 text-center">
-                <h3 className="text-[26px] md:text-[34px] font-medium text-[#0a0a0a] tracking-[-0.7px] mb-2 leading-[1.2]">
+                <h3 className="text-2xl md:text-3xl font-medium text-[#0a0a0a] tracking-[-0.7px] mb-2 leading-[1.2]">
                     {heading}
                 </h3>
-                <p className="text-[15px] text-gray-500 font-normal">{subheading}</p>
+                <p className="text-base text-gray-500 font-normal">{subheading}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 px-12">
                 {items.map((item) => {

@@ -171,7 +171,7 @@ export default function FAQs({ faqData = [], isHomepage = false }) {
 
                     {/* que */}
                     <span
-                      className={`flex-1 text-[15px] md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--black-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
+                      className={`flex-1 text-base md:text-[16px] transition-colors duration-200 font-semibold ${isOpen ? "text-[var(--black-color)] font-bold" : "text-[rgba(0,0,0,0.8)] font-semibold"}`}
                     >
                       {faq?.que || faq?.question}
                     </span>

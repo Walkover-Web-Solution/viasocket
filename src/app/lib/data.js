@@ -8,7 +8,7 @@ import {
     getExpertBlogs,
     getPageData,
     getEmbedData,
-    getFeaturedTemplatesData
+    getFeaturedTemplatesData,
 } from '@/utils/getData';
 import { securityGridData } from './securityGridData';
 import {
@@ -21,7 +21,7 @@ import {
     EXPERTBLOGS_FIELDS,
     PAGEDATA_FIELDS,
     EMBED_FIELDS,
-    FEATUREDTEMPLATES_FIELDS
+    FEATUREDTEMPLATES_FIELDS,
 } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
@@ -36,8 +36,7 @@ function buildClientStories(pages = {}) {
     const blogBaseUrl = 'https://viasocket.com/blog';
     const maxStories = 6;
 
-    const slugify = (value) =>
-        (value || '').toString().trim().toLowerCase().replace(/\s+/g, '-');
+    const slugify = (value) => (value || '').toString().trim().toLowerCase().replace(/\s+/g, '-');
 
     const formatTag = (tag) =>
         (tag || targetSlug)
@@ -227,7 +226,7 @@ export async function getWorkflowAutomationsPageData() {
                 iconName: 'error',
                 title: 'Reduces errors',
                 description:
-                    'Automated processes follow the same steps every time, which means fewer mistakes compared to manual work where people might forget steps or make typos.',
+                    'Automated processes follow the same steps every time, which means fewer mistakes compared to manual work where people might forget steps or make types.',
             },
             {
                 iconName: 'team',
@@ -721,4 +720,3 @@ export async function getFindAppsPageData(slug = []) {
         };
     }
 }
-

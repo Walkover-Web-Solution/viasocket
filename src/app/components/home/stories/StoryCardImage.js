@@ -5,7 +5,7 @@ const StoryCardImage = memo(function StoryCardImage({ image, headline, tag, feat
     const height = featured ? 240 : 140;
     const sizes = featured ? '(max-width: 768px) 100vw, 58vw' : '(max-width: 768px) 100vw, 42vw';
     const overlayHeight = featured ? 'h-16' : 'h-12';
-    const tagPosition = featured ? 'bottom-5 left-6 text-[11px]' : 'bottom-3 left-4 text-[9px]';
+    const tagPosition = featured ? 'bottom-5 left-6 text-sm' : 'bottom-3 left-4 text-[9px]';
     const overlayOpacity = featured ? 0.55 : 0.5;
 
     return (

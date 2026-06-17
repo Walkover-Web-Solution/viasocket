@@ -114,7 +114,7 @@ export default function FooterNew({ footerData = [] }) {
                   <div key={groupName}>
                     {groupName && (
                       <h4
-                        className="text-[11px] tracking-[1.65px] uppercase mb-4 whitespace-pre-wrap text-[#ffffff99]"
+                        className="text-sm tracking-[1.65px] uppercase mb-4 whitespace-pre-wrap text-[#ffffff99]"
                         style={{
                           lineHeight: "16.5px",
                         }}

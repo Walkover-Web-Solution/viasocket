@@ -78,7 +78,7 @@ export default function CaseStudies() {
                             <span className="text-[52px] font-semibold text-[#1a1a1a] leading-none tracking-[-1.4px]">
                                 {c.metric}
                             </span>
-                            <span className="text-[15px] font-medium">{c.sub}</span>
+                            <span className="text-base font-medium">{c.sub}</span>
                         </div>
                     </article>
                 ))}
