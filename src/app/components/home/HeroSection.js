@@ -75,7 +75,7 @@ export default function HeroSection({ hasToken }) {
                 <div className="flex items-center gap-8 flex-wrap justify-center">
                     <CTAButtons hasToken={hasToken} />
                     <Link
-                        href="/expert-are-live"
+                        href="/experts-are-live"
                         target="_blank"
                         className="group flex items-center gap-2.5 cursor-pointer no-underline"
                     >
@@ -106,7 +106,7 @@ export default function HeroSection({ hasToken }) {
                             </span>
                         </div>
                         <span className="text-[15px] font-medium text-accent flex items-center gap-1.5 -tracking-[0.01em]">
-                            Talk to an expert{' '}
+                            Experts are live{' '}
                             <span className="text-[17px] transition-transform duration-200 group-hover:translate-x-1">
                                 →
                             </span>
