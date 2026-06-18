@@ -48,7 +48,7 @@ function PlanCard({ plan }) {
         >
             {(plan.highlight || plan.badge) && (
                 <div
-                    className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-sm font-bold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
+                    className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-xs font-semibold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
                 >
                     Buy 1 month, get 5 free
                 </div>
@@ -94,7 +94,7 @@ export default function EmbedPricing({ appCount }) {
         <div className="container" id="pricing">
             <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">
                 <div className="flex flex-col gap-1">
-                    <h2 className="text-4xl font-medium text-black">Embed Pricing</h2>
+                    <h2 className="text-2xl md:text-4xl font-medium text-black">Embed Pricing</h2>
                     <p className="text-gray-600 text-lg">Choose the perfect plan that fits your need.</p>
                 </div>
 

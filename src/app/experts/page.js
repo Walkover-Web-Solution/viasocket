@@ -79,9 +79,9 @@ export default async function ExpertsPage() {
                                         Experts for automations.
                                     </h2>
                                     <ul className="list-disc flex flex-col gap-3 ps-4">
-                                        <li>
+                                        {/* <li>
                                             Lifetime free access To viaSocket's Team Plan with all advanced features
-                                        </li>
+                                        </li> */}
                                         <li>Assistance in creating and troubleshooting complex workflows</li>
                                         <li>
                                             Customized Training sessions tailored to your specific needs and skill level
