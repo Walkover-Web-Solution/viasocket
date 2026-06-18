@@ -72,7 +72,7 @@ export default async function ExpertAreLivePage() {
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="btn btn-outline"
+                                className="btn btn-accent"
                             >
                                 Book a Meeting
                             </Link>

@@ -1,5 +1,5 @@
 import IconWrapper from './iconWrapper.js';
-import { Code2, Sparkles, Webhook, AlarmClock, FileCode, ArrowDown } from 'lucide-react';
+import { Code2, Sparkles, Webhook, AlarmClock, FileCode, ArrowDown, Forward, Download } from 'lucide-react';
 import Image from 'next/image';
 import { BlockTypes } from '@/enums.js';
 
@@ -62,7 +62,7 @@ function FlowRenderer({ flowJson, scale = 100 }) {
             style={{ transform: `scale(${scale / 100})` }}
         >
             <FlowHeader trigger={flowJson?.trigger} />
-            <div className="font-semibold text-base">Do</div>
+            <div className="font-semibold text-base">Action</div>
             <FlowSteps block={flowJson?.blocks} order={flowJson?.order} />
         </div>
     );
@@ -71,10 +71,20 @@ function FlowRenderer({ flowJson, scale = 100 }) {
 function FlowHeader({ trigger }) {
     return (
         <div className="flex flex-col items-center">
-            <div className="font-semibold text-base">When</div>
+            <div className="font-semibold text-base bg-[#e8e8e8] border-b py-1 px-2 w-full rounded-t-md flex items-center justify-between">
+                <span className="text-sm">Trigger</span>
+                <div className="flex items-center gap-1">
+                    <div className="p-1 rounded hover:bg-gray-200/60 transition-colors cursor-pointer">
+                        <Download className="w-4 h-4 text-gray-500" strokeWidth={2} />
+                    </div>
+                    <div className="p-1 rounded hover:bg-gray-200/60 transition-colors cursor-pointer">
+                        <Forward className="w-4 h-4 text-gray-500" strokeWidth={2} />
+                    </div>
+                </div>
+            </div>
 
-            <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="relative group py-1 px-2 flex w-full max-w-[300px] bg-white shadow-sm rounded-md">
+            <div className="flex flex-col justify-start items-center gap-2 w-full">
+                <div className="relative group py-1 px-2 flex w-full max-w-[300px] bg-white shadow-sm rounded-b-md">
                     {trigger?.serviceName && (
                         <div
                             role="tooltip"
