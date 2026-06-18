@@ -74,7 +74,7 @@ function FlowHeader({ trigger }) {
             <div className="font-semibold text-base">When</div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full mt-2">
-                <div className="relative group py-1 px-2 flex w-full max-w-[300px] border-2 flow-border-color bg-white">
+                <div className="relative group py-1 px-2 flex w-full max-w-[300px] bg-white shadow-sm rounded-md">
                     {trigger?.serviceName && (
                         <div
                             role="tooltip"
@@ -171,7 +171,7 @@ function FlowSteps({ block, order, root = 'root' }) {
                         ) : (
                             <>
                                 {index > 0 && <VerticalStick />}
-                                <div className="flex items-center p-2 w-auto border-2 flow-border-color bg-white">
+                                <div className="flex items-center p-2 w-auto bg-white shadow-sm rounded-md">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
                                         <span className="font-400">
@@ -207,7 +207,7 @@ function IfGroup({ block, order, step, index = 0 }) {
                                 return (
                                     <li key={child}>
                                         <div
-                                            className="py-2 w-full border-2 flow-border-color"
+                                            className="py-2 w-full shadow-sm rounded-md"
                                             style={{
                                                 backgroundColor: generatePrettyColor(
                                                     depthandindex?.depth,
@@ -215,7 +215,7 @@ function IfGroup({ block, order, step, index = 0 }) {
                                                 ),
                                             }}
                                         >
-                                            <div className="p-2 border-b-2 flow-border-color">
+                                            <div className="p-2 shadow-sm rounded-md">
                                                 {replaceUnderscoreWithSpace(child)}
                                             </div>
                                             <div className="p-2 w-full">
