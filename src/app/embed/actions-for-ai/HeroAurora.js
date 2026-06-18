@@ -59,7 +59,7 @@ export default function HeroAurora({ appCount }) {
         <>
             <section className="relative bg-transparent container">
                 <EmbedBreadcrumbs currentPage="Action for AI" />
-                <div className="relative flex items-center justify-center min-h-[520px] overflow-hidden border border-white/10 bg-[#1A0A3E]">
+                <div className="relative flex items-center justify-center lg:min-h-[520px] overflow-hidden border border-white/10 bg-[#1A0A3E]">
                     <div className="relative z-[2] w-full max-w-[1400px] grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-8 py-16 lg:px-12 lg:py-24">
                         <HeroContent agent={agent} appCount={appCount} />
 
