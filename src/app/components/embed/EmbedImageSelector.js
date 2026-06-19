@@ -35,7 +35,7 @@ const EmbedImageSelector = ({ appCount }) => {
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col gap-1">
                     <h2 className="h2">Built-In Capabilities for AI Agents</h2>
-                    <p className="text-xl">
+                    <p className="text-lg md:text-xl">
                         The building blocks that enable AI agents to securely connect, decide, and take action.
                     </p>
                 </div>
@@ -65,8 +65,8 @@ const EmbedImageSelector = ({ appCount }) => {
                                     >
                                         <Icon size={20} />
                                     </div>
-                                    <h4 className="font-medium text-gray-900 text-xl">{f.title}</h4>
-                                    <p className="text-lg text-gray-600 leading-relaxed">{f.desc}</p>
+                                    <h4 className="font-medium text-gray-900 text-lg sm:text-xl">{f.title}</h4>
+                                    <p className="text-base sm:text-lg text-gray-600 leading-relaxed">{f.desc}</p>
                                 </div>
                             );
                         })}

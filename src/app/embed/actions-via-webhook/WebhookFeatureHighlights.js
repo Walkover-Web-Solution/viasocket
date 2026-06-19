@@ -33,7 +33,7 @@ export default function WebhookFeatureHighlights({ appCount }) {
         <div className="container flex flex-col gap-6">
             <div className="flex flex-col gap-1">
                 <h2 className="h2">Built-In Capabilities for Webhook Actions</h2>
-                <p className="text-2xl">
+                <p className="text-lg md:text-2xl">
                     The infrastructure that turns applications events into actions across you users connected apps.
                 </p>
             </div>
@@ -48,7 +48,7 @@ export default function WebhookFeatureHighlights({ appCount }) {
                             <br /> connected apps automatically.
                         </p>
                     </div>
-                    <div className="flex items-center gap-4 mt-auto">
+                    <div className="flex flex-wrap items-center gap-4 mt-auto">
                         <div className="relative">
                             <div className="w-12 h-12 bg-gradient-to-br from-[#0d9488] via-[#34d399] to-[#6ee7b7] flex items-center justify-center rounded-lg animate-feat-spark-glow relative z-10">
                                 <Phone
@@ -75,7 +75,7 @@ export default function WebhookFeatureHighlights({ appCount }) {
                         </div>
                     </div>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {features.map((f, i) => {
                         const Icon = f.icon;
                         return (

@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export default function DarkCta() {
     return (
-        <section className="bg-black py-16 text-center">
+        <section className="bg-black py-10 md:py-16 text-center">
             <div className="container mx-auto px-4">
                 <h2 className="h2 text-white">
                     Ship an AI agent that actually does things

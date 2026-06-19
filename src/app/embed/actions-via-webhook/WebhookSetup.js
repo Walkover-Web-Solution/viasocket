@@ -10,7 +10,7 @@ export default function WebhookSetup() {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 01</span>
-                        <h3 className="text-2xl font-medium">Get the user's webhook URL</h3>
+                        <h3 className="text-xl md:text-2xl font-medium">Get the user's webhook URL</h3>
                         <p className="text-gray-600 mb-4">Genrate a unique webhook URL for each user.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
                             <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
@@ -43,7 +43,7 @@ export default function WebhookSetup() {
 
                     <div className="border p-6 flex flex-col h-full bg-[#FAFAFA]">
                         <span className="text-xs font-bold tracking-wider text-accent mb-3">STEP 02</span>
-                        <h3 className="text-2xl font-medium">POST your event</h3>
+                        <h3 className="text-xl md:text-2xl font-medium">POST your event</h3>
                         <p className="text-gray-600 mb-4">POST data to the webhook URL and trigger connected workflows.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
                             <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">

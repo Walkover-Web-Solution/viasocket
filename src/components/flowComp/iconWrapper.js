@@ -17,7 +17,7 @@ function IconWrapper({
     );
 
     return (
-        <div className="h-8 w-8 flex items-center justify-center" >
+        <div className="h-8 w-8 flex items-center justify-center border rounded">
             {component}
         </div>
     );

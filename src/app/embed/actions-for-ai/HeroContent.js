@@ -1,39 +1,20 @@
 'use client';
 
-import { ArrowRight, Gift } from 'lucide-react';
 import Link from 'next/link';
+import LimitedTimeOffer from '@/app/components/embed/LimitedTimeOffer';
+import HeroCtaButtons from '@/app/components/embed/HeroCtaButtons';
 
 export default function HeroContent({ appCount }) {
     return (
-        <div className="flex flex-col items-start text-left">
-            <Link
-                href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
-                className="inline-flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-sm px-4 py-1.5 mb-6 text-sm border border-white/20 shadow-sm hover:bg-white hover:shadow-md transition-all"
-            >
-                <Gift size={16} className="text-accent" />
-                <span className="font-medium text-accent tracking-wide">LIMITED-TIME OFFER</span>
-                <span className="text-gray-700 font-medium text-sm">Get 6 months for the price of 1</span>
-                <ArrowRight size={14} strokeWidth={2.2} />
-            </Link>
-            <h1 className="h1 !text-white mb-2">Give your AI Agents the Power to Act</h1>
+        <div className="flex flex-col items-start text-left gap-4">
+            <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" />
+            <h1 className="h1 !text-white">Give your AI Agents the Power to Act</h1>
 
-            <p className="text-xl leading-[1.55] text-white/80 mb-8 max-w-[460px]">
+            <p className="text-base sm:text-lg md:text-xl leading-[1.55] text-white/80 mb-6 md:mb-8 max-w-[460px]">
                 Your users connect {appCount + 300}+ apps, <br /> callable by your AI as tools or MCP servers
             </p>
 
-            <div className="flex items-center gap-6">
-                <Link href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" className="btn btn-outline">
-                    Get Started
-                    <ArrowRight size={14} strokeWidth={2.2} />
-                </Link>
-                <Link
-                    href="https://cal.id/team/viasocket/sales-team"
-                    className="text-white/80 hover:text-white underline text-lg"
-                    target="_blank"
-                >
-                    Contact sales
-                </Link>
-            </div>
+            <HeroCtaButtons signupHref="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" className="flex flex-wrap gap-3 sm:gap-4 md:gap-6 items-center justify-start w-full" />
         </div>
     );
 }

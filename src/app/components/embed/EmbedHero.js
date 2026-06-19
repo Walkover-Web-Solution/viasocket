@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import AnimatedAppIcons from '@/app/components/home/AnimatedAppIcons';
+import LimitedTimeOffer from '@/app/components/embed/LimitedTimeOffer';
+import HeroCtaButtons from '@/app/components/embed/HeroCtaButtons';
 
 export default function EmbedHero({ appCount }) {
     const totalApps = +appCount + 300;
@@ -16,18 +18,7 @@ export default function EmbedHero({ appCount }) {
                     backgroundColor: 'transparent',
                 }}
             />
-            <Link
-                href="/signup?utm_source=/embed"
-                className="inline-flex items-center gap-2.5 rounded-full border border-[#F5C4B0] px-2 py-1.5 w-fit hover:shadow-sm transition-shadow"
-                style={{ background: 'linear-gradient(90deg, #FDECE9 0%, #FFF8F6 60%, #ffffff 100%)' }}
-            >
-                <span className="w-7 h-7 rounded-full bg-[#FDECE9] flex items-center justify-center text-base shrink-0">
-                    🎁
-                </span>
-                <span className="text-xs font-bold text-accent uppercase tracking-wide">Limited-Time Offer</span>
-                <span className="text-xs font-bold text-gray-700">Get 6 months for the price of 1</span>
-                <span className="text-gray-400 text-sm pr-1">›</span>
-            </Link>
+            <LimitedTimeOffer href="/signup?utm_source=/embed" />
 
             <h1 className="text-5xl md:text-7xl font-bold text-gray-900 leading-tight flex flex-col gap-2">
                 <span>Give your users</span>
@@ -41,14 +32,7 @@ export default function EmbedHero({ appCount }) {
                 <span>Users can connect apps and build workflows without leaving your platform.</span>
             </div>
 
-            <div className="flex items-center gap-4 mt-8 mb-8">
-                <Link href="/signup?utm_source=/embed" className="btn btn-accent">
-                    Get Started
-                </Link>
-                <Link href="https://cal.id/team/viasocket/embed" className="btn btn-outline" target="_blank">
-                    Contact Sales
-                </Link>
-            </div>
+            <HeroCtaButtons signupHref="/signup?utm_source=/embed" salesHref="https://cal.id/team/viasocket/embed" className="flex items-center gap-4 mt-8 mb-8" signupClassName="btn btn-accent" salesClassName="btn btn-outline" />
         </div>
     );
 }

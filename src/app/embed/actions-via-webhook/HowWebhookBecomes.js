@@ -51,7 +51,7 @@ export default function HowWebhookBecomes() {
                     {STEPS.map((step, i) => (
                         <Fragment key={i}>
                             {i > 0 && <Arrow />}
-                            <div className="flex-1 flex flex-col justify-between max-w-[360px]">
+                            <div className="flex-1 flex flex-col justify-between max-w-full lg:max-w-[360px]">
                                 <StepLabel>{step.label}</StepLabel>
                                 <StepCard>
                                     <Image

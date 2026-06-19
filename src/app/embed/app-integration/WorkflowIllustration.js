@@ -121,7 +121,7 @@ export default function WorkflowIllustration() {
                                 style={{ animationDelay: '.45s' }}
                             >
                                 <div className="absolute -inset-[2px] rounded-[12px] border-2 border-[rgba(5,150,105,.25)] animate-[fnPulseRing_2.5s_ease-in-out_infinite] pointer-events-none" />
-                                <div className="w-9 h-9 flex items-center justify-center shrink-0 overflow-hidden">
+                                <div className="w-9 h-9 rounded-lg bg-[#f4f4f5] border flex items-center justify-center shrink-0 overflow-hidden">
                                     <Image
                                         src="https://thingsofbrand.com/api/icon/hubspot.com"
                                         alt="HubSpot"
