@@ -23,10 +23,10 @@ export default function HeroAurora({ appCount }) {
                     <div className="absolute rounded-full blur-[100px] pointer-events-none w-[520px] h-[520px] bg-[#063826] left-[40%] -bottom-[18%] opacity-18 max-md:blur-[60px]" />
                     <div className="aurora-grid-bg" />
 
-                    <div className="relative z-10 p-6 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:min-h-[520px] items-center">
-                        <div className="flex flex-col items-start">
+                    <div className="relative z-10 p-6 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:min-h-[580px] items-center">
+                        <div className="flex flex-col items-start gap-4">
                             <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" />
-                            <h1 className="h1 !text-white !text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl">Integrate {appCount + 300}+ apps with your product</h1>
+                            <h1 className="h1 !text-white">Integrate {appCount + 300}+ apps with your product</h1>
 
                             <p className="text-base sm:text-lg md:text-xl text-white/[0.72] max-w-[480px] mb-6 md:mb-8 leading-[1.55] font-normal max-lg:mx-auto">
                                 Give users the ability to connect the tools they use with your product and automate it.

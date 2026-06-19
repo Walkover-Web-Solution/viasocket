@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 
-export default function HeroCtaButtons({ signupHref, salesHref = 'https://cal.id/team/viasocket/sales-team', className = 'flex gap-3 sm:gap-4 md:gap-6 items-center justify-start w-full' }) {
+export default function HeroCtaButtons({ signupHref, salesHref = 'https://cal.id/team/viasocket/sales-team', className = 'flex gap-3 sm:gap-4 md:gap-6 items-center justify-start w-full', salesClassName = 'text-white/80 hover:text-white underline' }) {
     return (
         <div className={className}>
             <Link href={signupHref} className="btn btn-outline">
@@ -10,7 +10,7 @@ export default function HeroCtaButtons({ signupHref, salesHref = 'https://cal.id
             </Link>
             <Link
                 href={salesHref}
-                className="text-white/80 hover:text-white underline"
+                className={salesClassName}
                 target="_blank"
             >
                 Contact Sales

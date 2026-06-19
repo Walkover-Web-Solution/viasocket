@@ -6,9 +6,9 @@ import HeroCtaButtons from '@/app/components/embed/HeroCtaButtons';
 
 export default function HeroContent({ appCount }) {
     return (
-        <div className="flex flex-col items-start text-left">
+        <div className="flex flex-col items-start text-left gap-4">
             <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" />
-            <h1 className="h1 !text-white !text-2xl sm:!text-3xl md:!text-4xl lg:!text-5xl mb-2">Give your AI Agents the Power to Act</h1>
+            <h1 className="h1 !text-white">Give your AI Agents the Power to Act</h1>
 
             <p className="text-base sm:text-lg md:text-xl leading-[1.55] text-white/80 mb-6 md:mb-8 max-w-[460px]">
                 Your users connect {appCount + 300}+ apps, <br /> callable by your AI as tools or MCP servers
