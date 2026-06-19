@@ -32,7 +32,7 @@ export default function EmbedHero({ appCount }) {
                 <span>Users can connect apps and build workflows without leaving your platform.</span>
             </div>
 
-            <HeroCtaButtons signupHref="/signup?utm_source=/embed" salesHref="https://cal.id/team/viasocket/embed" className="flex items-center gap-4 mt-8 mb-8" salesClassName="text-black underline" />
+            <HeroCtaButtons signupHref="/signup?utm_source=/embed" salesHref="https://cal.id/team/viasocket/embed" className="flex items-center gap-4 mt-8 mb-8" signupClassName="btn btn-accent" salesClassName="btn btn-outline" />
         </div>
     );
 }
