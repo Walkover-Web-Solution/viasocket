@@ -177,7 +177,7 @@ export default function WebhookHero({ appCount }) {
                     {/* Content */}
                     <div className="relative z-10 p-6 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:min-h-[580px] items-center">
                         {/* Left */}
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col gap-4">
                             <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" />
                             <h1 className="h1 !text-white flex flex-wrap items-center justify-start lg:justify-center gap-1 mb-4">
                                 The Fastest Way to Add Intgrations to Your Product
