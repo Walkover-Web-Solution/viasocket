@@ -82,7 +82,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                         className="w-full lg:w-[55%] flex flex-col justify-between gap-6 px-6 pt-6 pb-4"
                     >
                         <div className="cont gap-2">
-                            <h1 className="h1 !text-[40px] !leading-[1.2em] !font-semibold">{template?.title}</h1>
+                            <h1 className="h1">{template?.title}</h1>
                             <h2 className="h3 !text-lg !text-gray-500">{template?.description}</h2>
                             <div className="flex items-center gap-4 mt-6">
                                 <button
@@ -189,7 +189,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                             <ReactMarkdown
                                 components={{
                                     h1: ({ node, ...props }) => (
-                                        <h1 {...props} className="text-3xl font-bold mb-4 text-black-900" />
+                                        <h2 {...props} className="h2" />
                                     ),
                                     h2: ({ node, ...props }) => (
                                         <h2 {...props} className="text-2xl font-bold mb-3 mt-6 text-black-900" />
