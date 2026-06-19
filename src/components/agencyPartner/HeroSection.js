@@ -30,7 +30,7 @@ const HeroSection = ({ appCount }) => {
 
                 {/* CTA Buttons */}
                 <div className="flex items-center justify-center gap-4 mb-16">
-                    <Link href="/signup" className="btn btn-accent">
+                    <Link href="#pricing" className="btn btn-accent">
                         Become a Partner
                     </Link>
                     <Link href="/support" className="btn btn-outline">
