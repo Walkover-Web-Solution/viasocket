@@ -15,6 +15,7 @@ import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import HowFlowBecomesAiTool from './HowFlowBecomesAiTool';
 import AIComparisonTable from './AIComparisonTable';
 import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
+import FaqSection from '@/components/faqSection/faqSection';
 
 export const runtime = 'edge';
 
@@ -42,7 +43,8 @@ export async function generateMetadata() {
 }
 
 export default async function ActionForAiPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData, faqData } =
+        await getEmbedPageData();
 
     return (
         <>
@@ -67,6 +69,8 @@ export default async function ActionForAiPage() {
                         <BlogGrid posts={blogData} />
                     </div>
                 )}
+
+                <FaqSection faqData={faqData} faqName="actions-for-ai" />
             </main>
 
             <Footer footerData={footerData} />

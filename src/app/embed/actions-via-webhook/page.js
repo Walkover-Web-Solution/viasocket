@@ -14,6 +14,7 @@ import RelatedEmbeds from '@/app/components/embed/RelatedEmbeds';
 import WebhookFeatureHighlights from './WebhookFeatureHighlights';
 import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 import HowWebhookBecomes from './HowWebhookBecomes';
+import FaqSection from '@/components/faqSection/faqSection';
 
 export const runtime = 'edge';
 
@@ -45,7 +46,7 @@ export async function generateMetadata() {
 }
 
 export default async function ActionViaWebhookPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData, faqData } = await getEmbedPageData();
 
     return (
         <>
@@ -70,6 +71,7 @@ export default async function ActionViaWebhookPage() {
                         <BlogGrid posts={blogData} />
                     </div>
                 )}
+                <FaqSection faqData={faqData} faqName="actions-via-webhook" />
             </main>
             <Footer footerData={footerData} />
         </>

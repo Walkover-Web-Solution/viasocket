@@ -15,6 +15,7 @@ import ComparisonTable from '@/app/embed/app-integration/ComparisonTable';
 import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import DarkCta from '@/app/embed/app-integration/DarkCta';
 import HowAppIntegrationBecomes from './HowAppIntegrationBecomes';
+import FaqSection from '@/components/faqSection/faqSection';
 
 export const runtime = 'edge';
 
@@ -23,11 +24,15 @@ export async function generateMetadata() {
 
     return {
         title: metaData?.title || 'App Integrations | Embedded iPaaS for SaaS | viaSocket Embed',
-        description: metaData?.description || ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
+        description:
+            metaData?.description ||
+            ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
         keywords: metaData?.keywords || '',
         openGraph: {
             title: metaData?.title || 'App Integrations | Embedded iPaaS for SaaS | viaSocket Embed',
-            description: metaData?.description || ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
+            description:
+                metaData?.description ||
+                ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
             images: metaData?.image ? [{ url: metaData.image }] : undefined,
         },
         twitter: {
@@ -40,7 +45,8 @@ export async function generateMetadata() {
 }
 
 export default async function AppIntegrationsPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData, faqData } =
+        await getEmbedPageData();
 
     return (
         <>
@@ -65,6 +71,7 @@ export default async function AppIntegrationsPage() {
                         <BlogGrid posts={blogData} />
                     </div>
                 )}
+                <FaqSection faqData={faqData} faqName="app-integration" />
             </main>
             <Footer footerData={footerData} />
         </>
