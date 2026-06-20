@@ -1,8 +1,8 @@
-export default function AIComparisonTable() {
+export default function AIComparisonTable({ appCount = 0 }) {
     const rows = [
         {
             label: 'Apps available',
-            vs: '2,200+ apps',
+            vs: `${appCount + 300}+ apps`,
             paragon: '~500 toolkits',
             prismatic: '1,000+ actions',
             zapier: '9,000+ apps',

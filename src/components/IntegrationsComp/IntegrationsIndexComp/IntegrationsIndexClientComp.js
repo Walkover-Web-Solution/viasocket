@@ -332,7 +332,7 @@ export function AppVisual({ app, index, redirectPart }) {
         <Link
             key={index || app?.rowid}
             href={createURL(`/${redirectPart}/${app?.appslugname}`)}
-            className={`${style.app} hover-bg-grey-100-text-black custom-border flex items-center justify-center`}
+            className={`${style.app} hover-bg-grey-100-text-black custom-border flex items-start justify-center`}
         >
             <div className="flex items-center gap-2">
                 <div className="h-8 w-8 relative border">

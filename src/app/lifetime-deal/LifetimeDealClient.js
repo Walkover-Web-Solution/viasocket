@@ -17,9 +17,9 @@ export default function LifetimeDealClient({ reviewData = [], appCount = 0 }) {
             <Comparison />
             <HowItWorks />
             <AIWorkflows />
-            <Integrations />
+            <Integrations appCount={appCount} />
             <Pricing />
-            <Unlock />
+            <Unlock appCount={appCount} />
             <Testimonials reviewData={reviewData} />
             <Faq />
             <FinalCta />
