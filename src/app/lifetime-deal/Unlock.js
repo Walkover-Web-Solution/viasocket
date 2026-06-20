@@ -39,7 +39,7 @@ const CARDS = [
     },
 ];
 
-export default function Unlock() {
+export default function Unlock({ appCount = 0 }) {
     return (
         <section id="unlock" className="unlock-section relative bg-[#FFFCFC] py-[110px] border-t border-black/5 overflow-hidden">
             <div className="relative z-10 container mx-auto px-8">
@@ -80,7 +80,7 @@ export default function Unlock() {
 
                 <div className="flex flex-col items-center gap-4">
                     <p className="text-[13.5px] text-[var(--muted,#5A5A5A)] m-0 leading-[1.4] text-center">
-                        Trusted by 2,000+ growing teams
+                        Trusted by {appCount + 300}+ growing teams
                     </p>
                     <div className="flex items-center justify-center gap-4 flex-wrap">
                         {/* G2 */}

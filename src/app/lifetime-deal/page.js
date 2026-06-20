@@ -5,27 +5,22 @@ import LifetimeDealClient from './LifetimeDealClient';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-    const { metaData } = await getLifetimeDealPageData();
+    const { metaData, appCount } = await getLifetimeDealPageData();
+    const fallbackDesc = `MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across ${appCount + 300}+ apps. SOC2 Type II.`;
 
     return {
         title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
-        description:
-            metaData?.description ||
-            'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
+        description: metaData?.description || fallbackDesc,
         keywords: metaData?.keywords || '',
         openGraph: {
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
-            description:
-                metaData?.description ||
-                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
+            description: metaData?.description || fallbackDesc,
             images: metaData?.image ? [{ url: metaData.image }] : undefined,
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
-            description:
-                metaData?.description ||
-                'MCP-native embedded integration platform. Give your AI agents tool calling, your users workflow automation, and your backend webhook-driven actions across 2,200+ apps. SOC2 Type II.',
+            description: metaData?.description || fallbackDesc,
             images: metaData?.image ? [metaData.image] : undefined,
         },
     };

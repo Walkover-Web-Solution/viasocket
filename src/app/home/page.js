@@ -37,6 +37,7 @@ export default async function HomePage() {
     reviewData,
     navbarData,
     templateData,
+    appCount,
   } = await getHomePageData();
 
   return (
@@ -46,7 +47,7 @@ export default async function HomePage() {
       <NavbarServer navbarData={navbarData} utm={'/index'} />
 
       <HeroContainerNew/>
-      <CoreCapabilities/>
+      <CoreCapabilities appCount={appCount} />
       <VisualShowcase categoryData={indexTemplateData} templateData={templateData} />
       <ReviewsGrid reviewData={reviewData}/>
       {faqData?.length > 0 && <FAQs faqData={faqData} isHomepage={true} />}

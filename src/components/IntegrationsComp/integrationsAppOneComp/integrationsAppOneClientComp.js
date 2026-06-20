@@ -298,7 +298,7 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} />
+            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} appCount={appCount} />
 
             <div className="container">
                 <div className="cont gap-8">

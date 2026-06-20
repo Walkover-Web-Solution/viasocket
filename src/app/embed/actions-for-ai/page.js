@@ -19,23 +19,17 @@ import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-    const { metaData } = await getEmbedPageData();
+    const { metaData, appCount } = await getEmbedPageData();
+    const fallbackTitle = `The embedded MCP server for AI products. Connect your AI to ${appCount + 300}+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.`;
+    const fallbackDesc = `The embedded MCP server for AI products. Connect your AI to ${appCount + 300}+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.`;
 
     return {
-        title:
-            metaData?.title ||
-            'The embedded MCP server for AI products. Connect your AI to 2,200+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.',
-        description:
-            metaData?.description ||
-            'The embedded MCP server for AI products. Connect your AI to 2,200+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.',
+        title: metaData?.title || fallbackTitle,
+        description: metaData?.description || fallbackDesc,
         keywords: metaData?.keywords || '',
         openGraph: {
-            title:
-                metaData?.title ||
-                'The embedded MCP server for AI products. Connect your AI to 2,200+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.',
-            description:
-                metaData?.description ||
-                'The embedded MCP server for AI products. Connect your AI to 2,200+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.',
+            title: metaData?.title || fallbackTitle,
+            description: metaData?.description || fallbackDesc,
             images: metaData?.image ? [{ url: metaData.image }] : undefined,
         },
         twitter: {
@@ -60,11 +54,11 @@ export default async function ActionForAiPage() {
                 <EmbedImageSelector appCount={appCount} />
                 <UseCaseSection />
                 <EmbedSetupSteps />
-                <AIComparisonTable />
+                <AIComparisonTable appCount={appCount} />
                 <HowFlowBecomesAiTool />
                 <EmbedPricing />
                 <DarkCta />
-                <RelatedEmbeds currentPage="actions-for-ai" />
+                <RelatedEmbeds currentPage="actions-for-ai" appCount={appCount} />
                 <ShowBadges />
                 <SecuritySection securityGridData={securityGridData} />
 
