@@ -1,34 +1,33 @@
 import Link from 'next/link';
 import { Sparkles, Webhook, Puzzle, ArrowUpRight } from 'lucide-react';
 
-const CARDS = [
-    {
-        title: 'Actions for AI',
-        desc: 'Enable AI agents to trigger workflows and complete tasks across your connected apps.',
-        bg: 'bg-gradient-to-br from-[#1a0b3d] to-[#2d0f5e]',
-        iconBg: 'bg-white/10 text-white',
-        icon: Sparkles,
-        href: '/embed/actions-for-ai',
-    },
-    {
-        title: 'Actions via Webhook',
-        desc: 'Trigger workflows instantly from webhook events and automate backend processes.',
-        bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
-        iconBg: 'bg-white/10 text-white',
-        icon: Webhook,
-        href: '/embed/actions-via-webhook',
-    },
-    {
-        title: 'App Integrations',
-        desc: 'Give users access to 2,200+ apps and powerful workflow automation.',
-        bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
-        iconBg: 'bg-white/10 text-white',
-        icon: Puzzle,
-        href: '/embed/app-integration',
-    },
-];
-
-export default function EmbedFeatureCards() {
+export default function EmbedFeatureCards({ appCount = 0 }) {
+    const CARDS = [
+        {
+            title: 'Actions for AI',
+            desc: 'Enable AI agents to trigger workflows and complete tasks across your connected apps.',
+            bg: 'bg-gradient-to-br from-[#1a0b3d] to-[#2d0f5e]',
+            iconBg: 'bg-white/10 text-white',
+            icon: Sparkles,
+            href: '/embed/actions-for-ai',
+        },
+        {
+            title: 'Actions via Webhook',
+            desc: 'Trigger workflows instantly from webhook events and automate backend processes.',
+            bg: 'bg-gradient-to-br from-[#0a1733] to-[#0f2a4d]',
+            iconBg: 'bg-white/10 text-white',
+            icon: Webhook,
+            href: '/embed/actions-via-webhook',
+        },
+        {
+            title: 'App Integrations',
+            desc: `Give users access to ${appCount + 300}+ apps and powerful workflow automation.`,
+            bg: 'bg-gradient-to-br from-[#0a2419] to-[#0f3d2a]',
+            iconBg: 'bg-white/10 text-white',
+            icon: Puzzle,
+            href: '/embed/app-integration',
+        },
+    ];
     return (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {CARDS.map((card, i) => {

@@ -26,7 +26,7 @@ const quadrants = [
     headline: "Build multi-step automations visually with triggers, conditions, and actions."
   },
   {
-    label: "2,000+ Integrations",
+    label: `${appCount + 300}+ Integrations`,
     accent: "#059669",
     icon: LayoutGrid,
     headline: "Connect your entire stack — CRMs, support tools, payments, and more."
@@ -288,7 +288,7 @@ function TablesVisual() {
 
 const visualComponents = [AIAgentVisual, WorkflowVisual, IntegrationsVisual, TablesVisual];
 
-export function CoreCapabilities() {
+export function CoreCapabilities({ appCount = 0 }) {
   return (
     <section
       className="w-full py-12 md:py-16 overflow-visible bg-white z-[1] relative"

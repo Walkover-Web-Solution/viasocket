@@ -16,7 +16,7 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
         <div className="cont lg:gap-20 md:gap-16 gap-12 global-top-space container">
             <div className="w-full mt-12">
                 <EmbedHero appCount={appCount} />
-                <EmbedFeatureCards />
+                <EmbedFeatureCards appCount={appCount} />
             </div>
 
             <FeatureShowcase embedData={embedData} appCount={appCount} />

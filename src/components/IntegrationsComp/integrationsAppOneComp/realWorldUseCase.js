@@ -82,7 +82,7 @@ const AnimatedDot = ({ delay }) => (
     />
 );
 
-const RealWorldUseCase = ({ appOneDetails, combosData }) => {
+const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
     const handleImageError = useCallback((e, fallbackSrc) => {
         e.currentTarget.src = fallbackSrc;
         e.currentTarget.onerror = null;
@@ -94,23 +94,24 @@ const RealWorldUseCase = ({ appOneDetails, combosData }) => {
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {
         if (!combosData?.plugins) return INTEGRATION_APPS;
-        
+
         const plugins = Object.values(combosData.plugins)
-            .filter(plugin => plugin?.appslugname !== appOneDetails?.appslugname) // Exclude current app
+            .filter((plugin) => plugin?.appslugname !== appOneDetails?.appslugname) // Exclude current app
             .slice(0, 6) // Get top 6 apps
             .map((plugin, index) => ({
                 name: plugin?.name || 'App',
-                icon: plugin?.iconurl || `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
+                icon:
+                    plugin?.iconurl || `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
                 fallback: `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
                 delay: `${index * 60}ms`,
             }));
-        
+
         // If we have less than 6 apps, fill with static ones
         if (plugins.length < 6) {
             const remaining = INTEGRATION_APPS.slice(0, 6 - plugins.length);
             return [...plugins, ...remaining];
         }
-        
+
         return plugins;
     }, [combosData, appOneDetails]);
     return (
@@ -168,7 +169,9 @@ const RealWorldUseCase = ({ appOneDetails, combosData }) => {
                                     <AppTile key={index} app={app} onError={handleImageError} />
                                 ))}
                             </div>
-                            <span className="text-[0.8125rem] text-gray-500 text-center">+2,100+ more apps</span>
+                            <span className="text-[0.8125rem] text-gray-500 text-center">
+                                {appCount + 300}+ more apps
+                            </span>
                         </div>
                     </div>
                 </div>

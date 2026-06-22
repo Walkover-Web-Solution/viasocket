@@ -17,13 +17,13 @@ function Strip({ apps, dir }) {
     );
 }
 
-export default function Integrations() {
+export default function Integrations({ appCount = 0 }) {
     return (
         <section id="integrations" className="relative bg-[#080808] text-white py-28 lg:py-[140px] overflow-hidden text-center">
             <div aria-hidden className="absolute inset-0 pointer-events-none [background-image:linear-gradient(rgba(255,255,255,0.028)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.028)_1px,transparent_1px)] [background-size:52px_52px] [mask-image:radial-gradient(ellipse_85%_85%_at_50%_50%,black_10%,transparent_100%)]" />
             <div aria-hidden className="absolute inset-0 pointer-events-none [background:radial-gradient(ellipse_55%_45%_at_50%_60%,rgba(168,32,13,0.22)_0%,transparent_70%)]" />
             <div className="relative z-10 px-5 lg:px-20 container mx-auto">
-                <div className="inline-block text-sm font-bold tracking-[0.17em] uppercase mb-[22px]" style={{ color: '#E45656' }}>2,200+ APP INTEGRATIONS</div>
+                <div className="inline-block text-sm font-bold tracking-[0.17em] uppercase mb-[22px]" style={{ color: '#E45656' }}>{appCount + 300}+ APP INTEGRATIONS</div>
                 <h2 className="text-3xl sm:text-5xl lg:text-[54px] font-medium leading-[1.08] tracking-[-1.4px] mb-5 text-white">
                     One Platform. Endless Connections.<br />
                     Power Every Workflow with viaSocket.
