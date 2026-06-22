@@ -71,7 +71,7 @@ function FlowRenderer({ flowJson, scale = 100 }) {
 function FlowHeader({ trigger }) {
     return (
         <div className="flex flex-col items-center">
-            <div className="font-semibold text-base bg-[#e8e8e8] border-b py-1 px-2 w-full rounded-t-md flex items-center justify-between">
+            <div className="font-semibold text-base bg-[#e8e8e8] border-x border-t py-1 px-2 w-full flex items-center justify-between">
                 <span className="text-sm">Trigger</span>
                 <div className="flex items-center gap-1">
                     <div className="p-1 rounded hover:bg-gray-200/60 transition-colors cursor-pointer">
@@ -84,7 +84,7 @@ function FlowHeader({ trigger }) {
             </div>
 
             <div className="flex flex-col justify-start items-center gap-2 w-full">
-                <div className="relative group py-1 px-2 flex w-full max-w-[300px] bg-white shadow-sm rounded-b-md">
+                <div className="relative group py-1 px-2 flex w-full max-w-[300px] bg-white shadow-sm border">
                     {trigger?.serviceName && (
                         <div
                             role="tooltip"
@@ -181,7 +181,7 @@ function FlowSteps({ block, order, root = 'root' }) {
                         ) : (
                             <>
                                 {index > 0 && <VerticalStick />}
-                                <div className="flex items-center p-2 w-auto bg-white shadow-sm rounded-md">
+                                <div className="flex items-center p-2 w-auto bg-white shadow-sm border">
                                     {iconOfBlock()}
                                     <div className="flex justify-start items-center px-2">
                                         <span className="font-400">
@@ -214,20 +214,21 @@ function IfGroup({ block, order, step, index = 0 }) {
                         <ul>
                             {childs.map((child) => {
                                 const depthandindex = findDepthAndIndex(order, child);
+                                const bgColor = generatePrettyColor(depthandindex?.depth, depthandindex?.index);
+                                const bgColorWithOpacity = bgColor.replace(
+                                    /hsl\((\d+),\s*(\d+)%,\s*(\d+)%\)/,
+                                    (_, h, s, l) => `hsla(${h}, ${s}%, ${l}%, 0.5)`
+                                );
                                 return (
                                     <li key={child}>
                                         <div
-                                            className="py-2 w-full shadow-sm rounded-md"
+                                            className="py-2 w-full shadow-sm"
                                             style={{
-                                                backgroundColor: generatePrettyColor(
-                                                    depthandindex?.depth,
-                                                    depthandindex?.index
-                                                ),
+                                                backgroundColor: bgColorWithOpacity,
+                                                border: `2px solid ${bgColor}`,
                                             }}
                                         >
-                                            <div className="p-2 shadow-sm rounded-md">
-                                                {replaceUnderscoreWithSpace(child)}
-                                            </div>
+                                            <div className="p-2 shadow-sm">{replaceUnderscoreWithSpace(child)}</div>
                                             <div className="p-2 w-full">
                                                 <FlowSteps block={block} order={order} root={child} />
                                             </div>
