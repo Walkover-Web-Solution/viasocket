@@ -18,8 +18,7 @@ const HeroSection = ({ appCount }) => {
                 {/* Heading */}
                 <h1 className="h1 mb-4">
                     Build automations for clients, <br />
-                    with
-                    <span className="text-[#a8200d]">viaSocket.</span>
+                    with <span className="text-[#a8200d]">viaSocket.</span>
                 </h1>
 
                 {/* Description */}
