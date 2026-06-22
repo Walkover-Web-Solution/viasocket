@@ -16,6 +16,7 @@ import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import DarkCta from '@/app/embed/app-integration/DarkCta';
 import HowAppIntegrationBecomes from './HowAppIntegrationBecomes';
 import FaqSection from '@/components/faqSection/faqSection';
+import { getFaqData } from '@/utils/getFaqData';
 
 export const runtime = 'edge';
 
@@ -45,8 +46,10 @@ export async function generateMetadata() {
 }
 
 export default async function AppIntegrationsPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount, metaData, faqData } =
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } =
         await getEmbedPageData();
+
+    const appIntegrationFaq = await getFaqData('/embed/app-integration', '');
 
     return (
         <>
@@ -71,7 +74,7 @@ export default async function AppIntegrationsPage() {
                         <BlogGrid posts={blogData} />
                     </div>
                 )}
-                <FaqSection faqData={faqData} faqName="app-integration" />
+                <FaqSection faqData={appIntegrationFaq} faqName="app-integration" />
             </main>
             <Footer footerData={footerData} />
         </>
