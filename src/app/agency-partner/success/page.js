@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Check } from 'lucide-react';
 
 export const metadata = {
     title: 'Payment Successful | viaSocket',
@@ -9,18 +10,7 @@ export default function PaymentSuccessfulPage() {
         <div className="min-h-dvh bg-[#FAF9F6] flex flex-col items-center justify-center py-12 px-6 font-sans">
                 <div className="w-full max-w-[520px] bg-white border-[0.5px] border-black/[0.08] rounded-[20px] py-14 px-[52px] text-center">
                     <div className="w-16 h-16 rounded-full bg-[#22c55e]/[0.08] border-[1.5px] border-[#22c55e]/[0.25] flex items-center justify-center mx-auto mb-8">
-                        <svg
-                            width="26"
-                            height="26"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="#16a34a"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        >
-                            <polyline points="20 6 9 17 4 12" />
-                        </svg>
+                        <Check size={26} color="#16a34a" strokeWidth={2} />
                     </div>
 
                     <p className="text-[11px] font-semibold tracking-[0.1em] uppercase text-[#A8200D] mb-3">
