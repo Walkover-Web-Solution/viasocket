@@ -47,14 +47,29 @@ const AgencyPricing = () => {
                             </div>
                         ))}
                     </div>
+                    <p className="text-sm mt-6">
+                        <Link
+                            href="https://viasocket.com/help/partners/agency-partner-program"
+                            className="inline-flex items-center gap-1 text-[#A8200D] underline hover:opacity-80 transition-opacity"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Learn more about partner pricing
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                                <polyline points="15 3 21 3 21 9"/>
+                                <line x1="10" y1="14" x2="21" y2="3"/>
+                            </svg>
+                        </Link>
+                    </p>
                 </div>
 
                 {/* Right Card */}
                 <div className="w-full lg:w-[400px] flex-shrink-0">
                     <div className="relative bg-[#fafafa] rounded-2xl p-6 pt-10 border border-gray-200">
                         {/* Badge */}
-                        <span className="absolute -top-3 left-6 inline-block text-sm font-semibold text-white bg-gray-900 rounded-full px-3 py-1.5">
-                            25% partner discount
+                        <span className="absolute -top-3 left-6 inline-block text-xs font-normal text-white bg-gray-900 rounded-full px-3 py-1.5">
+                            25% OFF • LIMITED TIME OFFER
                         </span>
 
                         {/* Plan Name */}
