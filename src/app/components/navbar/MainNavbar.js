@@ -81,8 +81,10 @@ export default function MainNavbar({
                                 handleRedirect(
                                     e,
                                     pathname?.startsWith('/mcp')
-                                        ? 'https://flow.viasocket.com/mcp?'
-                                        : 'https://flow.viasocket.com?'
+                                        ? 'https://mushrooms.viasocket.com?'
+                                        : 'https://flow.viasocket.com?',
+                                    null,
+                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
                                 )
                             }
                             rel="nofollow"
@@ -95,7 +97,9 @@ export default function MainNavbar({
                             onClick={(e) =>
                                 handleRedirect(
                                     e,
-                                    pathname?.startsWith('/mcp') ? 'https://flow.viasocket.com/mcp?' : '/signup?'
+                                    pathname?.startsWith('/mcp') ? 'https://mushrooms.viasocket.com?' : '/signup?',
+                                    null,
+                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
                                 )
                             }
                         >

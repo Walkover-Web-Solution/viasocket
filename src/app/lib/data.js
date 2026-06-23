@@ -517,17 +517,20 @@ export async function getExpertsPageData() {
     }
 }
 
-export async function getEmbedPageData() {
+export async function getEmbedPageData(slug = '') {
     try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
-        const pageUrl = `${baseUrl}/embed`;
+        const pagePath = slug ? `/embed/${slug}` : '/embed';
+        const pageUrl = `${baseUrl}${pagePath}`;
+        const metaName = slug ? `/embed/${slug}` : '/embed';
+        const faqName = slug ? `/embed/${slug}` : '/embed';
 
         // Fetch dynamic data in parallel
         const [metaData, footerData, navbarData, faqData, embedData, blogData, appCount] = await Promise.all([
-            getMetaData('/embed', pageUrl),
+            getMetaData(metaName, pageUrl),
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
-            getFaqData('/embed', pageUrl),
+            getFaqData(faqName, pageUrl),
             getEmbedData(EMBED_FIELDS, '', pageUrl),
             getBlogData({ tag1: 'embed' }, pageUrl),
             getAppCount(pageUrl),
