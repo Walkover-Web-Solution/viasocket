@@ -20,7 +20,7 @@ import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-    const { metaData } = await getEmbedPageData();
+    const { metaData } = await getEmbedPageData('actions-via-webhook');
 
     return {
         title: metaData?.title || 'Actions via Webhook | Webhook Automation Platform | viaSocket Embed',
@@ -47,7 +47,7 @@ export async function generateMetadata() {
 }
 
 export default async function ActionViaWebhookPage() {
-    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData();
+    const { navbarData, footerData, blogData, securityGridData, appCount, metaData } = await getEmbedPageData('actions-via-webhook');
 
     const actionViaWebhookFaq = await getFaqData('/embed/actions-via-webhook', '');
 

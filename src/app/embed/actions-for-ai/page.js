@@ -21,9 +21,9 @@ import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-    const { metaData, appCount } = await getEmbedPageData();
-    const fallbackTitle = `The embedded MCP server for AI products. Connect your AI to ${appCount + 300}+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.`;
-    const fallbackDesc = `The embedded MCP server for AI products. Connect your AI to ${appCount + 300}+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.`;
+    const { metaData, appCount } = await getEmbedPageData('actions-for-ai');
+    const fallbackTitle = `The Embedded MCP server for AI products.`;
+    const fallbackDesc = `Connect your AI to ${appCount + 300}+ app actions through one viaSocket Embed. Multi-step workflows your users build, your AI calls as single tools.`;
 
     return {
         title: metaData?.title || fallbackTitle,
@@ -45,7 +45,7 @@ export async function generateMetadata() {
 
 export default async function ActionForAiPage() {
     const { navbarData, footerData, blogData, securityGridData, appCount, metaData } =
-        await getEmbedPageData();
+        await getEmbedPageData('actions-for-ai');
 
     const actionForAiFaq = await getFaqData('/embed/actions-for-ai', '');
 

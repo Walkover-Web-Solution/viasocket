@@ -21,7 +21,7 @@ import { getFaqData } from '@/utils/getFaqData';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
-    const { metaData } = await getEmbedPageData();
+    const { metaData } = await getEmbedPageData('app-integration');
 
     return {
         title: metaData?.title || 'App Integrations | Embedded iPaaS for SaaS | viaSocket Embed',
@@ -47,7 +47,7 @@ export async function generateMetadata() {
 
 export default async function AppIntegrationsPage() {
     const { navbarData, footerData, blogData, securityGridData, appCount, metaData } =
-        await getEmbedPageData();
+        await getEmbedPageData('app-integration');
 
     const appIntegrationFaq = await getFaqData('/embed/app-integration', '');
 
