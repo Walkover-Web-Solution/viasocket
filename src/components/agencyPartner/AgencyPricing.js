@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ExternalLink } from 'lucide-react';
 
 const AgencyPricing = () => {
     const stats = [
@@ -47,14 +48,25 @@ const AgencyPricing = () => {
                             </div>
                         ))}
                     </div>
+                    <p className="text-sm mt-6">
+                        <Link
+                            href="https://viasocket.com/help/partners/agency-partner-program"
+                            className="inline-flex items-center gap-1 text-[#A8200D] underline hover:opacity-80 transition-opacity"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Learn more about partner pricing
+                            <ExternalLink size={14} />
+                        </Link>
+                    </p>
                 </div>
 
                 {/* Right Card */}
                 <div className="w-full lg:w-[400px] flex-shrink-0">
                     <div className="relative bg-[#fafafa] rounded-2xl p-6 pt-10 border border-gray-200">
                         {/* Badge */}
-                        <span className="absolute -top-3 left-6 inline-block text-sm font-semibold text-white bg-gray-900 rounded-full px-3 py-1.5">
-                            25% partner discount
+                        <span className="absolute -top-3 left-6 inline-block text-xs font-normal text-white bg-gray-900 rounded-full px-3 py-1.5">
+                            25% OFF • LIMITED TIME OFFER
                         </span>
 
                         {/* Plan Name */}
@@ -67,7 +79,7 @@ const AgencyPricing = () => {
                             <span className="text-gray-400 text-sm line-through">$350</span>
                         </div>
                         <div className="flex items-baseline gap-1 mb-1">
-                            <span className="text-5xl font-bold text-gray-900">$250</span>
+                            <span className="text-5xl font-bold text-gray-900">$263</span>
                             <span className="text-gray-500 text-base">/month</span>
                         </div>
                         <p className="text-gray-500 text-xs mb-6">Billed monthly. Cancel anytime.</p>
