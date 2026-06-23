@@ -79,7 +79,7 @@ const AgencyPricing = () => {
                             <span className="text-gray-400 text-sm line-through">$350</span>
                         </div>
                         <div className="flex items-baseline gap-1 mb-1">
-                            <span className="text-5xl font-bold text-gray-900">$250</span>
+                            <span className="text-5xl font-bold text-gray-900">$263</span>
                             <span className="text-gray-500 text-base">/month</span>
                         </div>
                         <p className="text-gray-500 text-xs mb-6">Billed monthly. Cancel anytime.</p>
