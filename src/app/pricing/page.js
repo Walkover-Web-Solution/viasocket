@@ -67,6 +67,9 @@ export default async function PricingPage() {
                             Free call with automation experts
                         </Link>
                     </div>
+                    <Link href="/agency-partner" className="text-lg text-accent underline">
+                        Special pricing for agency partners →
+                    </Link>
                 </div>
 
                 <div className="flex items-center justify-center">
