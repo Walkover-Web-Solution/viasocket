@@ -52,6 +52,14 @@ const INTEGRATION_APPS = [
 
 const DEFAULT_ICON = 'https://placehold.co/120x120/0F9D58/white?text=GS';
 
+const hexToRgba = (hex, alpha = 1) => {
+    const h = (hex || '').replace('#', '');
+    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const num = parseInt(full, 16);
+    if (Number.isNaN(num) || full.length !== 6) return `rgba(15,157,88,${alpha})`;
+    return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
+};
+
 const UseCaseCard = ({ text }) => (
     <div className="bg-white border border-gray-200 px-[18px] py-4 flex items-center [&:last-child:nth-child(odd)]:col-span-2">
         <p className="text-[1.1rem] font-medium text-[#1a1a1a] leading-[1.5] m-0">{text}</p>
@@ -90,6 +98,7 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
 
     const appIcon = useMemo(() => appOneDetails?.iconurl || DEFAULT_ICON, [appOneDetails?.iconurl]);
     const appName = useMemo(() => appOneDetails?.name || 'App', [appOneDetails?.name]);
+    const brandColor = appOneDetails?.brandcolor || '#0f9d58';
 
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {
@@ -133,7 +142,12 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
                 </div>
 
                 <div className="w-full lg:w-1/2 bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch">
-                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_center,rgba(15,157,88,0.13)_0%,transparent_68%)]"></div>
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: `radial-gradient(ellipse 80% 80% at center, ${hexToRgba(brandColor, 0.13)} 0%, transparent 68%)`,
+                        }}
+                    ></div>
 
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-[34%]">
                         <div className="absolute rounded-full border border-[#0f9d58]/20 pulse-ring w-[210px] h-[210px]"></div>
@@ -142,7 +156,10 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
 
                     <div className="relative h-full flex items-center justify-center gap-8 lg:gap-14 p-8 lg:p-12 z-10">
                         <div className="flex flex-col items-center gap-4 shrink-0">
-                            <div className="border-2 border-[#0f9d58] bg-white p-4 lg:p-6 shadow-sm">
+                            <div
+                                className="border-2 bg-white p-4 lg:p-6 shadow-sm"
+                                style={{ borderColor: brandColor }}
+                            >
                                 <Image
                                     className="object-contain"
                                     src={appIcon}
