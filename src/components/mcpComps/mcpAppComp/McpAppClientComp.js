@@ -117,38 +117,17 @@ export default function McpAppClientComp({
                         <div className="cont gap-8 w-full lg:w-2/3 justify-center">
                             <div className="flex gap-4 items-center">
                                 <div className="border custom-border p-3 bg-white">
-                                    {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
-                                        <Image
-                                            src="/assets/brand/favicon-96x96.png"
-                                            alt={appOneDetails?.name}
-                                            width={30}
-                                            height={30}
-                                        />
-                                    ) : ( */}
                                     <Image
                                         src={appOneDetails?.iconurl || 'https://placehold.co/60x60'}
                                         alt={appOneDetails?.name}
                                         width={30}
                                         height={30}
                                     />
-                                    {/* )} */}
                                 </div>
-
-                                {/* {(appOneDetails?.name?.toLowerCase().includes('adobe') || appOneDetails?.description?.toLowerCase().includes('adobe')) ? (
-                                    <div className="cont">
-                                        <h2 className="h3 capitalize">viaSocket MCP for {appOneDetails?.name}</h2>
-                                        <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
-                                    </div>
-                                ) : (
-                                    <div className="cont">
-                                        <h2 className="h3">MCP for {appOneDetails?.name}</h2>
-                                        <h2 className="sub__h1 text-gray-500">{appOneDetails?.category[0]}</h2>
-                                    </div>
-                                )} */}
                             </div>
                             <div className="cont justify-center gap-2">
                                 {appOneDetails?.name?.toLowerCase().includes('adobe') ||
-                                    appOneDetails?.description?.toLowerCase().includes('adobe') ? (
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <div className="cont gap-1">
                                         <h1 className="h1 capitalize"> MCP Server for {appOneDetails?.name}</h1>
                                         <p className="text-base font-medium sm:text-lg md:text-xl text-black text-start">
@@ -226,9 +205,6 @@ export default function McpAppClientComp({
                                             />
                                             <h2 className="text-gray-500">Action in Progress...</h2>
                                         </div>
-                                        {/* {mcpPromptData[0]?.action && (
-                                            <p className="text-gray-500">{mcpPromptData[0]?.action}</p>
-                                        )} */}
                                     </div>
                                 </div>
                             </div>
@@ -494,7 +470,7 @@ export default function McpAppClientComp({
                                     ))}
                                 </div>
                                 {appOneDetails?.name?.toLowerCase().includes('adobe') ||
-                                    appOneDetails?.description?.toLowerCase().includes('adobe') ? (
+                                appOneDetails?.description?.toLowerCase().includes('adobe') ? (
                                     <p className="text-sm text-gray-500">
                                         viaSocket is not affiliated with Adobe. Adobe and its trademarks are the
                                         property of Adobe Inc.
