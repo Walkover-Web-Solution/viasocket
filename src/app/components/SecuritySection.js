@@ -17,13 +17,13 @@ export default function SecuritySection({ securityGridData }) {
                     </div>
                     <div className="flex gap-4">
                         <Image
-                            src="https://viasocket.com/assets/img/aicpa-soc-badge.webp"
+                            src="https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-28.png"
                             alt="aicpa soc badge"
                             width={80}
                             height={80}
                         />
                         <Image
-                            src="https://viasocket.com/assets/img/iso-certified.webp"
+                            src="https://stuff.thingsofbrand.com/viasocket.com/images/img2_image-29.png"
                             alt="iso certified badge"
                             width={80}
                             height={80}
