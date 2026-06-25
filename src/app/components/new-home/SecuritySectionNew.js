@@ -1,7 +1,7 @@
 import Image from "next/image";
 
-const socBadge = "https://viasocket.com/assets/img/aicpa-soc-badge.webp";
-const isoBadge = "https://viasocket.com/assets/img/iso-certified.webp";
+const socBadge = "https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-28.png";
+const isoBadge = "https://stuff.thingsofbrand.com/viasocket.com/images/img2_image-29.png";
 
 export default function SecuritySectionNew({ securityGridData = [] }) {
   return (
