@@ -32,12 +32,7 @@ export default function HeroSection({ appCount = 0 }) {
                             <Sparkles className="h-[13px] w-[13px] text-accent" />
                             viaSocket Integration Script
                         </span>
-                        <h1 className="mb-[22px] text-[34px] font-bold leading-[1.1] tracking-[-1px] text-[#1a1a1a] md:text-[42px] lg:text-[46px] lg:tracking-[-1.2px]">
-                            Show your app&apos;s integrations{' '}
-                            <span className="bg-gradient-to-b from-transparent from-[60%] to-[#f1ede0] to-[60%] text-[#1a1a1a]">
-                                right on your site
-                            </span>
-                        </h1>
+                        <h1 className="h1">Show your app&apos;s integrations right on your site</h1>
                         <p className="mb-[30px] max-w-[520px] text-[17px] font-normal leading-[1.55] text-[#5a5a5a] lg:text-[19px]">
                             Add one script tag. Your users see ready-made automations between your app and the tools
                             they already use, ready to set up in one click.

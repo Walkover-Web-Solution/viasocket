@@ -11,13 +11,13 @@ const ICON = {
 
 export default function HowItWorks() {
     return (
-        <div className="container my-20">
+        <div className="container my-20" id="how">
             <div className="rounded-[18px] border border-[#e2dfd2] bg-white px-6 py-12 md:px-12 md:py-16">
                 <div className="mx-auto max-w-[720px] text-center">
                     <span className="mb-[14px] block text-[12px] font-semibold uppercase tracking-[1.4px] text-accent">
                         How it works
                     </span>
-                    <h2 className="text-[30px] font-bold leading-[1.12] tracking-[-1px] text-[#1a1a1a] md:text-[42px]">
+                    <h2 className="h2">
                         From copy-paste to live in three steps
                     </h2>
                     <p className="mx-auto mt-[16px] max-w-[560px] text-[16px] leading-[1.6] text-[#5a5a5a] md:text-[17px]">
