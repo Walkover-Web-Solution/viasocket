@@ -1,8 +1,10 @@
 'use client';
 
+import { useState } from 'react';
 import { Search, Check, X } from 'lucide-react';
 
 const MAX_FEATURE = 10;
+const INITIAL_VISIBLE = 36;
 
 export default function ScriptPicker({
     slots,
@@ -13,16 +15,36 @@ export default function ScriptPicker({
     selectedSlugs,
     onSelectApp,
     onRemoveSlot,
+    onClearAll,
 }) {
+    const filledCount = slots.filter(Boolean).length;
     const lastFilledFeature = slots.slice(1).reduce((acc, s, i) => (s ? i : acc), -1);
     const visibleFeatureCount = Math.min(MAX_FEATURE, Math.max(2, lastFilledFeature + 2));
+    const [showAll, setShowAll] = useState(false);
+    const visibleApps = query || showAll ? apps : apps.slice(0, INITIAL_VISIBLE);
+    const hasMore = !query && !showAll && apps.length > INITIAL_VISIBLE;
 
     return (
         <div className="overflow-hidden rounded-[14px] border border-[#ece9df] bg-[#faf9f4]">
             <div className="flex flex-col gap-4 border-b border-[#ece9df] p-4">
+                <div className="flex items-center justify-between">
+                    <span className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#8a8a8a]">
+                        Selected apps {filledCount > 0 && `(${filledCount})`}
+                    </span>
+                    {filledCount >= 2 && (
+                        <button
+                            type="button"
+                            onClick={onClearAll}
+                            className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-accent hover:underline"
+                        >
+                            <X className="h-3 w-3" strokeWidth={2.5} />
+                            Clear all
+                        </button>
+                    )}
+                </div>
                 <div className="flex flex-wrap gap-3">
                     <SlotCard
-                        label="primaryApp"
+                        label="My app"
                         slot={slots[0]}
                         isPrimary
                         emptyLabel="Select"
@@ -51,7 +73,35 @@ export default function ScriptPicker({
                 </div>
             </div>
 
-            <div className="grid max-h-[320px] grid-cols-2 gap-2 overflow-y-auto p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+            <div className="flex items-center justify-between px-4 pt-4">
+                <span className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#8a8a8a]">
+                    {query ? `Results (${apps.length})` : `Popular apps`}
+                </span>
+                {hasMore && (
+                    <button
+                        type="button"
+                        onClick={() => setShowAll(true)}
+                        className="text-[12.5px] font-semibold text-accent hover:underline"
+                    >
+                        See all apps
+                    </button>
+                )}
+                {!query && showAll && apps.length > INITIAL_VISIBLE && (
+                    <button
+                        type="button"
+                        onClick={() => setShowAll(false)}
+                        className="text-[12.5px] font-semibold text-accent hover:underline"
+                    >
+                        Show less
+                    </button>
+                )}
+            </div>
+
+            <div
+                className={`grid grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 ${
+                    showAll || query ? '' : 'max-h-[320px] overflow-y-auto'
+                }`}
+            >
                 {loading && apps.length === 0 ? (
                     Array.from({ length: 12 }).map((_, i) => (
                         <div
@@ -62,7 +112,7 @@ export default function ScriptPicker({
                 ) : apps.length === 0 ? (
                     <div className="col-span-full py-6 text-center text-[14px] text-[#8a8a8a]">No apps found.</div>
                 ) : (
-                    apps.map((app) => {
+                    visibleApps.map((app) => {
                         const selected = selectedSlugs.has(app.appslugname);
                         const slotsFull = !slots.some((s) => s === null);
                         const disabled = !selected && slotsFull;

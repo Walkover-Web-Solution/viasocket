@@ -13,7 +13,7 @@ const TEMPLATES = [
 export default function IntegrationsPreview({ current }) {
     return (
         <div className="relative" aria-hidden="true">
-            <div className="overflow-hidden rounded-2xl border border-[#ece9df] bg-white shadow-[0_30px_60px_-20px_rgba(26,26,26,0.18),0_8px_20px_-8px_rgba(26,26,26,0.08)]">
+            <div className="overflow-hidden rounded-2xl border border-[#ece9df] bg-white shadow-sm">
                 {/* host bar */}
                 <div className="flex items-center gap-2 border-b border-[#ece9df] bg-[#faf9f4] px-4 py-[11px]">
                     <div className="flex gap-[5px]">
@@ -94,13 +94,13 @@ export default function IntegrationsPreview({ current }) {
             </div>
 
             {/* floating widget */}
-            <div className="absolute -bottom-[18px] -left-[18px] hidden items-center gap-[11px] rounded-xl border border-[#ece9df] bg-white px-[15px] py-[11px] shadow-[0_16px_36px_-14px_rgba(26,26,26,0.22)] sm:flex">
+            <div className="absolute -bottom-[18px] -left-[18px] hidden items-center gap-[11px] rounded-xl border border-[#ece9df] bg-white px-3 py-2 sm:flex">
                 <span className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] border border-[#ecd9a4] bg-[#fbf4e1] text-[#b8860b]">
                     <Code2 className="h-[17px] w-[17px]" strokeWidth={2} />
                 </span>
-                <div>
-                    <b className="block text-[14px] font-bold leading-[1.2] text-[#1a1a1a]">1 script tag</b>
-                    <span className="text-[11.5px] text-[#5a5a5a]">renders every template</span>
+                <div className="flex flex-col gap-1">
+                    <span className="text-sm font-bold">1 script tag</span>
+                    <span className="text-xs text-[#5a5a5a]">renders every template</span>
                 </div>
             </div>
         </div>

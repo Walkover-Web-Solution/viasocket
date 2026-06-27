@@ -8,9 +8,9 @@ import ScriptOutput from './ScriptOutput';
 const MAX_FEATURE = 10;
 const TOTAL_SLOTS = MAX_FEATURE + 1; // 1 primary + 10 feature
 
-export default function SetupBuilder() {
+export default function SetupBuilder({ initialApps = [] }) {
     const [query, setQuery] = useState('');
-    const [apps, setApps] = useState([]);
+    const [apps, setApps] = useState(initialApps);
     const [loading, setLoading] = useState(false);
     const [slots, setSlots] = useState(Array(TOTAL_SLOTS).fill(null)); // index 0 = primary
     const [copied, setCopied] = useState(false);
@@ -18,10 +18,15 @@ export default function SetupBuilder() {
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
+        if (!query) {
+            setApps(initialApps);
+            setLoading(false);
+            return;
+        }
         debounceRef.current = setTimeout(async () => {
             setLoading(true);
             try {
-                const res = await searchApps(query || 'a');
+                const res = await searchApps(query);
                 setApps(Array.isArray(res) ? res.slice(0, 36) : []);
             } catch {
                 setApps([]);
@@ -30,7 +35,7 @@ export default function SetupBuilder() {
             }
         }, 250);
         return () => debounceRef.current && clearTimeout(debounceRef.current);
-    }, [query]);
+    }, [query, initialApps]);
 
     const selectedSlugs = useMemo(() => new Set(slots.filter(Boolean).map((a) => a.appslugname)), [slots]);
 
@@ -99,7 +104,7 @@ export default function SetupBuilder() {
                     <span className="mb-[14px] block text-[12px] font-semibold uppercase tracking-[1.4px] text-accent">
                         Build your script
                     </span>
-                    <h2 className="text-[30px] font-bold leading-[1.12] tracking-[-1px] text-[#1a1a1a] md:text-[38px]">
+                    <h2 className="h2">
                         Generate your script in seconds
                     </h2>
                     <p className="mt-[14px] text-[16px] font-normal leading-[1.6] text-[#5a5a5a] md:text-[18px]">
@@ -118,6 +123,7 @@ export default function SetupBuilder() {
                         selectedSlugs={selectedSlugs}
                         onSelectApp={handleSelect}
                         onRemoveSlot={removeSlot}
+                        onClearAll={() => setSlots(Array(TOTAL_SLOTS).fill(null))}
                     />
                     <ScriptOutput
                         scriptCode={scriptCode}

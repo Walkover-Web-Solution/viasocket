@@ -40,7 +40,7 @@ export async function generateMetadata() {
 }
 
 export default async function IntegrationsScriptPage() {
-    const { metaData, footerData, navbarData, blogData } = await getIntegrationsScriptPageData();
+    const { metaData, footerData, navbarData, blogData, apps } = await getIntegrationsScriptPageData();
     const appCount = await getAppCount();
 
     return (
@@ -51,7 +51,7 @@ export default async function IntegrationsScriptPage() {
             </ConditionalNavbar>
             <div className="global-top-space">
                 <HeroSection appCount={appCount} />
-                <SetupBuilder />
+                <SetupBuilder initialApps={apps} />
                 <WhyItMatters />
                 <HowItWorks />
                 <FinalCta />

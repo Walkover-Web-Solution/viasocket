@@ -652,11 +652,12 @@ export async function getIntegrationsScriptPageData() {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
         const pageUrl = `${baseUrl}/integrations-script`;
 
-        const [metaData, footerData, navbarData, blogs] = await Promise.all([
+        const [metaData, footerData, navbarData, blogs, apps] = await Promise.all([
             getMetaData('/integrations-script', pageUrl),
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getBlogData({ tag1: 'integrations-script' }, pageUrl),
+            getApps({ limit: 500 }, pageUrl),
         ]);
 
         return {
@@ -664,6 +665,7 @@ export async function getIntegrationsScriptPageData() {
             footerData: footerData || [],
             navbarData: navbarData || [],
             blogData: blogs || [],
+            apps: apps || [],
         };
     } catch (error) {
         console.error('Error fetching integrations-script page data:', error);
@@ -672,6 +674,7 @@ export async function getIntegrationsScriptPageData() {
             footerData: [],
             navbarData: [],
             blogData: [],
+            apps: [],
         };
     }
 }

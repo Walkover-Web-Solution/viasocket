@@ -21,9 +21,7 @@ export default function WhyItMatters() {
                 <span className="mb-[14px] block text-[12px] font-semibold uppercase tracking-[1.4px] text-accent">
                     Why it matters
                 </span>
-                <h2 className="text-[32px] font-bold leading-[1.12] tracking-[-1px] text-[#1a1a1a] md:text-[44px]">
-                    A logo wall tells them. A template lets them act.
-                </h2>
+                <h2 className="h2">A logo wall tells them. A template lets them act.</h2>
                 <p className="mt-[18px] max-w-[640px] text-[16px] font-normal leading-[1.6] text-[#5a5a5a] md:text-[18px]">
                     Most &quot;integrations&quot; pages are a static grid of logos. The script turns that page into a
                     set of real, one-click automations between your app and the tools your users already run.
