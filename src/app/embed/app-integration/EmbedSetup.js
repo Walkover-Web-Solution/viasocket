@@ -13,7 +13,7 @@ export default function EmbedSetup() {
                         <h3 className="text-xl md:text-2xl font-medium">Generate the embed token</h3>
                         <p className="text-gray-600 mb-4">Generate a secure token for each user.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
-                            <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
+                            <pre className="px-6 py-5 text-sm leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
                                 <span className="text-[#86efac] opacity-55 italic">
                                     {'// Sign this payload with your access key (HS256)'}
                                 </span>
@@ -45,7 +45,7 @@ export default function EmbedSetup() {
                         <h3 className="text-xl md:text-2xl font-medium">Add the embed script</h3>
                         <p className="text-gray-600 mb-4">Add the script to your application and launch the embed anywhere in your UI.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
-                            <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
+                            <pre className="px-6 py-5 text-sm leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
                                 <span className="text-[#86efac] opacity-55 italic">
                                     &lt;!-- Paste into your frontend --&gt;
                                 </span>

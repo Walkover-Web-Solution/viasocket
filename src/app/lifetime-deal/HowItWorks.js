@@ -50,7 +50,7 @@ export default function HowItWorks() {
                                     <span className="text-accent">{s.num}</span>{' '}
                                     <span className="text-gray-900">{s.title}</span>
                                 </p>
-                                <p className="text-[12px] text-gray-500 leading-[1.5] max-w-[240px]">{s.desc}</p>
+                                <p className="text-sm text-gray-500 leading-[1.5] max-w-[240px]">{s.desc}</p>
                             </div>
                         </div>
                     ))}

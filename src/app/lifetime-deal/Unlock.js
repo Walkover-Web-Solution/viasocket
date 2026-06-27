@@ -94,7 +94,7 @@ export default function Unlock({ appCount = 0 }) {
                                     className="w-full h-full object-contain"
                                 />
                             </div>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5 shadow-sm">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-sm font-semibold text-black/75 border border-black/5 shadow-sm">
                                 G2
                                 <span className="inline-flex items-center">
                                     {[1,2,3,4].map((s) => (
@@ -126,7 +126,7 @@ export default function Unlock({ appCount = 0 }) {
                                     className="w-full h-full object-contain"
                                 />
                             </div>
-                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-[12px] font-semibold text-black/75 border border-black/5 shadow-sm">
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white text-sm font-semibold text-black/75 border border-black/5 shadow-sm">
                                 Capterra
                                 <span className="inline-flex items-center">
                                     {[1,2,3,4,5].map((s) => (
