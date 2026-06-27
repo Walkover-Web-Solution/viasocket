@@ -111,9 +111,14 @@ const AgencyPricing = () => {
                         </div>
                         <p className="text-xs text-gray-500 mb-6">Free to join. Earn every month your referred clients stay.</p>
 
-                        <button className="block w-full btn btn-outline mb-6">
+                        <Link
+                            href="https://cal.id/divyansh-jain/agency-partnership"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full btn btn-outline mb-6"
+                        >
                             Start earning
-                        </button>
+                        </Link>
 
                         <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-4">What&apos;s Included</p>
                         <ul className="space-y-2.5">
@@ -145,3 +150,4 @@ const AgencyPricing = () => {
 };
 
 export default AgencyPricing;
+
