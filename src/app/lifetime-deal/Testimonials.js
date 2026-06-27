@@ -23,7 +23,7 @@ function Card({ item, hidden }) {
             <p className="text-xs text-[#1a1a1a] leading-[1.45] line-clamp-6 tracking-[-0.05px] mb-2 flex-grow">
                 {item.body}
             </p>
-            <div className="text-[#f5b400] tracking-[2px] text-[12px] mb-[6px] leading-none" aria-label="5 out of 5 stars">
+            <div className="text-[#f5b400] tracking-[2px] text-sm mb-[6px] leading-none" aria-label="5 out of 5 stars">
                 ★★★★★
             </div>
             <div className="h-px bg-black/[0.08] mb-[6px]"></div>

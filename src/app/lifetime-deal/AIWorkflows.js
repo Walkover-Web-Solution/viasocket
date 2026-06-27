@@ -208,7 +208,7 @@ export default function AIWorkflows() {
                             <span className="w-3 h-3 rounded-full bg-[#FFBD2E]" />
                             <span className="w-3 h-3 rounded-full bg-[#28C840]" />
                         </div>
-                        <div className="flex-1 flex items-center justify-center gap-[7px] text-[12px] font-medium text-[#555] truncate">
+                        <div className="flex-1 flex items-center justify-center gap-[7px] text-sm font-medium text-[#555] truncate">
                             <span
                                 className={`w-[7px] h-[7px] rounded-full shrink-0 ${
                                     canvasOn ? 'bg-[#22c55e]' : 'bg-accent aiwf-dot-pulse'

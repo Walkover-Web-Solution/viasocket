@@ -48,7 +48,7 @@ function CodeBlock({ code, label, tokens }) {
 
     return (
         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
-            <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
+            <pre className="px-6 py-5 text-sm leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
                 {code.split('\n').map((line, i) => (
                     <div key={i}>{line ? highlight(line) : '\u00A0'}</div>
                 ))}

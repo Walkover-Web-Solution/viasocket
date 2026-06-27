@@ -25,7 +25,7 @@ const StoryCardBody = memo(function StoryCardBody({ headline, teaser, featured }
             )}
             <div className="mt-auto">
                 <span
-                    className={`font-semibold flex items-center gap-1 ${featured ? 'text-[14px]' : 'text-[12px]'}`}
+                    className={`font-semibold flex items-center gap-1 ${featured ? 'text-[14px]' : 'text-sm'}`}
                     style={{ color: 'var(--accent, #8B1A1A)' }}
                 >
                     Read the full story

@@ -44,7 +44,7 @@ export default function AIComparisonTable({ appCount = 0 }) {
 
     const cell = 'p-3 text-left align-top border-b border-r';
     const headCell = `${cell} text-sm font-medium text-gray-900 tracking-tight whitespace-nowrap`;
-    const firstCol = 'sticky left-0 z-[2] bg-white min-w-[148px] font-semibold text-[12px] text-gray-900';
+    const firstCol = 'sticky left-0 z-[2] bg-white min-w-[148px] font-semibold text-sm text-gray-900';
 
     return (
         <section className="container" id="compare">

@@ -118,7 +118,7 @@ export default function LifetimeDealFooter({ appCount = 0, containerClassName = 
             {/* Bottom bar */}
             <div className="border-t border-white/[0.08]">
                 <div className={`${containerClassName} px-6 py-5`}>
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-white/40">
+                    <div className="flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-white/40">
                         <span>© 2026 viaSocket. All rights reserved.</span>
                         <span>Made for teams who automate at scale.</span>
                     </div>
