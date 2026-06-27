@@ -40,6 +40,12 @@ export default function WhyAgenciesSection() {
     return (
         <section className="w-full bg-white py-20">
             <div className="container mx-auto px-5 md:px-8">
+                <div className="text-center mb-12">
+                    <h2 className="h2">Why Agencies Choose viaSocket</h2>
+                    <p className="mt-3 text-[#555]">
+                        Built for agencies, consultants, and freelancers delivering automation services at scale.
+                    </p>
+                </div>
                 {/* Agency Partner Plan */}
                 <div className="relative">
                     <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4">
@@ -47,7 +53,7 @@ export default function WhyAgenciesSection() {
                             Agency Partner Plan
                         </span>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 border-t border-b border-gray-200">
+                    <div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-200">
                         {agencyCards.map((card, i) => (
                             <div
                                 key={i}

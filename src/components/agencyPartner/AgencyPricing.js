@@ -26,10 +26,13 @@ const AgencyPricing = () => {
                 {/* Header */}
                 <div className="flex flex-col items-center gap-2 text-center mb-14">
                     <div className="flex items-center gap-2 mb-4">
-                        <span className="text-yellow-500 text-sm tracking-widest">★★★★★</span>
+                        <span className="text-sm tracking-widest relative inline-block">
+                            <span className="text-gray-300">★★★★★</span>
+                            <span className="text-yellow-500 absolute inset-0 overflow-hidden w-[90%]">★★★★★</span>
+                        </span>
                         <span className="text-sm text-gray-600">Trusted by 150+ agencies</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+                    <h2 className="h2 mb-2">
                         Pricing built for agencies.
                     </h2>
                     <p className="text-gray-600 mb-4">
