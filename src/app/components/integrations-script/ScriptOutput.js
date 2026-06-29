@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { Copy, Info, Check } from 'lucide-react';
 
 export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
@@ -33,13 +34,15 @@ export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
                     <Info className="mt-0.5 h-4 w-4 flex-shrink-0 text-accent" />
                     <span>
                         Pick your app, then the apps to feature. Each one drops into the script automatically and empty
-                        slots are skipped when you copy. Don&apos;t see your app?{' '}
-                        <a
-                            href="https://viasocket.com/integrations"
+                        slots are skipped when you copy. You can select a maximum of 10 apps to feature. Don&apos;t see your app?{' '}
+                        <Link
+                            href="https://viasocket.com/help/viasocket-embed/Discover-the-Power-of-Automation-with-viasocket-Integration-Script"
                             className="font-semibold text-accent hover:underline"
+                            target="_blank"
+                            rel="noopener noreferrer"
                         >
                             Browse the full directory
-                        </a>
+                        </Link>
                         .
                     </span>
                 </div>
