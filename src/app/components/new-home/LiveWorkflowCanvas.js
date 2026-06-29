@@ -348,7 +348,7 @@ function WorkflowAnimation({
                     className="mt-3 text-[10px] flex items-center gap-0.5 cursor-default"
                     style={{ color: t.addStepGhost }}
                   >
-                    <span className="text-[12px]">+</span> Add Step
+                    <span className="text-sm">+</span> Add Step
                   </div>
                 </div>
               ))}

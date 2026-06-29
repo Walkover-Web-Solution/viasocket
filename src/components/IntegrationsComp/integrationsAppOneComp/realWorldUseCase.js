@@ -52,6 +52,14 @@ const INTEGRATION_APPS = [
 
 const DEFAULT_ICON = 'https://placehold.co/120x120/0F9D58/white?text=GS';
 
+const hexToRgba = (hex, alpha = 1) => {
+    const h = (hex || '').replace('#', '');
+    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const num = parseInt(full, 16);
+    if (Number.isNaN(num) || full.length !== 6) return `rgba(15,157,88,${alpha})`;
+    return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
+};
+
 const UseCaseCard = ({ text }) => (
     <div className="bg-white border border-gray-200 px-[18px] py-4 flex items-center [&:last-child:nth-child(odd)]:col-span-2">
         <p className="text-[1.1rem] font-medium text-[#1a1a1a] leading-[1.5] m-0">{text}</p>
@@ -75,10 +83,10 @@ const AppTile = ({ app, onError }) => (
     </div>
 );
 
-const AnimatedDot = ({ delay }) => (
+const AnimatedDot = ({ delay, color }) => (
     <div
-        className="absolute top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full bg-[#0f9d58] opacity-0 dot"
-        style={{ animationDelay: delay }}
+        className="absolute top-1/2 -translate-y-1/2 w-[6px] h-[6px] rounded-full opacity-0 dot"
+        style={{ animationDelay: delay, backgroundColor: color }}
     />
 );
 
@@ -90,6 +98,13 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
 
     const appIcon = useMemo(() => appOneDetails?.iconurl || DEFAULT_ICON, [appOneDetails?.iconurl]);
     const appName = useMemo(() => appOneDetails?.name || 'App', [appOneDetails?.name]);
+    const brandColor = (() => {
+        const m = /^#?([0-9a-f]{6})$/i.exec(appOneDetails?.brandcolor || '');
+        if (!m) return '#6b7280';
+        const n = parseInt(m[1], 16);
+        const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+        return r * 0.299 + g * 0.587 + b * 0.114 > 230 ? '#6b7280' : appOneDetails.brandcolor;
+    })();
 
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {
@@ -133,16 +148,24 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
                 </div>
 
                 <div className="w-full lg:w-1/2 bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch">
-                    <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_80%_80%_at_center,rgba(15,157,88,0.13)_0%,transparent_68%)]"></div>
+                    <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                            background: `radial-gradient(ellipse 80% 80% at center, ${hexToRgba(brandColor, 0.13)} 0%, transparent 68%)`,
+                        }}
+                    ></div>
 
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-[34%]">
-                        <div className="absolute rounded-full border border-[#0f9d58]/20 pulse-ring w-[210px] h-[210px]"></div>
-                        <div className="absolute rounded-full border border-[#0f9d58]/20 pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]"></div>
+                        <div className="absolute rounded-full border pulse-ring w-[210px] h-[210px]" style={{ borderColor: hexToRgba(brandColor, 0.2) }}></div>
+                        <div className="absolute rounded-full border pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]" style={{ borderColor: hexToRgba(brandColor, 0.2) }}></div>
                     </div>
 
                     <div className="relative h-full flex items-center justify-center gap-8 lg:gap-14 p-8 lg:p-12 z-10">
                         <div className="flex flex-col items-center gap-4 shrink-0">
-                            <div className="border-2 border-[#0f9d58] bg-white p-4 lg:p-6 shadow-sm">
+                            <div
+                                className="border-2 bg-white p-4 lg:p-6 shadow-sm"
+                                style={{ borderColor: brandColor }}
+                            >
                                 <Image
                                     className="object-contain"
                                     src={appIcon}
@@ -156,10 +179,10 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
                         </div>
 
                         <div className="w-[80px] shrink-0 relative">
-                            <div className="w-full h-[1px] bg-[#0f9d58]/40 relative">
-                                <AnimatedDot delay="0s" />
-                                <AnimatedDot delay="0.65s" />
-                                <AnimatedDot delay="0.98s" />
+                            <div className="w-full h-[1px] relative" style={{ backgroundColor: hexToRgba(brandColor, 0.4) }}>
+                                <AnimatedDot delay="0s" color={brandColor} />
+                                <AnimatedDot delay="-0.667s" color={brandColor} />
+                                <AnimatedDot delay="-1.333s" color={brandColor} />
                             </div>
                         </div>
 

@@ -647,6 +647,38 @@ export async function getDataDeletionPolicyPageData() {
     }
 }
 
+export async function getIntegrationsScriptPageData() {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
+        const pageUrl = `${baseUrl}/integrations-script`;
+
+        const [metaData, footerData, navbarData, blogs, apps] = await Promise.all([
+            getMetaData('/integrations-script', pageUrl),
+            getFooterData(FOOTER_FIELDS, '', pageUrl),
+            getNavbarData(NAVBAR_FIELDS, '', pageUrl),
+            getBlogData({ tag1: 'integrations-script' }, pageUrl),
+            getApps({ limit: 500 }, pageUrl),
+        ]);
+
+        return {
+            metaData: metaData || {},
+            footerData: footerData || [],
+            navbarData: navbarData || [],
+            blogData: blogs || [],
+            apps: apps || [],
+        };
+    } catch (error) {
+        console.error('Error fetching integrations-script page data:', error);
+        return {
+            metaData: {},
+            footerData: [],
+            navbarData: [],
+            blogData: [],
+            apps: [],
+        };
+    }
+}
+
 export async function getAgencyPartnerPageData() {
     try {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';

@@ -134,7 +134,7 @@ function WorkflowVisual() {
       {/* Step 2: Action */}
       <div className="flex flex-col gap-1.5">
         <span
-          className="text-[12px] uppercase tracking-wider font-semibold"
+          className="text-sm uppercase tracking-wider font-semibold"
         >
           Do
         </span>

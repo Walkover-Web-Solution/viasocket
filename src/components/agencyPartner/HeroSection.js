@@ -23,8 +23,7 @@ const HeroSection = ({ appCount }) => {
 
                 {/* Description */}
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    One account, unlimited client workspaces, and everything you need to build and manage automations
-                    for every client you work with.
+                    Everything you need to build and manage automations for every client you work with.
                 </p>
 
                 {/* CTA Buttons */}

@@ -1,14 +1,8 @@
 import Link from 'next/link';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, Check, DollarSign, Star, Headphones } from 'lucide-react';
 
 const AgencyPricing = () => {
-    const stats = [
-        { number: '250K', label: 'tasks per month, shared across all client workspaces' },
-        { number: '100%', label: 'of revenue retained. No commissions, no splits.' },
-        { number: '100K', label: 'AI credits included per month.' },
-    ];
-
-    const includedItems = [
+    const partnerFeatures = [
         'Unlimited workspace creation',
         '250,000 tasks / month',
         '100,000 AI credits included',
@@ -17,99 +11,141 @@ const AgencyPricing = () => {
         '$0.00021 per task overage',
     ];
 
-    return (
-        <section id="pricing" className="max-w-6xl mx-auto px-4 py-20">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
-                {/* Left Content */}
-                <div className="flex-1 max-w-xl">
-                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
-                        One plan.
-                        <br />
-                        Everything included.
-                    </h2>
-                    <p className="text-gray-600 text-base mb-10 max-w-md">
-                        No per-seat fees, no workspace charges, no revenue splits.
-                        <br />
-                        One flat rate for your whole practice.
-                    </p>
+    const referFeatures = [
+        '50% recurring commission on every plan',
+        'Paid every month they stay subscribed',
+        'Earn $18.50 to $49.50 per client',
+        'Unlimited referrals, no earning cap',
+        'Free lifetime viaSocket workspace',
+        'Partner dashboard & monthly payouts',
+    ];
 
-                    <div className="space-y-0">
-                        {stats.map((stat, index) => (
-                            <div
-                                key={index}
-                                className={`flex items-center gap-4 py-5 ${index !== stats.length - 1 ? 'border-b border-gray-200' : ''}`}
-                            >
-                                <span className="text-2xl font-bold text-gray-400 w-16 flex-shrink-0">
-                                    {stat.number}
-                                </span>
-                                <span className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">
-                                    {stat.label}
-                                </span>
-                            </div>
-                        ))}
+    return (
+        <section id="pricing" className="w-full bg-[#f5f0e8] py-20">
+            <div className="max-w-6xl mx-auto px-4">
+                {/* Header */}
+                <div className="flex flex-col items-center gap-2 text-center mb-14">
+                    <div className="flex items-center gap-2 mb-4">
+                        <span className="text-sm tracking-widest relative inline-block">
+                            <span className="text-gray-300">★★★★★</span>
+                            <span className="text-yellow-500 absolute inset-0 overflow-hidden w-[90%]">★★★★★</span>
+                        </span>
+                        <span className="text-sm text-gray-600">Trusted by 150+ agencies</span>
                     </div>
-                    <p className="text-sm mt-6">
-                        <Link
-                            href="https://viasocket.com/help/partners/agency-partner-program"
-                            className="inline-flex items-center gap-1 text-[#A8200D] underline hover:opacity-80 transition-opacity"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Learn more about partner pricing
-                            <ExternalLink size={14} />
-                        </Link>
+                    <h2 className="h2 mb-2">
+                        Pricing built for agencies.
+                    </h2>
+                    <p className="text-gray-600 mb-4">
+                        Become a Partner and bill clients yourself, or share revenue and earn 50% of every plan your clients pay for.
                     </p>
+                    <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-700">
+                        <div className="flex items-center gap-2">
+                            <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(184,50,37,0.07)' }}>
+                                <DollarSign size={14} className="text-[#A8200D]" />
+                            </span>
+                            <span>Keep 100% of your revenue</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(184,50,37,0.07)' }}>
+                                <Star size={14} className="text-[#A8200D]" />
+                            </span>
+                            <span>All premium features</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(184,50,37,0.07)' }}>
+                                <Headphones size={14} className="text-[#A8200D]" />
+                            </span>
+                            <span>Priority support available</span>
+                        </div>
+                    </div>
                 </div>
 
-                {/* Right Card */}
-                <div className="w-full lg:w-[400px] flex-shrink-0">
-                    <div className="relative bg-[#fafafa] rounded-2xl p-6 pt-10 border border-gray-200">
-                        {/* Badge */}
-                        <span className="absolute -top-3 left-6 inline-block text-xs font-normal text-white bg-gray-900 rounded-full px-3 py-1.5">
-                            25% OFF • LIMITED TIME OFFER
-                        </span>
+                {/* Cards */}
+                <div className="relative grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-20">
+                    {/* OR Divider (centered between columns on desktop) */}
+                    <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10 text-accent font-medium text-sm">
+                        OR
+                    </div>
 
-                        {/* Plan Name */}
-                        <p className="text-sm font-bold tracking-[0.15em] text-[#A8200D] uppercase mb-3">
+                    {/* Partner Card */}
+                    <div className="w-full bg-white rounded-2xl p-8 shadow-sm border border-gray-100 justify-self-center">
+                        <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#A8200D] mb-4">
                             Agency Partner Plan
                         </p>
-
-                        {/* Pricing */}
-                        <div className="mb-1">
-                            <span className="text-gray-400 text-sm line-through">$350</span>
+                        <div className="flex items-center gap-3 mb-2">
+                            <span className="text-gray-400 line-through text-sm">$350</span>
+                            <span className="text-xs font-medium text-green-700 bg-green-50 px-2 py-0.5 rounded">Save $100/mo</span>
                         </div>
                         <div className="flex items-baseline gap-1 mb-1">
                             <span className="text-5xl font-bold text-gray-900">$250</span>
-                            <span className="text-gray-500 text-base">/month</span>
+                            <span className="text-gray-500">/month</span>
                         </div>
-                        <p className="text-gray-500 text-xs mb-6">Billed monthly. Cancel anytime.</p>
+                        <p className="text-xs text-gray-500 mb-6">Billed monthly. Cancel anytime. You bill your own clients.</p>
 
-                        {/* CTA Button */}
                         <Link
                             href="https://buy.stripe.com/aFafZhgBudT51oZbvR2go15"
-                            className="block w-full btn btn-accent"
                             target="_blank"
                             rel="noopener noreferrer"
+                            className="block w-full btn btn-accent mb-6"
                         >
                             Become a Partner
                         </Link>
 
-                        {/* Divider */}
-                        <div className="border-t border-gray-200 pt-5">
-                            <p className="text-[10px] font-bold tracking-[0.15em] text-gray-400 uppercase mb-4">
-                                What&apos;s Included
-                            </p>
-
-                            <ul className="space-y-2.5">
-                                {includedItems.map((item, index) => (
-                                    <li key={index} className="flex items-center gap-2.5">
-                                        <span className="w-1.5 h-1.5 rounded-full bg-[#A8200D] flex-shrink-0"></span>
-                                        <span className="text-gray-800 text-sm">{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-4">What&apos;s Included</p>
+                        <ul className="space-y-2.5">
+                            {partnerFeatures.map((item, index) => (
+                                <li key={index} className="flex items-center gap-2.5 text-sm text-gray-700">
+                                    <Check size={14} className="text-[#A8200D] flex-shrink-0" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
                     </div>
+
+                    {/* Refer Card */}
+                    <div className="w-full bg-white rounded-2xl p-8 shadow-sm border border-gray-100 justify-self-center">
+                        <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#A8200D] mb-4">
+                            Refer & Earn
+                        </p>
+                        <p className="text-xs text-[#A8200D] font-medium mb-1">$0 upfront</p>
+                        <div className="flex items-baseline gap-1 mb-1">
+                            <span className="text-5xl font-bold text-gray-900">50%</span>
+                            <span className="text-gray-500">recurring</span>
+                        </div>
+                        <p className="text-xs text-gray-500 mb-6">Free to join. Earn every month your referred clients stay.</p>
+
+                        <Link
+                            href="https://cal.id/divyansh-jain/agency-partnership"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block w-full btn btn-outline mb-6"
+                        >
+                            Start earning
+                        </Link>
+
+                        <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-gray-400 mb-4">What&apos;s Included</p>
+                        <ul className="space-y-2.5">
+                            {referFeatures.map((item, index) => (
+                                <li key={index} className="flex items-center gap-2.5 text-sm text-gray-700">
+                                    <Check size={14} className="text-[#A8200D] flex-shrink-0" />
+                                    {item}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+                {/* Bottom Link */}
+                <div className="text-center mt-10">
+                    <Link
+                        href="https://viasocket.com/help/partners/agency-partner-program"
+                        className="inline-flex items-center gap-1 text-sm text-[#A8200D] underline hover:opacity-80 transition-opacity"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Learn more about partner pricing
+                        <ExternalLink size={14} />
+                    </Link>
                 </div>
             </div>
         </section>
@@ -117,3 +153,4 @@ const AgencyPricing = () => {
 };
 
 export default AgencyPricing;
+

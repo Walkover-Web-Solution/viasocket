@@ -13,7 +13,7 @@ export default function WebhookSetup() {
                         <h3 className="text-xl md:text-2xl font-medium">Get the user's webhook URL</h3>
                         <p className="text-gray-600 mb-4">Genrate a unique webhook URL for each user.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
-                            <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
+                            <pre className="px-6 py-5 text-sm leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
                                 <span className="text-[#86efac] opacity-55 italic">
                                     {'// Sign this payload with your secret key'}
                                 </span>
@@ -46,7 +46,7 @@ export default function WebhookSetup() {
                         <h3 className="text-xl md:text-2xl font-medium">POST your event</h3>
                         <p className="text-gray-600 mb-4">POST data to the webhook URL and trigger connected workflows.</p>
                         <div className="bg-[#0B1220] overflow-hidden flex flex-col flex-1 mt-auto">
-                            <pre className="px-6 py-5 text-[12px] leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
+                            <pre className="px-6 py-5 text-sm leading-6 font-mono overflow-x-auto text-gray-200 flex-1">
                                 <span className="text-[#86efac] opacity-55 italic">{'# Trigger from anywhere on your server'}</span>
                                 {'\n\n\n'}
                                 <span className="text-red-400">curl</span> -X POST {'\n'}  <span className="text-[#86efac]">

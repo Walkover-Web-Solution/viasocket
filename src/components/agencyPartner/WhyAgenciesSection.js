@@ -1,13 +1,13 @@
-import { Users, DollarSign, Layers, Star, Headphones, BarChart3 } from 'lucide-react';
+import { Users, DollarSign, Layers, Gift, Infinity, Wallet } from 'lucide-react';
 
-const whyCards = [
+const agencyCards = [
     {
         title: '1. Unlimited Client Workspaces',
         description: 'One account, unlimited clients. Each gets a separate workspace.',
         icon: <Users size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '2. Keep 100% of Revenue',
+        title: '2. Charge Whatever You Want',
         description: 'Set your own rates. No platform commission.',
         icon: <DollarSign size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
@@ -16,20 +16,23 @@ const whyCards = [
         description: 'One shared pool across all clients. Use it where needed.',
         icon: <Layers size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
+];
+
+const referCards = [
     {
-        title: '4. Full Premium Features',
-        description: 'Real-time automation, advanced AI, and priority processing.',
-        icon: <Star size={28} stroke="#A8200D" strokeWidth={1.5} />,
+        title: '1. Earn Recurring Rewards',
+        description: 'Refer businesses and earn rewards on every active customer.',
+        icon: <Gift size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '5. Dedicated Support',
-        description: 'Direct access to our team, plus partner-specific docs.',
-        icon: <Headphones size={28} stroke="#A8200D" strokeWidth={1.5} />,
+        title: '2. Lifetime Free Workspace',
+        description: 'A free viaSocket workspace for life to build and test automations.',
+        icon: <Infinity size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
     {
-        title: '6. Usage-Based Pricing',
-        description: 'Pay for tasks, not seats or clients. Scale freely.',
-        icon: <BarChart3 size={28} stroke="#A8200D" strokeWidth={1.5} />,
+        title: '3. No Upfront Cost',
+        description: 'Join free and start earning right away. No subscription or fees.',
+        icon: <Wallet size={28} stroke="#A8200D" strokeWidth={1.5} />,
     },
 ];
 
@@ -37,40 +40,72 @@ export default function WhyAgenciesSection() {
     return (
         <section className="w-full bg-white py-20">
             <div className="container mx-auto px-5 md:px-8">
-                {/* Section Header */}
-                <div className="flex flex-col items-center text-center mb-[72px]">
-                    <h2 className="text-[clamp(30px,4vw,52px)] font-bold leading-[1.08] tracking-[-0.02em] text-[#111] mb-4">
-                        Why Agencies Choose viaSocket
-                    </h2>
-                    <p className="max-w-[640px] text-[17px] leading-[1.6] text-[#555]">
+                <div className="text-center mb-12">
+                    <h2 className="h2">Why Agencies Choose viaSocket</h2>
+                    <p className="mt-3 text-[#555]">
                         Built for agencies, consultants, and freelancers delivering automation services at scale.
                     </p>
                 </div>
-
-                {/* Cards Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-200">
-                    {whyCards.map((card, i) => (
-                        <div
-                            key={i}
-                            className={`group flex flex-col items-center text-center py-[52px] px-9 transition-colors duration-200
-                ${i < 5 ? 'border-b' : 'border-b-0'} border-gray-200
-                ${i === 0 || i === 1 || i === 3 || i === 4 ? 'md:border-r' : ''}
-                ${i === 2 || i === 5 ? 'md:border-r-0' : ''}
-                ${i >= 3 ? 'md:border-b' : 'md:border-b'}
-              `}
-                        >
-                            <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
-                                {card.icon}
-                            </div>
-                            <h3
-                                className="text-[17px] font-bold leading-[1.3] text-[#111] mb-[10px]"
-                                style={{ fontFamily: 'Inter Tight, sans-serif' }}
+                {/* Agency Partner Plan */}
+                <div className="relative">
+                    <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4">
+                        <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#A8200D]">
+                            Agency Partner Plan
+                        </span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-200">
+                        {agencyCards.map((card, i) => (
+                            <div
+                                key={i}
+                                className={`group flex flex-col items-center text-center py-[52px] px-9 transition-colors duration-200
+                                    ${i < agencyCards.length - 1 ? 'border-b md:border-b-0 md:border-r' : 'border-b-0 md:border-r-0'}
+                                    border-gray-200
+                                `}
                             >
-                                {card.title}
-                            </h3>
-                            <p className="text-[14px] leading-[1.65] text-[#555] max-w-[260px]">{card.description}</p>
-                        </div>
-                    ))}
+                                <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
+                                    {card.icon}
+                                </div>
+                                <h3
+                                    className="text-[17px] font-bold leading-[1.3] text-[#111] mb-[10px]"
+                                    style={{ fontFamily: 'Inter Tight, sans-serif' }}
+                                >
+                                    {card.title}
+                                </h3>
+                                <p className="text-[14px] leading-[1.65] text-[#555] max-w-[260px]">{card.description}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* Refer & Earn */}
+                <div className="relative mt-16">
+                    <div className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4">
+                        <span className="text-xs font-bold uppercase tracking-[0.15em] text-[#A8200D]">
+                            Refer & Earn
+                        </span>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 border-t border-gray-200">
+                        {referCards.map((card, i) => (
+                            <div
+                                key={i}
+                                className={`group flex flex-col items-center text-center py-[52px] px-9 transition-colors duration-200
+                                    ${i < referCards.length - 1 ? 'border-b md:border-b-0 md:border-r' : 'border-b-0 md:border-r-0'}
+                                    border-gray-200
+                                `}
+                            >
+                                <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
+                                    {card.icon}
+                                </div>
+                                <h3
+                                    className="text-[17px] font-bold leading-[1.3] text-[#111] mb-[10px]"
+                                    style={{ fontFamily: 'Inter Tight, sans-serif' }}
+                                >
+                                    {card.title}
+                                </h3>
+                                <p className="text-[14px] leading-[1.65] text-[#555] max-w-[260px]">{card.description}</p>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </section>

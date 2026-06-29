@@ -107,7 +107,7 @@ export default function WebhookFlowCard() {
                                 className={`flex items-center gap-3 py-2 px-3 bg-gray-50 border border-gray-200 text-xs opacity-0 ${actionAnimationClasses[i]}`}
                             >
                                 <span className="font-semibold text-gray-900 min-w-[64px]">{a.app}</span>
-                                <span className="flex-1 text-gray-500 text-[12px]">{a.detail}</span>
+                                <span className="flex-1 text-gray-500 text-sm">{a.detail}</span>
                                 <span className="text-[10px] font-bold text-green-700 tracking-wider">DONE</span>
                             </div>
                         ))}
