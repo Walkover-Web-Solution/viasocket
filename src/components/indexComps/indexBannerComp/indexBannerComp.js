@@ -61,7 +61,7 @@ export default function IndexBannerComp() {
                             target="_blank"
                             className="text-accent text-xs flex items-center gap-1"
                         >
-                            Hire an Expert <ArrowUpRight className="w-4 h-4" />
+                            Let us build <ArrowUpRight className="w-4 h-4" />
                         </Link>
                     </div>
                 </div>
