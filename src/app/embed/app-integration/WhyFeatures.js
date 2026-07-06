@@ -51,7 +51,7 @@ export default function WhyFeatures({ appCount }) {
 
                     <div className="mt-auto flex items-center gap-4 pt-8">
                         <div className="w-[54px] h-[54px] bg-gradient-to-br from-[#059669] via-[#10b981] to-[#34d399] flex items-center justify-center shrink-0 rounded-[10px] relative animate-feat-spark-glow">
-                            <div className="absolute -inset-1.5 rounded-[14px] bg-[radial-gradient(circle,rgba(5,150,105,0.35)_0%,transparent_70%)] z-0 animate-feat-spark-halo pointer-events-none" />
+                            <div className="absolute -inset-1.5 rounded-lg bg-[radial-gradient(circle,rgba(5,150,105,0.35)_0%,transparent_70%)] z-0 animate-feat-spark-halo pointer-events-none" />
                             <FileText
                                 className="w-7 h-7 text-white relative z-10 drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)] animate-feat-spark-float"
                                 strokeWidth={2}

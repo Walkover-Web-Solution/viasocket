@@ -56,7 +56,7 @@ export default function WebhookFeatureHighlights({ appCount }) {
                                     className="text-white relative z-10 animate-feat-spark-float drop-shadow-sm"
                                 />
                             </div>
-                            <div className="absolute inset-[-6px] rounded-[14px] bg-[radial-gradient(circle,rgba(13,148,136,.35)_0%,transparent_70%)] animate-feat-spark-halo pointer-events-none z-0" />
+                            <div className="absolute inset-[-6px] rounded-lg bg-[radial-gradient(circle,rgba(13,148,136,.35)_0%,transparent_70%)] animate-feat-spark-halo pointer-events-none z-0" />
                         </div>
                         <div className="w-[30px] h-[6px] bg-[linear-gradient(90deg,#5eead4_0%,#5eead4_50%,transparent_50%,transparent_100%)] bg-[length:6px_2px] bg-repeat-x bg-[position:0_50%] animate-feat-connector-flow flex-shrink-0" />
                         <div className="flex-1 bg-white border border-[#bfdbfe] p-4 rounded flex flex-col gap-1">

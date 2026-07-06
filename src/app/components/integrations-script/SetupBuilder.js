@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import searchApps from '@/utils/searchApps';
 import ScriptPicker from './ScriptPicker';
 import ScriptOutput from './ScriptOutput';
@@ -9,12 +10,46 @@ const MAX_FEATURE = 10;
 const TOTAL_SLOTS = MAX_FEATURE + 1; // 1 primary + 10 feature
 
 export default function SetupBuilder({ initialApps = [] }) {
+    const searchParams = useSearchParams();
+    const preselectSlug = searchParams?.get('app') || '';
     const [query, setQuery] = useState('');
     const [apps, setApps] = useState(initialApps);
     const [loading, setLoading] = useState(false);
     const [slots, setSlots] = useState(Array(TOTAL_SLOTS).fill(null)); // index 0 = primary
     const [copied, setCopied] = useState(false);
     const debounceRef = useRef(null);
+    const preselectDoneRef = useRef(false);
+
+    useEffect(() => {
+        if (!preselectSlug || preselectDoneRef.current) return;
+        let cancelled = false;
+        const applyPreselect = (app) => {
+            if (!app || cancelled) return;
+            preselectDoneRef.current = true;
+            setSlots((prev) => {
+                if (prev[0]) return prev;
+                const next = [...prev];
+                next[0] = app;
+                return next;
+            });
+            setApps((prev) => (prev.some((a) => a.appslugname === app.appslugname) ? prev : [app, ...prev]));
+        };
+        const local = initialApps.find((a) => a.appslugname === preselectSlug);
+        if (local) {
+            applyPreselect(local);
+            return;
+        }
+        (async () => {
+            try {
+                const res = await searchApps(preselectSlug);
+                const match = Array.isArray(res) ? res.find((a) => a.appslugname === preselectSlug) : null;
+                applyPreselect(match);
+            } catch { }
+        })();
+        return () => {
+            cancelled = true;
+        };
+    }, [preselectSlug, initialApps]);
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -94,46 +129,47 @@ export default function SetupBuilder({ initialApps = [] }) {
             await navigator.clipboard.writeText(scriptCode);
             setCopied(true);
             setTimeout(() => setCopied(false), 1800);
-        } catch {}
+        } catch { }
     };
 
     return (
         <div className="container my-20" id="setup">
             <div className="rounded-lg border border-[#e2dfd2] bg-white p-6 md:p-12">
-                <div className="max-w-[660px]">
-                    <span className="mb-[14px] block text-[12px] font-semibold uppercase tracking-[1.4px] text-accent">
-                        Build your script
-                    </span>
-                    <h2 className="h2">
-                        Generate your script in seconds
-                    </h2>
-                    <p className="mt-[14px] text-[16px] font-normal leading-[1.6] text-[#5a5a5a] md:text-[18px]">
-                        Pick your app and the tools you want to feature. The script fills itself in automatically, ready
-                        to copy and paste anywhere.
-                    </p>
+                <div className="flex items-start justify-between gap-6">
+                    <div className="max-w-[660px]">
+                        <span className="mb-[14px] block text-[12px] font-semibold uppercase tracking-[1.4px] text-accent">
+                            Build your script
+                        </span>
+                        <h2 className="h1">Generate your script in seconds</h2>
+                        <p>
+                            Pick your app and the tools you want to feature. The script fills itself in automatically,
+                            ready to copy and paste anywhere.
+                        </p>
+                    </div>
+                    <a href="#how" className="btn btn-outline flex-shrink-0">
+                        See how it works
+                    </a>
                 </div>
 
-                <div className="mt-10 grid gap-6">
-                    <ScriptPicker
-                        slots={slots}
-                        query={query}
-                        setQuery={setQuery}
-                        apps={apps}
-                        loading={loading}
-                        selectedSlugs={selectedSlugs}
-                        onSelectApp={handleSelect}
-                        onRemoveSlot={removeSlot}
-                        onClearAll={() => setSlots(Array(TOTAL_SLOTS).fill(null))}
-                    />
-                    <ScriptOutput
-                        scriptCode={scriptCode}
-                        canCopy={canCopy}
-                        copied={copied}
-                        onCopy={handleCopy}
-                    />
+                <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="w-full min-w-0">
+                        <ScriptPicker
+                            slots={slots}
+                            query={query}
+                            setQuery={setQuery}
+                            apps={apps}
+                            loading={loading}
+                            selectedSlugs={selectedSlugs}
+                            onSelectApp={handleSelect}
+                            onRemoveSlot={removeSlot}
+                            onClearAll={() => setSlots(Array(TOTAL_SLOTS).fill(null))}
+                        />
+                    </div>
+                    <div className="w-full min-w-0">
+                        <ScriptOutput scriptCode={scriptCode} canCopy={canCopy} copied={copied} onCopy={handleCopy} />
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
