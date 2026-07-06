@@ -49,7 +49,7 @@ export default function Comparison({ onHire }) {
                         onClick={onHire}
                         className="inline-flex items-center gap-2 px-4 py-2 bg-[#1a1a1a] hover:bg-black text-white text-sm font-semibold rounded-full transition-colors group"
                     >
-                        Hire an expert
+                        Let us build
                         <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
                     </button>
                 </div>

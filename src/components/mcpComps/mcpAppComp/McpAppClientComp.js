@@ -149,7 +149,14 @@ export default function McpAppClientComp({
                                 {mcpPromptData[0]?.prompt || appOneDetails.events.length > 0 ? (
                                     <button
                                         className="btn btn-accent"
-                                        onClick={(e) => handleRedirect(e, 'https://app.mushroom.viasocket.com/login?')}
+                                        onClick={(e) =>
+                                            handleRedirect(
+                                                e,
+                                                'https://app.mushroom.viasocket.com/login?',
+                                                null,
+                                                appOneDetails?.appslugname || appOneDetails?.name
+                                            )
+                                        }
                                     >
                                         Get Your MCP URL
                                     </button>
