@@ -77,12 +77,16 @@ export default function MainNavbar({
                     {hasToken ? (
                         <button
                             className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
-                            onClick={(e) => {
-                                const url = pathname?.startsWith('/mcp')
-                                    ? 'https://app.mushroom.viasocket.com/login?'
-                                    : 'https://flow.viasocket.com?';
-                                handleRedirect(e, url, null, undefined);
-                            }}
+                            onClick={(e) =>
+                                handleRedirect(
+                                    e,
+                                    pathname?.startsWith('/mcp')
+                                        ? 'https://app.mushroom.viasocket.com/login?'
+                                        : 'https://flow.viasocket.com?',
+                                    null,
+                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
+                                )
+                            }
                             rel="nofollow"
                         >
                             Dashboard <ArrowRight className="ml-2 w-4 h-4" />
@@ -90,12 +94,14 @@ export default function MainNavbar({
                     ) : (
                         <button
                             className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
-                            onClick={(e) => {
-                                const url = pathname?.startsWith('/mcp')
-                                    ? 'https://app.mushroom.viasocket.com/login?'
-                                    : '/signup?';
-                                handleRedirect(e, url, null, undefined);
-                            }}
+                            onClick={(e) =>
+                                handleRedirect(
+                                    e,
+                                    pathname?.startsWith('/mcp') ? 'https://app.mushroom.viasocket.com/login?' : '/signup?',
+                                    null,
+                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
+                                )
+                            }
                         >
                             Login/Sign Up
                         </button>
