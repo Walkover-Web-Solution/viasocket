@@ -28,7 +28,7 @@ function NavList({ navItems }) {
             </li>
             <li className="hover:bg-gray-100 text-black p-2">
                 <Link href="https://cal.id/team/viasocket/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
-                    <span className="text-lg hover:text-accent hover:underline">Hire an expert</span>
+                    <span className="text-lg hover:text-accent hover:underline">Let us build</span>
                 </Link>
             </li>
         </ul>

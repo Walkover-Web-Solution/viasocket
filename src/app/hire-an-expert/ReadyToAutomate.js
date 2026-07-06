@@ -63,7 +63,7 @@ export default function ReadyToAutomate({ onHire }) {
             </div>
 
             <button onClick={onHire} className="btn btn-accent group">
-                Hire an Expert
+                Let us build
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </button>
         </section>

@@ -23,7 +23,7 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
                 <div
                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit ${MCPPadding} !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                 >
-                    Hire an expert
+                    Let us build
                 </div>
             </Link>
             <Link href={'/support'}>

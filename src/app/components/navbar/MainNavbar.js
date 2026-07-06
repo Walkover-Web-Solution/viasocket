@@ -17,6 +17,15 @@ export default function MainNavbar({
 }) {
     const pathname = usePathname();
 
+    const getMcpUtmSource = () => {
+        if (!pathname?.startsWith('/mcp/')) return undefined;
+        const segments = pathname.split('/').filter(Boolean);
+        if (segments.length >= 2 && segments[1] !== 'category') {
+            return segments[1];
+        }
+        return undefined;
+    };
+
     const isActive = (path) => {
         if (!path || path.startsWith('http')) return '';
         const currentPath = pathname.split('?')[0].split('#')[0];
@@ -84,7 +93,7 @@ export default function MainNavbar({
                                         ? 'https://app.mushroom.viasocket.com/login?'
                                         : 'https://flow.viasocket.com?',
                                     null,
-                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
+                                    pathname?.startsWith('/mcp') ? getMcpUtmSource() || 'viasocket' : undefined
                                 )
                             }
                             rel="nofollow"
@@ -99,7 +108,7 @@ export default function MainNavbar({
                                     e,
                                     pathname?.startsWith('/mcp') ? 'https://app.mushroom.viasocket.com/login?' : '/signup?',
                                     null,
-                                    pathname?.startsWith('/mcp') ? 'viasocket' : undefined
+                                    pathname?.startsWith('/mcp') ? getMcpUtmSource() || 'viasocket' : undefined
                                 )
                             }
                         >
