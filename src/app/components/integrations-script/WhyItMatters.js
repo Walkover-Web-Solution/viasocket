@@ -56,7 +56,7 @@ export default function WhyItMatters() {
 
 function CompareCard({ pillLabel, pillClass, title, iconBg, iconColor, Icon, points, headerBg }) {
     return (
-        <div className="overflow-hidden rounded-[14px] border border-[#e2dfd2] bg-white">
+        <div className="overflow-hidden rounded-lg border border-[#e2dfd2] bg-white">
             <div className={`flex items-center gap-3 px-5 py-4 ${headerBg}`}>
                 <span
                     className={`inline-flex items-center rounded-full px-2.5 py-1 text-[10.5px] font-bold uppercase tracking-[1px] ${pillClass}`}
