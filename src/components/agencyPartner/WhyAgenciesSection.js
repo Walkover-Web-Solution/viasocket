@@ -62,7 +62,7 @@ export default function WhyAgenciesSection() {
                                     border-gray-200
                                 `}
                             >
-                                <div className="w-16 h-16 rounded-lg flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
+                                <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
                                     {card.icon}
                                 </div>
                                 <h3
@@ -93,7 +93,7 @@ export default function WhyAgenciesSection() {
                                     border-gray-200
                                 `}
                             >
-                                <div className="w-16 h-16 rounded-lg flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
+                                <div className="w-16 h-16 rounded-[14px] flex items-center justify-center mb-5 transition-colors duration-200 group-hover:bg-[#a8200d]/[0.07]">
                                     {card.icon}
                                 </div>
                                 <h3

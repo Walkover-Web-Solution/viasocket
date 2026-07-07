@@ -31,7 +31,7 @@ const HeroSection = ({ appCount }) => {
                     <Link href="#pricing" className="btn btn-accent">
                         Become a Partner
                     </Link>
-                    <Link href="https://cal.id/divyansh-jain/agency-partnership" className="btn btn-outline" target="_blank">
+                    <Link href="/support" className="btn btn-outline">
                         Talk to Sales
                         <ArrowRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
                     </Link>
