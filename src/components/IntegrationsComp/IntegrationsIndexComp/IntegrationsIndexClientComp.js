@@ -382,12 +382,12 @@ export function RequestIntegrationPopupOpener({
     const searchParams = useSearchParams();
 
     const QUERY_KEY = 'requestIntegration';
-    const isOpen = searchParams?.get(QUERY_KEY) === '1';
+    const isOpen = searchParams?.get(QUERY_KEY) === 'true';
 
     const updateQueryParam = (open) => {
         const params = new URLSearchParams(searchParams?.toString() || '');
         if (open) {
-            params.set(QUERY_KEY, '1');
+            params.set(QUERY_KEY, 'true');
         } else {
             params.delete(QUERY_KEY);
         }
