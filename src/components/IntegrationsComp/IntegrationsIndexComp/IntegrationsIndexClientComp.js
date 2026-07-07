@@ -8,6 +8,7 @@ import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter'
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
 import { useEffect, useRef, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
@@ -376,15 +377,26 @@ export function RequestIntegrationPopupOpener({
     secondAppInfo = null,
     isNewTheme = false,
 }) {
-    const [modalData, setModalData] = useState({ isOpen: false, appInfo: null, type: null });
+    const router = useRouter();
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
 
-    const openModal = () => {
-        setModalData({ isOpen: true, appInfo, type });
+    const QUERY_KEY = 'requestIntegration';
+    const isOpen = searchParams?.get(QUERY_KEY) === 'true';
+
+    const updateQueryParam = (open) => {
+        const params = new URLSearchParams(searchParams?.toString() || '');
+        if (open) {
+            params.set(QUERY_KEY, 'true');
+        } else {
+            params.delete(QUERY_KEY);
+        }
+        const queryString = params.toString();
+        router.replace(`${pathname}${queryString ? `?${queryString}` : ''}`, { scroll: false });
     };
 
-    const closeModal = () => {
-        setModalData((prev) => ({ ...prev, isOpen: false }));
-    };
+    const openModal = () => updateQueryParam(true);
+    const closeModal = () => updateQueryParam(false);
 
     const label =
         title ||
@@ -479,11 +491,11 @@ export function RequestIntegrationPopupOpener({
     return (
         <>
             {getUi()}
-            {modalData.isOpen && (
+            {isOpen && (
                 <IntegrationsRequestComp
-                    appInfo={modalData.appInfo}
+                    appInfo={appInfo}
                     secondAppInfo={secondAppInfo}
-                    type={modalData.type}
+                    type={type}
                     onClose={closeModal}
                 />
             )}
