@@ -48,8 +48,12 @@ export default function GetStarted() {
 
                     <div className="p-4 flex flex-col gap-3">
                         <div className="flex items-start gap-2 max-w-[85%]">
-                            <div className="w-7 h-7 rounded-full border border-custom-border p-1 flex-shrink-0 flex items-center justify-center">
-                                <Image src="/assets/brand/socketIcon.svg" alt="viaSocket" width={16} height={16} />
+                            <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 bg-gray-200">
+                                <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
+                                    <rect width="36" height="36" fill="#D1D5DB"/>
+                                    <circle cx="18" cy="14" r="6" fill="#9CA3AF"/>
+                                    <path d="M6 30c0-6.627 5.373-10 12-10s12 3.373 12 10" fill="#9CA3AF"/>
+                                </svg>
                             </div>
                             <div className="bg-gray-100 text-gray-900 text-sm px-4 py-2 rounded-2xl rounded-tl-sm">
                                 What can I help you with?
