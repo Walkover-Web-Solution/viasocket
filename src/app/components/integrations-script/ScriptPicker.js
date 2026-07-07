@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { Search, Check, X } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { Plus, Search, Check, X } from 'lucide-react';
 
 const MAX_FEATURE = 10;
 const INITIAL_VISIBLE = 36;
@@ -19,13 +19,13 @@ export default function ScriptPicker({
 }) {
     const filledCount = slots.filter(Boolean).length;
     const lastFilledFeature = slots.slice(1).reduce((acc, s, i) => (s ? i : acc), -1);
-    const visibleFeatureCount = Math.min(MAX_FEATURE, Math.max(2, lastFilledFeature + 2));
+    const visibleFeatureCount = slots[0] ? Math.min(MAX_FEATURE, lastFilledFeature + 2) : 0;
     const [showAll, setShowAll] = useState(false);
     const visibleApps = query || showAll ? apps : apps.slice(0, INITIAL_VISIBLE);
     const hasMore = !query && !showAll && apps.length > INITIAL_VISIBLE;
 
     return (
-        <div className="overflow-hidden rounded-[14px] border border-[#ece9df] bg-[#faf9f4]">
+        <div className="flex flex-col overflow-hidden rounded-lg border border-[#ece9df] bg-[#faf9f4] h-full">
             <div className="flex flex-col gap-4 border-b border-[#ece9df] p-4">
                 <div className="flex items-center justify-between">
                     <span className="text-[12px] font-semibold uppercase tracking-[0.6px] text-[#8a8a8a]">
@@ -43,23 +43,30 @@ export default function ScriptPicker({
                     )}
                 </div>
                 <div className="flex flex-wrap gap-3">
-                    <SlotCard
-                        label="My app"
-                        slot={slots[0]}
-                        isPrimary
-                        emptyLabel="Select"
-                        onRemove={() => onRemoveSlot(0)}
-                    />
-                    {Array.from({ length: visibleFeatureCount }).map((_, i) => (
-                        <SlotCard
-                            key={`feat-${i}`}
-                            label={`appName${i + 1}`}
-                            slot={slots[i + 1]}
-                            emptyLabel="Add app"
-                            onRemove={() => onRemoveSlot(i + 1)}
-                        />
-                    ))}
-                    {visibleFeatureCount < MAX_FEATURE && <AddMoreCard />}
+                    {(() => {
+                        const nextEmptyIdx = slots.findIndex((s, i) => i > 0 && !s);
+                        return (
+                            <>
+                                <SlotCard
+                                    label="My app"
+                                    slot={slots[0]}
+                                    isPrimary={!slots[0]}
+                                    emptyLabel="Select"
+                                    onRemove={() => onRemoveSlot(0)}
+                                />
+                                {Array.from({ length: visibleFeatureCount }).map((_, i) => (
+                                    <SlotCard
+                                        key={`feat-${i}`}
+                                        label={`appName${i + 1}`}
+                                        slot={slots[i + 1]}
+                                        isPrimary={slots[0] && i + 1 === nextEmptyIdx}
+                                        emptyLabel="Add app"
+                                        onRemove={() => onRemoveSlot(i + 1)}
+                                    />
+                                ))}
+                            </>
+                        );
+                    })()}
                 </div>
                 <div className="relative w-full">
                     <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#8a8a8a]" />
@@ -98,19 +105,25 @@ export default function ScriptPicker({
             </div>
 
             <div
-                className={`grid grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 ${
-                    showAll || query ? '' : 'max-h-[320px] overflow-y-auto'
-                }`}
+                className="grid auto-rows-min grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-h-[480px] overflow-y-auto "
             >
                 {loading && apps.length === 0 ? (
-                    Array.from({ length: 12 }).map((_, i) => (
+                    Array.from({ length: 6 }).map((_, i) => (
                         <div
                             key={i}
-                            className="h-[64px] animate-pulse rounded-md border border-[#ece9df] bg-white"
+                            className="h-[40px] animate-pulse rounded-md border border-[#ece9df] bg-[#faf9f4]"
                         />
                     ))
                 ) : apps.length === 0 ? (
-                    <div className="col-span-full py-6 text-center text-[14px] text-[#8a8a8a]">No apps found.</div>
+                    <>
+                        {Array.from({ length: 6 }).map((_, i) => (
+                            <div
+                                key={i}
+                                className="h-[40px] rounded-md border border-dashed border-[#ece9df] bg-[#faf9f4]"
+                            />
+                        ))}
+                        <div className="col-span-full py-2 text-center text-[13px] text-[#8a8a8a]">No apps found.</div>
+                    </>
                 ) : (
                     visibleApps.map((app) => {
                         const selected = selectedSlugs.has(app.appslugname);
@@ -122,9 +135,8 @@ export default function ScriptPicker({
                                 type="button"
                                 disabled={disabled}
                                 onClick={() => onSelectApp(app)}
-                                className={`flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-left transition ${
-                                    selected ? 'border-accent' : 'border-[#ece9df] hover:border-accent'
-                                } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+                                className={`flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-left transition ${selected ? 'border-accent' : 'border-[#ece9df] hover:border-accent'
+                                    } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
                             >
                                 <img
                                     src={app.iconurl || 'https://placehold.co/36x36'}
@@ -149,7 +161,7 @@ function SlotCard({ slot, label, isPrimary, emptyLabel, onRemove }) {
         <div
             className={`flex min-w-[150px] flex-col justify-between gap-2 rounded-lg border bg-white p-3 ${borderColor}`}
         >
-            <span className={`font-mono text-sm font-semibold tracking-[0.2px] ${labelColor}`}>{label}</span>
+            <span className={`text-xs font-semibold ${labelColor}`}>{label}</span>
             {slot ? (
                 <div className="flex items-center justify-between gap-2">
                     <div className="flex min-w-0 items-center gap-2">
@@ -158,7 +170,7 @@ function SlotCard({ slot, label, isPrimary, emptyLabel, onRemove }) {
                             alt={slot.name}
                             className="h-6 w-6 flex-shrink-0 rounded-[6px] object-contain"
                         />
-                        <span className="truncate text-[13px] font-semibold text-[#1a1a1a]">{slot.name}</span>
+                        <span className="truncate text-[10px] font-semibold text-[#1a1a1a]">{slot.name}</span>
                     </div>
                     <button
                         type="button"
@@ -181,10 +193,17 @@ function SlotCard({ slot, label, isPrimary, emptyLabel, onRemove }) {
     );
 }
 
-function AddMoreCard() {
+function AddMoreCard({ onClick }) {
     return (
-        <div className="flex h-[78px] w-[170px] items-center justify-center rounded-[12px] border border-dashed border-[#cfcabb] bg-transparent text-[13px] font-semibold text-[#5a5a5a]">
-            <span className="mr-1.5 text-[16px] leading-none">+</span> Add app
-        </div>
+        <button
+            type="button"
+            onClick={onClick}
+            className="flex min-w-[150px] items-center gap-2 rounded-lg border border-dashed border-[#cfcabb] bg-transparent p-3 text-[13px] font-semibold text-[#5a5a5a] transition hover:border-accent hover:text-accent"
+        >
+            <span className="flex h-6 w-6 items-center justify-center rounded-[6px] border border-dashed border-[#cfcabb] text-[#8a8a8a]">
+                <Plus className="h-3.5 w-3.5" />
+            </span>
+            Add more
+        </button>
     );
 }
