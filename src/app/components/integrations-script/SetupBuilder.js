@@ -11,7 +11,10 @@ const TOTAL_SLOTS = MAX_FEATURE + 1; // 1 primary + 10 feature
 
 export default function SetupBuilder({ initialApps = [] }) {
     const searchParams = useSearchParams();
-    const preselectSlug = searchParams?.get('app') || '';
+    const preselectSlugs = useMemo(
+        () => Array.from(new Set(searchParams?.getAll('app') || [])).slice(0, TOTAL_SLOTS),
+        [searchParams]
+    );
     const [query, setQuery] = useState('');
     const [apps, setApps] = useState(initialApps);
     const [loading, setLoading] = useState(false);
@@ -19,37 +22,74 @@ export default function SetupBuilder({ initialApps = [] }) {
     const [copied, setCopied] = useState(false);
     const debounceRef = useRef(null);
     const preselectDoneRef = useRef(false);
+    const [canSyncParams, setCanSyncParams] = useState(!preselectSlugs.length);
+    const selectedAppSlugs = useMemo(() => slots.filter(Boolean).map((a) => a.appslugname), [slots]);
+    const selectedSlugs = useMemo(() => new Set(selectedAppSlugs), [selectedAppSlugs]);
 
     useEffect(() => {
-        if (!preselectSlug || preselectDoneRef.current) return;
-        let cancelled = false;
-        const applyPreselect = (app) => {
-            if (!app || cancelled) return;
-            preselectDoneRef.current = true;
-            setSlots((prev) => {
-                if (prev[0]) return prev;
-                const next = [...prev];
-                next[0] = app;
-                return next;
-            });
-            setApps((prev) => (prev.some((a) => a.appslugname === app.appslugname) ? prev : [app, ...prev]));
-        };
-        const local = initialApps.find((a) => a.appslugname === preselectSlug);
-        if (local) {
-            applyPreselect(local);
+        if (!preselectSlugs.length) {
+            setCanSyncParams(true);
             return;
         }
+        if (preselectDoneRef.current) return;
+        let cancelled = false;
         (async () => {
-            try {
-                const res = await searchApps(preselectSlug);
-                const match = Array.isArray(res) ? res.find((a) => a.appslugname === preselectSlug) : null;
-                applyPreselect(match);
-            } catch { }
+            const resolved = await Promise.all(
+                preselectSlugs.map(async (slug) => {
+                    const local = initialApps.find((a) => a.appslugname === slug);
+                    if (local) return local;
+                    try {
+                        const res = await searchApps(slug);
+                        return Array.isArray(res) ? res.find((a) => a.appslugname === slug) : null;
+                    } catch {
+                        return null;
+                    }
+                })
+            );
+            if (cancelled) return;
+            preselectDoneRef.current = true;
+            const found = resolved.filter(Boolean);
+            if (!found.length) {
+                setCanSyncParams(true);
+                return;
+            }
+            setSlots((prev) => {
+                const next = [...prev];
+                found.forEach((app) => {
+                    if (next.some((s) => s?.appslugname === app.appslugname)) return;
+                    const empty = next.findIndex((s) => s === null);
+                    if (empty !== -1) next[empty] = app;
+                });
+                return next;
+            });
+            setApps((prev) => {
+                const merged = [...prev];
+                found.forEach((app) => {
+                    if (!merged.some((a) => a.appslugname === app.appslugname)) merged.unshift(app);
+                });
+                return merged;
+            });
+            setCanSyncParams(true);
         })();
         return () => {
             cancelled = true;
         };
-    }, [preselectSlug, initialApps]);
+    }, [preselectSlugs, initialApps]);
+
+    // Sync selected slots to URL query params (?app=slug1&app=slug2)
+    useEffect(() => {
+        if (typeof window === 'undefined' || !canSyncParams) return;
+        const params = new URLSearchParams(window.location.search);
+        if (params.getAll('app').join('|') === selectedAppSlugs.join('|')) return;
+        params.delete('app');
+        selectedAppSlugs.forEach((slug) => params.append('app', slug));
+        const search = params.toString();
+        window.history.replaceState(
+            null,
+            '',
+            `${window.location.pathname}${search ? `?${search}` : ''}${window.location.hash}`
+        );
+    }, [selectedAppSlugs, canSyncParams]);
 
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -71,8 +111,6 @@ export default function SetupBuilder({ initialApps = [] }) {
         }, 250);
         return () => debounceRef.current && clearTimeout(debounceRef.current);
     }, [query, initialApps]);
-
-    const selectedSlugs = useMemo(() => new Set(slots.filter(Boolean).map((a) => a.appslugname)), [slots]);
 
     const handleSelect = (app) => {
         setSlots((prev) => {
