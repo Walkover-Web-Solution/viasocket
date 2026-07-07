@@ -50,7 +50,7 @@ export default async function IntegrationsScriptPage() {
                 <NavbarServer navbarData={navbarData} utm={'/integrations-script'} />
             </ConditionalNavbar>
             <div className="global-top-space">
-                <HeroSection appCount={appCount} />
+                {/* <HeroSection appCount={appCount} /> */}
                 <SetupBuilder initialApps={apps} />
                 <WhyItMatters />
                 <HowItWorks />

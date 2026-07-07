@@ -57,7 +57,7 @@ function Step({ index, title, desc, visual }) {
     return (
         <div className="flex flex-col">
             <div className="mb-3 text-center text-[11px] font-bold uppercase tracking-[1.6px] text-accent">{index}</div>
-            <div className="flex h-[200px] items-center justify-center rounded-[14px] border border-[#ece9df] bg-[#faf9f4] p-4">
+            <div className="flex h-[200px] items-center justify-center rounded-lg border border-[#ece9df] bg-[#faf9f4] p-4">
                 {visual}
             </div>
             <h3 className="mt-5 text-[17px] font-bold text-[#1a1a1a]">{title}</h3>
