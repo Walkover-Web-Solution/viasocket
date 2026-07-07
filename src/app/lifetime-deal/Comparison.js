@@ -89,7 +89,7 @@ export default function Comparison() {
                         {COMPETITORS.map((c) => (
                             <div
                                 key={c.name}
-                                className="bg-[#E5E5E5] rounded-lg p-5 flex items-center justify-between transition-all duration-300 hover:-translate-y-0.5"
+                                className="bg-[#E5E5E5] rounded-[14px] p-5 flex items-center justify-between transition-all duration-300 hover:-translate-y-0.5"
                             >
                                 <div>
                                     <div className="text-lg font-bold tracking-[-0.3px] text-gray-900 mb-1">

@@ -39,11 +39,11 @@ export default async function PricingPage() {
 
     return (
         <>
-            <div className="container cont pb-4 lg:gap-20 md:gap-16 gap-12 global-top-space">
-                <MetaHeadComp metaData={metaData} page={'/pricing'} />
-                <ConditionalNavbar>
-                    <NavbarServer navbarData={navbarData} utm={'/pricing'} />
-                </ConditionalNavbar>
+            <MetaHeadComp metaData={metaData} page={'/pricing'} />
+            <ConditionalNavbar>
+                <NavbarServer navbarData={navbarData} utm={'/pricing'} />
+            </ConditionalNavbar>
+            <div className="container cont pb-4 pt-12 lg:gap-20 md:gap-16 gap-12 global-top-space">
                 <div className="cont flex flex-col items-center text-center gap-6">
                     <div className="flex flex-col items-center">
                         <h1 className="text-6xl">

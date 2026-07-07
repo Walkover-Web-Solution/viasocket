@@ -5,7 +5,7 @@ export default function WorkflowIllustration() {
     return (
         <div className="mt-auto flex items-center gap-3.5 pt-8">
             <div className="w-[54px] h-[54px] bg-gradient-to-br from-[#7c3aed] via-[#a78bfa] to-[#c4b5fd] flex items-center justify-center shrink-0 rounded-[10px] relative animate-feat-spark-glow">
-                <div className="absolute -inset-1.5 rounded-lg bg-[radial-gradient(circle,rgba(124,58,237,0.35)_0%,transparent_70%)] z-0 animate-feat-spark-halo pointer-events-none" />
+                <div className="absolute -inset-1.5 rounded-[14px] bg-[radial-gradient(circle,rgba(124,58,237,0.35)_0%,transparent_70%)] z-0 animate-feat-spark-halo pointer-events-none" />
                 <Sparkles color="white" size={28} className="relative z-[1] drop-shadow-[0_1px_2px_rgba(0,0,0,0.18)] animate-feat-spark-float" />
             </div>
             <div
