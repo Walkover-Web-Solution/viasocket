@@ -19,7 +19,8 @@ export default function ScriptPicker({
 }) {
     const filledCount = slots.filter(Boolean).length;
     const lastFilledFeature = slots.slice(1).reduce((acc, s, i) => (s ? i : acc), -1);
-    const visibleFeatureCount = slots[0] ? Math.min(MAX_FEATURE, lastFilledFeature + 2) : 0;
+    const hasAnyFeature = lastFilledFeature !== -1;
+    const visibleFeatureCount = slots[0] || hasAnyFeature ? Math.min(MAX_FEATURE, lastFilledFeature + 2) : 0;
     const [showAll, setShowAll] = useState(false);
     const visibleApps = query || showAll ? apps : apps.slice(0, INITIAL_VISIBLE);
     const hasMore = !query && !showAll && apps.length > INITIAL_VISIBLE;
