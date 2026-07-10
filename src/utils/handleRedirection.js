@@ -1,4 +1,5 @@
 import { setUtmSource } from './handleUtmSource';
+import { appendReferralToUrl } from './referralUtils';
 
 export const handleRedirect = (e, url, router, customSource) => {
     e.preventDefault();
@@ -14,6 +15,8 @@ export const handleRedirect = (e, url, router, customSource) => {
         const utmParams = setUtmSource({ source });
         finalUrl = `${baseUrl}${separator}state=${utmParams}`;
     }
+
+    finalUrl = appendReferralToUrl(finalUrl);
 
     if (router && url.startsWith('/')) {
         router.push(finalUrl);

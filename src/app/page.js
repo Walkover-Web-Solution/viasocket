@@ -8,10 +8,9 @@ import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter'
 import HeroContainer from './components/home/HeroContainer';
 import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
+import ReferralCaptureWrapper from '@/components/ReferralCaptureWrapper';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
-
-export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getHomePageData();
@@ -61,6 +60,7 @@ export default async function HomePage() {
     const hasToken = await getHasToken();
     return (
         <>
+            <ReferralCaptureWrapper />
             <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
             <MetaHeadComp metaData={metaData} page={'/'} />
             <ConditionalNavbar>
