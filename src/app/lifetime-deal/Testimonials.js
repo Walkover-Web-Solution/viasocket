@@ -83,7 +83,7 @@ export default function Testimonials({ reviewData = [] }) {
                         </h3>
                     </aside>
 
-                    <div className="relative overflow-hidden">
+                    <div className="relative overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                         <div className="flex gap-4 w-max pt-1 pb-[18px] testimonials-marquee motion-reduce:animate-none">
                             {sets.map((s) =>
                                 testimonials.map((t, i) => (
