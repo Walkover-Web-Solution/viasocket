@@ -15,19 +15,25 @@ export default function SecuritySection({ securityGridData }) {
                             so you can run workflows with confidence.
                         </h3>
                     </div>
-                    <div className="flex gap-4">
-                        <Image
-                            src="https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-28.png"
-                            alt="aicpa soc badge"
-                            width={80}
-                            height={80}
-                        />
-                        <Image
-                            src="https://stuff.thingsofbrand.com/viasocket.com/images/img2_image-29.png"
-                            alt="iso certified badge"
-                            width={80}
-                            height={80}
-                        />
+                    <div className="flex gap-4 flex-shrink-0">
+                        <div className="w-20 h-20 flex-shrink-0">
+                            <Image
+                                src="https://stuff.thingsofbrand.com/viasocket.com/images/img8_image-28.png"
+                                alt="aicpa soc badge"
+                                width={80}
+                                height={80}
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
+                        <div className="w-20 h-20 flex-shrink-0">
+                            <Image
+                                src="https://stuff.thingsofbrand.com/viasocket.com/images/img2_image-29.png"
+                                alt="iso certified badge"
+                                width={80}
+                                height={80}
+                                className="w-full h-full object-contain"
+                            />
+                        </div>
                     </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 border border-white border-t-0 border-r-0">

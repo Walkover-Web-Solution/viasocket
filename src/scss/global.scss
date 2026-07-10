@@ -137,6 +137,7 @@
 #__next {
     border-left: 1px solid var(--custom-border);
     border-right: 1px solid var(--custom-border);
+    overflow-x: hidden;
 
     /** Using for all btn font size */
     .btn {
