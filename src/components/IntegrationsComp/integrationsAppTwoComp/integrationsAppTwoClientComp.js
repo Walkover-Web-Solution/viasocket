@@ -1,140 +1,27 @@
 'use client';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
-import { LinkText } from '@/components/uiComponents/buttons';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/app/components/blog/BlogGrid';
-import createURL from '@/utils/createURL';
-import IntegrationsEventsComp from '../integrationsEventsComp/integrationsEventsComp';
-import CombinationCardComp from '@/components/combinationCardComp/combinationCardComp';
 import VideoGrid from '@/components/videoGrid/videoGrid';
-import { handleRedirect } from '@/utils/handleRedirection';
-import ExternalLink from '@/utils/ExternalLink';
-import { ChevronDown, ChevronUp } from 'lucide-react';
-import { ArrowLeftRight, Search } from 'lucide-react';
-import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import GetStarted from '@/components/getStarted/getStarted';
-
-
-function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
-    const [search, setSearch] = useState('');
-    const [selectedEvent, setSelectedEvent] = useState(null);
-
-    useEffect(() => {
-        if (resetEvent) {
-            setSelectedEvent(null);
-        }
-    }, [resetEvent]);
-
-    const filteredList = list?.filter((item) => item?.name?.toLowerCase().includes(search.toLowerCase()));
-
-    const handleSelect = (event) => {
-        setSelectedEvent(event);
-        setSearch('');
-        onSelect(event);
-        if (onToggle) {
-            onToggle();
-        }
-    };
-
-    return (
-        <div className="flex flex-col w-full md:w-1/2 gap-2 relative">
-            <h2 className="text-sm font-semibold text-gray-500">{title}</h2>
-
-            <div className="p-2" style={{ backgroundColor: appDetails?.brandcolor }}>
-                <div
-                    className="w-full border flex bg-white cursor-pointer relative lg:p-2"
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onToggle();
-                    }}
-                >
-                    <div className="flex items-center justify-center p-2">
-                        <Image
-                            src={appDetails?.iconurl || 'https://placehold.co/36x36'}
-                            width={100}
-                            height={100}
-                            alt={appDetails?.name || 'App'}
-                        />
-                    </div>
-
-                    <div className="w-full min-h-[64px] flex flex-col items-center justify-center text-center px-2 pr-10">
-                        {selectedEvent ? (
-                            <>
-                                <p className="font-semibold text-gray-800 text-md">{selectedEvent.name}</p>
-                                {selectedEvent.description && (
-                                    <p className="text-sm text-gray-500 mt-1">{selectedEvent.description}</p>
-                                )}
-                            </>
-                        ) : (
-                            <p className="text-accent underline text-lg">
-                                {title.includes('Trigger') ? 'When this happens...' : 'Automatically do this!'}
-                            </p>
-                        )}
-                    </div>
-                    <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
-                        {isOpen ? <ChevronUp className="w-9 h-9" /> : <ChevronDown className="w-9 h-9" />}
-                    </div>
-                </div>
-            </div>
-            <div
-                className={`absolute top-full left-0 mt-2 w-full border custom-border bg-white shadow-lg overflow-hidden transition-all duration-300 ease-in-out z-20
-                ${isOpen ? 'opacity-100 visible max-h-72' : 'opacity-0 invisible max-h-0'}`}
-                onClick={(e) => e.stopPropagation()}
-            >
-                <div className="sticky top-0 bg-white border-b flex items-center gap-2 p-2 z-30">
-                    <Search className="w-5 h-5 text-gray-500" />
-                    <input
-                        type="text"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder={placeholder}
-                        className="w-full outline-none text-sm p-1"
-                    />
-                </div>
-
-                <ul className="divide-y overflow-y-auto max-h-60">
-                    {filteredList?.length > 0 ? (
-                        filteredList.map((event, index) => (
-                            <li
-                                key={index}
-                                className="p-3 hover:bg-gray-100 cursor-pointer text-sm"
-                                onClick={() => handleSelect(event)}
-                            >
-                                <div className="flex flex-row items-center gap-2">
-                                    <div className="border flex items-center justify-center p-2">
-                                        <Image
-                                            src={appDetails?.iconurl || 'https://placehold.co/36x36'}
-                                            width={20}
-                                            height={20}
-                                            alt={appDetails?.name || 'App'}
-                                        />
-                                    </div>
-                                    <p className="text-lg">{event?.name}</p>
-                                </div>
-                            </li>
-                        ))
-                    ) : (
-                        <li className="p-3 text-center">
-                            <div className="flex flex-row items-center gap-2">
-                                <RequestIntegrationPopupOpener type={type} showType="dotted" appInfo={appDetails} />
-                            </div>
-                        </li>
-                    )}
-                </ul>
-            </div>
-        </div>
-    );
-}
+import ShowAppsIndexOptimized from '@/app/components/home/ShowAppsIndexOptimized';
+import ShowBadges from '@/app/components/home/ShowBadges';
+import TriggerOrActionCard from './TriggerOrActionCard';
+import TriggersAndActions from './TriggersAndActions';
+import AIFeatureSection from './AIFeatureSection';
+import HeroSection from './HeroSection';
+import PopularFlows from './PopularFlows';
+import HowItWorks from './HowItWorks';
+import FinalCTA from './FinalCTA';
+import AboutApps from './AboutApps';
 
 export default function IntegrationsAppTwoClientComp({
     combosData,
@@ -159,12 +46,10 @@ export default function IntegrationsAppTwoClientComp({
     const categorizeEvents = (events = []) => {
         const triggers = [];
         const actions = [];
-
         events.forEach((event) => {
             if (event?.type === 'trigger') triggers.push(event);
             else if (event?.type === 'action') actions.push(event);
         });
-
         return { triggers, actions };
     };
 
@@ -180,7 +65,6 @@ export default function IntegrationsAppTwoClientComp({
                 setOpenDropdown(null);
             }
         };
-
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, [openDropdown]);
@@ -189,20 +73,56 @@ export default function IntegrationsAppTwoClientComp({
         const tempApp = currentAppOne;
         setCurrentAppOne(currentAppTwo);
         setCurrentAppTwo(tempApp);
-
         setSelectedTrigger(null);
         setSelectedAction(null);
         setResetTrigger(!resetTrigger);
-
         setAppOneEvents(categorizeEvents(currentAppTwo?.events));
         setAppTwoEvents(categorizeEvents(currentAppOne?.events));
-
         const newURL = `/integrations/${currentAppTwo?.appslugname}/${currentAppOne?.appslugname}`;
         router.push(newURL);
     };
 
+    const hasAnyEvents = appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0;
+
+    const popularUseCases =
+        combosData?.combinations
+            ?.filter((c) => c?.description && !/^(List|Get)\b/i.test(c.description.trim()))
+            ?.slice(0, 6) || [];
+
+    const getComboLink = (combo) => {
+        const integrations =
+            combosData?.plugins[combo?.trigger?.name]?.rowid +
+            ',' +
+            combosData?.plugins[combo?.actions[0]?.name]?.rowid;
+        return `${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
+            ?.map((action) => action?.id)
+            .join(',')}&integrations=${integrations}&action&`;
+    };
+
+    const hasCombinations = combosData?.combinations?.length > 0;
+
+    const hasMatchingTemplates = useMemo(() => {
+        const appSlugs = [appOneDetails, appTwoDetails]
+            .map((app) => app?.appslugname || app?.slugname || app?.slug)
+            .filter(Boolean);
+        if (!templateToShow?.length || appSlugs.length === 0) return false;
+
+        return templateToShow.some((template) => {
+            const pluginSlugs = (template.pluginData || []).map((p) => p.pluginslugname);
+            const appMatches = (slug) => {
+                if (slug === 'webhook') return template.triggerType === 'webhook';
+                if (slug === 'cron') return template.triggerType === 'cron';
+                return pluginSlugs.includes(slug);
+            };
+            return appSlugs.every(appMatches);
+        });
+    }, [templateToShow, appOneDetails, appTwoDetails]);
+
+    const utm = '/integrations/' + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname;
+
     return (
-        <div className="cont -mt-10 global-top-space pt-12 gap-12 md:gap-16 lg:gap-20">
+        <div className="cont -mt-10 global-top-space pt-6 gap-12 md:gap-20">
+            {/* Breadcrumb */}
             <div className="container flex flex-wrap items-center text-base md:text-lg mt-1 text-gray-700">
                 <Breadcrumb
                     parent="Integrations"
@@ -214,305 +134,127 @@ export default function IntegrationsAppTwoClientComp({
                     child2Link={`/integrations/${appTwoDetails?.appslugname}`}
                 />
             </div>
-            <div className="container">
-                <div className="cont flex justify-center items-center p-4 mt-8">
-                    <h1 className="h1 items-center text-center md:w-2/3">
-                        Connect <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                        <span className="text-accent">{appTwoDetails?.name}</span> to Build Intelligent Automations
-                    </h1>
-                </div>
-                <div className="flex flex-col items-center justify-center px-4 my-12">
-                    <div className="flex flex-col md:flex-row justify-center items-center w-full max-w-6xl gap-4">
-                        <TriggerOrActionCard
-                            title="Choose a Trigger"
-                            appDetails={currentAppOne}
-                            placeholder="Search Triggers..."
-                            list={appOneEvents.triggers}
-                            isOpen={openDropdown === 'trigger'}
-                            onToggle={() => setOpenDropdown(openDropdown === 'trigger' ? null : 'trigger')}
-                            onSelect={(event) => setSelectedTrigger(event)}
-                            type="trigger"
-                            resetEvent={resetTrigger}
-                        />
 
-                        <div className="flex flex-col items-center justify-center py-4 md:py-0">
-                            <button
-                                onClick={handleSwapApps}
-                                className="btn btn-outline px-4 py-2 flex items-center gap-2 md:hidden"
-                            >
-                                Swap Apps
-                            </button>
-                            <div className="hidden md:flex items-center justify-center mt-6">
-                                <div className="w-16 border-t-2 border-dashed custom-border"></div>
-                                <button onClick={handleSwapApps} className="btn btn-outline rounded-full p-3 mx-4">
-                                    <ArrowLeftRight className="w-5 h-5" />
-                                </button>
-                                <div className="w-16 border-t-2 border-dashed custom-border"></div>
-                            </div>
-                        </div>
+            {/* Hero */}
+            <HeroSection
+                appOneDetails={appOneDetails}
+                appTwoDetails={appTwoDetails}
+                selectedTrigger={selectedTrigger}
+                selectedAction={selectedAction}
+                popularUseCases={popularUseCases}
+                getComboLink={getComboLink}
+                hasToken={hasToken}
+                utm={utm}
+            />
 
-                        <TriggerOrActionCard
-                            title="Choose an Action"
-                            appDetails={currentAppTwo}
-                            placeholder="Search Actions..."
-                            list={appTwoEvents.actions}
-                            isOpen={openDropdown === 'action'}
-                            onToggle={() => setOpenDropdown(openDropdown === 'action' ? null : 'action')}
-                            onSelect={(event) => setSelectedAction(event)}
-                            type="action"
-                            resetEvent={resetTrigger}
-                        />
-                    </div>
-                    <div className="flex flex-col items-center">
-                        {selectedTrigger && selectedAction ? (
-                            <button
-                                onClick={(e) => {
-                                    handleRedirect(
-                                        e,
-                                        `${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger.rowid}/action?events=${selectedAction.rowid}&integrations=${selectedTrigger.pluginrecordid},${selectedAction.pluginrecordid}&action&`
-                                    );
-                                }}
-                                className="btn btn-accent mt-10 px-8 py-3"
-                            >
-                                Connect these apps for free
-                            </button>
-                        ) : (
-                            <DashboardButton
-                                utm_src={
-                                    '/integrations/' + appOneDetails?.appslugname + '/' + appTwoDetails?.appslugname
-                                }
-                                hasToken={hasToken}
-                            />
-                        )}
-                    </div>
-                </div>
-            </div>
-            <div className={`${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
-                <div className="container py-8 flex flex-col gap-16">
-                    {/* Combinations Section */}
-                    {combosData?.combinations?.length > 0 ? (
-                        <div className="flex flex-col gap-6">
+            {/* 4. Popular flows */}
+            {hasCombinations ? (
+                <PopularFlows
+                    combosData={combosData}
+                    appOneDetails={appOneDetails}
+                    appTwoDetails={appTwoDetails}
+                    currentAppOne={currentAppOne}
+                    currentAppTwo={currentAppTwo}
+                    appOneEvents={appOneEvents}
+                    appTwoEvents={appTwoEvents}
+                    openDropdown={openDropdown}
+                    setOpenDropdown={setOpenDropdown}
+                    selectedTrigger={selectedTrigger}
+                    setSelectedTrigger={setSelectedTrigger}
+                    selectedAction={selectedAction}
+                    setSelectedAction={setSelectedAction}
+                    resetTrigger={resetTrigger}
+                    visibleCombos={visibleCombos}
+                    setVisibleCombos={setVisibleCombos}
+                    showMore={showMore}
+                    setShowMore={setShowMore}
+                    handleSwapApps={handleSwapApps}
+                />
+            ) : (
+                <>
+                    {!hasAnyEvents && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
+                    {!hasCombinations && hasAnyEvents && (
+                        <div className="cont gap-4">
                             <h2 className="h2">
-                                Ready to use {appOneDetails?.name} and {appTwoDetails?.name} automations
+                                Available events for <span className="text-accent">{appOneDetails?.name}</span> and{' '}
+                                <span className="text-accent">{appTwoDetails?.name}</span>
                             </h2>
-
-                            <div
-                                className={`grid grid-cols-1 md:grid-cols-2 border-l custom-border ${
-                                    combosData?.combinations?.length > 1 ? 'border-t' : ''
-                                }`}
-                            >
-                                {combosData?.combinations
-                                    ?.filter(
-                                        (combo) =>
-                                            combo?.description && !/^(List|Get)\b/i.test(combo.description.trim())
-                                    )
-                                    ?.slice(0, visibleCombos)
-                                    ?.map((combo, index) => {
-                                        const isSingle = combosData?.combinations?.length === 1;
-                                        const integrations =
-                                            combosData?.plugins[combo?.trigger?.name]?.rowid +
-                                            ',' +
-                                            combosData?.plugins[combo?.actions[0]?.name]?.rowid;
-
-                                        const triggerName = combosData?.plugins[combo?.trigger?.name]?.events?.find(
-                                            (event) => event?.rowid === combo?.trigger?.id
-                                        )?.name;
-
-                                        const actionName = combosData?.plugins[combo?.actions[0]?.name]?.events?.find(
-                                            (event) => event?.rowid === combo?.actions[0]?.id
-                                        )?.name;
-
-                                        return (
-                                            <CombinationCardComp
-                                                key={index}
-                                                showTopBorder={isSingle}
-                                                trigger={{
-                                                    name: triggerName,
-                                                    iconurl:
-                                                        combosData?.plugins[combo?.trigger?.name]?.iconurl ||
-                                                        'https://placehold.co/40x40',
-                                                }}
-                                                action={{
-                                                    name: actionName,
-                                                    iconurl:
-                                                        combosData?.plugins[combo?.actions[0]?.name]?.iconurl ||
-                                                        'https://placehold.co/40x40',
-                                                }}
-                                                description={combo?.description}
-                                                link={`${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${combo?.trigger?.id}/action?events=${combo?.actions
-                                                    ?.map((action) => action?.id)
-                                                    .join(',')}&integrations=${integrations}&action&`}
-                                            />
-                                        );
-                                    })}
-                            </div>
-
-                            {showMore && (
-                                <button
-                                    onClick={() => {
-                                        setVisibleCombos(visibleCombos + 8);
-                                        if (combosData?.combinations?.length <= visibleCombos) {
-                                            setShowMore(false);
-                                        }
-                                    }}
-                                    className="btn btn-outline border-t-0 border-2 border-gray-400"
-                                >
-                                    Load More <ChevronDown className="w-5 h-5" />
-                                </button>
-                            )}
                         </div>
-                    ) : (
-                        <>
-                            {!appOneDetails?.events?.length && !appTwoDetails?.events?.length && (
-                                <IntegrationsBetaComp appOneDetails={appOneDetails} />
-                            )}
-
-                            {((!combosData?.combinations?.length && appOneDetails?.events?.length > 0) ||
-                                (!combosData?.combinations?.length && appTwoDetails?.events?.length > 0)) && (
-                                <div className="cont gap-6">
-                                    <div className="cont gap-2">
-                                        <h2 className="h2">
-                                            Enable Integrations or automations with these events of{' '}
-                                            <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                            <span className="text-accent">{appTwoDetails?.name}</span>
-                                        </h2>
-                                        <p className="sub__h1">
-                                            {`Enable Integrations or automations with these events of ${appOneDetails?.name} and ${appTwoDetails?.name}`}
-                                        </p>
-                                    </div>
-
-                                    <IntegrationsEventsComp
-                                        combosData={combosData}
-                                        appOneDetails={appOneDetails}
-                                        appTwoDetails={appTwoDetails}
-                                    />
-                                </div>
-                            )}
-                        </>
                     )}
+                </>
+            )}
 
-                    {/* Template Container */}
+            {/* 5. Supported Triggers & Actions */}
+            {(appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0) && (
+                <div className="container">
+                    <TriggersAndActions appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
+                </div>
+            )}
+
+            {/* 6b. Pre-built Workflows (Templates) */}
+            {hasMatchingTemplates && (
+                <div className="container flex flex-col gap-4">
+                    <div className="flex flex-col gap-2">
+                        <span className="text-accent text-xs font-bold uppercase tracking-widest">
+                            Pre-built Workflows
+                        </span>
+                        <h2 className="h2">Start with a template</h2>
+                        <p className="text-gray-500 text-base whitespace-nowrap">
+                            Launch your automation in minutes using professionally built workflow templates. Customize
+                            them anytime to fit your needs.
+                        </p>
+                    </div>
                     <TemplateContainer
                         selectedApps={[currentAppOne, currentAppTwo]}
                         templateToShow={templateToShow}
                         requireAllApps={true}
                     />
                 </div>
-            </div>
-
-            {combosData?.combinations?.length > 0 &&
-                appOneDetails?.events?.length > 0 &&
-                appTwoDetails?.events?.length > 0 && (
-                    <div className="container cont gap-4">
-                        <h2 className="h2">Actions and Triggers</h2>
-                        <IntegrationsEventsComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
-                    </div>
-                )}
-
-            <div className="container cont">
-                <GetStarted />
-            </div>
-
-            {blogsData?.length > 0 && (
-                <div className="container">
-                    {' '}
-                    <BlogGrid posts={blogsData} />
-                </div>
             )}
 
+            {/* 3. How It Works - Build your first workflow */}
+            <HowItWorks appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} hasToken={hasToken} utm={utm} />
+
+            {/* Trust & Security */}
+            <div className="flex flex-col gap-0">
+                <ShowBadges />
+                <div className="container">
+                    <ShowAppsIndexOptimized isTrustMarquee={true} />
+                </div>
+            </div>
+
+            {/* AI Workflow Builder */}
+            <AIFeatureSection appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
+
+            {/* 7. Watch & Learn */}
             {videoData?.length > 0 && (
                 <VideoGrid videoData={videoData} appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
             )}
 
-            {faqData && <FAQSection faqData={faqData} />}
-            <div className="container pb-4">
-                <div className="cont">
-                    <div className="flex flex-col md:flex-row border border-x-0 border-b-0 custom-border bg-white">
-                        <div className="cont gap-4 w-full p-6 md:p-12 border border-t-0 md:border-b-0  custom-border">
-                            <div className="cont gap-2 ">
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt={appOneDetails?.name}
-                                />
-                                <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
-                                    <Link
-                                        key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
-                                        className="mb-2"
-                                    >
-                                        <span className="btn btn-outline">{cat}</span>
-                                    </Link>
-                                ))}
-                            </div>
-                            <ExternalLink
-                                href={(() => {
-                                    const baseUrl = appOneDetails?.domain?.startsWith('http')
-                                        ? appOneDetails?.domain
-                                        : 'http://' + appOneDetails?.domain;
-                                    const separator = baseUrl.includes('?') ? '&' : '?';
-                                    return `${baseUrl}${separator}utm_source=viasocket`;
-                                })()}
-                                appSlugName={appOneDetails?.appslugname}
-                                doFollowArray={getDoFollowUrlStatusArray}
-                            >
-                                <LinkText children={'Learn More'} />
-                            </ExternalLink>
-                        </div>
-                        <div className="cont w-full gap-4 p-12 border-x md:border-l-0 custom-border">
-                            <div className="cont gap-2">
-                                <Image
-                                    className="h-10 w-fit"
-                                    src={appTwoDetails?.iconurl || 'https://placehold.co/36x36'}
-                                    width={36}
-                                    height={36}
-                                    alt={appTwoDetails?.name}
-                                />
-                                <h3 className="h3 font-bold pt-5">About {appTwoDetails?.name}</h3>
-                            </div>
-                            <p className="text-sm sm:text-lg text-black h-full ">{appTwoDetails?.description}</p>
-                            <div className="flex flex-wrap gap-2">
-                                {appTwoDetails?.category?.slice(0, 2).map((cat, index) => (
-                                    <Link
-                                        key={index}
-                                        href={createURL(
-                                            `/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`
-                                        )}
-                                        className="mb-2"
-                                    >
-                                        <span className="btn btn-outline">{cat}</span>
-                                    </Link>
-                                ))}
-                            </div>
-                            <ExternalLink
-                                href={(() => {
-                                    const baseUrl = appTwoDetails?.domain?.startsWith('http')
-                                        ? appTwoDetails?.domain
-                                        : 'http://' + appTwoDetails?.domain;
-                                    const separator = baseUrl.includes('?') ? '&' : '?';
-                                    return `${baseUrl}${separator}utm_source=viasocket`;
-                                })()}
-                                appSlugName={appTwoDetails?.appslugname}
-                                doFollowArray={getDoFollowUrlStatusArray}
-                            >
-                                <LinkText children={'Learn More'} />
-                            </ExternalLink>
-                        </div>
-                    </div>
-
-                    <ConditionalFooter>
-                        <Footer footerData={footerData} />
-                    </ConditionalFooter>
+            {/* 7b. Learn More About Automation (Blog) */}
+            {blogsData?.length > 0 && (
+                <div className="container">
+                    <BlogGrid posts={blogsData} />
                 </div>
+            )}
+
+            {/* 8. Need Help Building Your Workflow? */}
+            <div className="container cont">
+                <GetStarted />
             </div>
+
+            {/* 10. FAQs */}
+            {faqData && <FAQSection faqData={faqData} />}
+
+            {/* 14. Final CTA */}
+            <FinalCTA appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} utm={utm} hasToken={hasToken} />
+
+            {/* About App A and About App B */}
+            <AboutApps appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} getDoFollowUrlStatusArray={getDoFollowUrlStatusArray} />
+
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </div>
     );
 }

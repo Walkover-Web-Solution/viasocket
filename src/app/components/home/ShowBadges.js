@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import SecuritySection from '@/app/components/SecuritySection';
 
 const badgeList = [
     {
@@ -36,7 +37,7 @@ const badgeList = [
 
 export default function ShowBadges() {
     return (
-        <div className="container py-20">
+        <div className="container pt-20 pb-6">
             <div className="flex flex-col items-center gap-4 mb-14 text-center">
                 <h2 className="h2">
                     Trusted by Thousands.
