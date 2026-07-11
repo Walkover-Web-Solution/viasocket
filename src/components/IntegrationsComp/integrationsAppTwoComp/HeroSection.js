@@ -15,8 +15,8 @@ export default function HeroSection({
 }) {
     return (
         <div className="container">
-            <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-10 px-4 justify-between">
-                <div className="cont items-start text-left gap-6 w-full lg:w-1/2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start justify-between">
+                <div className="cont items-start text-left gap-6">
                     <h1 className="h1">
                         Connect <span className="text-accent">{appOneDetails?.name}</span> and{' '}
                         <span className="text-accent">{appTwoDetails?.name}</span>
@@ -79,7 +79,7 @@ export default function HeroSection({
                 </div>
 
                 {popularUseCases.length > 0 && (
-                    <div className="w-full lg:w-[620px] shrink-0 self-center relative">
+                    <div className="w-full shrink-0 self-center relative">
                         <div
                             aria-hidden="true"
                             className="absolute -top-20 left-10 w-[280px] h-[280px] rounded-full bg-gradient-to-br from-accent/40 to-accent/10 blur-[120px] opacity-30 z-0 animate-pulse"
@@ -107,7 +107,7 @@ export default function HeroSection({
                                     Popular Use Cases
                                 </h3>
                             </div>
-                            <div className="flex flex-col gap-3 w-[655px]">
+                            <div className="flex flex-col gap-3">
                                 {popularUseCases.slice(0, 5).map((combo, i) => (
                                     <a
                                         key={i}
