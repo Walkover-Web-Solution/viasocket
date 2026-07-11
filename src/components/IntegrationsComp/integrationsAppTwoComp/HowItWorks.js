@@ -9,7 +9,6 @@ export default function HowItWorks({ appOneDetails, appTwoDetails, hasToken, utm
             <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
                 <a
                     href="https://www.youtube.com/watch?v=1KKTY-3WSzk"
-                    target="_blank"
                     rel="noopener noreferrer"
                     className="w-full md:w-[55%] shrink-0 rounded-xl overflow-hidden relative group"
                 >

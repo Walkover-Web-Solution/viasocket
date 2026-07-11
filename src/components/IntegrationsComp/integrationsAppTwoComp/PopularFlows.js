@@ -39,7 +39,7 @@ export default function PopularFlows({
             </div>
 
             {/* Builder */}
-            <div className="flex flex-col items-start w-full">
+            {/* <div className="flex flex-col items-start w-full">
                 <div className="flex flex-col md:flex-row justify-start items-center w-full max-w-6xl gap-6">
                     <TriggerOrActionCard
                         title="Choose a trigger"
@@ -82,7 +82,7 @@ export default function PopularFlows({
                         resetEvent={resetTrigger}
                     />
                 </div>
-            </div>
+            </div> */}
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {combosData?.combinations
