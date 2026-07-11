@@ -10,11 +10,9 @@ import VideoGrid from '@/components/videoGrid/videoGrid';
 import generateIntegrationFAQ from './generateIntegrationFAQ';
 import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
-import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import GetStarted from '@/components/getStarted/getStarted';
 import ShowAppsIndexOptimized from '@/app/components/home/ShowAppsIndexOptimized';
 import ShowBadges from '@/app/components/home/ShowBadges';
-import TriggerOrActionCard from './TriggerOrActionCard';
 import TriggersAndActions from './TriggersAndActions';
 import AIFeatureSection from './AIFeatureSection';
 import HeroSection from './HeroSection';
@@ -243,14 +241,18 @@ export default function IntegrationsAppTwoClientComp({
                 <GetStarted />
             </div>
 
-            {/* 10. FAQs */}
-            {faqData && <FAQSection faqData={faqData} />}
-
             {/* 14. Final CTA */}
             <FinalCTA appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} utm={utm} hasToken={hasToken} />
 
+            {/* 10. FAQs */}
+            {faqData && <FAQSection faqData={faqData} />}
+
             {/* About App A and About App B */}
-            <AboutApps appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} getDoFollowUrlStatusArray={getDoFollowUrlStatusArray} />
+            <AboutApps
+                appOneDetails={appOneDetails}
+                appTwoDetails={appTwoDetails}
+                getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
+            />
 
             <ConditionalFooter>
                 <Footer footerData={footerData} />
