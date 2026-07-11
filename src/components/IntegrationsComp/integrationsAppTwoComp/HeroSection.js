@@ -15,7 +15,7 @@ export default function HeroSection({
 }) {
     return (
         <div className="container">
-            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-10 px-4">
+            <div className="flex flex-col lg:flex-row items-start gap-12 lg:gap-10 px-4 justify-between">
                 <div className="cont items-start text-left gap-6 w-full lg:w-1/2">
                     <h1 className="h1">
                         Connect <span className="text-accent">{appOneDetails?.name}</span> and{' '}
@@ -79,83 +79,45 @@ export default function HeroSection({
                 </div>
 
                 {popularUseCases.length > 0 && (
-                    <div className="w-full lg:w-[620px] shrink-0 self-center" style={{ position: 'relative' }}>
+                    <div className="w-full lg:w-[620px] shrink-0 self-center relative">
                         <div
                             aria-hidden="true"
-                            style={{
-                                position: 'absolute',
-                                top: -50,
-                                left: 20,
-                                width: 180,
-                                height: 180,
-                                borderRadius: '50%',
-                                background: '#C41230',
-                                filter: 'blur(90px)',
-                                opacity: 0.12,
-                                zIndex: 0,
-                            }}
+                            className="absolute -top-20 left-10 w-[280px] h-[280px] rounded-full bg-gradient-to-br from-accent/40 to-accent/10 blur-[120px] opacity-30 z-0 animate-pulse"
                         ></div>
                         <div
                             aria-hidden="true"
-                            style={{
-                                position: 'absolute',
-                                bottom: -40,
-                                right: 10,
-                                width: 200,
-                                height: 200,
-                                borderRadius: '50%',
-                                background: '#9CA3AF',
-                                filter: 'blur(90px)',
-                                opacity: 0.15,
-                                zIndex: 0,
-                            }}
+                            className="absolute -bottom-16 right-0 w-[320px] h-[320px] rounded-full bg-gradient-to-tl from-accent/30 to-transparent blur-[140px] opacity-25 z-0"
                         ></div>
                         <div
                             aria-hidden="true"
-                            style={{
-                                position: 'absolute',
-                                top: 20,
-                                left: -30,
-                                right: -30,
-                                bottom: 0,
-                                background: 'rgba(90,90,90,0.1)',
-                                filter: 'blur(60px)',
-                                zIndex: 0,
-                            }}
+                            className="absolute top-1/2 -left-[50px] -right-[50px] w-full h-[400px] bg-gradient-to-r from-accent/20 via-accent/5 to-accent/20 blur-[100px] opacity-20 z-0"
+                        ></div>
+                        <div
+                            aria-hidden="true"
+                            className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-transparent to-white/5 blur-[80px] z-0"
                         ></div>
 
-                        <div style={{ position: 'relative', zIndex: 1 }}>
-                            <div className="flex items-center gap-3" style={{ marginBottom: 20 }}>
+                        <div className="relative z-10">
+                            <div className="flex items-center gap-3 mb-6">
                                 <span
-                                    className="w-1 bg-accent rounded-full shrink-0"
-                                    style={{ height: 22, backgroundColor: '#C41230' }}
+                                    className="w-1.5 h-[22px] rounded-full shrink-0 bg-gradient-to-b from-accent to-accent/60"
                                     aria-hidden="true"
                                 ></span>
-                                <h3 className="font-bold text-black" style={{ fontSize: 20 }}>
+                                <h3 className="font-bold text-black text-xl">
                                     Popular Use Cases
                                 </h3>
                             </div>
-                            <div className="flex flex-col gap-3">
+                            <div className="flex flex-col gap-3 w-[655px]">
                                 {popularUseCases.slice(0, 5).map((combo, i) => (
                                     <a
                                         key={i}
                                         href={getComboLink(combo)}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="flex items-center gap-3 rounded-2xl px-[18px] py-4"
-                                        style={{
-                                            position: 'relative',
-                                            zIndex: 1,
-                                            background: 'rgba(255, 255, 255, 0.5)',
-                                            border: '1px solid rgba(255, 255, 255, 0.8)',
-                                            backdropFilter: 'blur(28px) saturate(180%)',
-                                            WebkitBackdropFilter: 'blur(28px) saturate(180%)',
-                                            boxShadow:
-                                                '0 12px 28px rgba(0,0,0,0.14), inset 0 1px 0 rgba(255,255,255,0.85), inset 0 0 10px rgba(120,120,120,0.05)',
-                                        }}
+                                        className="group flex items-center gap-3 rounded-2xl px-[18px] py-4 relative z-10 bg-gradient-to-br from-white/70 to-white/40 border border-white/90 backdrop-blur-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] transition-all duration-300 hover:-translate-y-1 hover:from-white/85 hover:to-white/60 hover:border-white/95"
                                     >
-                                        <Zap className="w-4 h-4 text-accent shrink-0" aria-hidden="true" />
-                                        <p className="text-[15px] text-[#1F2430] truncate">{combo?.description}</p>
+                                        <Zap className="w-4 h-4 text-accent shrink-0 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
+                                        <p className="text-sm text-[#1F2430]">{combo?.description}</p>
                                     </a>
                                 ))}
                             </div>

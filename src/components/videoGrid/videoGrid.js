@@ -135,7 +135,7 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                                         </p>
                                     )}
                                     <div className="flex items-end justify-between gap-2 mt-2">
-                                        <p className="text-xs line-clamp-2" style={{ color: '#6B7280' }}>
+                                        <p className="text-xs line-clamp-2">
                                             {video.description || `Learn how to automate ${appOneName || ''}${appTwoName ? ` and ${appTwoName}` : ''} workflows.`}
                                         </p>
                                         <ChevronRight className="w-4 h-4 shrink-0" style={{ color: '#C54825' }} />

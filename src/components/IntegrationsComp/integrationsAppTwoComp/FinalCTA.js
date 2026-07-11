@@ -4,7 +4,7 @@ import DashboardButton from '@/components/dashboardButton/dashboardButton';
 export default function FinalCTA({ appOneDetails, appTwoDetails, utm, hasToken }) {
     return (
         <div className="container">
-            <div className="bg-black text-white py-5 px-4 text-center w-full">
+            <div className="bg-black text-white p-12 text-center w-full">
                 <div className="cont gap-6 items-center">
                     <h2 className="h2 text-white">
                         Start automating {appOneDetails?.name} and {appTwoDetails?.name} free

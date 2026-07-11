@@ -28,7 +28,7 @@ export default function AIFeatureSection({ appOneName, appTwoName }) {
 
                     <h2 className="text-4xl md:text-5xl font-bold leading-tight text-gray-900">
                         From idea to automation.<br />
-                        <span className="text-accent">Ai will build it for you</span>
+                        <span className="text-accent">AI will build it for you</span>
                     </h2>
 
                     <p className="text-gray-500 text-base leading-relaxed">
