@@ -1,0 +1,29 @@
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.marquee-container {
+    overflow: hidden;
+    $gradient: linear-gradient(
+        to right,
+        transparent,
+        black 10%,
+        black 90%,
+        transparent
+    );
+    mask-image: $gradient;
+    -webkit-mask-image: $gradient;
+}
+
+.marquee-track {
+    animation: marquee 20s linear infinite;
+
+    &:hover {
+        animation-play-state: paused;
+    }
+}

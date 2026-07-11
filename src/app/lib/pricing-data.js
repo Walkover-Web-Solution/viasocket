@@ -1,9 +1,10 @@
-import {  getPricingFeatureData } from '@/utils/getData';
+import {  getPricingFeatureData, getReviewSectionData } from '@/utils/getData';
 import {
     FOOTER_FIELDS,
     NAVBAR_FIELDS,
     PRICINGFEATURE_FIELDS,
     COUNTRIES_FIELDS,
+    REVIEWSECTION_FIELDS,
 } from '@/const/fields';
 import getCountries from '@/utils/getCountries';
 import { getMetaData } from '@/utils/getMetaData';
@@ -18,7 +19,7 @@ export async function getPricingPageData() {
         const pageUrl = `${baseUrl}/pricing`;
 
         // Fetch dynamic data in parallel
-        const [metaData, footerData, faqData, features, countries, appCount, navbarData] = await Promise.all([
+        const [metaData, footerData, faqData, features, countries, appCount, navbarData, reviewData] = await Promise.all([
             getMetaData('/pricing', pageUrl),
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getFaqData('/pricing', pageUrl),
@@ -26,6 +27,7 @@ export async function getPricingPageData() {
             getCountries(COUNTRIES_FIELDS, '', pageUrl),
             getAppCount(pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
+            getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl),
         ]);
 
         return {
@@ -36,6 +38,7 @@ export async function getPricingPageData() {
             countries: countries || [],
             appCount: appCount || 0,
             navbarData: navbarData || [],
+            reviewData: reviewData || [],
         };
     } catch (error) {
         console.error('Error fetching pricing page data:', error);
@@ -47,6 +50,7 @@ export async function getPricingPageData() {
             countries: [],
             appCount: 0,
             navbarData: [],
+            reviewData: [],
         };
     }
 }
