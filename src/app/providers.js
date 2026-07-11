@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import HeadComp from '@/components/headComp/headComp';
 import ChatWidget from '@/components/chat-widget/chat-wdget';
 import { getUtmSource } from '@/utils/handleUtmSource';
+import { trackReferral } from '@/utils/referral';
 
 let zarazLoaded = false;
 
@@ -75,6 +76,7 @@ export default function AppProvider({ children }) {
 
     useEffect(() => {
         getUtmSource();
+        trackReferral();
     }, []);
 
     useEffect(() => {

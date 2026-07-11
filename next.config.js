@@ -47,11 +47,7 @@ const nextConfig = {
                 destination: '/features/variables',
                 permanent: true,
             },
-            {
-                source: '/login',
-                destination: 'https://flow.viasocket.com/',
-                permanent: false,
-            },
+
             {
                 source: '/mcp',
                 destination: 'https://mushrooms.viasocket.com/',
