@@ -17,7 +17,7 @@ export const getUtmSource = () => {
         const queryObject = {};
 
         queryParams.forEach((value, key) => {
-            if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
+            if (key.startsWith('utm_') || key.startsWith('affiliate_') || key === 'ref') {
                 queryObject[key] = value;
             }
         });
@@ -36,7 +36,7 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         const queryParams = new URLSearchParams(window.location.search);
 
         queryParams.forEach((value, key) => {
-            if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
+            if (key.startsWith('utm_') || key.startsWith('affiliate_') || key === 'ref') {
                 queryObject[key] = value;
             }
         });
