@@ -11,9 +11,24 @@ const setCookie = (name, value, days) => {
     document.cookie = `${name}=${value};${expires};path=/`;
 };
 
+export const REFERRAL_STORAGE_KEY = 'viasocket_referral_id';
+
+export const getStoredReferral = () => {
+    if (typeof window === 'undefined') return null;
+    return localStorage.getItem(REFERRAL_STORAGE_KEY);
+};
+
 export const getUtmSource = () => {
+    if (typeof window === 'undefined') return;
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const ref = queryParams.get('ref');
+    
+    if (ref && ref.trim() !== '') {
+        localStorage.setItem(REFERRAL_STORAGE_KEY, ref.trim());
+    }
+
     if (!getCookie('utmData')) {
-        const queryParams = new URLSearchParams(window.location.search);
         const queryObject = {};
 
         queryParams.forEach((value, key) => {
@@ -31,15 +46,28 @@ export const getUtmSource = () => {
 export const setUtmSource = ({ source = 'index' } = {}) => {
     let utmData = getCookie('utmData');
     let queryObject = {};
+    let queryParams;
+
+    if (typeof window !== 'undefined') {
+        queryParams = new URLSearchParams(window.location.search);
+        const ref = queryParams.get('ref');
+        if (ref && ref.trim() !== '') {
+            localStorage.setItem(REFERRAL_STORAGE_KEY, ref.trim());
+        }
+    }
 
     if (!utmData) {
-        const queryParams = new URLSearchParams(window.location.search);
+        if (!queryParams && typeof window !== 'undefined') {
+            queryParams = new URLSearchParams(window.location.search);
+        }
 
-        queryParams.forEach((value, key) => {
-            if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
-                queryObject[key] = value;
-            }
-        });
+        if (queryParams) {
+            queryParams.forEach((value, key) => {
+                if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
+                    queryObject[key] = value;
+                }
+            });
+        }
 
         if (Object.keys(queryObject).length > 0) {
             utmData = JSON.stringify(queryObject);
