@@ -45,7 +45,7 @@ export default function PerkGrid() {
     return (
         <section
             id="features"
-            className="container p-12"
+            className="container p-12 lg:py-20"
         >
             <div className="flex items-center justify-center gap-2 text-center mb-8">
                 <h2 className="h2">
@@ -56,10 +56,10 @@ export default function PerkGrid() {
             <div className="grid grid-cols-1 lg:grid-cols-3 relative mt-8">
                     {perks.map((perk, index) => (
                         <div key={perk.id} className="relative px-[14px] py-9 text-center">
-                            {/* Right border with gradient */}
+                            {/* Right border with gradient - only on lg screens */}
                             {(index + 1) % 3 !== 0 && (
                                 <div
-                                    className="absolute top-[10%] bottom-[10%] right-0 w-px max-md:hidden"
+                                    className="absolute top-[10%] bottom-[10%] right-0 w-px hidden lg:block"
                                     style={{
                                         background:
                                             'linear-gradient(to bottom, transparent, var(--custom-border, #d1d5db) 20%, var(--custom-border, #d1d5db) 80%, transparent)',
@@ -67,10 +67,10 @@ export default function PerkGrid() {
                                 />
                             )}
 
-                            {/* Bottom border with gradient */}
-                            {index < 3 && (
+                            {/* Bottom border with gradient - on all cards except last 3 on lg screens */}
+                            {!(index >= 3 && window.innerWidth >= 1024) && (
                                 <div
-                                    className="absolute left-[8%] right-[8%] bottom-0 h-px max-md:hidden"
+                                    className="absolute left-[8%] right-[8%] bottom-0 h-px"
                                     style={{
                                         background:
                                             'linear-gradient(to right, transparent, var(--custom-border, #d1d5db) 20%, var(--custom-border, #d1d5db) 80%, transparent)',

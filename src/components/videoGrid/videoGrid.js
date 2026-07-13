@@ -3,46 +3,34 @@ import { useRef, useState, useEffect } from 'react';
 import { ChevronRight, Play } from 'lucide-react';
 import Image from 'next/image';
 
-function getYouTubeId(url) {
+const getYouTubeId = (url) => {
     if (!url) return null;
-    const embedMatch = url.match(/youtube\.com\/embed\/([^?&]+)/);
-    if (embedMatch) return embedMatch[1];
-    const watchMatch = url.match(/[?&]v=([^&]+)/);
-    if (watchMatch) return watchMatch[1];
-    const shortMatch = url.match(/youtu\.be\/([^?&]+)/);
-    if (shortMatch) return shortMatch[1];
-    return null;
-}
+    const match = url.match(/(?:youtube\.com\/embed\/|[?&]v=|youtu\.be\/)([^?&]+)/);
+    return match?.[1] || null;
+};
 
 const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) => {
     const scrollRef = useRef(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const [imgErrors, setImgErrors] = useState({});
+    const [playingIndex, setPlayingIndex] = useState(null);
 
     if (!videoData?.length) return null;
 
     const scrollToIndex = (idx) => {
-        const el = scrollRef.current;
-        if (!el) return;
-        const child = el.children[idx];
-        if (!child) return;
-        el.scrollTo({ left: child.offsetLeft - el.offsetLeft, behavior: 'smooth' });
+        const child = scrollRef.current?.children[idx];
+        if (child) scrollRef.current.scrollTo({ left: child.offsetLeft - scrollRef.current.offsetLeft, behavior: 'smooth' });
         setActiveIndex(idx);
     };
 
     const handleScroll = () => {
-        const el = scrollRef.current;
-        if (!el) return;
-        const children = Array.from(el.children);
-        const scrollLeft = el.scrollLeft;
-        let closest = 0;
-        let minDist = Infinity;
-        children.forEach((child, idx) => {
-            const dist = Math.abs(child.offsetLeft - el.offsetLeft - scrollLeft);
-            if (dist < minDist) {
-                minDist = dist;
-                closest = idx;
-            }
+        if (!scrollRef.current) return;
+        const { children, scrollLeft, clientWidth, offsetLeft } = scrollRef.current;
+        const center = scrollLeft + clientWidth / 2;
+        let closest = 0, minDist = Infinity;
+        Array.from(children).forEach((child, idx) => {
+            const dist = Math.abs(child.offsetLeft + child.clientWidth / 2 - center);
+            if (dist < minDist) { minDist = dist; closest = idx; }
         });
         setActiveIndex(closest);
     };
@@ -86,49 +74,57 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                 >
                     {videoData.map((video, index) => {
                         const videoId = getYouTubeId(video.links);
-                        const thumbnail = videoId
-                            ? imgErrors[index]
-                                ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-                                : `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`
-                            : null;
-                        const youtubeLink = videoId ? `https://www.youtube.com/watch?v=${videoId}` : video.links;
+                        const thumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/${imgErrors[index] ? 'hqdefault' : 'maxresdefault'}.jpg` : null;
+                        const isPlaying = playingIndex === index;
 
                         return (
-                            <a
+                            <div
                                 key={video.rowid || index}
-                                href={youtubeLink}
-                                rel="noopener noreferrer"
                                 className="snap-start shrink-0 flex flex-col rounded-2xl overflow-hidden bg-white border border-[#ECE8E2] hover:shadow-md transition-shadow group"
                                 style={{
                                     width: videoData.length === 1 ? '100%' : 'calc(33.333% - 14px)',
                                     minWidth: '260px',
                                 }}
                             >
-                                {/* Thumbnail */}
-                                <div className="relative aspect-video w-full overflow-hidden">
-                                    {thumbnail ? (
-                                        <Image
-                                            src={thumbnail}
-                                            alt={video.title || video.subtitle || `Video ${index + 1}`}
-                                            width={480}
-                                            height={270}
-                                            className="w-full h-full object-cover"
-                                            onError={() => setImgErrors((prev) => ({ ...prev, [index]: true }))}
+                                {/* Video/Thumbnail */}
+                                <div className="relative aspect-video w-full overflow-hidden cursor-pointer" onClick={() => !isPlaying && setPlayingIndex(index)}>
+                                    {isPlaying ? (
+                                        <iframe
+                                            className="w-full h-full"
+                                            src={`${video.links}${video.links.includes('?') ? '&' : '?'}autoplay=1`}
+                                            title={`YouTube video player ${index + 1}`}
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            referrerPolicy="strict-origin-when-cross-origin"
+                                            allowFullScreen
                                         />
                                     ) : (
-                                        <div className="w-full h-full bg-gray-200" />
-                                    )}
-                                    {/* Play button overlay */}
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                        <div className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                                            <Play className="w-5 h-5 text-gray-900 ml-0.5" fill="currentColor" />
-                                        </div>
-                                    </div>
-                                    {/* Duration badge */}
-                                    {video.duration && (
-                                        <span className="absolute bottom-2 left-2 bg-black/80 text-white text-xs font-medium px-1.5 py-0.5 rounded">
-                                            {video.duration}
-                                        </span>
+                                        <>
+                                            {thumbnail ? (
+                                                <Image
+                                                    src={thumbnail}
+                                                    alt={video.title || video.subtitle || `Video ${index + 1}`}
+                                                    width={480}
+                                                    height={270}
+                                                    className="w-full h-full object-cover"
+                                                    onError={() => setImgErrors((prev) => ({ ...prev, [index]: true }))}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-full bg-gray-200" />
+                                            )}
+                                            {/* Play button overlay */}
+                                            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                                <div className="w-11 h-11 rounded-full bg-white/90 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                                                    <Play className="w-5 h-5 text-gray-900 ml-0.5" fill="currentColor" />
+                                                </div>
+                                            </div>
+                                            {/* Duration badge */}
+                                            {video.duration && (
+                                                <span className="absolute bottom-2 left-2 bg-black/80 text-white text-xs font-medium px-1.5 py-0.5 rounded pointer-events-none">
+                                                    {video.duration}
+                                                </span>
+                                            )}
+                                        </>
                                     )}
                                 </div>
 
@@ -150,7 +146,7 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                                         <ChevronRight className="w-4 h-4 shrink-0" style={{ color: '#C54825' }} />
                                     </div>
                                 </div>
-                            </a>
+                            </div>
                         );
                     })}
                 </div>

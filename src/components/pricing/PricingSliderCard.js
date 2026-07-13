@@ -21,7 +21,7 @@ export default function PricingSliderCard({ hasToken }) {
     };
 
     return (
-        <div className="relative bg-white border border-gray-200 rounded-xl p-6 w-full max-w-lg">
+        <div className="relative bg-white border border-gray-200 rounded-xl p-6 w-full lg:max-w-lg">
             {/* Badge */}
             <span
                 className={`absolute top-0 right-6 px-3.5 py-1.5 text-xs font-bold rounded-b-lg transition-all ${
@@ -80,24 +80,24 @@ export default function PricingSliderCard({ hasToken }) {
 
             {/* Status Message */}
             {!isExceeded ? (
-                <div className="flex flex-col gap-2.5 bg-green-50 rounded-lg p-3.5 mt-1">
+                <div className="flex flex-col gap-4 bg-green-50 rounded-lg p-5 mt-1">
                     <p className="text-xs font-semibold text-green-700">
                         You're within the free plan. Sign up and create your first automation for free.
                     </p>
                     <button
-                        className="btn btn-outline w-full h-10"
+                        className="w-full h-10 px-4 py-2 border border-black rounded-full font-semibold text-sm hover:bg-black hover:text-white transition-all"
                         onClick={() => (window.location.href = '/signup')}
                     >
                         Sign up to view your plan →
                     </button>
                 </div>
             ) : (
-                <div className="flex flex-col gap-2.5 bg-red-50 rounded-lg p-3.5 mt-1">
+                <div className="flex flex-col gap-4 bg-red-50 rounded-lg p-5 mt-1">
                     <p className="text-xs font-semibold text-gray-900">
                         You're ready to scale. Sign up for a plan matched to your usage.
                     </p>
                     <button
-                        className="btn btn-outline w-full h-10"
+                        className="w-full h-10 px-4 py-2 border border-black rounded-full font-semibold text-sm hover:bg-black hover:text-white transition-all"
                         onClick={() => (window.location.href = '/signup')}
                     >
                         Sign up to view your plan →

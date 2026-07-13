@@ -12,6 +12,7 @@ import PerkGrid from '@/components/pricing/PerkGrid';
 import FinalCTA from '@/components/pricing/FinalCTA';
 import Testimonials from '../lifetime-deal/Testimonials';
 import SecuritySection from '@/app/components/SecuritySection';
+import ShowBadges from '@/app/components/home/ShowBadges';
 
 export const runtime = 'edge';
 
@@ -50,12 +51,15 @@ export default async function PricingPage() {
             <PricingHeroSection hasToken={hasToken} />
 
             <PerkGrid />
-            <Testimonials reviewData={reviewData} />
+            <Testimonials reviewData={reviewData} showLabel={false} />
 
             <FinalCTA />
             <div className="my-12">
                 {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/pricing`} />}
             </div>
+
+            <ShowBadges />
+
             <SecuritySection />
 
             <ConditionalFooter>
