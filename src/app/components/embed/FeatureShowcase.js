@@ -20,7 +20,7 @@ const FeatureShowcase = ({ appCount }) => {
         {
             icon: FileText,
             iconBg: 'bg-amber-50 text-amber-600',
-            title: 'Make automatuon feel native',
+            title: 'Make automation feel native',
             desc: 'Embed automation directly into your product with a fully customizable experience.',
         },
         {
@@ -36,7 +36,7 @@ const FeatureShowcase = ({ appCount }) => {
                 <div className="flex flex-col gap-1">
                     <h2 className="h2">Everything you need to own the integration layer</h2>
                     <p className="text-xl">
-                        Your users connect their apps, and automatuon across them, all inside your product.
+                        Your users connect their apps, and automation across them, all inside your product.
                     </p>
                 </div>
 
