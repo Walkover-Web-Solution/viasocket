@@ -418,9 +418,15 @@ export default function IntegrationsAppOneClientComp({
                     </div>
                     <ExternalLink
                         href={(() => {
-                            const baseUrl = appOneDetails?.domain.startsWith('http')
+                            let baseUrl = appOneDetails?.domain.startsWith('http')
                                 ? appOneDetails?.domain
                                 : 'http://' + appOneDetails?.domain;
+                            
+                            // Add /integrations/viasocket/ for magicalapi.com domain
+                            if (baseUrl.includes('magicalapi.com')) {
+                                baseUrl = baseUrl.replace(/\/$/, '') + '/integrations/viasocket/';
+                            }
+                            
                             const separator = baseUrl.includes('?') ? '&' : '?';
                             return `${baseUrl}${separator}utm_source=viasocket`;
                         })()}
