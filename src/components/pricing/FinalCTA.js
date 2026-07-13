@@ -36,7 +36,7 @@ export default function FinalCTA() {
 
   return (
     <div className="bg-black p-12" style={{ backgroundImage: 'radial-gradient(ellipse at top, rgba(168, 32, 13, 0.35), transparent 70%)' }}>
-      <div className="container p-12 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-20 items-start">
+      <div className="container p-12 grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12 lg:gap-20 items-center">
         <div>
           <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-3xl font-semibold leading-tight mb-4 sm:mb-5 md:mb-6 lg:mb-7">
             Sign up free and start your first workflow, no credit card required.

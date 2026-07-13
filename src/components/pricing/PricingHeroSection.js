@@ -6,22 +6,22 @@ import PricingSliderCard from './PricingSliderCard';
 export default function PricingHeroSection({ hasToken }) {
     return (
         <div className="w-full min-h-screen flex items-center justify-center bg-white">
-            <div className="container">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+            <div className="container p-12 mt-12 md:mt-0">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-20 items-center">
                 {/* Left Content */}
                 <div className="flex flex-col gap-4">
                     <h1 className="h1">
                         Start free with <span className="text-accent">2,000 tasks</span> and{' '}
-                        <span className="text-accent">500 AI credits</span> a month
+                        <span className="text-accent">500 AI credits</span> a month.
                     </h1>
 
                     <p className="text-xl">
-                        built on enterprise-grade security, with role-based plans so you only pay for what your team
+                        Built on enterprise-grade security, with role-based plans so you only pay for what your team
                         actually needs.
                     </p>
 
                     {/* Rating */}
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 mt-4">
                         <div className="flex items-center gap-2 bg-yellow-50 px-4 py-2 rounded-full border w-fit">
                             <div className="flex gap-0.5">
                                 <span className="text-xs text-yellow-400">★</span>

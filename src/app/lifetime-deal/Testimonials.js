@@ -1,8 +1,11 @@
+'use client';
+
 import Image from 'next/image';
+import { useRef } from 'react';
+import { ArrowRight } from 'lucide-react';
 
 const hasReviewContent = (item) =>
-    !!item &&
-    (!!item.user_name?.trim() || !!item.subtitle?.trim() || !!item.description?.trim());
+    !!item && (!!item.user_name?.trim() || !!item.subtitle?.trim() || !!item.description?.trim());
 
 const mapReviewToCard = (item) => ({
     body: item.description || '',
@@ -17,7 +20,10 @@ function Card({ item, hidden }) {
             className="flex-[0_0_260px] sm:flex-[0_0_290px] lg:flex-[0_0_320px] bg-white rounded-[16px] border border-black/[0.05] hover:border-[#a8200d]/30 px-[18px] py-[10px] lg:px-[22px] lg:pt-[14px] lg:pb-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_10px_24px_-12px_rgba(0,0,0,0.1)] hover:shadow-[0_1px_3px_rgba(0,0,0,0.03),0_0_0_1px_rgba(168,32,13,0.12),0_14px_32px_-10px_rgba(0,0,0,0.11)] hover:-translate-y-[3px] transition-all duration-[280ms] ease-[cubic-bezier(0.2,0.7,0.2,1)] flex flex-col motion-reduce:transition-none motion-reduce:hover:translate-y-0"
             aria-hidden={hidden || undefined}
         >
-            <div className="font-serif text-2xl leading-[0.5] font-bold text-[#fbb5a4] mb-[6px] h-[12px] tracking-[-0.02em]" aria-hidden="true">
+            <div
+                className="font-serif text-2xl leading-[0.5] font-bold text-[#fbb5a4] mb-[6px] h-[12px] tracking-[-0.02em]"
+                aria-hidden="true"
+            >
                 &ldquo;
             </div>
             <p className="text-xs text-[#1a1a1a] leading-[1.45] line-clamp-6 tracking-[-0.05px] mb-2 flex-grow">
@@ -49,21 +55,31 @@ function Card({ item, hidden }) {
     );
 }
 
-export default function Testimonials({ reviewData = [] }) {
+export default function Testimonials({ reviewData = [], showLabel = true }) {
+    const scrollContainerRef = useRef(null);
     const testimonials = (reviewData || []).filter(hasReviewContent).map(mapReviewToCard);
 
     // Repeat 4x for seamless marquee (track translates -25%)
     const sets = [0, 1, 2, 3];
 
+    const handleArrowClick = () => {
+        scrollContainerRef.current?.scrollBy({
+            left: 320,
+            behavior: 'smooth'
+        });
+    };
+
     if (testimonials.length === 0) return null;
 
     return (
-        <section className="relative bg-[#fffcf4] py-[72px] md:py-[110px] overflow-hidden" id="testimonials">
-            <div className="relative z-[1] container mx-auto px-8">
+        <section className="bg-[#fffcf4]" id="testimonials">
+            <div className="container p-12 lg:py-20">
                 <div className="text-center mb-14 md:mb-[72px]">
-                    <span className="inline-block text-[#a8200d] text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
-                        LOVED BY TEAMS
-                    </span>
+                    {showLabel && (
+                        <span className="inline-block text-[#a8200d] text-[11.5px] font-bold tracking-[0.18em] uppercase mb-6">
+                            LOVED BY TEAMS
+                        </span>
+                    )}
                     <h2 className="h2">
                         Real teams. Real results.
                         <br />
@@ -71,9 +87,12 @@ export default function Testimonials({ reviewData = [] }) {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] lg:grid-cols-[220px_1fr] gap-6 md:gap-8 lg:gap-12 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] lg:grid-cols-[220px_1fr] gap-6 md:gap-8 lg:gap-12 items-start relative">
                     <aside className="text-center md:text-left">
-                        <div className="font-serif text-[88px] lg:text-[120px] leading-[0.7] text-[#a8200d]/[0.18] font-bold mb-3 tracking-[-0.02em]" aria-hidden="true">
+                        <div
+                            className="font-serif text-[88px] lg:text-[120px] leading-[0.7] text-[#a8200d]/[0.18] font-bold mb-3 tracking-[-0.02em]"
+                            aria-hidden="true"
+                        >
                             &ldquo;
                         </div>
                         <h3 className="text-2xl lg:text-3xl font-medium tracking-[-0.6px] leading-[1.15] text-[#1a1a1a] mb-7 lg:mb-10">
@@ -83,18 +102,23 @@ export default function Testimonials({ reviewData = [] }) {
                         </h3>
                     </aside>
 
-                    <div className="relative overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                    <div ref={scrollContainerRef} className="overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                         <div className="flex gap-4 w-max pt-1 pb-[18px] testimonials-marquee motion-reduce:animate-none">
                             {sets.map((s) =>
-                                testimonials.map((t, i) => (
-                                    <Card key={`${s}-${i}`} item={t} hidden={s !== 0} />
-                                ))
+                                testimonials.map((t, i) => <Card key={`${s}-${i}`} item={t} hidden={s !== 0} />)
                             )}
                         </div>
+                        <button 
+                            onClick={handleArrowClick} 
+                            type="button"
+                            className="absolute right-[-20px] top-1/2 -translate-y-1/2 z-20 flex items-center justify-center w-10 h-10 cursor-pointer hover:scale-110 transition-transform border rounded-full bg-accent"
+                            aria-label="Scroll testimonials right"
+                        >
+                            <ArrowRight className="w-4 h-4 text-white animate-slide-right" strokeWidth={2.5} />
+                        </button>
                     </div>
                 </div>
             </div>
-
         </section>
     );
 }

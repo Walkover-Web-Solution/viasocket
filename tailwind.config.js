@@ -34,6 +34,7 @@ module.exports = {
                 flowAction1: 'flowAction1 10s ease-in-out infinite',
                 flowAction2: 'flowAction2 10s ease-in-out infinite',
                 flowAction3: 'flowAction3 10s ease-in-out infinite',
+                'slide-right': 'slideRight 1.5s ease-in-out infinite',
             },
             keyframes: {
                 shimmer: {
@@ -87,6 +88,10 @@ module.exports = {
                 flowAction3: {
                     '0%, 60%': { opacity: '0', transform: 'translateY(6px)' },
                     '64%, 100%': { opacity: '1', transform: 'translateY(0)' },
+                },
+                slideRight: {
+                    '0%, 100%': { transform: 'translateX(0)' },
+                    '50%': { transform: 'translateX(4px)' },
                 },
             },
         },
