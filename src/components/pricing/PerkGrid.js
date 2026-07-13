@@ -68,15 +68,13 @@ export default function PerkGrid() {
                             )}
 
                             {/* Bottom border with gradient - on all cards except last 3 on lg screens */}
-                            {!(index >= 3 && window.innerWidth >= 1024) && (
-                                <div
-                                    className="absolute left-[8%] right-[8%] bottom-0 h-px"
-                                    style={{
-                                        background:
-                                            'linear-gradient(to right, transparent, var(--custom-border, #d1d5db) 20%, var(--custom-border, #d1d5db) 80%, transparent)',
-                                    }}
-                                />
-                            )}
+                            <div
+                                className={`absolute left-[8%] right-[8%] bottom-0 h-px ${index >= 3 ? 'hidden lg:block' : ''}`}
+                                style={{
+                                    background:
+                                        'linear-gradient(to right, transparent, var(--custom-border, #d1d5db) 20%, var(--custom-border, #d1d5db) 80%, transparent)',
+                                }}
+                            />
 
                             {/* Icon */}
                             <div className="text-black flex items-center justify-center mx-auto mb-5">{perk.icon}</div>
