@@ -11,28 +11,29 @@ const setCookie = (name, value, days) => {
     document.cookie = `${name}=${value};${expires};path=/`;
 };
 
-export const REFERRAL_STORAGE_KEY = 'viasocket_referral_id';
-
 export const getStoredReferral = () => {
     if (typeof window === 'undefined') return null;
-    return localStorage.getItem(REFERRAL_STORAGE_KEY);
+    const utmData = getCookie('utmData');
+    if (utmData) {
+        try {
+            const parsed = JSON.parse(utmData);
+            return parsed.ref || null;
+        } catch (e) {
+            return null;
+        }
+    }
+    return null;
 };
 
 export const getUtmSource = () => {
     if (typeof window === 'undefined') return;
 
-    const queryParams = new URLSearchParams(window.location.search);
-    const ref = queryParams.get('ref');
-    
-    if (ref && ref.trim() !== '') {
-        localStorage.setItem(REFERRAL_STORAGE_KEY, ref.trim());
-    }
-
     if (!getCookie('utmData')) {
+        const queryParams = new URLSearchParams(window.location.search);
         const queryObject = {};
 
         queryParams.forEach((value, key) => {
-            if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
+            if (key.startsWith('utm_') || key.startsWith('affiliate_') || key === 'ref') {
                 queryObject[key] = value;
             }
         });
@@ -48,14 +49,6 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
     let queryObject = {};
     let queryParams;
 
-    if (typeof window !== 'undefined') {
-        queryParams = new URLSearchParams(window.location.search);
-        const ref = queryParams.get('ref');
-        if (ref && ref.trim() !== '') {
-            localStorage.setItem(REFERRAL_STORAGE_KEY, ref.trim());
-        }
-    }
-
     if (!utmData) {
         if (!queryParams && typeof window !== 'undefined') {
             queryParams = new URLSearchParams(window.location.search);
@@ -63,7 +56,7 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
 
         if (queryParams) {
             queryParams.forEach((value, key) => {
-                if (key.startsWith('utm_') || key.startsWith('affiliate_')) {
+                if (key.startsWith('utm_') || key.startsWith('affiliate_') || key === 'ref') {
                     queryObject[key] = value;
                 }
             });
@@ -106,9 +99,13 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         console.error('Failed to parse ab_test cookie:', e);
     }
 
-    const queryString = Object.entries(queryObject)
+    const urlQueryObject = { ...queryObject };
+    delete urlQueryObject.ref;
+
+    const urlUtmData = JSON.stringify(urlQueryObject);
+    const queryString = Object.entries(urlQueryObject)
         .map(([key, val]) => `${key}=${val}`)
         .join('&');
 
-    return `${utmData}&${queryString}`;
+    return `${urlUtmData}&${queryString}`;
 };

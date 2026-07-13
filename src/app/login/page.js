@@ -1,19 +1,34 @@
 'use client';
 
 import { useEffect } from 'react';
-import { getStoredReferral, setUtmSource } from '@/utils/handleUtmSource';
+import { setUtmSource } from '@/utils/handleUtmSource';
 
 export default function LoginPage() {
     useEffect(() => {
-        // Track immediately in case someone lands directly on /login?ref=xxx
         setUtmSource();
         
-        const storedRef = getStoredReferral();
+        let queryParams = [];
+        if (typeof document !== 'undefined') {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; utmData=`);
+            if (parts.length === 2) {
+                const utmRaw = parts.pop().split(';').shift();
+                if (utmRaw) {
+                    try {
+                        const parsed = JSON.parse(decodeURIComponent(utmRaw));
+                        Object.entries(parsed).forEach(([key, val]) => {
+                            queryParams.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
+                        });
+                    } catch (e) {}
+                }
+            }
+        }
         
-        if (storedRef) {
-            window.location.href = `https://flow.viasocket.com/?ref=${storedRef}`;
+        const queryString = queryParams.join('&');
+        
+        if (queryString) {
+            window.location.href = `https://flow.viasocket.com/?${queryString}`;
         } else {
-            // Preserve the existing redirect exactly as it works today
             window.location.href = 'https://flow.viasocket.com/';
         }
     }, []);
