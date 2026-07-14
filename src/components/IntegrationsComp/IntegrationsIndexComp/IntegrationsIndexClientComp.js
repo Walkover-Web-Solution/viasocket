@@ -74,17 +74,18 @@ export default function IntegrationsIndexClientComp({
                 if (!fetchedApps) {
                     setSearchedApps([]);
                 } else {
+                    const searchTermLower = searchTerm.toLowerCase();
                     const sortedApps = fetchedApps.sort((a, b) => {
                         const aName = a?.name?.toLowerCase() || '';
                         const bName = b?.name?.toLowerCase() || '';
 
-                        const aStarts = aName.startsWith(searchTerm);
-                        const bStarts = bName.startsWith(searchTerm);
+                        const aStarts = aName.startsWith(searchTermLower);
+                        const bStarts = bName.startsWith(searchTermLower);
 
                         if (aStarts !== bStarts) return aStarts ? -1 : 1;
 
-                        const aContains = aName.includes(searchTerm);
-                        const bContains = bName.includes(searchTerm);
+                        const aContains = aName.includes(searchTermLower);
+                        const bContains = bName.includes(searchTermLower);
 
                         if (aContains !== bContains) return aContains ? -1 : 1;
 
@@ -252,21 +253,22 @@ export default function IntegrationsIndexClientComp({
                                         );
                                     })}
                                     <div
-                                        className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}
+                                        className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center relative w-[130%] !py-3 sm:!py-4`}
                                     >
-                                        <div className="flex items-center gap-2 justify-between">
-                                            <h2 className="flex items-center gap-2">
+                                        <div className="flex items-center gap-3 justify-between w-full">
+                                            <div className="flex items-start gap-3">
                                                 <span className="text-xl">
                                                     <span aria-label="lightbulb">💡</span>
                                                 </span>
-                                                <span>Request an App</span>
-                                            </h2>
+                                                <div className="flex flex-col gap-1">
+                                                    <h2>Request an App</h2>
+                                                    <span className="w-fit inline-flex items-center px-3 py-0.5 rounded-full text-xs font-semibold bg-green-50 border border-green-200 text-green-700">
+                                                        Added in 2 days
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <RequestIntegrationPopupOpener showType="button" title="Request" />
                                         </div>
-                                        <p className={`${style?.app__des}`}>
-                                            Can’t find the App you’re looking for? We’ll try to build it for you within
-                                            48 hours
-                                        </p>
                                     </div>
                                 </>
                             ) : (
@@ -349,21 +351,23 @@ export function AppVisual({ app, index, redirectPart }) {
         </Link>
     ) : (
         <div
-            className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center`}
+            className={`${style.app} border-2 hover-bg-grey-100-text-black border-dashed custom-border flex justify-center relative w-[130%] !py-3 sm:!py-4`}
         >
-            <div className="flex items-center gap-2 justify-between">
-                <h2 className="flex items-center gap-2">
+            <div className="flex items-center gap-3 justify-between w-full">
+                <div className="flex items-start gap-3">
                     <span className="text-xl">
                         <span aria-label="lightbulb">💡</span>
                     </span>
-                    <span>Request an App</span>
-                </h2>
+                    <div className="flex flex-col gap-1">
+                        <h2>Request an App</h2>
+                        <span className="w-fit inline-flex items-center px-3 py-0.5 rounded-full text-xs font-semibold bg-green-50 border border-green-200 text-green-700">
+                            Added in 2 days
+                        </span>
+                    </div>
+                </div>
 
                 <RequestIntegrationPopupOpener showType="button" title="Request" />
             </div>
-            <p className={`${style?.app__des}`}>
-                Can’t find the App you’re looking for? We’ll try to build it for you within 48 hours
-            </p>
         </div>
     );
 }
