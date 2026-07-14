@@ -20,6 +20,8 @@ export default function SetupBuilder({ initialApps = [] }) {
     const [loading, setLoading] = useState(false);
     const [slots, setSlots] = useState(Array(TOTAL_SLOTS).fill(null)); // index 0 = primary
     const [copied, setCopied] = useState(false);
+    const [refCode, setRefCode] = useState('');
+    const [domain, setDomain] = useState('');
     const debounceRef = useRef(null);
     const preselectDoneRef = useRef(false);
     const [canSyncParams, setCanSyncParams] = useState(!preselectSlugs.length);
@@ -152,12 +154,14 @@ export default function SetupBuilder({ initialApps = [] }) {
         features.forEach((app, i) => {
             lines.push(`  appName${i + 1}="${app.appslugname}"`);
         });
+        if (refCode.trim()) lines.push(`  ref="${refCode.trim()}"`);
+        if (domain.trim()) lines.push(`  domain="${domain.trim()}"`);
         lines.push(`  id="viasocket_integrations"`);
         lines.push(`  crossorigin="anonymous"`);
         lines.push(`  src="https://integrations.viasocket.com/integrations.js">`);
         lines.push(`</script>`);
         return lines.join('\n');
-    }, [primary, features]);
+    }, [primary, features, refCode, domain]);
 
     const canCopy = !!primary;
 
@@ -201,6 +205,10 @@ export default function SetupBuilder({ initialApps = [] }) {
                             onSelectApp={handleSelect}
                             onRemoveSlot={removeSlot}
                             onClearAll={() => setSlots(Array(TOTAL_SLOTS).fill(null))}
+                            refCode={refCode}
+                            setRefCode={setRefCode}
+                            domain={domain}
+                            setDomain={setDomain}
                         />
                     </div>
                     <div className="w-full min-w-0">

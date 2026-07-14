@@ -16,6 +16,10 @@ export default function ScriptPicker({
     onSelectApp,
     onRemoveSlot,
     onClearAll,
+    refCode,
+    setRefCode,
+    domain,
+    setDomain,
 }) {
     const filledCount = slots.filter(Boolean).length;
     const lastFilledFeature = slots.slice(1).reduce((acc, s, i) => (s ? i : acc), -1);
@@ -78,6 +82,32 @@ export default function ScriptPicker({
                         placeholder="Search apps to feature..."
                         className="w-full rounded-md border border-[#e2dfd2] bg-white py-2 pl-9 pr-3 text-[14px] text-[#1a1a1a] outline-none focus:border-accent"
                     />
+                </div>
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    <div>
+                        <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
+                            Referral code <span className="normal-case font-normal">(optional)</span>
+                        </label>
+                        <input
+                            type="text"
+                            value={refCode}
+                            onChange={(e) => setRefCode(e.target.value)}
+                            placeholder="e.g. partner123"
+                            className="w-full rounded-md border border-[#e2dfd2] bg-white px-3 py-2 text-[14px] text-[#1a1a1a] outline-none focus:border-accent"
+                        />
+                    </div>
+                    <div>
+                        <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
+                            Your domain <span className="normal-case font-normal">(optional)</span>
+                        </label>
+                        <input
+                            type="text"
+                            value={domain}
+                            onChange={(e) => setDomain(e.target.value)}
+                            placeholder="e.g. yourapp.com"
+                            className="w-full rounded-md border border-[#e2dfd2] bg-white px-3 py-2 text-[14px] text-[#1a1a1a] outline-none focus:border-accent"
+                        />
+                    </div>
                 </div>
             </div>
 
