@@ -40,7 +40,7 @@ export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
 
         const script = document.createElement('script');
 
-        ['primaryApp', 'id', 'crossorigin'].forEach((attr) => {
+        ['primaryApp', 'id', 'crossorigin', 'ref', 'domain'].forEach((attr) => {
             const value = sourceScript.getAttribute(attr);
 
             if (!value) return;
