@@ -1,6 +1,6 @@
 'use client';
 
-import { setIntent } from '@/utils/intentUtils';
+import { setIntent } from '@/utils/userIntentTracker';
 import { handleRedirect } from '@/utils/handleRedirection';
 import Hero from './Hero';
 import HowItWorks from './HowItWorks';
