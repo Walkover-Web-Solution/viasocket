@@ -126,7 +126,7 @@ export default function HeroSection({
                                             rel="noopener noreferrer"
                                             className={`group flex items-center rounded-2xl px-[18px] py-4 relative z-10 self-start bg-gradient-to-br from-white/70 to-white/40 border border-white/90 backdrop-blur-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] transition-all duration-300 hover:-translate-y-1 hover:from-white/85 hover:to-white/60 hover:border-white/95 w-fit max-w-[90%] ${indents[i % indents.length]}`}
                                         >
-                                            <p className="text-sm text-[#1F2430]">{combo?.description}</p>
+                                            <p className="text-xs text-[#1F2430]">{combo?.description}</p>
                                         </a>
                                     );
                                 })}
