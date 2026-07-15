@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import { ArrowRightLeft, ChevronDown, ArrowRight, ArrowDownUp } from 'lucide-react';
 import TriggerOrActionCard from './TriggerOrActionCard';
+import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function PopularFlows({
     combosData,
@@ -13,7 +14,9 @@ export default function PopularFlows({
     appTwoEvents,
     openDropdown,
     setOpenDropdown,
+    selectedTrigger,
     setSelectedTrigger,
+    selectedAction,
     setSelectedAction,
     resetTrigger,
     visibleCombos,
@@ -22,6 +25,7 @@ export default function PopularFlows({
     setShowMore,
     handleSwapApps,
 }) {
+    const canBuildFlow = Boolean(selectedTrigger && selectedAction);
     const hasCombinations = combosData?.combinations?.length > 0;
 
     if (!hasCombinations) return null;
@@ -29,7 +33,6 @@ export default function PopularFlows({
     return (
         <div className="container flex flex-col gap-8">
             <div className="flex flex-col gap-3">
-                <span className="text-accent text-xs font-bold uppercase tracking-widest">Ready to use</span>
                 <h2 className="h2">
                     Popular {appOneDetails?.name} + {appTwoDetails?.name} flows
                 </h2>
@@ -81,6 +84,23 @@ export default function PopularFlows({
                         type="action"
                         resetEvent={resetTrigger}
                     />
+
+                    <button
+                        onClick={(e) => {
+                            if (!canBuildFlow) return;
+                            handleRedirect(
+                                e,
+                                `${process.env.NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/${selectedTrigger.rowid}/action?events=${selectedAction.rowid}&integrations=${selectedTrigger.pluginrecordid},${selectedAction.pluginrecordid}&action&`
+                            );
+                        }}
+                        disabled={!canBuildFlow}
+                        aria-disabled={!canBuildFlow}
+                        className={`btn btn-accent px-8 py-3 md:mt-8 max-md:w-full shrink-0 whitespace-nowrap transition-opacity ${
+                            canBuildFlow ? '' : 'opacity-40 cursor-not-allowed'
+                        }`}
+                    >
+                        Build this flow
+                    </button>
                 </div>
             </div> */}
 
@@ -134,10 +154,10 @@ export default function PopularFlows({
                                         />
                                     </div>
                                 </div>
-                                <p className="font-bold text-gray-900 text-base leading-snug flex-1">
+                                <p className="font-medium text-gray-900 text-base leading-snug flex-1">
                                     {combo.description}
                                 </p>
-                                <span className="text-accent font-medium text-sm flex items-center gap-1">
+                                <span className="text-accent font-medium text-sm flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                     Use this flow <ArrowRight className="w-3.5 h-3.5" aria-hidden="true" />
                                 </span>
                             </a>

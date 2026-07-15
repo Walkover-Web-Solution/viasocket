@@ -26,6 +26,8 @@ export default function IntegrationsAppTwoClientComp({
     footerData,
     appOneDetails,
     appTwoDetails,
+    similarAppsOne,
+    similarAppsTwo,
     blogsData,
     videoData,
     getDoFollowUrlStatusArray,
@@ -251,6 +253,8 @@ export default function IntegrationsAppTwoClientComp({
             <AboutApps
                 appOneDetails={appOneDetails}
                 appTwoDetails={appTwoDetails}
+                similarAppsOne={similarAppsOne}
+                similarAppsTwo={similarAppsTwo}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
             />
 
