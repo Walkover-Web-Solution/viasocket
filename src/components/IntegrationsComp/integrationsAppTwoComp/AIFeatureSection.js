@@ -7,7 +7,7 @@ export default function AIFeatureSection({ appOneName, appTwoName }) {
 
     return (
         <div className="container">
-            <div className="flex flex-col md:flex-row items-stretch gap-10 md:gap-16">
+            <div className="flex flex-col md:flex-row items-stretch justify-around gap-10 md:gap-16">
                 {/* Left: product screenshot (dark app UI image) */}
                 <div className="w-full md:w-[38%] shrink-0 rounded-xl overflow-hidden">
                     <Image

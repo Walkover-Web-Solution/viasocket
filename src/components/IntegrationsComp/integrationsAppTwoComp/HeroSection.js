@@ -1,5 +1,4 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import { Plug, Sparkles, TrendingUp, ArrowRight } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';

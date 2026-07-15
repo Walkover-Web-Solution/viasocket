@@ -58,7 +58,7 @@ function SimilarAppsSidebar({ appDetails, similarApps }) {
                 <button
                     type="button"
                     onClick={() => setVisibleCount((count) => count + SIMILAR_APPS_PAGE_SIZE)}
-                    className="btn btn-outline custom-border w-full justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+                    className="btn btn-outline fit-content ml-auto"
                 >
                     Load More <ChevronDown className="w-5 h-5" />
                 </button>
@@ -69,7 +69,7 @@ function SimilarAppsSidebar({ appDetails, similarApps }) {
 
 function AppRow({ appDetails, otherApp, similarApps, getDoFollowUrlStatusArray }) {
     return (
-        <div className="flex flex-col p-6 md:p-12 border custom-border rounded-2xl bg-white">
+        <div className="flex flex-col p-6 md:p-12 border custom-border bg-white">
             <div className="text-xs sm:text-sm text-gray-600 mb-4">
                 <Breadcrumb
                     parent="Integrations"
@@ -93,7 +93,7 @@ function AppRow({ appDetails, otherApp, similarApps, getDoFollowUrlStatusArray }
                         </div>
                         <h3 className="h3 font-bold pt-5">About {appDetails?.name}</h3>
                     </div>
-                    <p className="max-w-2xl">{appDetails?.description}</p>
+                    <p className="max-w-4xl">{appDetails?.description}</p>
                     <div className="flex flex-wrap gap-2">
                         {appDetails?.category?.slice(0, 2).map((cat, index) => (
                             <Link
