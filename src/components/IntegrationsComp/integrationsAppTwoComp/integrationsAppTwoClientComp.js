@@ -26,6 +26,8 @@ export default function IntegrationsAppTwoClientComp({
     footerData,
     appOneDetails,
     appTwoDetails,
+    similarAppsOne,
+    similarAppsTwo,
     blogsData,
     videoData,
     getDoFollowUrlStatusArray,
@@ -244,15 +246,17 @@ export default function IntegrationsAppTwoClientComp({
             {/* 14. Final CTA */}
             <FinalCTA appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} utm={utm} hasToken={hasToken} />
 
-            {/* 10. FAQs */}
-            {faqData && <FAQSection faqData={faqData} />}
-
             {/* About App A and About App B */}
             <AboutApps
                 appOneDetails={appOneDetails}
                 appTwoDetails={appTwoDetails}
+                similarAppsOne={similarAppsOne}
+                similarAppsTwo={similarAppsTwo}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
             />
+
+            {/* 10. FAQs */}
+            {faqData && <FAQSection faqData={faqData} />}
 
             <ConditionalFooter>
                 <Footer footerData={footerData} />

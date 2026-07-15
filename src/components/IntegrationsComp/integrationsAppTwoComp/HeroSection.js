@@ -1,6 +1,6 @@
 'use client';
-import { useState } from 'react';
-import { Code2, Sparkles, RefreshCcw, Zap } from 'lucide-react';
+import Image from 'next/image';
+import { Plug, Sparkles, TrendingUp, ArrowRight } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 
 export default function HeroSection({
@@ -17,25 +17,42 @@ export default function HeroSection({
         <div className="container">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start justify-between">
                 <div className="cont items-start text-left gap-6">
+                    <div className="flex items-center gap-3">
+                        <Image
+                            className="h-10 w-fit"
+                            src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                            width={36}
+                            height={36}
+                            alt={`${appOneDetails?.name} logo`}
+                        />
+                        <ArrowRight className="w-3.5 h-3.5 text-gray-400 shrink-0" aria-hidden="true" />
+                        <Image
+                            className="h-10 w-fit"
+                            src={appTwoDetails?.iconurl || 'https://placehold.co/36x36'}
+                            width={36}
+                            height={36}
+                            alt={`${appTwoDetails?.name} logo`}
+                        />
+                    </div>
                     <h1 className="h1">
                         Connect <span className="text-accent">{appOneDetails?.name}</span> and{' '}
                         <span className="text-accent">{appTwoDetails?.name}</span>
                     </h1>
 
                     <p>
-                        Save hours every week with {appOneDetails?.name} + {appTwoDetails?.name} automations. Stop
-                        doing things manually and let viaSocket handle the repetitive tasks between your apps
+                        Integrate {appOneDetails?.name} with {appTwoDetails?.name} to automate workflows, sync data
+                        between apps, and eliminate repetitive tasks with AI-powered automation.
                     </p>
 
                     <div className="flex flex-wrap items-center gap-6 text-gray-900 text-sm font-bold">
                         <span className="flex items-center gap-1.5">
-                            <Code2 className="w-4 h-4 text-accent" /> No Code
-                        </span>
-                        <span className="flex items-center gap-1.5">
                             <Sparkles className="w-4 h-4 text-accent" /> AI Powered
                         </span>
                         <span className="flex items-center gap-1.5">
-                            <RefreshCcw className="w-4 h-4 text-accent" /> Real-time Sync
+                            <TrendingUp className="w-4 h-4 text-accent" /> Built to Scale
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                            <Plug className="w-4 h-4 text-accent" /> 2000+ Integrations
                         </span>
                     </div>
 
@@ -98,28 +115,21 @@ export default function HeroSection({
                         ></div>
 
                         <div className="relative z-10">
-                            <div className="flex items-center gap-3 mb-6">
-                                <span
-                                    className="w-1.5 h-[22px] rounded-full shrink-0 bg-gradient-to-b from-accent to-accent/60"
-                                    aria-hidden="true"
-                                ></span>
-                                <h3 className="font-bold text-black text-xl">
-                                    Popular Use Cases
-                                </h3>
-                            </div>
-                            <div className="flex flex-col gap-3">
-                                {popularUseCases.slice(0, 5).map((combo, i) => (
-                                    <a
-                                        key={i}
-                                        href={getComboLink(combo)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="group flex items-center gap-3 rounded-2xl px-[18px] py-4 relative z-10 bg-gradient-to-br from-white/70 to-white/40 border border-white/90 backdrop-blur-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] transition-all duration-300 hover:-translate-y-1 hover:from-white/85 hover:to-white/60 hover:border-white/95"
-                                    >
-                                        <Zap className="w-4 h-4 text-accent shrink-0 group-hover:scale-110 transition-transform duration-300" aria-hidden="true" />
-                                        <p className="text-sm text-[#1F2430]">{combo?.description}</p>
-                                    </a>
-                                ))}
+                            <div className="flex flex-col gap-8">
+                                {popularUseCases.slice(0, 5).map((combo, i) => {
+                                    const indents = ['ml-[8%]', 'ml-0', 'ml-[14%]', 'ml-[2%]', 'ml-[10%]'];
+                                    return (
+                                        <a
+                                            key={i}
+                                            href={getComboLink(combo)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`group flex items-center rounded-2xl px-[18px] py-4 relative z-10 self-start bg-gradient-to-br from-white/70 to-white/40 border border-white/90 backdrop-blur-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] transition-all duration-300 hover:-translate-y-1 hover:from-white/85 hover:to-white/60 hover:border-white/95 w-fit max-w-[90%] ${indents[i % indents.length]}`}
+                                        >
+                                            <p className="text-sm text-[#1F2430]">{combo?.description}</p>
+                                        </a>
+                                    );
+                                })}
                             </div>
                         </div>
                     </div>
