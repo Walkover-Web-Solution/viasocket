@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import SecuritySection from '@/app/components/SecuritySection';
 
 const badgeList = [
     {
@@ -36,11 +37,10 @@ const badgeList = [
 
 export default function ShowBadges() {
     return (
-        <div className="container py-20">
+        <div className="container py-12">
             <div className="flex flex-col items-center gap-4 mb-14 text-center">
                 <h2 className="h2">
-                    Trusted by Thousands.
-                    <span className="text-accent">Recognized</span> by the Best.
+                    Trusted by Thousands. <span className="text-accent">Recognized</span> by the Best.
                 </h2>
                 <p className="text-gray-600 text-lg max-w-2xl">
                     Recognized by leading review platforms and trusted by 10,000+ businesses worldwide.

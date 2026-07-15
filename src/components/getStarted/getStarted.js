@@ -48,8 +48,14 @@ export default function GetStarted() {
 
                     <div className="p-4 flex flex-col gap-3">
                         <div className="flex items-start gap-2 max-w-[85%]">
-                            <div className="w-7 h-7 rounded-full border border-custom-border p-1 flex-shrink-0 flex items-center justify-center">
-                                <Image src="/assets/brand/socketIcon.svg" alt="viaSocket" width={16} height={16} />
+                            <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0">
+                                <Image
+                                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                                    width={28}
+                                    height={28}
+                                    alt="Support agent"
+                                    className="w-full h-full object-cover"
+                                />
                             </div>
                             <div className="bg-gray-100 text-gray-900 text-sm px-4 py-2 rounded-2xl rounded-tl-sm">
                                 What can I help you with?

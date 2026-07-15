@@ -8,18 +8,17 @@ import Image from 'next/image';
 
 const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
     const pathname = usePathname();
-    const heading = pathname.startsWith('/mcp')
-        ? 'Know More About MCP'
-        : pathname.split('/').length === 4
-            ? `Know More About ${formatSegment(pathname.split('/')[2])} and ${formatSegment(pathname.split('/')[3])} Integrations`
-            : pathname.split('/').length === 3
-                ? `Know More About ${formatSegment(pathname.split('/')[2])} Integrations`
-                : 'Know More About viaSocket Integrations';
+    const heading = 'Learn More About Automation';
 
     if (posts?.length > 0) {
         return (
             <div className="flex flex-col gap-9">
-                {showHeading && <h2 className="h2">{heading}</h2>}
+                {showHeading && (
+                    <div className="flex flex-col gap-2">
+                        <span className="text-accent text-xs font-bold uppercase tracking-widest">Read and learn</span>
+                        <h2 className="h2">{heading}</h2>
+                    </div>
+                )}
                 <div className="w-full cont">
                     <div className="sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 grid gap-4">
                         {posts?.map((post, index) => (
@@ -52,24 +51,23 @@ const CardComponent = ({ card, isBlack = false }) => {
             id="blogSection"
             className={`${isBlack ? 'border border-white' : 'border custom-border'} card rounded-none bg-white LinkButtonCard`}
         >
-            {' '}
-            <div className="flex flex-col gap-4 h-full">
-                <div className="w-full h-[240px] relative flex-shrink-0">
+            <div className="flex flex-col gap-3 h-full">
+                <div className="w-full h-[160px] relative flex-shrink-0">
                     <Image
                         src={card?.image || 'https://placehold.co/40x40'}
                         alt={card?.title}
                         width={300}
-                        height={240}
-                        className="w-full h-full object-fit"
+                        height={160}
+                        className="w-full h-full object-cover"
                     />
                 </div>
-                <div className="card-body flex flex-col gap-2 flex-grow p-4">
+                <div className="flex flex-col gap-2 flex-grow p-3">
                     <div className="flex-grow">
-                        <h3 className="font-semibold line-clamp-1">{card?.title}</h3>
-                        <p className="text-sm mt-2 line-clamp-3">{card?.description}</p>
+                        <h3 className="font-semibold text-sm line-clamp-2">{card?.title}</h3>
+                        <p className="text-xs text-gray-500 mt-1 line-clamp-2">{card?.description}</p>
                     </div>
                     <div className="mt-auto text-sm">
-                        <LinkText>Know more</LinkText>
+                        <LinkText>Read article</LinkText>
                     </div>
                 </div>
             </div>

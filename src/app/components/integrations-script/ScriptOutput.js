@@ -119,7 +119,7 @@ export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
             </div>
 
             <div
-                className={`min-h-[360px] max-h-[700px] overflow-y-auto p-8 flex-1 h-full min-h-full ${activeTab === 'preview' ? '' : 'hidden'}`}
+                className={`min-h-[360px] max-h-[700px] overflow-y-auto p-8 flex-1 h-full ${activeTab === 'preview' ? '' : 'hidden'}`}
             >
                 {!canCopy ? (
                     <IntegrationsPreview current={currentPair} />

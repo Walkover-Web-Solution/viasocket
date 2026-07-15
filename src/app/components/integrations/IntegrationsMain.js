@@ -19,6 +19,8 @@ const IntegrationsMain = (props) => {
                     blogsData={data.blogData}
                     appOneDetails={data.appOneDetails}
                     appTwoDetails={data.appTwoDetails}
+                    similarAppsOne={data.similarAppsOne}
+                    similarAppsTwo={data.similarAppsTwo}
                     combosData={data.combosData}
                     footerData={data.footerData}
                     videoData={data.videoData}

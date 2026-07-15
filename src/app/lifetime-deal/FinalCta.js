@@ -74,7 +74,7 @@ export default function FinalCta() {
             <div className="container mx-auto px-6 relative z-[1]">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-center">
                     <div>
-                        <h2 className="h2">
+                        <h2 className="h2 mb-1">
                             Ready to automate
                             <br />
                             <span className="text-[#a8200d]">smarter,</span> not harder?

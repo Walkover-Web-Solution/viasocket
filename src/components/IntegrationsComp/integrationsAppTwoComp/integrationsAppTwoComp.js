@@ -9,6 +9,8 @@ export default function IntegrationsAppTwoComp({
     footerData,
     appOneDetails,
     appTwoDetails,
+    similarAppsOne,
+    similarAppsTwo,
     blogsData,
     metaData,
     videoData,
@@ -38,6 +40,8 @@ export default function IntegrationsAppTwoComp({
                 blogsData={blogsData}
                 appOneDetails={appOneDetails}
                 appTwoDetails={appTwoDetails}
+                similarAppsOne={similarAppsOne}
+                similarAppsTwo={similarAppsTwo}
                 combosData={combosData}
                 footerData={footerData}
                 videoData={videoData}

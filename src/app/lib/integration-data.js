@@ -27,6 +27,17 @@ function safeJsonParse(value, fallback = []) {
     try { return JSON.parse(value) || fallback; } catch { return fallback; }
 }
 
+async function getSimilarApps(appDetails, excludeSlugs, pageUrl) {
+    const primaryCategory = appDetails?.category?.[0];
+    if (!primaryCategory) return [];
+
+    const apps = await getApps({ categoryData: [{ name: primaryCategory }], limit: 12 }, pageUrl);
+
+    return (apps || [])
+        .filter((app) => app?.appslugname && !excludeSlugs.includes(app.appslugname))
+        .slice(0, 9);
+}
+
 function transformAppData(app) {
     return {
         appSlug: app.app_slug,
@@ -84,10 +95,13 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             const appTwoDetails = getAppDetails(combosData, integrationsInfo?.apptwo);
 
             if (appOneDetails && appTwoDetails) {
-                const [blogData, videoData, templateData] = await Promise.all([
+                const excludeSlugs = [appOneDetails?.appslugname, appTwoDetails?.appslugname];
+                const [blogData, videoData, templateData, similarAppsOne, similarAppsTwo] = await Promise.all([
                     getBlogData({ tag1: appOneDetails?.appslugname, tag2: appTwoDetails?.appslugname }, pageUrl),
                     getVideoData({ tag1: appOneDetails?.appslugname, tag2: appTwoDetails?.appslugname }, pageUrl),
                     getTemplates(pageUrl),
+                    getSimilarApps(appOneDetails, excludeSlugs, pageUrl),
+                    getSimilarApps(appTwoDetails, excludeSlugs, pageUrl),
                 ]);
 
                 const validTemplates = templateData.filter(
@@ -104,6 +118,8 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                     combosData: combosData || {},
                     appOneDetails: appOneDetails || {},
                     appTwoDetails: appTwoDetails || {},
+                    similarAppsOne: similarAppsOne || [],
+                    similarAppsTwo: similarAppsTwo || [],
                     categoryData: {},
                     blogData: blogData || [],
                     videoData: videoData || [],
