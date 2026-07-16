@@ -11,7 +11,7 @@ import ReadyToAutomate from './ReadyToAutomate';
 
 export default function HireExpertClient({}) {
     const handleHireClick = (e) => {
-        setIntent('hireanexpert', 1);
+        setIntent('hireanexpert');
         handleRedirect(e, '/signup?', null, 'hire-an-expert');
     };
 
