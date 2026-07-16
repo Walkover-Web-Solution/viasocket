@@ -32,6 +32,7 @@ export default function IntegrationsAppTwoClientComp({
     videoData,
     getDoFollowUrlStatusArray,
     templateToShow,
+    appCount,
     hasToken,
 }) {
     const router = useRouter();
@@ -86,7 +87,7 @@ export default function IntegrationsAppTwoClientComp({
 
     const popularUseCases =
         combosData?.combinations
-            ?.filter((c) => c?.description && !/^(List|Get)\b/i.test(c.description.trim()))
+            ?.filter((c) => c?.description)
             ?.slice(0, 6) || [];
 
     const getComboLink = (combo) => {
@@ -145,6 +146,7 @@ export default function IntegrationsAppTwoClientComp({
                 getComboLink={getComboLink}
                 hasToken={hasToken}
                 utm={utm}
+                appCount={appCount}
             />
 
             {/* 4. Popular flows */}

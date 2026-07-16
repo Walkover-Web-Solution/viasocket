@@ -3,25 +3,25 @@ import { Check } from 'lucide-react';
 
 const plans = [
     {
-        name: 'STARTER',
-        price: 'Free',
-        priceSuffix: '',
-        description: 'Everything you need to get started.',
+        name: 'SANDBOX',
+        price: '$0',
+        priceSuffix: '/ month',
+        description: 'Build and validate your embedded integration experience.',
         usage: ['25 active users', '25k tasks / month'],
         support: ['Docs & Community'],
-        ctaLabel: 'Get started free',
+        ctaLabel: 'Start building',
         ctaLink: '/signup?utm_source=/embed',
         ctaClass: 'btn btn-primary',
         highlight: false,
     },
     {
-        name: 'PRO',
-        price: '$99',
+        name: 'PRODUCTION',
+        price: '$249',
         priceSuffix: '/ month',
-        description: 'Scale up with higher limits and full platform access.',
-        usage: ['250 active users', '250k tasks / month'],
+        description: 'Deploy embedded integrations to your customers at scale with higher limits and full platform access.',
+        usage: ['1,000 active users', '1M tasks / month'],
         support: ['Email & priority tickets support'],
-        ctaLabel: 'Get started',
+        ctaLabel: 'Deploy with Production',
         ctaLink: '/signup?utm_source=/embed',
         ctaClass: 'btn btn-accent',
         highlight: true,
@@ -30,8 +30,8 @@ const plans = [
         name: 'ENTERPRISE',
         price: 'Custom',
         priceSuffix: '',
-        description: 'Tailored for security, compliance, and unlimited scale.',
-        usage: ['Custom users', 'Custom tasks'],
+        description: 'Built for organizations requiring custom capacity, security, compliance, and dedicated support.',
+        usage: ['Custom active users', 'Custom task volume'],
         support: ['Dedicated 1-on-1 support'],
         ctaLabel: 'Contact Sales',
         ctaLink: 'https://cal.id/team/viasocket/embed',
@@ -50,7 +50,7 @@ function PlanCard({ plan }) {
                 <div
                     className={`absolute top-0 left-1/2 -translate-x-1/2 text-white text-xs font-semibold tracking-wide uppercase px-4 py-1 rounded-b-lg whitespace-nowrap ${plan.highlight ? 'bg-accent' : 'bg-black'}`}
                 >
-                    Buy 1 month, get 5 free
+                    BUY 1 MONTH, GET 5 FREE
                 </div>
             )}
             <div

@@ -12,6 +12,7 @@ export default function HeroSection({
     getComboLink,
     hasToken,
     utm,
+    appCount,
 }) {
     return (
         <div className="container">
@@ -52,7 +53,7 @@ export default function HeroSection({
                             <TrendingUp className="w-4 h-4 text-accent" /> Built to Scale
                         </span>
                         <span className="flex items-center gap-1.5">
-                            <Plug className="w-4 h-4 text-accent" /> 2000+ Integrations
+                            <Plug className="w-4 h-4 text-accent" /> {appCount + 300}+ Integrations
                         </span>
                     </div>
 
@@ -73,12 +74,7 @@ export default function HeroSection({
                             <button
                                 className="btn btn-accent px-8 py-3"
                                 onClick={(e) =>
-                                    handleRedirect(
-                                        e,
-                                        hasToken ? `https://flow.viasocket.com?` : `/signup?`,
-                                        null,
-                                        utm
-                                    )
+                                    handleRedirect(e, hasToken ? `https://flow.viasocket.com?` : `/signup?`, null, utm)
                                 }
                             >
                                 Create your flow
@@ -117,14 +113,18 @@ export default function HeroSection({
                         <div className="relative z-10">
                             <div className="flex flex-col gap-8">
                                 {popularUseCases.slice(0, 5).map((combo, i) => {
-                                    const indents = ['ml-[8%]', 'ml-0', 'ml-[14%]', 'ml-[2%]', 'ml-[10%]'];
+                                    const isRight = i % 2 === 0;
                                     return (
                                         <a
                                             key={i}
                                             href={getComboLink(combo)}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`group flex items-center rounded-2xl px-[18px] py-4 relative z-10 self-start bg-gradient-to-br from-white/70 to-white/40 border border-white/90 backdrop-blur-[32px] shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] transition-all duration-300 hover:-translate-y-1 hover:from-white/85 hover:to-white/60 hover:border-white/95 w-fit max-w-[90%] ${indents[i % indents.length]}`}
+                                            className={`group flex items-center rounded-2xl px-3 py-4 relative z-10 w-fit max-w-[90%] transition-all duration-300 hover:-translate-y-1 backdrop-blur-[32px] border border-white/90 shadow-md ${
+                                                isRight
+                                                    ? 'ml-auto rounded-br-sm bg-gradient-to-br from-white/80 to-white/50 hover:from-white/90 hover:to-white/60'
+                                                    : 'ml-auto !mr-28 rounded-bl-sm bg-gradient-to-br from-gray-50/80 to-white/50 hover:from-gray-50/90 hover:to-white/60'
+                                            }`}
                                         >
                                             <p className="text-xs text-[#1F2430]">{combo?.description}</p>
                                         </a>

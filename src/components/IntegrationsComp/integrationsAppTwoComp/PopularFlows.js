@@ -25,7 +25,7 @@ export default function PopularFlows({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {combosData?.combinations
-                    ?.filter((combo) => combo?.description && !/^(List|Get)\b/i.test(combo.description.trim()))
+                    ?.filter((combo) => combo?.description)
                     ?.slice(0, visibleCombos)
                     ?.map((combo, index) => {
                         const integrations =

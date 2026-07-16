@@ -17,6 +17,7 @@ export default function IntegrationsAppTwoComp({
     getDoFollowUrlStatusArray,
     navbarData,
     templateToShow,
+    appCount,
     skipHeadComp,
     hasToken,
 }) {
@@ -47,6 +48,7 @@ export default function IntegrationsAppTwoComp({
                 videoData={videoData}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
+                appCount={appCount}
                 hasToken={hasToken}
             />
         </div>

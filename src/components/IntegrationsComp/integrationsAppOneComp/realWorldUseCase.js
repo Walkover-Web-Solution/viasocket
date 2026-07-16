@@ -2,15 +2,6 @@ import React, { useMemo, useCallback } from 'react';
 import Image from 'next/image';
 import '../../../scss/realworldusecase.scss';
 
-const USE_CASES = [
-    'Sync form responses automatically to a spreadsheet for instant data capture',
-    'Send Slack notifications whenever a new row is added or updated in Sheets',
-    'Trigger email campaigns in Mailchimp when a new contact is added to a sheet',
-    'Create CRM contacts in HubSpot directly from new Google Sheets entries',
-    'Generate and save PDF reports to Google Drive from spreadsheet data',
-    'Automatically back up database records to a Google Sheet on a daily schedule',
-];
-
 const INTEGRATION_APPS = [
     {
         name: 'Slack',
@@ -90,7 +81,15 @@ const AnimatedDot = ({ delay, color }) => (
     />
 );
 
-const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
+const getUseCaseText = (item) => {
+    if (typeof item === 'string') return item;
+    if (item && typeof item === 'object') {
+        return item.usecase || item.text || item.description || item.title || item.name || '';
+    }
+    return '';
+};
+
+const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
     const handleImageError = useCallback((e, fallbackSrc) => {
         e.currentTarget.src = fallbackSrc;
         e.currentTarget.onerror = null;
@@ -105,6 +104,11 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
         const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255];
         return r * 0.299 + g * 0.587 + b * 0.114 > 230 ? '#6b7280' : appOneDetails.brandcolor;
     })();
+
+    const dynamicUseCases = useMemo(() => {
+        const raw = appData?.useCasesNewData || [];
+        return Array.isArray(raw) ? raw.map(getUseCaseText).filter(Boolean) : [];
+    }, [appData?.useCasesNewData]);
 
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {
@@ -139,15 +143,17 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount }) => {
             </div>
 
             <div className="flex flex-col lg:flex-row border border-gray-300 overflow-hidden">
-                <div className="w-full lg:w-1/2 bg-[#fafaf9] p-5 border-b lg:border-b-0 lg:border-r border-gray-300">
-                    <div className="grid grid-cols-2 gap-4 h-full">
-                        {USE_CASES.map((useCase, index) => (
-                            <UseCaseCard key={index} text={useCase} />
-                        ))}
+                {dynamicUseCases.length > 0 && (
+                    <div className="w-full lg:w-1/2 bg-[#fafaf9] p-5 border-b lg:border-b-0 lg:border-r border-gray-300">
+                        <div className="grid grid-cols-2 gap-4 h-full">
+                            {dynamicUseCases.map((useCase, index) => (
+                                <UseCaseCard key={index} text={useCase} />
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
 
-                <div className="w-full lg:w-1/2 bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch">
+                <div className={`bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch ${dynamicUseCases.length > 0 ? 'w-full lg:w-1/2' : 'w-full'}`}>
                     <div
                         className="absolute inset-0 pointer-events-none"
                         style={{

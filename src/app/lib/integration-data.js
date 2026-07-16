@@ -62,6 +62,8 @@ function transformAppData(app) {
 
         useCasesCardsData: safeJsonParse(app.use_case_cards),
 
+        useCasesNewData: safeJsonParse(app.usecases_new),
+
         faqData: safeJsonParse(app.faqs),
     };
 }

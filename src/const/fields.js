@@ -62,5 +62,5 @@ export const DEPARTMENTDATA_FIELDS = [
     'card_image',
 ];
 export const TEMPLATEMARQUEEITEMS_FIELDS = ['name', 'slug', 'icon', 'is_app'];
-export const SINGLEAPP_FIELDS = ['app_name', 'app_description', 'app_slug', 'primary_keyword', 'secondary_keywords', 'page_title', 'meta_description', 'h1_title', 'subheadline', 'use_case_cards', 'faqs'];
+export const SINGLEAPP_FIELDS = ['app_name', 'app_description', 'app_slug', 'primary_keyword', 'secondary_keywords', 'page_title', 'meta_description', 'h1_title', 'subheadline', 'use_case_cards', 'faqs', 'usecases_new'];
 export const FEATUREDTEMPLATES_FIELDS = ['name'];
