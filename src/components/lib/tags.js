@@ -19,4 +19,5 @@ export function listTags() {
     const tags1 = tags.tags;
 
     return tags1;
+    // return tags.tags;
 }
