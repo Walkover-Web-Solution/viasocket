@@ -433,7 +433,7 @@ export default function IntegrationsAppOneClientComp({
                         appSlugName={appOneDetails?.appslugname}
                         doFollowArray={getDoFollowUrlStatusArray}
                     >
-                        <LinkText children={'Learn More ragini'} />
+                        <LinkText children={'Learn More'} />
                     </ExternalLink>
                 </div>
                 <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
