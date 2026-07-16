@@ -298,7 +298,7 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} appCount={appCount} />
+            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} appCount={appCount} appData={appData} />
 
             <div className="container">
                 <div className="cont gap-8">
@@ -433,7 +433,7 @@ export default function IntegrationsAppOneClientComp({
                         appSlugName={appOneDetails?.appslugname}
                         doFollowArray={getDoFollowUrlStatusArray}
                     >
-                        <LinkText children={'Learn More'} />
+                        <LinkText children={'Learn More ragini'} />
                     </ExternalLink>
                 </div>
                 <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
