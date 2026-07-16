@@ -1,8 +1,6 @@
 import React from "react";
 import PostItem from "./postItem";
-// import TagLink from "./tagLink";
 import Pagination from "./pagination";
-// import TagButton from "./tagButton";
 
 export default function PostList({ posts, tags, pagination }) {
   return (
