@@ -7,7 +7,7 @@ export const getCookie = (name) => {
 const getCookieDomain = () => {
     if (typeof window === 'undefined') return '';
     const hostname = window.location.hostname;
-    if (!hostname || hostname === 'localhost' || hostname === '127.0.0.1') return '';
+    if (!hostname) return '';
     const parts = hostname.split('.');
     const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
     return `.${rootDomain}`;
