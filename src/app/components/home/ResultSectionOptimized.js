@@ -94,7 +94,7 @@ export default function ResultSectionOptimized({
             {/* Default Templates Section - show when no search is active */}
             {noSearchActive && latestDefaultTemplates.length > 0 && (
                 <div className="container mx-auto pb-12 relative z-index-1">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {latestDefaultTemplates.map((template, index) => (
                             <TemplateCard
                                 key={template.id}

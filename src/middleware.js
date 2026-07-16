@@ -44,8 +44,6 @@ export async function middleware(request) {
 
             const clickId = incomingClickId || (isValidRdtCid(cookieClickId) ? cookieClickId : null);
 
-            // IMPORTANT
-            // const apiUrl = 'http://127.0.0.1:3000/api/reddit/page-visit';
             const apiUrl = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/reddit/page-visit`;
 
             const payload = {
