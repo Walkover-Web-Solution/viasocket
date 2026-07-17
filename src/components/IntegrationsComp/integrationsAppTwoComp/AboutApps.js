@@ -1,22 +1,13 @@
 'use client';
-import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronDown } from 'lucide-react';
 import ExternalLink from '@/utils/ExternalLink';
 import { LinkText } from '@/components/uiComponents/buttons';
 import createURL from '@/utils/createURL';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 
-const SIMILAR_APPS_PAGE_SIZE = 3;
-
 function SimilarAppsSidebar({ appDetails, similarApps }) {
-    const [visibleCount, setVisibleCount] = useState(SIMILAR_APPS_PAGE_SIZE);
-
     if (!similarApps?.length) return null;
-
-    const visibleApps = similarApps.slice(0, visibleCount);
-    const hasMore = visibleCount < similarApps.length;
 
     return (
         <div className="flex flex-col gap-2 w-full">
@@ -27,8 +18,8 @@ function SimilarAppsSidebar({ appDetails, similarApps }) {
                 ></span>
                 <h4 className="font-bold text-black text-xl">Similar apps</h4>
             </div>
-            <div className="flex flex-col gap-2">
-                {visibleApps.map((app, index) => (
+            <div className="flex flex-col gap-2 max-h-72 overflow-y-auto pr-1">
+                {similarApps.map((app, index) => (
                     <Link
                         key={index}
                         href={createURL(`/integrations/${appDetails?.appslugname}/${app?.appslugname}`)}
@@ -54,15 +45,6 @@ function SimilarAppsSidebar({ appDetails, similarApps }) {
                     </Link>
                 ))}
             </div>
-            {hasMore && (
-                <button
-                    type="button"
-                    onClick={() => setVisibleCount((count) => count + SIMILAR_APPS_PAGE_SIZE)}
-                    className="btn btn-outline fit-content ml-auto"
-                >
-                    Load More <ChevronDown className="w-5 h-5" />
-                </button>
-            )}
         </div>
     );
 }
