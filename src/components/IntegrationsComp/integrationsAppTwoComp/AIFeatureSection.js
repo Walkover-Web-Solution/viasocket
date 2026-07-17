@@ -32,7 +32,7 @@ export default function AIFeatureSection({ appOneName, appTwoName }) {
                     </h2>
 
                     <p className="text-gray-500 text-base leading-relaxed">
-                        Just describe the task in plain English. Viasocket AI selects the right apps, builds the workflow, maps the fields, and prepares everything for review before you publish.
+                        Just describe the task in plain English. viaSocket AI selects the right apps, builds the workflow, maps the fields, and prepares everything for review before you publish.
                     </p>
 
                     <div className="flex flex-wrap items-center">
