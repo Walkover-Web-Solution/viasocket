@@ -1,27 +1,28 @@
 'use client';
 
-import { useState } from 'react';
+import { setIntent } from '@/utils/userIntentTracker';
+import { handleRedirect } from '@/utils/handleRedirection';
 import Hero from './Hero';
 import HowItWorks from './HowItWorks';
 import Comparison from './Comparison';
 import CaseStudies from './CaseStudies';
 import TestimonialsCarousel from './TestimonialsCarousel';
 import ReadyToAutomate from './ReadyToAutomate';
-import HireModal from './hire-modal/HireModal';
 
-export default function HireExpertClient({ securityGridData }) {
-    const [modalOpen, setModalOpen] = useState(false);
-    const openModal = () => setModalOpen(true);
+export default function HireExpertClient({}) {
+    const handleHireClick = (e) => {
+        setIntent('hireanexpert');
+        handleRedirect(e, '/signup?', null, 'hire-an-expert');
+    };
 
     return (
         <div className="font-inter-tight text-[#222]">
-            <Hero onHire={openModal} />
+            <Hero onHire={handleHireClick} />
             <HowItWorks />
-            <Comparison onHire={openModal} />
+            <Comparison onHire={handleHireClick} />
             <CaseStudies />
-            <ReadyToAutomate onHire={openModal} />
+            <ReadyToAutomate onHire={handleHireClick} />
             <TestimonialsCarousel />
-            {modalOpen && <HireModal onClose={() => setModalOpen(false)} />}
         </div>
     );
 }

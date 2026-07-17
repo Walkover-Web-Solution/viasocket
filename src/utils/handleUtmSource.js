@@ -1,14 +1,25 @@
-const getCookie = (name) => {
+export const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 };
 
-const setCookie = (name, value, days) => {
+const getCookieDomain = () => {
+    if (typeof window === 'undefined') return '';
+    const hostname = window.location.hostname;
+    if (!hostname) return '';
+    const parts = hostname.split('.');
+    const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
+    return `.${rootDomain}`;
+};
+
+export const setCookie = (name, value, days) => {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
     const expires = `expires=${date.toUTCString()}`;
-    document.cookie = `${name}=${value};${expires};path=/`;
+    const domain = getCookieDomain();
+    const domainAttr = domain ? `;domain=${domain}` : '';
+    document.cookie = `${name}=${value};${expires};path=/${domainAttr}`;
 };
 
 export const getUtmSource = () => {

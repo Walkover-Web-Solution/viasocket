@@ -8,10 +8,16 @@ const TemplateCard = ({ template, preventClick, isFeatured }) => {
     return (
         <Link
             key={template?.id}
-            href={`/automations/${template?.title?.trim().replace(/[^a-zA-Z0-9\s]/g, '').replace(/\s+/g, '-').toLowerCase()}/${template?.id}`}
-            className="group shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden border border-gray-100 flex flex-col relative"
+            href={`/automations/${template?.title
+                ?.trim()
+                .replace(/[^a-zA-Z0-9\s]/g, '')
+                .replace(/\s+/g, '-')
+                .toLowerCase()}/${template?.id}`}
+            className="group transition-all duration-300 overflow-hidden border border-gray-50 hover:border-gray-200 hover:-translate-y-1 relative"
             style={{ backgroundColor: bgcolor || 'white' }}
-            onClick={(e) => { if (preventClick?.current) e.preventDefault(); }}
+            onClick={(e) => {
+                if (preventClick?.current) e.preventDefault();
+            }}
         >
             {isFeatured && (
                 <div className="absolute top-3 right-3 bg-gradient-to-r from-green-500 to-emerald-600 text-white text-xs font-bold px-3 py-1.5 rounded-full z-10 flex items-center gap-1">
@@ -21,18 +27,24 @@ const TemplateCard = ({ template, preventClick, isFeatured }) => {
                     Featured
                 </div>
             )}
-            <div className={`p-4 md:p-6 flex flex-col gap-4 h-[290px] ${isLightBg ? 'text-black' : 'text-white'}`}>
-                <TemplateCardIcons template={template} />
+            <div className={`flex flex-col gap-4 justify-between h-full ${isLightBg ? 'text-black' : 'text-white'}`}>
+                <div className="flex flex-col gap-4 p-4">
+                    <TemplateCardIcons template={template} />
 
-                <div className="flex-1 flex items-center">
-                    <h4 className={`line-clamp-3 font-[Inter,sans-serif] text-3xl font-[720] leading-[38px] tracking-[-0.5px] m-0`}>{template?.title}</h4>
+                    <div className="flex-1 flex items-center">
+                        <h4 className={`line-clamp-2 text-lg font-semibold`}>{template?.title}</h4>
+                    </div>
                 </div>
 
-                <div className="flex items-center justify-between mt-auto">
+                <div className="flex items-center justify-between border-t p-4">
                     <div className="flex items-center gap-2">
-                        <span className={`text-xs ${isLightBg ? 'text-[#00000099]' : 'text-white/60'}`}>{template?.userName}</span>
+                        <span className={`text-xs ${isLightBg ? 'text-[#00000099]' : 'text-white/60'}`}>
+                            {template?.userName}
+                        </span>
                     </div>
-                    <span className={`flex items-center gap-1 text-xs font-semibold ${isLightBg ? 'text-[#000000cc]' : 'text-white/70'}`}>
+                    <span
+                        className={`flex items-center gap-1 text-xs font-semibold ${isLightBg ? 'text-[#000000cc]' : 'text-white/70'}`}
+                    >
                         Preview template
                         <ArrowRight size={13} />
                     </span>

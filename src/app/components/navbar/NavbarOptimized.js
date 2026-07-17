@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import Menubar from '@/components/navbar/menubar';
-import MCPBanner from './MCPBanner';
-import EmbedBanner from './EmbedBanner';
+// import MCPBanner from './MCPBanner';
 import TopNavLinks from './TopNavLinks';
 import MainNavbar from './MainNavbar';
+import MigratingBanner from './MigratingBanner';
 
 const navItems = [
     {
@@ -58,7 +58,8 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                     className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
                 >
                     <div className="items-center justify-end flex !h-[30px]">
-                        {utm === '/index' && <MCPBanner />}
+                        {/* {utm === '/index' && <MCPBanner />} */}
+                        {utm === '/index' && <MigratingBanner />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
                     </div>
                 </div>
