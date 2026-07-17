@@ -6,7 +6,7 @@ export default function MigratingBanner() {
         <div
             className={`hidden lg:flex cursor-pointer w-full bg-[#3B62FF] text-white backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)] !h-[30px] items-center justify-center gap-2 !text-sm`}
         >
-            <span className="letter-spacing-[0.02em]">
+            <span className="tracking-[0.06em]">
                 Migrating from another tool? We'll move your workflows for you, <strong>Free</strong>.
             </span>
             <Link
