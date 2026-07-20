@@ -11,7 +11,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
     const [scale, setScale] = useState(1);
     const contentRef = useRef(null);
     const flowContainerRef = useRef(null);
-    const [flowRendererHeight, setFlowRendererHeight] = useState('550px');
+    const [flowRendererHeight, setFlowRendererHeight] = useState('480px');
 
     const [selected, setSelected] = useState(null);
     const [currentTemplate, setCurrentTemplate] = useState(null);
@@ -72,14 +72,14 @@ const IndexTemplateComp = ({ categories, templates }) => {
     }, [currentTemplate]);
 
     return (
-        <div className="cont gap-8 container relative mt-12">
+        <div className="cont gap-8 container relative mt-12 py-8">
             <div className="flex flex-col gap-1 items-center justify-center">
                 <h2 className="h2">Your team's workflows, already built.</h2>
                 <p>Browse templates for Finance, Marketing, Support, HR and more. One click to deploy.</p>
             </div>
 
             <div className="flex flex-col w-full border custom-border">
-                <div className="flex gap-4 p-4 justify-center flex-wrap border-b custom-border">
+                <div className="flex gap-4 p-3 justify-center flex-wrap border-b custom-border bg-[#FFFDF2]">
                     {categories?.slice(0, 5)?.map((cat) => (
                         <button
                             key={cat?.name}
@@ -125,7 +125,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
                     </div>
                     <div
                         ref={flowContainerRef}
-                        className="w-full relative dotted-background border-t lg:border-t-0 lg:border-l custom-border p-4"
+                        className="w-full relative dotted-background border-t lg:border-t-0 lg:border-l custom-border p-4 overflow-hidden"
                         style={{ height: flowRendererHeight }}
                     >
                         <ZoomableFlowContainer
@@ -149,7 +149,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
                     </div>
                 </div>
 
-                <div className="p-4 border-t flex items-center gap-2">
+                <div className="p-3 border-t flex items-center gap-2 bg-[#EFF2FF]">
                     <p className="text-sm text-gray-500 font-semibold">ALSO WORKS WITH</p>
                     <div className="flex items-center">
                         {visibleIcons.map((iconUrl, index) => (
@@ -157,7 +157,13 @@ const IndexTemplateComp = ({ categories, templates }) => {
                                 key={`app-icon-${index}`}
                                 className={`w-9 h-9 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden ${index > 0 ? '-ml-2' : ''}`}
                             >
-                                <Image src={iconUrl} alt="App icon" width={22} height={22} className="object-contain p-1" />
+                                <Image
+                                    src={iconUrl}
+                                    alt="App icon"
+                                    width={22}
+                                    height={22}
+                                    className="object-contain p-1"
+                                />
                             </div>
                         ))}
                         {extraCount > 0 && <span className="text-sm text-gray-500 ml-3">+{extraCount} more</span>}
