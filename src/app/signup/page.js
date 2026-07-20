@@ -66,7 +66,10 @@ export default async function SignupPage({ searchParams }) {
                         <div className="mt-10 space-y-4 text-xs sm:text-sm text-gray-500 flex flex-col">
                             <p className="flex items-center gap-1.5">
                                 <span>Already have an account?</span>
-                                <Link href="/login" className="text-[#a32015] font-medium hover:underline text-base">
+                                <Link
+                                    href={params?.import === 'true' ? '/login?import=true' : '/login'}
+                                    className="text-[#a32015] font-medium hover:underline text-base"
+                                >
                                     Log in
                                 </Link>
                             </p>
