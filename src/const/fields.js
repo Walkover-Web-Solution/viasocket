@@ -40,7 +40,16 @@ export const MCP_FIELDS = ['action', 'description', 'name', 'prompt', 'slug_name
 export const PRICINGFEATURE_FIELDS = ['featurename'];
 export const INDEXTEMPLATE_FIELDS = ['name', 'scriptId', 'bgcolor'];
 export const DOFOLLOWLINK_FIELDS = ['appslugname'];
-export const REVIEWSECTION_FIELDS = ['name', 'user_name', 'subtitle', 'description', 'date', 'link', 'user_profile', 'platform_logo'];
+export const REVIEWSECTION_FIELDS = [
+    'name',
+    'user_name',
+    'subtitle',
+    'description',
+    'date',
+    'link',
+    'user_profile',
+    'platform_logo',
+];
 export const FEATUREBANNER_FIELDS = ['bgimage'];
 export const NAVBAR_FIELDS = ['group_name', 'name', 'link', 'is_link', 'group_link'];
 export const BLACKFRIDAYSALE_FIELDS = [
@@ -62,5 +71,20 @@ export const DEPARTMENTDATA_FIELDS = [
     'card_image',
 ];
 export const TEMPLATEMARQUEEITEMS_FIELDS = ['name', 'slug', 'icon', 'is_app'];
-export const SINGLEAPP_FIELDS = ['app_name', 'app_description', 'app_slug', 'primary_keyword', 'secondary_keywords', 'page_title', 'meta_description', 'h1_title', 'subheadline', 'use_case_cards', 'faqs', 'usecases_new'];
+export const SINGLEAPP_FIELDS = [
+    'app_name',
+    'app_description',
+    'app_slug',
+    'primary_keyword',
+    'secondary_keywords',
+    'page_title',
+    'meta_description',
+    'h1_title',
+    'subheadline',
+    'herosection_new',
+    'subheadlinie_new',
+    'use_case_cards',
+    'faqs',
+    'usecases_new',
+];
 export const FEATUREDTEMPLATES_FIELDS = ['name'];
