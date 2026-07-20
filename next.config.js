@@ -50,7 +50,7 @@ const nextConfig = {
             {
                 source: '/login',
                 has: [{ type: 'query', key: 'import', value: 'true' }],
-                destination: 'https://flow.viasocket.com/org?import=true',
+                destination: 'https://flow.viasocket.com/org',
                 permanent: false,
             },
             {
