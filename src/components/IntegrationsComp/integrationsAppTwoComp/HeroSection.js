@@ -122,11 +122,11 @@ export default function HeroSection({
                                             rel="noopener noreferrer"
                                             className={`group flex items-center rounded-2xl px-3 py-4 relative z-10 w-fit max-w-[90%] transition-all duration-300 hover:-translate-y-1 backdrop-blur-[32px] border border-white/90 shadow-md ${
                                                 isRight
-                                                    ? 'ml-auto rounded-br-sm bg-gradient-to-br from-white/80 to-white/50 hover:from-white/90 hover:to-white/60'
-                                                    : 'ml-auto !mr-28 rounded-bl-sm bg-gradient-to-br from-gray-50/80 to-white/50 hover:from-gray-50/90 hover:to-white/60'
+                                                    ? 'ml-auto bg-gradient-to-br from-white/80 to-white/50 hover:from-white/90 hover:to-white/60'
+                                                    : 'ml-auto !mr-28 bg-gradient-to-br from-gray-50/80 to-white/50 hover:from-gray-50/90 hover:to-white/60'
                                             }`}
                                         >
-                                            <p className="text-xs text-[#1F2430]">{combo?.description}</p>
+                                            <p className="text-sm text-[#1F2430]">{combo?.description}</p>
                                         </a>
                                     );
                                 })}

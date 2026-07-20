@@ -7,7 +7,7 @@ export default function AIFeatureSection({ appOneName, appTwoName }) {
 
     return (
         <div className="container">
-            <div className="flex flex-col md:flex-row items-stretch justify-around gap-10 md:gap-16">
+            <div className="flex flex-col md:flex-row items-stretch justify-between gap-10 md:gap-20">
                 {/* Left: product screenshot (dark app UI image) */}
                 <div className="w-full md:w-[38%] shrink-0 rounded-xl overflow-hidden">
                     <Image
@@ -32,7 +32,7 @@ export default function AIFeatureSection({ appOneName, appTwoName }) {
                     </h2>
 
                     <p className="text-gray-500 text-base leading-relaxed">
-                        Just describe the task in plain English. Viasocket AI selects the right apps, builds the workflow, maps the fields, and prepares everything for review before you publish.
+                        Just describe the task in plain English. viaSocket AI selects the right apps, builds the workflow, maps the fields, and prepares everything for review before you publish.
                     </p>
 
                     <div className="flex flex-wrap items-center">

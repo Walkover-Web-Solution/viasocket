@@ -107,8 +107,14 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
 
     const dynamicUseCases = useMemo(() => {
         const raw = appData?.useCasesNewData || [];
-        return Array.isArray(raw) ? raw.map(getUseCaseText).filter(Boolean) : [];
-    }, [appData?.useCasesNewData]);
+        if (Array.isArray(raw) && raw.length > 0) {
+            return raw.map(getUseCaseText).filter(Boolean);
+        }
+        const fallback = appData?.useCasesCardsData || [];
+        return Array.isArray(fallback)
+            ? fallback.map((item) => (typeof item === 'string' ? item : item?.title || '')).filter(Boolean)
+            : [];
+    }, [appData?.useCasesNewData, appData?.useCasesCardsData]);
 
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {

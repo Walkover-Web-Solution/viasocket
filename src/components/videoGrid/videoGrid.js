@@ -50,7 +50,7 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                         <span className="text-accent text-xs font-bold uppercase tracking-widest">
                             Watch &amp; learn
                         </span>
-                        <h2 className="h2">Learn by building automations</h2>
+                        <h2 className="h2">Learn to build automation</h2>
                         <p className="text-gray-500 text-base whitespace-nowrap">
                             Step-by-step video tutorials to help you connect apps, automate workflows, and save time.
                         </p>

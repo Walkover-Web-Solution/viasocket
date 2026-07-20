@@ -47,8 +47,8 @@ function transformAppData(app) {
         appDescription: app.app_description,
 
         headings: {
-            h1: app.h1_title,
-            subheadline: app.subheadline,
+            h1: app.herosection_new || app.h1_title,
+            subheadline: app.subheadlinie_new || app.subheadline,
         },
 
         metadata: {
