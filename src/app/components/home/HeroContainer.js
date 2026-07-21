@@ -2,10 +2,24 @@
 
 import { useCallback, useState } from 'react';
 import HeroSection from './HeroSection';
+import HeroSectionB from './HeroSectionB';
+import HeroSectionC from './HeroSectionC';
 import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 import SearchAndResults from './SearchAndResults';
 
-export default function HeroContainer({ appCount, initialApps, templateData, hasToken }) {
+// A/B hero variants keyed off the `variant` cookie assigned server-side (middleware).
+function HeroVariant({ variant, appCount, hasToken }) {
+    switch (variant) {
+        case 'B':
+            return <HeroSectionB appCount={appCount} hasToken={hasToken} />;
+        case 'C':
+            return <HeroSectionC appCount={appCount} hasToken={hasToken} />;
+        default:
+            return <HeroSection appCount={appCount} hasToken={hasToken} />;
+    }
+}
+
+export default function HeroContainer({ appCount, initialApps, templateData, hasToken, variant }) {
     const [hasActiveSearch, setHasActiveSearch] = useState(false);
 
     // Handle search state changes from SearchAndResults component
@@ -18,7 +32,7 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
     return (
         <div className={`${containerClasses} px-4 mx-auto relative global-top-space dotted-background`}>
             <div className="text-center">
-                <HeroSection appCount={appCount} hasToken={hasToken} />
+                <HeroVariant variant={variant} appCount={appCount} hasToken={hasToken} />
 
                 <ShowAppsIndexOptimized isHomePage apps={initialApps} appCount={appCount} />
 
