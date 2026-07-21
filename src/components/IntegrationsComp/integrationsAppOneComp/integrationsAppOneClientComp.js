@@ -45,6 +45,7 @@ export default function IntegrationsAppOneClientComp({
     const [searchedApps, setSearchedApps] = useState([]);
     const [searchedCategories, setSearchedCategories] = useState(null);
     const [debounceValue, setDebounceValue] = useState('');
+    const [searchLoading, setSearchLoading] = useState(false);
     const [activeStep, setActiveStep] = useState(1);
 
     useEffect(() => {
@@ -88,6 +89,10 @@ export default function IntegrationsAppOneClientComp({
 
     const handleCategoriesResults = useCallback((categories) => {
         setSearchedCategories(categories);
+    }, []);
+
+    const handleLoadingChange = useCallback((loading) => {
+        setSearchLoading(loading);
     }, []);
 
     const handleDebounceValueChange = useCallback((value) => {
@@ -167,6 +172,7 @@ export default function IntegrationsAppOneClientComp({
                                     onSearchResults={handleSearchResults}
                                     onCategoriesResults={handleCategoriesResults}
                                     onDebounceValueChange={handleDebounceValueChange}
+                                    onLoadingChange={handleLoadingChange}
                                     app={appOneDetails}
                                 />
                             </div>
@@ -175,6 +181,7 @@ export default function IntegrationsAppOneClientComp({
                             pageInfo={pageInfo}
                             integrationsInfo={integrationsInfo}
                             apps={debounceValue ? searchedApps : apps}
+                            searchLoading={searchLoading}
                             appCategories={appOneDetails?.category}
                             appCount={appCount}
                             searchTerm={debounceValue}

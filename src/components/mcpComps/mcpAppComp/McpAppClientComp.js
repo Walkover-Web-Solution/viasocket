@@ -48,7 +48,7 @@ export default function McpAppClientComp({
 
         const search = async () => {
             setSearchLoading(true);
-            const searchTerm = debounceValue.toLowerCase();
+            const searchTermLower = debounceValue.toLowerCase();
 
             const fetchedApps = await searchApps(debounceValue, controller.signal);
             if (controller.signal.aborted) return;
@@ -62,13 +62,13 @@ export default function McpAppClientComp({
                 const aName = a?.name?.toLowerCase() || '';
                 const bName = b?.name?.toLowerCase() || '';
 
-                const aStarts = aName.startsWith(searchTerm);
-                const bStarts = bName.startsWith(searchTerm);
+                const aStarts = aName.startsWith(searchTermLower);
+                const bStarts = bName.startsWith(searchTermLower);
 
                 if (aStarts !== bStarts) return aStarts ? -1 : 1;
 
-                const aContains = aName.includes(searchTerm);
-                const bContains = bName.includes(searchTerm);
+                const aContains = aName.includes(searchTermLower);
+                const bContains = bName.includes(searchTermLower);
 
                 if (aContains !== bContains) return aContains ? -1 : 1;
 

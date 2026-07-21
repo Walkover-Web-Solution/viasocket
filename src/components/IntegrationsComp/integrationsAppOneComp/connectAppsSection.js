@@ -30,6 +30,7 @@ export default function ConnectAppsSection({ brandColor, appOneDetails, apps, pa
   const [searchTerm, setSearchTerm] = useState("");
   const [searchedApps, setSearchedApps] = useState([]);
   const [debounceValue, setDebounceValue] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
 
   const appName = appOneDetails?.name || "App";
   const appSlug = appOneDetails?.appslugname;
@@ -41,6 +42,10 @@ export default function ConnectAppsSection({ brandColor, appOneDetails, apps, pa
 
   const handleDebounceValueChange = useCallback((value) => {
     setDebounceValue(value);
+  }, []);
+
+  const handleLoadingChange = useCallback((loading) => {
+    setSearchLoading(loading);
   }, []);
 
   const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
@@ -95,6 +100,7 @@ export default function ConnectAppsSection({ brandColor, appOneDetails, apps, pa
             setSearchTerm={setSearchTerm}
             onSearchResults={handleSearchResults}
             onDebounceValueChange={handleDebounceValueChange}
+            onLoadingChange={handleLoadingChange}
             app={appOneDetails}
           />
         </div>
@@ -112,7 +118,7 @@ export default function ConnectAppsSection({ brandColor, appOneDetails, apps, pa
             ))}
           </div>
 
-          {debounceValue && (!displayApps || displayApps.length === 0) && (
+          {debounceValue && !searchLoading && (!displayApps || displayApps.length === 0) && (
             <div className="flex flex-col items-center justify-center py-12">
               <span>No apps match &ldquo;{searchTerm}&rdquo;</span>
               <span className="text-xs mt-1">Try a different search term</span>

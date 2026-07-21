@@ -23,6 +23,7 @@ export default function SetupBuilder({ initialApps = [] }) {
     const [refCode, setRefCode] = useState('');
     const [domain, setDomain] = useState('');
     const debounceRef = useRef(null);
+    const searchAbortRef = useRef(null);
     const preselectDoneRef = useRef(false);
     const [canSyncParams, setCanSyncParams] = useState(!preselectSlugs.length);
     const selectedAppSlugs = useMemo(() => slots.filter(Boolean).map((a) => a.appslugname), [slots]);
@@ -96,22 +97,30 @@ export default function SetupBuilder({ initialApps = [] }) {
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         if (!query) {
+            searchAbortRef.current?.abort();
             setApps(initialApps);
             setLoading(false);
             return;
         }
         debounceRef.current = setTimeout(async () => {
+            searchAbortRef.current?.abort();
+            const controller = new AbortController();
+            searchAbortRef.current = controller;
             setLoading(true);
             try {
-                const res = await searchApps(query);
+                const res = await searchApps(query, controller.signal);
+                if (controller.signal.aborted) return;
                 setApps(Array.isArray(res) ? res.slice(0, 36) : []);
-            } catch {
-                setApps([]);
+            } catch (error) {
+                if (error?.name !== 'AbortError') setApps([]);
             } finally {
-                setLoading(false);
+                if (!controller.signal.aborted) setLoading(false);
             }
         }, 250);
-        return () => debounceRef.current && clearTimeout(debounceRef.current);
+        return () => {
+            debounceRef.current && clearTimeout(debounceRef.current);
+            searchAbortRef.current?.abort();
+        };
     }, [query, initialApps]);
 
     const handleSelect = (app) => {

@@ -12,6 +12,7 @@ const IntegrationSearchApps = ({
     onSearchResults,
     onCategoriesResults,
     onDebounceValueChange,
+    onLoadingChange,
     app,
 }) => {
     const [debounceValue, setDebounceValue] = useState('');
@@ -34,6 +35,7 @@ const IntegrationSearchApps = ({
         if (!debounceValue) {
             abortControllerRef.current?.abort();
             setSearchLoading(false);
+            onLoadingChange && onLoadingChange(false);
             onSearchResults && onSearchResults([]);
             onCategoriesResults && onCategoriesResults(null);
             onDebounceValueChange && onDebounceValueChange('');
@@ -57,9 +59,11 @@ const IntegrationSearchApps = ({
 
             // Search apps
             setSearchLoading(true);
+            onLoadingChange && onLoadingChange(true);
             const fetchedApps = await searchApps(debounceValue, controller.signal);
             if (controller.signal.aborted) return;
             setSearchLoading(false);
+            onLoadingChange && onLoadingChange(false);
             if (!fetchedApps) {
                 onSearchResults && onSearchResults([]);
                 return;
@@ -90,7 +94,7 @@ const IntegrationSearchApps = ({
         return () => {
             abortControllerRef.current?.abort();
         };
-    }, [debounceValue, onSearchResults, onCategoriesResults, onDebounceValueChange]);
+    }, [debounceValue, onSearchResults, onCategoriesResults, onDebounceValueChange, onLoadingChange]);
 
     return (
         <>

@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -59,16 +59,6 @@ export default function IntegrationsAppTwoClientComp({
 
     const [appOneEvents, setAppOneEvents] = useState(categorizeEvents(currentAppOne?.events));
     const [appTwoEvents, setAppTwoEvents] = useState(categorizeEvents(currentAppTwo?.events));
-
-    useEffect(() => {
-        const handleClickOutside = () => {
-            if (openDropdown) {
-                setOpenDropdown(null);
-            }
-        };
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-    }, [openDropdown]);
 
     const handleSwapApps = () => {
         const tempApp = currentAppOne;

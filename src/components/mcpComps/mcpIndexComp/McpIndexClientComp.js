@@ -33,9 +33,6 @@ export default function McpIndexClientComp({
     keyPointData,
     appCount,
 }) {
-    if (!categoryData || Object.keys(categoryData).length === 0) {
-        return <ErrorComp />;
-    }
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -45,7 +42,7 @@ export default function McpIndexClientComp({
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
-        return cats.sort((a, b) => {
+        return [...cats].sort((a, b) => {
             const priorityA = Number(a.priority) || Infinity;
             const priorityB = Number(b.priority) || Infinity;
             return priorityA - priorityB || a.name.localeCompare(b.name);
@@ -81,7 +78,7 @@ export default function McpIndexClientComp({
 
         const search = async () => {
             setSearchLoading(true);
-            const searchTerm = debounceValue.toLowerCase();
+            const searchTermLower = debounceValue.toLowerCase();
 
             const fetchedApps = await searchApps(debounceValue, controller.signal);
             if (controller.signal.aborted) return;
@@ -95,13 +92,13 @@ export default function McpIndexClientComp({
                 const aName = a?.name?.toLowerCase() || '';
                 const bName = b?.name?.toLowerCase() || '';
 
-                const aStarts = aName.startsWith(searchTerm);
-                const bStarts = bName.startsWith(searchTerm);
+                const aStarts = aName.startsWith(searchTermLower);
+                const bStarts = bName.startsWith(searchTermLower);
 
                 if (aStarts !== bStarts) return aStarts ? -1 : 1;
 
-                const aContains = aName.includes(searchTerm);
-                const bContains = bName.includes(searchTerm);
+                const aContains = aName.includes(searchTermLower);
+                const bContains = bName.includes(searchTermLower);
 
                 if (aContains !== bContains) return aContains ? -1 : 1;
 
@@ -133,6 +130,10 @@ export default function McpIndexClientComp({
             return url;
         }
     };
+
+    if (!categoryData || Object.keys(categoryData).length === 0) {
+        return <ErrorComp />;
+    }
 
     {
         return (

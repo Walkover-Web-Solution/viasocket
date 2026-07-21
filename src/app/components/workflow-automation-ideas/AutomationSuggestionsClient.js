@@ -5,6 +5,18 @@ import { useEffect, useState, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import searchApps from '@/utils/searchApps';
 
+const EXCLUDED_APPS = [
+    'zapier',
+    'make.com',
+    'pabbly connect',
+    'workato',
+    'relay.app',
+    'integrately',
+    'microsoft power automate',
+    'ifttt',
+    'n8n',
+];
+
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -21,6 +33,7 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
         className={`flex items-center gap-2 px-3 py-2 cursor-pointer w-[300px] hover:bg-gray-100 ${
             isChecked ? 'bg-gray-200' : 'bg-white'
         }`}
+        onMouseDown={(e) => e.preventDefault()}
         onClick={() => handleSelect(app)}
     >
         <input
@@ -66,6 +79,7 @@ export default function AutomationSuggestionsClient() {
     const [searchData, setSearchData] = useState([]);
     const [combinationLoading, setCombinationLoading] = useState(true);
     const debounceValue = useDebounce(searchTerm, 300);
+    const searchAbortRef = useRef(null);
 
     const [renderCombos, setRenderCombos] = useState([]);
     const [selectedIndustry, setSelectedIndustry] = useState('');
@@ -78,8 +92,11 @@ export default function AutomationSuggestionsClient() {
 
     const filterSelectedApps = useCallback(
         (apps) =>
-            apps?.filter((app) => !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname)) ||
-            [],
+            apps?.filter(
+                (app) =>
+                    !selectedApps.some((selectedApp) => selectedApp.appslugname === app.appslugname) &&
+                    !EXCLUDED_APPS.includes((app?.name || '').toLowerCase())
+            ) || [],
         [selectedApps]
     );
 
@@ -122,26 +139,30 @@ export default function AutomationSuggestionsClient() {
     };
     
     useEffect(() => {
-        if (debounceValue !== '') {
-            filterApps();
-        }
+        searchAbortRef.current?.abort();
+        const controller = new AbortController();
+        searchAbortRef.current = controller;
+        filterApps(controller.signal);
+        return () => controller.abort();
     }, [debounceValue]);
 
     useEffect(() => {
         handleGenerate();
     }, []);
 
-    const filterApps = async () => {
+    const filterApps = async (signal) => {
         try {
             if (debounceValue) {
-                const result = await searchApps(debounceValue);
+                const result = await searchApps(debounceValue, signal);
+                if (signal?.aborted) return;
                 setSearchData(filterSelectedApps(result));
             } else {
                 const apps = await fetchAppsData();
+                if (signal?.aborted) return;
                 setSearchData(filterSelectedApps(apps));
             }
         } catch (error) {
-            console.error(error);
+            if (error?.name !== 'AbortError') console.error(error);
         }
     };
 
@@ -172,17 +193,6 @@ export default function AutomationSuggestionsClient() {
         };
     }, [dropdownRef]);
 
-    const excludedApps = [
-        'zapier',
-        'make.com',
-        'pabbly connect',
-        'workato',
-        'relay.app',
-        'Integrately',
-        'Microsoft Power Automate',
-        'IFTTT',
-        'n8n',
-    ];
 
     return (
         <>

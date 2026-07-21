@@ -13,6 +13,7 @@ export default function IntegrationsAppComp({
     appCount,
     searchTerm,
     searchedCategories,
+    searchLoading = false,
 }) {
 
     return (
@@ -107,14 +108,14 @@ export default function IntegrationsAppComp({
                                             </div>
                                         </Link>
                                     ))
-                                ) : (
+                                ) : !searchLoading ? (
                                     <div className="col-span-full row-span-1 md:row-span-2 min-h-[200px] md:min-h-[150px]">
                                         <RequestIntegrationPopupOpener
                                             showType="searchView"
                                             className="md:border-t-0 md:border-l-0"
                                         />
                                     </div>
-                                )
+                                ) : null
                             ) : (
                                 apps
                                     ?.filter((app) => !app?.category?.some((cat) => appCategories?.includes(cat)))

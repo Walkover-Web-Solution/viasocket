@@ -31,10 +31,6 @@ export default function IntegrationsIndexClientComp({
     appCount,
     categoryName,
 }) {
-    if (!categoryData || Object.keys(categoryData).length === 0) {
-        return <ErrorComp />;
-    }
-
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
@@ -45,7 +41,7 @@ export default function IntegrationsIndexClientComp({
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
-        return cats.sort((a, b) => {
+        return [...cats].sort((a, b) => {
             const priorityA = Number(a.priority) || Infinity;
             const priorityB = Number(b.priority) || Infinity;
             return priorityA - priorityB || a.name.localeCompare(b.name);
@@ -133,6 +129,10 @@ export default function IntegrationsIndexClientComp({
             return url;
         }
     };
+
+    if (!categoryData || Object.keys(categoryData).length === 0) {
+        return <ErrorComp />;
+    }
 
     return (
         <>

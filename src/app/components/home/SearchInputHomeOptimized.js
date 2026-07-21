@@ -27,6 +27,7 @@ const getFirstSuggestion = (apps, industries, departments, search) => {
         if (!list || list.length === 0) return null;
         const item = list[0];
         const name = item?.name || item?.industry_name || item?.department_name || item;
+        if (typeof name !== 'string') return null;
         return name.toLowerCase().startsWith(lower) ? { suggestion: name, type } : null;
     };
 
@@ -460,27 +461,30 @@ export default function SearchInputHomeOptimized({
                             const custom = searchTerm.trim();
                             setCustomIndustry(custom);
                             if (!selectedIndustries.includes(custom)) {
-                                setSelectedIndustries((prev) => [...prev, custom]);
+                                const newSelectedIndustries = [...selectedIndustries, custom];
+                                setSelectedIndustries(newSelectedIndustries);
                                 setSearchTerm('');
                                 setTimeout(() => {
                                     if (
                                         selectedApps.length > 0 ||
-                                        selectedIndustries.length > 0 ||
+                                        newSelectedIndustries.length > 0 ||
                                         selectedDepartments.length > 0 ||
                                         custom !== ''
                                     ) {
-                                        handleSearchTemplates();
-                                        if (enableVideos) handleSearchVideos();
-                                        if (enableBlogs) handleSearchBlogs();
+                                        handleSearchTemplates(selectedApps, newSelectedIndustries, selectedDepartments);
+                                        if (enableVideos)
+                                            handleSearchVideos(selectedApps, newSelectedIndustries, selectedDepartments);
+                                        if (enableBlogs)
+                                            handleSearchBlogs(selectedApps, newSelectedIndustries, selectedDepartments);
                                     }
                                     // Check AI response condition separately
                                     if (enableAi) {
                                         const shouldShowAiResponse =
                                             (selectedApps.length >= 1 &&
-                                                (selectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
+                                                (newSelectedIndustries.length >= 1 || selectedDepartments.length >= 1)) ||
                                             selectedApps.length >= 1;
                                         if (shouldShowAiResponse) {
-                                            getAiResponse();
+                                            getAiResponse(selectedApps, newSelectedIndustries, selectedDepartments);
                                         } else {
                                             setShowAiResponse(false);
                                         }
@@ -830,7 +834,7 @@ export default function SearchInputHomeOptimized({
                                             <div
                                                 key={index}
                                                 className="flex items-center gap-2 cursor-pointer hover:bg-gray-100 p-4"
-                                                onClick={(e) => {
+                                                onMouseDown={(e) => {
                                                     e.preventDefault();
                                                     handleSelectIndustry(industry);
                                                 }}
