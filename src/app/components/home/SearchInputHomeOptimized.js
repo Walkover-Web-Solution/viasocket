@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
-import { Search } from 'lucide-react';
+import { Search, Loader2 } from 'lucide-react';
 import searchApps from '@/utils/searchApps';
 import { getIndustries, getDepartments } from '@/utils/axiosCalls';
 import { getVideoData } from '@/utils/getVideoData';
@@ -16,7 +16,7 @@ const filterListByName = (list, search) => {
 
     return list.filter((item) => {
         const name = (item?.name || '').trim().toLowerCase();
-        return name.startsWith(lower);
+        return name.includes(lower);
     });
 };
 
@@ -54,6 +54,9 @@ export default function SearchInputHomeOptimized({
     const dropdownRef = useRef(null);
     const inputRef = useRef(null);
     const allAppsCache = useRef(null);
+    const searchDebounceRef = useRef(null);
+    const searchAbortRef = useRef(null);
+    const [appSearchLoading, setAppSearchLoading] = useState(false);
     const [selectedApps, setSelectedApps] = useState([]);
     const [selectedIndustries, setSelectedIndustries] = useState([]);
     const [selectedDepartments, setSelectedDepartments] = useState([]);
@@ -341,26 +344,14 @@ export default function SearchInputHomeOptimized({
         });
     };
 
-    const handleSearch = useCallback(
-        async (value) => {
-            setSearchTerm(value);
-            setShowDropdown(true);
-            setCurrentSuggestion('');
-            setSuggestionText('');
-
-            if (!value.trim()) {
-                if (!allAppsCache.current) {
-                    const apps = initialApps;
-                    allAppsCache.current = apps;
-                }
-                setSearchData(filterSelectedApps(allAppsCache.current));
-                setFilteredIndustries(allIndustries);
-                setFilteredDepartments(allDepartments);
-                return;
-            }
-
+    const performAppSearch = useCallback(
+        async (value, controller) => {
             try {
-                const result = await searchApps(value);
+                setAppSearchLoading(true);
+                const result = await searchApps(value, controller.signal);
+                if (controller.signal.aborted) return;
+                setAppSearchLoading(false);
+
                 const filteredApps = filterSelectedApps(result);
                 // Sort the app results to prioritize exact matches
                 const sortedApps = sortSearchResults(filteredApps, value);
@@ -378,11 +369,51 @@ export default function SearchInputHomeOptimized({
                     setSuggestionText(firstSuggestion.suggestion.slice(value.length));
                 }
             } catch (error) {
-                console.error(error);
+                if (error?.name !== 'AbortError') console.error(error);
+                setAppSearchLoading(false);
             }
         },
         [allIndustries, allDepartments, filterSelectedApps]
     );
+
+    const handleSearch = useCallback(
+        (value) => {
+            setSearchTerm(value);
+            setShowDropdown(true);
+            setCurrentSuggestion('');
+            setSuggestionText('');
+
+            searchDebounceRef.current && clearTimeout(searchDebounceRef.current);
+
+            if (!value.trim()) {
+                searchAbortRef.current?.abort();
+                setAppSearchLoading(false);
+                if (!allAppsCache.current) {
+                    const apps = initialApps;
+                    allAppsCache.current = apps;
+                }
+                setSearchData(filterSelectedApps(allAppsCache.current));
+                setFilteredIndustries(allIndustries);
+                setFilteredDepartments(allDepartments);
+                return;
+            }
+
+            searchDebounceRef.current = setTimeout(() => {
+                searchAbortRef.current?.abort();
+                const controller = new AbortController();
+                searchAbortRef.current = controller;
+                performAppSearch(value, controller);
+            }, 400);
+        },
+        [allIndustries, allDepartments, filterSelectedApps, initialApps, performAppSearch]
+    );
+
+    useEffect(() => {
+        return () => {
+            searchDebounceRef.current && clearTimeout(searchDebounceRef.current);
+            searchAbortRef.current?.abort();
+        };
+    }, []);
 
     const handleKeyPress = (e) => {
         if (e.key === 'Tab' && currentSuggestion) {
@@ -599,7 +630,11 @@ export default function SearchInputHomeOptimized({
                         }
                     }}
                 >
-                    <Search className="w-5 h-5" />
+                    {appSearchLoading ? (
+                        <Loader2 className="w-5 h-5 animate-spin text-gray-400 shrink-0" aria-hidden="true" />
+                    ) : (
+                        <Search className="w-5 h-5" />
+                    )}
 
                     {selectedApps?.map((app) => (
                         <div
