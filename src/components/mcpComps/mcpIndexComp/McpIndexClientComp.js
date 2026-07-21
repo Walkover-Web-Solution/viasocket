@@ -1,9 +1,9 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles, ChevronRight } from 'lucide-react';
+import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles, ChevronRight, Loader2 } from 'lucide-react';
 import Footer from '@/components/footer/footer';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
 import ErrorComp from '@/components/404/404Comp';
@@ -39,7 +39,9 @@ export default function McpIndexClientComp({
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
-    const [searchedCategoies, setSearchedCategoies] = useState([]);
+    const [searchedCategoies, setSearchedCategoies] = useState();
+    const [searchLoading, setSearchLoading] = useState(false);
+    const abortControllerRef = useRef(null);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -60,15 +62,30 @@ export default function McpIndexClientComp({
     }, [searchTerm]);
 
     useEffect(() => {
-        const search = async () => {
-            if (!debounceValue) {
-                setSearchedApps([]);
-                return;
-            }
+        if (!debounceValue) {
+            abortControllerRef.current?.abort();
+            setSearchLoading(false);
+            setSearchedApps([]);
+            setSearchedCategoies();
+            return;
+        }
 
+        const filteredCategories = categories?.filter((category) =>
+            category?.name?.toLowerCase()?.includes(debounceValue.toLowerCase())
+        );
+        setSearchedCategoies(filterPriorityCategories(filteredCategories));
+
+        abortControllerRef.current?.abort();
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        const search = async () => {
+            setSearchLoading(true);
             const searchTerm = debounceValue.toLowerCase();
 
-            const fetchedApps = await searchApps(debounceValue);
+            const fetchedApps = await searchApps(debounceValue, controller.signal);
+            if (controller.signal.aborted) return;
+            setSearchLoading(false);
             if (!fetchedApps) {
                 setSearchedApps([]);
                 return;
@@ -95,6 +112,9 @@ export default function McpIndexClientComp({
         };
 
         search();
+        return () => {
+            abortControllerRef.current?.abort();
+        };
     }, [debounceValue]);
 
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
@@ -164,6 +184,7 @@ export default function McpIndexClientComp({
                             placeholder="Search your favorite MCP Servers"
                             autoFocus
                         />
+                        {searchLoading && <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" aria-hidden="true" />}
                     </label>
                     <div className="flex">
                         <div className="border custom-border lg:block hidden bg-white overflow-y-auto scrollbar-thin max-w-[252px] min-w-[252px] lg:h-[1201px] xl:h-[901px] h-[78.125vw]">

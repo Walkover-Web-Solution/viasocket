@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Search, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, ArrowUpRight, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import style from './IntegrationsIndexComp.module.scss';
@@ -39,7 +39,9 @@ export default function IntegrationsIndexClientComp({
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
     const [searchedCategoies, setSearchedCategoies] = useState();
+    const [searchLoading, setSearchLoading] = useState(false);
     const searchInputRef = useRef(null);
+    const abortControllerRef = useRef(null);
 
     const filterPriorityCategories = (cats) => {
         if (!Array.isArray(cats)) return [];
@@ -69,12 +71,20 @@ export default function IntegrationsIndexClientComp({
                 category?.name?.toLowerCase()?.includes(debounceValue.toLowerCase())
             );
             setSearchedCategoies(filterPriorityCategories(filteredCategories));
+
+            abortControllerRef.current?.abort();
+            const controller = new AbortController();
+            abortControllerRef.current = controller;
+
             const loadApps = async () => {
-                const fetchedApps = await searchApps(debounceValue);
+                setSearchLoading(true);
+                const fetchedApps = await searchApps(debounceValue, controller.signal);
+                if (controller.signal.aborted) return;
+                setSearchLoading(false);
                 if (!fetchedApps) {
                     setSearchedApps([]);
                 } else {
-                    const searchTermLower = searchTerm.toLowerCase();
+                    const searchTermLower = debounceValue.toLowerCase();
                     const sortedApps = fetchedApps.sort((a, b) => {
                         const aName = a?.name?.toLowerCase() || '';
                         const bName = b?.name?.toLowerCase() || '';
@@ -97,9 +107,14 @@ export default function IntegrationsIndexClientComp({
             };
             loadApps();
         } else {
+            abortControllerRef.current?.abort();
+            setSearchLoading(false);
             setSearchedApps([]);
             setSearchedCategoies();
         }
+        return () => {
+            abortControllerRef.current?.abort();
+        };
     }, [debounceValue]);
 
     const showNext = apps?.length > 0 && APPERPAGE <= apps?.length;
@@ -180,6 +195,7 @@ export default function IntegrationsIndexClientComp({
                             placeholder="Search your favorite tools "
                             autoFocus
                         />
+                        {searchLoading && <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" aria-hidden="true" />}
                     </label>
                 </div>
 

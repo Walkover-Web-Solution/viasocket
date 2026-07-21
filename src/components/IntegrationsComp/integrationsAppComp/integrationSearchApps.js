@@ -1,7 +1,7 @@
 'use client';
 
-import { Search } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Search, Loader2 } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 import categories from '@/data/categories.json';
 import searchApps from '@/utils/searchApps';
 import style from './IntegrationsAppComp.module.scss';
@@ -15,6 +15,8 @@ const IntegrationSearchApps = ({
     app,
 }) => {
     const [debounceValue, setDebounceValue] = useState('');
+    const [searchLoading, setSearchLoading] = useState(false);
+    const abortControllerRef = useRef(null);
 
     // Debounce effect
     useEffect(() => {
@@ -29,14 +31,20 @@ const IntegrationSearchApps = ({
 
     // Search effect
     useEffect(() => {
-        const search = async () => {
-            if (!debounceValue) {
-                onSearchResults && onSearchResults([]);
-                onCategoriesResults && onCategoriesResults(null);
-                onDebounceValueChange && onDebounceValueChange('');
-                return;
-            }
+        if (!debounceValue) {
+            abortControllerRef.current?.abort();
+            setSearchLoading(false);
+            onSearchResults && onSearchResults([]);
+            onCategoriesResults && onCategoriesResults(null);
+            onDebounceValueChange && onDebounceValueChange('');
+            return;
+        }
 
+        abortControllerRef.current?.abort();
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        const search = async () => {
             onDebounceValueChange && onDebounceValueChange(debounceValue);
 
             const searchTermLower = debounceValue.toLowerCase();
@@ -48,7 +56,10 @@ const IntegrationSearchApps = ({
             onCategoriesResults && onCategoriesResults(filteredCategories);
 
             // Search apps
-            const fetchedApps = await searchApps(debounceValue);
+            setSearchLoading(true);
+            const fetchedApps = await searchApps(debounceValue, controller.signal);
+            if (controller.signal.aborted) return;
+            setSearchLoading(false);
             if (!fetchedApps) {
                 onSearchResults && onSearchResults([]);
                 return;
@@ -76,6 +87,9 @@ const IntegrationSearchApps = ({
         };
 
         search();
+        return () => {
+            abortControllerRef.current?.abort();
+        };
     }, [debounceValue, onSearchResults, onCategoriesResults, onDebounceValueChange]);
 
     return (
@@ -92,6 +106,7 @@ const IntegrationSearchApps = ({
                     className={`${style.input} grow truncate w-48`}
                     placeholder={`Search any app to connect with ${app?.name || 'apps'}`}
                 />
+                {searchLoading && <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" aria-hidden="true" />}
             </label>
         </>
     );

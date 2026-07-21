@@ -12,66 +12,42 @@ export const useTemplateFilters = (templates = []) => {
     const [customIndustry, setCustomIndustry] = useState('');
 
     const filteredTemplates = useMemo(() => {
-        let filtered = [...templates];
-        let filteredChanged = false;
+        let filtered = templates;
 
         // Filter by categories (industries and departments included)
         if (selectedCategories.length > 0) {
-            filteredChanged = true;
             filtered = filtered.filter((template) => {
                 return template.category && template.category.some((cat) => selectedCategories.includes(cat));
             });
-
-            if (customIndustry === '' && filtered.length === 0) {
-                filtered = [...templates];
-            }
         }
 
-        // Filter by apps
+        // Filter by apps — narrows whatever the category filter above already produced
         if (selectedApps.length > 0) {
-
-            let filterFunction = (template) => {
+            const appMatches = (template, slug) => {
+                if (slug === 'webhook') return template.triggerType === 'webhook';
+                if (slug === 'cron') return template.triggerType === 'cron';
                 const pluginSlugs = (template.pluginData || []).map((p) => p.pluginslugname);
+                return pluginSlugs.includes(slug);
+            };
 
-                const appMatches = (slug) => {
-                    if (slug === 'webhook') return template.triggerType === 'webhook';
-                    if (slug === 'cron') return template.triggerType === 'cron';
-                    return pluginSlugs.includes(slug);
-                };
-
-                return requireAllApps
-                    ? selectedApps.every(appMatches) // AND logic
-                    : selectedApps.some(appMatches);  // OR logic (default)
-            }
-            if (filteredChanged) {
-                const selectedAppFiltered = templates.filter(filterFunction)
-                filtered = [...filtered, ...selectedAppFiltered]
-            } else {
-                filtered = filtered.filter(filterFunction);
-            }
-            filteredChanged = true;
+            filtered = filtered.filter((template) =>
+                requireAllApps
+                    ? selectedApps.every((slug) => appMatches(template, slug)) // AND logic
+                    : selectedApps.some((slug) => appMatches(template, slug)) // OR logic (default)
+            );
         }
 
-        // Filter by search term
+        // Filter by search term — narrows whatever category/app filters already produced
         if (searchTerm.trim()) {
-            const filterFunction = (template) =>
-                template.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                template.metadata?.description?.toLowerCase().includes(searchTerm.toLowerCase())
-            if (filteredChanged) {
-                const searchTermFiltered = templates.filter(filterFunction)
-                filtered = [...filtered, ...searchTermFiltered]
-            } else {
-                filtered = filtered.filter(filterFunction);
-            }
-            filteredChanged = true;
+            const term = searchTerm.toLowerCase();
+            filtered = filtered.filter(
+                (template) =>
+                    template.title?.toLowerCase().includes(term) ||
+                    template.metadata?.description?.toLowerCase().includes(term)
+            );
         }
 
-        // Deduplicate templates when multiple filter branches merge overlapping matches
-        filtered = Array.from(new Map(filtered.map((template) => [template.id, template])).values());
-
-
-        // Clean up match scores
-        return filtered.map(({ matchScore, ...rest }) => rest);
+        return filtered;
     }, [templates, searchTerm, selectedCategories, selectedApps, requireAllApps]);
 
     // Memoized sorted templates

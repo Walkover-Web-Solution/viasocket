@@ -1,11 +1,11 @@
 'use client';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ChevronLeft, ChevronRight, Search, Headphones, CheckCircle, User, Send } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, Headphones, CheckCircle, User, Send, Loader2 } from 'lucide-react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import BlogGrid from '@/app/components/blog/BlogGrid';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import createURL from '@/utils/createURL';
 import McpEventComp from '../mcpEventsComp/McpEventsComp';
 import { handleRedirect } from '@/utils/handleRedirection';
@@ -31,17 +31,28 @@ export default function McpAppClientComp({
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
     const [searchedApps, setSearchedApps] = useState([]);
+    const [searchLoading, setSearchLoading] = useState(false);
+    const abortControllerRef = useRef(null);
 
     useEffect(() => {
-        const search = async () => {
-            if (!debounceValue) {
-                setSearchedApps([]);
-                return;
-            }
+        if (!debounceValue) {
+            abortControllerRef.current?.abort();
+            setSearchLoading(false);
+            setSearchedApps([]);
+            return;
+        }
 
+        abortControllerRef.current?.abort();
+        const controller = new AbortController();
+        abortControllerRef.current = controller;
+
+        const search = async () => {
+            setSearchLoading(true);
             const searchTerm = debounceValue.toLowerCase();
 
-            const fetchedApps = await searchApps(debounceValue);
+            const fetchedApps = await searchApps(debounceValue, controller.signal);
+            if (controller.signal.aborted) return;
+            setSearchLoading(false);
             if (!fetchedApps) {
                 setSearchedApps([]);
                 return;
@@ -68,6 +79,9 @@ export default function McpAppClientComp({
         };
 
         search();
+        return () => {
+            abortControllerRef.current?.abort();
+        };
     }, [debounceValue]);
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -279,6 +293,7 @@ export default function McpAppClientComp({
                                 className="grow py-2 px-3 text-black"
                                 placeholder="Search compatible apps"
                             />
+                            {searchLoading && <Loader2 className="w-4 h-4 animate-spin text-gray-400 shrink-0" aria-hidden="true" />}
                         </label>
                     </div>
 
