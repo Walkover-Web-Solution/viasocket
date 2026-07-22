@@ -78,7 +78,14 @@ export default function MainNavbar({
                                     )}`}
                                     href={item.link}
                                 >
-                                    {item.name}
+                                    <span className="flex flex-col items-center leading-tight">
+                                        {item.name}
+                                        {item.badge && (
+                                            <span className="text-[9px] text-accent font-normal normal-case">
+                                                {item.badge}
+                                            </span>
+                                        )}
+                                    </span>
                                 </Link>
                             ))}
                     </div>
