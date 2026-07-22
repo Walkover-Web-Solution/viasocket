@@ -28,9 +28,10 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
     }, []);
 
     const containerClasses = 'min-h-0 pt-24';
+    const bgClass = variant === 'C' ? '' : 'dotted-background';
 
     return (
-        <div className={`${containerClasses} px-4 mx-auto relative global-top-space dotted-background`}>
+        <div className={`${containerClasses} ${bgClass} px-4 mx-auto relative global-top-space`}>
             <div className="text-center">
                 <HeroVariant variant={variant} appCount={appCount} hasToken={hasToken} />
 

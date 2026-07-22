@@ -4,23 +4,22 @@ import CustomLoginOptimized from '../customLogin/CustomLoginOptimized';
 
 export default function HeroSectionC() {
     return (
-        <section className="bg-transparent container">
-            <div className="flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-16 w-full text-center lg:text-left">
-                {/* Left - marketing copy */}
-                <div className="flex-1 max-w-3xl lg:flex-[2]">
-                    <h1 className="h1 mb-6">
-                        <span className="text-accent">Free forever</span> with 10,000 tasks and 500 AI credits a month.
-                    </h1>
+        <section className="container flex items-center justify-start gap-20 py-12 lg:py-20">
+            <div className="flex flex-col gap-6 items-start justify-center">
+                <h1 className="h1 text-start">
+                    Automate Anything. <br /> <span className="text-accent">Free Forever.</span>
+                </h1>
 
-                    <p className="sub__h1 text-gray-600">
-                        Your work never stops. As your business grows, simply pay for as much as you use.
-                    </p>
-                </div>
+                <p className="text-xl text-start font-medium text-gray-500">
+                    viaSocket's AI builds the automation for you. <br /> 10,000 tasks and 500 AI credits included every
+                    month.
+                </p>
+            </div>
 
-                {/* Right - real MSG91 auth widget (same one the /signup page uses) */}
-                <div className="w-full max-w-md flex justify-center shrink-0 bg-white p-6 pt-8 rounded-lg">
-                    <CustomLoginOptimized redirect_to="" />
-                </div>
+            <div className="w-px h-60 bg-gray-300 mx-20"></div>
+
+            <div className="relative">
+                <CustomLoginOptimized redirect_to="" />
             </div>
         </section>
     );
