@@ -1,4 +1,4 @@
-import { CheckCircle, Calendar, Upload, Wrench, Rocket, MessageCircle } from 'lucide-react';
+import { CheckCircle, Upload, Wrench, Rocket } from 'lucide-react';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
@@ -122,12 +122,15 @@ export default async function RelayMigrationPage() {
                 </div>
                 <RelayUseCases />
                 <RelayCTABanner />
-
-                <SecuritySection />
+                <div className="bg-[#F9F6F1] pt-12">
+                    <SecuritySection />
+                </div>
             </div>
 
             <ConditionalFooter>
-                <Footer footerData={footerData} />
+                <div className="bg-[#F9F6F1]">
+                    <Footer footerData={footerData} />
+                </div>
             </ConditionalFooter>
         </>
     );

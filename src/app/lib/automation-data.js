@@ -14,6 +14,7 @@ import { getMetaData } from '@/utils/getMetaData';
 import { getFaqData } from '@/utils/getFaqData';
 import { getBlogData } from '@/utils/getBlogData';
 import { getTemplates, getApps } from '@/utils/axiosCalls';
+import { resolveAutomationSlug } from './automationSlugResolver';
 
 const THIRTY_DAYS_IN_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -162,8 +163,6 @@ export async function getAutomationSlugPageData(slug) {
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://viasocket.com';
         const pageUrl = `${baseUrl}/automations/${slug.join('/')}`;
 
-        const [firstSlug, secondSlug] = slug || [];
-
         // Fetch basic data in parallel
         const [footerData, faqData, navbarData, templates] = await Promise.all([
             getFooterData(FOOTER_FIELDS, '', pageUrl),
@@ -174,70 +173,7 @@ export async function getAutomationSlugPageData(slug) {
 
         const templateData = templates.filter((t) => t?.flowJson?.order?.root && t?.flowJson?.order?.root?.length > 0);
 
-        // Check if this is a category page (single slug) or template page (two slugs)
-        const isCategory = firstSlug && !secondSlug;
-
-        if (isCategory) {
-            // Handle category filtering
-            const categoryName = firstSlug.replace(/-/g, ' ');
-            const categoryTemplates = templateData.filter(
-                (template) =>
-                    Array.isArray(template.category) &&
-                    template.category.some(
-                        (cat) =>
-                            cat.toLowerCase().replace(/\s+/g, '-') === firstSlug ||
-                            cat.toLowerCase() === categoryName.toLowerCase()
-                    )
-            );
-            const metaData = {
-                title: `${categoryName.charAt(0).toUpperCase() + categoryName.slice(1)} Templates - viaSocket`,
-                description: `Discover ${categoryName} automation templates on viaSocket. Streamline your workflows with pre-built integrations.`,
-                keywords: `${categoryName}, automation, integration, workflow, templates`,
-                image: '/assets/img/viasocket-og-image.png',
-                url: pageUrl,
-            };
-            return {
-                footerData: footerData || [],
-                metaData: metaData,
-                template: null,
-                relatedTemplates: categoryTemplates || [],
-                isCategory: true,
-                categoryName: categoryName,
-                navbarData: navbarData || [],
-            };
-        } else {
-            // Handle individual template page
-            const selectedTemplate = templateData.find((t) => String(t.id) === String(secondSlug));
-
-            const selectedCategories = Array.isArray(selectedTemplate?.category) ? selectedTemplate.category : [];
-
-            const relatedTemplates = templateData
-                .filter(
-                    (template) =>
-                        template.id !== selectedTemplate?.id &&
-                        Array.isArray(template.category) &&
-                        template.category.some((cat) => selectedCategories.includes(cat))
-                )
-                .slice(0, 3);
-
-            const metaData = {
-                title: selectedTemplate?.title || 'viaSocket Template',
-                description: selectedTemplate?.description || 'Discover powerful automation templates on viaSocket',
-                keywords: selectedTemplate?.tags?.join(', ') || 'automation, integration, workflow',
-                image: selectedTemplate?.templateUrl || '/assets/img/viasocket-og-image.png',
-                url: pageUrl,
-            };
-            return {
-                footerData: footerData || [],
-                metaData: metaData,
-                template: selectedTemplate || null,
-                relatedTemplates: relatedTemplates || [],
-                isCategory: false,
-                categoryName: null,
-                navbarData: navbarData || [],
-                faqData: faqData || [],
-            };
-        }
+        return resolveAutomationSlug({ slug, templateData, footerData, faqData, navbarData, pageUrl });
     } catch (error) {
         console.error('Error fetching automation slug page data:', error);
         return {

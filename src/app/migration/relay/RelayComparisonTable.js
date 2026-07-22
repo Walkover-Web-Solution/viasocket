@@ -53,7 +53,7 @@ const comparisonRows = [
 
 export default function RelayComparisonTable() {
     return (
-        <div className="bg-[#FAF8F4]">
+        <div className="bg-[#F9F6F1]">
             <div className="container py-12 lg:py-16">
                 <h2 className="h2 mb-6 lg:mb-8 text-center lg:text-left">
                     Everything you had on Relay, and then some.
@@ -84,10 +84,7 @@ export default function RelayComparisonTable() {
 
                 <div className="flex flex-col gap-4 lg:hidden">
                     {comparisonRows.map((row) => (
-                        <div
-                            key={row.feature}
-                            className="bg-white border border-gray-200 rounded-xl overflow-hidden"
-                        >
+                        <div key={row.feature} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
                             <div className="px-4 py-3 bg-[#FAF8F4] border-b border-gray-200 font-semibold text-gray-900 text-sm">
                                 {row.feature}
                             </div>

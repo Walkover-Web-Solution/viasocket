@@ -3,7 +3,7 @@ import { MoveRight } from 'lucide-react';
 
 export default function RelayCTABanner() {
     return (
-        <div className="bg-accent mb-12 relative overflow-hidden">
+        <div className="bg-accent relative overflow-hidden">
             <svg
                 className="absolute left-4 md:left-12 bottom-4 md:bottom-8 w-24 h-24 md:w-40 md:h-40 text-white/30 pointer-events-none"
                 viewBox="0 0 100 100"
