@@ -6,6 +6,7 @@ import Menubar from '@/components/navbar/menubar';
 import TopNavLinks from './TopNavLinks';
 import MainNavbar from './MainNavbar';
 import MigratingBanner from './MigratingBanner';
+import Relay from './Relay';
 
 const navItems = [
     {
@@ -60,6 +61,7 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                     <div className="items-center justify-end flex !h-[30px]">
                         {/* {utm === '/index' && <MCPBanner />} */}
                         {utm === '/index' && <MigratingBanner />}
+                        {utm === '/migration/relay' && <Relay />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
                     </div>
                 </div>
