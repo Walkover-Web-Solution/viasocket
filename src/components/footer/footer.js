@@ -1,9 +1,12 @@
+'use client';
+
 import createURL from '@/utils/createURL';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Instagram, Linkedin, Twitter, MessageCircle } from 'lucide-react';
 import YouTubeIcon from './YouTubeIcon';
 import { RequestIntegrationPopupOpener } from '../IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexClientComp';
+import ExploreWithAIButton from './ExploreWithAIButton';
 
 export default function Footer({ footerData, borderClass, isBlack = false }) {
     const filteredData = footerData?.filter((item) => !item?.hidden);
@@ -62,6 +65,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         className={`flex flex-col gap-12 md:p-10 p-4 lg:border-b-0 border-b sm:border-r ${borderTheme}`}
                     >
                         {renderedGroups?.slice(0, Math.ceil(renderedGroups?.length / 3))}
+                        <div className="flex flex-col gap-2 mt-auto">
+                            <ExploreWithAIButton />
+                        </div>
                     </div>
 
                     <div
@@ -72,7 +78,7 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             2 * Math.ceil(renderedGroups?.length / 3)
                         )}
 
-                        <div className="flex flex-col gap-6 mt-auto p-4">
+                        <div className="flex flex-col gap-6 mt-auto">
                             <div className="flex gap-2 justify-center items-center">
                                 <Image
                                     src="https://brand-assets.capterra.com/badge/3b902cef-5889-4a4e-afaa-855d73a3d238.svg"
@@ -96,39 +102,42 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     href={`https://www.instagram.com/viasocket/`}
                                     target="_blank"
                                     aria-label="instagram"
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <Instagram className="w-5 h-5" />
+                                    <Instagram className="w-4 h-4" />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
                                     aria-label="facebook"
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <Linkedin className="w-5 h-5" />
+                                    <Linkedin className="w-4 h-4" />
                                 </Link>
 
                                 <Link
                                     href={`https://x.com/viasocket`}
                                     target="_blank"
-                                    className=""
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="twitter"
                                 >
-                                    <Twitter className="w-5 h-5" />
+                                    <Twitter className="w-4 h-4" />
                                 </Link>
                                 <Link
                                     href={`https://www.youtube.com/@viasocket`}
                                     target="_blank"
-                                    className=""
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="youtube"
                                 >
-                                    <YouTubeIcon />
+                                    <YouTubeIcon className="w-4 h-4" />
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
                                     target="_blank"
                                     aria-label="discord"
+                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <MessageCircle className="w-5 h-5" />
+                                    <MessageCircle className="w-4 h-4" />
                                 </Link>
                             </div>
                         </div>
