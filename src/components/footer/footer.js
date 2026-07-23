@@ -97,47 +97,47 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 />
                             </div>
 
-                            <div className="flex gap-2 justify-center items-center md:gap-6">
+                            <div className="flex flex-wrap gap-2 justify-center items-center md:gap-4">
                                 <Link
                                     href={`https://www.instagram.com/viasocket/`}
                                     target="_blank"
                                     aria-label="instagram"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
+                                    className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <Instagram className="w-4 h-4" />
+                                    <Instagram className="w-3.5 h-3.5" />
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
                                     target="_blank"
                                     aria-label="facebook"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
+                                    className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <Linkedin className="w-4 h-4" />
+                                    <Linkedin className="w-3.5 h-3.5" />
                                 </Link>
 
                                 <Link
                                     href={`https://x.com/viasocket`}
                                     target="_blank"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
+                                    className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="twitter"
                                 >
-                                    <Twitter className="w-4 h-4" />
+                                    <Twitter className="w-3.5 h-3.5" />
                                 </Link>
                                 <Link
                                     href={`https://www.youtube.com/@viasocket`}
                                     target="_blank"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
+                                    className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="youtube"
                                 >
-                                    <YouTubeIcon className="w-4 h-4" />
+                                    <YouTubeIcon className="w-3.5 h-3.5" />
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
                                     target="_blank"
                                     aria-label="discord"
-                                    className="flex items-center justify-center w-9 h-9 rounded-full border border-gray-300 hover:border-accent transition-colors"
+                                    className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                 >
-                                    <MessageCircle className="w-4 h-4" />
+                                    <MessageCircle className="w-3.5 h-3.5" />
                                 </Link>
                             </div>
                         </div>
