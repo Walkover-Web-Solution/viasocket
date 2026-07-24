@@ -5,39 +5,45 @@ import '../../../scss/realworldusecase.scss';
 const INTEGRATION_APPS = [
     {
         name: 'Slack',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/slack/slack-original.svg',
+        iconurl: 'https://thingsofbrand.com/api/icon/slack.com',
         fallback: 'https://placehold.co/52x52/4A154B/white?text=SL',
         delay: '0ms',
     },
     {
-        name: 'Gmail',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/google/google-original.svg',
-        fallback: 'https://placehold.co/52x52/EA4335/white?text=GM',
+        name: 'Shopify',
+        iconurl: 'https://stuff.thingsofbrand.com/shopify.com/images/img6fb21a1332_shopify.jpg',
+        fallback: 'https://placehold.co/52x52/18BFFF/white?text=SH',
         delay: '60ms',
     },
     {
-        name: 'HubSpot',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/hubspot/hubspot-original.svg',
-        fallback: 'https://placehold.co/52x52/FF7A59/white?text=HB',
+        name: 'Salesforce',
+        iconurl: 'https://stuff.thingsofbrand.com/salesforce.com/images/img1_salesforce.png',
+        fallback: 'https://placehold.co/52x52/0A99F9/white?text=SF',
         delay: '120ms',
     },
     {
-        name: 'Notion',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/notion/notion-original.svg',
-        fallback: 'https://placehold.co/52x52/000000/white?text=NT',
+        name: 'HubSpot',
+        iconurl: 'https://thingsofbrand.com/api/icon/hubspot.com',
+        fallback: 'https://placehold.co/52x52/FF7A59/white?text=HB',
         delay: '180ms',
     },
     {
-        name: 'Shopify',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/shopify/shopify-original.svg',
-        fallback: 'https://placehold.co/52x52/96BF48/white?text=SP',
+        name: 'Google Sheets',
+        iconurl: 'https://stuff.thingsofbrand.com/google.com/images/img4_googlesheet.png',
+        fallback: 'https://placehold.co/52x52/34A853/white?text=GS',
         delay: '240ms',
     },
     {
-        name: 'Airtable',
-        icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/airtable/airtable-original.svg',
-        fallback: 'https://placehold.co/52x52/18BFFF/white?text=AT',
+        name: 'Gmail',
+        iconurl: 'https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg',
+        fallback: 'https://placehold.co/52x52/0E46FF/white?text=GM',
         delay: '300ms',
+    },
+    {
+        name: 'Zendesk',
+        iconurl: 'https://stuff.thingsofbrand.com/zendesk.com/images/imgf_zendesk.png',
+        fallback: 'https://placehold.co/52x52/6B46C1/white?text=ZD',
+        delay: '360ms',
     },
 ];
 
@@ -45,7 +51,13 @@ const DEFAULT_ICON = 'https://placehold.co/120x120/0F9D58/white?text=GS';
 
 const hexToRgba = (hex, alpha = 1) => {
     const h = (hex || '').replace('#', '');
-    const full = h.length === 3 ? h.split('').map((c) => c + c).join('') : h;
+    const full =
+        h.length === 3
+            ? h
+                  .split('')
+                  .map((c) => c + c)
+                  .join('')
+            : h;
     const num = parseInt(full, 16);
     if (Number.isNaN(num) || full.length !== 6) return `rgba(15,157,88,${alpha})`;
     return `rgba(${(num >> 16) & 255},${(num >> 8) & 255},${num & 255},${alpha})`;
@@ -64,12 +76,12 @@ const AppTile = ({ app, onError }) => (
     >
         <Image
             className="w-[52px] h-[52px] object-contain block"
-            src={app.icon}
-            alt={app.name}
+            src={app?.iconurl || app?.fallback || 'https://placehold.co/52x52'}
+            alt={app?.name || 'App'}
             width={52}
             height={52}
             loading="lazy"
-            onError={(e) => onError(e, app.fallback)}
+            onError={(e) => onError(e, app?.fallback)}
         />
     </div>
 );
@@ -125,7 +137,7 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
             .slice(0, 6) // Get top 6 apps
             .map((plugin, index) => ({
                 name: plugin?.name || 'App',
-                icon:
+                iconurl:
                     plugin?.iconurl || `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
                 fallback: `https://placehold.co/52x52/0F9D58/white?text=${plugin?.name?.charAt(0) || 'A'}`,
                 delay: `${index * 60}ms`,
@@ -159,7 +171,9 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
                     </div>
                 )}
 
-                <div className={`bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch ${dynamicUseCases.length > 0 ? 'w-full lg:w-1/2' : 'w-full'}`}>
+                <div
+                    className={`bg-[#fafaf9] relative overflow-hidden min-h-[320px] lg:min-h-[420px] self-stretch ${dynamicUseCases.length > 0 ? 'w-full lg:w-1/2' : 'w-full'}`}
+                >
                     <div
                         className="absolute inset-0 pointer-events-none"
                         style={{
@@ -168,16 +182,19 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
                     ></div>
 
                     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 pr-[34%]">
-                        <div className="absolute rounded-full border pulse-ring w-[210px] h-[210px]" style={{ borderColor: hexToRgba(brandColor, 0.2) }}></div>
-                        <div className="absolute rounded-full border pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]" style={{ borderColor: hexToRgba(brandColor, 0.2) }}></div>
+                        <div
+                            className="absolute rounded-full border pulse-ring w-[210px] h-[210px]"
+                            style={{ borderColor: hexToRgba(brandColor, 0.2) }}
+                        ></div>
+                        <div
+                            className="absolute rounded-full border pulse-ring w-[300px] h-[300px] [animation-delay:0.65s]"
+                            style={{ borderColor: hexToRgba(brandColor, 0.2) }}
+                        ></div>
                     </div>
 
                     <div className="relative h-full flex items-center justify-center gap-8 lg:gap-14 p-8 lg:p-12 z-10">
                         <div className="flex flex-col items-center gap-4 shrink-0">
-                            <div
-                                className="border-2 bg-white p-4 lg:p-6 shadow-sm"
-                                style={{ borderColor: brandColor }}
-                            >
+                            <div className="border-2 bg-white p-4 lg:p-6 shadow-sm" style={{ borderColor: brandColor }}>
                                 <Image
                                     className="object-contain"
                                     src={appIcon}
@@ -191,7 +208,10 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
                         </div>
 
                         <div className="w-[80px] shrink-0 relative">
-                            <div className="w-full h-[1px] relative" style={{ backgroundColor: hexToRgba(brandColor, 0.4) }}>
+                            <div
+                                className="w-full h-[1px] relative"
+                                style={{ backgroundColor: hexToRgba(brandColor, 0.4) }}
+                            >
                                 <AnimatedDot delay="0s" color={brandColor} />
                                 <AnimatedDot delay="-0.667s" color={brandColor} />
                                 <AnimatedDot delay="-1.333s" color={brandColor} />
