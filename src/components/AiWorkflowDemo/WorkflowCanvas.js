@@ -1,6 +1,6 @@
 'use client';
 
-export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, nodes }) {
+export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, nodes, compact = false }) {
     return (
         <div
             aria-hidden={!canvasOn}
@@ -12,17 +12,19 @@ export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, node
                 backgroundSize: '22px 22px',
             }}
         >
-            <div className="flex items-center gap-2.5 px-[22px] py-[14px] pb-3 border-b border-black/[0.07] bg-white shrink-0">
-                <span className="w-[9px] h-[9px] rounded-full bg-[#22c55e] shrink-0 shadow-[0_0_0_3px_rgba(34,197,94,0.18)]" />
-                <div className="flex flex-col gap-[1px]">
-                    <span className="text-[13px] font-bold text-[#111] tracking-[-0.1px]">
-                        Workflow Generated Successfully
-                    </span>
-                    <span className="text-[11.5px] text-[#999]">
-                        Your automation is ready to deploy.
-                    </span>
+            {!compact && (
+                <div className="flex items-center gap-2.5 px-[22px] py-[14px] pb-3 border-b border-black/[0.07] bg-white shrink-0">
+                    <span className="w-[9px] h-[9px] rounded-full bg-[#22c55e] shrink-0 shadow-[0_0_0_3px_rgba(34,197,94,0.18)]" />
+                    <div className="flex flex-col gap-[1px]">
+                        <span className="text-[13px] font-bold text-[#111] tracking-[-0.1px]">
+                            Workflow Generated Successfully
+                        </span>
+                        <span className="text-[11.5px] text-[#999]">
+                            Your automation is ready to deploy.
+                        </span>
+                    </div>
                 </div>
-            </div>
+            )}
 
             <div className="flex-1 flex flex-col items-stretch px-5 pt-3.5 pb-4 overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {nodes.map((n, i) => {
@@ -105,20 +107,22 @@ export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, node
                     );
                 })}
 
-                <div className="flex justify-center pt-[18px] pb-1">
-                    <button
-                        type="button"
-                        className={`inline-flex items-center gap-2 bg-[#1A1A1A] text-white/90 border border-white/10 rounded-[10px] pl-3.5 pr-4 py-[9px] text-[13px] font-semibold tracking-[-0.1px] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_4px_12px_rgba(10,10,10,0.18)] hover:bg-[#262626] hover:border-white/[0.16] transition-all duration-[400ms] ${
-                            publishOn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-1.5'
-                        }`}
-                        style={{ transitionTimingFunction: 'cubic-bezier(0.34,1.4,0.64,1)' }}
-                    >
-                        <svg viewBox="0 0 24 24" className="w-[13px] h-[13px] fill-[#4ADE80]">
-                            <polygon points="13 2 3 14 11 14 9 22 21 10 13 10 15 2" />
-                        </svg>
-                        Publish Flow
-                    </button>
-                </div>
+                {!compact && (
+                    <div className="flex justify-center pt-[18px] pb-1">
+                        <button
+                            type="button"
+                            className={`inline-flex items-center gap-2 bg-[#1A1A1A] text-white/90 border border-white/10 rounded-[10px] pl-3.5 pr-4 py-[9px] text-[13px] font-semibold tracking-[-0.1px] shadow-[inset_0_1px_0_rgba(255,255,255,0.04),0_4px_12px_rgba(10,10,10,0.18)] hover:bg-[#262626] hover:border-white/[0.16] transition-all duration-[400ms] ${
+                                publishOn ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-1.5'
+                            }`}
+                            style={{ transitionTimingFunction: 'cubic-bezier(0.34,1.4,0.64,1)' }}
+                        >
+                            <svg viewBox="0 0 24 24" className="w-[13px] h-[13px] fill-[#4ADE80]">
+                                <polygon points="13 2 3 14 11 14 9 22 21 10 13 10 15 2" />
+                            </svg>
+                            Publish Flow
+                        </button>
+                    </div>
+                )}
             </div>
         </div>
     );

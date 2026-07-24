@@ -84,6 +84,9 @@ export default function IntegrationsAppTwoClientComp({
     };
 
     const hasAnyEvents = appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0;
+    const appOneCapable = appOneDetails?.events?.length > 0;
+    const appTwoCapable = appTwoDetails?.events?.length > 0;
+    const onlyOneCapable = appOneCapable !== appTwoCapable;
 
     const popularUseCases =
         combosData?.combinations
@@ -137,20 +140,24 @@ export default function IntegrationsAppTwoClientComp({
             </div>
 
             {/* Hero */}
-            <HeroSection
-                appOneDetails={appOneDetails}
-                appTwoDetails={appTwoDetails}
-                selectedTrigger={selectedTrigger}
-                selectedAction={selectedAction}
-                popularUseCases={popularUseCases}
-                getComboLink={getComboLink}
-                hasToken={hasToken}
-                utm={utm}
-                appCount={appCount}
-            />
+            {hasAnyEvents && !onlyOneCapable ? (
+                <HeroSection
+                    appOneDetails={appOneDetails}
+                    appTwoDetails={appTwoDetails}
+                    selectedTrigger={selectedTrigger}
+                    selectedAction={selectedAction}
+                    popularUseCases={popularUseCases}
+                    getComboLink={getComboLink}
+                    hasToken={hasToken}
+                    utm={utm}
+                    appCount={appCount}
+                />
+            ) : (
+                <IntegrationsBetaComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
+            )}
 
             {/* 4. Popular flows */}
-            {hasCombinations ? (
+            {hasCombinations && (
                 <PopularFlows
                     combosData={combosData}
                     appOneDetails={appOneDetails}
@@ -172,23 +179,11 @@ export default function IntegrationsAppTwoClientComp({
                     setShowMore={setShowMore}
                     handleSwapApps={handleSwapApps}
                 />
-            ) : (
-                <>
-                    {!hasAnyEvents && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
-                    {!hasCombinations && hasAnyEvents && (
-                        <div className="cont gap-4">
-                            <h2 className="h2">
-                                Available events for <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                <span className="text-accent">{appTwoDetails?.name}</span>
-                            </h2>
-                        </div>
-                    )}
-                </>
             )}
 
             {/* 5. Supported Triggers & Actions */}
-            {(appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0) && (
-                <div className="container">
+            {hasAnyEvents && (
+                <div className="container" id="automations">
                     <TriggersAndActions appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                 </div>
             )}
