@@ -386,14 +386,18 @@ export function RequestIntegrationPopupOpener({
     const searchParams = useSearchParams();
 
     const QUERY_KEY = 'requestIntegration';
+    const TYPE_KEY = 'requestType';
     const isOpen = searchParams?.get(QUERY_KEY) === 'true';
+    const requestType = searchParams?.get(TYPE_KEY);
 
     const updateQueryParam = (open) => {
         const params = new URLSearchParams(searchParams?.toString() || '');
         if (open) {
             params.set(QUERY_KEY, 'true');
+            if (type) params.set(TYPE_KEY, type);
         } else {
             params.delete(QUERY_KEY);
+            params.delete(TYPE_KEY);
         }
         const queryString = params.toString();
         router.replace(`${pathname}${queryString ? `?${queryString}` : ''}`, { scroll: false });
@@ -499,7 +503,7 @@ export function RequestIntegrationPopupOpener({
                 <IntegrationsRequestComp
                     appInfo={appInfo}
                     secondAppInfo={secondAppInfo}
-                    type={type}
+                    type={requestType}
                     onClose={closeModal}
                 />
             )}
