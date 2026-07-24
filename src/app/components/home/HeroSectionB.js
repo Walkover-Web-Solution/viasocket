@@ -31,7 +31,7 @@ export default function HeroSectionB({ hasToken }) {
                 window.localStorage.setItem('prompt', value);
             } catch {}
         }
-        handleRedirect(e, '/signup?', null, '/hero-ai');
+        handleRedirect(e, '/signup?', null, '/hero-ai', { import: 'true' });
     };
 
     return (
@@ -107,7 +107,7 @@ export default function HeroSectionB({ hasToken }) {
 
                     <div className="flex justify-end mt-4">
                         <button
-                            className="btn !bg-black !text-white !border-black hover:!bg-black hover:!text-white"
+                            className="btn btn-primary"
                             onClick={build}
                         >
                             Build my workflow <ArrowRight className="w-4 h-4" />
