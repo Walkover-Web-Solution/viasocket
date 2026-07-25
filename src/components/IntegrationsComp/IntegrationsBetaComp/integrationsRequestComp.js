@@ -88,6 +88,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         const { plug, ...cleanedPayload } = formDataToSend;
         cleanedPayload.userNeed = `New ${type || 'App'}`;
         cleanedPayload.category = appInfo?.category?.join(', ');
+        cleanedPayload.appName = formData.plug?.name || appInfo?.name || '';
 
         try {
             setIsLoading(true);
@@ -163,7 +164,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             )}
 
             {!showSuccessPopup && (
-                <div className="modal-box !overflow-hidden !p-4 max-h-[90vh] shadow-2xl">
+                <div className="modal-box !overflow-auto !p-4 max-h-[90vh] shadow-2xl">
                     <div className="flex flex-col gap-4 overflow-hidden">
                         <div className="flex flex-col gap-2">
                             <div className="flex gap-3 items-center">
