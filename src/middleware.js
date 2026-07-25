@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { VARIANT_COOKIE, VARIANTS, VARIANT_MAX_AGE } from '@/const/abTest';
 
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
@@ -19,17 +18,6 @@ export async function middleware(request) {
     }
 
     const response = NextResponse.next();
-
-    // A/B variant assignment (sticky, decided server-side at the edge)
-    const existingVariant = request.cookies.get(VARIANT_COOKIE)?.value;
-    if (!existingVariant || !VARIANTS.includes(existingVariant)) {
-        const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-        response.cookies.set(VARIANT_COOKIE, variant, {
-            maxAge: VARIANT_MAX_AGE,
-            path: '/',
-            sameSite: 'lax',
-        });
-    }
 
     // Read click id from URL
     const rawIncomingClickId = searchParams.get('rdt_cid');
