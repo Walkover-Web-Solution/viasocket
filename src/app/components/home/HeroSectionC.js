@@ -4,7 +4,7 @@ import CustomLoginOptimized from '../customLogin/CustomLoginOptimized';
 
 export default function HeroSectionC() {
     return (
-        <section className="container flex items-center justify-start gap-20 py-12 lg:py-20">
+        <section className="container flex flex-col lg:flex-row items-center justify-center lg:justify-start gap-20 py-12 lg:py-20">
             <div className="flex flex-col gap-6 items-start justify-center">
                 <h1 className="h1 text-start">
                     Automate Anything. <br /> <span className="text-accent">Free Forever.</span>
@@ -16,7 +16,7 @@ export default function HeroSectionC() {
                 </p>
             </div>
 
-            <div className="w-px h-60 bg-gray-300 mx-20"></div>
+            <div className="w-full h-px lg:w-px lg:h-60 bg-gray-300 lg:mx-20"></div>
 
             <div className="relative">
                 <CustomLoginOptimized redirect_to="" />
