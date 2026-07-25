@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -39,6 +39,7 @@ export default function IntegrationsAppTwoClientComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const popularFlowsRef = useRef(null);
     const [selectedTrigger, setSelectedTrigger] = useState(null);
     const [selectedAction, setSelectedAction] = useState(null);
     const [resetTrigger, setResetTrigger] = useState(false);
@@ -61,8 +62,8 @@ export default function IntegrationsAppTwoClientComp({
     const [appTwoEvents, setAppTwoEvents] = useState(categorizeEvents(currentAppTwo?.events));
 
     useEffect(() => {
-        const handleClickOutside = () => {
-            if (openDropdown) {
+        const handleClickOutside = (event) => {
+            if (openDropdown && popularFlowsRef.current && !popularFlowsRef.current.contains(event.target)) {
                 setOpenDropdown(null);
             }
         };
@@ -159,6 +160,7 @@ export default function IntegrationsAppTwoClientComp({
             {/* 4. Popular flows */}
             {hasCombinations && (
                 <PopularFlows
+                    containerRef={popularFlowsRef}
                     combosData={combosData}
                     appOneDetails={appOneDetails}
                     appTwoDetails={appTwoDetails}

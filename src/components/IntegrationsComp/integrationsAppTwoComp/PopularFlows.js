@@ -5,6 +5,7 @@ import { ArrowRightLeft, ChevronDown, ArrowRight, ArrowDownUp } from 'lucide-rea
 import TriggerOrActionCard from './TriggerOrActionCard';
 
 export default function PopularFlows({
+    containerRef,
     combosData,
     appOneDetails,
     appTwoDetails,
@@ -62,7 +63,7 @@ export default function PopularFlows({
             </div>
 
             {/* Builder */}
-            <div className="flex flex-col items-start w-full">
+            <div ref={containerRef} className="flex flex-col items-start w-full">
                 <div className="flex flex-col md:flex-row justify-start items-center w-full max-w-6xl gap-6">
                     <TriggerOrActionCard
                         title="Choose a trigger"
