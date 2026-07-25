@@ -1,26 +1,20 @@
 'use client';
-import Image from 'next/image';
 import { ArrowRight, CheckCircle } from 'lucide-react';
+import AiWorkflowDemo from '@/components/AiWorkflowDemo/AiWorkflowDemo';
 
-export default function AIFeatureSection({ appOneName, appTwoName }) {
+export default function AIFeatureSection() {
     const features = ['No coding required', 'Review before publishing', 'Works with 2,000+ apps'];
 
     return (
         <div className="container">
             <div className="flex flex-col md:flex-row items-stretch justify-between gap-10 md:gap-20">
-                {/* Left: product screenshot (dark app UI image) */}
-                <div className="w-full md:w-[38%] shrink-0 rounded-xl overflow-hidden">
-                    <Image
-                        src="/assets/ai-builder-interface.png"
-                        width={500}
-                        height={380}
-                        alt="viaSocket AI builder interface"
-                        className="w-full h-auto object-cover object-top"
-                    />
+                {/* Left: live AI workflow builder demo */}
+                <div className="w-full md:w-[50%] shrink-0">
+                    <AiWorkflowDemo compact />
                 </div>
 
                 {/* Right: content on light background */}
-                <div className="flex flex-col justify-center gap-6 w-full md:w-[45%]">
+                <div className="flex flex-col justify-center gap-6 w-full md:w-[50%]">
                     <span className="flex items-center gap-2 text-accent text-xs font-semibold uppercase tracking-widest">
                         <span>&#9670;</span>
                         AI Workflow Builder

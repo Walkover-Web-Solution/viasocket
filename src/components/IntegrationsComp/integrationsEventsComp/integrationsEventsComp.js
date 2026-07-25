@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Plus, MousePointer2, Check, X, ChevronDown, CheckCircle } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
-import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 
 export default function IntegrationsEventsComp({ combosData, appOneDetails, appTwoDetails }) {
     const [visibleTriggers, setVisibleTriggers] = useState(6);
@@ -28,6 +27,14 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
 
     categorizeEvents(appOneDetails?.events);
     if (appTwoDetails) categorizeEvents(appTwoDetails?.events);
+
+    // When only one app has any events, default the request popup to the app that's
+    // actually missing capability instead of always defaulting to appOneDetails.
+    const appOneCapable = appOneDetails?.events?.length > 0;
+    const appTwoCapable = appTwoDetails?.events?.length > 0;
+    const onlyOneCapable = Boolean(appTwoDetails) && appOneCapable !== appTwoCapable;
+    const requestAppInfo = onlyOneCapable ? (appOneCapable ? appTwoDetails : appOneDetails) : appOneDetails;
+    const requestSecondAppInfo = onlyOneCapable ? (appOneCapable ? appOneDetails : appTwoDetails) : appTwoDetails;
 
     function getIcons(appslugname) {
         const appOneSlug = appOneDetails?.appslugname;
@@ -80,8 +87,8 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         </button>
                                     ) : (
                                         <RequestIntegrationPopupOpener
-                                            appInfo={appOneDetails}
-                                            secondAppInfo={appTwoDetails}
+                                            appInfo={requestAppInfo}
+                                            secondAppInfo={requestSecondAppInfo}
                                             showType="dotted"
                                             type="trigger"
                                         />
@@ -125,8 +132,8 @@ export default function IntegrationsEventsComp({ combosData, appOneDetails, appT
                                         </button>
                                     ) : (
                                         <RequestIntegrationPopupOpener
-                                            appInfo={appOneDetails}
-                                            secondAppInfo={appTwoDetails}
+                                            appInfo={requestAppInfo}
+                                            secondAppInfo={requestSecondAppInfo}
                                             className="lg:ml-auto"
                                             showType="dotted"
                                             type="action"
