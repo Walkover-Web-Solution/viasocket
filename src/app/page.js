@@ -10,7 +10,6 @@ import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
-import { getVariant } from '@/utils/getVariant';
 
 export const runtime = 'edge';
 
@@ -60,7 +59,6 @@ export default async function HomePage() {
         clientStories,
     } = await getHomePageData();
     const hasToken = await getHasToken();
-    const variant = await getVariant();
     return (
         <>
             <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
@@ -77,7 +75,6 @@ export default async function HomePage() {
                 initialApps={initialApps}
                 templateData={templateData}
                 hasToken={hasToken}
-                variant={variant}
             />
 
             <MainContent
@@ -100,3 +97,5 @@ export default async function HomePage() {
         </>
     );
 }
+
+

@@ -1,23 +1,18 @@
 import { setUtmSource } from './handleUtmSource';
 
-export const handleRedirect = (e, url, router, customSource, extraParams = {}) => {
+export const handleRedirect = (e, url, router, customSource) => {
     e.preventDefault();
     const baseUrl = url.replace(/\?$/, '');
-    const isFlowUrl = baseUrl.startsWith('https://flow.viasocket.com');
-    const mergedParams = isFlowUrl ? { import: 'true', ...extraParams } : extraParams;
     const separator = baseUrl.includes('?') ? '&' : '?';
-    const extra = Object.entries(mergedParams)
-        .map(([key, val]) => `&${key}=${encodeURIComponent(val)}`)
-        .join('');
     let finalUrl;
 
     if (customSource) {
         const utmState = JSON.stringify({ utm_source: customSource });
-        finalUrl = `${baseUrl}${separator}state=${utmState}${extra}`;
+        finalUrl = `${baseUrl}${separator}state=${utmState}&utm_source=${customSource}`;
     } else {
         const source = typeof window !== 'undefined' ? window.location.pathname : '';
         const utmParams = setUtmSource({ source });
-        finalUrl = `${baseUrl}${separator}state=${utmParams}${extra}`;
+        finalUrl = `${baseUrl}${separator}state=${utmParams}`;
     }
 
     if (router && url.startsWith('/')) {
@@ -27,3 +22,5 @@ export const handleRedirect = (e, url, router, customSource, extraParams = {}) =
         window.open(finalUrl, target);
     }
 };
+
+
