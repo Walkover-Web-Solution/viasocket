@@ -13,6 +13,7 @@ export default function IntegrationsAppComp({
     appCount,
     searchTerm,
     searchedCategories,
+    appOneDetails,
 }) {
 
     return (
@@ -112,6 +113,7 @@ export default function IntegrationsAppComp({
                                         <RequestIntegrationPopupOpener
                                             showType="searchView"
                                             className="md:border-t-0 md:border-l-0"
+                                            appInfo={appOneDetails}
                                         />
                                     </div>
                                 )
