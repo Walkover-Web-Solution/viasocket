@@ -389,6 +389,7 @@ export function RequestIntegrationPopupOpener({
     const TYPE_KEY = 'requestType';
     const isOpen = searchParams?.get(QUERY_KEY) === 'true';
     const requestType = searchParams?.get(TYPE_KEY);
+    const shouldOpen = isOpen && ((!type && !requestType) || type === requestType);
 
     const updateQueryParam = (open) => {
         const params = new URLSearchParams(searchParams?.toString() || '');
@@ -499,7 +500,7 @@ export function RequestIntegrationPopupOpener({
     return (
         <>
             {getUi()}
-            {isOpen && (
+            {shouldOpen && (
                 <IntegrationsRequestComp
                     appInfo={appInfo}
                     secondAppInfo={secondAppInfo}

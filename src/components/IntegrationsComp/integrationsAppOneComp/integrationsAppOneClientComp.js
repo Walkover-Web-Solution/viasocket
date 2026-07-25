@@ -179,6 +179,7 @@ export default function IntegrationsAppOneClientComp({
                             appCount={appCount}
                             searchTerm={debounceValue}
                             searchedCategories={searchedCategories}
+                            appOneDetails={appOneDetails}
                         />
                     </div>
                 )}
