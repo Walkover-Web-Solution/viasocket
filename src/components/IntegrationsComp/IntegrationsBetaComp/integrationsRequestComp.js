@@ -15,7 +15,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         userEmail: '',
         userName: '',
         useCase: '',
-        plugName: appInfo?.name,
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
         plug: appInfo,
@@ -114,11 +113,11 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
     };
 
     return (
-        <div className="fixed inset-0 z-50 grid place-items-center">
-            <div className="absolute inset-0 bg-black bg-opacity-40" />
+        <div className="fixed inset-0 z-50 grid place-items-center overflow-hidden">
+            <div className="absolute inset-0 bg-black/20" />
 
             {showSuccessPopup && (
-                <div className="modal-box max-w-md">
+                <div className="modal-box max-w-md !p-4 shadow-2xl">
                     <div className="flex flex-col items-center gap-4 text-center">
                         <div className="w-10 h-10 bg-green-700 rounded-full flex items-center justify-center">
                             <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -164,33 +163,32 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             )}
 
             {!showSuccessPopup && (
-                <div className="modal-box">
-                    <div className="flex flex-col gap-6">
-                        <div className="flex flex-col gap-4">
+                <div className="modal-box !overflow-hidden !p-4 max-h-[90vh] shadow-2xl">
+                    <div className="flex flex-col gap-4 overflow-hidden">
+                        <div className="flex flex-col gap-2">
                             <div className="flex gap-3 items-center">
                                 {type && (
                                     <Image
                                         src={formData?.plug?.iconurl || 'https://placehold.co/40x40'}
                                         height={36}
                                         width={36}
-                                        alt={"plugin icon"}
+                                        alt={'plugin icon'}
                                     />
                                 )}
                                 <h3 className="h3 font-bold">
                                     Request a new{' '}
                                     {type
-                                        ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${formData?.plug?.name}`
+                                        ? `${type == 'trigger' ? 'Trigger' : 'Action'} for ${formData?.plug?.name || 'this app'}`
                                         : 'Integration'}
                                 </h3>
                             </div>
                             <p className="flex items-center gap-1">
-                                <span className="text-lg font-medium">
-                                    Sit back and relax — we'll build your {type ? `${type}` : 'app'} in only 48 hours!
-                                    🚀
+                                <span className="text-base font-medium">
+                                    Sit back and relax, we'll build your {type ? `${type}` : 'app'} in only 48 hours! 🚀
                                 </span>{' '}
                             </p>
                         </div>
-                        <div className="flex gap-1 flex-col">
+                        <div className="flex gap-1 flex-col overflow-hidden">
                             {secondAppInfo && (
                                 <label className="form-control w-full">
                                     <div className="label">
@@ -206,7 +204,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                             setFormData((prev) => ({
                                                 ...prev,
                                                 plug: selectedApp,
-                                                plugName: selectedApp?.name,
                                             }));
                                         }}
                                     >
@@ -247,22 +244,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 />
                                 {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
                             </label>
-                            {!type && (
-                                <label className="form-control w-full">
-                                    <div className="label">
-                                        <span className="label-text">Plugin Name:</span>
-                                    </div>
-                                    <input
-                                        required
-                                        type="text"
-                                        name="plugName"
-                                        placeholder="Plugin Name"
-                                        className="input input-bordered w-full focus:outline-none"
-                                        value={formData.plugName}
-                                        onChange={handleInputChange}
-                                    />
-                                </label>
-                            )}
                             <label className="form-control w-full">
                                 <div className="label">
                                     <span className="label-text">Use Case:</span>

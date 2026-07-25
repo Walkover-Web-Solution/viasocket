@@ -22,3 +22,5 @@ export const handleRedirect = (e, url, router, customSource) => {
         window.open(finalUrl, target);
     }
 };
+
+

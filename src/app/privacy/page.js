@@ -41,7 +41,7 @@ export default async function PrivacyPage() {
             <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <div>
                     <h1 className="h1">PRIVACY POLICY</h1>
-                    <span className="font-semibold">Last updated September 26, 2023 </span>
+                    <span className="font-semibold">Last updated October 13, 2025 </span>
                 </div>
                 <div className="border custom-border p-12 !bg-white">
                     <div className="text-gray-600 text-sm mb-4">
@@ -335,9 +335,24 @@ export default async function PrivacyPage() {
                                             vital interest, such as to prevent harm.
                                         </li>
                                         <li>
-                                            <strong>GoogleWorkspace APIs.</strong>We explicitly affirm that Google
-                                            Workspace APIs are not used to develop, improve, or train generalized AI
-                                            and/or ML models.
+                                            <strong>Google Workspace and Google Photos APIs Limited Use.</strong> viaSocket's
+                                            use and transfer of information received from Google Workspace APIs and Google
+                                            Photos APIs adheres to the{' '}
+                                            <a
+                                                className="link"
+                                                href="https://developers.google.com/terms/api-services-user-data-policy"
+                                                target="_blank"
+                                            >
+                                                Google API Services User Data Policy
+                                            </a>
+                                            , including the Limited Use requirements. The use of raw or derived user data
+                                            received from Workspace APIs and Photos APIs will adhere to the Google User
+                                            Data Policy, including the Limited Use requirements. We do not use, transfer,
+                                            or sell Google user data—including raw, aggregated, or derived data—to
+                                            create, train, or improve any foundational or generalized machine learning
+                                            or artificial intelligence models. This restriction applies to our own
+                                            services as well as to any third-party AI/ML services that may interact with
+                                            Google user data through our platform.
                                         </li>
                                     </ul>
                                 </p>
@@ -551,6 +566,27 @@ export default async function PrivacyPage() {
                                     >
                                         Google Security Settings page
                                     </a>
+                                </p>
+
+                                <p>
+                                    <strong>Google Workspace and Google Photos API Services</strong>
+                                    <br />
+                                    viaSocket's use and transfer of information received from Google Workspace APIs and
+                                    Google Photos APIs adheres to the{' '}
+                                    <a
+                                        className="link"
+                                        href="https://developers.google.com/terms/api-services-user-data-policy"
+                                        target="_blank"
+                                    >
+                                        Google API Services User Data Policy
+                                    </a>
+                                    , including the Limited Use requirements. The use of raw or derived user data received
+                                    from Workspace APIs and Photos APIs will adhere to the Google User Data Policy,
+                                    including the Limited Use requirements. We do not use, transfer, or sell Google user
+                                    data—including raw, aggregated, or derived data—to create, train, or improve any
+                                    foundational or generalized machine learning or artificial intelligence models. This
+                                    restriction applies to our own services as well as to any third-party AI/ML services
+                                    that may interact with Google user data through our platform.
                                 </p>
 
                                 <p>

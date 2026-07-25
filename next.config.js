@@ -59,6 +59,11 @@ const nextConfig = {
                 permanent: false,
             },
             {
+                source: '/mcp/invgate-service-desk',
+                destination: '/mcp/invgateservicemanagement',
+                permanent: true,
+            },
+            {
                 source: '/mcp',
                 destination: 'https://mushrooms.viasocket.com/',
                 permanent: true,

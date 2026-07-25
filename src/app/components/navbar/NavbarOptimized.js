@@ -24,6 +24,7 @@ const navItems = [
     {
         name: 'Pricing',
         link: '/pricing',
+        badge: 'free forever',
     },
 ];
 
