@@ -29,7 +29,7 @@ export default function EmbedChatbotAction({ appCount }) {
 
                 <div className="w-full lg:w-1/2 flex items-center justify-center">
                     <Image
-                        src="https://stuff.thingsofbrand.com/viasocket.com/images/img4_image-8.png"
+                        src="https://stuff.thingsofbrand.com/viasocket.com/images/imga_workflow.png"
                         alt="Workflow item container"
                         width={600}
                         height={400}
