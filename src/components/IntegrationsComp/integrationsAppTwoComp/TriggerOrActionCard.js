@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { RequestIntegrationPopupOpener } from '../IntegrationsIndexComp/IntegrationsIndexClientComp';
 
-export default function TriggerOrActionCard({ title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
+export default function TriggerOrActionCard({ cardRef, title, appDetails, placeholder, list, isOpen, onToggle, onSelect, type, resetEvent }) {
     const [search, setSearch] = useState('');
     const [selectedEvent, setSelectedEvent] = useState(null);
 
@@ -26,7 +26,7 @@ export default function TriggerOrActionCard({ title, appDetails, placeholder, li
     };
 
     return (
-        <div className="flex flex-col w-full md:w-1/2 gap-2 relative">
+        <div ref={cardRef} className="flex flex-col w-full md:w-1/2 gap-2 relative">
             <h2 className="text-sm font-medium text-gray-500 text-left">{title}</h2>
 
             <div

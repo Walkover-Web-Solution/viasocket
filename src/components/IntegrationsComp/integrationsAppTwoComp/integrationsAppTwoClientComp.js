@@ -39,7 +39,8 @@ export default function IntegrationsAppTwoClientComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const [openDropdown, setOpenDropdown] = useState(null);
-    const popularFlowsRef = useRef(null);
+    const triggerCardRef = useRef(null);
+    const actionCardRef = useRef(null);
     const [selectedTrigger, setSelectedTrigger] = useState(null);
     const [selectedAction, setSelectedAction] = useState(null);
     const [resetTrigger, setResetTrigger] = useState(false);
@@ -63,7 +64,8 @@ export default function IntegrationsAppTwoClientComp({
 
     useEffect(() => {
         const handleClickOutside = (event) => {
-            if (openDropdown && popularFlowsRef.current && !popularFlowsRef.current.contains(event.target)) {
+            const activeCardRef = openDropdown === 'trigger' ? triggerCardRef : openDropdown === 'action' ? actionCardRef : null;
+            if (openDropdown && activeCardRef?.current && !activeCardRef.current.contains(event.target)) {
                 setOpenDropdown(null);
             }
         };
@@ -160,7 +162,8 @@ export default function IntegrationsAppTwoClientComp({
             {/* 4. Popular flows */}
             {hasCombinations && (
                 <PopularFlows
-                    containerRef={popularFlowsRef}
+                    triggerCardRef={triggerCardRef}
+                    actionCardRef={actionCardRef}
                     combosData={combosData}
                     appOneDetails={appOneDetails}
                     appTwoDetails={appTwoDetails}
