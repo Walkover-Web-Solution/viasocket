@@ -15,6 +15,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         userEmail: '',
         userName: '',
         useCase: '',
+        appName: appInfo?.name || '',
+        plugName: appInfo?.name || '',
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
         plug: appInfo,
@@ -88,7 +90,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         const { plug, ...cleanedPayload } = formDataToSend;
         cleanedPayload.userNeed = `New ${type || 'App'}`;
         cleanedPayload.category = appInfo?.category?.join(', ');
-        cleanedPayload.appName = formData.plug?.name || appInfo?.name || '';
 
         try {
             setIsLoading(true);
@@ -205,6 +206,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                             setFormData((prev) => ({
                                                 ...prev,
                                                 plug: selectedApp,
+                                                appName: selectedApp?.name,
+                                                plugName: selectedApp?.name,
                                             }));
                                         }}
                                     >
@@ -245,6 +248,28 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 />
                                 {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
                             </label>
+                            {!type && (
+                                <label className="form-control w-full">
+                                    <div className="label">
+                                        <span className="label-text">Plugin Name:</span>
+                                    </div>
+                                    <input
+                                        required
+                                        type="text"
+                                        name="plugName"
+                                        placeholder="Plugin Name"
+                                        className="input input-bordered w-full focus:outline-none"
+                                        value={formData.plugName}
+                                        onChange={(e) => {
+                                            setFormData((prev) => ({
+                                                ...prev,
+                                                plugName: e.target.value,
+                                                appName: e.target.value,
+                                            }));
+                                        }}
+                                    />
+                                </label>
+                            )}
                             <label className="form-control w-full">
                                 <div className="label">
                                     <span className="label-text">Use Case:</span>
