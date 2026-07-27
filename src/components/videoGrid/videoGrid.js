@@ -1,6 +1,6 @@
 'use client';
-import { useRef, useState, useEffect } from 'react';
-import { ChevronRight, Play } from 'lucide-react';
+import { useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import Image from 'next/image';
 
 const getYouTubeId = (url) => {
@@ -11,36 +11,19 @@ const getYouTubeId = (url) => {
 
 const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) => {
     const scrollRef = useRef(null);
-    const [activeIndex, setActiveIndex] = useState(0);
     const [imgErrors, setImgErrors] = useState({});
     const [playingIndex, setPlayingIndex] = useState(null);
 
     if (!videoData?.length) return null;
 
-    const scrollToIndex = (idx) => {
-        const child = scrollRef.current?.children[idx];
-        if (child) scrollRef.current.scrollTo({ left: child.offsetLeft - scrollRef.current.offsetLeft, behavior: 'smooth' });
-        setActiveIndex(idx);
-    };
-
-    const handleScroll = () => {
-        if (!scrollRef.current) return;
-        const { children, scrollLeft, clientWidth, offsetLeft } = scrollRef.current;
-        const center = scrollLeft + clientWidth / 2;
-        let closest = 0, minDist = Infinity;
-        Array.from(children).forEach((child, idx) => {
-            const dist = Math.abs(child.offsetLeft + child.clientWidth / 2 - center);
-            if (dist < minDist) { minDist = dist; closest = idx; }
-        });
-        setActiveIndex(closest);
-    };
-
-    useEffect(() => {
+    const scrollByAmount = (dir) => {
         const el = scrollRef.current;
         if (!el) return;
-        el.addEventListener('scroll', handleScroll, { passive: true });
-        return () => el.removeEventListener('scroll', handleScroll);
-    }, []);
+        const card = el.children[0];
+        const cardWidth = card ? card.getBoundingClientRect().width : el.clientWidth;
+        const gap = 20; // matches gap-5
+        el.scrollBy({ left: dir * (cardWidth + gap), behavior: 'smooth' });
+    };
 
     return (
         <div className="container flex flex-col gap-8">
@@ -152,16 +135,22 @@ const VideoGrid = ({ videoData, appOneName, appTwoName, showHeading = true }) =>
                 </div>
 
                 {videoData.length > 1 && (
-                    <div className="flex items-center justify-center gap-2 mt-6">
-                        {videoData.map((_, i) => (
-                            <button
-                                key={i}
-                                aria-label={`Go to video ${i + 1}`}
-                                onClick={() => scrollToIndex(i)}
-                                className={`h-2 rounded-full transition-all duration-200 ${activeIndex === i ? 'w-6 bg-accent' : 'w-2 bg-gray-300 hover:bg-gray-400'}`}
-                            />
-                        ))}
-                    </div>
+                    <>
+                        <button
+                            aria-label="Scroll left"
+                            onClick={() => scrollByAmount(-1)}
+                            className="hidden sm:flex items-center justify-center absolute left-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full shadow-xl hover:bg-black hover:scale-110 hover:shadow-2xl transition-all duration-300"
+                        >
+                            <ChevronLeft className="w-7 h-7 text-black" />
+                        </button>
+                        <button
+                            aria-label="Scroll right"
+                            onClick={() => scrollByAmount(1)}
+                            className="hidden sm:flex items-center justify-center absolute right-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 bg-white rounded-full shadow-xl hover:bg-black hover:scale-110 hover:shadow-2xl transition-all duration-300"
+                        >
+                            <ChevronRight className="w-7 h-7 text-black" />
+                        </button>
+                    </>
                 )}
             </div>
         </div>

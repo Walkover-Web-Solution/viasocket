@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -39,6 +39,8 @@ export default function IntegrationsAppTwoClientComp({
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
     const [openDropdown, setOpenDropdown] = useState(null);
+    const triggerCardRef = useRef(null);
+    const actionCardRef = useRef(null);
     const [selectedTrigger, setSelectedTrigger] = useState(null);
     const [selectedAction, setSelectedAction] = useState(null);
     const [resetTrigger, setResetTrigger] = useState(false);
@@ -61,8 +63,9 @@ export default function IntegrationsAppTwoClientComp({
     const [appTwoEvents, setAppTwoEvents] = useState(categorizeEvents(currentAppTwo?.events));
 
     useEffect(() => {
-        const handleClickOutside = () => {
-            if (openDropdown) {
+        const handleClickOutside = (event) => {
+            const activeCardRef = openDropdown === 'trigger' ? triggerCardRef : openDropdown === 'action' ? actionCardRef : null;
+            if (openDropdown && activeCardRef?.current && !activeCardRef.current.contains(event.target)) {
                 setOpenDropdown(null);
             }
         };
@@ -84,6 +87,9 @@ export default function IntegrationsAppTwoClientComp({
     };
 
     const hasAnyEvents = appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0;
+    const appOneCapable = appOneDetails?.events?.length > 0;
+    const appTwoCapable = appTwoDetails?.events?.length > 0;
+    const onlyOneCapable = appOneCapable !== appTwoCapable;
 
     const popularUseCases =
         combosData?.combinations
@@ -137,21 +143,27 @@ export default function IntegrationsAppTwoClientComp({
             </div>
 
             {/* Hero */}
-            <HeroSection
-                appOneDetails={appOneDetails}
-                appTwoDetails={appTwoDetails}
-                selectedTrigger={selectedTrigger}
-                selectedAction={selectedAction}
-                popularUseCases={popularUseCases}
-                getComboLink={getComboLink}
-                hasToken={hasToken}
-                utm={utm}
-                appCount={appCount}
-            />
+            {hasAnyEvents && !onlyOneCapable ? (
+                <HeroSection
+                    appOneDetails={appOneDetails}
+                    appTwoDetails={appTwoDetails}
+                    selectedTrigger={selectedTrigger}
+                    selectedAction={selectedAction}
+                    popularUseCases={popularUseCases}
+                    getComboLink={getComboLink}
+                    hasToken={hasToken}
+                    utm={utm}
+                    appCount={appCount}
+                />
+            ) : (
+                <IntegrationsBetaComp appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
+            )}
 
             {/* 4. Popular flows */}
-            {hasCombinations ? (
+            {hasCombinations && (
                 <PopularFlows
+                    triggerCardRef={triggerCardRef}
+                    actionCardRef={actionCardRef}
                     combosData={combosData}
                     appOneDetails={appOneDetails}
                     appTwoDetails={appTwoDetails}
@@ -172,23 +184,11 @@ export default function IntegrationsAppTwoClientComp({
                     setShowMore={setShowMore}
                     handleSwapApps={handleSwapApps}
                 />
-            ) : (
-                <>
-                    {!hasAnyEvents && <IntegrationsBetaComp appOneDetails={appOneDetails} />}
-                    {!hasCombinations && hasAnyEvents && (
-                        <div className="cont gap-4">
-                            <h2 className="h2">
-                                Available events for <span className="text-accent">{appOneDetails?.name}</span> and{' '}
-                                <span className="text-accent">{appTwoDetails?.name}</span>
-                            </h2>
-                        </div>
-                    )}
-                </>
             )}
 
             {/* 5. Supported Triggers & Actions */}
-            {(appOneDetails?.events?.length > 0 || appTwoDetails?.events?.length > 0) && (
-                <div className="container">
+            {hasAnyEvents && (
+                <div className="container" id="automations">
                     <TriggersAndActions appOneDetails={appOneDetails} appTwoDetails={appTwoDetails} />
                 </div>
             )}
@@ -226,7 +226,7 @@ export default function IntegrationsAppTwoClientComp({
             </div>
 
             {/* AI Workflow Builder */}
-            <AIFeatureSection appOneName={appOneDetails?.name} appTwoName={appTwoDetails?.name} />
+            <AIFeatureSection />
 
             {/* 7. Watch & Learn */}
             {videoData?.length > 0 && (

@@ -1,19 +1,21 @@
 'use client';
 
-export default function InputArea({ chips }) {
+export default function InputArea({ chips, compact = false }) {
     return (
         <div className="border-t border-black/[0.07] px-[18px] pt-[14px] pb-4 bg-white">
-            <div className="flex flex-wrap gap-[7px] mb-2.5">
-                {chips.map((c) => (
-                    <button
-                        key={c}
-                        type="button"
-                        className="text-[11.5px] font-medium text-[#666] bg-white border border-black/[0.11] rounded-full px-[13px] py-[5px] hover:-translate-y-0.5 hover:border-accent/30 hover:text-accent hover:shadow-[0_3px_10px_rgba(168,32,13,0.10)] transition-all duration-150"
-                    >
-                        {c}
-                    </button>
-                ))}
-            </div>
+            {!compact && (
+                <div className="flex flex-wrap gap-[7px] mb-2.5">
+                    {chips.map((c) => (
+                        <button
+                            key={c}
+                            type="button"
+                            className="text-[11.5px] font-medium text-[#666] bg-white border border-black/[0.11] rounded-full px-[13px] py-[5px] hover:-translate-y-0.5 hover:border-accent/30 hover:text-accent hover:shadow-[0_3px_10px_rgba(168,32,13,0.10)] transition-all duration-150"
+                        >
+                            {c}
+                        </button>
+                    ))}
+                </div>
+            )}
             <div className="flex items-center gap-2.5 bg-[#f7f7f7] border border-black/[0.09] rounded-[11px] pl-[13px] pr-2.5 py-[9px]">
                 <div className="w-[22px] h-[22px] rounded-md bg-accent flex items-center justify-center shrink-0">
                     <svg viewBox="0 0 24 24" className="w-3 h-3 fill-white">

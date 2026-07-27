@@ -361,22 +361,6 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            {/* Templates */}
-            <div className="container flex flex-col gap-4">
-                <div className="flex flex-col gap-2">
-                    <span className="text-accent text-xs font-bold uppercase tracking-widest">Pre-built Workflows</span>
-                    <h2 className="h2">Start with a template</h2>
-                    <p className="text-gray-500 text-base whitespace-nowrap">
-                        Launch your automation in minutes using professionally built workflow templates. Customize them anytime to fit your needs.
-                    </p>
-                </div>
-                <TemplateContainer
-                    selectedApps={[appOneDetails]}
-                    templateToShow={templateToShow}
-                    requireAllApps={true}
-                />
-            </div>
-
             <div className="container">
                 <GetStarted />
             </div>
