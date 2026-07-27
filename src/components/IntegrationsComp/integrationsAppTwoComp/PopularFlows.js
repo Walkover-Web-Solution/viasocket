@@ -118,7 +118,9 @@ export default function PopularFlows({
                         href={selectedCombo.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white rounded-xl border custom-border p-6 flex flex-col gap-4 hover:shadow-md transition-shadow group"
+                        className={`bg-white rounded-xl border p-6 flex flex-col gap-4 hover:shadow-md transition-shadow group ${
+                            highlightSelectedCombo ? 'border-accent border-2' : 'custom-border'
+                        }`}
                     >
                         <div className="flex items-center gap-2">
                             <div className="w-9 h-9 border custom-border overflow-hidden bg-white flex items-center justify-center shrink-0">
