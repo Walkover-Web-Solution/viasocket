@@ -74,7 +74,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
     return (
         <div className="cont gap-8 container relative mt-12 py-8">
             <div className="flex flex-col gap-1 items-center justify-center">
-                <h2 className="h2">Your team's workflows, already built.</h2>
+                <h2 className="h2">From generating Leads to Raising Fund</h2>
                 <p>Browse templates for Finance, Marketing, Support, HR and more. One click to deploy.</p>
             </div>
 
