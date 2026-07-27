@@ -18,6 +18,8 @@ export default function ScriptPicker({
     onClearAll,
     refCode,
     setRefCode,
+    templateId,
+    setTemplateId,
     domain,
     setDomain,
 }) {
@@ -83,6 +85,18 @@ export default function ScriptPicker({
                         className="w-full rounded-md border border-[#e2dfd2] bg-white py-2 pl-9 pr-3 text-[14px] text-[#1a1a1a] outline-none focus:border-accent"
                     />
                 </div>
+                <div>
+                    <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
+                        Template ID <span className="normal-case font-normal">(optional)</span>
+                    </label>
+                    <input
+                        type="text"
+                        value={templateId}
+                        onChange={(e) => setTemplateId(e.target.value)}
+                        placeholder="e.g. template123"
+                        className="w-full rounded-md border border-[#e2dfd2] bg-white px-3 py-2 text-[14px] text-[#1a1a1a] outline-none focus:border-accent"
+                    />
+                </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div>
                         <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
@@ -135,9 +149,7 @@ export default function ScriptPicker({
                 )}
             </div>
 
-            <div
-                className="grid auto-rows-min grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-h-[480px] overflow-y-auto "
-            >
+            <div className="grid auto-rows-min grid-cols-2 gap-2 p-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 max-h-[480px] overflow-y-auto ">
                 {loading && apps.length === 0 ? (
                     Array.from({ length: 6 }).map((_, i) => (
                         <div
@@ -166,8 +178,9 @@ export default function ScriptPicker({
                                 type="button"
                                 disabled={disabled}
                                 onClick={() => onSelectApp(app)}
-                                className={`flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-left transition ${selected ? 'border-accent' : 'border-[#ece9df] hover:border-accent'
-                                    } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
+                                className={`flex items-center gap-2 rounded-md border bg-white px-3 py-2 text-left transition ${
+                                    selected ? 'border-accent' : 'border-[#ece9df] hover:border-accent'
+                                } ${disabled ? 'cursor-not-allowed opacity-50' : ''}`}
                             >
                                 <img
                                     src={app.iconurl || 'https://placehold.co/36x36'}
