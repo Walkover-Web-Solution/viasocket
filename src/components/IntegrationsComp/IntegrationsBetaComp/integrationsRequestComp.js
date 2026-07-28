@@ -15,7 +15,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         userEmail: '',
         userName: '',
         useCase: '',
-        appName: appInfo?.name || '',
         plugName: appInfo?.name || '',
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
@@ -77,6 +76,11 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
             return;
         }
 
+        if (!type && !formData.plugName) {
+            alert('Plugin name is required.');
+            return;
+        }
+
         await submitForm();
         setShowSuccessPopup(true);
     };
@@ -87,7 +91,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
         });
 
         const formDataToSend = formData;
-        const { plug, ...cleanedPayload } = formDataToSend;
+        const { plug, appName, ...cleanedPayload } = formDataToSend;
         cleanedPayload.userNeed = `New ${type || 'App'}`;
         cleanedPayload.category = appInfo?.category?.join(', ');
 
@@ -206,7 +210,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                             setFormData((prev) => ({
                                                 ...prev,
                                                 plug: selectedApp,
-                                                appName: selectedApp?.name,
                                                 plugName: selectedApp?.name,
                                             }));
                                         }}
@@ -264,7 +267,6 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                             setFormData((prev) => ({
                                                 ...prev,
                                                 plugName: e.target.value,
-                                                appName: e.target.value,
                                             }));
                                         }}
                                     />
