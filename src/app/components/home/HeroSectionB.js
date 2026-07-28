@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Sparkles, ArrowRight, User, AlertTriangle, CalendarDays } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
+import { getCookie, setCookie } from '@/utils/handleUtmSource';
 
 const SVG_BASE =
     'absolute inset-0 w-full h-full transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]';
@@ -26,7 +27,9 @@ export default function HeroSectionB({ hasToken }) {
         // Carry the described automation forward via a cookie + localStorage (not the URL)
         const value = prompt.trim();
         if (typeof document !== 'undefined' && value) {
-            document.cookie = `prompt=${encodeURIComponent(value)}; path=/; max-age=${60 * 60 * 24}; samesite=lax`;
+            const utmData = JSON.parse(getCookie('utmData') || '{}');
+            utmData.prompt = value;
+            setCookie('utmData', JSON.stringify(utmData), 1);
             try {
                 window.localStorage.setItem('prompt', value);
             } catch {}

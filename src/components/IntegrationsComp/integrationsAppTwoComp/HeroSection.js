@@ -120,7 +120,7 @@ export default function HeroSection({
                                             href={getComboLink(combo)}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`group flex items-center rounded-2xl px-3 py-4 relative z-10 w-fit max-w-[90%] transition-all duration-300 hover:-translate-y-1 backdrop-blur-[32px] border border-white/90 shadow-md ${
+                                            className={`group flex items-center rounded-2xl px-3 py-4 relative z-10 w-fit max-w-[90%] transition-all duration-300 hover:-translate-y-1 backdrop-blur-[32px] border border-white/90 shadow-[0_20px_40px_rgba(0,0,0,0.12),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_15px_rgba(120,120,120,0.03)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.18),inset_0_1px_0_rgba(255,255,255,0.95),inset_0_0_20px_rgba(120,120,120,0.08)] ${
                                                 isRight
                                                     ? 'ml-auto bg-gradient-to-br from-white/80 to-white/50 hover:from-white/90 hover:to-white/60'
                                                     : 'ml-auto !mr-28 bg-gradient-to-br from-gray-50/80 to-white/50 hover:from-gray-50/90 hover:to-white/60'

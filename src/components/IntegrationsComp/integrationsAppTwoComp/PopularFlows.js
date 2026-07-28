@@ -5,6 +5,8 @@ import { ArrowRightLeft, ChevronDown, ArrowRight, ArrowDownUp } from 'lucide-rea
 import TriggerOrActionCard from './TriggerOrActionCard';
 
 export default function PopularFlows({
+    triggerCardRef,
+    actionCardRef,
     combosData,
     appOneDetails,
     appTwoDetails,
@@ -65,6 +67,7 @@ export default function PopularFlows({
             <div className="flex flex-col items-start w-full">
                 <div className="flex flex-col md:flex-row justify-start items-center w-full max-w-6xl gap-6">
                     <TriggerOrActionCard
+                        cardRef={triggerCardRef}
                         title="Choose a trigger"
                         appDetails={currentAppOne}
                         placeholder="Search triggers..."
@@ -94,6 +97,7 @@ export default function PopularFlows({
                     </div>
 
                     <TriggerOrActionCard
+                        cardRef={actionCardRef}
                         title="Choose an action"
                         appDetails={currentAppTwo}
                         placeholder="Search actions..."
@@ -114,7 +118,9 @@ export default function PopularFlows({
                         href={selectedCombo.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="bg-white rounded-xl border custom-border p-6 flex flex-col gap-4 hover:shadow-md transition-shadow group"
+                        className={`bg-white rounded-xl border p-6 flex flex-col gap-4 hover:shadow-md transition-shadow group ${
+                            highlightSelectedCombo ? 'border-accent border-2' : 'custom-border'
+                        }`}
                     >
                         <div className="flex items-center gap-2">
                             <div className="w-9 h-9 border custom-border overflow-hidden bg-white flex items-center justify-center shrink-0">
