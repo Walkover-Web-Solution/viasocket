@@ -24,10 +24,13 @@ export async function middleware(request) {
     const existingVariant = request.cookies.get(VARIANT_COOKIE)?.value;
     if (!existingVariant || !VARIANTS.includes(existingVariant)) {
         const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+        const hostname = request.nextUrl.hostname;
+        const isViasocket = hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com');
         response.cookies.set(VARIANT_COOKIE, variant, {
             maxAge: VARIANT_MAX_AGE,
             path: '/',
             sameSite: 'lax',
+            domain: isViasocket ? '.viasocket.com' : undefined,
         });
     }
 
