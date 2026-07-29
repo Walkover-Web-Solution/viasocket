@@ -22,6 +22,13 @@ export const setCookie = (name, value, days) => {
     document.cookie = `${name}=${value};${expires};path=/${domainAttr}`;
 };
 
+export const setVariantCookie = (variant) => {
+    const VARIANTS = ['A', 'B', 'C'];
+    if (!VARIANTS.includes(variant)) return;
+    if (getCookie('variant') === variant) return;
+    setCookie('variant', variant, 30);
+};
+
 export const getUtmSource = () => {
     if (!getCookie('utmData')) {
         const queryParams = new URLSearchParams(window.location.search);
@@ -63,30 +70,6 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         utmData = JSON.stringify(queryObject);
     } else {
         queryObject = JSON.parse(utmData);
-    }
-
-    // Include A/B variant in utm_content only if user hasn't signed up yet
-    // signup=true is set by middleware when user actually signs in (prod cookie appears)
-    try {
-        const abRaw = getCookie('ab_test');
-        if (abRaw) {
-            const abData = JSON.parse(decodeURIComponent(abRaw));
-            const isLoggedIn = !!getCookie('prod');
-            //once signup is true it stays true forever
-            if (isLoggedIn && !abData.signup) {
-                abData.signup = true;
-                setCookie('ab_test', encodeURIComponent(JSON.stringify(abData)), 30);
-            }
-            if (abData.variant && !abData.signup) {
-                queryObject.utm_content = abData.variant;
-            } else {
-                delete queryObject.utm_content;
-                utmData = JSON.stringify(queryObject);
-                setCookie('utmData', utmData, 1);
-            }
-        }
-    } catch (e) {
-        console.error('Failed to parse ab_test cookie:', e);
     }
 
     const queryString = Object.entries(queryObject)
