@@ -21,7 +21,7 @@ export default function SetupBuilder({ initialApps = [] }) {
     const [slots, setSlots] = useState(Array(TOTAL_SLOTS).fill(null)); // index 0 = primary
     const [copied, setCopied] = useState(false);
     const [refCode, setRefCode] = useState('');
-    const [templateId, setTemplateId] = useState('');
+    const [templateIds, setTemplateIds] = useState([]);
     const [domain, setDomain] = useState('');
     const debounceRef = useRef(null);
     const preselectDoneRef = useRef(false);
@@ -156,14 +156,14 @@ export default function SetupBuilder({ initialApps = [] }) {
             lines.push(`  appName${i + 1}="${app.appslugname}"`);
         });
         if (refCode.trim()) lines.push(`  ref="${refCode.trim()}"`);
-        if (templateId.trim()) lines.push(`  templateId="${templateId.trim()}"`);
+        if (templateIds.length) lines.push(`  templateIds="${templateIds.join(',')}"`);
         if (domain.trim()) lines.push(`  domain="${domain.trim()}"`);
         lines.push(`  id="viasocket_integrations"`);
         lines.push(`  crossorigin="anonymous"`);
         lines.push(`  src="https://integrations.viasocket.com/integrations.js">`);
         lines.push(`</script>`);
         return lines.join('\n');
-    }, [primary, features, refCode, templateId, domain]);
+    }, [primary, features, refCode, templateIds, domain]);
 
     const canCopy = !!primary;
 
@@ -209,8 +209,8 @@ export default function SetupBuilder({ initialApps = [] }) {
                             onClearAll={() => setSlots(Array(TOTAL_SLOTS).fill(null))}
                             refCode={refCode}
                             setRefCode={setRefCode}
-                            templateId={templateId}
-                            setTemplateId={setTemplateId}
+                            templateIds={templateIds}
+                            setTemplateIds={setTemplateIds}
                             domain={domain}
                             setDomain={setDomain}
                         />

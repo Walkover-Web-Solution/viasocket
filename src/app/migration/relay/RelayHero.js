@@ -19,7 +19,7 @@ export default function RelayHero() {
             </p>
 
             <div className="flex flex-col md:flex-row items-stretch md:items-center md:justify-center gap-2 w-full sm:w-auto">
-                <Link href="/signup?import=true" className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
+                <Link href="/signup?import=true&utm_source=relay-switch-google-ads" className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
                     Import my Relay workflows <ArrowRight size={14} />{' '}
                 </Link>
                 <Link
