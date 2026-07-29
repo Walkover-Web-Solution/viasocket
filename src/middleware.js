@@ -8,6 +8,13 @@ const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
 
 const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
 
+const getVariantCookieDomain = (hostname) => {
+    if (!hostname) return undefined;
+    const parts = hostname.split('.');
+    const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
+    return `.${rootDomain}`;
+};
+
 export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
@@ -28,6 +35,7 @@ export async function middleware(request) {
             maxAge: VARIANT_MAX_AGE,
             path: '/',
             sameSite: 'lax',
+            domain: getVariantCookieDomain(request.nextUrl.hostname),
         });
     }
 
