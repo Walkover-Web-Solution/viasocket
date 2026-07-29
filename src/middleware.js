@@ -24,16 +24,10 @@ export async function middleware(request) {
     const existingVariant = request.cookies.get(VARIANT_COOKIE)?.value;
     if (!existingVariant || !VARIANTS.includes(existingVariant)) {
         const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-        const host = request.headers.get('host') || '';
-        const hostname = host.split(':')[0];
-        const parts = hostname.split('.');
-        const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
-        const domain = hostname ? `.${rootDomain}` : undefined;
         response.cookies.set(VARIANT_COOKIE, variant, {
             maxAge: VARIANT_MAX_AGE,
             path: '/',
             sameSite: 'lax',
-            domain,
         });
     }
 
