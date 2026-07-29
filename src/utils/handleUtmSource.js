@@ -25,7 +25,8 @@ export const setCookie = (name, value, days) => {
 export const setVariantCookie = (variant) => {
     const VARIANTS = ['A', 'B', 'C'];
     if (!VARIANTS.includes(variant)) return;
-    if (getCookie('variant') === variant) return;
+    const existing = getCookie('variant');
+    if (existing && VARIANTS.includes(existing)) return;
     setCookie('variant', variant, 30);
 };
 
