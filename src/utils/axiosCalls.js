@@ -45,6 +45,9 @@ export async function getBlogs(pageUrl) {
     const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
     try {
         const response = await axiosWithCache.get(url, {
+            params: {
+                "offset": APPERPAGE
+            },
             headers: {
                 'auth-key': process.env.NEXT_PUBLIC_BLOG_DB_KEY,
                 'Content-Type': 'application/json',
