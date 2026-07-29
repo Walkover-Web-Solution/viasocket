@@ -1,11 +1,12 @@
 'use client';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import HeroSection from './HeroSection';
 import HeroSectionB from './HeroSectionB';
 import HeroSectionC from './HeroSectionC';
 import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 import SearchAndResults from './SearchAndResults';
+import { setVariantCookie } from '@/utils/handleUtmSource';
 
 // A/B hero variants keyed off the `variant` cookie assigned server-side (middleware).
 function HeroVariant({ variant, appCount, hasToken }) {
@@ -21,6 +22,10 @@ function HeroVariant({ variant, appCount, hasToken }) {
 
 export default function HeroContainer({ appCount, initialApps, templateData, hasToken, variant }) {
     const [hasActiveSearch, setHasActiveSearch] = useState(false);
+
+    useEffect(() => {
+        setVariantCookie(variant);
+    }, [variant]);
 
     // Handle search state changes from SearchAndResults component
     const handleSearchStateChange = useCallback((isActive) => {
