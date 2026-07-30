@@ -42,24 +42,43 @@ export async function getLiveSupportData(pageUrl) {
 }
 
 export async function getBlogs(pageUrl) {
-    const url = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
+    const baseUrl = `https://table-api.viasocket.com/66029bf861a15927654de175/tblngzrs5`;
+    const limit = 200;
+    let allBlogs = [];
+    let offset = 0;
+    let hasMore = true;
+
     try {
-        const response = await axiosWithCache.get(url, {
-            headers: {
-                'auth-key': process.env.NEXT_PUBLIC_BLOG_DB_KEY,
-                'Content-Type': 'application/json',
-            },
-            cache: {
-                ttl: 1000 * 60 * 60, //cache for 1 hour
-                interpretHeader: false,
-            },
-        });
-        return response?.data?.data?.rows || [];
+        while (hasMore) {
+            const url = `${baseUrl}?limit=${limit}&offset=${offset}`;
+            const response = await axiosWithCache.get(url, {
+                headers: {
+                    'auth-key': process.env.NEXT_PUBLIC_BLOG_DB_KEY,
+                    'Content-Type': 'application/json',
+                },
+                cache: {
+                    ttl: 1000 * 60 * 60, //cache for 1 hour
+                    interpretHeader: false,
+                },
+            });
+
+            const blogs = response?.data?.data?.rows || [];
+            allBlogs = [...allBlogs, ...blogs];
+
+            // If we got fewer than 'limit' records, we've fetched all data
+            if (blogs.length < limit) {
+                hasMore = false;
+            } else {
+                offset += limit;
+            }
+        }
+
+        return allBlogs;
     } catch (error) {
         sendErrorMessage({
             error,
             pageUrl,
-            source: url,
+            source: baseUrl,
         });
         return [];
     }
