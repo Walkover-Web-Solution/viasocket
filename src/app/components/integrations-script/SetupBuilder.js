@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import searchApps from '@/utils/searchApps';
 import ScriptPicker from './ScriptPicker';
 import ScriptOutput from './ScriptOutput';
+import { useTemplateIds } from '@/hooks/useTemplateIds';
 
 const MAX_FEATURE = 10;
 const TOTAL_SLOTS = MAX_FEATURE + 1; // 1 primary + 10 feature
@@ -21,8 +22,12 @@ export default function SetupBuilder({ initialApps = [] }) {
     const [slots, setSlots] = useState(Array(TOTAL_SLOTS).fill(null)); // index 0 = primary
     const [copied, setCopied] = useState(false);
     const [refCode, setRefCode] = useState('');
-    const [templateIds, setTemplateIds] = useState([]);
     const [domain, setDomain] = useState('');
+    const { templateIds, addTemplateId, removeTemplateId, setTemplateIds } = useTemplateIds();
+    const [pickerTab, setPickerTab] = useState(() => {
+        // If templateId is in URL, default to template tab
+        return searchParams?.get('templateId') ? 'template' : 'apps';
+    });
     const debounceRef = useRef(null);
     const preselectDoneRef = useRef(false);
     const [canSyncParams, setCanSyncParams] = useState(!preselectSlugs.length);
@@ -210,13 +215,16 @@ export default function SetupBuilder({ initialApps = [] }) {
                             refCode={refCode}
                             setRefCode={setRefCode}
                             templateIds={templateIds}
-                            setTemplateIds={setTemplateIds}
+                            addTemplateId={addTemplateId}
+                            removeTemplateId={removeTemplateId}
                             domain={domain}
                             setDomain={setDomain}
+                            activeTab={pickerTab}
+                            setActiveTab={setPickerTab}
                         />
                     </div>
                     <div className="w-full min-w-0">
-                        <ScriptOutput scriptCode={scriptCode} canCopy={canCopy} copied={copied} onCopy={handleCopy} />
+                        <ScriptOutput scriptCode={scriptCode} canCopy={canCopy} copied={copied} onCopy={handleCopy} templateIds={templateIds} pickerTab={pickerTab} />
                     </div>
                 </div>
             </div>
