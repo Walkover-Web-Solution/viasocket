@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Share2 } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import TemplateCardIcons from '@/components/templateCard/templateCardIcons';
 import ReactMarkdown from 'react-markdown';
@@ -12,6 +12,7 @@ import CategoryTemplates from '@/components/categoryTemplates/categoryTemplates'
 import ZoomableFlowContainer from '@/components/flowComp/zoomableFlowContainer';
 import TemplateCard from '@/components/templateCard/templateCard';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import { templateIdManager } from '@/utils/templateIdManager';
 
 export default function AutomationSlugClient({ pageData, hasToken }) {
     const [scale, setScale] = useState(1);
@@ -51,6 +52,14 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
         setIsStickyVisible(false);
     };
 
+    const handleCopyTemplateId = () => {
+        if (template?.id) {
+            navigator.clipboard.writeText(template?.id);
+            const url = templateIdManager.generateUrl(template?.id);
+            window.location.href = url;
+        }
+    };
+
     if (isCategory) {
         return (
             <div className="container cont lg:gap-20 md:gap-16 gap-12">
@@ -74,7 +83,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
     }
 
     return (
-        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-20 relative rounded-xl">
+        <div className="container cont lg:gap-20 md:gap-16 gap-12 pt-12 relative rounded-xl">
             <div ref={triggerRef} className="flex flex-col gap-4 border custom-border rounded-xl">
                 <div className="dotted-background flex flex-col lg:flex-row lg:gap-1 rounded-xl">
                     <div
@@ -93,12 +102,27 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                 >
                                     Install Template
                                 </button>
-                                <button className="btn btn-outline" onClick={handleShareTemplate}>
-                                    Share Template
+                                <button className="btn btn-outline" onClick={handleCopyTemplateId}>
+                                    copy template id
                                 </button>
                             </div>
                         </div>
                         <div className="flex items-center gap-4 border-t pt-4">
+                            <div className="relative group">
+                                <button
+                                    className="border p-1 w-8 h-8 bg-white flex items-center justify-center hover:!bg-black hover:text-white transition-colors"
+                                    onClick={handleShareTemplate}
+                                >
+                                    <Share2 className="w-4 h-4" />
+                                </button>
+                                <div
+                                    role="tooltip"
+                                    className="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 z-10 inline-block whitespace-nowrap px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+                                >
+                                    Share Template
+                                    <span className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-1 w-2 h-2 rotate-45 bg-gray-900" />
+                                </div>
+                            </div>
                             <TemplateCardIcons template={template} rounded />
                             <span className="w-1.5 h-1.5 rounded-full bg-gray-400" />
                             <h3 className="text-xs text-gray-400 tracking-[1px]">By {template?.userName}</h3>
@@ -154,9 +178,19 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                         >
                             Install Template
                         </button>
-                        <button className="btn btn-outline" onClick={handleShareTemplate}>
-                            Share Template
-                        </button>
+                        <div className="relative group">
+                            <button className="btn btn-outline" onClick={handleShareTemplate}>
+                                <Share2 className="w-4 h-4 mr-2" />
+                                Share Template
+                            </button>
+                            <div
+                                role="tooltip"
+                                className="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 z-10 inline-block whitespace-nowrap px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+                            >
+                                Share Template
+                                <span className="absolute bottom-full left-1/2 -translate-x-1/2 -mb-1 w-2 h-2 rotate-45 bg-gray-900" />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -188,9 +222,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                         <div className={`bg-white border custom-border p-8 ${style.markdownImage}`}>
                             <ReactMarkdown
                                 components={{
-                                    h1: ({ node, ...props }) => (
-                                        <h2 {...props} className="h2" />
-                                    ),
+                                    h1: ({ node, ...props }) => <h2 {...props} className="h2" />,
                                     h2: ({ node, ...props }) => (
                                         <h2 {...props} className="text-2xl font-bold mb-3 mt-6 text-black-900" />
                                     ),
