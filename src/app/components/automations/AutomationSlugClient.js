@@ -103,7 +103,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                     Install Template
                                 </button>
                                 <button className="btn btn-outline" onClick={handleCopyTemplateId}>
-                                    copy template id
+                                    Show Template in Your Website
                                 </button>
                             </div>
                         </div>
