@@ -28,6 +28,16 @@ export default function SetupBuilder({ initialApps = [] }) {
         // If templateId is in URL, default to template tab
         return searchParams?.get('templateId') ? 'template' : 'apps';
     });
+
+    const handleTabChange = (tab) => {
+        setPickerTab(tab);
+        // Clear the other selection when switching tabs
+        if (tab === 'apps') {
+            setTemplateIds([]);
+        } else if (tab === 'template') {
+            setSlots(Array(TOTAL_SLOTS).fill(null));
+        }
+    };
     const debounceRef = useRef(null);
     const preselectDoneRef = useRef(false);
     const [canSyncParams, setCanSyncParams] = useState(!preselectSlugs.length);
@@ -155,22 +165,28 @@ export default function SetupBuilder({ initialApps = [] }) {
     const features = slots.slice(1).filter(Boolean);
 
     const scriptCode = useMemo(() => {
-        const primarySlug = primary?.appslugname || 'your_app_slug';
-        const lines = [`<script`, `  primaryApp="${primarySlug}"`];
-        features.forEach((app, i) => {
-            lines.push(`  appName${i + 1}="${app.appslugname}"`);
-        });
+        const lines = [`<script`];
+        
+        if (pickerTab === 'apps') {
+            const primarySlug = primary?.appslugname || 'your_app_slug';
+            lines.push(`  primaryApp="${primarySlug}"`);
+            features.forEach((app, i) => {
+                lines.push(`  appName${i + 1}="${app.appslugname}"`);
+            });
+        } else if (pickerTab === 'template' && templateIds.length) {
+            lines.push(`  templateIds="${templateIds.join(',')}"`);
+        }
+        
         if (refCode.trim()) lines.push(`  ref="${refCode.trim()}"`);
-        if (templateIds.length) lines.push(`  templateIds="${templateIds.join(',')}"`);
         if (domain.trim()) lines.push(`  domain="${domain.trim()}"`);
         lines.push(`  id="viasocket_integrations"`);
         lines.push(`  crossorigin="anonymous"`);
         lines.push(`  src="https://integrations.viasocket.com/integrations.js">`);
         lines.push(`</script>`);
         return lines.join('\n');
-    }, [primary, features, refCode, templateIds, domain]);
+    }, [primary, features, refCode, templateIds, domain, pickerTab]);
 
-    const canCopy = !!primary;
+    const canCopy = pickerTab === 'apps' ? !!primary : templateIds.length > 0;
 
     const handleCopy = async () => {
         if (!canCopy) return;
@@ -220,7 +236,7 @@ export default function SetupBuilder({ initialApps = [] }) {
                             domain={domain}
                             setDomain={setDomain}
                             activeTab={pickerTab}
-                            setActiveTab={setPickerTab}
+                            setActiveTab={handleTabChange}
                         />
                     </div>
                     <div className="w-full min-w-0">
