@@ -20,16 +20,18 @@ export default function ScriptPicker({
     refCode,
     setRefCode,
     templateIds,
-    setTemplateIds,
+    addTemplateId,
+    removeTemplateId,
     domain,
     setDomain,
+    activeTab,
+    setActiveTab,
 }) {
     const filledCount = slots.filter(Boolean).length;
     const lastFilledFeature = slots.slice(1).reduce((acc, s, i) => (s ? i : acc), -1);
     const hasAnyFeature = lastFilledFeature !== -1;
     const visibleFeatureCount = slots[0] || hasAnyFeature ? Math.min(MAX_FEATURE, lastFilledFeature + 2) : 0;
     const [showAll, setShowAll] = useState(false);
-    const [activeTab, setActiveTab] = useState('apps');
     const visibleApps = query || showAll ? apps : apps.slice(0, INITIAL_VISIBLE);
     const hasMore = !query && !showAll && apps.length > INITIAL_VISIBLE;
 
@@ -45,13 +47,13 @@ export default function ScriptPicker({
                     </TabButton>
                 </div>
 
-                <div className="p-4 flex flex-col gap-4">
-                    <div className="flex items-end justify-end px-4">
+                <div className="px-4 pb-4 flex flex-col gap-4">
+                    <div className="flex items-end justify-end px-2">
                         {activeTab === 'apps' && filledCount >= 2 && (
                             <button
                                 type="button"
                                 onClick={onClearAll}
-                                className="inline-flex items-center gap-1 text-[12.5px] font-semibold text-accent hover:underline"
+                                className="inline-flex items-center gap-1 text-[12.5px] mt-2 font-semibold text-accent hover:underline"
                             >
                                 <X className="h-3 w-3" strokeWidth={2.5} />
                                 Clear all
@@ -99,7 +101,11 @@ export default function ScriptPicker({
                         </>
                     )}
                     {activeTab === 'template' && (
-                        <TemplateIdChipInput templateIds={templateIds} setTemplateIds={setTemplateIds} />
+                        <TemplateIdChipInput 
+                            templateIds={templateIds} 
+                            addTemplateId={addTemplateId}
+                            removeTemplateId={removeTemplateId}
+                        />
                     )}
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>

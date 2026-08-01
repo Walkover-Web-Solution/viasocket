@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Copy, Check } from 'lucide-react';
 import IntegrationsPreview from './IntegrationsPreview';
+import TemplatePreview from './TemplatePreview';
 
 const APP_ATTRIBUTES = Array.from({ length: 10 }, (_, i) => `appName${i + 1}`);
 
@@ -13,7 +14,7 @@ const PAIRS = [
     { name: 'Gmail', logo: 'https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg' },
 ];
 
-export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
+export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy, templateIds = [], pickerTab = 'apps' }) {
     const [activeTab, setActiveTab] = useState('preview');
     const [pairIdx, setPairIdx] = useState(0);
     const previewRef = useRef(null);
@@ -122,7 +123,11 @@ export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy }) {
                 className={`min-h-[360px] max-h-[700px] overflow-y-auto p-8 flex-1 h-full ${activeTab === 'preview' ? '' : 'hidden'}`}
             >
                 {!canCopy ? (
-                    <IntegrationsPreview current={currentPair} />
+                    pickerTab === 'template' ? (
+                        <TemplatePreview templateIds={templateIds} />
+                    ) : (
+                        <IntegrationsPreview current={currentPair} />
+                    )
                 ) : (
                     <div ref={previewRef} className="min-h-[300px]" />
                 )}

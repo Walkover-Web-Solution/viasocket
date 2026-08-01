@@ -3,34 +3,26 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 
-export default function TemplateIdChipInput({ templateIds, setTemplateIds }) {
+export default function TemplateIdChipInput({ templateIds, addTemplateId, removeTemplateId }) {
     const [templateInput, setTemplateInput] = useState('');
 
-    const addTemplateId = () => {
+    const handleAddTemplateId = () => {
         const value = templateInput.trim();
         if (!value) return;
         const ids = value
             .split(',')
             .map((v) => v.trim())
             .filter(Boolean);
-        setTemplateIds((prev) => {
-            const existing = new Set(prev);
-            ids.forEach((id) => existing.add(id));
-            return Array.from(existing);
-        });
+        addTemplateId(ids);
         setTemplateInput('');
-    };
-
-    const removeTemplateId = (id) => {
-        setTemplateIds((prev) => prev.filter((item) => item !== id));
     };
 
     const handleTemplateKeyDown = (e) => {
         if (e.key === 'Enter' || e.key === ',') {
             e.preventDefault();
-            addTemplateId();
+            handleAddTemplateId();
         } else if (e.key === 'Backspace' && !templateInput && templateIds.length) {
-            setTemplateIds((prev) => prev.slice(0, -1));
+            removeTemplateId(templateIds[templateIds.length - 1]);
         }
     };
 
