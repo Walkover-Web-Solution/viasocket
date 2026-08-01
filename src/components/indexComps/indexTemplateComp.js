@@ -5,7 +5,7 @@ import Link from 'next/link';
 import FlowRenderer from '../flowComp/flowRenderer';
 import ZoomableFlowContainer from '../flowComp/zoomableFlowContainer';
 import IconWrapper from '../flowComp/iconWrapper';
-import Image from 'next/image';
+import CategoryAppsDisplay from './CategoryAppsDisplay';
 
 const IndexTemplateComp = ({ categories, templates }) => {
     const [scale, setScale] = useState(1);
@@ -149,26 +149,7 @@ const IndexTemplateComp = ({ categories, templates }) => {
                     </div>
                 </div>
 
-                <div className="p-3 border-t flex items-center gap-2 bg-[#EFF2FF]">
-                    <p className="text-sm text-gray-500 font-semibold">ALSO WORKS WITH</p>
-                    <div className="flex items-center">
-                        {visibleIcons.map((iconUrl, index) => (
-                            <div
-                                key={`app-icon-${index}`}
-                                className={`w-9 h-9 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden ${index > 0 ? '-ml-2' : ''}`}
-                            >
-                                <Image
-                                    src={iconUrl}
-                                    alt="App icon"
-                                    width={22}
-                                    height={22}
-                                    className="object-contain p-1"
-                                />
-                            </div>
-                        ))}
-                        {extraCount > 0 && <span className="text-sm text-gray-500 ml-3">+{extraCount} more</span>}
-                    </div>
-                </div>
+                <CategoryAppsDisplay categoryName={selected?.name} currentTemplate={currentTemplate} />
             </div>
         </div>
     );
