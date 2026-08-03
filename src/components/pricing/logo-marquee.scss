@@ -9,6 +9,7 @@
 
 .marquee-container {
     overflow: hidden;
+    max-width: 768px;
     $gradient: linear-gradient(
         to right,
         transparent,
@@ -21,7 +22,7 @@
 }
 
 .marquee-track {
-    animation: marquee 20s linear infinite;
+    animation: marquee 40s linear infinite;
 
     &:hover {
         animation-play-state: paused;
