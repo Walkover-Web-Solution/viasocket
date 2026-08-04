@@ -42,23 +42,30 @@ const CategoryAppsDisplay = ({ categoryName, currentTemplate }) => {
     // Get icons for display - use category apps if available, otherwise fall back to flowJson icons
     const { visibleIcons, extraCount } = useMemo(() => {
         if (categoryApps.length > 0) {
-            const icons = categoryApps.map((app) => app?.iconurl).filter(Boolean);
+            const apps = categoryApps
+                .map((app) => ({ iconUrl: app?.iconurl, name: app?.name }))
+                .filter((app) => app.iconUrl);
             return {
-                visibleIcons: icons.slice(0, 4),
-                extraCount: Math.max(0, icons.length - 4),
+                visibleIcons: apps.slice(0, 4),
+                extraCount: Math.max(0, apps.length - 4),
             };
         }
 
         // Fall back to flowJson icons if no category apps
         const flowJson = currentTemplate?.metadata?.flowJson || currentTemplate?.flowJson;
-        const triggerIcon = flowJson?.trigger?.iconUrl;
+        const trigger = flowJson?.trigger;
         const stepKeys = flowJson?.order?.root || [];
-        const stepIcons = stepKeys.map((step) => flowJson?.blocks?.[step]?.iconUrl).filter(Boolean);
-        const icons = triggerIcon ? [triggerIcon, ...stepIcons] : stepIcons;
-        const uniqueIcons = [...new Set(icons)];
+        const steps = stepKeys.map((step) => flowJson?.blocks?.[step]);
+        const items = trigger ? [trigger, ...steps] : steps;
+        const mappedItems = items
+            .map((item) => ({ iconUrl: item?.iconUrl, name: item?.name }))
+            .filter((item) => item.iconUrl);
+        const uniqueItems = mappedItems.filter(
+            (item, index, self) => self.findIndex((t) => t.iconUrl === item.iconUrl) === index
+        );
         return {
-            visibleIcons: uniqueIcons.slice(0, 4),
-            extraCount: Math.max(0, uniqueIcons.length - 4),
+            visibleIcons: uniqueItems.slice(0, 4),
+            extraCount: Math.max(0, uniqueItems.length - 4),
         };
     }, [currentTemplate, categoryApps]);
 
@@ -66,18 +73,24 @@ const CategoryAppsDisplay = ({ categoryName, currentTemplate }) => {
         <div className="p-3 border-t flex items-center gap-2 bg-[#EFF2FF]">
             <p className="text-sm text-gray-500 font-semibold">ALSO WORKS WITH</p>
             <div className="flex items-center">
-                {visibleIcons.map((iconUrl, index) => (
+                {visibleIcons.map(({ iconUrl, name }, index) => (
                     <div
                         key={`app-icon-${index}`}
-                        className={`w-9 h-9 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center overflow-hidden ${index > 0 ? '-ml-2' : ''}`}
+                        className={`relative group w-9 h-9 rounded-full bg-white border border-gray-100 shadow-sm flex items-center justify-center ${index > 0 ? '-ml-2' : ''}`}
                     >
                         <Image
                             src={iconUrl}
-                            alt="App icon"
+                            alt={name || 'App icon'}
                             width={22}
                             height={22}
                             className="object-contain p-1"
                         />
+                        <div
+                            role="tooltip"
+                            className="pointer-events-none absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50 inline-block whitespace-nowrap px-3 py-2 text-xs font-medium text-white bg-gray-900 rounded-lg shadow-sm opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300"
+                        >
+                            {name || 'App icon'}
+                        </div>
                     </div>
                 ))}
                 {extraCount > 0 && <span className="text-sm text-gray-500 ml-3">+{extraCount} more</span>}
