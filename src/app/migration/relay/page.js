@@ -1,3 +1,4 @@
+import Script from 'next/script';
 import { CheckCircle, Upload, Wrench, Rocket } from 'lucide-react';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -109,6 +110,31 @@ export default async function RelayMigrationPage() {
 
     return (
         <>
+            <Script src="https://www.googletagmanager.com/gtag/js?id=AW-16852796533" strategy="afterInteractive" />
+            <Script id="gtag-config" strategy="afterInteractive">
+                {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                    gtag('config', 'AW-16852796533');
+                `}
+            </Script>
+            <Script id="gtag-conversion" strategy="afterInteractive">
+                {`
+                    function gtag_report_conversion(url) {
+                        var callback = function () {
+                            if (typeof(url) != 'undefined') {
+                                window.location = url;
+                            }
+                        };
+                        gtag('event', 'conversion', {
+                            'send_to': 'AW-16852796533/PQ6RCKGzwdQaEPWIheQ-',
+                            'event_callback': callback
+                        });
+                        return false;
+                    }
+                `}
+            </Script>
             <ConditionalNavbar>
                 <NavbarServer utm="/migration/relay" />
             </ConditionalNavbar>

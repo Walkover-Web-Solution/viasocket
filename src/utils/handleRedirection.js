@@ -13,7 +13,7 @@ export const handleRedirect = (e, url, router, customSource, extraParams = {}) =
 
     if (customSource) {
         const utmState = JSON.stringify({ utm_source: customSource });
-        finalUrl = `${baseUrl}${separator}state=${utmState}${extra}`;
+        finalUrl = `${baseUrl}${separator}state=${utmState}${extra}&utm_source=${encodeURIComponent(customSource)}`;
     } else {
         const source = typeof window !== 'undefined' ? window.location.pathname : '';
         const utmParams = setUtmSource({ source });

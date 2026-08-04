@@ -14,6 +14,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
     const [formData, setFormData] = useState({
         userEmail: '',
         userName: '',
+        whatsappNumber: '',
         useCase: '',
         plugName: appInfo?.name || '',
         source: 'website',
@@ -250,6 +251,20 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                     ref={emailInputRef}
                                 />
                                 {emailError && <span className="text-error text-sm mt-1">{emailError}</span>}
+                            </label>
+
+                            <label className="form-control w-full">
+                                <div className="label">
+                                    <span className="label-text">Need notifications on WhatsApp?</span>
+                                </div>
+                                <input
+                                    type="text"
+                                    name="whatsappNumber"
+                                    placeholder="WhatsApp Number / Contact Number"
+                                    className="input input-bordered w-full focus:outline-none"
+                                    value={formData.whatsappNumber}
+                                    onChange={handleInputChange}
+                                />
                             </label>
                             {!type && (
                                 <label className="form-control w-full">
