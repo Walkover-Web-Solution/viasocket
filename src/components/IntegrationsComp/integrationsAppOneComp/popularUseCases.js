@@ -36,7 +36,7 @@ export default function PopularUseCases({ appName }) {
                             className="bg-white border border-gray-200 hover:border-accent p-4 flex items-start justify-between gap-4 cursor-pointer transition-colors"
                             onClick={(e) => {
                                 const utmObject = JSON.parse(getCookie('utmData') || '{}');
-                                utmObject.popular_usecase = description;
+                                utmObject.prompt = description;
                                 setCookie('utmData', JSON.stringify(utmObject), 1);
                                 handleRedirect(e, '/signup?', null, null);
                             }}
