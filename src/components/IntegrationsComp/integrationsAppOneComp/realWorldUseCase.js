@@ -49,6 +49,15 @@ const INTEGRATION_APPS = [
 
 const DEFAULT_ICON = 'https://placehold.co/120x120/0F9D58/white?text=GS';
 
+const HARDCODED_USE_CASES = [
+    'Start a workflow in your other tools whenever something new happens in [app_name].',
+    'Update records in [app_name] automatically when data changes in the apps your team already uses.',
+    'Log [app_name] activity into a spreadsheet or database so reporting stays current without manual entry.',
+    'Alert the right teammate or channel when an important [app_name] event needs a response.',
+    'Add AI steps that summarize, classify, or draft text from your [app_name] data mid-workflow.',
+    'Run [app_name] workflows on a daily or weekly schedule to keep records and reports in sync.',
+];
+
 const hexToRgba = (hex, alpha = 1) => {
     const h = (hex || '').replace('#', '');
     const full =
@@ -123,10 +132,12 @@ const RealWorldUseCase = ({ appOneDetails, combosData, appCount, appData }) => {
             return raw.map(getUseCaseText).filter(Boolean);
         }
         const fallback = appData?.useCasesCardsData || [];
-        return Array.isArray(fallback)
-            ? fallback.map((item) => (typeof item === 'string' ? item : item?.title || '')).filter(Boolean)
-            : [];
-    }, [appData?.useCasesNewData, appData?.useCasesCardsData]);
+        if (Array.isArray(fallback) && fallback.length > 0) {
+            return fallback.map((item) => (typeof item === 'string' ? item : item?.title || '')).filter(Boolean);
+        }
+        // Final fallback to hardcoded use cases with app name replacement
+        return HARDCODED_USE_CASES.map(useCase => useCase.replace(/\[app_name\]/g, appName));
+    }, [appData?.useCasesNewData, appData?.useCasesCardsData, appName]);
 
     // Get dynamic app icons from combosData
     const dynamicApps = useMemo(() => {

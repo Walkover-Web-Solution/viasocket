@@ -23,6 +23,7 @@ import TemplateContainer from '../templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import RealWorldUseCase from './realWorldUseCase';
 import GetStarted from '@/components/getStarted/getStarted';
+import HeroSection from './heroSection';
 
 export default function IntegrationsAppOneClientComp({
     appOneDetails,
@@ -101,55 +102,20 @@ export default function IntegrationsAppOneClientComp({
     const selectedCombos = filteredCombos?.length > 0 ? filteredCombos : combosData?.combinations;
 
     return (
-        <div className="bg-[#f4f3f1] flex flex-col gap-8 md:gap-16 global-top-space pt-12">
-            <div className="container flex flex-col justify-between gap-12 mb-12">
+        <div className="bg-[#f4f3f1] flex flex-col gap-12 global-top-space pt-12">
+            <div className="container flex flex-col justify-between gap-12">
                 <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
-
-                    <div className="text-xl gap-4 flex-wrap flex items-center">
-                        <button
-                            onClick={(e) =>
-                                handleRedirect(e, `https://flow.viasocket.com/connect/${appOneDetails?.rowid}?`)
-                            }
-                            className="btn btn-outline"
-                            rel="nofollow"
-                        >
-                            Connect to {appOneDetails?.name} <ExternalLinkIcon className="w-4 h-4" />
-                        </button>
-                    </div>
                 </div>
 
-                {(combosData?.combinations?.length > 0 || appOneDetails?.events.length > 0) && (
-                    <div className="flex flex-col gap-12 mb-8">
-                        <div className=" flex flex-col gap-2">
-                            <h1 className="h1">
-                                {appData?.headings?.h1 || `Automate ${appOneDetails?.name} with viaSocket`}
-                            </h1>
-                            <p className="sub__h1">
-                                {appData?.headings?.subheadline ||
-                                    `Eliminate repetitive tasks and manual data entry. Build automated workflows with viaSocket's AI agents and serverless logic — no code required.`}
-                            </p>
-                        </div>
-                    </div>
-                )}
-
-                <TemplateContainer
-                    selectedApps={[appOneDetails]}
-                    templateToShow={templateToShow}
-                    requireAllApps={true}
+                <HeroSection
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
+                    appData={appData}
                 />
-            </div>
-
-            <div className="container flex flex-col gap-8">
-                <h2 className="h2">
-                    Connect {appOneDetails?.name} with {appCount + 300}+ apps
-                </h2>
                 {appOneDetails?.events.length > 0 && (
-                    <div
-                        className="cont gap-10 pt-12 border custom-border"
-                        style={{ backgroundColor: appOneDetails?.brandcolor }}
-                    >
-                        <div className="cont gap-10">
+                    <div className="cont border custom-border mt-12" style={{ backgroundColor: appOneDetails?.brandcolor }}>
+                        <div className="cont p-4">
                             <div className="flex sm:flex-row flex-col items-start sm:items-center gap-4 pl-4 sm:pl-6 pr-4 sm:pr-0">
                                 <div className="flex items-center gap-4">
                                     <Image
@@ -198,6 +164,18 @@ export default function IntegrationsAppOneClientComp({
                         )}
                     </div>
                 )}
+            </div>
+
+            <div className="container">
+                <h2 className="h2">Popular ways to automate {appOneDetails?.name}</h2>
+                <p className="text-lg">
+                    Ready-made flows built with {appOneDetails?.name} — preview one, then make it yours.
+                </p>
+                <TemplateContainer
+                    selectedApps={[appOneDetails]}
+                    templateToShow={templateToShow}
+                    requireAllApps={true}
+                />
             </div>
             <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                 <div className="container flex flex-col gap-16">
@@ -299,7 +277,14 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            <RealWorldUseCase appOneDetails={appOneDetails} combosData={combosData} appCount={appCount} appData={appData} />
+            <div id="real-world-use-cases">
+                <RealWorldUseCase
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
+                    appCount={appCount}
+                    appData={appData}
+                />
+            </div>
 
             <div className="container">
                 <div className="cont gap-8">
@@ -376,82 +361,83 @@ export default function IntegrationsAppOneClientComp({
 
             {faqData && <FAQSection faqData={faqData} />}
 
-    <div className='container'>
+            <div className="container">
                 <div className="flex flex-col md:flex-row border border-x-0 custom-border bg-white">
-                <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
-                    <div>
-                        <Image
-                            className="h-10 w-fit border p-1"
-                            src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                            width={36}
-                            height={36}
-                            alt={appOneDetails?.name}
-                        />
-                        <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
+                    <div className="cont gap-4 p-12 border-x custom-border w-full md:border-b-0 border-b">
+                        <div>
+                            <Image
+                                className="h-10 w-fit border p-1"
+                                src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                width={36}
+                                height={36}
+                                alt={appOneDetails?.name}
+                            />
+                            <h3 className="h3 font-bold pt-5">About {appOneDetails?.name}</h3>
+                        </div>
+                        <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
+                        <div className="flex flex-wrap gap-2">
+                            {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
+                                <Link
+                                    key={index}
+                                    href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
+                                    className="mb-2"
+                                >
+                                    <span className="btn btn-outline">{cat}</span>
+                                </Link>
+                            ))}
+                        </div>
+                        <ExternalLink
+                            href={(() => {
+                                let baseUrl = appOneDetails?.domain.startsWith('http')
+                                    ? appOneDetails?.domain
+                                    : 'http://' + appOneDetails?.domain;
+
+                                // Add /integrations/viasocket/ for magicalapi.com domain
+                                if (baseUrl.includes('magicalapi.com')) {
+                                    baseUrl = baseUrl.replace(/\/$/, '') + '/integrations/viasocket/';
+                                }
+
+                                const separator = baseUrl.includes('?') ? '&' : '?';
+                                return `${baseUrl}${separator}utm_source=viasocket`;
+                            })()}
+                            appSlugName={appOneDetails?.appslugname}
+                            doFollowArray={getDoFollowUrlStatusArray}
+                        >
+                            <LinkText children={'Learn More'} />
+                        </ExternalLink>
                     </div>
-                    <p className="text-sm sm:text-lg text-black h-full">{appOneDetails?.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                        {appOneDetails?.category?.slice(0, 2).map((cat, index) => (
-                            <Link
-                                key={index}
-                                href={createURL(`/integrations/category/${cat.toLowerCase().replace(/\s+/g, '-')}`)}
-                                className="mb-2"
-                            >
-                                <span className="btn btn-outline">{cat}</span>
+                    <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
+                        <div>
+                            <Image
+                                className="h-10 w-fit border p-1"
+                                src={'/assets/brand/fav_ico.svg'}
+                                width={36}
+                                height={36}
+                                alt="viaSocket"
+                            />
+                            <h3 className="h3 font-bold pt-5">About viaSocket</h3>
+                        </div>
+                        <p className="text-sm sm:text-lg text-black h-full">
+                            viaSocket is an AI-powered, workflow automation platform that helps people and businesses
+                            connect apps and automate repetitive tasks. With thousands of integrations, anyone can build
+                            workflows to move data, cut manual work, and save time. Whether for simple tasks or
+                            large-scale processes, viaSocket makes automation easy and helps teams focus on what matters
+                            most.
+                        </p>
+                        <div className="flex flex-wrap gap-3">
+                            <Link href="/" className="mb-2">
+                                <span className="btn btn-outline">Workflow Automation</span>
                             </Link>
-                        ))}
-                    </div>
-                    <ExternalLink
-                        href={(() => {
-                            let baseUrl = appOneDetails?.domain.startsWith('http')
-                                ? appOneDetails?.domain
-                                : 'http://' + appOneDetails?.domain;
-                            
-                            // Add /integrations/viasocket/ for magicalapi.com domain
-                            if (baseUrl.includes('magicalapi.com')) {
-                                baseUrl = baseUrl.replace(/\/$/, '') + '/integrations/viasocket/';
-                            }
-                            
-                            const separator = baseUrl.includes('?') ? '&' : '?';
-                            return `${baseUrl}${separator}utm_source=viasocket`;
-                        })()}
-                        appSlugName={appOneDetails?.appslugname}
-                        doFollowArray={getDoFollowUrlStatusArray}
-                    >
-                        <LinkText children={'Learn More'} />
-                    </ExternalLink>
-                </div>
-                <div className="w-full cont gap-4 p-12 border-x md:border-l-0 custom-border">
-                    <div>
-                        <Image
-                            className="h-10 w-fit border p-1"
-                            src={'/assets/brand/fav_ico.svg'}
-                            width={36}
-                            height={36}
-                            alt="viaSocket"
-                        />
-                        <h3 className="h3 font-bold pt-5">About viaSocket</h3>
-                    </div>
-                    <p className="text-sm sm:text-lg text-black h-full">
-                        viaSocket is an AI-powered, workflow automation platform that helps people and businesses
-                        connect apps and automate repetitive tasks. With thousands of integrations, anyone can build
-                        workflows to move data, cut manual work, and save time. Whether for simple tasks or large-scale
-                        processes, viaSocket makes automation easy and helps teams focus on what matters most.
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                        <Link href="/" className="mb-2">
-                            <span className="btn btn-outline">Workflow Automation</span>
-                        </Link>
-                        <Link href="/integrations" className="mb-2">
-                            <span className="btn btn-outline">Integration</span>
+                            <Link href="/integrations" className="mb-2">
+                                <span className="btn btn-outline">Integration</span>
+                            </Link>
+                        </div>
+                        <Link href={'/'}>
+                            <LinkText children={'Learn More'} />
                         </Link>
                     </div>
-                    <Link href={'/'}>
-                        <LinkText children={'Learn More'} />
-                    </Link>
                 </div>
             </div>
-    </div>
 
             <ConditionalFooter>
                 <Footer footerData={footerData} />
