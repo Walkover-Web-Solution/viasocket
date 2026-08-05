@@ -52,7 +52,7 @@ export default function PopularUseCases({ appName }) {
             </div>
             <a
                 href="#real-world-use-cases"
-                className="text-sm font-medium text-accent hover:text-red-600 flex items-center gap-1"
+                className="text-sm font-medium text-accent flex items-center gap-1"
             >
                 See all use cases <MoveRight className="w-4 h-4" />
             </a>

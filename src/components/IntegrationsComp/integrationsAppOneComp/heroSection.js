@@ -32,7 +32,7 @@ export default function HeroSection({ appOneDetails, combosData, appData }) {
                 </div>
             )}
 
-            <PopularUseCases appName={appOneDetails?.name} />
+            {showContent && <PopularUseCases appName={appOneDetails?.name} />}
         </div>
     );
 }
