@@ -34,7 +34,7 @@ export default function HeroSectionB({ hasToken }) {
                 window.localStorage.setItem('prompt', value);
             } catch {}
         }
-        handleRedirect(e, '/signup?', null, '/hero-ai', { import: 'true' });
+        handleRedirect(e, '/signup?', null, 'home-B', { import: 'true' });
     };
 
     return (

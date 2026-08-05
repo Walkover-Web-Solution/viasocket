@@ -103,80 +103,85 @@ export default function IntegrationsAppOneClientComp({
 
     return (
         <div className="bg-[#f4f3f1] flex flex-col gap-12 global-top-space pt-12">
-            <div className="container flex flex-col justify-between gap-12">
+            <div
+                className={`container flex flex-col justify-between ${appOneDetails?.events?.length > 0 || combosData?.combinations?.length > 0 ? 'gap-12' : ''}`}
+            >
                 <div className="cont md:flex-row flex gap-4 justify-between text-base py-4">
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
                 </div>
 
-                <HeroSection
-                    appOneDetails={appOneDetails}
-                    combosData={combosData}
-                    appData={appData}
-                />
-                {appOneDetails?.events.length > 0 && (
-                    <div className="cont border custom-border mt-12" style={{ backgroundColor: appOneDetails?.brandcolor }}>
-                        <div className="cont p-4">
-                            <div className="flex sm:flex-row flex-col items-start sm:items-center gap-4 pl-4 sm:pl-6 pr-4 sm:pr-0">
-                                <div className="flex items-center gap-4">
-                                    <Image
-                                        className="h-12 w-fit border bg-white p-1"
-                                        src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
-                                        width={20}
-                                        height={20}
-                                        alt={appOneDetails?.name}
+                <HeroSection appOneDetails={appOneDetails} combosData={combosData} appData={appData} />
+                <div className="flex flex-col gap-4">
+                    {appOneDetails?.events.length > 0 && (
+                        <div
+                            className="cont border custom-border mt-12"
+                            style={{ backgroundColor: appOneDetails?.brandcolor }}
+                        >
+                            <div className="cont p-4">
+                                <div className="flex sm:flex-row flex-col items-start sm:items-center gap-4 pl-4 sm:pl-6 pr-4 sm:pr-0">
+                                    <div className="flex items-center gap-4">
+                                        <Image
+                                            className="h-12 w-fit border bg-white p-1"
+                                            src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
+                                            width={20}
+                                            height={20}
+                                            alt={appOneDetails?.name}
+                                        />
+                                        <Plus className="w-8 h-8 text-white" />
+                                    </div>
+                                    <IntegrationSearchApps
+                                        searchTerm={searchTerm}
+                                        setSearchTerm={setSearchTerm}
+                                        onSearchResults={handleSearchResults}
+                                        onCategoriesResults={handleCategoriesResults}
+                                        onDebounceValueChange={handleDebounceValueChange}
+                                        app={appOneDetails}
                                     />
-                                    <Plus className="w-8 h-8 text-white" />
                                 </div>
-                                <IntegrationSearchApps
-                                    searchTerm={searchTerm}
-                                    setSearchTerm={setSearchTerm}
-                                    onSearchResults={handleSearchResults}
-                                    onCategoriesResults={handleCategoriesResults}
-                                    onDebounceValueChange={handleDebounceValueChange}
-                                    app={appOneDetails}
-                                />
                             </div>
+                            <IntegrationsAppComp
+                                pageInfo={pageInfo}
+                                integrationsInfo={integrationsInfo}
+                                apps={debounceValue ? searchedApps : apps}
+                                appCategories={appOneDetails?.category}
+                                appCount={appCount}
+                                searchTerm={debounceValue}
+                                searchedCategories={searchedCategories}
+                                appOneDetails={appOneDetails}
+                            />
                         </div>
-                        <IntegrationsAppComp
-                            pageInfo={pageInfo}
-                            integrationsInfo={integrationsInfo}
-                            apps={debounceValue ? searchedApps : apps}
-                            appCategories={appOneDetails?.category}
-                            appCount={appCount}
-                            searchTerm={debounceValue}
-                            searchedCategories={searchedCategories}
-                            appOneDetails={appOneDetails}
-                        />
-                    </div>
-                )}
+                    )}
 
-                {!searchTerm && (combosData?.combinations?.length > 0 || appOneDetails?.events?.length > 0) && (
-                    <div className="flex justify-end items-end gap-2 w-full">
-                        {integrationsInfo?.page > 0 && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
-                                <ChevronLeft className="w-5 h-5" /> Prev
-                            </Link>
-                        )}
-                        {showNext && (
-                            <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
-                                Next <ChevronRight className="w-5 h-5" />
-                            </Link>
-                        )}
-                    </div>
-                )}
+                    {!searchTerm && (combosData?.combinations?.length > 0 || appOneDetails?.events?.length > 0) && (
+                        <div className="flex justify-end items-end gap-2 w-full">
+                            {integrationsInfo?.page > 0 && (
+                                <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToPrev())}>
+                                    <ChevronLeft className="w-5 h-5" /> Prev
+                                </Link>
+                            )}
+                            {showNext && (
+                                <Link className="btn btn-outline gap-1 !px-5" href={createURL(goToNext())}>
+                                    Next <ChevronRight className="w-5 h-5" />
+                                </Link>
+                            )}
+                        </div>
+                    )}
+                </div>
             </div>
 
-            <div className="container">
-                <h2 className="h2">Popular ways to automate {appOneDetails?.name}</h2>
-                <p className="text-lg">
-                    Ready-made flows built with {appOneDetails?.name} — preview one, then make it yours.
-                </p>
-                <TemplateContainer
-                    selectedApps={[appOneDetails]}
-                    templateToShow={templateToShow}
-                    requireAllApps={true}
-                />
-            </div>
+            {(combosData?.combinations?.length > 0 || appOneDetails?.events?.length > 0) && (
+                <div className="container">
+                    <h2 className="h2">Popular ways to automate {appOneDetails?.name}</h2>
+                    <p className="text-lg">
+                        Ready-made flows built with {appOneDetails?.name} — preview one, then make it yours.
+                    </p>
+                    <TemplateContainer
+                        selectedApps={[appOneDetails]}
+                        templateToShow={templateToShow}
+                        requireAllApps={true}
+                    />
+                </div>
+            )}
             <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                 <div className="container flex flex-col gap-16">
                     <div className="flex flex-col gap-8">
