@@ -43,17 +43,15 @@ export default function PerkGrid() {
     ];
 
     return (
-        <section
-            id="features"
-            className="container p-12 lg:py-20"
-        >
-            <div className="flex items-center justify-center gap-2 text-center mb-8">
-                <h2 className="h2">
-                    Why does viaSocket <span className="text-accent">pricing feel fair?</span>
-                </h2>
-            </div>
+        <section className="bg-white" id="features">
+            <div className="container p-12 lg:py-20">
+                <div className="flex items-center justify-center gap-2 text-center mb-8">
+                    <h2 className="h2">
+                        Why does viaSocket <span className="text-accent">pricing feel fair?</span>
+                    </h2>
+                </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 relative mt-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 relative mt-8">
                     {perks.map((perk, index) => (
                         <div key={perk.id} className="relative px-[14px] py-9 text-center">
                             {/* Right border with gradient - only on lg screens */}
@@ -91,6 +89,7 @@ export default function PerkGrid() {
                         </div>
                     ))}
                 </div>
+            </div>
         </section>
     );
 }
