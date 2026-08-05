@@ -56,7 +56,7 @@ export default function ExperienceComparison() {
     ];
 
     return (
-        <section className="bg-white">
+        <section className="bg-[#F9FEFF]">
             <div className="container p-12 lg:py-20">
                 <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
                     {/* Left side - Heading */}
