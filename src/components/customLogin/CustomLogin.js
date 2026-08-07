@@ -57,7 +57,7 @@ const CustomLogin = ({ redirect_to }) => {
     }, [redirect_to]);
 
     return (
-        <div className="min-h-[222px] relative">
+        <div className="min-h-[85px] relative">
             {isLoading && (
                 <div className="absolute inset-0 rounded-lg">
                     <div className="h-10 bg-gray-300 skeleton rounded mb-2 w-[230px]"></div>
