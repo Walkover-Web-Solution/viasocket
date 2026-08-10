@@ -5,14 +5,14 @@ import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getPricingPageData } from '../lib/pricing-data';
-
 import { getHasToken } from '../lib/getAuth';
 import PricingHeroSection from '@/components/pricing/PricingHeroSection';
 import PerkGrid from '@/components/pricing/PerkGrid';
+import ExperienceComparison from '@/components/pricing/ExperienceComparison';
 import FinalCTA from '@/components/pricing/FinalCTA';
-import Testimonials from '../lifetime-deal/Testimonials';
 import SecuritySection from '@/app/components/SecuritySection';
 import ShowBadges from '@/app/components/home/ShowBadges';
+import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
 
 export const runtime = 'edge';
 
@@ -51,7 +51,10 @@ export default async function PricingPage() {
             <PricingHeroSection hasToken={hasToken} />
 
             <PerkGrid />
-            <Testimonials reviewData={reviewData} showLabel={false} />
+
+            <ExperienceComparison />
+
+            <ReviewIframeOptimized reviewData={reviewData} variant="pricing" />
 
             <FinalCTA />
             <div className="my-12">

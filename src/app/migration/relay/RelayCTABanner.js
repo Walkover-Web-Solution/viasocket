@@ -30,7 +30,7 @@ export default function RelayCTABanner() {
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
-                    <Link href="/signup?import=true&utm_source=relay-switch-google-ads" className="btn btn-outline">
+                    <Link href="/signup?utm_source=relay-switch-google-ads" className="btn btn-outline">
                         Import my Relay workflows <MoveRight className="w-4 h-4" />
                     </Link>
                     <Link

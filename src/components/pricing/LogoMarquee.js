@@ -11,14 +11,17 @@ export default function LogoMarquee() {
         'MSG91',
     ];
 
+    // Duplicate enough times so the track is always wider than any viewport
+    const allLogos = [...Array(10)].flatMap(() => logos);
+
     return (
-        <div className="flex flex-col gap-3">
-            <p className="text-xs font-bold text-accent uppercase tracking-widest">
+        <div className="flex flex-col gap-6 items-center">
+            <p className="text-xs font-bold uppercase tracking-widest">
                 Trusted by businesses worldwide
             </p>
-            <div className="marquee-container max-w-[46ch]">
+            <div className="marquee-container">
                 <div className="marquee-track flex gap-8 w-fit">
-                    {[...logos, ...logos].map((logo, index) => (
+                    {allLogos.map((logo, index) => (
                         <span
                             key={index}
                             className={`text-sm text-gray-500 whitespace-nowrap flex items-center ${
