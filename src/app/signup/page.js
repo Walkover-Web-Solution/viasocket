@@ -29,7 +29,7 @@ export async function generateMetadata() {
 export default async function SignupPage({ searchParams }) {
     const { appCount } = await getSignupPageData();
     const params = await searchParams;
-    const redirect_to = params?.import === 'true' ? '/redirect-to-flow' : (params?.redirect_to || '');
+    const redirect_to = params?.redirect_to || '';
 
     return (
         <>
@@ -67,7 +67,7 @@ export default async function SignupPage({ searchParams }) {
                             <p className="flex items-center gap-1.5">
                                 <span>Already have an account?</span>
                                 <Link
-                                    href={params?.import === 'true' ? '/login?import=true' : '/login'}
+                                    href="/login"
                                     className="text-[#a32015] font-medium hover:underline text-base"
                                 >
                                     Log in
