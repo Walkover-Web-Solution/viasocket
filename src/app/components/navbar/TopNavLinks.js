@@ -16,7 +16,7 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
                 </div>
             </Link>
             <Link
-                href="https://cal.id/team/viasocket/hire-an-expert"
+                href="/hire-an-expert"
                 target="_blank"
                 rel="nofollow noopener noreferrer"
             >

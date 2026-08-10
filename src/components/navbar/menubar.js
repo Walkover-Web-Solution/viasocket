@@ -27,7 +27,7 @@ function NavList({ navItems }) {
                 </Link>
             </li>
             <li className="hover:bg-gray-100 text-black p-2">
-                <Link href="https://cal.id/team/viasocket/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                <Link href="/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
                     <span className="text-lg hover:text-accent hover:underline">Let us build</span>
                 </Link>
             </li>
@@ -79,10 +79,10 @@ export default function Menubar({ open, onClose, navItems }) {
                 {/* MCP Banner for Mobile */}
                 <div className="!bg-[#5CD2A2] py-2 px-4 text-lg">
                     <div className="flex sm:flex-row flex-col items-center justify-center gap-2">
-                       <div className="flex items-center gap-1 justify-center whitespace-nowrap">
-                         <span>MCP is now</span>
-                        <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
-                       </div>
+                        <div className="flex items-center gap-1 justify-center whitespace-nowrap">
+                            <span>MCP is now</span>
+                            <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
+                        </div>
                         <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
                             <div className='whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
                                 Explore More <ArrowUpRight className="w-3 h-3" />
