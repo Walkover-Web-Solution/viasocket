@@ -3,8 +3,7 @@ import { setUtmSource } from './handleUtmSource';
 export const handleRedirect = (e, url, router, customSource, extraParams = {}) => {
     e.preventDefault();
     const baseUrl = url.replace(/\?$/, '');
-    const isFlowUrl = baseUrl.startsWith('https://flow.viasocket.com');
-    const mergedParams = isFlowUrl ? { import: 'true', ...extraParams } : extraParams;
+    const mergedParams = extraParams;
     const separator = baseUrl.includes('?') ? '&' : '?';
     const extra = Object.entries(mergedParams)
         .map(([key, val]) => `&${key}=${encodeURIComponent(val)}`)

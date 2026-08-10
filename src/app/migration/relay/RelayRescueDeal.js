@@ -28,7 +28,7 @@ export default function RelayRescueDeal() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4">
-                    <Link href="/signup?import=true&utm_source=relay-switch-google-ads" className="btn btn-accent">
+                    <Link href="/signup?utm_source=relay-switch-google-ads" className="btn btn-accent">
                         Claim my free year <MoveRight className="w-4 h-4" />
                     </Link>
                     <Link
