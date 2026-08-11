@@ -1,12 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Sparkles, ArrowRight, User, AlertTriangle, CalendarDays } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import { getCookie, setCookie } from '@/utils/handleUtmSource';
 
-const SVG_BASE =
-    'absolute inset-0 w-full h-full transition-[opacity,transform] duration-[400ms] ease-[cubic-bezier(0.4,0,0.2,1)]';
+const CAPABILITIES = ['Workflow', 'MCP', 'AI Agents'];
 
 const EXAMPLES = [
     { icon: User, label: 'New lead → enrich → CRM', prompt: 'When a new lead comes in, enrich it and add it to our CRM, then notify sales on Slack.' },
@@ -16,12 +15,6 @@ const EXAMPLES = [
 
 export default function HeroSectionB({ hasToken }) {
     const [prompt, setPrompt] = useState('');
-    const [showChat, setShowChat] = useState(false);
-
-    useEffect(() => {
-        const id = setInterval(() => setShowChat((v) => !v), 2200);
-        return () => clearInterval(id);
-    }, []);
 
     const build = (e) => {
         // Carry the described automation forward via a cookie + localStorage (not the URL)
@@ -32,63 +25,36 @@ export default function HeroSectionB({ hasToken }) {
             setCookie('utmData', JSON.stringify(utmData), 1);
             try {
                 window.localStorage.setItem('prompt', value);
-            } catch {}
+            } catch { }
         }
         handleRedirect(e, '/signup?', null, 'home-B');
     };
 
     return (
-        <section className="flex flex-col items-center justify-center text-center bg-transparent container">
+        <section className="container flex flex-col items-center justify-center text-center bg-transparent">
             <div className="flex flex-col items-center justify-center w-full text-center">
-                <h1 className="h1 mb-6 whitespace-normal lg:whitespace-nowrap">
-                    Automate Anything with AI Agents.
-                    <br />
-                    Backed by Real{' '}
-                    <span className="text-accent">
-                        Human Support
-                        <span className="relative inline-flex items-center justify-center align-middle ml-[0.2em] -top-[0.04em] w-[0.9em] h-[0.9em] cursor-pointer shrink-0">
-                            <svg
-                                viewBox="0 0 28 20"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className={`${SVG_BASE} ${showChat ? 'opacity-0 scale-[0.7]' : 'opacity-100 scale-100'}`}
-                            >
-                                <circle cx="6" cy="10" r="2.4" fill="#A8200D" className="origin-center animate-dot-bounce" />
-                                <circle
-                                    cx="14"
-                                    cy="10"
-                                    r="2.4"
-                                    fill="#A8200D"
-                                    className="origin-center animate-dot-bounce [animation-delay:0.15s]"
-                                />
-                                <circle
-                                    cx="22"
-                                    cy="10"
-                                    r="2.4"
-                                    fill="#A8200D"
-                                    className="origin-center animate-dot-bounce [animation-delay:0.3s]"
-                                />
-                            </svg>
-                            <svg
-                                viewBox="0 0 28 26"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                                className={`${SVG_BASE} ${showChat ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.7]'}`}
-                            >
-                                <rect x="1" y="1" width="26" height="18" rx="9" fill="#A8200D" />
-                                <path d="M6 19l3-4" stroke="#A8200D" strokeWidth="2.5" strokeLinecap="round" />
-                                <circle cx="8.5" cy="10" r="2" fill="#fff" />
-                                <circle cx="14" cy="10" r="2" fill="#fff" />
-                                <circle cx="19.5" cy="10" r="2" fill="#fff" />
-                            </svg>
-                        </span>
-                    </span>
-                </h1>
+                <div className="flex flex-col items-center w-full mb-10">
+                    <h1 className="h1 max-w-5xl tracking-tight">
+                        Talk to AI. It connects your apps and automates your repetitive work.
+                    </h1>
 
-                <p className="sub__h1 max-w-3xl mb-10 text-gray-600">
-                    Just tell <span className="text-accent font-medium">viaSocket AI</span> what you want to automate,
-                    and it builds the entire working workflow for you in minutes.
-                </p>
+                    <p className="mt-5 max-w-3xl text-base md:text-lg leading-[1.7] text-gray-600">
+                        Connect Gmail, Instagram, Google Sheets, WhatsApp, Slack, Shopify, and 2,000+ other apps. Just
+                        describe what you want to happen, and AI connects your apps, builds the automation, and gets it
+                        ready to run - no coding required
+                    </p>
+
+                    <div className="flex flex-wrap items-center justify-center gap-2 mt-7">
+                        {CAPABILITIES.map((capability) => (
+                            <span
+                                key={capability}
+                                className="rounded-full border border-black/15 bg-white px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-gray-600"
+                            >
+                                {capability}
+                            </span>
+                        ))}
+                    </div>
+                </div>
 
                 <div className="w-full max-w-4xl text-left bg-white border border-black rounded-2xl shadow-[6px_6px_0_0_rgba(0,0,0,0.9)] p-5 md:p-6">
                     <div className="flex items-center gap-2 mb-4">

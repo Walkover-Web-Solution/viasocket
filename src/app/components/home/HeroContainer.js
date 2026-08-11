@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import HeroSection from './HeroSection';
 import HeroSectionB from './HeroSectionB';
-import ShowAppsIndexOptimized from './ShowAppsIndexOptimized';
 import SearchAndResults from './SearchAndResults';
 import { setVariantCookie } from '@/utils/handleUtmSource';
 
@@ -29,11 +28,11 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
         setHasActiveSearch(isActive);
     }, []);
 
-    const containerClasses = 'min-h-0 pt-24';
+    const containerClasses = 'min-h-0 global-top-space';
     const bgClass = 'dotted-background';
 
     return (
-        <div className={`${containerClasses} ${bgClass} px-4 mx-auto relative global-top-space`}>
+        <div className={`${containerClasses} ${bgClass} px-4 mx-auto relative`}>
             <div className="text-center">
                 <HeroVariant
                     variant={variant}

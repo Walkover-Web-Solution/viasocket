@@ -32,17 +32,19 @@ export default function HeroSection({ hasToken, appCount, apps }) {
     return (
         <section className="container text-left">
             <div className="grid lg:grid-cols-2 gap-14 lg:gap-32 items-center">
-                <div className="space-y-8 flex flex-col gap-2">
-                    <h1 className="h1">
-                        Connect your apps,
-                        <br />
-                        <span className="text-accent">let AI automate your workflows.</span>
-                    </h1>
+                <div className="flex flex-col gap-8">
+                    <div className="flex flex-col gap-4">
+                        <h1 className="h1">
+                            Connect your apps,
+                            <br />
+                            <span className="text-accent">let AI automate your workflows.</span>
+                        </h1>
 
-                    <p className="text-lg font-light leading-[1.7] text-[#555] max-w-[440px] mb-10 opacity-0 animate-fadeSlideIn [animation-delay:0.2s]">
-                        Connect Gmail, Instagram, Google Sheets, WhatsApp, Slack, Shopify, and {appsLabel}+ other apps.
-                        Just tell AI what you want to automate — no coding required.
-                    </p>
+                        <p className="text-lg font-light">
+                            Connect Gmail, Instagram, Google Sheets, WhatsApp, Slack, Shopify, and {appsLabel}+ other apps.
+                            Just tell AI what you want to automate — no coding required.
+                        </p>
+                    </div>
 
                     <div className="flex items-center gap-6 flex-wrap opacity-0 animate-fadeSlideIn [animation-delay:0.3s]">
                         <CTAButtons hasToken={hasToken} />
@@ -86,7 +88,7 @@ export default function HeroSection({ hasToken, appCount, apps }) {
                         </Link>
                     </div>
 
-                    <div className="pt-8 border-t border-gray-200 ! mt-12">
+                    <div className="pt-8 border-t border-gray-200 mt-12">
                         <div className="font-mono text-xs uppercase tracking-wider text-gray-500">
                             Works with your stack
                         </div>

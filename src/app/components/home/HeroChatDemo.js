@@ -138,7 +138,7 @@ export default function HeroChatDemo({ apps }) {
     return (
         <div
             aria-hidden="true"
-            className="opacity-0 animate-fadeSlideIn [animation-delay:0.5s] bg-white border border-[#e8e8e8] rounded-lg overflow-hidden shadow-[0_4px_40px_rgba(0,0,0,0.06),0_1px_3px_rgba(0,0,0,0.04)]"
+            className="opacity-0 animate-fadeSlideIn [animation-delay:0.5s] bg-white border border-[#e8e8e8] rounded-lg overflow-hidden shadow-sm h-[320px]"
         >
             <div className="px-4 py-3 border-b border-[#f0f0f0] bg-[#fafafa]">
                 <span className="font-mono text-[11px] text-[#bbb] tracking-[0.06em]">viaSocket AI</span>
@@ -206,9 +206,8 @@ export default function HeroChatDemo({ apps }) {
 
             <div className="border-t border-[#f0f0f0] px-3.5 py-2.5 flex items-center gap-2.5">
                 <div
-                    className={`flex-1 min-h-[36px] px-3 py-2 bg-[#f9f9f9] rounded-lg text-[15px] font-semibold leading-6 border-2 ${
-                        isTyping ? 'border-[#0a0a0a] text-[#222]' : 'border-[#ebebeb]'
-                    }`}
+                    className={`flex-1 min-h-[36px] px-3 py-2 bg-[#f9f9f9] rounded-lg text-[15px] font-semibold leading-6 border-2 ${isTyping ? 'border-[#0a0a0a] text-[#222]' : 'border-[#ebebeb]'
+                        }`}
                 >
                     {isTyping ? (
                         typed
@@ -217,9 +216,8 @@ export default function HeroChatDemo({ apps }) {
                     )}
                 </div>
                 <div
-                    className={`w-[34px] h-[34px] rounded-lg grid place-items-center shrink-0 ${
-                        isTyping && typed ? 'bg-accent text-white' : 'bg-[#e5e5e5] text-[#bbb]'
-                    }`}
+                    className={`w-[34px] h-[34px] rounded-lg grid place-items-center shrink-0 ${isTyping && typed ? 'bg-accent text-white' : 'bg-[#e5e5e5] text-[#bbb]'
+                        }`}
                 >
                     <svg
                         width="14"
