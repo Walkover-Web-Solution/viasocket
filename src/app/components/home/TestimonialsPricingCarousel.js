@@ -27,7 +27,21 @@ export default function TestimonialsPricingCarousel({ reviewData, matchesFilter 
             if (!el || idx < 0 || idx >= total) return;
             const card = el.children[idx];
             if (card) {
-                card.scrollIntoView({ behavior, inline: 'center', block: 'nearest' });
+                // Scroll only this container. scrollIntoView() would also scroll the
+                // page and jump the user down to this section on load.
+                const elRect = el.getBoundingClientRect();
+                const cardRect = card.getBoundingClientRect();
+                const left = el.scrollLeft + (cardRect.left - elRect.left) - (el.clientWidth - cardRect.width) / 2;
+
+                if (behavior === 'auto') {
+                    // The container sets CSS scroll-behavior: smooth, which overrides
+                    // 'auto' here, so drop it inline for the initial positioning.
+                    el.style.scrollBehavior = 'auto';
+                    el.scrollLeft = left;
+                    el.style.scrollBehavior = '';
+                } else {
+                    el.scrollTo({ left, behavior });
+                }
             }
             setCurrentIndex(idx);
         },
