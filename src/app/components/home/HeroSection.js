@@ -32,7 +32,7 @@ export default function HeroSection({ hasToken, appCount, apps }) {
     return (
         <section className="container text-left">
             <div className="grid lg:grid-cols-2 gap-14 lg:gap-32 items-center">
-                <div className="space-y-6">
+                <div className="space-y-8 flex flex-col gap-2">
                     <h1 className="h1">
                         Connect your apps,
                         <br />
