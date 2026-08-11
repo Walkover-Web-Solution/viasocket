@@ -8,12 +8,12 @@ import SearchAndResults from './SearchAndResults';
 import { setVariantCookie } from '@/utils/handleUtmSource';
 
 // A/B hero variants keyed off the `variant` cookie assigned server-side (middleware).
-function HeroVariant({ variant, appCount, hasToken }) {
+function HeroVariant({ variant, appCount, initialApps, hasToken }) {
     switch (variant) {
         case 'B':
             return <HeroSectionB appCount={appCount} hasToken={hasToken} />;
         default:
-            return <HeroSection appCount={appCount} hasToken={hasToken} />;
+            return <HeroSection appCount={appCount} apps={initialApps} hasToken={hasToken} />;
     }
 }
 
@@ -35,9 +35,14 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
     return (
         <div className={`${containerClasses} ${bgClass} px-4 mx-auto relative global-top-space`}>
             <div className="text-center">
-                <HeroVariant variant={variant} appCount={appCount} hasToken={hasToken} />
+                <HeroVariant
+                    variant={variant}
+                    appCount={appCount}
+                    initialApps={initialApps}
+                    hasToken={hasToken}
+                />
 
-                <ShowAppsIndexOptimized isHomePage apps={initialApps} appCount={appCount} />
+                {/* <ShowAppsIndexOptimized isHomePage apps={initialApps} appCount={appCount} /> */}
 
                 <SearchAndResults
                     initialApps={initialApps}
