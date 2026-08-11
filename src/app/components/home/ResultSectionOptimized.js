@@ -47,9 +47,9 @@ export default function ResultSectionOptimized({
     const sortedFilteredTemplates = filteredTemplates.slice(0, 6); //when search/filter is active
 
     return (
-        <div className="result-section text-left container">
+        <div className="result-section text-left container mt-12 pt-12">
             {/* Persistent header row: heading on left, search on right. Search is rendered once so internal state is preserved across branch switches */}
-            <div className="container mx-auto relative z-50 flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-8">
+            <div className="relative z-50 flex flex-col md:flex-row md:items-center md:justify-between gap-8 mb-8">
                 <h2 className="h2 text-left mb-0">
                     {showTemplates && (loadingTemplates || hasTemplateResults) ? (
                         <>
@@ -93,7 +93,7 @@ export default function ResultSectionOptimized({
 
             {/* Default Templates Section - show when no search is active */}
             {noSearchActive && latestDefaultTemplates.length > 0 && (
-                <div className="container mx-auto pb-12 relative z-index-1">
+                <div className="pb-12 relative z-index-1">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {latestDefaultTemplates.map((template, index) => (
                             <TemplateCard
