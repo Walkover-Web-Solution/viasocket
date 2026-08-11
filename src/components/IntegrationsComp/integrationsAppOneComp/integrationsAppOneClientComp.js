@@ -320,9 +320,8 @@ export default function IntegrationsAppOneClientComp({
                                     >
                                         <p>Trigger</p>
                                         <Image
-                                            className={`bg-white border p-1 transition-opacity duration-500 ${
-                                                activeStep === 1 ? 'opacity-100' : 'opacity-0'
-                                            }`}
+                                            className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 1 ? 'opacity-100' : 'opacity-0'
+                                                }`}
                                             src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                             width={36}
                                             height={36}
@@ -335,9 +334,8 @@ export default function IntegrationsAppOneClientComp({
                                     >
                                         <p>Action</p>
                                         <Image
-                                            className={`bg-white border p-1 transition-opacity duration-500 ${
-                                                activeStep === 2 ? 'opacity-100' : 'opacity-0'
-                                            }`}
+                                            className={`bg-white border p-1 transition-opacity duration-500 ${activeStep === 2 ? 'opacity-100' : 'opacity-0'
+                                                }`}
                                             src={appOneDetails?.iconurl || 'https://placehold.co/36x36'}
                                             width={36}
                                             height={36}
@@ -393,9 +391,9 @@ export default function IntegrationsAppOneClientComp({
                         </div>
                         <ExternalLink
                             href={(() => {
-                                let baseUrl = appOneDetails?.domain.startsWith('http')
+                                let baseUrl = appOneDetails?.domain.startsWith('https')
                                     ? appOneDetails?.domain
-                                    : 'http://' + appOneDetails?.domain;
+                                    : 'https://' + appOneDetails?.domain;
 
                                 // Add /integrations/viasocket/ for magicalapi.com domain
                                 if (baseUrl.includes('magicalapi.com')) {
