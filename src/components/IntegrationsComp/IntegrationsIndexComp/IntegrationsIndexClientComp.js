@@ -74,25 +74,7 @@ export default function IntegrationsIndexClientComp({
                 if (!fetchedApps) {
                     setSearchedApps([]);
                 } else {
-                    const searchTermLower = searchTerm.toLowerCase();
-                    const sortedApps = fetchedApps.sort((a, b) => {
-                        const aName = a?.name?.toLowerCase() || '';
-                        const bName = b?.name?.toLowerCase() || '';
-
-                        const aStarts = aName.startsWith(searchTermLower);
-                        const bStarts = bName.startsWith(searchTermLower);
-
-                        if (aStarts !== bStarts) return aStarts ? -1 : 1;
-
-                        const aContains = aName.includes(searchTermLower);
-                        const bContains = bName.includes(searchTermLower);
-
-                        if (aContains !== bContains) return aContains ? -1 : 1;
-
-                        return aName.localeCompare(bName);
-                    });
-
-                    setSearchedApps(sortedApps);
+                    setSearchedApps(fetchedApps);
                 }
             };
             loadApps();
