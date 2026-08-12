@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
+import RelaySignupCTA from './RelaySignupCTA';
 
 export default function RelayHero() {
     return (
@@ -19,9 +20,9 @@ export default function RelayHero() {
             </p>
 
             <div className="flex flex-col md:flex-row items-stretch md:items-center md:justify-center gap-2 w-full sm:w-auto">
-                <Link href="/signup?utm_source=relay-switch-google-ads" className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
+                <RelaySignupCTA className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
                     Import my Relay workflows <ArrowRight size={14} />{' '}
-                </Link>
+                </RelaySignupCTA>
                 <Link
                     href="https://cal.id/team/viasocket/workflow-setup-discussion"
                     className="btn btn-outline flex items-center justify-center w-full md:max-w-fit"
