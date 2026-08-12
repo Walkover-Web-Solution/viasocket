@@ -533,10 +533,13 @@ export default function SearchInputHomeOptimized({
         fetchInitialDepartments();
     }, [filterSelectedApps, fetchIndustriesData, fetchDepartmentsData]);
 
-    // Auto-focus the search input when component mounts
+    // Auto-focus the search input when component mounts.
+    // preventScroll matters: this input sits below the hero, and focusing an
+    // off-screen element scrolls it into view, so on load the page jumped past
+    // the hero on any viewport short enough to leave the search below the fold.
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.focus();
+            inputRef.current.focus({ preventScroll: true });
             setHasBrowserFocus(true);
             setShouldShowCaret(true);
         }

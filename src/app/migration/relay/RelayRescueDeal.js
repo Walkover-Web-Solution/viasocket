@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { Check, MoveRight } from 'lucide-react';
+import RelaySignupCTA from './RelaySignupCTA';
 
 export default function RelayRescueDeal() {
     return (
@@ -28,9 +29,9 @@ export default function RelayRescueDeal() {
                 </div>
 
                 <div className="flex flex-wrap items-center gap-4">
-                    <Link href="/signup?utm_source=relay-switch-google-ads" className="btn btn-accent">
+                    <RelaySignupCTA className="btn btn-accent">
                         Claim my free year <MoveRight className="w-4 h-4" />
-                    </Link>
+                    </RelaySignupCTA>
                     <Link
                         href="https://cal.id/team/viasocket/workflow-setup-discussion"
                         target="_blank"
