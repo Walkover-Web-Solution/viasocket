@@ -177,7 +177,9 @@ export async function getApps(query, pageUrl) {
     const params = {
         category: (category !== 'All' && category) || '',
         limit: query?.limit || APPERPAGE,
-        offset: query?.page ? query?.page * APPERPAGE : 0,
+        // Callers that page by route pass `page` and step by APPERPAGE; callers
+        // that load in their own batch size pass `offset` directly.
+        offset: query?.offset ?? (query?.page ? query?.page * APPERPAGE : 0),
     };
 
     try {
