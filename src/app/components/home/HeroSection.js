@@ -4,7 +4,7 @@ import CTAButtons from './CTAButtons';
 import HeroChatDemo from './HeroChatDemo';
 
 const AVATAR_BASE =
-    'w-10 h-10 rounded-full border-[2.5px] border-white object-cover shadow-[0_2px_6px_rgba(0,0,0,0.12)]';
+    'w-10 h-10 rounded-full border-[2.5px] border-white object-cover shadow-sm';
 
 // Shown only when the apps API returns nothing, mirroring ShowAppsIndexOptimized.
 const STRIP_FALLBACK = [

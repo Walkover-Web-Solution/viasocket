@@ -46,6 +46,41 @@ export const getUtmSource = () => {
     }
 };
 
+// Sources this site stamps on itself. Page-path sources (e.g. '/integrations')
+// count as internal too. Anything else in utmData came from outside — an ad, a
+// referral — and is real attribution we must not overwrite.
+const INTERNAL_UTM_SOURCES = ['home-A', 'home-B', 'relay-switch-google-ads'];
+
+const isInternalUtmSource = (source) =>
+    !source || source.startsWith('/') || INTERNAL_UTM_SOURCES.includes(source);
+
+/**
+ * Saves a page's own utm_source into the utmData cookie, so a signup started
+ * from that page is attributed to it.
+ *
+ * handleRedirect only puts the source in the URL. The signup page resolves its
+ * source from this cookie before falling back to the query string, so without
+ * this the value passed by a page is dropped whenever a cookie already exists.
+ * Only internal tags are replaced — an external source stays put, keeping ad
+ * attribution intact. Other keys already in the cookie (a carried-over prompt)
+ * are preserved.
+ */
+export const savePageUtmSource = (source) => {
+    if (typeof document === 'undefined' || !source) return;
+
+    let utmData = {};
+    try {
+        utmData = JSON.parse(getCookie('utmData') || '{}');
+    } catch {
+        utmData = {};
+    }
+
+    if (!isInternalUtmSource(utmData.utm_source)) return;
+
+    utmData.utm_source = source;
+    setCookie('utmData', JSON.stringify(utmData), 1);
+};
+
 export const setUtmSource = ({ source = 'index' } = {}) => {
     let utmData = getCookie('utmData');
     let queryObject = {};

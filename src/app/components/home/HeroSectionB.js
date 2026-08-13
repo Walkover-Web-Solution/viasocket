@@ -2,8 +2,11 @@
 
 import { useState } from 'react';
 import { Sparkles, ArrowRight, User, AlertTriangle, CalendarDays } from 'lucide-react';
-import { handleRedirect } from '@/utils/handleRedirection';
-import { getCookie, setCookie } from '@/utils/handleUtmSource';
+import { getCookie, setCookie, savePageUtmSource } from '@/utils/handleUtmSource';
+
+// Home B variant tag — the source a signup from this hero reports.
+const HOME_B_UTM_SOURCE = 'home-B';
+const SIGNUP_URL = `/signup?utm_source=${HOME_B_UTM_SOURCE}`;
 
 const CAPABILITIES = ['Workflow', 'MCP', 'AI Agents'];
 
@@ -16,7 +19,7 @@ const EXAMPLES = [
 export default function HeroSectionB({ hasToken }) {
     const [prompt, setPrompt] = useState('');
 
-    const build = (e) => {
+    const build = () => {
         // Carry the described automation forward via a cookie + localStorage (not the URL)
         const value = prompt.trim();
         if (typeof document !== 'undefined' && value) {
@@ -27,7 +30,11 @@ export default function HeroSectionB({ hasToken }) {
                 window.localStorage.setItem('prompt', value);
             } catch { }
         }
-        handleRedirect(e, '/signup?', null, 'home-B');
+        savePageUtmSource(HOME_B_UTM_SOURCE);
+        // Straight to signup rather than handleRedirect, which sends utm_source
+        // twice — once inside `state`, once standalone. Only the standalone one is
+        // read: CustomLoginOptimized rebuilds `state` itself from the cookie.
+        window.open(SIGNUP_URL, '_self');
     };
 
     return (
