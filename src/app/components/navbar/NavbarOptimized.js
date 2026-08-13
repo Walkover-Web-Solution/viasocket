@@ -7,6 +7,7 @@ import TopNavLinks from './TopNavLinks';
 import MainNavbar from './MainNavbar';
 import MigratingBanner from './MigratingBanner';
 import Relay from './Relay';
+import WebinarBanner from '../webinar/WebinarBanner';
 
 const navItems = [
     {
@@ -32,6 +33,8 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const mode = 'light';
+    // Every page except the two that already run their own banner in this slot.
+    const showWebinarBanner = utm !== '/index' && utm !== '/migration/relay' && utm !== '/webinar';
     let borderClass;
     let backgroundClass;
     let textClass;
@@ -63,6 +66,7 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                         {/* {utm === '/index' && <MCPBanner />} */}
                         {utm === '/index' && <MigratingBanner />}
                         {utm === '/migration/relay' && <Relay />}
+                        {showWebinarBanner && <WebinarBanner />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
                     </div>
                 </div>
