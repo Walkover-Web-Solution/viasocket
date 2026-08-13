@@ -88,3 +88,4 @@ export const SINGLEAPP_FIELDS = [
     'usecases_new',
 ];
 export const FEATUREDTEMPLATES_FIELDS = ['name'];
+export const WEBINAR_FIELDS = ['applogo', 'name', 'date_in_ist', 'time', 'registration_link'];

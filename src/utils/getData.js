@@ -26,7 +26,8 @@ import {
     SOCIALREVIEWS,
     TEMPLATEMARQUEEITEMS,
     SINGLEAPPINTEGRATIONDATA,
-    FEATUREDTEMPLATES
+    FEATUREDTEMPLATES,
+    WEBINAR
 } from '@/const/tables';
 import { getDataFromTable } from './axiosCalls';
 
@@ -188,5 +189,10 @@ export async function getSingleAppIntegrationData(fields, filter, pageUrl){
 
 export async function getFeaturedTemplatesData(fields, filter, pageUrl){
     const data = await getDataFromTable(FEATUREDTEMPLATES, handleFieldsFilter(fields, filter), pageUrl);
+    return handleData(data);
+}
+
+export async function getWebinarData(fields, filter, pageUrl){
+    const data = await getDataFromTable(WEBINAR, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
