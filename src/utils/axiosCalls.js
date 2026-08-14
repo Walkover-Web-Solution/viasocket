@@ -177,7 +177,9 @@ export async function getApps(query, pageUrl) {
     const params = {
         category: (category !== 'All' && category) || '',
         limit: query?.limit || APPERPAGE,
-        offset: query?.page ? query?.page * APPERPAGE : 0,
+        // Callers that page by route pass `page` and step by APPERPAGE; callers
+        // that load in their own batch size pass `offset` directly.
+        offset: query?.offset ?? (query?.page ? query?.page * APPERPAGE : 0),
     };
 
     try {
@@ -195,6 +197,29 @@ export async function getApps(query, pageUrl) {
             error,
             pageUrl,
             source: fetchUrl,
+        });
+        return [];
+    }
+}
+
+// The usecases API filters by one app at a time — repeated `app` params make it
+// error — so callers ask for each selected app separately.
+export async function getUsecases(app, pageUrl) {
+    const url = `https://viasocket.com/automation-ideas/api/usecases`;
+    try {
+        const response = await axiosWithCache.get(url, {
+            params: { app },
+            cache: {
+                ttl: 1000 * 60 * 20, // cache for 20 min
+                interpretHeader: false,
+            },
+        });
+        return response?.data?.data || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
         });
         return [];
     }

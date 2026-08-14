@@ -3,14 +3,17 @@
 import { useCallback, useEffect, useState } from 'react';
 import HeroSection from './HeroSection';
 import HeroSectionB from './HeroSectionB';
+import HomeSectionC from './HomeSectionC';
 import SearchAndResults from './SearchAndResults';
 import { setVariantCookie } from '@/utils/handleUtmSource';
 
-// A/B hero variants keyed off the `variant` cookie assigned server-side (middleware).
+// Hero variants keyed off the `variant` cookie assigned server-side (middleware).
 function HeroVariant({ variant, appCount, initialApps, hasToken }) {
     switch (variant) {
         case 'B':
             return <HeroSectionB appCount={appCount} hasToken={hasToken} />;
+        case 'C':
+            return <HomeSectionC initialApps={initialApps} />;
         default:
             return <HeroSection appCount={appCount} apps={initialApps} hasToken={hasToken} />;
     }

@@ -16,7 +16,7 @@ const EXAMPLES = [
     { icon: CalendarDays, label: 'Daily sales summary email', prompt: 'Every morning, summarise yesterday’s sales from our CRM and email the report to the team.' },
 ];
 
-export default function HeroSectionB({ hasToken }) {
+export default function HeroSectionB() {
     const [prompt, setPrompt] = useState('');
 
     const build = () => {
