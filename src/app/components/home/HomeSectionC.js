@@ -9,7 +9,7 @@ import AppPicker, { appKey } from './AppPicker';
 
 // The automation-ideas app takes it from here; `web=true` marks the visit as
 // coming from the site.
-const AUTOMATION_IDEAS_URL = 'http://localhost:3000/automation-ideas';
+const AUTOMATION_IDEAS_URL = 'http://viasocket.com/automation-ideas';
 
 // Home C variant tag — the source a signup from this hero reports.
 const HOME_C_UTM_SOURCE = 'home-C';
