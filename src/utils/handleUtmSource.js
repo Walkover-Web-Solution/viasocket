@@ -23,7 +23,7 @@ export const setCookie = (name, value, days) => {
 };
 
 export const setVariantCookie = (variant) => {
-    const VARIANTS = ['A', 'B'];
+    const VARIANTS = ['A', 'B', 'C'];
     if (!VARIANTS.includes(variant)) return;
     if (getCookie('variant') === variant) return;
     setCookie('variant', variant, 30);
@@ -49,7 +49,7 @@ export const getUtmSource = () => {
 // Sources this site stamps on itself. Page-path sources (e.g. '/integrations')
 // count as internal too. Anything else in utmData came from outside — an ad, a
 // referral — and is real attribution we must not overwrite.
-const INTERNAL_UTM_SOURCES = ['home-A', 'home-B', 'relay-switch-google-ads'];
+const INTERNAL_UTM_SOURCES = ['home-A', 'home-B', 'home-C', 'relay-switch-google-ads'];
 
 const isInternalUtmSource = (source) =>
     !source || source.startsWith('/') || INTERNAL_UTM_SOURCES.includes(source);
