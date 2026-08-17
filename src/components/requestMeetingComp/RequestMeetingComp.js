@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
+import PhoneInput, { DEFAULT_COUNTRY_ISO, countryByIso } from '@/components/phoneInput/phoneInput';
 
 const RequestMeeting = ({ agencyName }) => {
     const [isLoading, setIsLoading] = useState(false);
@@ -9,6 +10,10 @@ const RequestMeeting = ({ agencyName }) => {
         name: '',
         email: '',
         phone: '',
+        // Which country the number belongs to, submitted beside it.
+        countryCode: countryByIso(DEFAULT_COUNTRY_ISO)?.dial || '',
+        countryIso: DEFAULT_COUNTRY_ISO,
+        country: countryByIso(DEFAULT_COUNTRY_ISO)?.name || '',
         datetime: '',
     });
     const [errors, setErrors] = useState({});
@@ -150,17 +155,23 @@ const RequestMeeting = ({ agencyName }) => {
                             <div className="label">
                                 <span className="label-text">Phone Number:</span>
                             </div>
-                            <input
+                            <PhoneInput
                                 required
-                                type="tel"
                                 name="phone"
                                 placeholder="Enter your Phone Number"
-                                className={`input input-bordered w-full focus:outline-none ${
-                                    errors.phone ? 'input-error' : ''
-                                }`}
+                                className={errors.phone ? 'input-error' : ''}
                                 value={formData.phone}
-                                onChange={handleInputChange}
+                                countryIso={formData.countryIso}
                                 maxLength="10"
+                                onChange={({ number, countryIso, countryCode, country }) =>
+                                    setFormData((prev) => ({
+                                        ...prev,
+                                        phone: number,
+                                        countryIso,
+                                        countryCode,
+                                        country,
+                                    }))
+                                }
                             />
                             {errors.phone && (
                                 <div className="label">

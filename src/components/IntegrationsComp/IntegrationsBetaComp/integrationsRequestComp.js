@@ -3,26 +3,50 @@
 import { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import PhoneInput, { DEFAULT_COUNTRY_ISO, countryByIso } from '@/components/phoneInput/phoneInput';
 
 function isValidEmail(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) {
+export function RequestPlugin({ appInfo, secondAppInfo = null, type, actionType, pluginId, onClose }) {
     const [isLoading, setIsLoading] = useState(false);
     const [showSuccessPopup, setShowSuccessPopup] = useState(false);
     const [formData, setFormData] = useState({
         userEmail: '',
         userName: '',
         whatsappNumber: '',
+        // Which country the number belongs to, sent beside the number itself.
+        countryCode: countryByIso(DEFAULT_COUNTRY_ISO)?.dial || '',
+        countryIso: DEFAULT_COUNTRY_ISO,
+        country: countryByIso(DEFAULT_COUNTRY_ISO)?.name || '',
         useCase: '',
         plugName: appInfo?.name || '',
         source: 'website',
         environment: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT,
         plug: appInfo,
+        // Only a trigger or action request belongs to an existing plugin, so a
+        // new-integration request leaves these out of the payload altogether.
+        // pluginId is the plugin row's `rowid` from plug-service.
+        ...(type
+            ? {
+                  actionType: actionType || type,
+                  pluginId: pluginId || appInfo?.rowid || '',
+              }
+            : {}),
     });
     const [emailError, setEmailError] = useState('');
     const emailInputRef = useRef(null);
+
+    const handlePhoneChange = ({ number, countryIso, countryCode, country }) => {
+        setFormData((prev) => ({
+            ...prev,
+            whatsappNumber: number,
+            countryIso,
+            countryCode,
+            country,
+        }));
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -212,6 +236,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                                 ...prev,
                                                 plug: selectedApp,
                                                 plugName: selectedApp?.name,
+                                                // Same rule as above: only carried on a trigger or action request.
+                                                ...(type ? { pluginId: selectedApp?.rowid || '' } : {}),
                                             }));
                                         }}
                                     >
@@ -257,13 +283,12 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
                                 <div className="label">
                                     <span className="label-text">Need notifications on WhatsApp?</span>
                                 </div>
-                                <input
-                                    type="text"
+                                <PhoneInput
                                     name="whatsappNumber"
                                     placeholder="WhatsApp Number / Contact Number"
-                                    className="input input-bordered w-full focus:outline-none"
                                     value={formData.whatsappNumber}
-                                    onChange={handleInputChange}
+                                    countryIso={formData.countryIso}
+                                    onChange={handlePhoneChange}
                                 />
                             </label>
                             {!type && (
@@ -322,10 +347,17 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, onClose }) 
     );
 }
 
-export default function IntegrationsRequestComp({ appInfo, secondAppInfo, type, onClose }) {
+export default function IntegrationsRequestComp({ appInfo, secondAppInfo, type, actionType, pluginId, onClose }) {
     return (
         <dialog open className="modal rounded-none">
-            <RequestPlugin appInfo={appInfo} secondAppInfo={secondAppInfo} type={type} onClose={onClose} />
+            <RequestPlugin
+                appInfo={appInfo}
+                secondAppInfo={secondAppInfo}
+                type={type}
+                actionType={actionType}
+                pluginId={pluginId}
+                onClose={onClose}
+            />
         </dialog>
     );
 }
