@@ -28,3 +28,4 @@ export const SOCIALREVIEWS = 'tblfttfs0';
 export const SINGLEAPPINTEGRATIONDATA = 'tbld4bjdd';
 export const FEATUREDTEMPLATES = 'tblvb5p9d';
 export const WEBINAR = 'tbll1z70k';
+export const ABTESTCOUNT = 'tbla8b06r';
