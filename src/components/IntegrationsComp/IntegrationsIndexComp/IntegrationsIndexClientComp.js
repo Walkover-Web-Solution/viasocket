@@ -362,6 +362,9 @@ export function RequestIntegrationPopupOpener({
     title,
     secondAppInfo = null,
     isNewTheme = false,
+    // Carried through to the form and submitted with it, without being shown.
+    actionType,
+    pluginId,
 }) {
     const router = useRouter();
     const pathname = usePathname();
@@ -487,6 +490,8 @@ export function RequestIntegrationPopupOpener({
                     appInfo={appInfo}
                     secondAppInfo={secondAppInfo}
                     type={requestType}
+                    actionType={actionType}
+                    pluginId={pluginId}
                     onClose={closeModal}
                 />
             )}
