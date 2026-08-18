@@ -15,8 +15,8 @@ const abTestHeaders = () => ({
     'Content-Type': 'application/json',
 });
 
-// The table API caps every read at 200 rows and ignores anything larger, so this
-// is the most history one request can return.
+// Kept well clear of the API's cap: a limit of 500 silently returns zero rows
+// (400 is still fine), which would look like a visitor with no history.
 const ABTEST_LOOKUP_LIMIT = 200;
 
 export async function getDataFromTable(table, query, pageUrl) {
@@ -410,20 +410,14 @@ export async function getCategoryBlogs(query, pageUrl) {
     }
 }
 
-export async function getAbTestVisits(visitorId, environment, pageUrl) {
+export async function getAbTestVisits(visitorId, pageUrl) {
     // Deliberately not axiosWithCache: the table answers reads with
     // cache-control: max-age=172800, so a repeated lookup would be served a
     // two-day-old count. The timestamp defeats the CDN copy as well.
-    //
-    // The environment is part of the filter, not something sifted out afterwards:
-    // the visitor id cookie is set on the registrable domain, so test.viasocket.com
-    // and viasocket.com hand the same visitor the same id, and their rows would
-    // otherwise share both this visitor's history and the 200-row ceiling.
-    const filter = encodeURIComponent(`name LIKE '%${visitorId}%' AND environment = '${environment}'`);
+    const filter = encodeURIComponent(`name LIKE '%${visitorId}%'`);
     // name records the page each visit was counted for and varient the variant it
-    // was served, so this one read answers both how long the visitor's history in
-    // this environment is and whether this page has already been counted for this
-    // variant.
+    // was served, so this one read answers both how long the visitor's history is
+    // and whether this page has already been counted for this variant.
     const url = `${abTestTableUrl()}?filter=${filter}&fields=rowid,name,varient&limit=${ABTEST_LOOKUP_LIMIT}&_=${Date.now()}`;
 
     try {
