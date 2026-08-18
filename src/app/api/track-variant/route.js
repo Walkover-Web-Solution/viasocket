@@ -56,8 +56,12 @@ const getEnvironment = (request) => {
     if (flag === 'test' || flag === 'stage' || flag === 'staging') return 'test';
     if (flag === 'local' || flag === 'development' || flag === 'dev') return 'local';
 
+    // Only the bare domain is production. Every viasocket.com subdomain is a
+    // deployment of this same code — test.viasocket.com is the standing one — so a
+    // build that shipped without the flag must not have its traffic recorded as
+    // production hits.
     const hostname = new URL(request.url).hostname;
-    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) return 'production';
+    if (hostname === 'viasocket.com') return 'production';
     if (hostname === 'localhost' || /^[\d.]+$/.test(hostname)) return 'local';
     return 'test';
 };
@@ -75,6 +79,15 @@ const getEnvironment = (request) => {
  */
 export async function POST(request) {
     try {
+        // Only production visits belong in the table. Test and local deployments
+        // sit under the same registrable domain, so the visitor_id cookie is
+        // shared with production: their rows land beside real ones and are
+        // counted as part of the same visitor's history.
+        const environment = getEnvironment(request);
+        if (environment !== 'production') {
+            return NextResponse.json({ success: false, reason: 'non-production environment' });
+        }
+
         const cookieStore = await cookies();
         const visitorId = cookieStore.get(VISITOR_ID_COOKIE)?.value;
         const variant = cookieStore.get(VARIANT_COOKIE)?.value;
@@ -85,7 +98,7 @@ export async function POST(request) {
 
         const { userInfo, pageUrl, utmData } = await request.json();
 
-        const visits = await getAbTestVisits(visitorId, pageUrl);
+        const visits = await getAbTestVisits(visitorId, environment, pageUrl);
         const pageKey = getPageKey(pageUrl);
 
         // A page is counted once per variant, not once outright: a visitor who edits
@@ -111,7 +124,7 @@ export async function POST(request) {
             }),
             varient: variant,
             view_count: viewCount,
-            environment: getEnvironment(request),
+            environment,
             utmdata: JSON.stringify(utmData || {}),
             timestamp: new Date().toISOString(),
         };
