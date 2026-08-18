@@ -1,7 +1,6 @@
 import '@/scss/global.scss';
 import AppProvider from './providers';
 import RedditPixel from './components/RedditPixel/RedditPixel';
-import VariantTracker from './components/VariantTracker/VariantTracker';
 
 export const metadata = {
     title: 'viaSocket',
@@ -73,7 +72,6 @@ export default function RootLayout({ children }) {
                 <div id="__next">
                     <AppProvider>{children}</AppProvider>
                 </div>
-                <VariantTracker />
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `(function() {
