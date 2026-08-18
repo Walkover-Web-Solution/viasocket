@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { VARIANTS, VARIANT_COOKIE, VISITOR_ID_COOKIE } from '@/const/abTest';
-import { getAbTestVisitCount, saveAbTestVisit } from '@/utils/axiosCalls';
+import { getAbTestVisits, saveAbTestVisit } from '@/utils/axiosCalls';
 
 export const runtime = 'edge';
 
@@ -13,6 +13,35 @@ const getClientIp = (request) =>
     request.headers.get('x-real-ip') ||
     request.headers.get('cf-connecting-ip') ||
     '';
+
+/**
+ * The identity of a page for counting purposes.
+ *
+ * A reload must not count twice, so the comparison ignores what reloading cannot
+ * change: the hash, and the order the query parameters happen to be written in.
+ * Anything else is a different page — a different path, or a query string
+ * carrying new data — and is counted again.
+ */
+const getPageKey = (pageUrl) => {
+    try {
+        const url = new URL(pageUrl);
+        const params = [...url.searchParams.entries()].sort(([a], [b]) => a.localeCompare(b));
+        const search = new URLSearchParams(params).toString();
+        return `${url.origin}${url.pathname}${search ? `?${search}` : ''}`;
+    } catch {
+        return pageUrl || '';
+    }
+};
+
+// The page a stored row was counted for. Rows written by hand, or by an older
+// shape of this route, simply fail to match and are treated as another page.
+const getRecordedPageKey = (row) => {
+    try {
+        return getPageKey(JSON.parse(row?.name || '{}')?.pageUrl || '');
+    } catch {
+        return '';
+    }
+};
 
 /**
  * Which of the three deployments this visit came from.
@@ -38,10 +67,11 @@ const getEnvironment = (request) => {
  *
  * The browser sends what only it knows (device, screen, utm, page); the visitor
  * id, variant, IP and environment are resolved here, where they can be trusted.
- * The table accepts inserts only, so a visit is always a new row and view_count
- * is this visit's position in that visitor's history. Always answers 200 — the
- * client never reads the response, and a tracking failure must not surface as a
- * page error.
+ * A page counts once per visitor per variant: reloading it changes nothing, while
+ * a genuinely different page — or the same path carrying new query data, or the
+ * same page seen again on a different variant — is a new row whose view_count is
+ * its position in that visitor's history. Always answers 200 — the client never
+ * reads the response, and a tracking failure must not surface as a page error.
  */
 export async function POST(request) {
     try {
@@ -55,7 +85,20 @@ export async function POST(request) {
 
         const { userInfo, pageUrl, utmData } = await request.json();
 
-        const viewCount = (await getAbTestVisitCount(visitorId, pageUrl)) + 1;
+        const visits = await getAbTestVisits(visitorId, pageUrl);
+        const pageKey = getPageKey(pageUrl);
+
+        // A page is counted once per variant, not once outright: a visitor who edits
+        // the cookie and comes back on a different variant has genuinely seen the
+        // page a second way, and that reading is what the test is measuring. Only a
+        // repeat of the same page on the same variant is a reload.
+        const alreadyCounted = visits.some((row) => row?.varient === variant && getRecordedPageKey(row) === pageKey);
+
+        if (pageKey && alreadyCounted) {
+            return NextResponse.json({ success: true, counted: false, viewCount: visits.length });
+        }
+
+        const viewCount = visits.length + 1;
 
         // pageurl is a linked-record column and rejects a plain URL, so the page
         // is kept inside user_info rather than dropped.
@@ -75,7 +118,7 @@ export async function POST(request) {
 
         const saved = await saveAbTestVisit(record, pageUrl);
 
-        return NextResponse.json({ success: Boolean(saved), viewCount });
+        return NextResponse.json({ success: Boolean(saved), counted: Boolean(saved), viewCount });
     } catch (error) {
         console.error('[variant tracking] failed:', error);
         return NextResponse.json({ success: false });
