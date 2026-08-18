@@ -8,8 +8,7 @@ const axiosWithCache = setupCache(axios);
 
 // The A/B tracking table lives in its own database with its own auth key, so it
 // does not go through getDataFromTable like the content tables do.
-const abTestTableUrl = () =>
-    `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
+const abTestTableUrl = () => `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
 
 const abTestHeaders = () => ({
     'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY_ABTEST}`,
@@ -411,23 +410,26 @@ export async function getCategoryBlogs(query, pageUrl) {
     }
 }
 
-export async function getAbTestVisitCount(visitorId, pageUrl) {
+export async function getAbTestVisits(visitorId, pageUrl) {
     // Deliberately not axiosWithCache: the table answers reads with
     // cache-control: max-age=172800, so a repeated lookup would be served a
     // two-day-old count. The timestamp defeats the CDN copy as well.
     const filter = encodeURIComponent(`name LIKE '%${visitorId}%'`);
-    const url = `${abTestTableUrl()}?filter=${filter}&fields=rowid&limit=${ABTEST_LOOKUP_LIMIT}&_=${Date.now()}`;
+    // name records the page each visit was counted for and varient the variant it
+    // was served, so this one read answers both how long the visitor's history is
+    // and whether this page has already been counted for this variant.
+    const url = `${abTestTableUrl()}?filter=${filter}&fields=rowid,name,varient&limit=${ABTEST_LOOKUP_LIMIT}&_=${Date.now()}`;
 
     try {
         const response = await axios.get(url, { headers: abTestHeaders() });
-        return response?.data?.data?.rows?.length || 0;
+        return response?.data?.data?.rows || [];
     } catch (error) {
         sendErrorMessage({
             error,
             pageUrl,
             source: url,
         });
-        return 0;
+        return [];
     }
 }
 
