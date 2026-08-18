@@ -1,9 +1,23 @@
 import { sendErrorMessage } from './SendErrorMessage';
 import axios from 'axios';
 import { APPERPAGE } from '@/const/integrations';
+import { ABTESTCOUNT } from '@/const/tables';
 import { setupCache } from 'axios-cache-interceptor';
 
 const axiosWithCache = setupCache(axios);
+
+// The A/B tracking table lives in its own database with its own auth key, so it
+// does not go through getDataFromTable like the content tables do.
+const abTestTableUrl = () => `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
+
+const abTestHeaders = () => ({
+    'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY_ABTEST}`,
+    'Content-Type': 'application/json',
+});
+
+// Kept well clear of the API's cap: a limit of 500 silently returns zero rows
+// (400 is still fine), which would look like a visitor with no history.
+const ABTEST_LOOKUP_LIMIT = 200;
 
 export async function getDataFromTable(table, query, pageUrl) {
     const apiUrl = `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65d2ed33fa9d1a94a5224235/${table}${query ? query : ''}`;
@@ -393,5 +407,45 @@ export async function getCategoryBlogs(query, pageUrl) {
             source: fetchUrl,
         });
         return [];
+    }
+}
+
+export async function getAbTestVisits(visitorId, pageUrl) {
+    // Deliberately not axiosWithCache: the table answers reads with
+    // cache-control: max-age=172800, so a repeated lookup would be served a
+    // two-day-old count. The timestamp defeats the CDN copy as well.
+    const filter = encodeURIComponent(`name LIKE '%${visitorId}%'`);
+    // name records the page each visit was counted for and varient the variant it
+    // was served, so this one read answers both how long the visitor's history is
+    // and whether this page has already been counted for this variant.
+    const url = `${abTestTableUrl()}?filter=${filter}&fields=rowid,name,varient&limit=${ABTEST_LOOKUP_LIMIT}&_=${Date.now()}`;
+
+    try {
+        const response = await axios.get(url, { headers: abTestHeaders() });
+        return response?.data?.data?.rows || [];
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return [];
+    }
+}
+
+export async function saveAbTestVisit(record, pageUrl) {
+    const url = abTestTableUrl();
+
+    try {
+        // The table only accepts inserts, and only in a records array.
+        const response = await axios.post(url, { records: [record] }, { headers: abTestHeaders() });
+        return response?.data?.data?.[0] || null;
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return null;
     }
 }

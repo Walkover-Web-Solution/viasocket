@@ -207,7 +207,7 @@ export default function HomeSectionC({ initialApps }) {
                 </h1>
 
                 <p className="mt-6 max-w-[520px] text-base md:text-lg leading-[1.7] text-gray-600">
-                    It handles the busywork across every app in your stack, around the clock.
+                    Describe what you want to automate. AI will build it for you.
                 </p>
 
                 <AppPicker
