@@ -1,10 +1,17 @@
 import Link from 'next/link';
+import { useMemo } from 'react';
 import { ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import { handleRedirect } from '@/utils/handleRedirection';
 import PopularUseCases from './popularUseCases';
+import HeroTemplates, { getHeroTemplates } from './heroTemplates';
 
-export default function HeroSection({ appOneDetails, combosData, appData }) {
+export default function HeroSection({ appOneDetails, combosData, appData, templateToShow }) {
     const showContent = combosData?.combinations?.length > 0 || appOneDetails?.events?.length > 0;
+
+    const heroTemplates = useMemo(
+        () => getHeroTemplates(templateToShow, appOneDetails?.appslugname),
+        [templateToShow, appOneDetails?.appslugname]
+    );
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 items-start lg:items-center gap-12 lg:gap-28">
@@ -32,7 +39,12 @@ export default function HeroSection({ appOneDetails, combosData, appData }) {
                 </div>
             )}
 
-            {showContent && <PopularUseCases appName={appOneDetails?.name} />}
+            {showContent &&
+                (heroTemplates?.length > 0 ? (
+                    <HeroTemplates templates={heroTemplates} />
+                ) : (
+                    <PopularUseCases appName={appOneDetails?.name} />
+                ))}
         </div>
     );
 }

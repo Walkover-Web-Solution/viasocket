@@ -110,7 +110,12 @@ export default function IntegrationsAppOneClientComp({
                     <Breadcrumb parent="Integrations" child1={appOneDetails?.name} parentLink={`/integrations`} />
                 </div>
 
-                <HeroSection appOneDetails={appOneDetails} combosData={combosData} appData={appData} />
+                <HeroSection
+                    appOneDetails={appOneDetails}
+                    combosData={combosData}
+                    appData={appData}
+                    templateToShow={templateToShow}
+                />
                 <div className="flex flex-col gap-4">
                     {appOneDetails?.events.length > 0 && (
                         <div
