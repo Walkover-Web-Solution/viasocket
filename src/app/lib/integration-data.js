@@ -22,6 +22,19 @@ import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
 import { getBlogData } from '@/utils/getBlogData';
+import { CATEGORY_PINNED_APPS } from '@/const/integrations';
+
+// Moves a category's pinned app to the first grid position when that app is on
+// the current page; other apps keep their existing order.
+function pinCategoryApp(apps, categorySlug) {
+    const pinnedSlug = CATEGORY_PINNED_APPS[categorySlug];
+    if (!pinnedSlug || !Array.isArray(apps)) return apps;
+
+    const pinnedIndex = apps.findIndex((app) => app?.appslugname === pinnedSlug);
+    if (pinnedIndex <= 0) return apps;
+
+    return [apps[pinnedIndex], ...apps.slice(0, pinnedIndex), ...apps.slice(pinnedIndex + 1)];
+}
 
 function safeJsonParse(value, fallback = []) {
     try { return JSON.parse(value) || fallback; } catch { return fallback; }
@@ -202,7 +215,10 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 getBlogData({ tag1: 'integration' }, pageUrl),
             ]);
 
-            const apps = await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl);
+            const apps = pinCategoryApp(
+                await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl),
+                integrationsInfo?.category
+            );
             const categoryBlogs = await getCategoryBlogs({ page: integrationsInfo?.page, categoryData }, pageUrl);
             const categoryName = integrationsInfo?.category || 'all';
 
