@@ -13,7 +13,7 @@ import FaqSection from '@/components/faqSection/faqSection';
 import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
-
+import AutomationIdeasSection from '../home/AutomationIdeasSection';
 
 export default function AutomationsClient({ pageData, hasToken }) {
     // SearchInputHome integration
@@ -194,7 +194,12 @@ export default function AutomationsClient({ pageData, hasToken }) {
                                 </h2>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
+                                        <TemplateCard
+                                            key={template.id}
+                                            index={index}
+                                            template={template}
+                                            isFeatured={template.isFeatured}
+                                        />
                                     ))}
                                 </div>
                             </>
@@ -229,7 +234,12 @@ export default function AutomationsClient({ pageData, hasToken }) {
                             <>
                                 <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
                                     {displayTemplates.slice(0, visibleCount).map((template, index) => (
-                                        <TemplateCard key={template.id} index={index} template={template} isFeatured={template.isFeatured} />
+                                        <TemplateCard
+                                            key={template.id}
+                                            index={index}
+                                            template={template}
+                                            isFeatured={template.isFeatured}
+                                        />
                                     ))}
                                 </div>
                                 {hasMoreToShow && (
@@ -265,8 +275,8 @@ export default function AutomationsClient({ pageData, hasToken }) {
                         </button>
                     </div>
                 )}
-
             </div>
+            <AutomationIdeasSection />
 
             <div className="cont gap-12 md:gap-16 lg:gap-20 bg-[#FAF9F6] pt-12">
                 <div className="container">
@@ -274,7 +284,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                         <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                             <h2 className="h2">Can't find the right template?</h2>
                             <h2 className="h2">Start with AI</h2>
-                            <DashboardButton utm_src={"/automations"} hasToken={hasToken} />
+                            <DashboardButton utm_src={'/automations'} hasToken={hasToken} />
                         </div>
                     </div>
                 </div>
@@ -282,9 +292,7 @@ export default function AutomationsClient({ pageData, hasToken }) {
                     {pageData.blogData?.length > 0 && <BlogGrid posts={pageData.blogData} />}
                 </div>
                 <div className="pb-4">
-                    {pageData.faqData?.length > 0 && (
-                        <FaqSection faqData={pageData.faqData} faqName={'/automations'} />
-                    )}
+                    {pageData.faqData?.length > 0 && <FaqSection faqData={pageData.faqData} faqName={'/automations'} />}
                     <Footer footerData={pageData.footerData} />
                 </div>
             </div>

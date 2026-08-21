@@ -8,6 +8,7 @@ import NavbarServer from '@/app/components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
+import AutomationIdeasSection from '../home/AutomationIdeasSection';
 
 // Departments that showcase a specific app's templates instead of their marquee apps'.
 const DEPARTMENT_TEMPLATE_APPS = {
@@ -68,6 +69,8 @@ export default function DepartmentClient({ data, hasToken }) {
                     department_name={department?.name}
                 />
                 <DepartmentUseCase use_cases={department?.use_cases} />
+
+                <AutomationIdeasSection />
 
                 <BlogGrid posts={blogsData} />
                 <DepartmentFAQ faqJson={department?.faqs} />

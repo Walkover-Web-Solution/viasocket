@@ -4,6 +4,7 @@ import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar'
 import { getAutomationsPageData } from '../lib/automation-data';
 import AutomationsClient from '../components/automations/AutomationsClient';
 import { getHasToken } from '../lib/getAuth';
+import AutomationIdeasSection from '../components/home/AutomationIdeasSection';
 
 export const runtime = 'edge';
 
