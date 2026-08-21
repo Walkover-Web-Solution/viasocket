@@ -4,6 +4,7 @@ import ReviewIframeOptimized from './ReviewIframeOptimized';
 import ShowBadges from './ShowBadges';
 import EmbedSection from '@/app/components/home/EmbedSection';
 import StoriesSection from './StoriesSection';
+import AutomationIdeasSection from './AutomationIdeasSection';
 
 export default function MainContent({ indexTemplateData, templateData, reviewData, clientStories, appCount }) {
     return (
@@ -11,6 +12,8 @@ export default function MainContent({ indexTemplateData, templateData, reviewDat
             <IndexTemplateComp categories={indexTemplateData} templates={templateData} />
 
             <ShowDepartmentOptimized />
+
+            <AutomationIdeasSection />
 
             <EmbedSection appCount={appCount} />
 
