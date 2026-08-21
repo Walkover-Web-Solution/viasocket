@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Sparkles, ArrowRight, User, AlertTriangle, CalendarDays } from 'lucide-react';
 import { getCookie, setCookie, savePageUtmSource } from '@/utils/handleUtmSource';
+import { trackCtaClick } from '@/utils/trackVisitor';
 
 // Home B variant tag — the source a signup from this hero reports.
 const HOME_B_UTM_SOURCE = 'home-B';
@@ -11,9 +12,21 @@ const SIGNUP_URL = `/signup?utm_source=${HOME_B_UTM_SOURCE}`;
 const CAPABILITIES = ['Workflow', 'MCP', 'AI Agents'];
 
 const EXAMPLES = [
-    { icon: User, label: 'New lead → enrich → CRM', prompt: 'When a new lead comes in, enrich it and add it to our CRM, then notify sales on Slack.' },
-    { icon: AlertTriangle, label: 'Failed payment → Slack alert', prompt: 'When a payment fails in Stripe, alert the billing channel on Slack with the customer details.' },
-    { icon: CalendarDays, label: 'Daily sales summary email', prompt: 'Every morning, summarise yesterday’s sales from our CRM and email the report to the team.' },
+    {
+        icon: User,
+        label: 'New lead → enrich → CRM',
+        prompt: 'When a new lead comes in, enrich it and add it to our CRM, then notify sales on Slack.',
+    },
+    {
+        icon: AlertTriangle,
+        label: 'Failed payment → Slack alert',
+        prompt: 'When a payment fails in Stripe, alert the billing channel on Slack with the customer details.',
+    },
+    {
+        icon: CalendarDays,
+        label: 'Daily sales summary email',
+        prompt: 'Every morning, summarise yesterday’s sales from our CRM and email the report to the team.',
+    },
 ];
 
 export default function HeroSectionB() {
@@ -28,9 +41,15 @@ export default function HeroSectionB() {
             setCookie('utmData', JSON.stringify(utmData), 1);
             try {
                 window.localStorage.setItem('prompt', value);
-            } catch { }
+            } catch {}
         }
         savePageUtmSource(HOME_B_UTM_SOURCE);
+        trackCtaClick(HOME_B_UTM_SOURCE, {
+            element: 'hero_build_workflow',
+            label: 'Build my workflow',
+            action: 'signup_click',
+            destinationUrl: SIGNUP_URL,
+        });
         // Straight to signup rather than handleRedirect, which sends utm_source
         // twice — once inside `state`, once standalone. Only the standalone one is
         // read: CustomLoginOptimized rebuilds `state` itself from the cookie.
@@ -82,10 +101,7 @@ export default function HeroSectionB() {
                     />
 
                     <div className="flex justify-end mt-4">
-                        <button
-                            className="btn btn-primary"
-                            onClick={build}
-                        >
+                        <button className="btn btn-primary" onClick={build}>
                             Build my workflow <ArrowRight className="w-4 h-4" />
                         </button>
                     </div>

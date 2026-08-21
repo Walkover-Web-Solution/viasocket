@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getApps, getUsecases } from '@/utils/axiosCalls';
 import searchApps from '@/utils/searchApps';
 import { savePageUtmSource } from '@/utils/handleUtmSource';
+import { trackCtaClick, trackInteraction } from '@/utils/trackVisitor';
 import ActivityCard, { ACTIVITY_CARDS } from './ActivityCard';
 import AppPicker, { appKey } from './AppPicker';
 
@@ -127,6 +128,12 @@ export default function HomeSectionC({ initialApps }) {
 
     const startSignup = () => {
         savePageUtmSource(HOME_C_UTM_SOURCE);
+        trackCtaClick(HOME_C_UTM_SOURCE, {
+            element: 'hero_start_free',
+            label: 'Start for free',
+            action: 'signup_click',
+            destinationUrl: SIGNUP_URL,
+        });
         // Straight to signup rather than handleRedirect, which sends utm_source
         // twice — once inside `state`, once standalone. Only the standalone one is
         // read: CustomLoginOptimized rebuilds `state` itself from the cookie.
@@ -151,6 +158,14 @@ export default function HomeSectionC({ initialApps }) {
         if (!selectedApps.length || isRedirecting) return;
 
         setIsRedirecting(true);
+
+        trackInteraction({
+            element: 'hero_show_usecases',
+            label: 'See what you can automate',
+            section: 'hero',
+            action: 'usecases_click',
+            destinationUrl: AUTOMATION_IDEAS_URL,
+        });
 
         const slugs = await Promise.all(selectedApps.map(slugFor));
         const params = new URLSearchParams({ web: 'true' });
@@ -188,7 +203,6 @@ export default function HomeSectionC({ initialApps }) {
 
     return (
         <section className="relative overflow-hidden dotted-background">
-
             <div aria-hidden="true" className="hidden lg:block">
                 {ACTIVITY_CARDS.map((card) => (
                     <ActivityCard key={card.text} floating {...card} />

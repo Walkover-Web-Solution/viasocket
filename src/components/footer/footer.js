@@ -34,6 +34,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                     target="_blank"
                                     href={createURL(item?.link)}
                                     key={index}
+                                    data-track="footer_nav_link"
+                                    data-track-label={`${groupName} → ${item?.name}`}
+                                    data-track-section="footer"
                                     className="hover:text-blue-500 transition-colors duration-300"
                                     aria-label={item?.name}
                                 >
@@ -100,6 +103,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                             <div className="flex flex-wrap gap-2 justify-center items-center md:gap-4">
                                 <Link
                                     href={`https://www.instagram.com/viasocket/`}
+                                    data-track="footer_social_instagram"
+                                    data-track-label="Instagram"
+                                    data-track-section="footer"
                                     target="_blank"
                                     aria-label="instagram"
                                     className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
@@ -108,6 +114,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 </Link>
                                 <Link
                                     href={`https://www.linkedin.com/company/viasocket-walkover/`}
+                                    data-track="footer_social_linkedin"
+                                    data-track-label="LinkedIn"
+                                    data-track-section="footer"
                                     target="_blank"
                                     aria-label="facebook"
                                     className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
@@ -117,6 +126,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
 
                                 <Link
                                     href={`https://x.com/viasocket`}
+                                    data-track="footer_social_x"
+                                    data-track-label="X"
+                                    data-track-section="footer"
                                     target="_blank"
                                     className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="twitter"
@@ -125,6 +137,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 </Link>
                                 <Link
                                     href={`https://www.youtube.com/@viasocket`}
+                                    data-track="footer_social_youtube"
+                                    data-track-label="YouTube"
+                                    data-track-section="footer"
                                     target="_blank"
                                     className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
                                     aria-label="youtube"
@@ -133,6 +148,9 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                                 </Link>
                                 <Link
                                     href={`https://discord.com/invite/wqsSsMAkkz`}
+                                    data-track="footer_social_discord"
+                                    data-track-label="Discord"
+                                    data-track-section="footer"
                                     target="_blank"
                                     aria-label="discord"
                                     className="flex shrink-0 items-center justify-center w-8 h-8 rounded-full border border-gray-300 hover:border-accent transition-colors"
@@ -148,14 +166,32 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         <div className="flex flex-col gap-2">
                             <p className="text-sm flex items-center gap-1 flex-wrap mt-auto">
                                 <span>© {new Date().getFullYear()} viaSocket |</span>
-                                <Link href="/privacy" className="active-link text-link">
+                                <Link
+                                    href="/privacy"
+                                    data-track="footer_privacy"
+                                    data-track-label="Privacy"
+                                    data-track-section="footer"
+                                    className="active-link text-link"
+                                >
                                     Privacy<span className="text-black">,</span>
                                 </Link>
-                                <Link href="/terms" className="active-link text-link">
+                                <Link
+                                    href="/terms"
+                                    data-track="footer_terms"
+                                    data-track-label="Terms"
+                                    data-track-section="footer"
+                                    className="active-link text-link"
+                                >
                                     Terms
                                 </Link>
                                 <span>and</span>
-                                <Link href="/data-retention-deletion" className="active-link text-link">
+                                <Link
+                                    href="/data-retention-deletion"
+                                    data-track="footer_data_policy"
+                                    data-track-label="Data Retention & Deletion Policy"
+                                    data-track-section="footer"
+                                    className="active-link text-link"
+                                >
                                     Data Retention & Deletion Policy
                                 </Link>
                             </p>

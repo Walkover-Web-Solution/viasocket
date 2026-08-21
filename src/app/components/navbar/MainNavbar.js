@@ -26,6 +26,16 @@ export default function MainNavbar({
         return undefined;
     };
 
+    // Where the auth button actually leads, so the recorded interaction names the
+    // same destination the click is about to take. On the MCP pages that is a
+    // login screen, not a signup, and the two must not be read as each other.
+    const isMcp = Boolean(pathname?.startsWith('/mcp'));
+    const authDestination = isMcp
+        ? 'https://app.mushroom.viasocket.com/login'
+        : hasToken
+          ? 'https://flow.viasocket.com'
+          : '/signup';
+
     const isActive = (path) => {
         if (!path || path.startsWith('http')) return '';
         const currentPath = pathname.split('?')[0].split('#')[0];
@@ -42,6 +52,9 @@ export default function MainNavbar({
                     <Link
                         href="/"
                         aria-label="logo"
+                        data-track="header_logo"
+                        data-track-label="viaSocket logo"
+                        data-track-section="header"
                         className={`${style.nav_btn} min-w-[120px] ${borderClass} ${backgroundClass} flex !justify-start`}
                         style={{ backgroundColor: 'transparent' }}
                     >
@@ -71,6 +84,9 @@ export default function MainNavbar({
                             navItems.map((item, index) => (
                                 <Link
                                     key={index}
+                                    data-track={`header_${item.track || 'nav'}`}
+                                    data-track-label={item.name}
+                                    data-track-section="header"
                                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} ${
                                         index === 0 ? 'border-l border-gray-300' : ''
                                     } border-r border-gray-300 hidden lg:flex w-fit !h-[54px] px-6 hover:text-accent !text-xs items-center justify-center ${isActive(
@@ -92,6 +108,11 @@ export default function MainNavbar({
 
                     {hasToken ? (
                         <button
+                            data-track="header_dashboard"
+                            data-track-label="Dashboard"
+                            data-track-section="header"
+                            data-track-action="dashboard_click"
+                            data-track-destination={authDestination}
                             className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                             onClick={(e) =>
                                 handleRedirect(
@@ -109,11 +130,18 @@ export default function MainNavbar({
                         </button>
                     ) : (
                         <button
+                            data-track="header_login_signup"
+                            data-track-label="Login/Sign Up"
+                            data-track-section="header"
+                            data-track-action={isMcp ? 'login_click' : 'signup_click'}
+                            data-track-destination={authDestination}
                             className={`${style.nav_btn} ${borderClass} flex items-center justify-center text-white px-4 mx-4 lg:mr-0 bg-accent !text-xs text-nowrap hover:bg-black !h-[32px] !font-normal rounded-full`}
                             onClick={(e) =>
                                 handleRedirect(
                                     e,
-                                    pathname?.startsWith('/mcp') ? 'https://app.mushroom.viasocket.com/login?' : '/signup?',
+                                    pathname?.startsWith('/mcp')
+                                        ? 'https://app.mushroom.viasocket.com/login?'
+                                        : '/signup?',
                                     null,
                                     pathname?.startsWith('/mcp') ? getMcpUtmSource() || 'viasocket' : undefined
                                 )
