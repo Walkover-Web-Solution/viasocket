@@ -9,23 +9,30 @@ import MigratingBanner from './MigratingBanner';
 import Relay from './Relay';
 import WebinarBanner from '../webinar/WebinarBanner';
 
+// `track` is the stable name each item reports as. It is spelled out rather than
+// derived from `name` so renaming the label in the UI cannot quietly rename the
+// thing being measured.
 const navItems = [
     {
         name: 'Usecases',
         link: '/departments',
+        track: 'usecases',
     },
     {
         name: 'Features',
         link: '/features',
+        track: 'features',
     },
     {
         name: 'Explore Apps',
         link: '/integrations',
+        track: 'explore_apps',
     },
     {
         name: 'Pricing',
         link: '/pricing',
         badge: 'free forever',
+        track: 'pricing',
     },
 ];
 

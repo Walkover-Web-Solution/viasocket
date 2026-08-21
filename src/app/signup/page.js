@@ -7,7 +7,7 @@ export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getSignupPageData();
-    
+
     return {
         title: metaData?.title || 'Sign Up - viaSocket',
         description: metaData?.description || 'Sign up to viaSocket and start automating your workflows',
@@ -41,10 +41,7 @@ export default async function SignupPage({ searchParams }) {
                     {/* Left column - signup methods */}
                     <div className="flex flex-col justify-center px-6 py-12 sm:px-10 lg:p-20 bg-white">
                         <div className="space-y-8 flex flex-col">
-                            <Link
-                                href="/"
-                                className="h-10 w-10 flex items-center justify-center shadow-md"
-                            >
+                            <Link href="/" className="h-10 w-10 flex items-center justify-center shadow-md">
                                 <Image src="/assets/brand/favicon_dark.svg" alt="viaSocket" width={40} height={40} />
                             </Link>
 
@@ -68,6 +65,10 @@ export default async function SignupPage({ searchParams }) {
                                 <span>Already have an account?</span>
                                 <Link
                                     href="/login"
+                                    data-track="signup_page_login"
+                                    data-track-label="Log in"
+                                    data-track-section="main"
+                                    data-track-action="login_click"
                                     className="text-[#a32015] font-medium hover:underline text-base"
                                 >
                                     Log in

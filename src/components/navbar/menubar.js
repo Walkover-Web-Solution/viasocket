@@ -11,23 +11,51 @@ function NavList({ navItems }) {
         <ul className="grid grid-cols-1 list-none">
             {navItems?.map((item, i) => (
                 <li key={i} className="hover:bg-gray-100 text-black p-2">
-                    <Link href={item?.link} className="flex flex-col">
+                    <Link
+                        href={item?.link}
+                        data-track={`menu_${item?.track || 'nav'}`}
+                        data-track-label={item?.name}
+                        data-track-section="menu"
+                        className="flex flex-col"
+                    >
                         <span className="text-lg hover:text-accent hover:underline">{item?.name}</span>
                     </Link>
                 </li>
             ))}
             <li className="hover:bg-gray-100 text-black p-2">
-                <Link href={'/support'} className="flex flex-col">
+                <Link
+                    href={'/support'}
+                    data-track="menu_support"
+                    data-track-label="Support"
+                    data-track-section="menu"
+                    className="flex flex-col"
+                >
                     <span className="text-lg hover:text-accent hover:underline">support</span>
                 </Link>
             </li>
             <li className="hover:bg-gray-100 text-black p-2">
-                <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                <Link
+                    href="https://cal.id/team/viasocket/sales-team"
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                    data-track="menu_contact_sales"
+                    data-track-label="Contact Sales"
+                    data-track-section="menu"
+                    className="flex flex-col"
+                >
                     <span className="text-lg hover:text-accent hover:underline">Contact Sales</span>
                 </Link>
             </li>
             <li className="hover:bg-gray-100 text-black p-2">
-                <Link href="/hire-an-expert" target="_blank" rel="nofollow noopener noreferrer" className="flex flex-col">
+                <Link
+                    href="/hire-an-expert"
+                    target="_blank"
+                    rel="nofollow noopener noreferrer"
+                    data-track="menu_hire_expert"
+                    data-track-label="Let us build"
+                    data-track-section="menu"
+                    className="flex flex-col"
+                >
                     <span className="text-lg hover:text-accent hover:underline">Let us build</span>
                 </Link>
             </li>
@@ -66,8 +94,9 @@ export default function Menubar({ open, onClose, navItems }) {
 
             <div
                 ref={panelRef}
-                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${open ? 'translate-x-0' : 'translate-x-full'
-                    }`}
+                className={`absolute top-0 right-0 h-full w-full md:max-w-[40%] bg-white border-l custom-border shadow-lg overflow-y-auto transition-transform duration-300 ease-in-out transform ${
+                    open ? 'translate-x-0' : 'translate-x-full'
+                }`}
                 role="dialog"
                 aria-modal="true"
                 aria-label="Menubar"
@@ -83,8 +112,12 @@ export default function Menubar({ open, onClose, navItems }) {
                             <span>MCP is now</span>
                             <Image src={`/assets/img/mushrooms-text.svg`} alt="explore mcp" width={100} height={100} />
                         </div>
-                        <Link href={'https://mushrooms.viasocket.com'} target='_blank' rel="nofollow noopener noreferrer">
-                            <div className='whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm'>
+                        <Link
+                            href={'https://mushrooms.viasocket.com'}
+                            target="_blank"
+                            rel="nofollow noopener noreferrer"
+                        >
+                            <div className="whitespace-nowrap bg-white rounded-full px-4 py-1 flex items-center gap-1 cursor-pointer hover:bg-gray-100 transition-colors text-sm">
                                 Explore More <ArrowUpRight className="w-3 h-3" />
                             </div>
                         </Link>

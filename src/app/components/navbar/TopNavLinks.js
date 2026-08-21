@@ -8,7 +8,14 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
 
     return (
         <>
-            <Link href="https://cal.id/team/viasocket/sales-team" target="_blank" rel="nofollow noopener noreferrer">
+            <Link
+                href="https://cal.id/team/viasocket/sales-team"
+                target="_blank"
+                rel="nofollow noopener noreferrer"
+                data-track="header_contact_sales"
+                data-track-label="Contact Sales"
+                data-track-section="header"
+            >
                 <div
                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit ${EmbedPadding} !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
                 >
@@ -19,6 +26,9 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
                 href="/hire-an-expert"
                 target="_blank"
                 rel="nofollow noopener noreferrer"
+                data-track="header_hire_expert"
+                data-track-label="Let us build"
+                data-track-section="header"
             >
                 <div
                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} hidden border-l border-gray-300 lg:flex w-fit ${MCPPadding} !h-[30px] items-center justify-center cursor-pointer hover:text-accent !text-xs text-nowrap`}
@@ -26,7 +36,7 @@ export default function TopNavLinks({ borderClass = '', backgroundClass = '', ut
                     Let us build
                 </div>
             </Link>
-            <Link href={'/support'}>
+            <Link href={'/support'} data-track="header_support" data-track-label="Support" data-track-section="header">
                 <div
                     className={`${style.nav_btn} ${borderClass} ${backgroundClass} border-l border-gray-300 hidden lg:flex w-fit px-4 !h-[30px] items-center justify-center cursor-pointer text-blue-500 !text-xs`}
                 >
