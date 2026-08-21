@@ -8,7 +8,8 @@ const axiosWithCache = setupCache(axios);
 
 // The A/B tracking table lives in its own database with its own auth key, so it
 // does not go through getDataFromTable like the content tables do.
-const abTestTableUrl = () => `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
+const abTestTableUrl = () =>
+    `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
 
 const abTestHeaders = () => ({
     'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY_ABTEST}`,
@@ -18,6 +19,32 @@ const abTestHeaders = () => ({
 // Kept well clear of the API's cap: a limit of 500 silently returns zero rows
 // (400 is still fine), which would look like a visitor with no history.
 const ABTEST_LOOKUP_LIMIT = 200;
+
+// Every column an upsert has to read before it can write: the visitor summary,
+// the counters, and the interaction history that must be appended to rather than
+// replaced.
+const ABTEST_ROW_FIELDS = [
+    'rowid',
+    'autonumber',
+    'name',
+    'user_id',
+    'varient',
+    'view_count',
+    'revisit_count',
+    'environment',
+    'utmdata',
+    'signup',
+    'timestamp',
+    'click_data',
+    'page_data',
+    'last_action',
+    'last_action_at',
+    'first_url',
+    'last_url',
+    'session_id',
+    'last_visit_at',
+    'createdat',
+].join(',');
 
 export async function getDataFromTable(table, query, pageUrl) {
     const apiUrl = `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65d2ed33fa9d1a94a5224235/${table}${query ? query : ''}`;
@@ -410,15 +437,31 @@ export async function getCategoryBlogs(query, pageUrl) {
     }
 }
 
-export async function getAbTestVisits(visitorId, pageUrl) {
-    // Deliberately not axiosWithCache: the table answers reads with
-    // cache-control: max-age=172800, so a repeated lookup would be served a
-    // two-day-old count. The timestamp defeats the CDN copy as well.
-    const filter = encodeURIComponent(`name LIKE '%${visitorId}%'`);
-    // name records the page each visit was counted for and varient the variant it
-    // was served, so this one read answers both how long the visitor's history is
-    // and whether this page has already been counted for this variant.
-    const url = `${abTestTableUrl()}?filter=${filter}&fields=rowid,name,varient&limit=${ABTEST_LOOKUP_LIMIT}&_=${Date.now()}`;
+/**
+ * Every row the table holds for one visitor, oldest first.
+ *
+ * There should only ever be one — the tracker upserts — but rows written before
+ * that was true, and rows created by two tabs racing, are returned too so the
+ * caller can collapse them into the oldest.
+ *
+ * Deliberately not axiosWithCache: the table answers reads with
+ * cache-control: max-age=172800, so a repeated lookup would be served a
+ * two-day-old row. The timestamp defeats the CDN copy as well.
+ */
+export async function getAbTestVisitorRows(visitorId, pageUrl) {
+    // The visitor id lives inside the JSON kept in `name`, so it is matched with
+    // LIKE; ordering by autonumber makes "the oldest row" the same answer for
+    // every concurrent request, which is what keeps them from disagreeing about
+    // which row survives.
+    const params = new URLSearchParams({
+        filter: `name LIKE '%${visitorId}%'`,
+        fields: ABTEST_ROW_FIELDS,
+        sort: 'autonumber',
+        limit: String(ABTEST_LOOKUP_LIMIT),
+        _: String(Date.now()),
+    });
+
+    const url = `${abTestTableUrl()}?${params.toString()}`;
 
     try {
         const response = await axios.get(url, { headers: abTestHeaders() });
@@ -429,7 +472,7 @@ export async function getAbTestVisits(visitorId, pageUrl) {
             pageUrl,
             source: url,
         });
-        return [];
+        return null;
     }
 }
 
@@ -437,9 +480,39 @@ export async function saveAbTestVisit(record, pageUrl) {
     const url = abTestTableUrl();
 
     try {
-        // The table only accepts inserts, and only in a records array.
+        // Inserts go in a records array; the response carries the new row.
         const response = await axios.post(url, { records: [record] }, { headers: abTestHeaders() });
         return response?.data?.data?.[0] || null;
+    } catch (error) {
+        sendErrorMessage({
+            error,
+            pageUrl,
+            source: url,
+        });
+        return null;
+    }
+}
+
+/**
+ * Rewrites the given columns of one row, addressed by rowid.
+ *
+ * This is how a repeat visit is recorded: the visitor already has a row, so their
+ * counters are updated in place instead of another row being inserted.
+ */
+export async function updateAbTestVisit(rowid, fields, pageUrl) {
+    // The rowid goes straight into the where clause, so only the shape the table
+    // itself hands back is accepted.
+    if (!/^row[a-z0-9]+$/i.test(rowid || '')) return null;
+
+    const url = abTestTableUrl();
+
+    try {
+        const response = await axios.patch(
+            url,
+            { records: [{ where: `rowid = '${rowid}'`, fields }] },
+            { headers: abTestHeaders() }
+        );
+        return response?.data?.data ?? true;
     } catch (error) {
         sendErrorMessage({
             error,

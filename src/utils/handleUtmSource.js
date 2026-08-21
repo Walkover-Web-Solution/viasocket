@@ -51,7 +51,7 @@ export const getUtmSource = () => {
 // referral — and is real attribution we must not overwrite.
 const INTERNAL_UTM_SOURCES = ['home-A', 'home-B', 'home-C', 'relay-switch-google-ads'];
 
-const isInternalUtmSource = (source) =>
+export const isInternalUtmSource = (source) =>
     !source || source.startsWith('/') || INTERNAL_UTM_SOURCES.includes(source);
 
 /**

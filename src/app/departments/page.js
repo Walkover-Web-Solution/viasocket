@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import IntelligentAutomationsSectionOptimized from '../components/home/IntelligentAutomationsSectionOptimized';
 import Image from 'next/image';
+import AutomationIdeasSection from '../components/home/AutomationIdeasSection';
 
 export const runtime = 'edge';
 
@@ -199,6 +200,8 @@ export default async function DepartmentsPage() {
                             );
                         })}
                     </div>
+
+                    <AutomationIdeasSection />
 
                     {/* Show Apps Section */}
                     <div className="my-20 container">

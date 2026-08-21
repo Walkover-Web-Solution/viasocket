@@ -46,7 +46,13 @@ export default function EmbedSection({ appCount }) {
                         pre-built workflow templates, and AI-powered actions, without ever leaving your platform.
                     </p>
 
-                    <Link href="/embed" className="btn btn-accent">
+                    <Link
+                        href="/embed"
+                        data-track="main_embed_cta"
+                        data-track-label="Embed"
+                        data-track-section="main"
+                        className="btn btn-accent"
+                    >
                         Explore embed
                         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
                             <path

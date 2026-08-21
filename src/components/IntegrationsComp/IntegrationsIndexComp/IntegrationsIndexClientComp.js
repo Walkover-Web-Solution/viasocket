@@ -17,6 +17,7 @@ import searchApps from '@/utils/searchApps';
 import FAQSection from '@/components/faqSection/faqSection';
 import AlphabeticalComponent from '@/components/alphabetSort/alphabetSort';
 import TopCategoryBlogs from './topCategoryBlogs';
+import AutomationIdeasSection from '@/app/components/home/AutomationIdeasSection';
 
 export default function IntegrationsIndexClientComp({
     pageInfo,
@@ -292,6 +293,7 @@ export default function IntegrationsIndexClientComp({
                 )}
             </div>
 
+            <AutomationIdeasSection />
             <TopCategoryBlogs categoryBlogs={categoryBlogs} categoryName={categoryName} />
 
             <div className="container my-6">
