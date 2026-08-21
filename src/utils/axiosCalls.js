@@ -9,7 +9,7 @@ const axiosWithCache = setupCache(axios);
 // The A/B tracking table lives in its own database with its own auth key, so it
 // does not go through getDataFromTable like the content tables do.
 const abTestTableUrl = () =>
-    `${process.env.NEXT_PUBLIC_DB_BASE_URL}/${process.env.NEXT_PUBLIC_DB_ID_ABTEST}/${ABTESTCOUNT}`;
+    `${process.env.NEXT_PUBLIC_DB_BASE_URL}/65c4c053a3fad7804af5bba8/${ABTESTCOUNT}`;
 
 const abTestHeaders = () => ({
     'auth-key': `${process.env.NEXT_PUBLIC_DB_KEY_ABTEST}`,
