@@ -9,9 +9,19 @@ import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 
+// Departments that showcase a specific app's templates instead of their marquee apps'.
+const DEPARTMENT_TEMPLATE_APPS = {
+    'human-resources': 'magicalapi',
+    marketing: 'magicalapi',
+    sales: 'magicalapi',
+};
+
 export default function DepartmentClient({ data, hasToken }) {
     const { metaData, navbarData, footerData, department, blogsData, templateToShow } = data;
-    
+
+    const templateAppSlug = DEPARTMENT_TEMPLATE_APPS[department?.slug];
+    const templateApps = templateAppSlug ? [{ appslugname: templateAppSlug }] : department?.marque_apps;
+
     return (
         <div className="square-background">
             <NavbarServer
@@ -52,7 +62,7 @@ export default function DepartmentClient({ data, hasToken }) {
                 </div>
 
                 <TemplateContainer
-                    selectedApps={department?.marque_apps}
+                    selectedApps={templateApps}
                     templateToShow={templateToShow}
                     requireAllApps={false}
                     department_name={department?.name}
