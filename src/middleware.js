@@ -32,6 +32,22 @@ export async function middleware(request) {
 
     const response = NextResponse.next();
 
+    // The homepage is the one page rendered from the variant cookie, and it is
+    // also where most visitors are handed their tracking cookies for the first
+    // time. A shared cache must therefore never store it: a stored copy is
+    // replayed to everyone with its Set-Cookie headers stripped and one
+    // visitor's variant baked into the HTML, which is exactly how homepage
+    // tracking and the A/B split both stop working. Cloudflare's zone cache
+    // rule is the authority in production, but the origin has to declare this
+    // too or any cache in front of it repeats the mistake.
+    if (pathname === '/') {
+        response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
+        // Cloudflare reads this in preference to Cache-Control for its own edge
+        // cache, so it is what keeps the page out of the CDN while leaving the
+        // directive above to speak for the browser.
+        response.headers.set('CDN-Cache-Control', 'no-store');
+    }
+
     const cookieDomain = getVariantCookieDomain(request.nextUrl.hostname);
 
     // A/B variant assignment (sticky, decided server-side at the edge)
