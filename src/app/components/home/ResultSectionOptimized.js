@@ -157,8 +157,8 @@ export default function ResultSectionOptimized({
             {/* AI Ideas Note Section - Show when incomplete selections */}
             {(selectedApps.length > 0 || selectedIndustries.length > 0 || selectedDepartments.length > 0) &&
                 !showAiResponse && (
-                    <div className="container mx-auto px-4 py-12 relative z-index-1">
-                        <h2 className="h2 mb-8 text-left">Top ideas curated for your business</h2>
+                    <div className="mx-auto relative z-index-1 my-12">
+                        <h2 className="h2 mb-4 text-left">Top ideas curated for your business</h2>
 
                         <div className="w-full">
                             <div className="border custom-border p-8 bg-white">
