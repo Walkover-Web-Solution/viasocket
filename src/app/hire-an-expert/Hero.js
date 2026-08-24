@@ -2,6 +2,7 @@
 
 import { ArrowRight, ShieldCheck, Tag, Zap } from 'lucide-react';
 import HeroHub from './HeroHub';
+import Link from 'next/link';
 
 const HERO_FEATURES = [
     { label: 'Expert implementation', icon: ShieldCheck },
@@ -39,13 +40,24 @@ export default function Hero({ onHire }) {
                     ))}
                 </div>
 
-                <button
-                    onClick={onHire}
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-[#8a1a0a] text-white text-sm font-semibold rounded-full transition-colors group"
-                >
-                    Hire an Expert
-                    <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
-                </button>
+                <div className="flex items-center gap-2">
+                    <button
+                        onClick={onHire}
+                        className="inline-flex items-center gap-2 px-4 py-2 bg-accent hover:bg-[#8a1a0a] text-white text-sm font-semibold rounded-full transition-colors group"
+                    >
+                        Hire an Expert
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    </button>
+
+                    <Link
+                        href="https://cal.id/team/viasocket/hire-an-expert"
+                        target="_blank"
+                        className="inline-flex items-center gap-2 px-4 py-2 hover:text-accent font-semibold group"
+                    >
+                        Connect to Experts
+                        <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
+                    </Link>
+                </div>
             </div>
 
             <div className="flex justify-center">
