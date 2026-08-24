@@ -13,6 +13,7 @@ import {
     newProfile,
     readProfile,
     shouldCountView,
+    startsHomeSession,
     toRowFields,
 } from '@/utils/abTestVisitor';
 
@@ -185,10 +186,16 @@ export async function POST(request) {
                     ? !isDuplicateClick(profile, interaction, now)
                     : type === 'cta' || shouldCountView(profile, event.pageKey, now);
 
+            // A repeat of the same page view can still be the first view of a new
+            // visit, and that is a counter of its own — so it is asked about
+            // separately, or a returning visitor landing back on the url they left
+            // from would have their revisit dropped along with the duplicate view.
+            const startsVisit = type === 'view' && startsHomeSession(profile, event);
+
             // A duplicate event with nothing to collapse has nothing to write: the
             // counters do not move, and the details it carries cannot have changed
             // in the seconds since the event it repeats.
-            if (!counted && !toMerge.length) {
+            if (!counted && !toMerge.length && !startsVisit) {
                 return NextResponse.json({
                     success: true,
                     created: false,
