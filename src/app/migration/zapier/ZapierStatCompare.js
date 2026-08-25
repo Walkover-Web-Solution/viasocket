@@ -3,7 +3,6 @@ const columns = [
         label: 'Zapier',
         value: '100',
         unit: 'tasks / month',
-        sub: 'No AI credits',
         accent: false,
     },
     {
