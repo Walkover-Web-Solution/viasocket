@@ -189,6 +189,10 @@ export const readProfile = (row) => {
             // current session is not mistaken for a return.
             homeSessions: stored.homeSessions ?? (toInt(stored.views?.home) ? 1 : 0),
             homeSessionId: stored.homeSessionId ?? histories.sessionId,
+            // Rows written before the timestamp existed: the last counted view is
+            // the closest thing to when their homepage session was counted, which
+            // is enough for the idle guard to work from their next visit onwards.
+            homeSessionAt: stored.homeSessionAt ?? stored.lastViewAt ?? '',
         };
     }
 
@@ -203,6 +207,7 @@ export const readProfile = (row) => {
         // that page was the homepage.
         homeSessions: isHomePath(path) ? 1 : 0,
         homeSessionId: row?.session_id || '',
+        homeSessionAt: isHomePath(path) ? row?.timestamp || row?.createdat || '' : '',
         clickCount: histories.clicks.length,
         pageEventCount: histories.pages.length,
         firstUrl: stored.pageUrl || '',
@@ -247,6 +252,38 @@ export const shouldCountView = (profile, pageKey, now) => {
     return now.getTime() - last >= VIEW_DEDUPE_WINDOW_MS;
 };
 
+/**
+ * Whether this view begins a homepage visit that has not been counted yet.
+ *
+ * A visitor's first homepage view always counts; after that a view only counts
+ * when it belongs to a session that has not been counted and the last counted one
+ * is at least the idle window old. The session id alone is not enough to ask: a
+ * visitor whose site data is blocked — private browsing, or an extension that
+ * clears it — is handed a fresh id on every load, and without the clock every
+ * reload would read as a return visit. The clock alone is not enough either, since
+ * it would count a visitor who simply stayed on the page for half an hour, so both
+ * have to agree.
+ *
+ * This is what keeps view_count at 1 for the life of a visitor and makes every
+ * later visit a revisit.
+ */
+export const startsHomeSession = (profile, { path, sessionId, nowIso }) => {
+    if (!isHomePath(path)) return false;
+
+    // The session this row was last counted for is still running.
+    if (sessionId && sessionId === profile?.homeSessionId) return false;
+
+    // Never seen the homepage: this is the first visit, whatever the clock says.
+    if (!toInt(profile?.homeSessions)) return true;
+
+    const last = Date.parse(profile?.homeSessionAt || '');
+
+    // A row written before this timestamp existed has only the id to go on.
+    if (!Number.isFinite(last)) return true;
+
+    return Date.parse(nowIso) - last >= SESSION_IDLE_MS;
+};
+
 const emptyProfile = (visitorId, nowIso) => ({
     profileVersion: PROFILE_VERSION,
     visitorId,
@@ -281,6 +318,9 @@ const emptyProfile = (visitorId, nowIso) => ({
     // last of those was, so a second look inside the same session adds nothing.
     homeSessions: 0,
     homeSessionId: '',
+    // When the last homepage session was counted, so a fresh session id cannot
+    // claim a return visit that the clock says has not happened.
+    homeSessionAt: '',
     firstUrl: '',
     lastUrl: '',
     referrer: '',
@@ -330,6 +370,9 @@ export const absorbRow = (profile, row) => {
         sessions: toInt(profile.sessions) + toInt(absorbed.sessions),
         homeSessions: toInt(profile.homeSessions) + toInt(absorbed.homeSessions),
         homeSessionId: profile.homeSessionId || absorbed.homeSessionId || '',
+        // The later of the two: taking the earlier one would let the next view slip
+        // past the idle guard and count a visit that never happened.
+        homeSessionAt: [profile.homeSessionAt, absorbed.homeSessionAt].filter(Boolean).sort().pop() || '',
         signupClicks: {
             count: toInt(profile.signupClicks?.count) + toInt(absorbed.signupClicks?.count),
             firstAt: profile.signupClicks?.firstAt || absorbed.signupClicks?.firstAt || '',
@@ -388,6 +431,17 @@ export const applyEvent = (profile, event) => {
 
     next.firstUtm = resolveFirstUtm(next.firstUtm, utmData);
 
+    // view_count and revisit_count describe the homepage alone, in visits rather
+    // than page views, so they are decided here — before the page-view dedupe has
+    // a say. A visit is a far coarser thing than a page view: the ten seconds that
+    // stop a double-fired effect from counting twice must never also swallow a
+    // genuine return visit that happens to land on the same url.
+    if (type === 'view' && startsHomeSession(profile, { path, sessionId, nowIso })) {
+        next.homeSessions = toInt(profile.homeSessions) + 1;
+        next.homeSessionId = sessionId;
+        next.homeSessionAt = nowIso;
+    }
+
     if (!counted) return next;
 
     if (type === 'click') return applyClick(next, event);
@@ -420,17 +474,6 @@ export const applyEvent = (profile, event) => {
     if (isNewSession || !toInt(profile.sessions)) {
         next.sessions = toInt(profile.sessions) + 1;
         next.lastVisitAt = nowIso;
-    }
-
-    // view_count and revisit_count describe the homepage alone, in visits rather
-    // than page views. A homepage session is counted once: the session it was
-    // counted for is remembered, so refreshing, leaving and coming back, or
-    // opening another tab adds nothing — only a session that has not been counted
-    // yet does, which is what makes the first visit view_count 1 and every later
-    // return a revisit. Views of any other page never reach here.
-    if (isHomePath(path) && sessionId !== profile.homeSessionId) {
-        next.homeSessions = toInt(profile.homeSessions) + 1;
-        next.homeSessionId = sessionId;
     }
 
     next.pages = appendEvent(
