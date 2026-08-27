@@ -14,7 +14,8 @@ export default function EmbedHero({ appCount }) {
                 className="dotted-background absolute inset-y-0 right-0 w-1/2 pointer-events-none"
                 style={{
                     maskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%)',
-                    WebkitMaskImage: 'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%)',
+                    WebkitMaskImage:
+                        'linear-gradient(to right, transparent 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.7) 100%)',
                     backgroundColor: 'transparent',
                 }}
             />
@@ -32,7 +33,13 @@ export default function EmbedHero({ appCount }) {
                 <span>Users can connect apps and build workflows without leaving your platform.</span>
             </div>
 
-            <HeroCtaButtons signupHref="/signup?utm_source=/embed" salesHref="https://cal.id/team/viasocket/embed" className="flex items-center gap-4 mt-8 mb-8" signupClassName="btn btn-accent" salesClassName="btn btn-outline" />
+            <HeroCtaButtons
+                salesHref="https://cal.id/team/viasocket/embed-viasocket"
+                signupHref="/signup?utm_source=/embed"
+                className="flex items-center gap-4 mt-8 mb-8"
+                signupClassName="btn btn-outline"
+                salesClassName="btn btn-accent"
+            />
         </div>
     );
 }

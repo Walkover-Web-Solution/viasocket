@@ -10,6 +10,7 @@ import EmbedChatbotAction from './EmbedChatbotAction';
 import ShowBadges from '../home/ShowBadges';
 import SecuritySection from '../SecuritySection';
 import FeatureShowcase from './FeatureShowcase';
+import EmbedVideo from './EmbedVideo';
 
 export default function EmbedContent({ blogData, footerData, faqData, embedData, appCount, securityGridData }) {
     return (
@@ -18,6 +19,8 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                 <EmbedHero appCount={appCount} />
                 <EmbedFeatureCards appCount={appCount} />
             </div>
+
+            <EmbedVideo />
 
             <FeatureShowcase embedData={embedData} appCount={appCount} />
 
