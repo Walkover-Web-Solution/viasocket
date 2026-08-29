@@ -32,8 +32,6 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
     const capableApp = appOneCapable ? appOneDetails : appTwoDetails;
     const missingApp = appOneCapable ? appTwoDetails : appOneDetails;
 
-    const capitalizeFirst = (name) => (name ? name.charAt(0).toUpperCase() + name.slice(1) : name);
-
     return (
         <div className="cont gap-8 justify-center items-center">
             <h1 className="h1 text-center lg:whitespace-nowrap">
@@ -44,8 +42,8 @@ export default function IntegrationsBetaComp({ appOneDetails, appTwoDetails }) {
                 <h2 className="sub__h1 text-center">
                     {onlyOneCapable ? (
                         <>
-                            {capitalizeFirst(capableApp?.name)} already connects with hundreds of apps.{' '}
-                            {capitalizeFirst(missingApp?.name)}&apos;s automation is still on its way. Want to speed
+                            {capableApp?.name} already connects with hundreds of apps.{' '}
+                            {missingApp?.name}&apos;s automation is still on its way. Want to speed
                             that up?
                         </>
                     ) : (

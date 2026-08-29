@@ -739,7 +739,7 @@ export default function SearchInputHomeOptimized({
                                             alt={app?.name}
                                             className="rounded"
                                         />
-                                        <span className="text-sm capitalize">{app?.name}</span>
+                                        <span className="text-sm">{app?.name}</span>
                                     </div>
                                 ))
                             ) : (
