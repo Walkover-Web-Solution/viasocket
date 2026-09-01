@@ -190,7 +190,6 @@ export default function IntegrationsAppOneClientComp({
             <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                 <div className="container flex flex-col gap-16">
                     <div className="flex flex-col gap-8">
-                        {console.log(combosData ,'combosData')}
                         {combosData?.combinations?.length > 0 ? (
                             <>
                                 <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
@@ -312,8 +311,9 @@ export default function IntegrationsAppOneClientComp({
                                     </div>
                                     <div className="cont gap-2">
                                         <p className="font-semibold sub__h1">
-                                            Take action in {appOneDetails?.name} when something happens in an app or you
-                                            want to add step in flow
+                                            {appOneDetails?.appslugname === 'zeffy'
+                                                ? 'Look up Zeffy data as a step in your flow.'
+                                                : `Take action in ${appOneDetails?.name} when something happens in an app or you want to add step in flow`}
                                         </p>
                                         <p className="sub__h1">{`Login -> Create new flow -> Select action -> Search ${appOneDetails?.name} -> Choose the action from the list`}</p>
                                     </div>
