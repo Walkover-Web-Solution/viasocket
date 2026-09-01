@@ -21,7 +21,21 @@ const Cta = ({
     theme = 'white',
     newTab = false,
     readMoreLink,
+    // Shared by many pages, so each call site names its own button rather than all
+    // of them reporting as one element. Left untracked when unnamed.
+    trackName,
+    trackSection = 'main',
 }) => {
+    const isSignup = String(buttonLink || '').includes('/signup');
+    const trackProps = trackName
+        ? {
+              'data-track': trackName,
+              'data-track-section': trackSection,
+              'data-track-action': isSignup ? 'signup_click' : 'click',
+              'data-track-destination': buttonLink,
+          }
+        : {};
+
     return (
         <div className="container">
             <div className={`cont border custom-border gap-2 p-6 md:p-12 ${theme === 'white' ? 'bg-white' : 'bg-black'}`}>
@@ -37,6 +51,7 @@ const Cta = ({
                 <Link href={buttonLink} target={newTab ? '_blank' : '_self'} className="w-fit mt-8">
                     <button
                         className={`btn ${theme === 'white' ? 'btn-accent' : 'bg-accent text-white hover:bg-white hover:text-black border-none'}`}
+                        {...trackProps}
                     >
                         {buttonLabel}
                     </button>

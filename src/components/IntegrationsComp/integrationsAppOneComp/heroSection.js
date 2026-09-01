@@ -23,7 +23,13 @@ export default function HeroSection({ appOneDetails, combosData, appData, templa
                             `Eliminate repetitive tasks and manual data entry. Build automated workflows with viaSocket's AI agents and serverless logic — no code required.`}
                     </p>
                     <div className="flex flex-wrap items-center gap-2">
-                        <Link href="/signup" className="btn btn-accent">
+                        <Link
+                            href="/signup"
+                            className="btn btn-accent"
+                            data-track="integrations_hero_start_automation"
+                            data-track-section="integrations"
+                            data-track-action="signup_click"
+                        >
                             Start your automation
                         </Link>
                         <button
@@ -32,6 +38,9 @@ export default function HeroSection({ appOneDetails, combosData, appData, templa
                             }
                             className="btn btn-outline"
                             rel="nofollow"
+                            data-track="integrations_hero_connect_app"
+                            data-track-section="integrations"
+                            data-track-action="connect_click"
                         >
                             Connect to {appOneDetails?.name} <ExternalLinkIcon className="w-4 h-4" />
                         </button>

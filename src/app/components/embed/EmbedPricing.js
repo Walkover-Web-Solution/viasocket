@@ -80,7 +80,7 @@ function PlanCard({ plan }) {
                     </ul>
                 </div>
 
-                <Link href={plan.ctaLink} className={`w-full mt-auto ${plan.ctaClass}`}>
+                <Link href={plan.ctaLink} className={`w-full mt-auto ${plan.ctaClass}`} data-track="embed_pricing_plan" data-track-section="embed" data-track-action="signup_click" data-track-label={plan.name}>
                     {plan.ctaLabel}
                 </Link>
             </div>

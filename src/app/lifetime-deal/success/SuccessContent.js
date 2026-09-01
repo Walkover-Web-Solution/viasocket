@@ -83,6 +83,9 @@ export default function SuccessContent() {
                 <Link
                     id="sxSignupCta"
                     href="/signup"
+                    data-track="lifetime_deal_success_signup"
+                    data-track-section="main"
+                    data-track-action="signup_click"
                     rel="nofollow noopener noreferrer"
                     className="btn btn-accent"
                 >

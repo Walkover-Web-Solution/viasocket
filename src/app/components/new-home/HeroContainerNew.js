@@ -187,6 +187,10 @@ export default function HeroContainerNew() {
                 <div className="flex items-center gap-5">
                   <button
                     className="primary-button"
+                    data-track="new_home_hero_signup"
+                    data-track-section="hero"
+                    data-track-action="signup_click"
+                    data-track-destination="/signup"
                     onClick={(e) => handleRedirect(e, '/signup?', null, 'home-A')}
                     onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "0 0 40px rgba(0,0,0,0.25)")}
                     onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "0 0 30px rgba(0,0,0,0.15)")}

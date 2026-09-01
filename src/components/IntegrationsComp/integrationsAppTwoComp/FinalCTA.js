@@ -12,7 +12,7 @@ export default function FinalCTA({ appOneDetails, appTwoDetails, utm, hasToken }
                     <p className="text-white/80 text-base md:text-lg max-w-xl mx-auto">
                         No credit card required. Set up your first workflow in minutes.
                     </p>
-                    <DashboardButton utm_src={utm + '#final-cta'} hasToken={hasToken} />
+                    <DashboardButton utm_src={utm + '#final-cta'} hasToken={hasToken} section="integrations" />
                 </div>
             </div>
         </div>

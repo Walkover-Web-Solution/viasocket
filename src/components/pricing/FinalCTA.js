@@ -41,7 +41,14 @@ export default function FinalCTA() {
           <h2 className="text-white text-xl sm:text-2xl md:text-3xl lg:text-3xl font-semibold leading-tight mb-4 sm:mb-5 md:mb-6 lg:mb-7">
             Sign up free and start your first workflow, no credit card required.
           </h2>
-          <button onClick={() => (window.location.href = '/signup')} className="btn btn-accent w-fit">
+          <button
+            onClick={() => (window.location.href = '/signup')}
+            className="btn btn-accent w-fit"
+            data-track="pricing_final_cta"
+            data-track-section="pricing"
+            data-track-action="signup_click"
+            data-track-destination="/signup"
+          >
             View your personalised plan →
           </button>
         </div>

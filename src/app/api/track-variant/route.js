@@ -13,9 +13,10 @@ import {
     newProfile,
     readProfile,
     shouldCountView,
-    startsHomeSession,
+    startsVisit,
     toRowFields,
 } from '@/utils/abTestVisitor';
+import { isBotRequest } from '@/utils/isBot';
 
 export const runtime = 'edge';
 
@@ -135,6 +136,14 @@ export async function POST(request) {
             return NextResponse.json({ success: false, reason: 'unrecognised interaction' });
         }
 
+        // A crawler drops its cookies between hits, so every visit it makes reads
+        // as a brand new visitor and earns a row of its own. Dropping the event
+        // before the lookup keeps that traffic out of the table entirely and costs
+        // it no table read either.
+        if (isBotRequest({ userAgent: request.headers.get('user-agent'), userInfo })) {
+            return NextResponse.json({ success: false, reason: 'bot' });
+        }
+
         const now = new Date();
         const nowIso = now.toISOString();
         const environment = getEnvironment(request);
@@ -190,12 +199,12 @@ export async function POST(request) {
             // visit, and that is a counter of its own — so it is asked about
             // separately, or a returning visitor landing back on the url they left
             // from would have their revisit dropped along with the duplicate view.
-            const startsVisit = type === 'view' && startsHomeSession(profile, event);
+            const opensVisit = type === 'view' && startsVisit(profile, event);
 
             // A duplicate event with nothing to collapse has nothing to write: the
             // counters do not move, and the details it carries cannot have changed
             // in the seconds since the event it repeats.
-            if (!counted && !toMerge.length && !startsVisit) {
+            if (!counted && !toMerge.length && !opensVisit) {
                 return NextResponse.json({
                     success: true,
                     created: false,
@@ -277,7 +286,12 @@ async function collapseDuplicates(visitorId, pageUrl) {
 
     const updated = await updateAbTestVisit(
         canonical.rowid,
-        toRowFields(profile, { environment: canonical.environment || 'production', nowIso: profile.lastSeen }),
+        toRowFields(profile, {
+            environment: canonical.environment || 'production',
+            // A profile built from a bare legacy row has no lastSeen, and writing
+            // an undefined timestamp is what the column would then hold.
+            nowIso: profile.lastSeen || new Date().toISOString(),
+        }),
         pageUrl
     );
 

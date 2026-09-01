@@ -100,7 +100,7 @@ export default async function DepartmentsPage() {
                             Build workflows that run across teams, tools, and systems—without manual handoffs.
                         </p>
                         <div className="flex gap-4 justify-center mt-5">
-                            <DashboardButton utm_src={'/departments/hero'} hasToken={hasToken} />
+                            <DashboardButton utm_src={'/departments/hero'} hasToken={hasToken} section="departments" />
                             <Link
                                 href="https://cal.id/team/viasocket/workflow-setup-discussion"
                                 className="btn btn-outline"

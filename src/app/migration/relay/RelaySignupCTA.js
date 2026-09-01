@@ -26,7 +26,15 @@ export default function RelaySignupCTA({ className, children }) {
     };
 
     return (
-        <button type="button" className={className} onClick={goToSignup}>
+        <button
+            type="button"
+            className={className}
+            onClick={goToSignup}
+            data-track="migration_relay_signup"
+            data-track-section="migration"
+            data-track-action="signup_click"
+            data-track-destination={SIGNUP_URL}
+        >
             {children}
         </button>
     );

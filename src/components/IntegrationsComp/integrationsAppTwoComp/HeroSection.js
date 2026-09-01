@@ -67,12 +67,18 @@ export default function HeroSection({
                                     );
                                 }}
                                 className="btn btn-accent px-8 py-3"
+                                data-track="integrations_hero_connect_apps"
+                                data-track-section="integrations"
+                                data-track-action="signup_click"
                             >
                                 Connect these apps for free
                             </button>
                         ) : (
                             <button
                                 className="btn btn-accent px-8 py-3"
+                                data-track="integrations_hero_create_flow"
+                                data-track-section="integrations"
+                                data-track-action={hasToken ? 'dashboard_click' : 'signup_click'}
                                 onClick={(e) =>
                                     handleRedirect(e, hasToken ? `https://flow.viasocket.com?` : `/signup?`, null, utm)
                                 }

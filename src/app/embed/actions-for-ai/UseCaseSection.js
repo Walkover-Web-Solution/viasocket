@@ -21,7 +21,7 @@ export default function UseCaseSection() {
             Here&apos;s a real example: a new lead submits a form. The agent analyzes the information,
             selects the required actions, and executes them across multiple apps in seconds
           </p>
-          <a href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" className="btn btn-accent">
+          <a href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" data-track="embed_actions_ai_use_case" data-track-section="embed" data-track-action="signup_click" className="btn btn-accent">
             Start building
           </a>
         </div>

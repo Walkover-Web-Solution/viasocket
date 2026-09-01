@@ -72,6 +72,9 @@ export default function HowItWorks({ appOneDetails, appTwoDetails, hasToken, utm
                     </ol>
                     <button
                         className="btn btn-accent self-start"
+                        data-track="integrations_how_it_works_create_flow"
+                        data-track-section="integrations"
+                        data-track-action={hasToken ? 'dashboard_click' : 'signup_click'}
                         onClick={(e) =>
                             handleRedirect(e, hasToken ? `https://flow.viasocket.com?` : `/signup?`, null, utm)
                         }
