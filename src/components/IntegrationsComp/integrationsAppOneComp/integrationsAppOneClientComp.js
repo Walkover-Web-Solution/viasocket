@@ -312,8 +312,9 @@ export default function IntegrationsAppOneClientComp({
                                     </div>
                                     <div className="cont gap-2">
                                         <p className="font-semibold sub__h1">
-                                            Take action in {appOneDetails?.name} when something happens in an app or you
-                                            want to add step in flow
+                                            {appOneDetails?.appslugname === 'zeffy'
+                                                ? 'Look up Zeffy data as a step in your flow.'
+                                                : `Take action in ${appOneDetails?.name} when something happens in an app or you want to add step in flow`}
                                         </p>
                                         <p className="sub__h1">{`Login -> Create new flow -> Select action -> Search ${appOneDetails?.name} -> Choose the action from the list`}</p>
                                     </div>
