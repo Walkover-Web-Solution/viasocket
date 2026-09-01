@@ -190,6 +190,7 @@ export default function IntegrationsAppOneClientComp({
             <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                 <div className="container flex flex-col gap-16">
                     <div className="flex flex-col gap-8">
+                        {console.log(combosData ,'combosData')}
                         {combosData?.combinations?.length > 0 ? (
                             <>
                                 <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
