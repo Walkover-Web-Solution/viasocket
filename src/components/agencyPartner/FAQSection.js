@@ -129,7 +129,7 @@ export default function FAQSection() {
                 </div>
             </div>
             <div className="flex justify-center mt-12">
-                <Link href="/signup" className="btn btn-accent">
+                <Link href="/signup" className="btn btn-accent" data-track="agency_partner_signup" data-track-section="main" data-track-action="signup_click">
                     Become a partner
                 </Link>
             </div>

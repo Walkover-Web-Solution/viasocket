@@ -132,7 +132,7 @@ export default async function WorkflowAutomationsPage() {
                         Workflow automation is the process of setting up automations for your manual, repetitive
                         business processes or workflows
                     </p>
-                    <DashboardButton utm_src={"/workflow-automations"} hasToken={hasToken} />
+                    <DashboardButton utm_src={"/workflow-automations"} hasToken={hasToken} section="workflow_automations" />
                 </section>
 
                 <section className="bg-black text-white p-6 md:p-12 flex flex-col gap-10">
@@ -322,7 +322,7 @@ export default async function WorkflowAutomationsPage() {
                             drive growth.
                         </p>
                     </div>
-                    <Link href="/signup?utm_source=worflow-automations">
+                    <Link href="/signup?utm_source=worflow-automations" data-track="workflow_automations_signup" data-track-section="main" data-track-action="signup_click">
                         <button className="btn bg-accent text-white hover:bg-white hover:text-black border custom-border">
                             Get started with viaSocket
                         </button>

@@ -16,7 +16,7 @@ export default function PanelSectionOptimized({ hasToken }) {
                         />
                     </div>
                     <div className="absolute bottom-[5%] left-[57%] -translate-x-1/2 flex justify-center flex-col items-center gap-4 z-50">
-                        <DashboardButton utm_src={"/sspanel"} hasToken={hasToken} />
+                        <DashboardButton utm_src={"/sspanel"} hasToken={hasToken} section="home" />
                     </div>
                 </div>
             </div>

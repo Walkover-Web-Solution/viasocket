@@ -1,4 +1,6 @@
 import { collectUserInfo, getUtmData } from './collectUserInfo';
+import { getCookie, setCookie } from './handleUtmSource';
+import { VISITOR_ID_COOKIE } from '@/const/abTest';
 
 /**
  * Client side of visitor tracking.
@@ -22,6 +24,13 @@ const REQUEST_TIMEOUT_MS = 8000;
 // returning later starts a new visit while moving between pages does not.
 const SESSION_IDLE_MS = 30 * 60 * 1000;
 const SESSION_KEY = 'vs_session';
+
+// A copy of the visitor id cookie, kept so a returning visitor can be recognised
+// as the same person when the cookie itself is gone. A year, to match the cookie.
+const VISITOR_KEY = 'vs_visitor';
+const VISITOR_ID_DAYS = 365;
+
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // Serialises events raised by this tab even where the Web Locks API is missing.
 let queue = Promise.resolve();
@@ -70,8 +79,53 @@ const touchSession = () => {
     return { sessionId: session.id, isNewSession: !isLive };
 };
 
-/** The current visit without starting one, for events that only ride along. */
-const currentSessionId = () => readStore(SESSION_KEY)?.id || '';
+/**
+ * Keeps the current visit alive without starting a new one.
+ *
+ * A visit ends after the idle window, and only page views used to refresh it — so
+ * a visitor who read one long page for half an hour and then clicked through was
+ * counted as having come back, when they had never left. An interaction is proof
+ * they are still here, so it moves the clock while leaving the id alone.
+ */
+const touchSessionClock = () => {
+    const stored = readStore(SESSION_KEY);
+    if (!stored?.id) return '';
+
+    writeStore(SESSION_KEY, { id: stored.id, at: Date.now() });
+
+    return stored.id;
+};
+
+/**
+ * The visitor id this event belongs to, repaired if it can be.
+ *
+ * The id is issued by middleware and lives in a cookie, which is the only copy the
+ * server trusts — but that cookie is lost whenever site data is cleared, when
+ * Safari expires it, or when an HTML response is served from a cache that strips
+ * Set-Cookie. Each of those turns a returning visitor into a brand new row and
+ * loses their history. Mirroring the id here lets the cookie be written back from
+ * the mirror, so the visitor is recognised as the same person.
+ *
+ * The mirror is only ever a copy: an id is never minted here, so the server stays
+ * the one issuer and a visitor cannot hand themselves an identity.
+ */
+const ensureVisitorId = () => {
+    if (typeof document === 'undefined') return '';
+
+    const fromCookie = getCookie(VISITOR_ID_COOKIE);
+    if (UUID_REGEX.test(fromCookie || '')) {
+        if (readStore(VISITOR_KEY) !== fromCookie) writeStore(VISITOR_KEY, fromCookie);
+        return fromCookie;
+    }
+
+    const mirrored = readStore(VISITOR_KEY);
+    if (!UUID_REGEX.test(mirrored || '')) return '';
+
+    // document.cookie is synchronous, so the request this call precedes carries it.
+    setCookie(VISITOR_ID_COOKIE, mirrored, VISITOR_ID_DAYS);
+
+    return mirrored;
+};
 
 const post = (payload) => {
     const controller = new AbortController();
@@ -147,14 +201,20 @@ const sendNow = (payload) => {
 
 /** Reports that this visitor has looked at a page. */
 export const trackView = () =>
-    send(() => ({
-        event: 'view',
-        userInfo: collectUserInfo(),
-        pageUrl: window.location.href,
-        utmData: getUtmData(),
-        referrer: document.referrer || '',
-        ...touchSession(),
-    }));
+    send(() => {
+        // Inside the lock, with the rest of the payload: repairing the cookie is
+        // part of deciding who this event belongs to.
+        ensureVisitorId();
+
+        return {
+            event: 'view',
+            userInfo: collectUserInfo(),
+            pageUrl: window.location.href,
+            utmData: getUtmData(),
+            referrer: document.referrer || '',
+            ...touchSession(),
+        };
+    });
 
 /**
  * Reports one meaningful interaction — a header link, a hero CTA, a footer link.
@@ -168,6 +228,8 @@ export const trackView = () =>
 export const trackInteraction = ({ element, label, section, action, destinationUrl } = {}) => {
     if (typeof window === 'undefined' || !element) return;
 
+    ensureVisitorId();
+
     sendNow({
         event: 'click',
         element,
@@ -178,7 +240,8 @@ export const trackInteraction = ({ element, label, section, action, destinationU
         pageUrl: window.location.href,
         utmData: getUtmData(),
         referrer: document.referrer || '',
-        sessionId: currentSessionId(),
+        // A press is proof the visit is still running, so it keeps it alive.
+        sessionId: touchSessionClock(),
     });
 };
 
@@ -192,6 +255,8 @@ export const trackInteraction = ({ element, label, section, action, destinationU
 export const trackCtaClick = (source, interaction = {}) => {
     if (typeof window === 'undefined') return;
 
+    ensureVisitorId();
+
     sendNow({
         event: 'cta',
         ctaSource: source,
@@ -201,6 +266,6 @@ export const trackCtaClick = (source, interaction = {}) => {
         pageUrl: window.location.href,
         utmData: getUtmData(),
         referrer: document.referrer || '',
-        sessionId: currentSessionId(),
+        sessionId: touchSessionClock(),
     });
 };

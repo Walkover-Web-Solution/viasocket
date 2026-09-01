@@ -6,6 +6,9 @@ export default function LimitedTimeOffer({ href }) {
         <Link
             href={href}
             className="inline-flex items-center justify-start gap-2 rounded-full bg-white/95 backdrop-blur-sm px-3 py-1.5 mb-4 text-xs md:text-sm border border-white/20 shadow-sm hover:bg-white hover:shadow-md transition-all max-w-fit"
+            data-track="embed_limited_time_offer"
+            data-track-section="embed"
+            data-track-action="signup_click"
         >
             <Gift size={14} className="text-accent shrink-0" />
             <span className="font-medium text-accent tracking-wide whitespace-nowrap">LIMITED-TIME OFFER</span>

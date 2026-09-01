@@ -19,7 +19,13 @@ export default function PricingHeroSection() {
                         </p>
                     </div>
 
-                    <Link href="/signup" className="btn btn-accent">
+                    <Link
+                        href="/signup"
+                        className="btn btn-accent"
+                        data-track="pricing_hero_signup"
+                        data-track-section="pricing"
+                        data-track-action="signup_click"
+                    >
                         Start With Free Plan
                         <ArrowRight />{' '}
                     </Link>

@@ -34,6 +34,11 @@ export default function PopularUseCases({ appName }) {
                         <div
                             key={index}
                             className="bg-white border border-gray-200 hover:border-accent p-4 flex items-start justify-between gap-4 cursor-pointer transition-colors"
+                            data-track="integrations_use_case"
+                            data-track-section="integrations"
+                            data-track-action="signup_click"
+                            data-track-label={useCaseTitles[index]}
+                            data-track-destination="/signup"
                             onClick={(e) => {
                                 const utmObject = JSON.parse(getCookie('utmData') || '{}');
                                 utmObject.prompt = description;

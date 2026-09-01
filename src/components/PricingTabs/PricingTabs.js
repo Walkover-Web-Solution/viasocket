@@ -265,7 +265,7 @@ export default function PricingTabsClient({ countries }) {
                                 )}
                             </div>
 
-                            <Link href="/signup?utm_source=pricing/premium" className="w-[50%] md:w-[30%]">
+                            <Link href="/signup?utm_source=pricing/premium" className="w-[50%] md:w-[30%]" data-track="pricing_plan_premium" data-track-section="pricing" data-track-action="signup_click">
                                 <button className="btn btn-accent w-full">Get Started</button>
                             </Link>
 

@@ -29,6 +29,9 @@ export default function WebhookUseCase() {
                     </p>
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/actions-via-webhook"
+                        data-track="embed_webhook_use_case"
+                        data-track-section="embed"
+                        data-track-action="signup_click"
                         className="btn btn-accent"
                     >
                         Start building
