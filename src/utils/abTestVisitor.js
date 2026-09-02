@@ -193,6 +193,19 @@ export const readProfile = (row) => {
             // the closest thing to when their homepage session was counted, which
             // is enough for the idle guard to work from their next visit onwards.
             homeSessionAt: stored.homeSessionAt ?? stored.lastViewAt ?? '',
+            // Rows written while the counters were homepage-only: their visits are
+            // read back off the columns those counters wrote, so a visitor who
+            // already had a history carries it forward rather than restarting at
+            // one. `sessions` is what the old client-reported counter was called.
+            visits:
+                stored.visits ??
+                Math.max(
+                    toInt(row?.view_count) + toInt(row?.revisit_count),
+                    toInt(stored.homeSessions),
+                    toInt(stored.sessions)
+                ),
+            visitSessionId: stored.visitSessionId ?? histories.sessionId,
+            visitAt: stored.visitAt ?? stored.homeSessionAt ?? stored.lastViewAt ?? '',
         };
     }
 
@@ -200,12 +213,15 @@ export const readProfile = (row) => {
 
     return {
         ...histories,
-        // A row from before the interaction columns existed has no session history,
-        // so the visit it records is counted as the one session it was.
-        sessions: Math.max(1, toInt(row?.revisit_count) + 1),
+        // A legacy row's visits are whatever its own columns already say, never
+        // less than the one visit the row itself represents — reading it as a
+        // single visit would throw away every return the old counters recorded.
+        visits: Math.max(1, toInt(row?.view_count) + toInt(row?.revisit_count)),
+        visitSessionId: row?.session_id || '',
+        visitAt: row?.timestamp || row?.createdat || '',
         // A legacy row records one page; it counts as a homepage session only if
         // that page was the homepage.
-        homeSessions: isHomePath(path) ? 1 : 0,
+        homeSessions: isHomePath(path) ? Math.max(1, toInt(row?.view_count) + toInt(row?.revisit_count)) : 0,
         homeSessionId: row?.session_id || '',
         homeSessionAt: isHomePath(path) ? row?.timestamp || row?.createdat || '' : '',
         clickCount: histories.clicks.length,
@@ -253,36 +269,57 @@ export const shouldCountView = (profile, pageKey, now) => {
 };
 
 /**
- * Whether this view begins a homepage visit that has not been counted yet.
+ * Whether this view begins a visit that has not been counted yet.
  *
- * A visitor's first homepage view always counts; after that a view only counts
- * when it belongs to a session that has not been counted and the last counted one
- * is at least the idle window old. The session id alone is not enough to ask: a
- * visitor whose site data is blocked — private browsing, or an extension that
- * clears it — is handed a fresh id on every load, and without the clock every
- * reload would read as a return visit. The clock alone is not enough either, since
- * it would count a visitor who simply stayed on the page for half an hour, so both
- * have to agree.
+ * A visitor's first view always counts; after that a view only counts when it
+ * belongs to a session that has not been counted and the last counted one is at
+ * least the idle window old. The session id alone is not enough to ask: a visitor
+ * whose site data is blocked — private browsing, or an extension that clears it —
+ * is handed a fresh id on every load, and without the clock every reload would
+ * read as a return visit. The clock alone is not enough either, since it would
+ * count a visitor who simply stayed on the page for half an hour, so both have to
+ * agree.
  *
- * This is what keeps view_count at 1 for the life of a visitor and makes every
- * later visit a revisit.
+ * `counted`, `at` and `sessionKey` name which set of counters is being asked
+ * about, so the same rule serves both the site-wide visit counters that
+ * view_count / revisit_count are written from and the homepage-only counters the
+ * A/B/C comparison reads.
  */
-export const startsHomeSession = (profile, { path, sessionId, nowIso }) => {
-    if (!isHomePath(path)) return false;
+const startsSession = (profile, { sessionId, nowIso }, { counted, at, sessionKey }) => {
+    // The session these counters were last moved for is still running.
+    if (sessionId && sessionId === profile?.[sessionKey]) return false;
 
-    // The session this row was last counted for is still running.
-    if (sessionId && sessionId === profile?.homeSessionId) return false;
+    // Never counted: this is the first visit, whatever the clock says.
+    if (!toInt(profile?.[counted])) return true;
 
-    // Never seen the homepage: this is the first visit, whatever the clock says.
-    if (!toInt(profile?.homeSessions)) return true;
-
-    const last = Date.parse(profile?.homeSessionAt || '');
+    const last = Date.parse(profile?.[at] || '');
 
     // A row written before this timestamp existed has only the id to go on.
     if (!Number.isFinite(last)) return true;
 
     return Date.parse(nowIso) - last >= SESSION_IDLE_MS;
 };
+
+/**
+ * Whether this view begins a visit anywhere on the site.
+ *
+ * This is what view_count counts: a visitor who lands on /integrations and never
+ * sees the homepage is still a visitor, and counting only the homepage is what
+ * left almost every row in the table reading zero visits.
+ */
+export const startsVisit = (profile, event) =>
+    startsSession(profile, event, { counted: 'visits', at: 'visitAt', sessionKey: 'visitSessionId' });
+
+/**
+ * Whether this view begins a homepage visit that has not been counted yet.
+ *
+ * Kept alongside the site-wide counter because the A/B/C test measures the
+ * homepage specifically: a variant is only served there, so its visit numbers
+ * have to be readable without the rest of the site's traffic mixed in.
+ */
+export const startsHomeSession = (profile, event) =>
+    isHomePath(event?.path) &&
+    startsSession(profile, event, { counted: 'homeSessions', at: 'homeSessionAt', sessionKey: 'homeSessionId' });
 
 const emptyProfile = (visitorId, nowIso) => ({
     profileVersion: PROFILE_VERSION,
@@ -301,6 +338,7 @@ const emptyProfile = (visitorId, nowIso) => ({
     variantViews: {},
     cta: { count: 0, bySource: {} },
     signupViews: 0,
+    signupViewAt: '',
     firstUtm: {},
     lastUtm: {},
     lastViewKey: '',
@@ -311,15 +349,18 @@ const emptyProfile = (visitorId, nowIso) => ({
     pages: [],
     clickCount: 0,
     pageEventCount: 0,
-    sessions: 0,
     sessionId: '',
-    // The homepage counters are counted in visits, not page views: how many
-    // sessions this visitor has looked at the homepage in, and which session the
-    // last of those was, so a second look inside the same session adds nothing.
+    // What view_count and revisit_count are written from: how many visits this
+    // visitor has made to any page, which session the last counted one was, and
+    // when it was counted — so a second page inside the same visit adds nothing,
+    // and a fresh session id cannot claim a return the clock says never happened.
+    visits: 0,
+    visitSessionId: '',
+    visitAt: '',
+    // The same three, for the homepage alone, kept so the A/B/C comparison can
+    // still be read without the rest of the site's traffic mixed in.
     homeSessions: 0,
     homeSessionId: '',
-    // When the last homepage session was counted, so a fresh session id cannot
-    // claim a return visit that the clock says has not happened.
     homeSessionAt: '',
     firstUrl: '',
     lastUrl: '',
@@ -330,6 +371,22 @@ const emptyProfile = (visitorId, nowIso) => ({
     signupClicks: { count: 0 },
     loginClicks: { count: 0 },
 });
+
+/**
+ * How many visits two rows for the same visitor represent between them.
+ *
+ * Two rows usually mean two separate stretches of history, so their counts add.
+ * The exception is the one that made them: two tabs opening together each saw no
+ * row and each inserted one, for the same session — adding those would hand a
+ * first-time visitor a revisit they never made, so a shared session counts once.
+ */
+const mergeSessionCounts = (profile, absorbed, countKey, sessionKey) => {
+    const left = toInt(profile[countKey]);
+    const right = toInt(absorbed[countKey]);
+    const sharedSession = profile[sessionKey] && profile[sessionKey] === absorbed[sessionKey];
+
+    return sharedSession ? Math.max(left, right) : left + right;
+};
 
 /**
  * Folds a duplicate row for the same visitor into their profile.
@@ -367,12 +424,15 @@ export const absorbRow = (profile, row) => {
         pages: mergeHistories(profile.pages, absorbed.pages, MAX_PAGE_EVENTS),
         clickCount: toInt(profile.clickCount) + toInt(absorbed.clickCount),
         pageEventCount: toInt(profile.pageEventCount) + toInt(absorbed.pageEventCount),
-        sessions: toInt(profile.sessions) + toInt(absorbed.sessions),
-        homeSessions: toInt(profile.homeSessions) + toInt(absorbed.homeSessions),
-        homeSessionId: profile.homeSessionId || absorbed.homeSessionId || '',
+        visits: mergeSessionCounts(profile, absorbed, 'visits', 'visitSessionId'),
+        visitSessionId: profile.visitSessionId || absorbed.visitSessionId || '',
         // The later of the two: taking the earlier one would let the next view slip
         // past the idle guard and count a visit that never happened.
+        visitAt: [profile.visitAt, absorbed.visitAt].filter(Boolean).sort().pop() || '',
+        homeSessions: mergeSessionCounts(profile, absorbed, 'homeSessions', 'homeSessionId'),
+        homeSessionId: profile.homeSessionId || absorbed.homeSessionId || '',
         homeSessionAt: [profile.homeSessionAt, absorbed.homeSessionAt].filter(Boolean).sort().pop() || '',
+        signupViewAt: [profile.signupViewAt, absorbed.signupViewAt].filter(Boolean).sort().pop() || '',
         signupClicks: {
             count: toInt(profile.signupClicks?.count) + toInt(absorbed.signupClicks?.count),
             firstAt: profile.signupClicks?.firstAt || absorbed.signupClicks?.firstAt || '',
@@ -398,7 +458,11 @@ export const absorbRow = (profile, row) => {
 /** The columns that turn a duplicate row into a pointer at the surviving one. */
 export const mergedRowFields = (visitorId, survivingRowId) => ({
     name: JSON.stringify({ visitorId, mergedInto: survivingRowId, profileVersion: PROFILE_VERSION }),
+    // Both counters have to be emptied, not just the first: what this row held has
+    // already been added to the survivor, so anything left here is counted twice by
+    // whoever sums the column.
     view_count: 0,
+    revisit_count: 0,
 });
 
 /**
@@ -410,7 +474,10 @@ export const mergedRowFields = (visitorId, survivingRowId) => ({
  */
 export const applyEvent = (profile, event) => {
     const { type, pageUrl, pageKey, path, variant, userInfo, utmData, ctaSource, ipAddress, nowIso, counted } = event;
-    const { sessionId, isNewSession, referrer } = event;
+    // Whether a view starts a visit is decided here from the profile and the
+    // clock, never from what the browser claims: `isNewSession` in the body would
+    // let a forged request move view_count at will.
+    const { sessionId, referrer } = event;
 
     const next = {
         ...profile,
@@ -431,11 +498,20 @@ export const applyEvent = (profile, event) => {
 
     next.firstUtm = resolveFirstUtm(next.firstUtm, utmData);
 
-    // view_count and revisit_count describe the homepage alone, in visits rather
-    // than page views, so they are decided here — before the page-view dedupe has
-    // a say. A visit is a far coarser thing than a page view: the ten seconds that
-    // stop a double-fired effect from counting twice must never also swallow a
-    // genuine return visit that happens to land on the same url.
+    // view_count and revisit_count are counted in visits rather than page views, so
+    // they are decided here — before the page-view dedupe has a say. A visit is a
+    // far coarser thing than a page view: the ten seconds that stop a double-fired
+    // effect from counting twice must never also swallow a genuine return visit
+    // that happens to land on the same url.
+    if (type === 'view' && startsVisit(profile, { sessionId, nowIso })) {
+        next.visits = toInt(profile.visits) + 1;
+        next.visitSessionId = sessionId;
+        next.visitAt = nowIso;
+        next.lastVisitAt = nowIso;
+    }
+
+    // The homepage counter is asked separately, and only about the homepage, so
+    // the A/B/C comparison keeps measuring the one page a variant is served on.
     if (type === 'view' && startsHomeSession(profile, { path, sessionId, nowIso })) {
         next.homeSessions = toInt(profile.homeSessions) + 1;
         next.homeSessionId = sessionId;
@@ -468,13 +544,9 @@ export const applyEvent = (profile, event) => {
     next.pageViews = bump(profile.pageViews, path);
     next.variantViews = bump(profile.variantViews, variant);
     next.signupViews = toInt(profile.signupViews) + (isSignupPath(path) ? 1 : 0);
+    if (isSignupPath(path)) next.signupViewAt = nowIso;
     next.lastViewKey = pageKey;
     next.lastViewAt = nowIso;
-
-    if (isNewSession || !toInt(profile.sessions)) {
-        next.sessions = toInt(profile.sessions) + 1;
-        next.lastVisitAt = nowIso;
-    }
 
     next.pages = appendEvent(
         profile.pages,
@@ -576,12 +648,59 @@ const applyClick = (profile, event) => {
     return next;
 };
 
+// The trail leading to signup is a summary, not a third copy of the history:
+// click_data and page_data already hold every event in full.
+const MAX_JOURNEY_STEPS = 40;
+
+/**
+ * The route the visitor took to their first signup press.
+ *
+ * Pages and clicks are interleaved by time and cut at the first `signup_click`, so
+ * the answer to "what did they look at before signing up" can be read straight off
+ * the row rather than stitched together from two other columns. Where no signup
+ * press has happened yet, the whole trail so far is the answer.
+ */
+const buildJourney = (profile) => {
+    const firstSignupAt = profile.signupClicks?.firstAt || '';
+
+    const steps = [
+        ...(profile.pages || []).map((page) => ({
+            type: 'page',
+            path: page?.path || '',
+            section: '',
+            at: page?.timestamp || '',
+        })),
+        ...(profile.clicks || []).map((click) => ({
+            type: 'click',
+            path: getPagePath(click?.current_url),
+            element: click?.element || '',
+            section: click?.section || '',
+            action: click?.event || '',
+            at: click?.timestamp || '',
+        })),
+    ]
+        .sort((a, b) => byTimestamp({ timestamp: a.at }, { timestamp: b.at }))
+        .filter((step) => !firstSignupAt || step.at <= firstSignupAt);
+
+    // The tail is what matters: the last thing they did before pressing signup.
+    const trail = steps.length > MAX_JOURNEY_STEPS ? steps.slice(steps.length - MAX_JOURNEY_STEPS) : steps;
+
+    return {
+        journey_to_first_signup: trail,
+        // Which parts of the site were involved — the direct answer to "does
+        // pricing lead to signup more than integrations does".
+        sections_touched: [...new Set(steps.map((step) => step.section).filter(Boolean))],
+        pages_touched: [...new Set(steps.map((step) => step.path).filter(Boolean))],
+    };
+};
+
 /**
  * What the `signup` column should hold.
  *
  * Signup itself is completed by the MSG91 widget, off this site, so what can be
- * observed here is the intent: reaching /signup, how often, and which button sent
- * them. Left null until that happens so the column reads as "has not started".
+ * observed here is the intent: reaching /signup, how often, which button sent
+ * them, and what they did on the way. Left null until that happens so the column
+ * reads as "has not started".
  */
 const buildSignup = (profile) => {
     const clicks = toInt(profile.signupClicks?.count);
@@ -600,7 +719,9 @@ const buildSignup = (profile) => {
         },
         signup_page_views: {
             count: pageViews,
-            last_at: pageViews ? profile.lastSeen : '',
+            // When /signup was last reached — not when the visitor was last seen
+            // anywhere, which is a different question with a different answer.
+            last_at: pageViews ? profile.signupViewAt || '' : '',
         },
         login_clicks: {
             count: toInt(profile.loginClicks?.count),
@@ -608,6 +729,7 @@ const buildSignup = (profile) => {
         },
         variant: profile.firstVariant || '',
         last_source: profile.cta?.lastSource || profile.lastUtm?.utm_source || '',
+        ...buildJourney(profile),
     });
 };
 
@@ -640,10 +762,13 @@ export const toRowFields = (profile, { environment, nowIso }) => {
         name: JSON.stringify(stripHistories(profile)),
         user_id: profile.visitorId || '',
         varient: profile.firstVariant || '',
-        // Set once, by the first homepage session, and never moved again.
-        view_count: toInt(profile.homeSessions) ? 1 : 0,
-        // Every later session the homepage was seen in.
-        revisit_count: Math.max(0, toInt(profile.homeSessions) - 1),
+        // Every visit this visitor has made, anywhere on the site — not page
+        // views, and not the homepage alone. The homepage-only figure the A/B/C
+        // test reads is kept in `name` as homeSessions.
+        view_count: toInt(profile.visits),
+        // The same count without the first visit, so a row reads "came back N
+        // times" directly.
+        revisit_count: Math.max(0, toInt(profile.visits) - 1),
         environment,
         utmdata: JSON.stringify(profile.firstUtm || {}),
         signup: buildSignup(profile),

@@ -26,7 +26,7 @@ export default function FeatureBannerComp({ featureData, pageInfo, navbarData, h
                                 </p>
                             </div>
                             {!featureData?.image && (
-                                <DashboardButton utm_src={pageInfo?.url} hasToken={hasToken} />
+                                <DashboardButton utm_src={pageInfo?.url} hasToken={hasToken} section="features" />
                             )}
                         </div>
                         {(featureData?.image || featureData?.bgimage) && (

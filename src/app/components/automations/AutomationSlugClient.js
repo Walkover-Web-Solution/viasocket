@@ -305,7 +305,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                     <div className="border flex flex-col justify-center items-center p-6 md:p-12 gap-4 bg-white lg:min-w-[900px] text-center h-[400px]">
                         <h2 className="h2">Can't find the right template?</h2>
                         <h2 className="h2 mb-4">Start with AI</h2>
-                        <DashboardButton utm_src={`/automations/${template?.title}`} hasToken={hasToken} />
+                        <DashboardButton utm_src={`/automations/${template?.title}`} hasToken={hasToken} section="automations" />
                     </div>
                 </div>
             </div>

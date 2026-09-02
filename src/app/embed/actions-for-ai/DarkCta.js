@@ -12,6 +12,9 @@ export default function DarkCta() {
                 <div className="flex flex-wrap items-center justify-center gap-3">
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                        data-track="embed_actions_ai_dark_cta"
+                        data-track-section="embed"
+                        data-track-action="signup_click"
                         className="btn btn-accent"
                     >
                         Get started

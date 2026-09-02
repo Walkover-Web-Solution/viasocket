@@ -22,6 +22,9 @@ export default function UseCaseSection({ appCount }) {
                     </p>
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/app-integration"
+                        data-track="embed_app_integration_use_case"
+                        data-track-section="embed"
+                        data-track-action="signup_click"
                         className="btn btn-accent mt-2"
                     >
                         Start building

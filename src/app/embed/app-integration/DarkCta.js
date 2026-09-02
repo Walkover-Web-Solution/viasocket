@@ -13,12 +13,18 @@ export default function DarkCta() {
                 <div className="flex flex-wrap items-center justify-center gap-3">
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                        data-track="embed_app_integration_dark_cta"
+                        data-track-section="embed"
+                        data-track-action="signup_click"
                         className="btn btn-accent"
                     >
                         Get started
                     </Link>
                     <Link
                         href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai"
+                        data-track="embed_app_integration_talk_to_engineering"
+                        data-track-section="embed"
+                        data-track-action="signup_click"
                         className="btn btn-outline"
                     >
                         Talk to engineering{' '}

@@ -24,6 +24,10 @@ export default function IndexBannerComp() {
                                 <div className="flex items-center gap-2 flex-wrap">
                                     <button
                                         className="btn btn-accent"
+                                        data-track="index_banner_signup"
+                                        data-track-section="hero"
+                                        data-track-action="signup_click"
+                                        data-track-destination="/signup"
                                         onClick={(e) => handleRedirect(e, '/signup?', router)}
                                     >
                                         Start for free
