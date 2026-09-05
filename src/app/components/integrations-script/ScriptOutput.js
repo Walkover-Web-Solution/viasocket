@@ -122,12 +122,10 @@ export default function ScriptOutput({ scriptCode, canCopy, copied, onCopy, temp
             <div
                 className={`min-h-[360px] max-h-[700px] overflow-y-auto p-8 flex-1 h-full ${activeTab === 'preview' ? '' : 'hidden'}`}
             >
-                {!canCopy ? (
-                    pickerTab === 'template' ? (
-                        <TemplatePreview templateIds={templateIds} />
-                    ) : (
-                        <IntegrationsPreview current={currentPair} />
-                    )
+                {pickerTab === 'template' ? (
+                    <TemplatePreview templateIds={templateIds} />
+                ) : !canCopy ? (
+                    <IntegrationsPreview current={currentPair} />
                 ) : (
                     <div ref={previewRef} className="min-h-[300px]" />
                 )}
