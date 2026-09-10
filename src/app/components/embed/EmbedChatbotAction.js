@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function EmbedChatbotAction({ appCount }) {
-    const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
+    const totalApps = appCount ? `${+appCount + 300}+` : '2300+';
 
     return (
         <div className="container" id="ai_agent">
