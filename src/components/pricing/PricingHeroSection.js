@@ -3,10 +3,11 @@ import LogoMarquee from './LogoMarquee';
 import { ArrowRight, Puzzle, TrendingUp, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
-export default function PricingHeroSection() {
+export default function PricingHeroSection({ appCount }) {
+    const totalApps = appCount ? `${+appCount + 300}+` : '2300+';
     return (
         <section className="bg-white">
-            <div className="mt-12 md:mt-0 flex flex-col gap-10 items-center justify-center global-top-space min-h-screen">
+            <div className="mt-12 md:mt-0 flex flex-col gap-10 items-center justify-center global-top-space">
                 <div className="container flex flex-col gap-10 items-center justify-center">
                     <div className="flex flex-col gap-2 items-center mt-12">
                         <h1 className="h1 text-center">
@@ -14,7 +15,7 @@ export default function PricingHeroSection() {
                             <span className="text-accent">500 AI credits</span> every month.
                         </h1>
                         <p className="text-center text-xl">
-                            Power your workflows with 2,200+ integrations, built-in AI, and a platform designed to scale
+                            Power your workflows with {totalApps} integrations, built-in AI, and a platform designed to scale
                             with your team.
                         </p>
                     </div>
@@ -62,7 +63,7 @@ export default function PricingHeroSection() {
                                 <Puzzle size={18} className="text-accent" />
                             </div>
                             <div className="flex flex-col">
-                                <span className="font-semibold text-accent text-lg md:text-xl">2200+</span>
+                                <span className="font-semibold text-accent text-lg md:text-xl">{totalApps}</span>
                                 <span className="text-sm">Apps & Integrations</span>
                             </div>
                         </div>

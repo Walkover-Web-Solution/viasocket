@@ -89,7 +89,7 @@ function PlanCard({ plan }) {
 }
 
 export default function EmbedPricing({ appCount }) {
-    const totalApps = appCount ? `${+appCount + 300}+` : '2200+';
+    const totalApps = appCount ? `${+appCount + 300}+` : '2300+';
     return (
         <div className="container" id="pricing">
             <div className="border border-gray-200 bg-white md:p-10 p-6 flex flex-col gap-8">

@@ -7,6 +7,7 @@ import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter'
 import { getPricingPageData } from '../lib/pricing-data';
 import { getHasToken } from '../lib/getAuth';
 import PricingHeroSection from '@/components/pricing/PricingHeroSection';
+import PricingPlans from '@/components/pricing/PricingPlans';
 import PerkGrid from '@/components/pricing/PerkGrid';
 import ExperienceComparison from '@/components/pricing/ExperienceComparison';
 import FinalCTA from '@/components/pricing/FinalCTA';
@@ -38,7 +39,7 @@ export async function generateMetadata() {
 }
 
 export default async function PricingPage() {
-    const { footerData, faqData, metaData, navbarData, reviewData } = await getPricingPageData();
+    const { footerData, faqData, metaData, navbarData, reviewData, appCount } = await getPricingPageData();
     const hasToken = await getHasToken();
 
     return (
@@ -48,7 +49,9 @@ export default async function PricingPage() {
                 <NavbarServer navbarData={navbarData} utm={'/pricing'} />
             </ConditionalNavbar>
 
-            <PricingHeroSection hasToken={hasToken} />
+            <PricingHeroSection appCount={appCount} hasToken={hasToken} />
+
+            <PricingPlans />
 
             <PerkGrid />
 
