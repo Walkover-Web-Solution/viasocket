@@ -15,7 +15,7 @@ const plans = [
         annual: 0,
         worth: '12,000',
         allowances: ['10,000 standard tasks', '500 AI credits'],
-        features: ['1 member', 'Docs & community support'],
+        features: ['Works with GPT, Claude & Gemini', 'Built-in Integrations'],
         cta: 'Continue with free plan',
         ctaClass: 'btn-outline',
         track: 'pricing_plan_free',
@@ -30,10 +30,10 @@ const plans = [
         worth: '27,000',
         allowances: ['17,000 standard tasks', '2,500 AI credits'],
         features: [
-            'Up to 10 members',
-            'Shared team workspace',
-            'Email & chat support',
+            'SSO & advanced permissions',
             'Pay as you scale: $0.0025/task, $0.007/AI credit',
+            'Works with GPT, Claude & Gemini',
+            'Built-in Integrations',
         ],
         cta: 'Upgrade Plan',
         ctaClass: 'btn-accent',
@@ -47,11 +47,10 @@ const plans = [
         worth: '80,000',
         allowances: ['40,000 standard tasks', '10,000 AI credits'],
         features: [
-            'Unlimited members',
             'SSO & advanced permissions',
-            'Priority 1:1 support',
-            'Setup help from automation experts',
             'Pay as you scale: $0.0004/task, $0.002/AI credit',
+            'Works with GPT, Claude & Gemini',
+            'Built-in Integrations',
         ],
         cta: 'Upgrade Plan',
         ctaClass: 'btn-outline',
@@ -124,13 +123,16 @@ export default function PricingPlans() {
                                 </div>
 
                                 <div className="mt-6">
-                                    <div className="flex items-center gap-1.5 font-semibold">
-                                        <span>Worth {plan.worth} tasks/mo</span>
-                                        <span title={ALLOWANCE_NOTE} className="inline-flex">
+                                    <div className="flex items-center gap-1.5">
+                                        <span className="font-semibold">Worth {plan.worth} tasks/mo</span>
+                                        <span className="relative inline-flex group cursor-help">
                                             <Info size={16} className="text-[#6b7280] shrink-0" />
+                                            <div className="hidden group-hover:block absolute top-full left-1/2 transform -translate-x-1/2 mt-2 px-3 py-1.5 bg-gray-800 text-white text-xs rounded whitespace-normal w-96 z-10 pointer-events-none">
+                                                {ALLOWANCE_NOTE}
+                                            </div>
                                         </span>
                                     </div>
-                                    <div className="text-sm text-[#6b7280] mt-2">
+                                    <div className="text-sm text-[#6b7280]">
                                         {plan.allowances.map((allowance) => (
                                             <div key={allowance}>{allowance}</div>
                                         ))}
