@@ -101,6 +101,11 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, actionType,
             return;
         }
 
+        if (formData.useCase.trim().length < 20) {
+            alert('Please provide at least 20 characters describing your use case.');
+            return;
+        }
+
         if (!type && !formData.plugName) {
             alert('Plugin name is required.');
             return;
