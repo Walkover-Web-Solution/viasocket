@@ -1,0 +1,26 @@
+/* The only CSS the /index page keeps.
+ *
+ * Everything else is Tailwind utilities: the palette, type scale, spacing,
+ * shadows, keyframes and animations live in tailwind.config.js under
+ * theme.extend, prefixed `index-`.
+ *
+ * What is left here is the two things Tailwind has no mechanism for — loading a
+ * webfont, and declaring a @font-face.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+
+/* A metric-matched stand-in for Instrument Serif, and it is a bug fix.
+   Instrument Serif sets the same string at 76.16% of Georgia's width, so on a
+   cold load the display heading paints a third too wide and then snaps when the
+   real face arrives. `size-adjust` scales Georgia to the same advance width; the
+   overrides match the line box. The swap still happens, it just stops moving
+   anything. Re-measure these three numbers if the display face changes. */
+@font-face {
+    font-family: 'Instrument Serif Fallback';
+    src: local('Georgia'), local('Times New Roman');
+    size-adjust: 76.16%;
+    ascent-override: 130%;
+    descent-override: 40.7%;
+    line-gap-override: 0%;
+}
