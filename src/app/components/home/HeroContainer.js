@@ -1,32 +1,16 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import HeroSection from './HeroSection';
-import HeroSectionB from './HeroSectionB';
-import HomeSectionC from './HomeSectionC';
 import SearchAndResults from './SearchAndResults';
-import { setVariantCookie } from '@/utils/handleUtmSource';
 
-// Hero variants keyed off the `variant` cookie assigned server-side (middleware).
-function HeroVariant({ variant, appCount, initialApps, hasToken }) {
-    switch (variant) {
-        case 'B':
-            return <HeroSectionB appCount={appCount} hasToken={hasToken} />;
-        case 'C':
-            return <HomeSectionC initialApps={initialApps} />;
-        default:
-            return <HeroSection appCount={appCount} apps={initialApps} hasToken={hasToken} />;
-    }
+function HeroVariant({ appCount, initialApps, hasToken }) {
+    return <HeroSection appCount={appCount} apps={initialApps} hasToken={hasToken} />;
 }
 
-export default function HeroContainer({ appCount, initialApps, templateData, hasToken, variant }) {
+export default function HeroContainer({ appCount, initialApps, templateData, hasToken }) {
     const [hasActiveSearch, setHasActiveSearch] = useState(false);
 
-    useEffect(() => {
-        setVariantCookie(variant);
-    }, [variant]);
-
-    // Handle search state changes from SearchAndResults component
     const handleSearchStateChange = useCallback((isActive) => {
         setHasActiveSearch(isActive);
     }, []);
@@ -38,7 +22,6 @@ export default function HeroContainer({ appCount, initialApps, templateData, has
         <div className={`${containerClasses} ${bgClass} px-4 mx-auto relative`}>
             <div className="text-center">
                 <HeroVariant
-                    variant={variant}
                     appCount={appCount}
                     initialApps={initialApps}
                     hasToken={hasToken}
