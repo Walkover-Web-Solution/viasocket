@@ -12,54 +12,6 @@ module.exports = {
         extend: {
             fontFamily: {
                 'inter-tight': ['Inter Tight', 'sans-serif'],
-                // The /index page's two faces. The display serif breaks below
-                // about 34px — its letters collide and the counters close — so
-                // anything smaller than that is set in the sans.
-                'index-display': ['Instrument Serif', 'Instrument Serif Fallback', 'Georgia', 'serif'],
-                'index-sans': ['DM Sans', 'Arial', 'sans-serif'],
-            },
-            colors: {
-                // The /index palette. Warm off-white ground, near-black ink with
-                // a green cast, and one accent reserved for the thing that needs
-                // a person.
-                index: {
-                    paper: '#f7f7f2',
-                    ink: '#14201f',
-                    muted: '#6e7772',
-                    line: '#dfe1d9',
-                    done: '#1f6f4a',
-                    attention: '#a8200d',
-                    // Section grounds. The page is not one flat colour; each
-                    // section sits on its own tint of paper, so the seams
-                    // soften rather than stepping.
-                    showcase: '#f1f3ea',
-                    fills: '#f4f4f1',
-                    reviews: '#f2f4ee',
-                    keeps: '#eaf3f2',
-                    trust: '#eaf0e8',
-                    wall: '#eef1e8',
-                },
-            },
-            fontSize: {
-                // Heading sizes are fluid; body sizes are fixed px. Reading
-                // sizes sit one step up from where they started: everything in
-                // the 12-17px band became 13-18px, and micro labels at 11.5 and
-                // under were deliberately left alone, because they are chrome
-                // and enlarging them makes a page louder, not more readable.
-                'index-hero': ['clamp(56px, 7.4vw, 118px)', { lineHeight: '0.88' }],
-                'index-section': ['clamp(32px, 4.4vw, 66px)', { lineHeight: '0.88' }],
-                'index-group': ['clamp(34px, 3.4vw, 50px)', { lineHeight: '1' }],
-                'index-card': ['clamp(24px, 2.6vw, 36px)', { lineHeight: '1.02' }],
-            },
-            spacing: {
-                // One column for the whole page. A section wider than the
-                // others reads as a mistake before it reads as a device.
-                'index-gutter': 'clamp(20px, 7.4vw, 104px)',
-                'index-section': 'clamp(72px, 7vw, 116px)',
-            },
-            boxShadow: {
-                'index-card': '0 12px 40px rgb(0 0 0 / 6%)',
-                'index-chip': '0 1px 2px rgb(31 39 33 / 5%), 0 6px 16px rgb(31 39 33 / 6%)',
             },
             screens: {
                 'xl2': '1500px', // Add custom screen size for 1500px
@@ -83,56 +35,8 @@ module.exports = {
                 flowAction2: 'flowAction2 10s ease-in-out infinite',
                 flowAction3: 'flowAction3 10s ease-in-out infinite',
                 'slide-right': 'slideRight 1.5s ease-in-out infinite',
-                // /index. Motion that resolves, not motion that idles: every
-                // animated thing is showing one job finishing, and each stops.
-                // The two marquees are the deliberate exception — a row that
-                // keeps arriving is the honest drawing of a catalogue.
-                'index-mark-roll': 'indexMarkRoll 1.3s cubic-bezier(0.22, 0.68, 0.3, 1.2) forwards',
-                'index-mark-shadow': 'indexMarkShadow 0.35s ease-out 1.25s both',
-                'index-mark-bob': 'indexMarkBob 3.2s ease-in-out infinite',
-                'index-card-in': 'indexFadeIn 0.3s ease-out',
-                'index-run-in': 'indexFadeIn 0.45s ease-out both',
-                'index-caret': 'indexCaret 1s steps(1) infinite',
-                'index-typing': 'indexTyping 1s ease-in-out infinite',
-                'index-reviews': 'indexReviews var(--dur) linear infinite',
-                'index-drift': 'indexDrift 68s linear infinite',
             },
             keyframes: {
-                indexFadeIn: {
-                    from: { opacity: '0' },
-                    to: { opacity: '1' },
-                },
-                indexMarkRoll: {
-                    '0%': { opacity: '0', transform: 'translateX(-260px) scale(0.18) rotate(-600deg)' },
-                    '15%': { opacity: '1' },
-                    '82%': { transform: 'translateX(6px) scale(1.06) rotate(8deg)' },
-                    '100%': { opacity: '1', transform: 'translateX(0) scale(1) rotate(0deg)' },
-                },
-                indexMarkShadow: {
-                    from: { opacity: '0', transform: 'translateX(-50%) scaleX(0.2)' },
-                    to: { opacity: '1', transform: 'translateX(-50%) scaleX(1)' },
-                },
-                indexMarkBob: {
-                    '0%, 100%': { transform: 'translateY(0)' },
-                    '50%': { transform: 'translateY(2px)' },
-                },
-                indexCaret: {
-                    '50%': { opacity: '0' },
-                },
-                indexTyping: {
-                    '0%, 60%, 100%': { opacity: '0.4', transform: 'translateY(0)' },
-                    '30%': { opacity: '1', transform: 'translateY(-4px)' },
-                },
-                // The track holds its set twice, so translating by exactly one
-                // set's width lands copy two where copy one began: no seam.
-                indexReviews: {
-                    from: { transform: 'translateX(0)' },
-                    to: { transform: 'translateX(calc(var(--set-w) * -1))' },
-                },
-                indexDrift: {
-                    from: { transform: 'translate3d(0, 0, 0)' },
-                    to: { transform: 'translate3d(-50%, 0, 0)' },
-                },
                 shimmer: {
                     '0%': { transform: 'translateX(-100%)' },
                     '100%': { transform: 'translateX(100%)' },
