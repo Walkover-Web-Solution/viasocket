@@ -27,6 +27,16 @@ const nextConfig = {
 
     async redirects() {
         return [
+            // `index` is a reserved route name in the App Router: the root route
+            // `/` is internally named `/index`, so a page at src/app/index can
+            // never be served at /index in a deployed build — the edge routing
+            // config rewrites /index to /. The page lives at /front-page, and
+            // this keeps the /index URL pointing at it.
+            {
+                source: '/index',
+                destination: '/front-page',
+                permanent: false,
+            },
             {
                 source: '/department/:path*',
                 destination: '/departments/:path*',
