@@ -206,7 +206,7 @@ export default function HeroChatDemo({ apps }) {
 
             <div className="border-t border-[#f0f0f0] px-3.5 py-2.5 flex items-center gap-2.5">
                 <div
-                    className={`flex-1 min-h-[36px] px-3 py-2 bg-[#f9f9f9] rounded-lg text-[15px] font-semibold leading-6 border-2 ${isTyping ? 'border-[#0a0a0a] text-[#222]' : 'border-[#ebebeb]'
+                    className={`flex-1 min-h-[36px] px-3 py-2 bg-[#f9f9f9] rounded-lg text-[15px] font-semibold leading-6 border-2 ${isTyping ? 'border-[#0a0a0a] text-[#222] truncate' : 'border-[#ebebeb]'
                         }`}
                 >
                     {isTyping ? (
