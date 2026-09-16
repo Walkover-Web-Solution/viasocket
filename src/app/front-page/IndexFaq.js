@@ -1,67 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-
-const FAQ = {
-    heading: 'Questions before you start.',
-    subhead: 'The practical things teams want to know before moving their work to viaSocket.',
-    contact: [
-        { label: 'Support', detail: 'Available 24/7', href: '/support' },
-        { label: 'Email us', detail: 'Replies within a few hours', href: 'mailto:support@viasocket.com' },
-    ],
-    items: [
-        {
-            q: 'What does viaSocket actually do?',
-            a: 'viaSocket is a reliable AI automation platform. You describe a job in plain words, and it works out the steps and runs them across thousands of apps. AI is used only where a decision is needed, so the rest is deterministic and repeats the same way every run. A job runs once, every time a trigger fires, or on a schedule you set.',
-        },
-        {
-            q: 'Do I need to know how to code?',
-            a: 'No. viaSocket is a no-code tool: you describe the work the way you would explain it to a colleague and it figures out the steps. If a step needs judgment it uses AI for that one, and plain automation for the rest. Developers who want to go further can call any REST API or receive a webhook as a step.',
-        },
-        {
-            q: 'Do I have to build the automation myself?',
-            a: 'No. Most automation tools ask you to lay out every trigger, condition and action on a canvas before anything runs. With viaSocket you describe the outcome in plain words and it works out the steps, connects the app integrations they need, and runs them. You can open a job and change any step, but you never have to build one to start.',
-        },
-        {
-            q: 'When does viaSocket use AI, and when does it not?',
-            a: 'It uses AI on the steps that need a decision, like judging whether an order looks wrong or which request is urgent. Steps with a fixed answer run as plain automation instead: a rule, on a trigger or on a schedule. That split is what keeps a job deterministic wherever it can be, and it is also why most of a job bills at the cheaper rate.',
-        },
-        {
-            q: 'How do you stop the AI from getting it wrong?',
-            a: 'Three ways. Most steps never reach AI at all, because a step with a fixed answer runs as a deterministic rule that returns the same result every time. For the steps that do need judgment, you can set an approval threshold so viaSocket asks before acting on anything above a limit you choose. And every step of every run is logged, so you can always see which step decided what.',
-        },
-        {
-            q: 'Which apps does it work with?',
-            a: 'Thousands of app integrations, including Google Sheets, Slack, Shopify, WhatsApp, Notion, HubSpot, Razorpay and most tools businesses already use. Anything with a REST API can be reached directly, and you can request any integration that is missing.',
-        },
-        {
-            // No competitor is named: the answer describes what viaSocket
-            // does, and the reader supplies their own comparison.
-            q: 'How is this different from other automation tools?',
-            a: 'Most automation tools ask you to lay out every trigger, condition and action yourself. viaSocket combines deterministic automation with AI judgment in one job: you describe the outcome, and it works out which steps need AI and which are plain automation. That is what makes the result reliable and repeatable, and the steps that do not need AI cost less to run.',
-        },
-        {
-            // The training claim matters more here than anywhere else on
-            // the page: this is the answer an engine lifts when somebody
-            // asks whether viaSocket trains on their data.
-            q: 'Is my data safe?',
-            a: 'viaSocket is SOC 2 Type II audited and ISO 27001:2022 certified, and your data is encrypted in transit and at rest. It is private to you by default, exportable and deletable on request, and compliant with GDPR and CCPA. Nothing you run is used to train AI models, by viaSocket or by any AI provider we work with.',
-        },
-        {
-            q: 'What does it cost?',
-            // Every figure here is read off viasocket.com/pricing (15 September) and
-            // must be updated there first if a plan ever changes. The free-plan
-            // allowance is also stated in the hero's footnote and the closing
-            // section's micro line. Agency is deliberately left out: a homepage FAQ
-            // that lists four plans is a pricing table, not an answer.
-            a: 'The free plan includes 10,000 tasks and 500 AI credits every month, with no card required. Team is $27 a month, or $18 a month billed annually, with 17,000 tasks and 2,500 AI credits, and anything past that runs at $0.0025 a task and $0.007 an AI credit. Premium is $99 a month, or $67 a month billed annually, with 40,000 tasks and 10,000 AI credits, and anything past that runs at $0.0004 a task and $0.002 an AI credit. Annual billing cuts the monthly rate by close to a third on both. Paid plans are based on what actually runs, not on how many jobs you set up, and because a step that runs as a rule costs a fraction of a step that needs AI, most of a job bills at the cheaper rate.',
-        },
-        {
-            q: 'Can I try it before committing?',
-            a: 'Yes. Start for free, no card required. Set up a job, watch it run, and decide from there.',
-        },
-    ],
-};
+import { FAQ } from './content';
 
 /**
  * The FAQ: the intro and the ways to reach a person on the left, the questions
@@ -72,20 +12,8 @@ export default function IndexFaq() {
 
     return (
         <section className="bg-index-paper px-5 py-20 font-index-sans text-index-ink min-[900px]:px-index-gutter min-[900px]:py-24">
-            <script
-                type="application/ld+json"
-                dangerouslySetInnerHTML={{
-                    __html: JSON.stringify({
-                        '@context': 'https://schema.org',
-                        '@type': 'FAQPage',
-                        mainEntity: FAQ.items.map((item) => ({
-                            '@type': 'Question',
-                            name: item.q,
-                            acceptedAnswer: { '@type': 'Answer', text: item.a },
-                        })),
-                    }),
-                }}
-            />
+            {/* FAQPage schema is generated in ./seo.js from this same FAQ
+                object and rendered once, page-wide, in page.js. */}
             <div className="mx-auto grid w-[min(1180px,100%)] grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[minmax(0,380px)_minmax(0,1fr)] min-[900px]:gap-[clamp(40px,6vw,100px)]">
                 <div className="static min-[900px]:sticky min-[900px]:top-[120px]">
                     <h2 className="m-0 font-index-display text-[28px] font-normal leading-[1.08] tracking-[-0.03em] text-index-ink min-[900px]:text-[clamp(30px,3.3vw,46px)] min-[900px]:tracking-[-0.04em]">

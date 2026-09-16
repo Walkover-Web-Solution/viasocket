@@ -8,6 +8,7 @@ import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter'
 import HeroContainer from './components/home/HeroContainer';
 import MainContent from './components/home/MainContent';
 import SecuritySection from './components/SecuritySection';
+import IndexPageContent from './front-page/IndexPageContent';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
 import { getVariant } from '@/utils/getVariant';
@@ -61,6 +62,23 @@ export default async function HomePage() {
     } = await getHomePageData();
     const hasToken = await getHasToken();
     const variant = await getVariant();
+
+    // Variant B serves the front-page redesign at the root route, reusing its
+    // components as-is rather than duplicating them for the homepage. Its
+    // signups are tagged 'home-B' rather than the standalone route's own
+    // '/front-page' tag, so the two stay attributable separately; /front-page
+    // itself is untouched since it renders IndexPageContent with no override.
+    if (variant === 'B') {
+        return (
+            <IndexPageContent
+                appCount={appCount}
+                reviewData={reviewData}
+                initialApps={initialApps}
+                utmSource="home-B"
+            />
+        );
+    }
+
     return (
         <>
             <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />

@@ -30,8 +30,8 @@ const NAV = {
  * is inline and scrolls away. It goes to the same destination as the hero box,
  * with no prompt attached.
  */
-export default function NewHeader() {
-    const startHref = buildSignupHref(INDEX_UTM_SOURCE);
+export default function NewHeader({ utmSource = INDEX_UTM_SOURCE }) {
+    const startHref = buildSignupHref(utmSource);
 
     // Clean at the top of the page, on purpose: the hero sits directly under
     // this bar, and a hairline at rest read as a stray edge across it. The
@@ -97,7 +97,7 @@ export default function NewHeader() {
                     className="inline-flex items-center gap-[5px] rounded-[9px] bg-index-ink px-[17px] py-[9px] font-index-sans text-[14.5px] font-medium text-index-paper transition-[transform,opacity] duration-[180ms] ease-out hover:-translate-y-px hover:opacity-90"
                     href={startHref}
                     onClick={() =>
-                        trackSignupClick(INDEX_UTM_SOURCE, {
+                        trackSignupClick(utmSource, {
                             element: 'index_nav_start',
                             label: NAV.start.label,
                             destinationUrl: startHref,

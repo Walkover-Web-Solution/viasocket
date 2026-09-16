@@ -2,6 +2,7 @@
 
 import { ArrowUpRight } from 'lucide-react';
 import { INDEX_UTM_SOURCE, buildSignupHref, carryPromptToSignup, trackSignupClick } from './signup';
+import { WALL_GROUP_TITLES } from './content';
 
 const WALL =
     /**
@@ -20,7 +21,7 @@ const WALL =
         heading: 'What else would you like done?',
         groups: [
             {
-                title: 'Data collection automation',
+                title: WALL_GROUP_TITLES[0],
                 tone: 'lime',
                 jobs: [
                     'Add invoice details to accounting.',
@@ -31,7 +32,7 @@ const WALL =
                 ],
             },
             {
-                title: 'Monitoring automation',
+                title: WALL_GROUP_TITLES[1],
                 tone: 'blue',
                 jobs: [
                     'Check which products need reordering.',
@@ -42,7 +43,7 @@ const WALL =
                 ],
             },
             {
-                title: 'Follow up automation',
+                title: WALL_GROUP_TITLES[2],
                 tone: 'coral',
                 jobs: [
                     'Remind customers who haven\u2019t paid.',
@@ -53,7 +54,7 @@ const WALL =
                 ],
             },
             {
-                title: 'Research automation',
+                title: WALL_GROUP_TITLES[3],
                 tone: 'violet',
                 jobs: [
                     'Research every new supplier before a large order.',
@@ -64,7 +65,7 @@ const WALL =
                 ],
             },
             {
-                title: 'Reporting automation',
+                title: WALL_GROUP_TITLES[4],
                 tone: 'sand',
                 jobs: [
                     'Tell me what needs my attention every morning.',
@@ -75,7 +76,7 @@ const WALL =
                 ],
             },
             {
-                title: 'Routing automation',
+                title: WALL_GROUP_TITLES[5],
                 tone: 'mint',
                 jobs: [
                     'Which invoices need a closer look?',
@@ -125,7 +126,7 @@ const DOT = {
     mint: 'bg-[#14b585]',
 };
 
-export default function IndexWall() {
+export default function IndexWall({ utmSource = INDEX_UTM_SOURCE }) {
     return (
         // The id is the showcase's handoff target.
         <section
@@ -164,10 +165,10 @@ export default function IndexWall() {
                                 /* Set as a block so the whole row is the target
                                    rather than the text alone. */
                                 className="group mb-[14px] flex items-center gap-2 p-0 text-[#5c685f] transition-[color,transform] duration-200 ease-out last:mb-0 hover:translate-x-1 hover:text-index-ink focus-visible:rounded-[4px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-index-ink min-[900px]:mb-[15px]"
-                                href={buildSignupHref(INDEX_UTM_SOURCE)}
+                                href={buildSignupHref(utmSource)}
                                 onClick={() => {
                                     carryPromptToSignup(ask);
-                                    trackSignupClick(INDEX_UTM_SOURCE, {
+                                    trackSignupClick(utmSource, {
                                         element: 'index_wall_job',
                                         label: ask,
                                     });
