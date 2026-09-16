@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { INDEX_UTM_SOURCE, buildSignupHref, trackSignupClick } from '@/app/front-page/signup';
 
@@ -32,6 +33,20 @@ const NAV = {
 export default function NewHeader() {
     const startHref = buildSignupHref(INDEX_UTM_SOURCE);
 
+    // Clean at the top of the page, on purpose: the hero sits directly under
+    // this bar, and a hairline at rest read as a stray edge across it. The
+    // line and its lift-off shadow only earn their place once there is
+    // something to divide the header from, which starts at the first pixel
+    // of scroll.
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 0);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
     return (
         <header
             /* Opaque at rest, not transparent-until-hovered. The page scrolls
@@ -40,7 +55,11 @@ export default function NewHeader() {
                links and the marks in the closing marquee tracked across the
                logo. It paints the page's own ground, so over the hero it still
                reads as one surface rather than as a band. */
-            className="fixed inset-x-0 top-0 z-50 flex h-[54px] items-center justify-between border-index-line bg-index-paper/95 px-[18px] backdrop-blur-lg supports-[backdrop-filter]:bg-index-paper/[0.87] min-[721px]:h-16 min-[721px]:px-10"
+            className={`fixed inset-x-0 top-0 z-50 flex h-[54px] items-center justify-between bg-index-paper/95 px-[18px] backdrop-blur-sm transition-shadow duration-300 ease-out supports-[backdrop-filter]:bg-index-paper/[0.87] min-[721px]:h-16 min-[721px]:px-10 ${
+                scrolled
+                    ? 'shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_1px_3px_rgba(20,32,31,0.05)]'
+                    : 'shadow-none'
+            }`}
         >
             <a className="inline-flex items-center" href="#top" aria-label={NAV.brandLabel}>
                 <Image

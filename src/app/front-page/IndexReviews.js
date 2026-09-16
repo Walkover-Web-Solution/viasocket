@@ -203,27 +203,46 @@ export default function IndexReviews({ reviewData = [] }) {
                         row.map((card, i) => (
                             <article
                                 key={`${copy}-${card.link || card.user_name}-${i}`}
-                                className="flex h-[236px] w-[var(--card-w)] flex-none flex-col rounded-[14px] border border-[#dfe3da] bg-white px-[22px] py-5 motion-reduce:w-auto motion-reduce:aria-hidden:hidden"
+                                className="flex h-[250px] w-[var(--card-w)] flex-none flex-col rounded-[14px] border border-[#dfe3da] bg-white px-[22px] py-5 motion-reduce:w-auto motion-reduce:aria-hidden:hidden"
                                 aria-hidden={copy === 1 ? 'true' : undefined}
                             >
                                 <p className="m-0 mb-[14px] grid grid-cols-[32px_minmax(0,1fr)_auto] gap-x-[11px] gap-y-[2px]">
-                                    {/* Initials, never a broken image or an empty circle. */}
-                                    <span
-                                        className="row-span-2 grid h-8 w-8 place-items-center rounded-[9px] bg-[#eceee6] text-[10px] font-medium text-index-muted"
-                                        aria-hidden="true"
-                                    >
-                                        {initials(card.user_name)}
-                                    </span>
+                                    {/* The reviewer's own picture when the row has one, initials
+                                        otherwise. */}
+                                    {card.user_profile?.[0]?.trim() ? (
+                                        <Image
+                                            src={card.user_profile[0].trim()}
+                                            alt=""
+                                            width={32}
+                                            height={32}
+                                            aria-hidden="true"
+                                            className="row-span-2 h-8 w-8 rounded-[9px] object-cover"
+                                        />
+                                    ) : (
+                                        <span
+                                            className="row-span-2 grid h-8 w-8 place-items-center rounded-[9px] bg-[#eceee6] text-[10px] font-medium text-index-muted"
+                                            aria-hidden="true"
+                                        >
+                                            {initials(card.user_name)}
+                                        </span>
+                                    )}
                                     <b className="text-[13.5px] font-medium text-index-ink">{card.user_name}</b>
                                     <i className="col-start-2 not-italic text-[11px] text-[#98a098]">{card.subtitle}</i>
                                     <em className="col-start-3 row-start-1 not-italic text-[9.5px] uppercase tracking-[0.09em] text-[#a8b0a7]">
                                         {card.name}
                                     </em>
                                 </p>
-                                <p className="m-0 flex-1 overflow-hidden text-sm line-clamp-4 leading-[1.55] text-[#3f4a43] min-[721px]:text-xs min-[900px]:text-sm min-[900px]:leading-[1.62]">
+                                {/* A fixed height, not `flex-1`: leftover flex
+                                    space only approximates five lines, and on a
+                                    tight card it can fall short, letting a sixth
+                                    line show past the clamp's ellipsis. This is
+                                    exactly five lines at each breakpoint's own
+                                    font size and line-height, so it never over-
+                                    or under-shoots. */}
+                                <p className="m-0 h-[109px] overflow-hidden text-sm line-clamp-5 leading-[1.55] text-[#3f4a43] min-[721px]:h-[93px] min-[721px]:text-xs min-[900px]:h-[114px] min-[900px]:text-sm min-[900px]:leading-[1.62]">
                                     {card.description}
                                 </p>
-                                {card.date && <p className="mt-2 text-[10.5px] text-[#a8b0a7]">{card.date}</p>}
+                                {card.date && <p className="mt-auto pt-2 text-[10.5px] text-[#a8b0a7]">{card.date}</p>}
                             </article>
                         ))
                     )}

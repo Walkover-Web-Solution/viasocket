@@ -200,9 +200,16 @@ export default function IndexVideo() {
                 </h2>
 
                 {/* The card arrives rather than takes over: ground stays visible
-                    on all four sides. */}
+                    on all four sides. Opacity and blur both read `--takeover`,
+                    not `--t`: it goes from 0 to 1 over exactly the one screen of
+                    scroll it takes the section to arrive at the top of the
+                    viewport, not partway through the long pin that follows. So
+                    the card starts softly blurred, clears within that one
+                    scroll, and stays clear through however many screens of hold
+                    are left. The scale still reads `--t`, so the arrival keeps
+                    its settle. */}
                 <div
-                    className="group relative w-auto max-h-none max-w-full min-[900px]:w-[min(82vw,140svh)] min-[900px]:max-h-full min-[900px]:[opacity:calc(0.8+0.2*min(1,var(--t,1)*2))] min-[900px]:[transform:scale(calc(0.93+0.07*var(--t,1)))] motion-reduce:max-h-none motion-reduce:opacity-100 motion-reduce:[transform:none]"
+                    className="group relative w-auto max-h-none max-w-full min-[900px]:w-[min(82vw,140svh)] min-[900px]:max-h-full min-[900px]:[opacity:calc(0.8+0.2*var(--takeover,0))] min-[900px]:[filter:blur(calc((1-var(--takeover,0))*6px))] min-[900px]:[transform:scale(calc(0.93+0.07*var(--t,1)))] motion-reduce:max-h-none motion-reduce:opacity-100 motion-reduce:[filter:none] motion-reduce:[transform:none]"
                     data-started={started ? 'true' : 'false'}
                 >
                     {VIDEO_SRC ? (
