@@ -48,14 +48,13 @@ const FAQ = {
             a: 'viaSocket is SOC 2 Type II audited and ISO 27001:2022 certified, and your data is encrypted in transit and at rest. It is private to you by default, exportable and deletable on request, and compliant with GDPR and CCPA. Nothing you run is used to train AI models, by viaSocket or by any AI provider we work with.',
         },
         {
-            // States the mechanism, not the allowances beyond the free
-            // plan, so this and the pricing page cannot drift apart when a
-            // plan changes.
             q: 'What does it cost?',
-            // The free-plan figures are read off viasocket.com/pricing and are also
-            // stated in the hero's footnote and the closing section's micro line.
-            // If they move there they move here.
-            a: 'The free plan includes 10,000 tasks and 500 AI credits every month, with no card required. Paid plans are based on what actually runs, not on how many jobs you set up, and a step that runs as a rule costs a fraction of a step that needs AI. Because viaSocket only reaches for AI where something has to be judged, most of a job bills at the cheaper rate.',
+            // Every figure here is read off viasocket.com/pricing (15 September) and
+            // must be updated there first if a plan ever changes. The free-plan
+            // allowance is also stated in the hero's footnote and the closing
+            // section's micro line. Agency is deliberately left out: a homepage FAQ
+            // that lists four plans is a pricing table, not an answer.
+            a: 'The free plan includes 10,000 tasks and 500 AI credits every month, with no card required. Team is $27 a month, or $18 a month billed annually, with 17,000 tasks and 2,500 AI credits, and anything past that runs at $0.0025 a task and $0.007 an AI credit. Premium is $99 a month, or $67 a month billed annually, with 40,000 tasks and 10,000 AI credits, and anything past that runs at $0.0004 a task and $0.002 an AI credit. Annual billing cuts the monthly rate by close to a third on both. Paid plans are based on what actually runs, not on how many jobs you set up, and because a step that runs as a rule costs a fraction of a step that needs AI, most of a job bills at the cheaper rate.',
         },
         {
             q: 'Can I try it before committing?',
@@ -73,6 +72,20 @@ export default function IndexFaq() {
 
     return (
         <section className="bg-index-paper px-5 py-20 font-index-sans text-index-ink min-[900px]:px-index-gutter min-[900px]:py-24">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'FAQPage',
+                        mainEntity: FAQ.items.map((item) => ({
+                            '@type': 'Question',
+                            name: item.q,
+                            acceptedAnswer: { '@type': 'Answer', text: item.a },
+                        })),
+                    }),
+                }}
+            />
             <div className="mx-auto grid w-[min(1180px,100%)] grid-cols-1 items-start gap-8 min-[900px]:grid-cols-[minmax(0,380px)_minmax(0,1fr)] min-[900px]:gap-[clamp(40px,6vw,100px)]">
                 <div className="static min-[900px]:sticky min-[900px]:top-[120px]">
                     <h2 className="m-0 font-index-display text-[28px] font-normal leading-[1.08] tracking-[-0.03em] text-index-ink min-[900px]:text-[clamp(30px,3.3vw,46px)] min-[900px]:tracking-[-0.04em]">

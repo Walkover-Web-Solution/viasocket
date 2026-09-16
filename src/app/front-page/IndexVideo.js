@@ -8,12 +8,10 @@ const VIDEO = {
     // PROVISIONAL, to be re-read against the final cut: this describes the
     // video the section is for, not the placeholder currently in it.
     heading: 'One job, from the sentence to done.',
-    // The section needed one badly. It was the only section that gave a
-    // reader a heading and then an unlabelled video, and nobody presses
-    // play on a video when they do not know what is in it. It is also the
-    // only place in visible copy where the three ways a job can run are
-    // named together.
-    subhead:
+    // No longer rendered on screen — the section is a heading and the video
+    // now. Kept here because it still feeds the VideoObject schema's
+    // description below, so search engines still read it.
+    schemaDescription:
         'The whole thing end to end: a job described in plain words, the steps viaSocket works out, and the automation running across the apps it needs.',
     label: 'What viaSocket does, start to finish',
     play: 'Play',
@@ -173,10 +171,26 @@ export default function IndexVideo() {
                on a phone is hostile and a large share of this audience arrives
                on one, so the reduced version is the plain one rather than a
                scaled copy of the desktop one. */
-            className="relative h-auto bg-index-paper motion-reduce:h-auto"
+            className="relative h-auto bg-index-paper motion-reduce:h-auto min-[900px]:h-[350vh] motion-reduce:min-[900px]:h-auto"
             ref={outerRef}
             aria-label={VIDEO.label}
         >
+            {VIDEO_SRC && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify({
+                            '@context': 'https://schema.org',
+                            '@type': 'VideoObject',
+                            name: VIDEO.heading,
+                            description: VIDEO.schemaDescription,
+                            thumbnailUrl: VIDEO_POSTER ? [`https://viasocket.com${VIDEO_POSTER}`] : undefined,
+                            contentUrl: `https://viasocket.com${VIDEO_SRC}`,
+                        }),
+                    }}
+                />
+            )}
+
             <div className="static flex h-auto flex-col items-stretch justify-center gap-5 overflow-visible px-5 pb-2 pt-[92px] min-[900px]:sticky min-[900px]:top-0 min-[900px]:h-svh min-[900px]:items-center min-[900px]:gap-[clamp(16px,2.8vh,32px)] min-[900px]:overflow-hidden min-[900px]:px-index-gutter min-[900px]:pb-[34px] min-[900px]:pt-[84px] motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible motion-reduce:px-index-gutter motion-reduce:pb-2 motion-reduce:pt-[92px]">
                 {/* On the page ground, in ink. No text sits over the footage,
                     which permanently removes the scrim, the band, and any
@@ -185,16 +199,10 @@ export default function IndexVideo() {
                     {VIDEO.heading}
                 </h2>
 
-                {/* Rides the same reveal one beat behind the heading, so the
-                    pair arrives as one block rather than a line and a caption. */}
-                <p className="mt-3 max-w-none text-left text-[15px] leading-[1.55] text-index-muted min-[900px]:mt-[14px] min-[900px]:max-w-[min(62ch,84vw)] min-[900px]:text-center min-[900px]:text-[17px]">
-                    {VIDEO.subhead}
-                </p>
-
                 {/* The card arrives rather than takes over: ground stays visible
                     on all four sides. */}
                 <div
-                    className="group relative w-auto max-h-none max-w-full min-[900px]:w-[min(82vw,140svh)] min-[900px]:max-h-full min-[900px]:[opacity:calc(0.6+0.4*min(1,var(--t,1)*2))] min-[900px]:[transform:scale(calc(0.93+0.07*var(--t,1)))] motion-reduce:max-h-none motion-reduce:opacity-100 motion-reduce:[transform:none]"
+                    className="group relative w-auto max-h-none max-w-full min-[900px]:w-[min(82vw,140svh)] min-[900px]:max-h-full min-[900px]:[opacity:calc(0.8+0.2*min(1,var(--t,1)*2))] min-[900px]:[transform:scale(calc(0.93+0.07*var(--t,1)))] motion-reduce:max-h-none motion-reduce:opacity-100 motion-reduce:[transform:none]"
                     data-started={started ? 'true' : 'false'}
                 >
                     {VIDEO_SRC ? (

@@ -40,7 +40,7 @@ export default function NewHeader() {
                links and the marks in the closing marquee tracked across the
                logo. It paints the page's own ground, so over the hero it still
                reads as one surface rather than as a band. */
-            className="fixed inset-x-0 top-0 z-50 flex h-[54px] items-center justify-between border-b border-index-line bg-index-paper/95 px-[18px] backdrop-blur-lg supports-[backdrop-filter]:bg-index-paper/[0.87] min-[721px]:h-16 min-[721px]:px-10"
+            className="fixed inset-x-0 top-0 z-50 flex h-[54px] items-center justify-between border-index-line bg-index-paper/95 px-[18px] backdrop-blur-lg supports-[backdrop-filter]:bg-index-paper/[0.87] min-[721px]:h-16 min-[721px]:px-10"
         >
             <a className="inline-flex items-center" href="#top" aria-label={NAV.brandLabel}>
                 <Image
