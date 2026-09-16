@@ -1,5 +1,6 @@
 'use client';
 
+import { ArrowUpRight } from 'lucide-react';
 import { INDEX_UTM_SOURCE, buildSignupHref, carryPromptToSignup, trackSignupClick } from './signup';
 
 const WALL =
@@ -162,7 +163,7 @@ export default function IndexWall() {
                                 key={ask}
                                 /* Set as a block so the whole row is the target
                                    rather than the text alone. */
-                                className="mb-[14px] block p-0 text-[#5c685f] transition-[color,transform] duration-200 ease-out last:mb-0 hover:translate-x-1 hover:text-index-ink focus-visible:rounded-[4px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-index-ink min-[900px]:mb-[15px]"
+                                className="group mb-[14px] flex items-center gap-2 p-0 text-[#5c685f] transition-[color,transform] duration-200 ease-out last:mb-0 hover:translate-x-1 hover:text-index-ink focus-visible:rounded-[4px] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-index-ink min-[900px]:mb-[15px]"
                                 href={buildSignupHref(INDEX_UTM_SOURCE)}
                                 onClick={() => {
                                     carryPromptToSignup(ask);
@@ -173,6 +174,13 @@ export default function IndexWall() {
                                 }}
                             >
                                 <span className="block text-base leading-[1.25] min-[900px]:text-[17px]">{ask}</span>
+                                {/* Hidden until hover, so the row reads as
+                                    plain text at rest and thirty of these
+                                    don't compete with the copy. */}
+                                <span className="flex flex-none translate-x-1 text-blue-600 items-center gap-1 whitespace-nowrap pt-[2px] text-sm font-medium opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100">
+                                    Do this
+                                    <ArrowUpRight className="h-[14px] w-[14px]" aria-hidden="true" />
+                                </span>
                             </a>
                         ))}
                     </div>
