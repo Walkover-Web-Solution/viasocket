@@ -16,10 +16,25 @@ import IndexReviews from './IndexReviews';
 import IndexTrust from './IndexTrust';
 import IndexFaq from './IndexFaq';
 import IndexClose from './IndexClose';
+import IndexSeam from './IndexSeam';
 import { getHomePageData } from '../lib/data';
 import './index-theme.scss';
 
 export const runtime = 'edge';
+
+// Mirrors tailwind.config.js theme.extend.colors.index — if a section's own
+// tint moves there, the seam on either side of it has to move here too, or a
+// blend starts fading to a colour that section no longer paints.
+const BG = {
+    paper: '#f7f7f2',
+    showcase: '#f1f3ea',
+    keeps: '#eaf3f2',
+    fills: '#f4f4f1',
+    wall: '#eef1e8',
+    reviews: '#f2f4ee',
+    trust: '#eaf0e8',
+    black: '#000000',
+};
 
 export async function generateMetadata() {
     const { metaData } = await getHomePageData();
@@ -66,26 +81,36 @@ export default async function IndexPage() {
 
             <IndexVideo />
 
+            <IndexSeam from={BG.paper} to={BG.showcase} />
             <IndexShowcase apps={initialApps} />
 
+            <IndexSeam from={BG.showcase} to={BG.paper} />
             <IndexDecides />
 
+            <IndexSeam from={BG.paper} to={BG.keeps} />
             <IndexKeeps />
 
+            <IndexSeam from={BG.keeps} to={BG.paper} />
             <IndexRatio />
 
+            <IndexSeam from={BG.paper} to={BG.fills} />
             <IndexFills />
 
+            <IndexSeam from={BG.fills} to={BG.wall} />
             <IndexWall />
 
+            <IndexSeam from={BG.wall} to={BG.reviews} />
             <IndexReviews reviewData={reviewData} />
 
+            <IndexSeam from={BG.reviews} to={BG.trust} />
             <IndexTrust />
 
+            <IndexSeam from={BG.trust} to={BG.paper} />
             <IndexFaq />
 
             <IndexClose apps={initialApps} />
 
+            {/* <IndexSeam from={BG.paper} to={BG.black} /> */}
             <ConditionalFooter>
                 <NewFooter />
             </ConditionalFooter>
