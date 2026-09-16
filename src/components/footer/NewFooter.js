@@ -123,62 +123,104 @@ const EXPLORE_AI = {
 };
 
 /* ── Columns ──────────────────────────────────────────────────────
-   The use-case column is `wide`: one flat list laid into two columns, so the
-   grid fills it row-wise and the pairs sit the way the reference shows them. */
+   Nine groups, read off viasocket.com's own footer and each link opened and
+   checked. Cut into three fixed columns of three groups each, in reading
+   order, rather than flowed with CSS columns: a flow places a group wherever
+   it fits, and nothing here should land by chance. */
 
-const COLUMNS = [
+const GROUPS = [
     {
-        title: 'What people use it for',
-        wide: true,
+        title: 'AI and automation',
         links: [
-            { label: 'Sales', href: '/departments/sales' },
-            { label: 'Leads', href: '/departments/sales' },
-            { label: 'CRM', href: '/departments/customer-service-and-support' },
-            { label: 'Support', href: '/departments/customer-service-and-support' },
-            { label: 'Finance', href: '/departments/finance-and-accounting' },
-            { label: 'Research', href: '/departments/research-and-development' },
-            { label: 'Recurring work', href: '/departments/operations' },
-            { label: 'Market monitoring', href: '/departments/marketing' },
-        ],
-    },
-    {
-        title: 'Product',
-        links: [
-            { label: '2,300+ integrations', href: '/integrations' },
+            { label: 'Apps integrations', href: '/integrations' },
             { label: 'Features', href: '/features' },
-            { label: 'Templates', href: '/automations' },
+            { label: 'List your app', href: 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket' },
+            { label: 'Automations', href: '/automations' },
+            { label: 'Discover top apps', href: '/discovery' },
+            { label: 'Embed', href: '/embed' },
+            { label: 'Workflow automation guide', href: '/workflow-automations' },
             { label: 'Automation ideas', href: '/automation-ideas' },
-            { label: 'Discover apps', href: '/discovery' },
-            { label: 'Request an integration', href: '/integrations' },
         ],
     },
     {
-        title: 'Plans and help',
+        title: 'Plans, pricing and offers',
         links: [
             { label: 'Pricing', href: '/pricing' },
             { label: 'Free access programs', href: '/free-access-programs' },
+        ],
+    },
+    {
+        title: 'Compare',
+        links: [
+            { label: 'viaSocket vs Zapier', href: '/blog/viasocket-vs-zapier/' },
+            { label: 'viaSocket vs Make', href: '/blog/viasocket-vs-make/' },
+            { label: 'viaSocket vs Pabbly', href: '/blog/viasocket-vs-pabbly' },
+        ],
+    },
+    {
+        title: 'Support',
+        links: [
             { label: 'Book a demo', href: 'https://cal.id/team/viasocket/workflow-setup-discussion' },
-            { label: 'Knowledge base', href: '/help' },
-            { label: 'Community', href: 'https://viasocket.com/community' },
-            // Contact 404s. This is the working equivalent and it is a real
-            // page, titled "24/7 viaSocket Support".
-            { label: 'Support', href: '/support' },
+            { label: 'Contact support team', href: '/support' },
+            { label: 'Request a feature', href: 'https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas' },
+            { label: 'Knowledge base', href: '/faq' },
+            { label: 'Community', href: '/community' },
+            { label: 'Blog', href: '/blog' },
+            { label: 'Download mobile app', href: 'https://play.google.com/store/apps/details?id=com.viasocketmobile' },
         ],
     },
     {
         title: 'Company',
         links: [
-            { label: 'About', href: '/about' },
-            { label: 'Blog', href: 'https://viasocket.com/blog' },
-            // Hiring lives on the parent company's domain, which is why
-            // /careers 404s here: the page was never on viasocket.com.
-            { label: 'Careers', href: 'https://walkover.in/careers' },
+            { label: 'About', href: '/help/about-us' },
+            // Hiring lives on the parent company's domain.
+            { label: 'We are hiring', href: 'https://walkover.in/careers' },
+            { label: 'Culture we foster', href: 'https://walkover.in/about/culture-we-foster' },
             { label: 'Roadmap', href: 'https://roadmap.viasocket.com/roadmap' },
+            { label: 'AI transparency', href: '/help/security-and-compliance/ai-transparency' },
+        ],
+    },
+    {
+        title: 'Automation experts',
+        links: [
+            { label: 'Hire an expert', href: 'https://tally.so/r/wzVdKZ' },
+            { label: 'Become a partner', href: '/help/partners' },
             { label: 'Partner program', href: '/experts' },
-            { label: 'Agency partners', href: '/agency-partner' },
+            { label: 'Agency partner program', href: '/agency-partner' },
+        ],
+    },
+    {
+        title: 'For SaaS',
+        links: [
+            { label: 'List your app', href: 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket' },
+            { label: 'Build your own plug', href: '/help/plugin-builder' },
+            { label: 'Embed', href: '/embed' },
+            { label: 'Whitelabel MCP server', href: '/mcp/saas' },
+            { label: 'Become a billing partner', href: '/help/viasocket-embed/billing-partner' },
+            { label: 'Showcase popular workflows', href: '/integrations-script' },
+        ],
+    },
+    {
+        title: 'For AI agent builders',
+        links: [
+            { label: 'viaSocket embed', href: '/embed#ai_agent' },
+            { label: 'MCP marketplace', href: '/mcp/aiagent' },
+        ],
+    },
+    {
+        title: 'MCP',
+        links: [
+            { label: 'MCP marketplace', href: '/mcp' },
+            { label: 'MCP for AI agents', href: '/mcp/aiagent' },
+            { label: 'MCP for SaaS players', href: '/mcp/saas' },
         ],
     },
 ];
+
+// Three fixed columns of three groups each, in the order above, not a
+// flowing layout: which group sits in which column never changes with
+// viewport width, only how the three columns themselves reflow.
+const COLUMNS = [GROUPS.slice(0, 3), GROUPS.slice(3, 6), GROUPS.slice(6, 9)];
 
 const LEGAL = [
     { label: 'Privacy', href: '/privacy', track: 'privacy' },
@@ -220,8 +262,8 @@ export default function NewFooter() {
 
     return (
         <footer className="static m-0 block bg-black p-0 text-[15px] text-white/80">
-            <div className="mx-auto w-[min(1400px,100%)] px-5 pb-6 pt-12 min-[721px]:px-[clamp(20px,7.4vw,104px)] min-[721px]:pb-[26px] min-[721px]:pt-16">
-                <div className="grid grid-cols-1 gap-9 min-[721px]:grid-cols-[minmax(0,1.15fr)_minmax(0,3fr)] min-[721px]:gap-12">
+            <div className="px-5 pb-6 pt-12 min-[721px]:px-index-gutter min-[721px]:pb-[26px] min-[721px]:pt-16">
+                <div className="grid grid-cols-1 gap-9 min-[1100px]:grid-cols-[minmax(0,1.15fr)_minmax(0,3fr)] min-[1100px]:gap-12">
                     <div>
                         <p className="m-0 max-w-[320px] text-[17px] leading-[26px] text-white">{TAGLINE}</p>
 
@@ -278,43 +320,49 @@ export default function NewFooter() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-6 min-[721px]:grid-cols-[1.3fr_repeat(3,minmax(0,1fr))] min-[721px]:gap-9">
-                        {COLUMNS.map((column) => (
-                            <nav
-                                key={column.title}
-                                aria-label={column.title}
-                                /* The hairline above each column is most of what
-                                   makes this read as a footer rather than as
-                                   stacked lists. */
-                                className={`border-t border-white/15 pt-5 ${column.wide ? 'col-span-full min-[721px]:col-span-1' : ''}`}
+                    {/* Three fixed columns, not a flowing layout: which group
+                        sits in which column never changes, only how the three
+                        columns reflow. A rule sits between them once there is
+                        room for all three side by side. */}
+                    <div className="grid grid-cols-1 gap-y-9 min-[721px]:grid-cols-2 min-[721px]:gap-x-9 min-[721px]:gap-y-9 min-[1100px]:grid-cols-3 min-[1100px]:gap-x-0 min-[1100px]:divide-x min-[1100px]:divide-white/15">
+                        {COLUMNS.map((column, columnIndex) => (
+                            <div
+                                key={columnIndex}
+                                className="flex flex-col gap-9 min-[1100px]:px-9 min-[1100px]:first:pl-0 min-[1100px]:last:pr-0"
                             >
-                                <h4 className="m-0 mb-3 font-index-sans text-base font-semibold normal-case tracking-normal text-white min-[721px]:mb-[14px] min-[721px]:text-[18px]">
-                                    {column.title}
-                                </h4>
-                                <ul
-                                    className={`m-0 list-none p-0 ${
-                                        column.wide ? 'grid grid-cols-2 gap-x-5 gap-y-2' : 'flex flex-col gap-2'
-                                    }`}
-                                >
-                                    {column.links.map((link) => (
-                                        <li key={link.label}>
-                                            <Link
-                                                href={link.href}
-                                                target='_blank'
-                                                {...(offsite(link.href)
-                                                    ? { target: '_blank', rel: 'noopener noreferrer' }
-                                                    : {})}
-                                                data-track="new_footer_nav_link"
-                                                data-track-label={`${column.title} → ${link.label}`}
-                                                data-track-section="new_footer"
-                                                className="text-sm text-white/80 transition-colors duration-[180ms] hover:text-white"
-                                            >
-                                                {link.label}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </nav>
+                                {column.map((group) => (
+                                    <nav
+                                        key={group.title}
+                                        aria-label={group.title}
+                                        /* The hairline above each group is most of
+                                           what makes this read as a footer rather
+                                           than as stacked lists. */
+                                        className="border-t border-white/15 pt-5"
+                                    >
+                                        <h4 className="m-0 mb-3 font-index-sans text-base font-semibold normal-case tracking-normal text-white min-[721px]:mb-[14px] min-[721px]:text-[18px]">
+                                            {group.title}
+                                        </h4>
+                                        <ul className="m-0 flex list-none flex-col gap-2 p-0">
+                                            {group.links.map((link) => (
+                                                <li key={link.label}>
+                                                    <Link
+                                                        href={link.href}
+                                                        {...(offsite(link.href)
+                                                            ? { target: '_blank', rel: 'noopener noreferrer' }
+                                                            : {})}
+                                                        data-track="new_footer_nav_link"
+                                                        data-track-label={`${group.title} → ${link.label}`}
+                                                        data-track-section="new_footer"
+                                                        className="text-sm text-white/80 transition-colors duration-[180ms] hover:text-white"
+                                                    >
+                                                        {link.label}
+                                                    </Link>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </nav>
+                                ))}
+                            </div>
                         ))}
                     </div>
                 </div>
@@ -333,7 +381,7 @@ export default function NewFooter() {
                         would be three times the band's height. The trailing
                         letter-space after the last glyph is clipped by the
                         parent's overflow, so the run still ends flush right. */}
-                    <span className="block whitespace-nowrap font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[length:inherit] font-bold leading-none tracking-[0.037em] text-transparent [-webkit-text-fill-color:transparent] [-webkit-text-stroke:0.8px_rgba(255,255,255,0.34)] min-[721px]:tracking-[0.087em] min-[721px]:[-webkit-text-stroke:1px_rgba(255,255,255,0.34)]">
+                    <span className="block whitespace-nowrap text-center font-['Helvetica_Neue',Helvetica,Arial,sans-serif] text-[length:inherit] font-bold leading-none tracking-[0.037em] text-transparent [-webkit-text-fill-color:transparent] [-webkit-text-stroke:0.8px_rgba(255,255,255,0.34)] min-[721px]:tracking-[0.087em] min-[721px]:[-webkit-text-stroke:1px_rgba(255,255,255,0.34)]">
                         {WORDMARK.toUpperCase()}
                     </span>
                 </div>
