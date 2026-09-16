@@ -5,20 +5,17 @@ import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight } from 'lucide-react';
 import { INDEX_UTM_SOURCE, buildSignupHref, carryPromptToSignup, trackSignupClick } from './signup';
 import IndexChatStage, { chatDuration } from './IndexChatStage';
 import { buildIconMap } from './appIcons';
+import { SHOWCASE_HEADING, SHOWCASE_STEPS } from './content';
 
 const SHOWCASE = {
     // The point is that any kind of work goes in as a prompt and comes back
     // done, so the heading says that and the steps show the shape of it.
-    heading: 'You describe the work. viaSocket does it.',
+    heading: SHOWCASE_HEADING,
     // The three steps ARE the sub-head. A lead sentence and a stepper were
     // saying the same thing twice in two registers, so the sentence went
     // and the stepper took its slot. Still an ordered list: the HowTo in
     // the schema graph is generated from these same three strings.
-    steps: [
-        'Describe the job in plain words',
-        'viaSocket plans the steps and connects your apps',
-        'It runs once, on a trigger, or on a schedule',
-    ],
+    steps: SHOWCASE_STEPS,
     // No total. Naming one closes the set: a reader whose job is not among
     // them would then know it is not on the list. "just examples" says the
     // set is open without claiming "anything".
@@ -315,7 +312,7 @@ const SHOWCASE = {
  * the card on mobile, where the list becomes a horizontal chip row. Clicking a
  * sidebar row or chip selects that card exactly as the arrows do.
  */
-export default function IndexShowcase({ apps }) {
+export default function IndexShowcase({ apps, utmSource = INDEX_UTM_SOURCE }) {
     const frameRef = useRef(null);
     const [active, setActive] = useState(0);
     // One run of one card's conversation. Bumping it restarts that run from zero.
@@ -499,10 +496,10 @@ export default function IndexShowcase({ apps }) {
                                     until the reader has already found it. */}
                                 <a
                                     className="invisible absolute right-[14px] top-1/2 z-[2] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-index-ink text-index-paper opacity-0 shadow-[0_1px_2px_rgb(20_32_31/16%)] transition-[opacity,transform,box-shadow] duration-[180ms] ease-out focus-visible:visible focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-index-ink group-data-[active=true]/row:visible group-data-[active=true]/row:opacity-100 group-data-[active=true]/row:hover:scale-110 group-data-[active=true]/row:hover:shadow-[0_4px_10px_rgb(20_32_31/24%)] group-data-[active=true]/row:active:scale-95"
-                                    href={buildSignupHref(INDEX_UTM_SOURCE)}
+                                    href={buildSignupHref(utmSource)}
                                     onClick={() => {
                                         carryPromptToSignup(c.job);
-                                        trackSignupClick(INDEX_UTM_SOURCE, {
+                                        trackSignupClick(utmSource, {
                                             element: 'index_showcase_row',
                                             label: c.verb,
                                         });
@@ -580,7 +577,14 @@ export default function IndexShowcase({ apps }) {
                         }
                     }}
                 >
-                    <IndexChatStage key={active} card={card} live={live && !reduced} runId={runId} iconMap={iconMap} />
+                    <IndexChatStage
+                        key={active}
+                        card={card}
+                        live={live && !reduced}
+                        runId={runId}
+                        iconMap={iconMap}
+                        utmSource={utmSource}
+                    />
 
                     <div className="mt-4 flex items-center justify-between gap-4 min-[721px]:hidden">
                         {counter}

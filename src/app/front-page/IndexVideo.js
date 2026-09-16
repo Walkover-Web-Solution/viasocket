@@ -3,28 +3,13 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { Play } from 'lucide-react';
-
-const VIDEO = {
-    // PROVISIONAL, to be re-read against the final cut: this describes the
-    // video the section is for, not the placeholder currently in it.
-    heading: 'One job, from the sentence to done.',
-    // No longer rendered on screen — the section is a heading and the video
-    // now. Kept here because it still feeds the VideoObject schema's
-    // description below, so search engines still read it.
-    schemaDescription:
-        'The whole thing end to end: a job described in plain words, the steps viaSocket works out, and the automation running across the apps it needs.',
-    label: 'What viaSocket does, start to finish',
-    play: 'Play',
-    playLabel: 'Play the video',
-};
+import { VIDEO, VIDEO_SRC, VIDEO_POSTER } from './content';
 
 // PROVISIONAL. A placeholder cut, 9.2 MB for 29 seconds, standing in until the
 // founders' own video replaces it. The heading and sub-head above describe the
 // intended video, not this footage; all three move with the file. The section is
 // built to be complete with no video at all: set VIDEO_SRC to null and the
 // poster alone carries it.
-const VIDEO_SRC = '/assets/index/video.mp4';
-const VIDEO_POSTER = '/assets/index/video-poster.jpg';
 
 /**
  * Section 2: the video, with a sticky reveal on desktop.
@@ -175,21 +160,8 @@ export default function IndexVideo() {
             ref={outerRef}
             aria-label={VIDEO.label}
         >
-            {VIDEO_SRC && (
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            '@context': 'https://schema.org',
-                            '@type': 'VideoObject',
-                            name: VIDEO.heading,
-                            description: VIDEO.schemaDescription,
-                            thumbnailUrl: VIDEO_POSTER ? [`https://viasocket.com${VIDEO_POSTER}`] : undefined,
-                            contentUrl: `https://viasocket.com${VIDEO_SRC}`,
-                        }),
-                    }}
-                />
-            )}
+            {/* VideoObject schema is generated in ./seo.js from these same
+                constants and rendered once, page-wide, in page.js. */}
 
             <div className="static flex h-auto flex-col items-stretch justify-center gap-5 overflow-visible px-5 pb-2 pt-[92px] min-[900px]:sticky min-[900px]:top-0 min-[900px]:h-svh min-[900px]:items-center min-[900px]:gap-[clamp(16px,2.8vh,32px)] min-[900px]:overflow-hidden min-[900px]:px-index-gutter min-[900px]:pb-[34px] min-[900px]:pt-[84px] motion-reduce:static motion-reduce:h-auto motion-reduce:overflow-visible motion-reduce:px-index-gutter motion-reduce:pb-2 motion-reduce:pt-[92px]">
                 {/* On the page ground, in ink. No text sits over the footage,

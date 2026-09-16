@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { INDEX_UTM_SOURCE, buildSignupHref, trackSignupClick } from './signup';
+import { FREE_PLAN_MICRO } from './content';
 
 const CLOSE = {
     heading: 'It works with the apps you already use.',
@@ -12,7 +13,7 @@ const CLOSE = {
     // States the free plan and nothing more: the pricing page is being
     // changed to match this page, and a figure here would be the thing that
     // goes stale first.
-    micro: 'Free to start. 10,000 tasks and 500 AI credits every month.',
+    micro: FREE_PLAN_MICRO,
     indexTitle: 'Every app, A to Z',
     indexLetters: ['0-9', ...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')],
 };
@@ -39,7 +40,7 @@ const TEAMS = '10,000+ teams';
  * The strip stops while the section is off screen, on hover, and entirely under
  * reduced motion, where it renders as a plain row.
  */
-export default function IndexClose({ apps = [] }) {
+export default function IndexClose({ apps = [], utmSource = INDEX_UTM_SOURCE }) {
     const bandRef = useRef(null);
     const [live, setLive] = useState(false);
 
@@ -63,7 +64,7 @@ export default function IndexClose({ apps = [] }) {
         return () => observer.disconnect();
     }, []);
 
-    const ctaHref = buildSignupHref(INDEX_UTM_SOURCE);
+    const ctaHref = buildSignupHref(utmSource);
 
     return (
         <section
@@ -82,7 +83,7 @@ export default function IndexClose({ apps = [] }) {
                     className="mt-[22px] inline-flex cursor-pointer items-center gap-[7px] rounded-[10px] border-0 bg-index-ink px-[22px] py-3 text-[15px] font-medium text-index-paper transition-[transform,opacity] duration-[180ms] ease-out hover:-translate-y-px hover:opacity-90 min-[900px]:mt-7 min-[900px]:px-[26px] min-[900px]:py-[14px] min-[900px]:text-base"
                     href={ctaHref}
                     onClick={() =>
-                        trackSignupClick(INDEX_UTM_SOURCE, {
+                        trackSignupClick(utmSource, {
                             element: 'index_close_cta',
                             label: CLOSE.submit,
                             destinationUrl: ctaHref,

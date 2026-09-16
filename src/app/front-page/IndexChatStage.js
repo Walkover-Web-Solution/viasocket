@@ -95,7 +95,7 @@ function StepApp({ icon, label, iconMap }) {
  * IndexShowcase mounts exactly one of these at a time; there are no dormant
  * copies here.
  */
-export default function IndexChatStage({ card, live, runId, iconMap }) {
+export default function IndexChatStage({ card, live, runId, iconMap, utmSource = INDEX_UTM_SOURCE }) {
     const stageRef = useRef(null);
     const [youTurn, ...viaTurns] = card.chat;
     const askText = youTurn?.text || '';
@@ -322,10 +322,10 @@ export default function IndexChatStage({ card, live, runId, iconMap }) {
                     this a phone has no way into the card at all. */}
                 <a
                     className="grid h-[30px] w-[30px] flex-none place-items-center rounded-full border border-index-line bg-transparent text-index-ink transition-colors duration-200 ease-out min-[721px]:hidden"
-                    href={buildSignupHref(INDEX_UTM_SOURCE)}
+                    href={buildSignupHref(utmSource)}
                     onClick={() => {
                         carryPromptToSignup(card.job);
-                        trackSignupClick(INDEX_UTM_SOURCE, {
+                        trackSignupClick(utmSource, {
                             element: 'index_showcase_card',
                             label: card.verb,
                         });

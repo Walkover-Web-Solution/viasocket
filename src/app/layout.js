@@ -52,10 +52,27 @@ export default function RootLayout({ children }) {
                         __html: JSON.stringify({
                             '@context': 'https://schema.org',
                             '@type': 'Organization',
+                            '@id': 'https://viasocket.com/#organization',
                             name: 'viaSocket',
                             url: 'https://viasocket.com',
                             logo: 'https://viasocket.com/assets/brand/logo.svg',
                             description: 'Connect your apps and automate workflows with viaSocket',
+                            parentOrganization: {
+                                '@type': 'Organization',
+                                name: 'Walkover Web Solutions Pvt Ltd.',
+                            },
+                            contactPoint: {
+                                '@type': 'ContactPoint',
+                                email: 'support@viasocket.com',
+                                contactType: 'customer support',
+                            },
+                            sameAs: [
+                                'https://www.linkedin.com/company/viasocket-walkover/',
+                                'https://x.com/viasocket',
+                                'https://www.youtube.com/@viasocket',
+                                'https://discord.com/invite/wqsSsMAkkz',
+                                'https://www.instagram.com/viasocket/',
+                            ],
                         }),
                     }}
                 />

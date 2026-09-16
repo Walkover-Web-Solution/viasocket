@@ -48,7 +48,7 @@ const IDEA_PLACE = [
     'bottom-[20%] right-[clamp(16px,3vw,72px)] rotate-[-2deg]',
 ];
 
-export default function IndexHero({ apps, appCount }) {
+export default function IndexHero({ apps, appCount, utmSource = INDEX_UTM_SOURCE }) {
     const [request, setRequest] = useState('');
     const [attentive, setAttentive] = useState(false);
     const inputRef = useRef(null);
@@ -60,13 +60,13 @@ export default function IndexHero({ apps, appCount }) {
 
     const startWork = (event) => {
         event.preventDefault();
-        const destinationUrl = buildSignupHref(INDEX_UTM_SOURCE);
+        const destinationUrl = buildSignupHref(utmSource);
 
         // The typed job travels in the utmData cookie, which is what signup
         // actually reads, so it must be written before the page leaves.
         carryPromptToSignup(request);
 
-        trackSignupClick(INDEX_UTM_SOURCE, {
+        trackSignupClick(utmSource, {
             element: 'index_hero_ask',
             label: HERO.submit,
             destinationUrl,

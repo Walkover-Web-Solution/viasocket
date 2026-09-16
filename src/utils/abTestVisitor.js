@@ -283,7 +283,7 @@ export const shouldCountView = (profile, pageKey, now) => {
  * `counted`, `at` and `sessionKey` name which set of counters is being asked
  * about, so the same rule serves both the site-wide visit counters that
  * view_count / revisit_count are written from and the homepage-only counters the
- * A/B/C comparison reads.
+ * A/B comparison reads.
  */
 const startsSession = (profile, { sessionId, nowIso }, { counted, at, sessionKey }) => {
     // The session these counters were last moved for is still running.
@@ -313,7 +313,7 @@ export const startsVisit = (profile, event) =>
 /**
  * Whether this view begins a homepage visit that has not been counted yet.
  *
- * Kept alongside the site-wide counter because the A/B/C test measures the
+ * Kept alongside the site-wide counter because the A/B test measures the
  * homepage specifically: a variant is only served there, so its visit numbers
  * have to be readable without the rest of the site's traffic mixed in.
  */
@@ -357,7 +357,7 @@ const emptyProfile = (visitorId, nowIso) => ({
     visits: 0,
     visitSessionId: '',
     visitAt: '',
-    // The same three, for the homepage alone, kept so the A/B/C comparison can
+    // The same three, for the homepage alone, kept so the A/B comparison can
     // still be read without the rest of the site's traffic mixed in.
     homeSessions: 0,
     homeSessionId: '',
@@ -511,7 +511,7 @@ export const applyEvent = (profile, event) => {
     }
 
     // The homepage counter is asked separately, and only about the homepage, so
-    // the A/B/C comparison keeps measuring the one page a variant is served on.
+    // the A/B comparison keeps measuring the one page a variant is served on.
     if (type === 'view' && startsHomeSession(profile, { path, sessionId, nowIso })) {
         next.homeSessions = toInt(profile.homeSessions) + 1;
         next.homeSessionId = sessionId;
@@ -763,7 +763,7 @@ export const toRowFields = (profile, { environment, nowIso }) => {
         user_id: profile.visitorId || '',
         varient: profile.firstVariant || '',
         // Every visit this visitor has made, anywhere on the site — not page
-        // views, and not the homepage alone. The homepage-only figure the A/B/C
+        // views, and not the homepage alone. The homepage-only figure the A/B
         // test reads is kept in `name` as homeSessions.
         view_count: toInt(profile.visits),
         // The same count without the first visit, so a row reads "came back N

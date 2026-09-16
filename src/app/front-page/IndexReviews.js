@@ -3,27 +3,12 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { Star, StarHalf } from 'lucide-react';
+import { LISTINGS } from './content';
 
 const REVIEWS = {
     heading: 'Reviews.',
     subhead: 'From G2, Capterra, LinkedIn and X.',
 };
-
-/**
- * The listing scores. Both figures come from the public listings and are shown
- * beside stars drawn from each row's own rating, so the half-star follows 4.6
- * and 4.8 separately rather than both taking one number.
- */
-const LISTINGS =
-    /**
-     * The listing scores. Both figures come from the public listings and are
-     * shown beside stars drawn from each row's own rating, so the half-star
-     * follows 4.6 and 4.8 separately rather than both taking one number.
-     */
-    [
-        { label: 'Capterra', value: '4.8 on Capterra \u00b7 648 reviews', rating: 4.8 },
-        { label: 'G2', value: '4.6 on G2 \u00b7 92 reviews', rating: 4.6 },
-    ];
 
 /**
  * The award seals. The same badges the site shows in ShowBadges, which stays

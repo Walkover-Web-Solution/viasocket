@@ -104,7 +104,7 @@ function useReveal(ref) {
 
 const TOTAL = 2;
 
-export default function IndexDecides() {
+export default function IndexDecides({ utmSource = INDEX_UTM_SOURCE }) {
     const sectionRef = useRef(null);
     const stageRef = useRef(null);
     const live = useReveal(sectionRef);
@@ -118,7 +118,7 @@ export default function IndexDecides() {
 
     useTimeline({ live, runId: 0, stageRef, reset, finish, steps, total: TOTAL });
 
-    const actionHref = buildSignupHref(INDEX_UTM_SOURCE);
+    const actionHref = buildSignupHref(utmSource);
 
     return (
         <section
@@ -154,7 +154,7 @@ export default function IndexDecides() {
                             className="mt-[22px] inline-flex w-max items-center gap-[3px] border-0 border-b border-index-ink bg-none pb-[3px] text-[15px] text-index-ink transition-[gap] duration-200 hover:gap-2"
                             href={actionHref}
                             onClick={() =>
-                                trackSignupClick(INDEX_UTM_SOURCE, {
+                                trackSignupClick(utmSource, {
                                     element: 'index_decides_action',
                                     label: DECIDES.action,
                                     destinationUrl: actionHref,
