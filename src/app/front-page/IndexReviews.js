@@ -220,7 +220,7 @@ export default function IndexReviews({ reviewData = [] }) {
                                         {card.name}
                                     </em>
                                 </p>
-                                <p className="m-0 flex-1 overflow-hidden text-[14px] leading-[1.55] text-[#3f4a43] min-[721px]:text-[13.5px] min-[900px]:text-[14px] min-[900px]:leading-[1.62]">
+                                <p className="m-0 flex-1 overflow-hidden text-sm line-clamp-4 leading-[1.55] text-[#3f4a43] min-[721px]:text-xs min-[900px]:text-sm min-[900px]:leading-[1.62]">
                                     {card.description}
                                 </p>
                                 {card.date && <p className="mt-2 text-[10.5px] text-[#a8b0a7]">{card.date}</p>}

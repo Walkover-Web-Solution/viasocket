@@ -60,12 +60,12 @@ const SHOWCASE = {
         {
             verb: 'Repetitive tasks',
             subhead: 'The small jobs nobody schedules and everybody does. They keep happening; you stop doing them.',
-            job: 'Every morning I copy yesterday\u2019s orders into a sheet and chase the ones that didn\u2019t pay. Take those over.',
+            job: 'Every morning, copy yesterday\u2019s orders into Sheets and chase the ones that didn\u2019t pay.',
             accent: '#5b7cc4',
             chat: [
                 {
                     from: 'you',
-                    text: 'Every morning I copy yesterday\u2019s orders into a sheet and chase the ones that didn\u2019t pay. Take those over.',
+                    text: 'Every morning, copy yesterday\u2019s orders into Sheets and chase the ones that didn\u2019t pay.',
                 },
                 { from: 'via', text: 'Tell me which ones. Here are five I see teams hand over first.' },
                 {
@@ -106,12 +106,12 @@ const SHOWCASE = {
             verb: 'Data collection',
             subhead:
                 'Records arrive in whatever shape the sender chose. They end up as rows that match, without anyone retyping them.',
-            job: 'Pull the details off every invoice and receipt that comes in and add a row to my accounting sheet.',
+            job: 'Put every invoice that lands in Gmail into my accounting sheet.',
             accent: '#14b585',
             chat: [
                 {
                     from: 'you',
-                    text: 'Pull the details off every invoice and receipt that comes in and add a row to my accounting sheet.',
+                    text: 'Put every invoice that lands in Gmail into my accounting sheet.',
                 },
                 {
                     from: 'via',
@@ -158,12 +158,12 @@ const SHOWCASE = {
             verb: 'Follow ups',
             subhead:
                 'Somebody owes you something. viaSocket keeps asking until they send it, and knows when to stop and when to bring you in.',
-            job: 'Chase my unpaid invoices every few days and stop as soon as the customer pays.',
+            job: 'Chase unpaid invoices until they pay, then stop.',
             accent: '#2f8fe8',
             chat: [
                 {
                     from: 'you',
-                    text: 'Chase my unpaid invoices every few days and stop as soon as the customer pays.',
+                    text: 'Chase unpaid invoices until they pay, then stop.',
                 },
                 {
                     from: 'via',
@@ -191,12 +191,12 @@ const SHOWCASE = {
         {
             verb: 'Weekly reporting',
             subhead: 'viaSocket watches the week, writes up what changed, and sends it to whoever needs it.',
-            job: 'Send me last week\u2019s sales, refunds and top products every Monday at 9.',
+            job: 'Every Monday at 9, send me last week\u2019s sales and refunds.',
             accent: '#7c5cff',
             chat: [
                 {
                     from: 'you',
-                    text: 'Send me last week\u2019s sales, refunds and top products every Monday at 9.',
+                    text: 'Every Monday at 9, send me last week\u2019s sales and refunds.',
                 },
                 { from: 'via', text: 'Monday, 9:00. Here is the week to 21 September.' },
                 {
@@ -222,12 +222,12 @@ const SHOWCASE = {
             verb: 'Request routing',
             subhead:
                 'Everything lands in one queue and somebody has to sort it. viaSocket reads each one and hands it to the person who owns it.',
-            job: 'Read every support email that comes in and send it to whoever should handle it.',
+            job: 'Read every support email and send it to the right person.',
             accent: '#f2673f',
             chat: [
                 {
                     from: 'you',
-                    text: 'Read every support email that comes in and send it to whoever should handle it.',
+                    text: 'Read every support email and send it to the right person.',
                 },
                 { from: 'via', text: 'Five new tickets since 9. Reading them.' },
                 {

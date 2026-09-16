@@ -12,7 +12,7 @@ const HERO = {
     // heroes on "build", and that one verb is the whole difference. Nine
     // words, and both claims in it are new information — you do not build
     // it, and it is reliable.
-    subhead: 'Describe the job. viaSocket turns it into reliable automation.',
+    subhead: 'Describe the job. viaSocket AI turns it into reliable automation.',
     inputLabel: 'Tell viaSocket what you need done',
     placeholder: 'Tell viaSocket the work…',
     submit: 'Do it',
@@ -23,10 +23,6 @@ const HERO = {
         'Find the missing details in this supplier list.',
         'Check which products need reordering.',
     ],
-    // The free-plan figure is read off viasocket.com/pricing. It is also stated
-    // in the FAQ's cost answer and in the closing section's micro line; if it
-    // moves there it moves here.
-    footnote: 'Free to start with 10,000 tasks a month.',
 };
 
 /**
@@ -97,8 +93,9 @@ export default function IndexHero({ apps, appCount }) {
                     {HERO.subhead}
                 </p>
 
-                {/* One pill, the input flush inside it, the submit as a filled
-                    counterpart so the page has one button shape. */}
+                {/* One pill, the input flush inside it, the submit as a
+                    circular send control: pale while there is nothing to
+                    send, filled the moment there is. */}
                 <form
                     className="mx-auto mt-6 flex w-[min(660px,100%)] items-center gap-2 rounded-full border border-[#cfd2c9] bg-[rgb(255_255_252/73%)] p-[5px] shadow-[0_15px_44px_rgb(31_39_33/5%)] min-[721px]:mt-[30px] min-[721px]:p-[7px]"
                     onSubmit={startWork}
@@ -148,10 +145,6 @@ export default function IndexHero({ apps, appCount }) {
                     </button>
                 ))}
             </div>
-
-            <p className="[opacity:calc(1-var(--takeover,0))] absolute inset-x-0 bottom-3 z-[2] m-0 text-center text-[11px] text-index-muted min-[721px]:bottom-12 min-[721px]:text-[13px]">
-                {HERO.footnote}
-            </p>
         </section>
     );
 }
