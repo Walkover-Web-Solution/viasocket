@@ -3,12 +3,12 @@
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { Play } from 'lucide-react';
-import { VIDEO, VIDEO_SRC, VIDEO_POSTER } from './content';
+import { VIDEO, VIDEO_YOUTUBE_ID, VIDEO_POSTER } from './content';
 
-// PROVISIONAL. A placeholder cut, 9.2 MB for 29 seconds, standing in until the
-// founders' own video replaces it. The heading and sub-head above describe the
-// intended video, not this footage; all three move with the file. The section is
-// built to be complete with no video at all: set VIDEO_SRC to null and the
+// PROVISIONAL. A dummy YouTube placeholder, standing in until the founders'
+// own video replaces it. The heading and sub-head above describe the intended
+// video, not this footage; all three move with the id. The section is built
+// to be complete with no video at all: set VIDEO_YOUTUBE_ID to null and the
 // poster alone carries it.
 
 /**
@@ -25,7 +25,7 @@ import { VIDEO, VIDEO_SRC, VIDEO_POSTER } from './content';
  */
 export default function IndexVideo() {
     const outerRef = useRef(null);
-    const videoRef = useRef(null);
+    const iframeRef = useRef(null);
 
     // Drives the reveal. Reads scroll position, writes two custom properties,
     // and touches nothing else.
@@ -106,48 +106,60 @@ export default function IndexVideo() {
 
     /**
      * Nothing plays until it is asked for. The section holds the poster with a
-     * Play affordance over it and starts on the click. Three things follow from
+     * Play affordance over it and starts on the click. Two things follow from
      * the reader starting it rather than the page:
      *
      * - It can have sound. Muted was a requirement of autoplay, not a choice.
-     * - It gets real controls, and they appear with playback rather than sitting
-     *   over the poster, so the resting state stays a clean still.
      * - It still pauses when scrolled away, which is the one piece of the old
      *   observer worth keeping: audio continuing from a section nobody is
-     *   looking at is worse than a video that stopped. It does not resume on its
-     *   own; coming back leaves it paused where it was.
+     *   looking at is worse than a video that stopped. It does not resume on
+     *   its own; coming back leaves it paused where it was.
+     *
+     * The embed is YouTube's, so play/pause travel over the iframe Player API's
+     * postMessage protocol rather than a direct method call, and "the video
+     * ended" arrives the same way instead of as a DOM `pause` event.
      */
     const [started, setStarted] = useState(false);
 
-    const play = () => {
-        const node = videoRef.current;
-        if (!node) return;
-        node.muted = false;
-        node.play()
-            .then(() => setStarted(true))
-            .catch(() => {
-                // Refused with sound on some setups; fall back rather than do nothing.
-                node.muted = true;
-                node.play()
-                    .then(() => setStarted(true))
-                    .catch(() => {});
-            });
+    const postToPlayer = (func) => {
+        iframeRef.current?.contentWindow?.postMessage(JSON.stringify({ event: 'command', func, args: [] }), '*');
     };
 
-    useEffect(() => {
-        const node = videoRef.current;
-        if (!node || !started) return undefined;
+    const play = () => setStarted(true);
 
+    useEffect(() => {
+        if (!started) return undefined;
+
+        // Reaching the end puts the affordance back, so the section rests as a
+        // still rather than on a stopped last frame. info 0 is YouTube's
+        // "ended" state.
+        const onMessage = (event) => {
+            if (event.origin !== 'https://www.youtube.com') return;
+            let data;
+            try {
+                data = JSON.parse(event.data);
+            } catch {
+                return;
+            }
+            if (data.event === 'onStateChange' && data.info === 0) setStarted(false);
+        };
+        window.addEventListener('message', onMessage);
+
+        const node = iframeRef.current;
         const observer = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
-                    if (!entry.isIntersecting) node.pause();
+                    if (!entry.isIntersecting) postToPlayer('pauseVideo');
                 });
             },
             { threshold: 0.25 }
         );
-        observer.observe(node);
-        return () => observer.disconnect();
+        if (node) observer.observe(node);
+
+        return () => {
+            window.removeEventListener('message', onMessage);
+            observer.disconnect();
+        };
     }, [started]);
 
     return (
@@ -184,25 +196,27 @@ export default function IndexVideo() {
                     className="group relative w-auto max-h-none max-w-full min-[900px]:w-[min(82vw,140svh)] min-[900px]:max-h-full min-[900px]:[opacity:calc(0.8+0.2*var(--takeover,0))] min-[900px]:[filter:blur(calc((1-var(--takeover,0))*6px))] min-[900px]:[transform:scale(calc(0.93+0.07*var(--t,1)))] motion-reduce:max-h-none motion-reduce:opacity-100 motion-reduce:[filter:none] motion-reduce:[transform:none]"
                     data-started={started ? 'true' : 'false'}
                 >
-                    {VIDEO_SRC ? (
-                        <>
-                            <video
-                                ref={videoRef}
-                                className="block aspect-video h-auto w-full rounded-[14px] bg-white object-cover min-[900px]:rounded-[clamp(14px,1.6vw,24px)] min-[900px]:shadow-[0_30px_70px_rgb(20_32_31/13%)]"
-                                src={VIDEO_SRC}
-                                poster={VIDEO_POSTER || undefined}
-                                playsInline
-                                preload="metadata"
-                                disablePictureInPicture
-                                controls={started}
-                                onPause={() => {
-                                    // Reaching the end puts the affordance back, so the
-                                    // section rests as a still rather than on a stopped
-                                    // last frame.
-                                    if (videoRef.current?.ended) setStarted(false);
-                                }}
+                    {VIDEO_YOUTUBE_ID ? (
+                        started ? (
+                            <iframe
+                                ref={iframeRef}
+                                className="block aspect-video h-auto w-full rounded-[14px] bg-white min-[900px]:rounded-[clamp(14px,1.6vw,24px)] min-[900px]:shadow-[0_30px_70px_rgb(20_32_31/13%)]"
+                                src={`https://www.youtube.com/embed/${VIDEO_YOUTUBE_ID}?autoplay=1&rel=0&playsinline=1&enablejsapi=1&origin=${encodeURIComponent(window.location.origin)}`}
+                                title={VIDEO.heading}
+                                allow="autoplay; encrypted-media; picture-in-picture; web-share"
+                                allowFullScreen
                             />
-                            {!started && (
+                        ) : (
+                            <>
+                                {VIDEO_POSTER && (
+                                    <Image
+                                        className="block aspect-video h-auto w-full rounded-[14px] bg-white object-cover min-[900px]:rounded-[clamp(14px,1.6vw,24px)] min-[900px]:shadow-[0_30px_70px_rgb(20_32_31/13%)]"
+                                        src={VIDEO_POSTER}
+                                        alt=""
+                                        width={1280}
+                                        height={720}
+                                    />
+                                )}
                                 <button
                                     type="button"
                                     /* A triangle and the word, left and
@@ -223,8 +237,8 @@ export default function IndexVideo() {
                                         {VIDEO.play}
                                     </span>
                                 </button>
-                            )}
-                        </>
+                            </>
+                        )
                     ) : VIDEO_POSTER ? (
                         // No video yet. The poster alone still carries the section.
                         <Image
