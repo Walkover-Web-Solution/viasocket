@@ -58,6 +58,7 @@ const SHOWCASE = {
             verb: 'Repetitive tasks',
             subhead: 'The small jobs nobody schedules and everybody does. They keep happening; you stop doing them.',
             job: 'Every morning, copy yesterday\u2019s orders into Sheets and chase the ones that didn\u2019t pay.',
+            prompt: 'Every morning, copy yesterday\u2019s orders into Google Sheets (google-sheets), then find the ones that are still unpaid and send each of those customers a payment reminder. Ask me where my orders come in and which email account to send from before you set it up.',
             accent: '#5b7cc4',
             chat: [
                 {
@@ -104,6 +105,7 @@ const SHOWCASE = {
             subhead:
                 'Records arrive in whatever shape the sender chose. They end up as rows that match, without anyone retyping them.',
             job: 'Put every invoice that lands in Gmail into my accounting sheet.',
+            prompt: 'When a new invoice arrives in Gmail (gmail), use an AI step to read the supplier, invoice number, date, and amount from the attachment, then add a row to my accounting sheet in Google Sheets (google-sheets). Ask me which label the invoices arrive under.',
             accent: '#14b585',
             chat: [
                 {
@@ -156,6 +158,7 @@ const SHOWCASE = {
             subhead:
                 'Somebody owes you something. viaSocket keeps asking until they send it, and knows when to stop and when to bring you in.',
             job: 'Chase unpaid invoices until they pay, then stop.',
+            prompt: 'Every weekday morning, find the invoices that are past their due date and send each customer a polite payment reminder, and stop chasing an invoice as soon as it is marked paid. Ask me which invoicing tool I use and which email account to send from.',
             accent: '#2f8fe8',
             chat: [
                 {
@@ -189,6 +192,7 @@ const SHOWCASE = {
             verb: 'Weekly reporting',
             subhead: 'viaSocket watches the week, writes up what changed, and sends it to whoever needs it.',
             job: 'Every Monday at 9, send me last week\u2019s sales and refunds.',
+            prompt: 'Every Monday at 9am, pull last week\u2019s sales and refunds, total them, compare them with the week before, and send me the summary. Ask me where my sales data lives and whether to send it by email or to a chat channel.',
             accent: '#7c5cff',
             chat: [
                 {
@@ -220,6 +224,7 @@ const SHOWCASE = {
             subhead:
                 'Everything lands in one queue and somebody has to sort it. viaSocket reads each one and hands it to the person who owns it.',
             job: 'Read every support email and send it to the right person.',
+            prompt: 'When a new support email arrives, use an AI step to work out what it is about and how urgent it is, then assign it to the right person on my team and tell them. Ask me which inbox to watch, who handles what, and where my team wants to be notified.',
             accent: '#f2673f',
             chat: [
                 {
@@ -266,6 +271,7 @@ const SHOWCASE = {
             subhead:
                 'viaSocket watches what you have left, works out what needs reordering, and has the order ready before you run out.',
             job: 'Tell me when a product drops below 10 in stock and draft the reorder email.',
+            prompt: 'When a product drops below 10 in stock, tell me which product it is and draft a reorder email to that product’s supplier with the quantity to order, and wait for me to approve it before sending. Ask me where my stock levels and supplier details are kept.',
             accent: '#e0a800',
             chat: [
                 {
@@ -498,7 +504,7 @@ export default function IndexShowcase({ apps, utmSource = INDEX_UTM_SOURCE }) {
                                     className="invisible absolute right-[14px] top-1/2 z-[2] grid h-7 w-7 -translate-y-1/2 place-items-center rounded-full bg-index-ink text-index-paper opacity-0 shadow-[0_1px_2px_rgb(20_32_31/16%)] transition-[opacity,transform,box-shadow] duration-[180ms] ease-out focus-visible:visible focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-index-ink group-data-[active=true]/row:visible group-data-[active=true]/row:opacity-100 group-data-[active=true]/row:hover:scale-110 group-data-[active=true]/row:hover:shadow-[0_4px_10px_rgb(20_32_31/24%)] group-data-[active=true]/row:active:scale-95"
                                     href={buildSignupHref(utmSource)}
                                     onClick={() => {
-                                        carryPromptToSignup(c.job);
+                                        carryPromptToSignup(c.prompt ?? c.job);
                                         trackSignupClick(utmSource, {
                                             element: 'index_showcase_row',
                                             label: c.verb,

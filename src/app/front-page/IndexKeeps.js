@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { INDEX_UTM_SOURCE, buildSignupHref, carryPromptToSignup, trackSignupClick } from './signup';
 
 const KEEPS = {
     heading: 'Run it once, or keep it running.',
@@ -13,6 +14,41 @@ const KEEPS = {
         before: 'Trigger this every time',
         after: 'comes in?',
         slots: ['a booking', 'an invoice', 'an order', 'a support request', 'a payment'],
+        // The prompt each control sends to signup, keyed to the word
+        // currently in the slot, so the chat opens on the same job the
+        // hinge sentence was just promising.
+        prompts: [
+            {
+                automate:
+                    'Every time a booking comes in, set the customer up and tell my team. Ask me where bookings come in, what setting a customer up involves, and where my team wants to be told.',
+                once:
+                    'I have a booking to handle now. Set the customer up and tell my team, just this once. Ask me where the booking is and what setting a customer up involves.',
+            },
+            {
+                automate:
+                    'Every time an invoice comes in, file it and tell my team. Ask me where invoices come in, which accounting tool to file it in, and where my team wants to be told.',
+                once:
+                    'I have an invoice to handle now. File it and tell my team, just this once. Ask me where the invoice is and which accounting tool to file it in.',
+            },
+            {
+                automate:
+                    'Every time an order comes in, get it ready to ship and tell my team. Ask me where orders come in, what getting an order ready involves, and where my team wants to be told.',
+                once:
+                    'I have an order to handle now. Get it ready to ship and tell my team, just this once. Ask me where the order is and what getting it ready involves.',
+            },
+            {
+                automate:
+                    'Every time a support request comes in, assign it to the right person and tell my team. Ask me where support requests come in, who handles what, and where my team wants to be told.',
+                once:
+                    'I have a support request to handle now. Assign it to the right person and tell my team, just this once. Ask me where the request is and who handles what.',
+            },
+            {
+                automate:
+                    'Every time a payment comes in, match it to the invoice it pays and tell my team. Ask me where payments come in, which accounting tool I use, and where my team wants to be told.',
+                once:
+                    'I have a payment to handle now. Match it to the invoice it pays and tell my team, just this once. Ask me where the payment is and which accounting tool I use.',
+            },
+        ],
         automate: 'Automate it',
         once: 'Just this once',
         // The other half of the argument. Choosing once gives you one mark,
@@ -137,7 +173,7 @@ function eventIndex(day) {
 
 const sourceFor = (day, kind) => (kind === 'weekly' ? K.weekly : K.events[eventIndex(day)]);
 
-export default function IndexKeeps() {
+export default function IndexKeeps({ utmSource = INDEX_UTM_SOURCE }) {
     const sectionRef = useRef(null);
     const stripRef = useRef(null);
     const [mode, setMode] = useState('auto');
@@ -342,20 +378,31 @@ export default function IndexKeeps() {
 
                 <div className="flex flex-none gap-[9px]">
                     {[
-                        { label: KEEPS.hinge.automate, on: !once, set: 'auto' },
-                        { label: KEEPS.hinge.once, on: once, set: 'once' },
-                    ].map((choice) => (
-                        <button
-                            key={choice.set}
-                            type="button"
-                            className="rounded-full border border-[#8aa3a0] bg-transparent px-[17px] py-[9px] text-[14px] text-[#3c5551] transition-[background-color,color,border-color] duration-200 hover:border-index-ink hover:text-index-ink data-[on=true]:border-index-ink data-[on=true]:bg-index-ink data-[on=true]:text-[#f1f6f4] motion-reduce:transition-none"
-                            data-on={choice.on}
-                            aria-pressed={choice.on}
-                            onClick={() => setMode(choice.set)}
-                        >
-                            {choice.label}
-                        </button>
-                    ))}
+                        { label: KEEPS.hinge.automate, on: !once, set: 'auto', key: 'automate' },
+                        { label: KEEPS.hinge.once, on: once, set: 'once', key: 'once' },
+                    ].map((choice) => {
+                        const activeSlot = reduced ? 0 : slot;
+                        const prompt = KEEPS.hinge.prompts[activeSlot][choice.key];
+                        return (
+                            <a
+                                key={choice.set}
+                                className="rounded-full border border-[#8aa3a0] bg-transparent px-[17px] py-[9px] text-[14px] text-[#3c5551] transition-[background-color,color,border-color] duration-200 hover:border-index-ink hover:text-index-ink data-[on=true]:border-index-ink data-[on=true]:bg-index-ink data-[on=true]:text-[#f1f6f4] motion-reduce:transition-none"
+                                data-on={choice.on}
+                                aria-current={choice.on}
+                                href={buildSignupHref(utmSource)}
+                                onClick={() => {
+                                    setMode(choice.set);
+                                    carryPromptToSignup(prompt);
+                                    trackSignupClick(utmSource, {
+                                        element: `index_keeps_${choice.key}`,
+                                        label: choice.label,
+                                    });
+                                }}
+                            >
+                                {choice.label}
+                            </a>
+                        );
+                    })}
                 </div>
             </div>
 

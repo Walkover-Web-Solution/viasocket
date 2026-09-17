@@ -66,7 +66,7 @@ export default function IndexPageContent({ appCount, reviewData, initialApps, ut
             <IndexDecides utmSource={utmSource} />
 
             <IndexSeam from={BG.paper} to={BG.keeps} />
-            <IndexKeeps />
+            <IndexKeeps utmSource={utmSource} />
 
             <IndexSeam from={BG.keeps} to={BG.paper} />
             <IndexRatio />

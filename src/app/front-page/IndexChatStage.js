@@ -324,7 +324,7 @@ export default function IndexChatStage({ card, live, runId, iconMap, utmSource =
                     className="grid h-[30px] w-[30px] flex-none place-items-center rounded-full border border-index-line bg-transparent text-index-ink transition-colors duration-200 ease-out min-[721px]:hidden"
                     href={buildSignupHref(utmSource)}
                     onClick={() => {
-                        carryPromptToSignup(card.job);
+                        carryPromptToSignup(card.prompt ?? card.job);
                         trackSignupClick(utmSource, {
                             element: 'index_showcase_card',
                             label: card.verb,
