@@ -201,11 +201,11 @@ export default function IndexReviews({ reviewData = [] }) {
                                             width={32}
                                             height={32}
                                             aria-hidden="true"
-                                            className="row-span-2 h-8 w-8 rounded-[9px] object-cover"
+                                            className="row-span-2 h-8 w-8  rounded object-cover"
                                         />
                                     ) : (
                                         <span
-                                            className="row-span-2 grid h-8 w-8 place-items-center rounded-[9px] bg-[#eceee6] text-[10px] font-medium text-index-muted"
+                                            className="row-span-2 grid h-8 w-8 place-items-center  rounded bg-[#eceee6] text-[10px] font-medium text-index-muted"
                                             aria-hidden="true"
                                         >
                                             {initials(card.user_name)}

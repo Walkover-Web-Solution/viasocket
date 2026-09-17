@@ -55,7 +55,7 @@ export default function HeroSection({ appCount = 0 }) {
                                 {PAIRS.slice(0, 4).map((p) => (
                                     <span
                                         key={p.name}
-                                        className="flex h-[34px] w-[34px] items-center justify-center rounded-[9px] border border-[#ece9df] bg-white"
+                                        className="flex h-[34px] w-[34px] items-center justify-center  rounded border border-[#ece9df] bg-white"
                                     >
                                         <Image
                                             src={p.logo}

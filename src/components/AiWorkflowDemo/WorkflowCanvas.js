@@ -43,7 +43,7 @@ export default function WorkflowCanvas({ canvasOn, nodesVisible, publishOn, node
                                     {n.id}
                                 </div>
                                 <div
-                                    className="w-[30px] h-[30px] rounded-[9px] flex items-center justify-center shrink-0 [&_svg]:w-[14px] [&_svg]:h-[14px] [&_svg]:fill-none [&_svg]:[stroke-width:2] [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round]"
+                                    className="w-[30px] h-[30px]  rounded flex items-center justify-center shrink-0 [&_svg]:w-[14px] [&_svg]:h-[14px] [&_svg]:fill-none [&_svg]:[stroke-width:2] [&_svg]:[stroke-linecap:round] [&_svg]:[stroke-linejoin:round]"
                                     style={{ background: n.bg, color: n.typeColor }}
                                 >
                                     <span className="contents [&_svg]:stroke-[currentColor]">

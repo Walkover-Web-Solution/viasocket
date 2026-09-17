@@ -498,7 +498,7 @@ function NightCard({ live }) {
                                 <span className="flex flex-wrap gap-2">
                                     {n.chat.options.map((o, i) => (
                                         <span
-                                            className={`inline-flex items-center rounded-[9px] border px-[15px] py-2 text-[14px] font-medium leading-none ${
+                                            className={`inline-flex items-center  rounded border px-[15px] py-2 text-[14px] font-medium leading-none ${
                                                 i === 0
                                                     ? 'border-index-ink bg-index-ink text-index-paper'
                                                     : 'border-[#cfd5c7] bg-white text-index-ink'
