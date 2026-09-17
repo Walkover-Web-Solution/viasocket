@@ -5,7 +5,7 @@ import Menubar from '@/components/navbar/menubar';
 // import MCPBanner from './MCPBanner';
 import TopNavLinks from './TopNavLinks';
 import MainNavbar from './MainNavbar';
-import MigratingBanner from './MigratingBanner';
+// import MigratingBanner from './MigratingBanner';
 import Relay from './Relay';
 import WebinarBanner from '../webinar/WebinarBanner';
 
@@ -71,7 +71,7 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                 >
                     <div className="items-center justify-end flex !h-[30px]">
                         {/* {utm === '/index' && <MCPBanner />} */}
-                        {utm === '/index' && <MigratingBanner />}
+                        {/* {utm === '/index' && <MigratingBanner />} */}
                         {utm === '/migration/relay' && <Relay />}
                         {showWebinarBanner && <WebinarBanner />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />

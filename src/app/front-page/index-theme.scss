@@ -1,0 +1,42 @@
+/* The only CSS the /front-page page keeps.
+ *
+ * Everything else is Tailwind utilities: the palette, type scale, spacing,
+ * shadows, keyframes and animations live in tailwind.config.js under
+ * theme.extend, prefixed `index-`.
+ *
+ * What is left here is three things Tailwind has no mechanism for — loading a
+ * webfont, declaring a @font-face, and reaching up past this page's own root to
+ * undo an ancestor's overflow (below).
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap');
+
+/* A metric-matched stand-in for Instrument Serif, and it is a bug fix.
+   Instrument Serif sets the same string at 76.16% of Georgia's width, so on a
+   cold load the display heading paints a third too wide and then snaps when the
+   real face arrives. `size-adjust` scales Georgia to the same advance width; the
+   overrides match the line box. The swap still happens, it just stops moving
+   anything. Re-measure these three numbers if the display face changes. */
+@font-face {
+    font-family: 'Instrument Serif Fallback';
+    src: local('Georgia'), local('Times New Roman');
+    size-adjust: 76.16%;
+    ascent-override: 130%;
+    descent-override: 40.7%;
+    line-gap-override: 0%;
+}
+
+/* #__next carries a site-wide `overflow-x: hidden` (src/scss/global.scss). Per
+   the CSS overflow spec, a non-visible value on one axis forces the other axis
+   to compute as auto, so #__next becomes a scroll container on both axes for
+   every page. The FAQ's left column relies on `position: sticky`, which sticks
+   relative to the nearest such container rather than the real viewport — so on
+   an unpatched #__next it silently never sticks.
+
+   Scoped to this page only, via :has(): every other route keeps the guard
+   exactly as it was. On this page the individual sections (hero, showcase,
+   video, ...) already clip their own overflow locally, so this page does not
+   depend on the site-wide rule the way the rest of the site does. */
+#__next:has(.index-page) {
+    overflow-x: visible;
+}
