@@ -98,16 +98,16 @@ export const VIDEO = {
     playLabel: 'Play the video',
 };
 
-// PROVISIONAL. A placeholder cut, 9.2 MB for 29 seconds, standing in until the
-// founders' own video replaces it. The heading and sub-head above describe the
-// intended video, not this footage; all three move with the file. The section is
-// built to be complete with no video at all: set VIDEO_SRC to null and the
+// PROVISIONAL. A YouTube placeholder, standing in until the founders'
+// own video replaces it. The heading and sub-head above describe the intended
+// video, not this footage; all three move with the id. The section is built
+// to be complete with no video at all: set VIDEO_YOUTUBE_ID to null and the
 // poster alone carries it.
-export const VIDEO_SRC = '/assets/index/video.mp4';
+export const VIDEO_YOUTUBE_ID = 'BN_m_S031Ss';
 export const VIDEO_POSTER = '/assets/index/video-poster.jpg';
-// 29s, read off the placeholder cut itself — feeds the VideoObject schema's
-// duration, so it moves with the file rather than drifting from it.
-export const VIDEO_DURATION = 'PT29S';
+// Read off the placeholder video itself — feeds the VideoObject schema's
+// duration, so it moves with the id rather than drifting from it.
+export const VIDEO_DURATION = 'PT33S';
 
 export const WALL_GROUP_TITLES = [
     'Data collection automation',

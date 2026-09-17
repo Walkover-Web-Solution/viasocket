@@ -138,7 +138,7 @@ export default function IndexHero({ apps, appCount, utmSource = INDEX_UTM_SOURCE
                     <button
                         key={idea}
                         type="button"
-                        className={`pointer-events-auto absolute max-w-[min(290px,calc(21vw-32px))] border-0 bg-transparent p-0 text-left font-index-display text-[clamp(23px,2.2vw,35px)] leading-[0.98] tracking-[-0.045em] text-[#66716a] transition-[color,transform] duration-[350ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-[7px] hover:text-index-ink ${IDEA_PLACE[index]}`}
+                        className={`pointer-events-auto absolute max-w-[min(290px,calc(21vw-32px))] border-0 bg-transparent p-0 text-left font-index-display text-[clamp(23px,2.2vw,35px)] leading-[0.98] tracking-[-0.045em] text-[#66716a] transition-[color,transform] duration-[350ms] ease-[cubic-bezier(0.2,0.8,0.2,1)] hover:-translate-y-[7px] hover:rotate-0 hover:text-index-ink ${IDEA_PLACE[index]}`}
                         onClick={() => pickIdea(idea)}
                     >
                         {idea}

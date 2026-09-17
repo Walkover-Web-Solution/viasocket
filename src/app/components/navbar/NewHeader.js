@@ -94,7 +94,7 @@ export default function NewHeader({ utmSource = INDEX_UTM_SOURCE }) {
                 <a
                     /* Same ink pill as the closing CTA, one size down, so the
                        page has one button shape. */
-                    className="inline-flex items-center gap-[5px]  rounded bg-index-ink px-[17px] py-[9px] font-index-sans text-[14.5px] font-medium text-index-paper transition-[transform,opacity] duration-[180ms] ease-out hover:-translate-y-px hover:opacity-90"
+                    className="inline-flex items-center gap-2 rounded-md bg-index-ink px-[17px] py-[9px] font-index-sans text-sm font-medium text-index-paper transition-[transform,opacity] duration-[180ms] ease-out hover:-translate-y-px hover:opacity-90"
                     href={startHref}
                     onClick={() =>
                         trackSignupClick(utmSource, {
