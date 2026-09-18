@@ -60,14 +60,8 @@ export default function NavbarOptimized({ utm, hasToken = null, navItems = DEFAU
         backgroundClass = textClass + '!uppercase';
     }
 
-    // Read by .global-top-space on every other page, so content clears this
-    // header's actual height instead of a guess. The top bar only ever shows
-    // at the lg breakpoint, so it only ever adds to --nav-height-lg.
-    const navHeightLg = showTopBar ? '78px' : '48px';
-
     return (
         <>
-            <style>{`:root { --nav-height: 48px; --nav-height-lg: ${navHeightLg}; }`}</style>
             <div
                 className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
             >
