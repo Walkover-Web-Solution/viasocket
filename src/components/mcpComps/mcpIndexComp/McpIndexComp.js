@@ -1,5 +1,6 @@
 import McpIndexClientComp from './McpIndexClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import FooterServer from '@/components/footer/FooterServer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import Script from 'next/script';
 
@@ -37,7 +38,6 @@ export default function McpIndexComp({
                 <McpIndexClientComp
                     pageInfo={pageInfo}
                     integrationsInfo={integrationsInfo}
-                    footerData={footerData}
                     apps={apps}
                     blogsData={blogsData}
                     categoryData={categoryData}
@@ -48,6 +48,7 @@ export default function McpIndexComp({
                     featuresData={featuresData}
                     keyPointData={keyPointData}
                     appCount={appCount}
+                    footer={<FooterServer footerData={footerData} />}
                 />
             </div>
         );

@@ -12,7 +12,7 @@ import WebinarBanner from '../webinar/WebinarBanner';
 // `track` is the stable name each item reports as. It is spelled out rather than
 // derived from `name` so renaming the label in the UI cannot quietly rename the
 // thing being measured.
-const navItems = [
+const DEFAULT_NAV_ITEMS = [
     {
         name: 'Usecases',
         link: '/departments',
@@ -36,7 +36,7 @@ const navItems = [
     },
 ];
 
-export default function NavbarOptimized({ utm, hasToken = null }) {
+export default function NavbarOptimized({ utm, hasToken = null, navItems = DEFAULT_NAV_ITEMS, showTopBar = true }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const mode = 'light';
@@ -60,23 +60,31 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
         backgroundClass = textClass + '!uppercase';
     }
 
+    // Read by .global-top-space on every other page, so content clears this
+    // header's actual height instead of a guess. The top bar only ever shows
+    // at the lg breakpoint, so it only ever adds to --nav-height-lg.
+    const navHeightLg = showTopBar ? '78px' : '48px';
+
     return (
         <>
+            <style>{`:root { --nav-height: 48px; --nav-height-lg: ${navHeightLg}; }`}</style>
             <div
                 className={`fixed top-0 left-0 right-0 z-[100] w-full transition-all duration-300 max-h-none overflow-visible translate-y-0 opacity-100 pointer-events-auto`}
             >
                 {/* Top navigation bar */}
-                <div
-                    className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
-                >
-                    <div className="items-center justify-end flex !h-[30px]">
-                        {/* {utm === '/index' && <MCPBanner />} */}
-                        {/* {utm === '/index' && <MigratingBanner />} */}
-                        {utm === '/migration/relay' && <Relay />}
-                        {showWebinarBanner && <WebinarBanner />}
-                        <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
+                {showTopBar && (
+                    <div
+                        className={`border-gray-300 border-b lg:block hidden bg-gray-200/80 supports-[backdrop-filter]:bg-gray-200/70 supports-[-webkit-backdrop-filter:blur(0)]:bg-gray-200/70 backdrop-blur-xl [-webkit-backdrop-filter:blur(24px)]`}
+                    >
+                        <div className="items-center justify-end flex !h-[30px]">
+                            {/* {utm === '/index' && <MCPBanner />} */}
+                            {/* {utm === '/index' && <MigratingBanner />} */}
+                            {utm === '/migration/relay' && <Relay />}
+                            {showWebinarBanner && <WebinarBanner />}
+                            <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Main navigation bar */}
                 <MainNavbar

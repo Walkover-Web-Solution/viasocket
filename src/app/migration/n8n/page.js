@@ -2,7 +2,7 @@ import Script from 'next/script';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import { getFooterData, getReviewSectionData } from '@/utils/getData';
 import { FOOTER_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import N8nHero from './N8nHero';
@@ -106,7 +106,7 @@ export default async function N8nMigrationPage() {
 
             <ConditionalFooter>
                 <div className="bg-[#F9F6F1]">
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </div>
             </ConditionalFooter>
         </>

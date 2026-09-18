@@ -1,5 +1,5 @@
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
@@ -69,7 +69,7 @@ export default async function PricingPage() {
             <SecuritySection />
 
             <ConditionalFooter>
-                <Footer footerData={footerData} />
+                <FooterServer footerData={footerData} />
             </ConditionalFooter>
         </>
     );

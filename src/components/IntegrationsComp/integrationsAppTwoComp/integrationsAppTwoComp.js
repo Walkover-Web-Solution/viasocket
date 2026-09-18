@@ -1,6 +1,7 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppTwoClientComp from './integrationsAppTwoClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 
 export default function IntegrationsAppTwoComp({
@@ -44,12 +45,12 @@ export default function IntegrationsAppTwoComp({
                 similarAppsOne={similarAppsOne}
                 similarAppsTwo={similarAppsTwo}
                 combosData={combosData}
-                footerData={footerData}
                 videoData={videoData}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
                 appCount={appCount}
                 hasToken={hasToken}
+                footer={<FooterServer footerData={footerData} />}
             />
         </div>
     );

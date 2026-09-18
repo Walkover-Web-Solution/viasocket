@@ -1,7 +1,7 @@
 import { getMetaData } from '@/utils/getMetaData';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import Link from 'next/link';
@@ -214,7 +214,7 @@ export default async function DepartmentsPage() {
                 </div>
             </div>
             <ConditionalFooter>
-                <Footer footerData={footerData} />
+                <FooterServer footerData={footerData} />
             </ConditionalFooter>
         </>
     );

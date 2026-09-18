@@ -1,5 +1,5 @@
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
@@ -45,7 +45,7 @@ export default async function BlackFridaySalePage() {
                     <div className="cont">
                         {faqData && faqData.length > 0 && <FAQSection faqData={faqData} faqName={`/black-friday-sale`} />}
                         <ConditionalFooter>
-                            <Footer footerData={footerData} />
+                            <FooterServer footerData={footerData} />
                         </ConditionalFooter>
                     </div>
                 </div>

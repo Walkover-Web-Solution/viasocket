@@ -1,5 +1,6 @@
 import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import FooterServer from '@/components/footer/FooterServer';
 import McpAppClientComp from './McpAppClientComp';
 
 export default function McpAppComp({
@@ -29,12 +30,12 @@ export default function McpAppComp({
                         pageInfo={pageInfo}
                         integrationsInfo={integrationsInfo}
                         faqData={faqData}
-                        footerData={footerData}
                         blogsData={blogsData}
                         apps={apps}
                         mcpAppSteps={mcpAppSteps}
                         mcpPromptData={mcpPromptData}
                         mcpAIIntegrationData={mcpAIIntegrationData}
+                        footer={<FooterServer footerData={footerData} />}
                     />
                 </div>
             </div>
