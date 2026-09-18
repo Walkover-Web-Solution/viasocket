@@ -1,7 +1,7 @@
 import Script from 'next/script';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import NavbarServer from './components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -20,7 +20,9 @@ export async function generateMetadata() {
     const variant = await getVariant();
 
     const title =
-        variant === 'B' ? 'AI Automation You Can Rely On | viaSocket' : metaData?.title || 'viaSocket - Automate Anything';
+        variant === 'B'
+            ? 'AI Automation You Can Rely On | viaSocket'
+            : metaData?.title || 'viaSocket - Automate Anything';
     const description =
         variant === 'B'
             ? 'Describe a job in plain words. viaSocket turns it into an automation across 2,300+ apps and uses AI only where a decision is needed.'
@@ -94,8 +96,8 @@ export default async function HomePage() {
                 <NavbarServer navbarData={navbarData} utm={'/index'} />
             </ConditionalNavbar>
 
-            {/* Spacer for fixed navbar */}
-            <div className="h-[48px] lg:h-[78px]"></div>
+            {/* Spacer for fixed navbar (top bar is hidden for this variant) */}
+            <div className="h-[48px]"></div>
 
             <HeroContainer
                 appCount={appCount}
@@ -119,11 +121,9 @@ export default async function HomePage() {
 
                 <SecuritySection securityGridData={securityGridData} />
                 <ConditionalFooter>
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </ConditionalFooter>
             </div>
         </>
     );
 }
-
-

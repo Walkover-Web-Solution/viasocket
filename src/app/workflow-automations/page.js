@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Ban, Clock, Rocket, Zap, BarChart3, Mail, UserPlus, FileText, Headphones, Users, CheckCircle, Shield, LayoutDashboard, Plug2, Smartphone, Settings, Repeat, Zap as TriggerIcon, Play, TrendingUp } from 'lucide-react';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import FAQSection from '@/components/faqSection/faqSection';
@@ -332,7 +332,7 @@ export default async function WorkflowAutomationsPage() {
                 <div className="pb-4">
                     {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/workflow-automations'} />}
                     <ConditionalFooter>
-                        <Footer footerData={footerData} />
+                        <FooterServer footerData={footerData} />
                     </ConditionalFooter>
                 </div>
             </div>

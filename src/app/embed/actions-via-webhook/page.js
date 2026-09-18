@@ -1,7 +1,7 @@
 import NavbarServer from '../../components/navbar/NavbarServer';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getEmbedPageData } from '../../lib/data';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ShowBadges from '@/app/components/home/ShowBadges';
 import SecuritySection from '@/app/components/SecuritySection';
 import BlogGrid from '@/app/components/blog/BlogGrid';
@@ -76,7 +76,7 @@ export default async function ActionViaWebhookPage() {
                 )}
                 <FaqSection faqData={actionViaWebhookFaq} faqName="actions-via-webhook" />
             </main>
-            <Footer footerData={footerData} />
+            <FooterServer footerData={footerData} />
         </>
     );
 }
