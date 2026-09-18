@@ -10,6 +10,18 @@ const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
 
 const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
 
+// Replaces any existing `name` entry in a raw Cookie header with `value`,
+// so a freshly-minted cookie can be forwarded into the current request
+// (Set-Cookie on the response only reaches the *next* request).
+const withCookie = (cookieHeader, name, value) => {
+    const parts = (cookieHeader || '')
+        .split(';')
+        .map((part) => part.trim())
+        .filter((part) => part && !part.startsWith(`${name}=`));
+    parts.push(`${name}=${value}`);
+    return parts.join('; ');
+};
+
 const getVariantCookieDomain = (hostname) => {
     if (!hostname) return undefined;
     // localhost and bare IPs are not registrable domains — browsers drop a cookie
@@ -30,8 +42,6 @@ export async function middleware(request) {
         return NextResponse.redirect(url);
     }
 
-    const response = NextResponse.next();
-
     const cookieDomain = getVariantCookieDomain(request.nextUrl.hostname);
 
     // Tracks whether this response is the one handing a visitor a cookie they
@@ -40,8 +50,18 @@ export async function middleware(request) {
 
     // A/B variant assignment (sticky, decided server-side at the edge)
     const existingVariant = request.cookies.get(VARIANT_COOKIE)?.value;
-    if (!existingVariant || !VARIANTS.includes(existingVariant)) {
-        const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+    const needsVariant = !existingVariant || !VARIANTS.includes(existingVariant);
+    const variant = needsVariant ? VARIANTS[Math.floor(Math.random() * VARIANTS.length)] : existingVariant;
+
+    // When a variant is freshly assigned, Set-Cookie below only reaches the
+    // *next* request — page.js reads cookies() on this same request, so
+    // without forwarding it here every new visitor's first render falls back
+    // to VARIANTS[0] regardless of the coin flip.
+    let response;
+    if (needsVariant) {
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('cookie', withCookie(requestHeaders.get('cookie'), VARIANT_COOKIE, variant));
+        response = NextResponse.next({ request: { headers: requestHeaders } });
 
         response.cookies.set(VARIANT_COOKIE, variant, {
             maxAge: VARIANT_MAX_AGE,
@@ -50,6 +70,8 @@ export async function middleware(request) {
             domain: cookieDomain,
         });
         mintedCookie = true;
+    } else {
+        response = NextResponse.next();
     }
 
     // Anonymous visitor id — the key every visit is recorded against. Anything
