@@ -3,7 +3,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { ChevronRight, FileText } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -138,7 +138,7 @@ export default async function ExpertsPage() {
                 </div>
             </div>
             <ConditionalFooter>
-                <Footer footerData={footerData} />
+                <FooterServer footerData={footerData} />
             </ConditionalFooter>
         </>
     );

@@ -1,6 +1,6 @@
 import BlogGrid from '../blog/BlogGrid';
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import EmbedSetupSteps from './EmbedSetupSteps';
 import EmbedHero from './EmbedHero';
 import EmbedFeatureCards from './EmbedFeatureCards';
@@ -43,7 +43,7 @@ export default function EmbedContent({ blogData, footerData, faqData, embedData,
                     <GetStarted />
                 </div>
 
-                <Footer footerData={footerData} />
+                <FooterServer footerData={footerData} />
             </div>
         </div>
     );

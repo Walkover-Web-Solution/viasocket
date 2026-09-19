@@ -3,7 +3,7 @@ import { CheckCircle, Upload, Wrench, Rocket } from 'lucide-react';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import { getFooterData, getReviewSectionData } from '@/utils/getData';
 import { FOOTER_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import RelayHero from './RelayHero';
@@ -155,7 +155,7 @@ export default async function RelayMigrationPage() {
 
             <ConditionalFooter>
                 <div className="bg-[#F9F6F1]">
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </div>
             </ConditionalFooter>
         </>

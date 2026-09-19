@@ -1,7 +1,7 @@
 import FAQSection from '@/components/faqSection/faqSection';
 import React from 'react';
 import NavbarServer from '../../components/navbar/NavbarServer';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -130,7 +130,7 @@ export default async function MCPAiAgentPage() {
             <>
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <ConditionalFooter>
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </ConditionalFooter>
             </>
         </div>

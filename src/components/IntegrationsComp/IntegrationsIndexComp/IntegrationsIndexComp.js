@@ -1,5 +1,6 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
+import FooterServer from '@/components/footer/FooterServer';
 import IntegrationsIndexClientComp from './IntegrationsIndexClientComp';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 
@@ -29,7 +30,6 @@ export default function IntegrationsIndexComp({
             <IntegrationsIndexClientComp
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}
-                footerData={footerData}
                 apps={apps}
                 blogsData={blogsData}
                 categoryData={categoryData}
@@ -38,6 +38,7 @@ export default function IntegrationsIndexComp({
                 categoryName={categoryName}
                 faqData={faqData}
                 appCount={appCount}
+                footer={<FooterServer footerData={footerData} />}
             />
         </>
     );

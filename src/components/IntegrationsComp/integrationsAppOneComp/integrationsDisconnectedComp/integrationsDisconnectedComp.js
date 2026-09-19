@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronRight, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import BlogGrid from '@/components/blogGrid/blogGrid';
@@ -154,7 +154,7 @@ export default function IntegrationsDisconnectedComp({
                 </div>
 
                 <ConditionalFooter>
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </ConditionalFooter>
             </div>
         </div>

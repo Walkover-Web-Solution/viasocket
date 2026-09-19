@@ -10,6 +10,18 @@ const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
 
 const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
 
+// Replaces any existing `name` entry in a raw Cookie header with `value`,
+// so a freshly-minted cookie can be forwarded into the current request
+// (Set-Cookie on the response only reaches the *next* request).
+const withCookie = (cookieHeader, name, value) => {
+    const parts = (cookieHeader || '')
+        .split(';')
+        .map((part) => part.trim())
+        .filter((part) => part && !part.startsWith(`${name}=`));
+    parts.push(`${name}=${value}`);
+    return parts.join('; ');
+};
+
 const getVariantCookieDomain = (hostname) => {
     if (!hostname) return undefined;
     // localhost and bare IPs are not registrable domains — browsers drop a cookie
@@ -30,30 +42,26 @@ export async function middleware(request) {
         return NextResponse.redirect(url);
     }
 
-    const response = NextResponse.next();
-
-    // The homepage is the one page rendered from the variant cookie, and it is
-    // also where most visitors are handed their tracking cookies for the first
-    // time. A shared cache must therefore never store it: a stored copy is
-    // replayed to everyone with its Set-Cookie headers stripped and one
-    // visitor's variant baked into the HTML, which is exactly how homepage
-    // tracking and the A/B split both stop working. Cloudflare's zone cache
-    // rule is the authority in production, but the origin has to declare this
-    // too or any cache in front of it repeats the mistake.
-    if (pathname === '/') {
-        response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
-        // Cloudflare reads this in preference to Cache-Control for its own edge
-        // cache, so it is what keeps the page out of the CDN while leaving the
-        // directive above to speak for the browser.
-        response.headers.set('CDN-Cache-Control', 'no-store');
-    }
-
     const cookieDomain = getVariantCookieDomain(request.nextUrl.hostname);
+
+    // Tracks whether this response is the one handing a visitor a cookie they
+    // did not already have, on whichever page they happened to land on first.
+    let mintedCookie = false;
 
     // A/B variant assignment (sticky, decided server-side at the edge)
     const existingVariant = request.cookies.get(VARIANT_COOKIE)?.value;
-    if (!existingVariant || !VARIANTS.includes(existingVariant)) {
-        const variant = VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
+    const needsVariant = !existingVariant || !VARIANTS.includes(existingVariant);
+    const variant = needsVariant ? VARIANTS[Math.floor(Math.random() * VARIANTS.length)] : existingVariant;
+
+    // When a variant is freshly assigned, Set-Cookie below only reaches the
+    // *next* request — page.js reads cookies() on this same request, so
+    // without forwarding it here every new visitor's first render falls back
+    // to VARIANTS[0] regardless of the coin flip.
+    let response;
+    if (needsVariant) {
+        const requestHeaders = new Headers(request.headers);
+        requestHeaders.set('cookie', withCookie(requestHeaders.get('cookie'), VARIANT_COOKIE, variant));
+        response = NextResponse.next({ request: { headers: requestHeaders } });
 
         response.cookies.set(VARIANT_COOKIE, variant, {
             maxAge: VARIANT_MAX_AGE,
@@ -61,6 +69,9 @@ export async function middleware(request) {
             sameSite: 'lax',
             domain: cookieDomain,
         });
+        mintedCookie = true;
+    } else {
+        response = NextResponse.next();
     }
 
     // Anonymous visitor id — the key every visit is recorded against. Anything
@@ -74,6 +85,25 @@ export async function middleware(request) {
             sameSite: 'lax',
             domain: cookieDomain,
         });
+        mintedCookie = true;
+    }
+
+    // The homepage is rendered from the variant cookie, so a shared cache must
+    // never store it regardless of cookies: a stored copy is replayed to
+    // everyone with one visitor's variant baked into the HTML. Any other page
+    // only needs the same treatment on the request that just minted a cookie —
+    // a cached copy of that exact response would replay its Set-Cookie (or,
+    // once evicted, the version with none) to every later visitor who lands on
+    // that page first, which is how they end up with no tracking cookies at
+    // all and the API call fails with "missing tracking cookies". Cloudflare's
+    // zone cache rule is the authority in production, but the origin has to
+    // declare this too or any cache in front of it repeats the mistake.
+    if (pathname === '/' || mintedCookie) {
+        response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
+        // Cloudflare reads this in preference to Cache-Control for its own edge
+        // cache, so it is what keeps the page out of the CDN while leaving the
+        // directive above to speak for the browser.
+        response.headers.set('CDN-Cache-Control', 'no-store');
     }
 
     // Read click id from URL

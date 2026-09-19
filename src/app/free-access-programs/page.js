@@ -1,7 +1,7 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
 import Link from 'next/link';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getFreeAccessProgramsPageData } from '../lib/data';
@@ -174,7 +174,7 @@ export default async function FreeAccessProgramsPage() {
                 </div>
             </div>
             <ConditionalFooter>
-                <Footer footerData={footerData} />
+                <FooterServer footerData={footerData} />
             </ConditionalFooter>
         </>
     );

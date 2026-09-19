@@ -1,7 +1,7 @@
 import Script from 'next/script';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
+import FooterServer from '@/components/footer/FooterServer';
 import NavbarServer from './components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -17,15 +17,25 @@ export const runtime = 'edge';
 
 export async function generateMetadata() {
     const { metaData } = await getHomePageData();
+    const variant = await getVariant();
+
+    const title =
+        variant === 'B'
+            ? 'AI Automation You Can Rely On | viaSocket'
+            : metaData?.title || 'viaSocket - Automate Anything';
+    const description =
+        variant === 'B'
+            ? 'Describe a job in plain words. viaSocket turns it into an automation across 2,300+ apps and uses AI only where a decision is needed.'
+            : metaData?.description || 'Connect your apps and automate workflows with viaSocket';
 
     return {
-        title: metaData?.title || 'viaSocket - Automate Anything',
-        description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+        title,
+        description,
         keywords: metaData?.keywords || '',
         openGraph: {
             siteName: 'viaSocket',
-            title: metaData?.title || 'viaSocket - Automate Anything',
-            description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+            title,
+            description,
             url: 'https://viasocket.com',
             type: 'website',
             images: [
@@ -39,8 +49,8 @@ export async function generateMetadata() {
         },
         twitter: {
             card: 'summary_large_image',
-            title: metaData?.title || 'viaSocket - Automate Anything',
-            description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
+            title,
+            description,
             images: ['https://files.msg91.com/342616/wnitwkyk'],
         },
     };
@@ -65,9 +75,8 @@ export default async function HomePage() {
 
     // Variant B serves the front-page redesign at the root route, reusing its
     // components as-is rather than duplicating them for the homepage. Its
-    // signups are tagged 'home-B' rather than the standalone route's own
-    // '/front-page' tag, so the two stay attributable separately; /front-page
-    // itself is untouched since it renders IndexPageContent with no override.
+    // signups are tagged 'home-B' so they stay attributable separately from
+    // the rest of the root route's traffic.
     if (variant === 'B') {
         return (
             <IndexPageContent
@@ -87,8 +96,8 @@ export default async function HomePage() {
                 <NavbarServer navbarData={navbarData} utm={'/index'} />
             </ConditionalNavbar>
 
-            {/* Spacer for fixed navbar */}
-            <div className="h-[48px] lg:h-[78px]"></div>
+            {/* Spacer for fixed navbar (top bar is hidden for this variant) */}
+            <div className="h-[48px]"></div>
 
             <HeroContainer
                 appCount={appCount}
@@ -112,11 +121,9 @@ export default async function HomePage() {
 
                 <SecuritySection securityGridData={securityGridData} />
                 <ConditionalFooter>
-                    <Footer footerData={footerData} />
+                    <FooterServer footerData={footerData} />
                 </ConditionalFooter>
             </div>
         </>
     );
 }
-
-

@@ -101,8 +101,8 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, actionType,
             return;
         }
 
-        if (formData.useCase.trim().length < 20) {
-            alert('Please provide at least 20 characters describing your use case.');
+        if (formData.useCase.trim().length < 10) {
+            alert('Please provide at least 10 characters describing your use case.');
             return;
         }
 

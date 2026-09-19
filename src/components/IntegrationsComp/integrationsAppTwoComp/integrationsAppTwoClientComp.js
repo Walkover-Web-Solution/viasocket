@@ -2,7 +2,6 @@
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, useMemo, useRef } from 'react';
 import FAQSection from '@/components/faqSection/faqSection';
-import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/app/components/blog/BlogGrid';
@@ -23,7 +22,6 @@ import AboutApps from './AboutApps';
 
 export default function IntegrationsAppTwoClientComp({
     combosData,
-    footerData,
     appOneDetails,
     appTwoDetails,
     similarAppsOne,
@@ -34,6 +32,7 @@ export default function IntegrationsAppTwoClientComp({
     templateToShow,
     appCount,
     hasToken,
+    footer,
 }) {
     const router = useRouter();
     const [visibleCombos, setVisibleCombos] = useState(12);
@@ -260,9 +259,7 @@ export default function IntegrationsAppTwoClientComp({
             {/* 10. FAQs */}
             {faqData && <FAQSection faqData={faqData} />}
 
-            <ConditionalFooter>
-                <Footer footerData={footerData} />
-            </ConditionalFooter>
+            <ConditionalFooter>{footer}</ConditionalFooter>
         </div>
     );
 }
