@@ -3,7 +3,7 @@ import { ArrowRight, CheckCircle } from 'lucide-react';
 import AiWorkflowDemo from '@/components/AiWorkflowDemo/AiWorkflowDemo';
 
 export default function AIFeatureSection() {
-    const features = ['No coding required', 'Review before publishing', 'Works with 2,000+ apps'];
+    const features = ['No coding required', 'Review before publishing', 'Works with 2,300+ apps'];
 
     return (
         <div className="container">
