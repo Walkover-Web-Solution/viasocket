@@ -23,7 +23,7 @@ const withThousands = (value) => value.toString().replace(/\B(?=(\d{3})+(?!\d))/
 
 export default function HeroSection({ hasToken, appCount, apps }) {
     const totalApps = appCount ? appCount + 300 : 0;
-    const appsLabel = totalApps ? withThousands(totalApps) : '2,000';
+    const appsLabel = totalApps ? withThousands(totalApps) : '2,300';
     const moreLabel = totalApps ? `+${Math.round(totalApps / 1000)}k` : '+2k';
 
     const liveApps = (apps || []).filter((app) => app?.iconurl);
