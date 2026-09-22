@@ -3,7 +3,6 @@ import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import { getAutomationsPageData } from '../lib/automation-data';
 import AutomationsClient from '../components/automations/AutomationsClient';
-import FooterServer from '@/components/footer/FooterServer';
 import { getHasToken } from '../lib/getAuth';
 import AutomationIdeasSection from '../components/home/AutomationIdeasSection';
 
@@ -19,11 +18,7 @@ export default async function AutomationsPage() {
             <ConditionalNavbar>
                 <NavbarServer navbarData={pageData.navbarData} utm={'/automations'} />
             </ConditionalNavbar>
-            <AutomationsClient
-                pageData={pageData}
-                hasToken={hasToken}
-                footer={<FooterServer footerData={pageData.footerData} />}
-            />
+            <AutomationsClient pageData={pageData} hasToken={hasToken} />
         </>
     );
 }

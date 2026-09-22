@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { Plus, ChevronDown, ExternalLink as ExternalLinkIcon } from 'lucide-react';
 import IntegrationsAppComp from '../integrationsAppComp/integrationsAppComp';
 import FAQSection from '@/components/faqSection/faqSection';
+import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import IntegrationsBetaComp from '../IntegrationsBetaComp/IntegrationsBetaComp';
 import BlogGrid from '@/app/components/blog/BlogGrid';
@@ -31,13 +32,13 @@ export default function IntegrationsAppOneClientComp({
     integrationsInfo,
     apps,
     faqData,
+    footerData,
     appData,
     blogsData,
     videoData,
     appCount,
     getDoFollowUrlStatusArray,
     templateToShow,
-    footer,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -189,6 +190,7 @@ export default function IntegrationsAppOneClientComp({
             <div className={`py-8 ${combosData?.combinations?.length > 0 && 'dotted-background'}`}>
                 <div className="container flex flex-col gap-16">
                     <div className="flex flex-col gap-8">
+                        {console.log(combosData ,'combosData')}
                         {combosData?.combinations?.length > 0 ? (
                             <>
                                 <p className="h2">{`Ready to use ${appOneDetails?.name} automations`}</p>
@@ -447,7 +449,9 @@ export default function IntegrationsAppOneClientComp({
                 </div>
             </div>
 
-            <ConditionalFooter>{footer}</ConditionalFooter>
+            <ConditionalFooter>
+                <Footer footerData={footerData} />
+            </ConditionalFooter>
         </div>
     );
 }
