@@ -27,9 +27,8 @@ const getVariantCookieDomain = (hostname) => {
     // localhost and bare IPs are not registrable domains — browsers drop a cookie
     // that names one, so it is left off and the cookie stays host-only.
     if (hostname === 'localhost' || /^[\d.]+$/.test(hostname)) return undefined;
-    const parts = hostname.split('.');
-    const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
-    return `.${rootDomain}`;
+    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) return '.viasocket.com';
+    return undefined;
 };
 
 export async function middleware(request) {
@@ -67,6 +66,7 @@ export async function middleware(request) {
             maxAge: VARIANT_MAX_AGE,
             path: '/',
             sameSite: 'lax',
+            secure: true,
             domain: cookieDomain,
         });
         mintedCookie = true;
@@ -83,6 +83,7 @@ export async function middleware(request) {
             maxAge: VISITOR_ID_MAX_AGE,
             path: '/',
             sameSite: 'lax',
+            secure: true,
             domain: cookieDomain,
         });
         mintedCookie = true;
@@ -117,6 +118,7 @@ export async function middleware(request) {
             maxAge: RDT_CID_MAX_AGE,
             path: '/',
             sameSite: 'lax',
+            secure: true,
         });
     } else if (rawIncomingClickId && !isValidRdtCid(rawIncomingClickId)) {
         response.cookies.delete(RDT_CID_COOKIE);
