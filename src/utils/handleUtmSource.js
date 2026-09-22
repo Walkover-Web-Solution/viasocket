@@ -9,10 +9,9 @@ export const getCookie = (name) => {
 const getCookieDomain = () => {
     if (typeof window === 'undefined') return '';
     const hostname = window.location.hostname;
-    if (!hostname) return '';
-    const parts = hostname.split('.');
-    const rootDomain = parts.length > 2 ? parts.slice(-2).join('.') : hostname;
-    return `.${rootDomain}`;
+    if (!hostname || hostname === 'localhost' || /^[\d.]+$/.test(hostname)) return '';
+    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) return '.viasocket.com';
+    return '';
 };
 
 export const setCookie = (name, value, days) => {
@@ -21,7 +20,8 @@ export const setCookie = (name, value, days) => {
     const expires = `expires=${date.toUTCString()}`;
     const domain = getCookieDomain();
     const domainAttr = domain ? `;domain=${domain}` : '';
-    document.cookie = `${name}=${value};${expires};path=/${domainAttr}`;
+    const secureAttr = window.location.protocol === 'https:' ? ';secure' : '';
+    document.cookie = `${name}=${value};${expires};path=/${domainAttr}${secureAttr}`;
 };
 
 export const setVariantCookie = (variant) => {
