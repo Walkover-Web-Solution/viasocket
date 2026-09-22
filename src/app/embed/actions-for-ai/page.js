@@ -5,7 +5,7 @@ import HeroAurora from './HeroAurora';
 import UseCaseSection from './UseCaseSection';
 import EmbedPricing from '@/app/components/embed/EmbedPricing';
 import EmbedSetupSteps from '@/app/components/embed/EmbedSetupSteps';
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import EmbedImageSelector from '@/app/components/embed/EmbedImageSelector';
 import SecuritySection from '@/app/components/SecuritySection';
 import ShowBadges from '@/app/components/home/ShowBadges';
@@ -76,7 +76,7 @@ export default async function ActionForAiPage() {
                 <FaqSection faqData={actionForAiFaq} faqName="actions-for-ai" />
             </main>
 
-            <FooterServer footerData={footerData} />
+            <Footer footerData={footerData} />
         </>
     );
 }

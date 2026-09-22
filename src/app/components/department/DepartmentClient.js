@@ -5,7 +5,7 @@ import DepartmentUseCase from '@/components/departmentFAQ/DepartmentUseCase';
 import TemplateContainer from '@/components/IntegrationsComp/templateContainer/templateContainer';
 import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import AutomationIdeasSection from '../home/AutomationIdeasSection';
@@ -76,7 +76,7 @@ export default function DepartmentClient({ data, hasToken }) {
                 <DepartmentFAQ faqJson={department?.faqs} />
             </div>
 
-            <FooterServer footerData={footerData} />
+            <Footer footerData={footerData} />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { Mail, Phone, MessageSquare, Lightbulb } from 'lucide-react';
 import Link from 'next/link';
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import NavbarServer from '../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -145,7 +145,7 @@ export default async function ExpertAreLivePage() {
             </div>
 
             <ConditionalFooter>
-                <FooterServer footerData={footerData} />
+                <Footer footerData={footerData} />
             </ConditionalFooter>
         </>
     );

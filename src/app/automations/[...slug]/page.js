@@ -1,4 +1,4 @@
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import NavbarServer from '../../components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
@@ -30,7 +30,7 @@ export default async function AutomationSlugPage({ params }) {
                     <FaqSection faqData={pageData.faqData} faqName={'/automation'} />
                 )}
                 <ConditionalFooter>
-                    <FooterServer footerData={pageData.footerData} />
+                    <Footer footerData={pageData.footerData} />
                 </ConditionalFooter>
             </div>
         </div>

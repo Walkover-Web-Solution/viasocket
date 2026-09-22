@@ -1,7 +1,7 @@
 import FAQSection from '@/components/faqSection/faqSection';
 import React from 'react';
 import NavbarServer from '../../components/navbar/NavbarServer';
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
@@ -159,7 +159,7 @@ export default async function MCPSaasPage() {
             <>
                 {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
                 <ConditionalFooter>
-                    <FooterServer footerData={footerData} />
+                    <Footer footerData={footerData} />
                 </ConditionalFooter>
             </>
         </div>
