@@ -1,4 +1,4 @@
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import Link from 'next/link';
 
 export default function FeaturesFooterComp({ footerData, featureData, pageInfo }) {
@@ -13,7 +13,7 @@ export default function FeaturesFooterComp({ footerData, featureData, pageInfo }
                 </div>
             </div>
 
-            <FooterServer footerData={footerData} />
+            <Footer footerData={footerData} />
         </div>
     );
 }

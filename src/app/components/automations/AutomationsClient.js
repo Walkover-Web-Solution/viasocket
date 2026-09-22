@@ -10,11 +10,12 @@ import { Webhook, Timer } from 'lucide-react';
 import MarqueeComponent from '@/components/marqueeComponent/marqueeComponent';
 import BlogGrid from '../blog/BlogGrid';
 import FaqSection from '@/components/faqSection/faqSection';
+import Footer from '@/components/footer/footer';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import SearchInputHomeOptimized from '../home/SearchInputHomeOptimized';
 import AutomationIdeasSection from '../home/AutomationIdeasSection';
 
-export default function AutomationsClient({ pageData, hasToken, footer }) {
+export default function AutomationsClient({ pageData, hasToken }) {
     // SearchInputHome integration
     const [filteredSearchTemplates, setFilteredSearchTemplates] = useState([]);
     const [showSearchTemplates, setShowSearchTemplates] = useState(false);
@@ -292,7 +293,7 @@ export default function AutomationsClient({ pageData, hasToken, footer }) {
                 </div>
                 <div className="pb-4">
                     {pageData.faqData?.length > 0 && <FaqSection faqData={pageData.faqData} faqName={'/automations'} />}
-                    {footer}
+                    <Footer footerData={pageData.footerData} />
                 </div>
             </div>
         </div>

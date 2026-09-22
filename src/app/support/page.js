@@ -1,6 +1,6 @@
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import NavbarServer from '../components/navbar/NavbarServer';
-import FooterServer from '@/components/footer/FooterServer';
+import Footer from '@/components/footer/footer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getSupportPageData } from '../lib/support-data';
@@ -79,7 +79,7 @@ export default async function SupportPage() {
 
 
                 <ConditionalFooter>
-                    <FooterServer footerData={footerData} />
+                    <Footer footerData={footerData} />
                 </ConditionalFooter>
     
         </>

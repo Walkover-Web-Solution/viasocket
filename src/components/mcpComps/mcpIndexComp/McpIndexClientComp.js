@@ -2,6 +2,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, Scale, Layers, Network, Plug, Shield, Wrench, Sparkles, ChevronRight } from 'lucide-react';
+import Footer from '@/components/footer/footer';
 import { useEffect, useState } from 'react';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import createURL from '@/utils/createURL';
@@ -20,6 +21,7 @@ import {
 export default function McpIndexClientComp({
     pageInfo,
     integrationsInfo,
+    footerData,
     apps,
     blogsData,
     categoryData,
@@ -30,7 +32,6 @@ export default function McpIndexClientComp({
     featuresData,
     keyPointData,
     appCount,
-    footer,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -354,7 +355,7 @@ export default function McpIndexClientComp({
 
                 <>
                     {faqData?.length > 0 && <FAQSection faqData={faqData} faqName={'/index'} />}
-                    {footer}
+                    <Footer footerData={footerData} />
                 </>
             </>
         );

@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Search, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import Footer from '@/components/footer/footer';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import style from './IntegrationsIndexComp.module.scss';
 import { APPERPAGE } from '@/const/integrations';
@@ -21,6 +22,7 @@ import AutomationIdeasSection from '@/app/components/home/AutomationIdeasSection
 export default function IntegrationsIndexClientComp({
     pageInfo,
     integrationsInfo,
+    footerData,
     apps,
     blogsData,
     categoryData,
@@ -29,7 +31,6 @@ export default function IntegrationsIndexClientComp({
     faqData,
     appCount,
     categoryName,
-    footer,
 }) {
     if (!categoryData || Object.keys(categoryData).length === 0) {
         return <ErrorComp />;
@@ -304,7 +305,9 @@ export default function IntegrationsIndexClientComp({
                     <AlphabeticalComponent />
                 </div>
 
-                <ConditionalFooter>{footer}</ConditionalFooter>
+                <ConditionalFooter>
+                    <Footer footerData={footerData} />
+                </ConditionalFooter>
             </div>
         </>
     );

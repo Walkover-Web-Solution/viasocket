@@ -1,7 +1,6 @@
 import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppOneClientComp from './integrationsAppOneClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
-import FooterServer from '@/components/footer/FooterServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 
 export default async function IntegrationsAppOneComp({
@@ -144,12 +143,12 @@ export default async function IntegrationsAppOneComp({
                 combosData={combosData}
                 faqData={faqData}
                 appData={appData}
+                footerData={footerData}
                 useCaseData={useCaseData}
                 videoData={videoData}
                 appCount={appCount}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
-                footer={<FooterServer footerData={footerData} />}
             />
         </div>
     );

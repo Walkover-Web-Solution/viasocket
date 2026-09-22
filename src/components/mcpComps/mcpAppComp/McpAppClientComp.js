@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight, Search, Headphones, CheckCircle, User, Send } from 'lucide-react';
 import FAQSection from '@/components/faqSection/faqSection';
+import Footer from '@/components/footer/footer';
 import BlogGrid from '@/app/components/blog/BlogGrid';
 import { useEffect, useState } from 'react';
 import createURL from '@/utils/createURL';
@@ -20,12 +21,12 @@ export default function McpAppClientComp({
     pageInfo,
     integrationsInfo,
     faqData,
+    footerData,
     blogsData,
     apps,
     mcpAppSteps,
     mcpPromptData,
     mcpAIIntegrationData,
-    footer,
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [debounceValue, setDebounceValue] = useState('');
@@ -511,7 +512,7 @@ export default function McpAppClientComp({
                             </div>
                         </div>
 
-                        {footer}
+                        <Footer footerData={footerData} />
                     </div>
                 </div>
             </div>
