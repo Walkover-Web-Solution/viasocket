@@ -12,6 +12,7 @@ import IndexPageContent from './front-page/IndexPageContent';
 import { getHomePageData } from './lib/data';
 import { getHasToken } from './lib/getAuth';
 import { getVariant } from '@/utils/getVariant';
+import TrackingCookies from './components/VariantTracker/TrackingCookies';
 
 export const runtime = 'edge';
 
@@ -77,17 +78,21 @@ export default async function HomePage() {
     // the rest of the root route's traffic.
     if (variant === 'B') {
         return (
-            <IndexPageContent
-                appCount={appCount}
-                reviewData={reviewData}
-                initialApps={initialApps}
-                utmSource="home-B"
-            />
+            <>
+                <TrackingCookies renderedVariant={variant} />
+                <IndexPageContent
+                    appCount={appCount}
+                    reviewData={reviewData}
+                    initialApps={initialApps}
+                    utmSource="home-B"
+                />
+            </>
         );
     }
 
     return (
         <>
+            <TrackingCookies renderedVariant={variant} />
             <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
             <MetaHeadComp metaData={metaData} page={'/'} />
             <ConditionalNavbar>
