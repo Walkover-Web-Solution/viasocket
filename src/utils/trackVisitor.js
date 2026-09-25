@@ -99,15 +99,14 @@ const touchSessionClock = () => {
 /**
  * The visitor id this event belongs to, repaired if it can be.
  *
- * The id is issued by middleware and lives in a cookie, which is the only copy the
- * server trusts — but that cookie is lost whenever site data is cleared, when
- * Safari expires it, or when an HTML response is served from a cache that strips
- * Set-Cookie. Each of those turns a returning visitor into a brand new row and
- * loses their history. Mirroring the id here lets the cookie be written back from
- * the mirror, so the visitor is recognised as the same person.
+ * The id is issued by the TrackingCookies inline script and lives in a cookie,
+ * which is the only copy the server reads — but that cookie is lost whenever site
+ * data is cleared or Safari expires it. Each of those turns a returning visitor
+ * into a brand new row and loses their history. Mirroring the id here lets the
+ * cookie be written back from the mirror, so the visitor is recognised as the
+ * same person.
  *
- * The mirror is only ever a copy: an id is never minted here, so the server stays
- * the one issuer and a visitor cannot hand themselves an identity.
+ * The mirror is only ever a copy: an id is never minted here.
  */
 const ensureVisitorId = () => {
     if (typeof document === 'undefined') return '';

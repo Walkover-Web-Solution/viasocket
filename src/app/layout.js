@@ -2,6 +2,7 @@ import '@/scss/global.scss';
 import AppProvider from './providers';
 import RedditPixel from './components/RedditPixel/RedditPixel';
 import VariantTracker from './components/VariantTracker/VariantTracker';
+import TrackingCookies from './components/VariantTracker/TrackingCookies';
 
 export const metadata = {
     title: 'viaSocket',
@@ -46,6 +47,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="light">
             <head>
+                <TrackingCookies />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
