@@ -1,9 +1,8 @@
-import { VARIANTS } from '@/const/abTest';
-
+// Returns the first match: a stale host-only copy alongside the .viasocket.com
+// one would otherwise make the cookie read as missing.
 export const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    const entry = document.cookie.split('; ').find((part) => part.startsWith(`${name}=`));
+    return entry ? entry.slice(name.length + 1) : undefined;
 };
 
 const getCookieDomain = () => {
@@ -22,12 +21,6 @@ export const setCookie = (name, value, days) => {
     const domainAttr = domain ? `;domain=${domain}` : '';
     const secureAttr = window.location.protocol === 'https:' ? ';secure' : '';
     document.cookie = `${name}=${value};${expires};path=/${domainAttr}${secureAttr}`;
-};
-
-export const setVariantCookie = (variant) => {
-    if (!VARIANTS.includes(variant)) return;
-    if (getCookie('variant') === variant) return;
-    setCookie('variant', variant, 30);
 };
 
 export const getUtmSource = () => {
