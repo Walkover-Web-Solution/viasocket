@@ -1,5 +1,15 @@
 import Header from './Header';
 import Hero from './Hero';
+import OneAction from './OneAction';
+import Trap from './Trap';
+import Expertise from './Expertise';
+import Turn from './Turn';
+import Proof from './Proof';
+import Production from './Production';
+import UseCases from './UseCases';
+import Start from './Start';
+import Faq from './Faq';
+import Footer from './Footer';
 
 export const runtime = 'edge';
 
@@ -24,6 +34,16 @@ export default function DevelopersPage() {
                 <Header />
             </div>
             <Hero />
+            <OneAction />
+            <Trap />
+            <Expertise />
+            <Turn />
+            <Proof />
+            <Production />
+            <UseCases />
+            <Start />
+            <Faq />
+            <Footer />
         </>
     );
 }

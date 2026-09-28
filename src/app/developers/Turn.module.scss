@@ -1,0 +1,61 @@
+.map svg {
+    display: block;
+    width: 100%;
+    min-width: 760px;
+    height: auto;
+}
+.lbl {
+    font-family: theme('fontFamily.dev-mono');
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    fill: theme('colors.dev.ink-3');
+}
+.name {
+    font-family: theme('fontFamily.dev-sans');
+    font-size: 14px;
+    font-weight: 600;
+    fill: theme('colors.dev.ink');
+}
+.route {
+    fill: none;
+    stroke: theme('colors.dev.accent');
+    stroke-opacity: 0.35;
+    stroke-width: 1.2;
+    stroke-dasharray: 4 6;
+    animation: dash 7s linear infinite;
+}
+.spine {
+    fill: none;
+    stroke: theme('colors.dev.accent');
+    stroke-opacity: 0.6;
+    stroke-width: 1.5;
+}
+.hub {
+    fill: theme('colors.dev.accent');
+}
+.ring {
+    fill: none;
+    stroke: theme('colors.dev.accent');
+    stroke-opacity: 0.3;
+}
+.dot {
+    fill: theme('colors.dev.surface');
+    stroke: theme('colors.dev.accent');
+    stroke-width: 1.5;
+}
+.verbs {
+    font-family: theme('fontFamily.dev-mono');
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    fill: theme('colors.dev.accent');
+}
+
+@keyframes dash {
+    to { stroke-dashoffset: -100; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .route {
+        animation: none;
+    }
+}
