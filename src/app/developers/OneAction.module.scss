@@ -1,0 +1,53 @@
+// The 9-node pathway diagram's alternating up/down connector lines and node
+// dots are positioned by percentage math per node — awkward as Tailwind
+// utilities since the count/spacing is data-driven, so the SVG primitives
+// live here instead.
+.pathway {
+    overflow-x: auto;
+}
+.pathway svg {
+    display: block;
+    width: 100%;
+    min-width: 780px;
+    height: auto;
+}
+.line {
+    stroke: theme('colors.dev.line-2');
+    stroke-width: 1.5;
+    fill: none;
+}
+.node {
+    fill: theme('colors.dev.bg');
+    stroke: theme('colors.dev.line-2');
+    stroke-width: 1.5;
+    transition: fill 0.35s, stroke 0.35s;
+}
+.name {
+    font-family: theme('fontFamily.dev-sans');
+    font-size: 14px;
+    font-weight: 500;
+    fill: theme('colors.dev.ink-3');
+    transition: fill 0.35s;
+}
+.num {
+    font-family: theme('fontFamily.dev-mono');
+    font-size: 11px;
+    fill: theme('colors.dev.ink-3');
+    letter-spacing: 0.06em;
+}
+.on .node {
+    fill: theme('colors.dev.accent');
+    stroke: theme('colors.dev.accent');
+}
+.on .name {
+    fill: theme('colors.dev.ink');
+}
+.end {
+    fill: theme('colors.dev.ink');
+}
+.endLbl {
+    font-family: theme('fontFamily.dev-sans');
+    font-size: 15px;
+    font-weight: 600;
+    fill: theme('colors.dev.ink');
+}

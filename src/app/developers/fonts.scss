@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+// Faint 96px grid backing every /developers page. Not expressible as a single
+// Tailwind utility (two gradients + explicit size + position), so it lives
+// here instead of as an arbitrary bg-[...] value.
+.dev-grid {
+    background-image:
+        linear-gradient(to right, rgba(11, 13, 16, 0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(11, 13, 16, 0.035) 1px, transparent 1px);
+    background-size: 96px 96px;
+    background-position: center top;
+}
+
