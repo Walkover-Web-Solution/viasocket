@@ -4,7 +4,7 @@ import { Plus } from 'lucide-react';
 import { H2, Label, Scene } from './Heading';
 import { useReveal, revealClass } from './useReveal';
 
-const FAQS = [
+const DEFAULT_FAQS = [
     ['What exactly is the action layer?', 'The action layer sits between your AI and the software your users already use. It gives your AI access to actions across 2,300+ apps and handles the authentication, data mapping, execution, and monitoring behind those actions.'],
     ['Does my AI need to understand every API?', "No. Your AI works with actions and capabilities instead of having to understand every app's API, authentication flow, or implementation details. viaSocket handles the underlying complexity."],
     ['Do I have to build the integrations myself?', 'No. You can build integrations yourself, but then you also own authentication, permissions, mappings, failures, retries, API changes, monitoring, and maintenance. viaSocket handles this infrastructure for you.'],
@@ -14,7 +14,7 @@ const FAQS = [
     ['What happens when an action fails?', "Execution doesn't stop at simply calling an API. viaSocket provides monitoring and the infrastructure needed to track execution, debug failures, and manage what happened."],
     ['How many apps can my AI work with?', 'viaSocket currently supports actions across 2,300+ apps. You can give your AI access to the apps your customers already use without building each integration from scratch.'],
     ['Is this only for AI agents?', 'The action layer is designed for AI products and agents that need to take real actions in external software. It can also support products where actions, triggers, and workflows need to interact with those applications.'],
-    ['How long does it take to add the action layer?', 'You can get started in under 15 minutes. The implementation can be added to your product using the provided setup prompt and then customized to your product&apos;s needs.'],
+    ['How long does it take to add the action layer?', "You can get started in under 15 minutes. The implementation can be added to your product using the provided setup prompt and then customized to your product's needs."],
 ];
 
 function FaqItem({ q, a }) {
@@ -30,13 +30,13 @@ function FaqItem({ q, a }) {
     );
 }
 
-export default function Faq() {
+export default function Faq({ items = DEFAULT_FAQS, title = 'Questions, answered.' }) {
     return (
         <Scene id="faq">
             <Label>FAQ</Label>
-            <H2>Questions, answered.</H2>
+            <H2>{title}</H2>
             <div className="grid max-w-[760px] border-t border-dev-line">
-                {FAQS.map(([q, a]) => (
+                {items.map(([q, a]) => (
                     <FaqItem key={q} q={q} a={a} />
                 ))}
             </div>
