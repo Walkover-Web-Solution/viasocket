@@ -1,0 +1,147 @@
+// The flow diagram's grid, gradient-dash connectors, orb pulse and travelling
+// dot aren't expressible as Tailwind utilities without heavy arbitrary-value
+// gymnastics, so they live here. Everything else on this page is Tailwind.
+
+.flow {
+    display: grid;
+    grid-template-columns: auto minmax(48px, 1fr) auto minmax(48px, 1fr) auto;
+    align-items: center;
+    width: 100%;
+    max-width: 1080px;
+}
+
+@media (max-width: 760px) {
+    .flow {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 8px;
+    }
+}
+
+.orb {
+    background: radial-gradient(circle at 30% 25%, color-mix(in srgb, theme('colors.dev.accent-soft') 80%, #fff), theme('colors.dev.accent-soft'));
+    animation: orb 3.6s ease-in-out infinite;
+}
+.orb::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid theme('colors.dev.accent');
+    opacity: 0.25;
+    animation: ring 3.6s ease-out infinite;
+}
+
+.flLink {
+    position: relative;
+    height: 2px;
+    margin: 0 6px;
+    background-image: linear-gradient(90deg, theme('colors.dev.line-2') 0 40%, transparent 40% 100%);
+    background-size: 8px 2px;
+}
+@media (max-width: 760px) {
+    .flLink {
+        width: 2px;
+        height: 44px;
+        margin: 0;
+        background-image: linear-gradient(180deg, theme('colors.dev.line-2') 0 40%, transparent 40% 100%);
+        background-size: 2px 8px;
+    }
+}
+.flLink i {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: theme('colors.dev.accent');
+    box-shadow: 0 0 0 4px theme('colors.dev.accent-soft');
+    animation: travel 1.6s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+.flLink i:nth-child(2) {
+    animation-delay: 0.8s;
+}
+@media (max-width: 760px) {
+    .flLink i {
+        left: 50%;
+        top: 0;
+        margin: -4px 0 0 -4px;
+        animation-name: traveldown;
+    }
+}
+
+.flCard::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 70%, transparent);
+}
+
+.beat {
+    animation: beat 1.6s ease-out infinite;
+}
+
+.appTile {
+    animation: bob 4.2s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+}
+.appTile.lit {
+    background: var(--c);
+    transform: scale(1.14) translateY(-2px);
+    box-shadow:
+        0 10px 24px -8px var(--c),
+        0 0 0 4px color-mix(in srgb, var(--c) 22%, transparent);
+}
+.appTile svg {
+    fill: theme('colors.dev.ink-inv');
+    transition: fill 0.45s;
+}
+.appTile.lit svg {
+    fill: #fff;
+}
+
+.agentIcon {
+    animation: bob 4.6s ease-in-out infinite;
+    animation-delay: var(--d, 0s);
+}
+
+@keyframes orb {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+@keyframes ring {
+    0% { transform: scale(0.9); opacity: 0.35; }
+    70% { transform: scale(1.25); opacity: 0; }
+    100% { opacity: 0; }
+}
+@keyframes travel {
+    0% { left: 0; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+}
+@keyframes traveldown {
+    0% { top: 0; opacity: 0; }
+    12% { opacity: 1; }
+    88% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+@keyframes beat {
+    0% { box-shadow: 0 0 0 0 theme('colors.dev.accent-soft'); }
+    60% { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+}
+@keyframes bob {
+    0%, 100% { translate: 0 0; }
+    50% { translate: 0 -3px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .orb, .orb::after, .flLink i, .beat, .appTile, .agentIcon {
+        animation: none !important;
+    }
+}

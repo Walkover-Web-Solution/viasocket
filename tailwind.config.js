@@ -17,6 +17,8 @@ module.exports = {
                 // anything smaller than that is set in the sans.
                 'index-display': ['Instrument Serif', 'Instrument Serif Fallback', 'Georgia', 'serif'],
                 'index-sans': ['DM Sans', 'Arial', 'sans-serif'],
+                'dev-sans': ['Albert Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+                'dev-mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
             },
             colors: {
                 // The /index palette. Warm off-white ground, near-black ink with
@@ -38,6 +40,27 @@ module.exports = {
                     keeps: '#eaf3f2',
                     trust: '#eaf0e8',
                     wall: '#eef1e8',
+                },
+                // The /developers palette. Cool near-white ground, one blue
+                // accent, green reserved for verified/succeeded states only.
+                // Light-only — this codebase has no dark-mode variant anywhere,
+                // so /developers doesn't invent one either.
+                dev: {
+                    bg: '#F7F7F8',
+                    surface: '#FFFFFF',
+                    'surface-2': '#EFF0F2',
+                    ink: '#0B0D10',
+                    'ink-2': '#4F555D',
+                    'ink-3': '#8A9098',
+                    'ink-inv': '#F7F7F8',
+                    line: '#E2E4E8',
+                    'line-2': '#C9CDD3',
+                    accent: '#2B5BFF',
+                    'accent-soft': '#E9EEFF',
+                    ok: '#12805A',
+                    'ok-soft': '#E1F3EA',
+                    warn: '#A35A00',
+                    bad: '#C4362D',
                 },
             },
             fontSize: {

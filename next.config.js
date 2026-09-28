@@ -22,10 +22,6 @@ const nextConfig = {
                 source: '/feedback-unsatisfied',
                 destination: '/feedback?variant=unsatisfied',
             },
-            {
-                source: '/developers',
-                destination: '/developers/index.html',
-            },
         ];
     },
 
