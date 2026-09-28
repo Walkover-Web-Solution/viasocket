@@ -32,10 +32,10 @@ export default function Header() {
                     </Link>
                 ))}
                 <Link
-                    href="/developers#start"
+                    href="https://viasocket.com/signup"
                     className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline px-[16px] py-[9px] rounded-full font-semibold text-[14px] transition-transform hover:-translate-y-px"
                 >
-                    Add viaSocket to your AI
+                    Signup
                 </Link>
             </nav>
         </header>

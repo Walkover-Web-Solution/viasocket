@@ -19,10 +19,6 @@ export default function Turn() {
         <Scene id="turn">
             <H2>Build your AI. Not the action layer.</H2>
             <div ref={mapRef} className={`bg-dev-surface border border-dev-line rounded-[20px] overflow-hidden shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] ${revealClass(mapVisible)}`}>
-                <div className="flex justify-between gap-3 px-[18px] py-3 border-b border-dev-line font-dev-mono text-[11.5px] tracking-[0.1em] uppercase text-dev-ink-3">
-                    <span>Routes · one origin, one action layer, every destination</span>
-                    <span>Schematic</span>
-                </div>
                 <div className="overflow-x-auto">
                     <svg
                         viewBox={`0 0 1100 ${H}`}

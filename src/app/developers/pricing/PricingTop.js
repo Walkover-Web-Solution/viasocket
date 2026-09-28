@@ -79,6 +79,9 @@ export default function PricingTop() {
                         </div>
                     ))}
                 </div>
+                <p className="text-center text-[14px] text-dev-ink-3 mt-4">
+                    $1 = 5,000 Tasks, if you exceed your plan limit.
+                </p>
             </section>
         </>
     );

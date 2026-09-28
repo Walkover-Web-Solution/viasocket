@@ -133,7 +133,6 @@ export default function AuthPage() {
                 <H2>What happens when an app changes its authentication?</H2>
                 <div className="grid lg:grid-cols-2 gap-[clamp(24px,4vw,56px)] items-center">
                     <div className="grid gap-2.5 text-[clamp(18px,1.8vw,22px)] font-medium tracking-[-0.01em] text-dev-ink-2">
-                        <span>You shouldn&apos;t have to rebuild your authentication system every time an app changes its requirements.</span>
                         <span>viaSocket maintains the integration and authentication layer across supported apps.</span>
                         <span>Your product continues to work through the same interface.</span>
                     </div>
