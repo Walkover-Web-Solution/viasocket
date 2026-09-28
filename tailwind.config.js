@@ -19,6 +19,9 @@ module.exports = {
                 'index-sans': ['DM Sans', 'Arial', 'sans-serif'],
                 'dev-sans': ['Albert Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
                 'dev-mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                'docs-sans': ['IBM Plex Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
+                'docs-mono': ['IBM Plex Mono', 'ui-monospace', 'Menlo', 'Consolas', 'monospace'],
+                'docs-serif': ['IBM Plex Serif', 'Georgia', 'serif'],
             },
             colors: {
                 // The /index palette. Warm off-white ground, near-black ink with
@@ -61,6 +64,23 @@ module.exports = {
                     'ok-soft': '#E1F3EA',
                     warn: '#A35A00',
                     bad: '#C4362D',
+                },
+                // The /developers/docs palette (its own IBM Plex identity, distinct
+                // from the rest of /developers) — also light-only.
+                docs: {
+                    bg: '#ffffff',
+                    surface: '#f3f5f8',
+                    'surface-2': '#e8ecf2',
+                    ink: '#10161d',
+                    muted: '#59636f',
+                    rule: '#dde3ea',
+                    'rule-strong': '#c3ccd7',
+                    accent: '#1247c4',
+                    'accent-soft': '#e6ecfb',
+                    good: '#0b6b4f',
+                    'good-soft': '#e2f2ec',
+                    warn: '#8a4b06',
+                    'warn-soft': '#fbeedd',
                 },
             },
             fontSize: {
