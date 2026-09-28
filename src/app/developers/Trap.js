@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { BrandIcon, APP_NAMES } from './BrandIcon';
+import { BrandIcon, CLUSTER_APP_NAMES } from './BrandIcon';
 import { H2, Scene } from './Heading';
 import { useReveal, revealClass } from './useReveal';
 
@@ -17,7 +17,7 @@ const CLUSTER_GAP = { lg: 'gap-[6px]', mid: 'gap-[5px]', dense: 'gap-1' };
 
 function Cluster({ n, size }) {
     const [ref, visible] = useReveal(0.3);
-    const tiles = Array.from({ length: n }, (_, i) => APP_NAMES[i % APP_NAMES.length]);
+    const tiles = Array.from({ length: n }, (_, i) => CLUSTER_APP_NAMES[i % CLUSTER_APP_NAMES.length]);
     return (
         <div ref={ref} className={`flex flex-wrap ${CLUSTER_GAP[size]} content-start min-h-[120px]`}>
             {tiles.map((name, i) => (

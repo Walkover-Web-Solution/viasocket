@@ -69,21 +69,31 @@ export default function UseCases() {
         <Scene id="usecases">
             <H2 style={{ maxWidth: '22ch', marginBottom: '8px' }}>Give your AI access to your users&apos; apps</H2>
             <div ref={ref} className={`grid gap-[clamp(20px,3vw,32px)] ${revealClass(visible)}`}>
-                <div role="tablist" className="flex gap-1.5 flex-wrap p-1 rounded-full bg-dev-surface-2 w-max max-w-full">
-                    {TABS.map((tab, i) => (
-                        <button
-                            key={tab}
-                            role="tab"
-                            type="button"
-                            aria-selected={active === i}
-                            onClick={() => setActive(i)}
-                            className={`text-[15px] font-medium px-[18px] py-[9px] rounded-full border-0 cursor-pointer transition-colors ${
-                                active === i ? 'bg-dev-ink text-dev-ink-inv' : 'bg-transparent text-dev-ink-2'
-                            }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
+                <div className="flex items-center gap-2.5 flex-wrap">
+                    <div role="tablist" className="flex gap-1.5 flex-wrap p-1 rounded-full bg-dev-surface-2 w-max max-w-full">
+                        {TABS.map((tab, i) => (
+                            <button
+                                key={tab}
+                                role="tab"
+                                type="button"
+                                aria-selected={active === i}
+                                onClick={() => setActive(i)}
+                                className={`text-[15px] font-medium px-[18px] py-[9px] rounded-full border-0 cursor-pointer transition-colors ${
+                                    active === i ? 'bg-dev-ink text-dev-ink-inv' : 'bg-transparent text-dev-ink-2'
+                                }`}
+                            >
+                                {tab}
+                            </button>
+                        ))}
+                    </div>
+                    <a
+                        href="https://viasocket.com/integrations"
+                        target="_blank"
+                        rel="noopener"
+                        className="text-[14.5px] font-medium text-dev-ink-2 no-underline px-3 py-2 hover:text-dev-ink"
+                    >
+                        View all →
+                    </a>
                 </div>
                 <div role="tabpanel" className="bg-dev-surface border border-dev-line rounded-[20px] shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] overflow-hidden">
                     <div className="flex justify-between gap-3 px-5 py-3 border-b border-dev-line font-dev-mono text-[11.5px] text-dev-ink-3">

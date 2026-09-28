@@ -14,9 +14,9 @@ export default function Header() {
 
     return (
         <header className="sticky top-0 z-20 flex items-center justify-between gap-4 max-w-[1080px] mx-auto py-[18px] bg-dev-bg/85 backdrop-blur-[14px]">
-            <Link href="/developers" className="flex items-center gap-[9px] font-bold text-[18px] tracking-[-0.02em] no-underline text-dev-ink">
-                <i className="w-[9px] h-[9px] rounded-full bg-dev-accent inline-block" />
-                viaSocket
+            <Link href="/developers" className="flex items-center no-underline">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/brand/developers-logo.svg" alt="viaSocket" className="h-9 w-auto" />
             </Link>
             <nav className="flex items-center gap-[22px]">
                 {NAV.map((item) => (
@@ -32,10 +32,10 @@ export default function Header() {
                     </Link>
                 ))}
                 <Link
-                    href="/developers#start"
+                    href="https://viasocket.com/signup"
                     className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline px-[16px] py-[9px] rounded-full font-semibold text-[14px] transition-transform hover:-translate-y-px"
                 >
-                    Add viaSocket to your AI
+                    Signup
                 </Link>
             </nav>
         </header>
