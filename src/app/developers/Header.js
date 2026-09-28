@@ -16,7 +16,7 @@ export default function Header() {
         <header className="sticky top-0 z-20 flex items-center justify-between gap-4 max-w-[1080px] mx-auto py-[18px] bg-dev-bg/85 backdrop-blur-[14px]">
             <Link href="/developers" className="flex items-center no-underline">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/brand/developers-logo.svg" alt="viaSocket" className="h-6 w-auto" />
+                <img src="/assets/brand/developers-logo.svg" alt="viaSocket" className="h-9 w-auto" />
             </Link>
             <nav className="flex items-center gap-[22px]">
                 {NAV.map((item) => (
