@@ -1,0 +1,26 @@
+.popup {
+    animation: none;
+}
+.popup .done {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s;
+}
+.popup.ok .done {
+    opacity: 1;
+}
+.allow {
+    transition: transform 0.15s;
+}
+.allow.press {
+    transform: scale(0.97);
+}
+
+@keyframes beat {
+    0% { box-shadow: 0 0 0 0 theme('colors.dev.accent-soft'); }
+    60% { box-shadow: 0 0 0 8px transparent; }
+    100% { box-shadow: 0 0 0 0 transparent; }
+}
+.beat {
+    animation: beat 1.6s ease-out infinite;
+}
