@@ -32,7 +32,7 @@ export default function Header() {
                     </Link>
                 ))}
                 <Link
-                    href="https://viasocket.com/signup"
+                    href="https://flow.viasocket.com/integrations"
                     className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline px-[16px] py-[9px] rounded-full font-semibold text-[14px] transition-transform hover:-translate-y-px"
                 >
                     Signup
