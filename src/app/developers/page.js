@@ -30,9 +30,7 @@ export async function generateMetadata() {
 export default function DevelopersPage() {
     return (
         <>
-            <div className="max-w-[1080px] mx-auto px-[clamp(20px,5vw,64px)]">
-                <Header />
-            </div>
+            <Header />
             <Hero />
             <OneAction />
             <Trap />
