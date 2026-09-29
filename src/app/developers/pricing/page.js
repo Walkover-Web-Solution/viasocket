@@ -31,9 +31,7 @@ const PRICING_FAQS = [
 export default function PricingPage() {
     return (
         <>
-            <div className="max-w-[1080px] mx-auto px-[clamp(20px,5vw,64px)]">
-                <Header />
-            </div>
+            <Header />
             <PricingTop />
             <Ladder />
             <CompareRows />

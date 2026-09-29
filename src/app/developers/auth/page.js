@@ -79,9 +79,7 @@ const AUTH_FAQS = [
 export default function AuthPage() {
     return (
         <>
-            <div className="max-w-[1080px] mx-auto px-[clamp(20px,5vw,64px)]">
-                <Header />
-            </div>
+            <Header />
             <AuthHero />
 
             <Scene>

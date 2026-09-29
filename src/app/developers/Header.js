@@ -13,31 +13,33 @@ export default function Header() {
     const pathname = usePathname();
 
     return (
-        <header className="sticky top-0 z-20 flex items-center justify-between gap-4 max-w-[1080px] mx-auto py-[18px] bg-dev-bg/85 backdrop-blur-[14px]">
-            <Link href="/developers" className="flex items-center no-underline">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/brand/developers-logo.svg" alt="viaSocket" className="h-9 w-auto" />
-            </Link>
-            <nav className="flex items-center gap-[22px]">
-                {NAV.map((item) => (
-                    <Link
-                        key={item.href}
-                        href={item.href}
-                        className={`hidden sm:inline text-[14.5px] no-underline ${
-                            pathname === item.href ? 'text-dev-ink' : 'text-dev-ink-2'
-                        }`}
-                        aria-current={pathname === item.href ? 'page' : undefined}
-                    >
-                        {item.label}
-                    </Link>
-                ))}
-                <Link
-                    href="https://flow.viasocket.com/integrations"
-                    className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline px-[16px] py-[9px] rounded-full font-semibold text-[14px] transition-transform hover:-translate-y-px"
-                >
-                    Signup
+        <header className="sticky top-0 z-20 bg-dev-bg/85 backdrop-blur-[14px]">
+            <div className="flex items-center justify-between gap-4 max-w-[1240px] mx-auto py-[20px] px-[clamp(24px,6vw,88px)]">
+                <Link href="/developers" className="flex items-center no-underline">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src="/assets/brand/developers-logo.svg" alt="viaSocket" className="h-9 w-auto" />
                 </Link>
-            </nav>
+                <nav className="flex items-center gap-[32px]">
+                    {NAV.map((item) => (
+                        <Link
+                            key={item.href}
+                            href={item.href}
+                            className={`hidden sm:inline text-[14.5px] no-underline ${
+                                pathname === item.href ? 'text-dev-ink' : 'text-dev-ink-2'
+                            }`}
+                            aria-current={pathname === item.href ? 'page' : undefined}
+                        >
+                            {item.label}
+                        </Link>
+                    ))}
+                    <Link
+                        href="https://flow.viasocket.com/integrations"
+                        className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline px-[18px] py-[10px] rounded-full font-semibold text-[14px] transition-transform hover:-translate-y-px"
+                    >
+                        Signup
+                    </Link>
+                </nav>
+            </div>
         </header>
     );
 }
