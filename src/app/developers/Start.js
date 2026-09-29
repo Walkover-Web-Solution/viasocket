@@ -245,7 +245,7 @@ export default function Start() {
                     onClick={downloadSkill}
                     className="inline-flex items-center gap-[10px] bg-transparent text-dev-ink border border-dev-line-2 rounded-full font-semibold text-[15.5px] px-[22px] py-[14px] cursor-pointer transition-transform hover:-translate-y-px"
                 >
-                    <Download size={17} strokeWidth={2} />
+                    <Download size={19} strokeWidth={2.25} />
                     Get skill
                 </button>
                 <span className="text-[14px] text-dev-ink-3">Live in under 15 minutes</span>
