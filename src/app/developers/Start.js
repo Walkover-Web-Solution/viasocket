@@ -245,7 +245,7 @@ export default function Start() {
                     onClick={downloadSkill}
                     aria-label="Get skill"
                     title="Get skill"
-                    className="grid place-items-center w-[52px] h-[52px] bg-transparent text-dev-ink border border-dev-line-2 rounded-full cursor-pointer transition-transform hover:-translate-y-px"
+                    className="grid place-items-center w-[52px] h-[52px] bg-transparent text-dev-ink border-0 cursor-pointer transition-transform hover:-translate-y-px hover:text-dev-ink-2"
                 >
                     <ArrowDownToLine size={19} strokeWidth={2.25} />
                 </button>
