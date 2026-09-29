@@ -243,10 +243,11 @@ export default function Start() {
                 <button
                     type="button"
                     onClick={downloadSkill}
-                    className="inline-flex items-center gap-[10px] bg-transparent text-dev-ink border border-dev-line-2 rounded-full font-semibold text-[15.5px] px-[22px] py-[14px] cursor-pointer transition-transform hover:-translate-y-px"
+                    aria-label="Get skill"
+                    title="Get skill"
+                    className="grid place-items-center w-[52px] h-[52px] bg-transparent text-dev-ink border border-dev-line-2 rounded-full cursor-pointer transition-transform hover:-translate-y-px"
                 >
                     <ArrowDownToLine size={19} strokeWidth={2.25} />
-                    Get skill
                 </button>
                 <span className="text-[14px] text-dev-ink-3">Live in under 15 minutes</span>
             </div>
