@@ -1,3 +1,4 @@
+import Header from '../Header';
 import { LangProvider } from './LangContext';
 import { LangBlock } from './LangBlock';
 import { CodeBlock } from './CodeBlock';
@@ -23,6 +24,7 @@ const section = 'flex flex-col gap-3.5 scroll-mt-6';
 export default function DocsPage() {
     return (
         <LangProvider>
+            <Header />
             <div className="max-w-[1140px] mx-auto px-4 pb-16 grid grid-cols-1 lg:grid-cols-[238px_minmax(0,1fr)] gap-0 lg:gap-14 items-start">
                 <header className="lg:col-span-2 border-b border-docs-rule py-[40px_0_32px] flex flex-col gap-3.5">
                     <div className="font-docs-mono text-[12px] tracking-[0.09em] uppercase text-docs-muted flex flex-wrap gap-2 items-center">
@@ -363,25 +365,6 @@ export default function DocsPage() {
                         <Callout variant="warn" title="Treat script_id like a password">
                             <p>Anyone holding it can run that app as that user, with no token needed. Keep it in your database, server-side. It must never reach the browser, a log line, or an error you return to the client.</p>
                         </Callout>
-                    </section>
-
-                    <section id="example" className={section}>
-                        <h2 className={h2}>Complete examples, one app at a time</h2>
-                        <p className={p}>The ten steps above are the same for every app. If you would rather follow a full working build with the real ids already filled in — nothing to look up, nothing to substitute — start with one of these.</p>
-                        <ul className="m-0 p-0 list-none grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            {[
-                                ['Integrate Slack into your app', 'Connect a workspace, choose a channel, post a message'],
-                                ['Integrate Gmail into your app', 'Connect an inbox, send and read mail'],
-                                ['Integrate Google Sheets into your app', 'Connect an account, choose a sheet, append rows'],
-                                ['Integrate HubSpot into your app', 'Connect a portal, create contacts and deals'],
-                            ].map(([title, desc]) => (
-                                <li key={title} className="border border-docs-rule rounded-md p-[11px_13px] text-[14px]">
-                                    <a href="#" className="no-underline font-medium text-docs-accent hover:underline">{title}</a>
-                                    <span className="block text-docs-muted text-[13px] mt-0.5">{desc}</span>
-                                </li>
-                            ))}
-                        </ul>
-                        <p className={p}>Each one is this quickstart with the ids resolved. Once you have done any of them, moving to another app is three ids.</p>
                     </section>
 
                     <section id="missing" className={section}>
