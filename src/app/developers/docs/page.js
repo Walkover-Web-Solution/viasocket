@@ -27,9 +27,6 @@ export default function DocsPage() {
             <Header />
             <div className="max-w-[1140px] mx-auto px-4 pb-16 grid grid-cols-1 lg:grid-cols-[238px_minmax(0,1fr)] gap-0 lg:gap-14 items-start">
                 <header className="lg:col-span-2 border-b border-docs-rule py-[40px_0_32px] flex flex-col gap-3.5">
-                    <div className="font-docs-mono text-[12px] tracking-[0.09em] uppercase text-docs-muted flex flex-wrap gap-2 items-center">
-                        <span>viaSocket for developers</span><span className="text-docs-rule-strong">/</span><span>Apps API</span><span className="text-docs-rule-strong">/</span><span>Quickstart</span>
-                    </div>
                     <h1 className="text-[clamp(28px,4.6vw,44px)] leading-[1.12] font-bold tracking-[-0.02em] m-0 [text-wrap:balance]">
                         Quickstart: add app integrations to your product
                     </h1>
