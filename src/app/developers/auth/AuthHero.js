@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Check } from 'lucide-react';
 import { BrandIcon, AGENT_NAMES } from '../BrandIcon';
+import CopyPromptButton from '../CopyPromptButton';
 import styles from './AuthHero.module.scss';
 
 const SCOPES = ['Read & write leads', 'Read opportunities & pipelines', 'Manage contacts'];
@@ -58,9 +59,7 @@ export default function AuthHero() {
             </p>
             <p className="text-[14px] text-dev-ink-3">OAuth · tokens · refresh · reauthorization · connection management — handled by viaSocket.</p>
             <div className="flex items-center justify-center gap-4 flex-wrap">
-                <Link href="/developers#start" className="inline-flex items-center gap-[10px] bg-dev-ink text-dev-ink-inv no-underline rounded-full font-semibold text-[15.5px] px-[22px] py-[14px] transition-transform hover:-translate-y-px">
-                    Start building
-                </Link>
+                <CopyPromptButton />
                 <Link href="#handled" className="inline-flex items-center gap-[10px] bg-transparent text-dev-ink border border-dev-line-2 no-underline rounded-full font-semibold text-[15.5px] px-[22px] py-[14px] transition-transform hover:-translate-y-px">
                     See how it works
                 </Link>

@@ -19,9 +19,11 @@ module.exports = {
                 'index-sans': ['DM Sans', 'Arial', 'sans-serif'],
                 'dev-sans': ['Albert Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
                 'dev-mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
-                'docs-sans': ['IBM Plex Sans', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'sans-serif'],
-                'docs-mono': ['IBM Plex Mono', 'ui-monospace', 'Menlo', 'Consolas', 'monospace'],
-                'docs-serif': ['IBM Plex Serif', 'Georgia', 'serif'],
+                // /developers/docs shares the same two faces as the rest of
+                // /developers — no separate IBM Plex identity anymore.
+                'docs-sans': ['Albert Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
+                'docs-mono': ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+                'docs-serif': ['Albert Sans', 'system-ui', '-apple-system', 'Segoe UI', 'sans-serif'],
             },
             colors: {
                 // The /index palette. Warm off-white ground, near-black ink with
@@ -65,12 +67,13 @@ module.exports = {
                     warn: '#A35A00',
                     bad: '#C4362D',
                 },
-                // The /developers/docs palette (its own IBM Plex identity, distinct
-                // from the rest of /developers) — also light-only.
+                // The /developers/docs palette. Same ground and surfaces as the
+                // rest of /developers so the docs page doesn't feel like a
+                // different site; ink/accent/status tones stay its own.
                 docs: {
-                    bg: '#ffffff',
-                    surface: '#f3f5f8',
-                    'surface-2': '#e8ecf2',
+                    bg: '#F7F7F8',
+                    surface: '#FFFFFF',
+                    'surface-2': '#EFF0F2',
                     ink: '#10161d',
                     muted: '#59636f',
                     rule: '#dde3ea',

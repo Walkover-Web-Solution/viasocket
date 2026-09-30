@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import styles from './OverageTicker.module.scss';
 
 const PLANS = [
     { label: 'Free', m: '$0', y: '$0', desc: 'Everything you need to start.', tasks: '100K tasks / month', cta: 'Start free', href: '/developers#start' },
@@ -9,6 +10,41 @@ const PLANS = [
     { label: 'Scale', m: '$99', y: '$990', desc: 'For products with real volume.', tasks: '5M tasks / month', cta: 'Start with Scale', href: '/developers#start' },
     { label: 'Enterprise', m: 'Custom', y: 'Custom', desc: 'For higher usage and control.', tasks: 'Custom tasks', cta: 'Talk to sales', href: 'https://cal.id/team/viasocket/embed-viasocket', external: true },
 ];
+
+const OVERAGE_MIN = 1;
+const OVERAGE_MAX = 50;
+
+function OverageTicker() {
+    const [n, setN] = useState(5);
+    const pct = ((n - OVERAGE_MIN) / (OVERAGE_MAX - OVERAGE_MIN)) * 100;
+
+    return (
+        <div className="w-full max-w-[420px] mx-auto mt-5 rounded-2xl border border-dev-line bg-dev-surface shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] p-[22px_24px]">
+            <div className="flex items-baseline justify-center gap-2.5 flex-wrap text-center">
+                <span className="font-dev-mono text-[26px] font-bold tabular-nums text-dev-ink tracking-[-0.02em]">${n}</span>
+                <span className="text-dev-ink-3 text-[15px]">=</span>
+                <span className="font-dev-mono text-[26px] font-bold tabular-nums text-dev-accent tracking-[-0.02em]">{(n * 5000).toLocaleString()}</span>
+                <span className="text-[15px] font-medium text-dev-ink-2">Tasks</span>
+            </div>
+            <input
+                type="range"
+                min={OVERAGE_MIN}
+                max={OVERAGE_MAX}
+                step={1}
+                value={n}
+                onChange={(e) => setN(Number(e.target.value))}
+                aria-label="Overage amount in dollars"
+                className={`${styles.slider} block w-full mt-4`}
+                style={{ background: `linear-gradient(to right, #2B5BFF ${pct}%, #E2E4E8 ${pct}%)` }}
+            />
+            <div className="flex items-center justify-between mt-2.5">
+                <span className="font-dev-mono text-[11px] text-dev-ink-3">$1</span>
+                <span className="text-[12.5px] text-dev-ink-2">if you exceed your plan limit</span>
+                <span className="font-dev-mono text-[11px] text-dev-ink-3">$50</span>
+            </div>
+        </div>
+    );
+}
 
 export default function PricingTop() {
     const [period, setPeriod] = useState('m');
@@ -79,9 +115,7 @@ export default function PricingTop() {
                         </div>
                     ))}
                 </div>
-                <p className="text-center text-[14px] text-dev-ink-3 mt-4">
-                    $1 = 5,000 Tasks, if you exceed your plan limit.
-                </p>
+                <OverageTicker />
             </section>
         </>
     );

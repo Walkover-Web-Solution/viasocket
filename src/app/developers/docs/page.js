@@ -25,8 +25,8 @@ export default function DocsPage() {
     return (
         <LangProvider>
             <Header />
-            <div className="max-w-[1140px] mx-auto px-4 pb-16 grid grid-cols-1 lg:grid-cols-[238px_minmax(0,1fr)] gap-0 lg:gap-14 items-start">
-                <header className="lg:col-span-2 border-b border-docs-rule py-[40px_0_32px] flex flex-col gap-3.5">
+            <div className="max-w-[1140px] mx-auto px-[clamp(20px,5vw,64px)] pb-16 grid grid-cols-1 lg:grid-cols-[238px_minmax(0,1fr)] gap-0 lg:gap-14 items-start">
+                <header className="lg:col-span-2 border-b border-docs-rule pt-[48px] pb-[32px] flex flex-col gap-3.5">
                     <h1 className="text-[clamp(28px,4.6vw,44px)] leading-[1.12] font-bold tracking-[-0.02em] m-0 [text-wrap:balance]">
                         Quickstart: add app integrations to your product
                     </h1>
@@ -364,16 +364,7 @@ export default function DocsPage() {
                         </Callout>
                     </section>
 
-                    <section id="missing" className={section}>
-                        <h2 className={h2}>The app you need is not in the catalog</h2>
-                        <p className={p}>Search first — the catalog is wide and the search matches descriptions as well as names. If you mean your own product or a private internal API, build it once as a connector in Plug Builder, in the Developer section of the dashboard. After that it behaves like every other app: same connect flow, same actions, same events, same steps.</p>
-                        <p className={p}>Do not hand-roll an HTTP client inside the integration instead. It would have none of the connection handling above, which was the reason to be here.</p>
-                    </section>
                 </article>
-
-                <footer className="lg:col-span-2 border-t border-docs-rule py-[28px_0_0] text-docs-muted text-[14px] flex flex-col gap-2">
-                    <p>viaSocket is built by Walkover. This quickstart covers the Apps API. Embed and MCP have their own guides.</p>
-                </footer>
             </div>
         </LangProvider>
     );

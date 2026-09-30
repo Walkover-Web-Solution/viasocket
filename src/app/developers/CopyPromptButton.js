@@ -28,7 +28,7 @@ export default function CopyPromptButton({ className = '', onCopied }) {
                 copied ? 'bg-dev-ok text-white' : 'bg-dev-ink text-dev-ink-inv'
             } ${className}`}
         >
-            {copied ? 'Copied' : 'Copy implementation prompt'}
+            {copied ? 'Paste in your agent' : 'Copy prompt'}
         </button>
     );
 }

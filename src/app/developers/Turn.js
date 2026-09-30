@@ -8,7 +8,7 @@ const APPS = ['Salesforce', 'Gmail', 'HubSpot', 'Slack', 'Zendesk', 'Stripe', 'G
 
 export default function Turn() {
     const [mapRef, mapVisible] = useReveal(0.2);
-    const H = 380;
+    const H = 420;
     const ox = 90;
     const oy = H / 2;
     const hx = 430;
@@ -42,7 +42,7 @@ export default function Turn() {
                         </text>
 
                         {APPS.map((app, i) => {
-                            const y = 30 + ((H - 60) * i) / (APPS.length - 1);
+                            const y = 46 + ((H - 92) * i) / (APPS.length - 1);
                             const d = `M${hx + 52} ${hy} C ${hx + 230} ${hy}, ${x - 200} ${y}, ${x - 8} ${y}`;
                             return (
                                 <g key={app}>
@@ -52,7 +52,7 @@ export default function Turn() {
                                 </g>
                             );
                         })}
-                        <text className={styles.lbl} x={x} y="14" textAnchor="middle">DESTINATIONS · 12 OF 2,300+</text>
+                        <text className={styles.lbl} x={x} y="28" textAnchor="middle">DESTINATIONS · 12 OF 2,300+</text>
                     </svg>
                 </div>
             </div>
