@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 
 const PLANS = [
@@ -9,6 +9,29 @@ const PLANS = [
     { label: 'Scale', m: '$99', y: '$990', desc: 'For products with real volume.', tasks: '5M tasks / month', cta: 'Start with Scale', href: '/developers#start' },
     { label: 'Enterprise', m: 'Custom', y: 'Custom', desc: 'For higher usage and control.', tasks: 'Custom tasks', cta: 'Talk to sales', href: 'https://cal.id/team/viasocket/embed-viasocket', external: true },
 ];
+
+function OverageTicker() {
+    const [n, setN] = useState(1);
+
+    useEffect(() => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return undefined;
+        const id = setInterval(() => setN((v) => (v % 9) + 1), 900);
+        return () => clearInterval(id);
+    }, []);
+
+    return (
+        <div className="grid gap-4 justify-items-center mt-4">
+            <span className="sr-only">$1 = 5,000 Tasks, if you exceed your plan limit.</span>
+            <div aria-hidden="true" className="inline-flex items-center gap-3 flex-wrap justify-center rounded-2xl border border-dev-line bg-dev-surface px-5 py-3.5 shadow-[0_1px_2px_rgba(11,13,16,.03)]">
+                <span className="font-dev-mono text-[16px] font-semibold tabular-nums text-dev-ink">${n}</span>
+                <span className="text-dev-ink-3">=</span>
+                <span className="font-dev-mono text-[16px] font-semibold tabular-nums text-dev-accent">{(n * 5000).toLocaleString()} Tasks</span>
+                <span className="text-[13.5px] text-dev-ink-2 ml-1">if you exceed your plan limit</span>
+            </div>
+        </div>
+    );
+}
 
 export default function PricingTop() {
     const [period, setPeriod] = useState('m');
@@ -79,12 +102,7 @@ export default function PricingTop() {
                         </div>
                     ))}
                 </div>
-                <p className="text-center mt-4">
-                    <span className="inline-flex items-center gap-2 text-dev-accent bg-dev-accent-soft border border-dev-accent/25 rounded-full px-3.5 py-1.5 text-[13.5px] font-medium">
-                        <i className="w-1.5 h-1.5 rounded-full bg-dev-accent inline-block shrink-0" />
-                        $1 = 5,000 Tasks, if you exceed your plan limit.
-                    </span>
-                </p>
+                <OverageTicker />
             </section>
         </>
     );
