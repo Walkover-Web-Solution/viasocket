@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import styles from './OverageTicker.module.scss';
 
 const PLANS = [
     { label: 'Free', m: '$0', y: '$0', desc: 'Everything you need to start.', tasks: '100K tasks / month', cta: 'Start free', href: '/developers#start' },
@@ -10,24 +11,36 @@ const PLANS = [
     { label: 'Enterprise', m: 'Custom', y: 'Custom', desc: 'For higher usage and control.', tasks: 'Custom tasks', cta: 'Talk to sales', href: 'https://cal.id/team/viasocket/embed-viasocket', external: true },
 ];
 
-function OverageTicker() {
-    const [n, setN] = useState(1);
+const OVERAGE_MIN = 1;
+const OVERAGE_MAX = 50;
 
-    useEffect(() => {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (reduce) return undefined;
-        const id = setInterval(() => setN((v) => (v % 9) + 1), 900);
-        return () => clearInterval(id);
-    }, []);
+function OverageTicker() {
+    const [n, setN] = useState(5);
+    const pct = ((n - OVERAGE_MIN) / (OVERAGE_MAX - OVERAGE_MIN)) * 100;
 
     return (
-        <div className="grid gap-4 justify-items-center mt-4">
-            <span className="sr-only">$1 = 5,000 Tasks, if you exceed your plan limit.</span>
-            <div aria-hidden="true" className="inline-flex items-center gap-3 flex-wrap justify-center rounded-2xl border border-dev-line bg-dev-surface px-5 py-3.5 shadow-[0_1px_2px_rgba(11,13,16,.03)]">
-                <span className="font-dev-mono text-[16px] font-semibold tabular-nums text-dev-ink">${n}</span>
-                <span className="text-dev-ink-3">=</span>
-                <span className="font-dev-mono text-[16px] font-semibold tabular-nums text-dev-accent">{(n * 5000).toLocaleString()} Tasks</span>
-                <span className="text-[13.5px] text-dev-ink-2 ml-1">if you exceed your plan limit</span>
+        <div className="w-full max-w-[420px] mx-auto mt-5 rounded-2xl border border-dev-line bg-dev-surface shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] p-[22px_24px]">
+            <div className="flex items-baseline justify-center gap-2.5 flex-wrap text-center">
+                <span className="font-dev-mono text-[26px] font-bold tabular-nums text-dev-ink tracking-[-0.02em]">${n}</span>
+                <span className="text-dev-ink-3 text-[15px]">=</span>
+                <span className="font-dev-mono text-[26px] font-bold tabular-nums text-dev-accent tracking-[-0.02em]">{(n * 5000).toLocaleString()}</span>
+                <span className="text-[15px] font-medium text-dev-ink-2">Tasks</span>
+            </div>
+            <input
+                type="range"
+                min={OVERAGE_MIN}
+                max={OVERAGE_MAX}
+                step={1}
+                value={n}
+                onChange={(e) => setN(Number(e.target.value))}
+                aria-label="Overage amount in dollars"
+                className={`${styles.slider} block w-full mt-4`}
+                style={{ background: `linear-gradient(to right, #2B5BFF ${pct}%, #E2E4E8 ${pct}%)` }}
+            />
+            <div className="flex items-center justify-between mt-2.5">
+                <span className="font-dev-mono text-[11px] text-dev-ink-3">$1</span>
+                <span className="text-[12.5px] text-dev-ink-2">if you exceed your plan limit</span>
+                <span className="font-dev-mono text-[11px] text-dev-ink-3">$50</span>
             </div>
         </div>
     );
