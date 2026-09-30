@@ -148,7 +148,7 @@ export default function Production() {
             <H2>It feels like your product.</H2>
             <Lead>Our action layer is designed to become an extension of your product.</Lead>
             <div ref={ref} className={`grid gap-[clamp(20px,3vw,32px)] w-full ${revealClass(visible)}`}>
-                <div className="relative rounded-[18px] overflow-hidden shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] border border-dev-line bg-dev-surface min-h-[460px]">
+                <div className="relative rounded-[18px] overflow-hidden shadow-[0_1px_1px_rgba(11,13,16,.04),0_24px_60px_-30px_rgba(11,13,16,.25)] border border-dev-line bg-dev-surface h-[460px]">
                     <ScreenA active={active === 0} />
                     <ScreenB active={active === 1} />
                     <ScreenC active={active === 2} />

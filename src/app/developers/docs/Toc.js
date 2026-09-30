@@ -21,12 +21,7 @@ const GROUPS = [
             ['#s8', '8. Build inputData'],
             ['#s9', "9. Get the app's values"],
             ['#s10', '10. Run the action'],
-            ['#example', 'Full examples'],
         ],
-    },
-    {
-        title: 'Reference',
-        links: [['#missing', 'App not listed']],
     },
 ];
 
