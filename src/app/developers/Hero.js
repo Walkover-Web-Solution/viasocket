@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Button from './Button';
+import CopyPromptButton from './CopyPromptButton';
 import { BrandIcon, brandColor, AGENT_NAMES, APP_NAMES } from './BrandIcon';
 import styles from './Hero.module.scss';
 
@@ -56,7 +57,7 @@ export default function Hero() {
                         Connect your AI to the apps your users already use and let it take real actions across 2,300+ apps.
                     </p>
                     <div className="flex items-center justify-center gap-4 flex-wrap mt-2">
-                        <Button href="/developers#start">Add viaSocket to your AI</Button>
+                        <CopyPromptButton />
                         <Button href="/developers/docs" quiet>Read docs</Button>
                         <span className="text-[14px] text-dev-ink-3">Live in under 15 minutes</span>
                     </div>
