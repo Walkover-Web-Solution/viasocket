@@ -364,16 +364,7 @@ export default function DocsPage() {
                         </Callout>
                     </section>
 
-                    <section id="missing" className={section}>
-                        <h2 className={h2}>The app you need is not in the catalog</h2>
-                        <p className={p}>Search first — the catalog is wide and the search matches descriptions as well as names. If you mean your own product or a private internal API, build it once as a connector in Plug Builder, in the Developer section of the dashboard. After that it behaves like every other app: same connect flow, same actions, same events, same steps.</p>
-                        <p className={p}>Do not hand-roll an HTTP client inside the integration instead. It would have none of the connection handling above, which was the reason to be here.</p>
-                    </section>
                 </article>
-
-                <footer className="lg:col-span-2 border-t border-docs-rule pt-[40px] text-docs-muted text-[14px] flex flex-col gap-2">
-                    <p>viaSocket is built by Walkover. This quickstart covers the Apps API. Embed and MCP have their own guides.</p>
-                </footer>
             </div>
         </LangProvider>
     );

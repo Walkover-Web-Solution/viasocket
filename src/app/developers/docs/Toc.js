@@ -23,10 +23,6 @@ const GROUPS = [
             ['#s10', '10. Run the action'],
         ],
     },
-    {
-        title: 'Reference',
-        links: [['#missing', 'App not listed']],
-    },
 ];
 
 export function Toc() {
