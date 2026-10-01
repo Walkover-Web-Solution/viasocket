@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const NAV = [
+    { href: '/developers/apps', label: 'Apps' },
     { href: '/developers/auth', label: 'Managed auth' },
     { href: '/developers/pricing', label: 'Pricing' },
     { href: '/developers/docs', label: 'Docs' },
