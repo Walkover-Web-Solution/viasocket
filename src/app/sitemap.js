@@ -6,6 +6,8 @@ const SITE_URL = 'https://viasocket.com';
 // Dynamic pages (integrations, departments, mcp, automations, find-apps,
 // features) are covered by the backend's own sitemap instead — see
 // build-utilities/generate-robots-txt.js and src/app/robots.txt/route.js.
+// /embed and bare /mcp are left out too — both 301 elsewhere (next.config.js
+// redirects), so they're not real destinations for crawlers to index.
 const STATIC_ROUTES = [
     '/',
     '/agency-partner',
@@ -19,7 +21,6 @@ const STATIC_ROUTES = [
     '/developers/auth',
     '/developers/docs',
     '/developers/pricing',
-    '/embed',
     '/embed/actions-for-ai',
     '/embed/actions-via-webhook',
     '/embed/app-integration',
@@ -34,7 +35,6 @@ const STATIC_ROUTES = [
     '/integrations-script',
     '/lifetime-deal',
     '/lifetime-deal/success',
-    '/mcp',
     '/mcp/aiagent',
     '/mcp/saas',
     '/migration/n8n',

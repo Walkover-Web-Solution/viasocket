@@ -62,6 +62,11 @@ const nextConfig = {
                 destination: 'https://mushrooms.viasocket.com/',
                 permanent: true,
             },
+            {
+                source: '/embed',
+                destination: '/developers',
+                permanent: true,
+            },
         ];
     },
 
