@@ -24,6 +24,7 @@ import Breadcrumb from '@/components/breadcrumb/breadcrumb';
 import RealWorldUseCase from './realWorldUseCase';
 import GetStarted from '@/components/getStarted/getStarted';
 import HeroSection from './heroSection';
+import AutomationIdeasSection from './automationIdeasSection';
 
 export default function IntegrationsAppOneClientComp({
     appOneDetails,
@@ -39,6 +40,7 @@ export default function IntegrationsAppOneClientComp({
     appCount,
     getDoFollowUrlStatusArray,
     templateToShow,
+    automationIdeasData,
 }) {
     const [visibleCombos, setVisibleCombos] = useState(12);
     const [showMore, setShowMore] = useState(combosData?.combinations?.length >= visibleCombos);
@@ -368,6 +370,11 @@ export default function IntegrationsAppOneClientComp({
                     <BlogGrid posts={blogsData} />
                 </div>
             )}
+
+            <AutomationIdeasSection
+                automationIdeasData={automationIdeasData}
+                appName={appOneDetails?.name}
+            />
 
             {faqData && <FAQSection faqData={faqData} />}
 

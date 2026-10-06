@@ -20,6 +20,7 @@ import PopularFlows from './PopularFlows';
 import HowItWorks from './HowItWorks';
 import FinalCTA from './FinalCTA';
 import AboutApps from './AboutApps';
+import AutomationIdeasSection from '../integrationsAppOneComp/automationIdeasSection';
 
 export default function IntegrationsAppTwoClientComp({
     combosData,
@@ -33,6 +34,7 @@ export default function IntegrationsAppTwoClientComp({
     getDoFollowUrlStatusArray,
     templateToShow,
     appCount,
+    automationIdeasData,
     hasToken,
 }) {
     const router = useRouter();
@@ -239,6 +241,12 @@ export default function IntegrationsAppTwoClientComp({
                     <BlogGrid posts={blogsData} />
                 </div>
             )}
+
+            {/* 7c. Automation Ideas */}
+            <AutomationIdeasSection
+                automationIdeasData={automationIdeasData}
+                appName={`${appOneDetails?.name}${appTwoDetails?.name ? ` + ${appTwoDetails.name}` : ''}`}
+            />
 
             {/* 8. Need Help Building Your Workflow? */}
             <div className="container cont">

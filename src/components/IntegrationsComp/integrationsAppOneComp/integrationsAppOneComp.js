@@ -20,6 +20,7 @@ export default async function IntegrationsAppOneComp({
     getDoFollowUrlStatusArray,
     navbarData,
     templateToShow,
+    automationIdeasData,
     skipHeadComp,
 }) {
     const getTriggersAndActionsCount = (events) => {
@@ -149,6 +150,7 @@ export default async function IntegrationsAppOneComp({
                 appCount={appCount}
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
+                automationIdeasData={automationIdeasData}
             />
         </div>
     );
