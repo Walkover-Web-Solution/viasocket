@@ -453,6 +453,7 @@ export async function getAbTestVisitorRows(visitorId, pageUrl) {
     // LIKE; ordering by autonumber makes "the oldest row" the same answer for
     // every concurrent request, which is what keeps them from disagreeing about
     // which row survives.
+    return null;
     const params = new URLSearchParams({
         filter: `name LIKE '%${visitorId}%'`,
         fields: ABTEST_ROW_FIELDS,
