@@ -13,16 +13,26 @@ const nextConfig = {
     },
 
     async rewrites() {
-        return [
-            {
-                source: '/feedback-satisfied',
-                destination: '/feedback?variant=satisfied',
-            },
-            {
-                source: '/feedback-unsatisfied',
-                destination: '/feedback?variant=unsatisfied',
-            },
-        ];
+        return {
+            // The homepage is the static site in public/new-home. beforeFiles runs ahead of the
+            // app routes, so "/" is served from it and src/app/page.js (with its A/B variants) is not used.
+            beforeFiles: [
+                {
+                    source: '/',
+                    destination: '/new-home/index.html',
+                },
+            ],
+            afterFiles: [
+                {
+                    source: '/feedback-satisfied',
+                    destination: '/feedback?variant=satisfied',
+                },
+                {
+                    source: '/feedback-unsatisfied',
+                    destination: '/feedback?variant=unsatisfied',
+                },
+            ],
+        };
     },
 
     async redirects() {

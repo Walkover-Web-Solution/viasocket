@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>viaSocket: Integration Layer for your products &amp; agents</title>
+<meta name="description" content="Add integrations to your product or AI agent with one prompt. You build the app or agent; viaSocket handles the connections and actions.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#fafaf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b0b0c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="/new-home/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/new-home/styles.css?v=140">
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-THTCRSLN');</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-THTCRSLN" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="#hero" aria-label="viaSocket home"><picture><source srcset="/new-home/assets/logo-light.svg" media="(prefers-color-scheme: dark)"><img src="/new-home/assets/logo.svg" alt="viaSocket" width="92" height="27"></picture></a>
+    <nav class="top-nav" aria-label="Main">
+      <a href="#features">Features</a>
+      <a href="https://viasocket.com/developers/pricing">Pricing</a>
+      <a href="https://flow.viasocket.com/integrations">Log in</a>
+    </nav>
+    <a class="start" href="https://flow.viasocket.com/integrations">Start free <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1 · Hero: the line on the left; on the right, an app like yours with the connected app's own consent screen -->
+<section class="hero" id="hero" aria-labelledby="h1">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-tx">
+      <h1 id="h1" aria-label="Integration Layer for your products &amp; agents."><span aria-hidden="true"><span class="h1-l">Integration Layer</span><span class="h1-l">for your</span><span class="h1-l rot"><em data-rot>AI agent.</em></span></span></h1>
+      <p class="hero-sub">You build the app or agent. viaSocket handles the connections and actions.</p>
+      <div class="hero-cta">
+        <button class="btn" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="1"/><path d="M5 15H3V3h12v2"/></svg><span class="btn-t">Copy setup prompt</span></button>
+        <span class="hero-hint">Paste it into Cursor, Claude Code or Codex.</span>
+      </div>
+      <div class="hero-apps" aria-label="Connects to 2,300+ apps, the browser and 50+ AI models">
+        <span class="ha-g"><span class="ha-k">2,300+ apps</span><span class="ha-i" aria-hidden="true"><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt="" title="Gmail" width="16" height="16" loading="lazy"><img src="https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg" alt="" title="Slack" width="16" height="16" loading="lazy"><img src="https://stuff.thingsofbrand.com/hubspot.com/images/img61728fea98_hubspot.jpg" alt="" title="HubSpot" width="16" height="16" loading="lazy"><img src="https://stuff.thingsofbrand.com/shopify.com/images/img6fb21a1332_shopify.jpg" alt="" title="Shopify" width="16" height="16" loading="lazy"></span></span>
+        <i class="ha-sep" aria-hidden="true"></i>
+        <span class="ha-g"><span class="ha-k">Browser</span><span class="ha-i" aria-hidden="true"><svg class="ha-br" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M6.5 6.5h.01M9 6.5h.01"/></svg></span></span>
+        <i class="ha-sep" aria-hidden="true"></i>
+        <span class="ha-g"><span class="ha-k">50+ AI models</span><span class="ha-i" aria-hidden="true"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" alt="" title="ChatGPT" width="16" height="16" loading="lazy" class="inv"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="" title="Claude" width="16" height="16" loading="lazy"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="" title="Gemini" width="16" height="16" loading="lazy"><img src="https://ico.hugeicons.com/perplexity-ai-stroke-rounded@3x.webp?x=276356447" alt="" title="Perplexity" width="16" height="16" loading="lazy" class="inv"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/grok-ai-icon.png" alt="" title="Grok" width="16" height="16" loading="lazy" class="inv"><img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg" alt="" title="Mistral" width="16" height="16" loading="lazy"></span></span>
+      </div>
+    </div>
+
+    <div class="hx" id="hx">
+      <div class="hx-chips" role="group" aria-label="See it in another app"><button type="button" class="hx-c" aria-pressed="true">AI agent</button><button type="button" class="hx-c" aria-pressed="false">CRM</button><button type="button" class="hx-c" aria-pressed="false">Support desk</button><button type="button" class="hx-c" aria-pressed="false">Recruiting</button></div>
+      <div class="shot" id="hx-panel" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Example apps. Changes every few seconds; hover or focus to hold it.">
+        <p class="sr-only" id="hx-say">Your AI agent asks to connect Slack before it posts. Slack’s own consent screen opens on top.</p>
+        <div class="shot-in" aria-hidden="true">
+
+          <!-- your AI agent + Slack -->
+          <div class="scene on" data-scene="0">
+            <div class="win app pw">
+              <div class="wb"><span class="wb-dots"><i></i><i></i><i></i></span><span class="wb-app"><i>A</i>Your AI agent</span><span class="wb-url">app.youragent.ai/chat</span></div>
+              <div class="app-b">
+                <div class="a-nav"><span class="on">Chats</span><span>Tools</span><span>Memory</span><span>Settings</span></div>
+                <div class="a-main">
+                  <div class="a-hd"><span class="a-av sp"><svg viewBox="0 0 24 24"><path d="M12 3.5l1.9 4.8 4.8 1.9-4.8 1.9L12 16.9l-1.9-4.8-4.8-1.9 4.8-1.9z"/></svg></span><span class="a-who"><b>Launch notes</b><small>Chat · today</small></span><span class="a-badge">Agent</span></div>
+                  <div class="a-cols">
+                    <div class="a-stack"><span class="a-msg me">Post the launch notes to #marketing.</span><span class="a-msg">I need access to Slack to post them.</span><div class="a-card a-empty"><span class="a-ic"><img src="https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg" alt=""></span><b>Slack isn’t connected</b><small>Connect it once to let the agent post.</small><span class="a-btn">Connect Slack</span></div></div>
+                    <div class="a-card a-side"><span class="kv"><small>Tool</small><b>Gmail · on</b></span><span class="kv"><small>Tool</small><b>Notion · on</b></span><span class="kv"><small>Tool</small><b>Slack · off</b></span><span class="kv"><small>Model</small><b>Your choice</b></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pop-wrap">
+              <div class="win pop pw">
+                <div class="pa-bar"><img src="https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg" alt=""><span>Slack</span></div>
+                <div class="pa-b">
+                  <div class="pa-pair"><span class="pa-app">A</span><svg class="pa-x" viewBox="0 0 24 24"><path d="M4 9h14l-3-3M20 15H6l3 3"/></svg><span class="pa-prov"><img src="https://stuff.thingsofbrand.com/slack.com/images/img668216333e_slack.jpg" alt=""></span></div>
+                  <b class="pa-t">Your AI agent wants to access the Northwind workspace</b>
+                  <span class="pa-acct"><i>N</i><span>northwind.slack.com</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                  <span class="pa-k">It will be able to:</span>
+                  <ul class="pa-sc"><li><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg><span>Send messages as Your AI agent</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li><li><svg viewBox="0 0 24 24"><path d="M5 9h14M5 15h14M10 4L8 20M16 4l-2 16"/></svg><span>See channels it’s added to</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li></ul>
+                  <p class="pa-note">Make sure you trust Your AI agent. You can remove access any time in Slack.</p>
+                  <div class="pa-btns"><span>Cancel</span><span class="on">Allow</span></div>
+                </div>
+              </div>
+              <span class="note">Slack’s own consent screen</span>
+            </div>
+          </div>
+
+          <!-- your CRM + Gmail -->
+          <div class="scene" data-scene="1">
+            <div class="win app pw">
+              <div class="wb"><span class="wb-dots"><i></i><i></i><i></i></span><span class="wb-app"><i>C</i>Your CRM</span><span class="wb-url">app.yourcrm.com/contacts/lia-chen</span></div>
+              <div class="app-b">
+                <div class="a-nav"><span class="on">Contacts</span><span>Deals</span><span>Inbox</span><span>Reports</span><span>Settings</span></div>
+                <div class="a-main">
+                  <div class="a-hd"><span class="a-av">LC</span><span class="a-who"><b>Lia Chen</b><small>Head of Operations · Northwind</small></span><span class="a-badge">Customer</span></div>
+                  <div class="a-tabs"><span>Overview</span><span class="on">Emails</span><span>Deals</span><span>Notes</span></div>
+                  <div class="a-cols">
+                    <div class="a-card a-empty"><span class="a-ic"><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt=""></span><b>See Lia’s emails here</b><small>Connect Gmail to sync the conversation.</small><span class="a-btn">Connect Gmail</span></div>
+                    <div class="a-card a-side"><span class="kv"><small>Email</small><b>lia@northwind.com</b></span><span class="kv"><small>Stage</small><b>Demo done</b></span><span class="kv"><small>Owner</small><b>You</b></span><span class="kv"><small>Next step</small><b>Follow-up</b></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pop-wrap">
+              <div class="win pop pw">
+                <div class="pa-bar"><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt=""><span>Sign in with Google</span></div>
+                <div class="pa-b">
+                  <div class="pa-pair"><span class="pa-app">C</span><svg class="pa-x" viewBox="0 0 24 24"><path d="M4 9h14l-3-3M20 15H6l3 3"/></svg><span class="pa-prov"><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt=""></span></div>
+                  <b class="pa-t">Your CRM wants to access your Google Account</b>
+                  <span class="pa-acct"><i>D</i><span>dana@company.com</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                  <span class="pa-k">This will let Your CRM:</span>
+                  <ul class="pa-sc"><li><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg><span>Read, compose and send email</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li><li><svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M14 6l4 4"/></svg><span>Manage drafts</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li></ul>
+                  <p class="pa-note">Make sure you trust Your CRM. You can remove access any time in your Google Account.</p>
+                  <div class="pa-btns"><span>Cancel</span><span class="on">Allow</span></div>
+                </div>
+              </div>
+              <span class="note">Gmail’s own consent screen</span>
+            </div>
+          </div>
+
+          <!-- your support desk + Shopify -->
+          <div class="scene" data-scene="2">
+            <div class="win app pw">
+              <div class="wb"><span class="wb-dots"><i></i><i></i><i></i></span><span class="wb-app"><i>S</i>Your support desk</span><span class="wb-url">help.yourdesk.com/tickets/1042</span></div>
+              <div class="app-b">
+                <div class="a-nav"><span>Inbox</span><span class="on">Tickets</span><span>Customers</span><span>Reports</span><span>Settings</span></div>
+                <div class="a-main">
+                  <div class="a-hd"><span class="a-av">MK</span><span class="a-who"><b>#1042 · Where’s my order?</b><small>Maya Kapoor · 10 min ago</small></span><span class="a-badge">Open</span></div>
+                  <div class="a-tabs"><span class="on">Conversation</span><span>Details</span><span>History</span></div>
+                  <div class="a-cols">
+                    <div class="a-stack"><span class="a-msg">Hi! My order #1042 hasn’t arrived yet. Any update?</span><div class="a-card a-empty"><span class="a-ic"><img src="https://stuff.thingsofbrand.com/shopify.com/images/img6fb21a1332_shopify.jpg" alt=""></span><b>See the order here</b><small>Connect Shopify to show order and shipping status.</small><span class="a-btn">Connect Shopify</span></div></div>
+                    <div class="a-card a-side"><span class="kv"><small>Customer</small><b>Maya Kapoor</b></span><span class="kv"><small>Email</small><b>maya@mail.com</b></span><span class="kv"><small>Channel</small><b>Email</b></span><span class="kv"><small>Priority</small><b>Normal</b></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pop-wrap">
+              <div class="win pop pw">
+                <div class="pa-bar"><img src="https://stuff.thingsofbrand.com/shopify.com/images/img6fb21a1332_shopify.jpg" alt=""><span>Shopify</span></div>
+                <div class="pa-b">
+                  <div class="pa-pair"><span class="pa-app">S</span><svg class="pa-x" viewBox="0 0 24 24"><path d="M4 9h14l-3-3M20 15H6l3 3"/></svg><span class="pa-prov"><img src="https://stuff.thingsofbrand.com/shopify.com/images/img6fb21a1332_shopify.jpg" alt=""></span></div>
+                  <b class="pa-t">Your support desk wants to access your store</b>
+                  <span class="pa-acct"><i>N</i><span>northwind.myshopify.com</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                  <span class="pa-k">It will be able to:</span>
+                  <ul class="pa-sc"><li><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span>View orders and shipping</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li><li><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg><span>View customers</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li></ul>
+                  <p class="pa-note">Make sure you trust Your support desk. You can remove it any time in your store settings.</p>
+                  <div class="pa-btns"><span>Cancel</span><span class="on">Install</span></div>
+                </div>
+              </div>
+              <span class="note">Shopify’s own consent screen</span>
+            </div>
+          </div>
+
+          <!-- your recruiting app + Google Calendar -->
+          <div class="scene" data-scene="3">
+            <div class="win app pw">
+              <div class="wb"><span class="wb-dots"><i></i><i></i><i></i></span><span class="wb-app"><i>R</i>Your recruiting app</span><span class="wb-url">jobs.yourhiring.com/candidates/riya</span></div>
+              <div class="app-b">
+                <div class="a-nav"><span>Jobs</span><span class="on">Candidates</span><span>Interviews</span><span>Team</span><span>Settings</span></div>
+                <div class="a-main">
+                  <div class="a-hd"><span class="a-av">RS</span><span class="a-who"><b>Riya Shah</b><small>Product designer · Applied 3 days ago</small></span><span class="a-badge">Interview</span></div>
+                  <div class="a-tabs"><span>Profile</span><span class="on">Interviews</span><span>Notes</span></div>
+                  <div class="a-cols">
+                    <div class="a-card a-empty"><span class="a-ic"><img src="https://stuff.thingsofbrand.com/google.com/images/img7_Google-Calendar.png" alt=""></span><b>Schedule the interview</b><small>Connect Google Calendar to see free times.</small><span class="a-btn">Connect Google Calendar</span></div>
+                    <div class="a-card a-side"><span class="kv"><small>Email</small><b>riya@mail.com</b></span><span class="kv"><small>Role</small><b>Product designer</b></span><span class="kv"><small>Stage</small><b>Interview</b></span><span class="kv"><small>Panel</small><b>2 people</b></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pop-wrap">
+              <div class="win pop pw">
+                <div class="pa-bar"><img src="https://stuff.thingsofbrand.com/google.com/images/img7_Google-Calendar.png" alt=""><span>Sign in with Google</span></div>
+                <div class="pa-b">
+                  <div class="pa-pair"><span class="pa-app">R</span><svg class="pa-x" viewBox="0 0 24 24"><path d="M4 9h14l-3-3M20 15H6l3 3"/></svg><span class="pa-prov"><img src="https://stuff.thingsofbrand.com/google.com/images/img7_Google-Calendar.png" alt=""></span></div>
+                  <b class="pa-t">Your recruiting app wants to access your Google Account</b>
+                  <span class="pa-acct"><i>D</i><span>dana@company.com</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+                  <span class="pa-k">This will let Your recruiting app:</span>
+                  <ul class="pa-sc"><li><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>See and edit calendar events</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li><li><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>See when you’re free</span><svg class="pa-i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg></li></ul>
+                  <p class="pa-note">Make sure you trust Your recruiting app. You can remove access any time in your Google Account.</p>
+                  <div class="pa-btns"><span>Cancel</span><span class="on">Allow</span></div>
+                </div>
+              </div>
+              <span class="note">Google Calendar’s own consent screen</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · Use cases: equal cards, each a screen of the app -->
+<section class="sec" id="use-cases" aria-labelledby="h-uc">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-t"><span class="eyebrow">Use cases</span><h2 class="h2" id="h-uc">What users are building.</h2></div>
+    </div>
+    <div class="ix">
+      <div class="ix-l">
+        <div class="tabs" role="group" aria-label="Filter examples" id="tabs"></div>
+        <div class="ix-list" id="ix-list" role="list" aria-label="Examples"></div>
+        <p class="legend"><span><i class="dot" aria-hidden="true"></i>Live: real apps built on viaSocket</span><span><i class="dot ex" aria-hidden="true"></i>Example: an idea you can copy as a prompt</span></p>
+      </div>
+      <div class="ix-r" id="ix-r"><article class="pane" id="pane" aria-label="Preview of the selected example"></article></div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · Sample prompts: what people type to their coding agent; each copy carries the setup prompt -->
+<section class="sec" id="prompts" aria-labelledby="h-pr">
+  <div class="wrap">
+    <div class="sh">
+      <div class="sh-t"><span class="eyebrow">Sample prompts</span><h2 class="h2" id="h-pr">Just tell your AI what you want.</h2></div>
+    </div>
+    <ul class="pr" id="pr-list" aria-label="Sample prompts"></ul>
+  </div>
+</section>
+
+<!-- 4 · Features: the jobs viaSocket handles -->
+<section class="sec" id="features" aria-labelledby="h-feat">
+  <div class="wrap">
+    <div class="sh"><div class="sh-t"><span class="eyebrow">What viaSocket handles</span><h2 class="h2" id="h-feat">The infrastructure behind your integrations.</h2></div></div>
+    <div class="vt" role="table" aria-label="Building it yourself compared with viaSocket">
+      <div class="vt-r vt-h" role="row"><span role="columnheader">The job</span><span role="columnheader">Building it yourself</span><span role="columnheader">With viaSocket</span></div>
+      <div class="vt-g" role="row"><span role="rowheader">Every piece handled</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 0 1-10 0zM12 16v5"/></svg></span>Talking to each app</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>An API client per app, maintained forever</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>One call shape for every app.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13.5h6L10 21l9-11h-6z"/></svg></span>Events</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Public endpoints, signatures, retries, polling</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Subscribe. Polling and retries are handled.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l1.9 4.8 4.8 1.9-4.8 1.9L12 16.9l-1.9-4.8-4.8-1.9 4.8-1.9z"/><path d="M18.5 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg></span>AI agents</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Wrap every API as a tool yourself</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>The same actions work as agent tools.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16"/><path d="M12 8.5v7M8.5 12h7"/></svg></span>The next app</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Most of the work, all over again</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Change three ids. Nothing else.</span></div>
+      <div class="vt-g" role="row"><span role="rowheader">Every layer secure</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="8" r="3.5"/><path d="M3.5 19.5c.8-3.2 3.3-5 6.5-5s5.7 1.8 6.5 5M16 10.5l1.8 1.8 3.2-3.3"/></svg></span>User permission</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>An OAuth app and consent flow per service</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>One popup, on the app’s own consent screen.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l8-8M16 7l2.5 2.5M14 9l2 2"/></svg></span>Credentials</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Tokens in your database, and your liability</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Encrypted and refreshed. You keep an id.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/></svg></span>User isolation</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Your own code to keep each user’s data apart</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Isolated by the user id you choose.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="7"/><rect x="3" y="13" width="18" height="7"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></span>Your secret</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>Your own scheme to keep keys off the client</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Stays on your server. Nothing secret in the browser.</span></div>
+      <div class="vt-r" role="row"><b role="rowheader"><span class="vt-ic" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg></span>Event handlers</b><span class="vt-no" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17"/></svg></i>A public webhook endpoint to defend</span><span class="vt-yes" role="cell"><i aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i>Each event runs in its own sandbox.</span></div>
+    </div>
+    <div class="vt-f">
+      <div class="vt-f-tx">
+        <h3>Start with one prompt.</h3>
+        <p>You build the app or agent. viaSocket handles the connections and actions.</p>
+        <p class="vt-f-trust">GDPR · CCPA · HTTPS behind Cloudflare · DDoS protection · Web firewall</p>
+      </div>
+      <div class="vt-f-go">
+        <button class="btn" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="1"/><path d="M5 15H3V3h12v2"/></svg><span class="btn-t">Copy setup prompt</span></button>
+        <a class="ulink" href="https://viasocket.com/help/security-and-compliance">Security details <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="ft" aria-label="viaSocket">
+  <div class="ft-in">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <a class="logo" href="#hero" aria-label="viaSocket home"><picture><source srcset="/new-home/assets/logo-light.svg" media="(prefers-color-scheme: dark)"><img src="/new-home/assets/logo.svg" alt="viaSocket" width="110" height="32"></picture></a>
+        <p>Integration Layer for your products &amp; agents.</p>
+        <button class="btn" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="3"/><path d="M5 15a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2"/></svg><span class="btn-t">Copy setup prompt</span></button>
+        <div class="vf-ai"><span>Explore with AI</span><a href="https://chatgpt.com/?q=I%20want%20to%20automate%20my%20business.%20Use%20everything%20you%20already%20know%20about%20me%2C%20including%20our%20previous%20conversations.%20If%20important%20details%20are%20missing%2C%20ask%20focused%20questions%20before%20making%20recommendations.%20Analyze%20my%20company%2C%20products%2C%20team%20structure%2C%20software%20stack%2C%20workflows%2C%20customer%20journey%2C%20and%20operational%20bottlenecks.%20Then%20recommend%20the%20highest-impact%20automations%2C%20AI%20agents%2C%20integrations%2C%20and%20workflows%20that%20can%20be%20built%20using%20ViaSocket%20%28https%3A%2F%2Fviasocket.com%29%2C%20ranked%20by%20ROI%2C%20implementation%20effort%2C%20and%20business%20impact." target="_blank" rel="noopener noreferrer" title="Ask ChatGPT about viaSocket" aria-label="Ask ChatGPT about viaSocket"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" alt="" width="14" height="14" loading="lazy"></a><a href="https://claude.ai/new?q=I%20want%20to%20automate%20my%20business.%20Use%20everything%20you%20already%20know%20about%20me%2C%20including%20our%20previous%20conversations.%20If%20important%20details%20are%20missing%2C%20ask%20focused%20questions%20before%20making%20recommendations.%20Analyze%20my%20company%2C%20products%2C%20team%20structure%2C%20software%20stack%2C%20workflows%2C%20customer%20journey%2C%20and%20operational%20bottlenecks.%20Then%20recommend%20the%20highest-impact%20automations%2C%20AI%20agents%2C%20integrations%2C%20and%20workflows%20that%20can%20be%20built%20using%20ViaSocket%20%28https%3A%2F%2Fviasocket.com%29%2C%20ranked%20by%20ROI%2C%20implementation%20effort%2C%20and%20business%20impact." target="_blank" rel="noopener noreferrer" title="Ask Claude about viaSocket" aria-label="Ask Claude about viaSocket"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="" width="14" height="14" loading="lazy"></a><a href="https://www.perplexity.ai/?q=I%20want%20to%20automate%20my%20business.%20Use%20everything%20you%20already%20know%20about%20me%2C%20including%20our%20previous%20conversations.%20If%20important%20details%20are%20missing%2C%20ask%20focused%20questions%20before%20making%20recommendations.%20Analyze%20my%20company%2C%20products%2C%20team%20structure%2C%20software%20stack%2C%20workflows%2C%20customer%20journey%2C%20and%20operational%20bottlenecks.%20Then%20recommend%20the%20highest-impact%20automations%2C%20AI%20agents%2C%20integrations%2C%20and%20workflows%20that%20can%20be%20built%20using%20ViaSocket%20%28https%3A%2F%2Fviasocket.com%29%2C%20ranked%20by%20ROI%2C%20implementation%20effort%2C%20and%20business%20impact." target="_blank" rel="noopener noreferrer" title="Ask Perplexity about viaSocket" aria-label="Ask Perplexity about viaSocket"><img src="https://ico.hugeicons.com/perplexity-ai-stroke-rounded@3x.webp?x=276356447" alt="" width="14" height="14" loading="lazy"></a><a href="https://grok.com/?q=I%20want%20to%20automate%20my%20business.%20Use%20everything%20you%20already%20know%20about%20me%2C%20including%20our%20previous%20conversations.%20If%20important%20details%20are%20missing%2C%20ask%20focused%20questions%20before%20making%20recommendations.%20Analyze%20my%20company%2C%20products%2C%20team%20structure%2C%20software%20stack%2C%20workflows%2C%20customer%20journey%2C%20and%20operational%20bottlenecks.%20Then%20recommend%20the%20highest-impact%20automations%2C%20AI%20agents%2C%20integrations%2C%20and%20workflows%20that%20can%20be%20built%20using%20ViaSocket%20%28https%3A%2F%2Fviasocket.com%29%2C%20ranked%20by%20ROI%2C%20implementation%20effort%2C%20and%20business%20impact." target="_blank" rel="noopener noreferrer" title="Ask Grok about viaSocket" aria-label="Ask Grok about viaSocket"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/grok-ai-icon.png" alt="" width="14" height="14" loading="lazy"></a></div>
+      </div>
+      <nav class="ft-links" aria-label="Footer">
+        <div class="ft-col">
+          <div class="vf-g"><h3>For SaaS</h3><ul><li><a href="https://cal.id/team/viasocket/bring-saas-app-on-viasocket">List Your App</a></li><li><a href="https://viasocket.com/help/plugin-builder">Build Your Own Plug</a></li><li><a href="https://viasocket.com/mcp/saas">Whitelabel MCP Server</a></li><li><a href="https://viasocket.com/help/viasocket-embed/billing-partner">Become a Billing Partner</a></li><li><a href="https://viasocket.com/integrations-script">Showcase Popular Workflows</a></li></ul></div>
+        </div>
+        <div class="ft-col">
+          <div class="vf-g"><h3>Support</h3><ul><li><a href="https://cal.id/team/viasocket/workflow-setup-discussion">Book a Demo</a></li><li><a href="https://viasocket.com/support">Contact Support Team</a></li><li><a href="https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas">Request a Feature</a></li><li><a href="https://viasocket.com/faq">Knowledge Base</a></li><li><a href="https://viasocket.com/blog">Blog</a></li><li><a href="https://play.google.com/store/apps/details?id=com.viasocketmobile">Download Mobile App</a></li><li><a href="https://viasocket.com/integrations">Request an Integration</a></li></ul></div>
+        </div>
+        <div class="ft-col">
+          <div class="vf-g"><h3>Automation Experts</h3><ul><li><a href="https://tally.so/r/wzVdKZ">Hire an Expert</a></li><li><a href="https://viasocket.com/help/partners">Become a Partner</a></li><li><a href="https://viasocket.com/experts">Partner Program</a></li><li><a href="https://viasocket.com/agency-partner">Agency Partner Program</a></li></ul></div>
+          <div class="vf-g"><h3>MCP</h3><ul><li><a href="https://viasocket.com/mcp">MCP Marketplace</a></li><li><a href="https://viasocket.com/mcp/aiagent">MCP for AI Agents</a></li><li><a href="https://viasocket.com/mcp/saas">MCP for SaaS Players</a></li></ul></div>
+        </div>
+        <div class="ft-col">
+          <div class="vf-g"><h3>Company</h3><ul><li><a href="https://viasocket.com/help/about-us">About</a></li><li><a href="https://walkover.in/careers">We are Hiring</a></li><li><a href="https://walkover.in/about/culture-we-foster">Culture We Foster</a></li><li><a href="https://roadmap.viasocket.com/roadmap">Roadmap</a></li><li><a href="https://viasocket.com/help/security-and-compliance/ai-transparency">AI Transparency</a></li></ul></div>
+          <div class="vf-g"><h3>Plans</h3><ul><li><a href="https://viasocket.com/pricing">Pricing</a></li></ul></div>
+          <div class="vf-g"><h3>AI &amp; Automation</h3><ul><li><a href="https://viasocket.com/integrations">Apps Integrations</a></li><li><a href="https://viasocket.com/discovery">Discover Top Apps</a></li></ul></div>
+        </div>
+      </nav>
+    </div>
+    <div class="ft-bar">
+      <div class="vf-legal"><p>© 2026 viaSocket | <a href="https://viasocket.com/privacy">Privacy</a>, <a href="https://viasocket.com/terms">Terms</a> and <a href="https://viasocket.com/data-retention-deletion">Data Retention &amp; Deletion Policy</a></p><p>Walkover Web Solutions Pvt Ltd. | All rights reserved.</p></div>
+      <div class="ft-trust"><div class="vf-badges"><a href="https://www.capterra.com/p/10020406/viaSocket/" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on Capterra"><img src="https://brand-assets.capterra.com/badge/0c624c79-b388-4438-bb92-6bdbe09c04ee.svg" alt="Capterra badge" width="44" height="34" loading="lazy"></a><img src="https://www.g2.com/shared-assets/product-badges/users-love-us.svg" alt="G2 Users Love Us badge" width="50" height="60" loading="lazy"></div><div class="vf-social"><a href="https://www.instagram.com/viasocket/" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg></a><a href="https://www.linkedin.com/company/viasocket-walkover/" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></a><a href="https://x.com/viasocket" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a><a href="https://www.youtube.com/@viasocket" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"/><path d="m10 15 5-3-5-3z"/></svg></a><a href="https://discord.com/invite/wqsSsMAkkz" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on Discord"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg></a></div></div>
+    </div>
+  </div>
+  <div class="ft-mark" aria-hidden="true">viaSocket</div>
+</footer>
+
+
+<p class="sr-only" id="promptText">Integrate apps into this product with viaSocket.
+Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
+Keep it there for next time; download it again if a call in it fails.
+My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
+Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's &quot;Finished when&quot; list.</p>
+
+<script src="/new-home/main.js?v=97"></script>
+</body>
+</html>
