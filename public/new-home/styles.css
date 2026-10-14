@@ -1255,7 +1255,7 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 @media (max-width: 760px) { .pane .pu, .pane .pu[data-at] { opacity: 1 !important; border-color: var(--line-2) !important; } }
 
 /* FAQ: question rows that open in place; every answer starts with the answer */
-.fq { max-width: 880px; border-top: 1px solid var(--line-2); }
+.fq { max-width: none; border-top: 1px solid var(--line-2); }
 .fq-i { border-bottom: 1px solid var(--line-2); }
 .fq-i > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; list-style: none; cursor: pointer; }
 .fq-i > summary::-webkit-details-marker { display: none; }
