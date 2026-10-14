@@ -585,12 +585,12 @@
   /* ---------- sample prompts: what a founder asks their AI to add so their customers get integrations, AI agents and automations; clicking a card copies it with the setup prompt ---------- */
   // what a founder wants their own customers to be able to do: connect apps, use an AI agent, run automations (one of each per row)
   var PR = [
-    ['Add integrations to my app so users can connect the tools they already use, like Slack, HubSpot and Gmail.'],
-    ['Add a chat assistant to my app that can actually do things in my users’ Gmail, Slack and CRM.'],
-    ['My users keep asking for automations. Add a simple “when this happens, do that” builder to my app.'],
-    ['Most of my customers use HubSpot or Salesforce. Let them connect it and bring their contacts into my app.'],
-    ['Let users choose what my AI agent can do in their apps, like reading their Gmail but not sending from it.'],
-    ['Send each user a short morning summary of their inbox in Slack. Let them switch it on from settings.']
+    ['I’m building a support chatbot. It needs to look up Shopify orders and email customers through Gmail. Use viaSocket for those integrations.'],
+    ['Our users want a morning summary of their Gmail inbox in Slack. Set this up with viaSocket and let them choose the channel.'],
+    ['When a Stripe invoice is paid, mark it paid in our database and notify our Discord channel. Handle this through viaSocket.'],
+    ['Customers keep asking for custom workflows. Build an Automations page where they can connect their apps and do things like send new HubSpot contacts to Google Sheets.'],
+    ['My agent already runs on Vercel AI SDK. Wire up viaSocket so it can update HubSpot contacts and send emails through Gmail.'],
+    ['I don’t want to build OAuth flows for every integration. Use viaSocket to let each customer connect their own Slack and HubSpot accounts.']
   ];
   var prList = $('#pr-list');
   prList.innerHTML = PR.map(function (p, i) {

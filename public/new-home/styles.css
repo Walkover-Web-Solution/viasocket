@@ -1286,3 +1286,47 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
   /* the whole window, scaled to the card: no cropping */
   .m-prev .rc { left: 0; right: auto; font-size: calc(100cqw / 51.2); }
 }
+
+/* sample prompts: longer, plain prompts read at 17px */
+.pr-q { font-size: 17px; font-weight: 400; line-height: 1.5; }
+@media (max-width: 640px) { .pr-q { font-size: 15.5px; } }
+
+/* footer: five short groups in one row, the same sentence case throughout */
+.ft-links { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 28px; }
+.ft .vf-g ul { gap: 11px; }
+@media (max-width: 1024px) { .ft-links { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; } }
+@media (max-width: 560px) { .ft-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; } }
+
+/* footer, polished: its own quiet surface, a bigger mark, roomier columns, a tidy legal line */
+.ft { margin-top: 0; border-top: 1px solid var(--line); background: var(--s2); }
+.ft-in { padding: 80px 0 32px; }
+.ft-top { grid-template-columns: minmax(0, 1fr) minmax(0, 3.1fr); gap: 48px; padding-bottom: 56px; }
+.ft-brand { gap: 20px; }
+.ft-brand .logo img { width: 168px; height: auto; }
+.ft-brand .ft-tag { max-width: 17ch; margin-top: 4px; font-size: 24px; font-weight: 600; line-height: 1.2; letter-spacing: -0.025em; color: var(--ink); }
+.ft-brand .ft-sub { max-width: 34ch; margin-top: -10px; font-size: 15px; font-weight: 400; line-height: 1.55; letter-spacing: 0; color: var(--ink-2); }
+.ft-brand .btn { margin-top: 4px; }
+.ft .vf-ai a { background: var(--s1); transition: border-color 0.15s ease; }
+.ft-links { padding-top: 10px; }
+@media (min-width: 1025px) { .ft-links { gap: 20px; } .ft .vf-g a { white-space: nowrap; } }
+.ft .vf-g .vf-gh { margin-bottom: 18px; }
+.ft .vf-g ul { gap: 13px; }
+.ft .vf-g a { font-size: 15px; transition: color 0.15s ease; }
+.ft .vf-g a:hover { color: var(--ink); text-decoration: none; }
+.ft-bar { padding-top: 28px; }
+.ft .vf-legal { gap: 6px; }
+.ft .vf-legal p { display: flex; flex-wrap: wrap; align-items: center; }
+.ft .vf-legal i { margin: 0 10px; font-style: normal; color: var(--line-3); }
+.ft .vf-legal a { color: var(--ink-2); text-decoration: none; transition: color 0.15s ease; }
+.ft .vf-legal a:hover { color: var(--ink); text-decoration: underline; }
+.ft .vf-badges img { height: 38px; }
+.ft .vf-social a { width: 38px; height: 38px; background: var(--s1); transition: border-color 0.15s ease; }
+.ft .vf-social svg { width: 15px; height: 15px; }
+.ft-mark { color: var(--s3); }
+@media (max-width: 1024px) { .ft-top { grid-template-columns: minmax(0, 1fr); gap: 44px; } .ft-links { padding-top: 0; } }
+@media (max-width: 560px) {
+  .ft-in { padding-top: 56px; }
+  .ft-brand .logo img { width: 150px; }
+  .ft-brand .ft-tag { font-size: 21px; }
+  .ft .vf-legal i { margin: 0 7px; }
+}
