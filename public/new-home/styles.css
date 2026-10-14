@@ -1373,3 +1373,8 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 .ft .vf-social svg.fill { fill: currentColor; stroke: none; }
 /* badges are self-hosted; if one ever fails to load, don't print its alt text over the footer */
 .ft .vf-badges img { overflow: hidden; color: transparent; font-size: 0; }
+/* badges and social icons: a solid, immediately clickable box each */
+.ft .vf-badges a { display: inline-flex; align-items: center; padding: 4px; margin: -4px; cursor: pointer; }
+.ft .vf-badges img { display: block; pointer-events: none; }
+.ft .vf-social a, .ft .vf-legal a, .ft .vf-g a { cursor: pointer; }
+.ft .vf-social svg { pointer-events: none; }

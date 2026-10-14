@@ -112,10 +112,10 @@
       'Your recruiting app asks to connect Google Calendar to find free times. Google’s own consent screen opens on top.'
     ];
     // every 2.4s, held while the pointer or keyboard focus is on the window itself; never with reduced motion
-    var AUTO = 2400, OUT = 120, cur = 0, timer = 0, swapT = 0, hover = false, focus = false;
+    var AUTO = 2400, OUT = 120, cur = 0, timer = 0, swapT = 0, hover = false, focus = false, away = false;
     function arm() {
       clearTimeout(timer);
-      if (reduced || hover || focus) return;
+      if (reduced || hover || focus || away) return;
       timer = setTimeout(function () {
         if (shot.contains(doc.activeElement)) { focus = true; return; }
         show(cur + 1);
@@ -145,7 +145,13 @@
     shot.addEventListener('mouseleave', function () { hover = false; arm(); });
     shot.addEventListener('focusin', function () { focus = true; arm(); });
     shot.addEventListener('focusout', function (e) { if (!shot.contains(e.relatedTarget)) { focus = false; arm(); } });
-    arm();
+    // stop cycling once the hero is scrolled away or the tab is hidden, so the page is idle further down
+    var heroEl = $('#hero');
+    var offscreen = false;
+    function setAway() { away = offscreen || doc.hidden; arm(); }
+    if ('IntersectionObserver' in window && heroEl) new IntersectionObserver(function (en) { offscreen = !en[0].isIntersecting; setAway(); }).observe(heroEl);
+    doc.addEventListener('visibilitychange', setAway);
+    setAway();
   }
 
   /* ---------- 2 · use cases ---------- */
