@@ -1330,3 +1330,27 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
   .ft-brand .ft-tag { font-size: 21px; }
   .ft .vf-legal i { margin: 0 7px; }
 }
+
+/* FAQ in the same boxed look as the features table: numbered rows, square toggle tile */
+.fq { counter-reset: fq; border: 1px solid var(--line); background: var(--s1); }
+.fq-i { counter-increment: fq; border-bottom: 0; border-top: 1px solid var(--line); transition: background-color 0.15s ease; }
+.fq-i:first-child { border-top: 0; }
+.fq-i > summary { display: grid; grid-template-columns: 40px minmax(0, 1fr) 30px; align-items: center; gap: 0 16px; padding: 20px 22px; transition: background-color 0.15s ease; }
+.fq-i > summary::before { content: counter(fq, decimal-leading-zero); font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-3); }
+.fq-i > summary:hover { background: var(--tint-1); }
+.fq-i > summary:focus { outline: none; }
+.fq-i > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.fq-i[open] { background: var(--s2); }
+.fq-i[open] > summary:hover { background: transparent; }
+.fq-i[open] > summary::before { color: var(--ink); }
+.fq-q { font-size: 17px; }
+.fq-x { width: 30px; height: 30px; border: 1px solid var(--line-2); background: var(--tint-1); transition: background-color 0.15s ease, border-color 0.15s ease; }
+.fq-x::before, .fq-x::after { left: 50%; width: 12px; margin-left: -6px; }
+.fq-i[open] .fq-x { background: var(--ink); border-color: var(--ink); }
+.fq-i[open] .fq-x::before, .fq-i[open] .fq-x::after { background: var(--bg); }
+.fq-a { max-width: calc(72ch + 78px); margin: 0; padding: 0 22px 24px 78px; }
+@media (max-width: 600px) {
+  .fq-i > summary { grid-template-columns: 26px minmax(0, 1fr) 28px; gap: 0 12px; padding: 16px; }
+  .fq-x { width: 28px; height: 28px; }
+  .fq-a { padding: 0 16px 20px 54px; }
+}
