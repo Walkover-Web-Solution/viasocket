@@ -1378,3 +1378,13 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 .ft .vf-badges img { display: block; pointer-events: none; }
 .ft .vf-social a, .ft .vf-legal a, .ft .vf-g a { cursor: pointer; }
 .ft .vf-social svg { pointer-events: none; }
+
+/* review pass: one inner padding for every boxed block (24px desktop, 18px phones) and titles that start at the same height */
+.sh-t > .h2:first-child { margin-top: 0; }
+.fq-i > summary { padding: 20px 24px; }
+.fq-a { max-width: calc(72ch + 80px); padding: 0 24px 24px 80px; }
+@media (max-width: 600px) {
+  .fq-i > summary { padding: 16px 18px; }
+  .fq-a { padding: 0 18px 20px 56px; }
+  .vt-f-tx, .vt-f-go { padding: 22px 18px; }
+}
