@@ -488,6 +488,25 @@
       '<span class="ics" aria-hidden="true">' + a.apps.map(function (k) { return ico(k); }).join('') + '</span></button></div>';
   }).join('');
 
+  // phones: every use case shows its own preview under its name, in its finished state (no playback); the shared pane is hidden there
+  var phone = window.matchMedia('(max-width: 760px)'), mBuilt = false;
+  function mPreviews() {
+    if (mBuilt || !phone.matches) return;
+    mBuilt = true;
+    $$('.ix-it', list).forEach(function (it) {
+      var gi = Number($('.row', it).getAttribute('data-g')), box = doc.createElement('div');
+      box.className = 'm-prev';
+      box.setAttribute('aria-hidden', 'true');
+      box.innerHTML = SCN[gi];
+      var rs = $('.rs', box), n = (rs.getAttribute('data-steps') || '').split(',').filter(Boolean).length;
+      for (var i = 1; i <= n; i++) rs.classList.add('s' + i);
+      $$('[data-ty]', rs).forEach(function (t) { t.textContent = t.getAttribute('data-ty'); });
+      $('.row', it).insertAdjacentElement('afterend', box);
+    });
+  }
+  mPreviews();
+  if (phone.addEventListener) phone.addEventListener('change', mPreviews); else phone.addListener(mPreviews);
+
   // the pane: the use case's name and its prompt on top, then the real app it works in, playing
   var active = -1;
   function ixShow(gi) {

@@ -520,7 +520,7 @@ code { font-family: var(--mono); }
 @media (prefers-color-scheme: dark) { .ft .vf-ai a:nth-child(2) img, .ft .vf-ai a:nth-child(4) img, .ft .vf-ai a:nth-child(5) img { filter: invert(1); } }
 .ft-links { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
 .ft-col { display: grid; align-content: start; gap: 32px; }
-.ft .vf-g h3 { margin: 0 0 14px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.ft .vf-g .vf-gh { margin: 0 0 14px; font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
 .ft .vf-g ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
 .ft .vf-g a { font-size: 14px; color: var(--ink-2); text-decoration: none; }
 .ft .vf-g a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
@@ -1253,3 +1253,36 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 }
 /* phones have no scene to sync with, so every integration card shows at full strength */
 @media (max-width: 760px) { .pane .pu, .pane .pu[data-at] { opacity: 1 !important; border-color: var(--line-2) !important; } }
+
+/* FAQ: question rows that open in place; every answer starts with the answer */
+.fq { max-width: 880px; border-top: 1px solid var(--line-2); }
+.fq-i { border-bottom: 1px solid var(--line-2); }
+.fq-i > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 22px 0; list-style: none; cursor: pointer; }
+.fq-i > summary::-webkit-details-marker { display: none; }
+.fq-i > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.fq-q { margin: 0; font-size: 18px; font-weight: 600; line-height: 1.35; letter-spacing: -0.015em; color: var(--ink); }
+.fq-x { position: relative; flex: none; width: 14px; height: 14px; }
+.fq-x::before, .fq-x::after { content: ""; position: absolute; left: 0; top: 50%; width: 14px; height: 1.5px; margin-top: -0.75px; background: var(--ink-2); transition: transform 0.2s ease; }
+.fq-x::after { transform: rotate(90deg); }
+.fq-i[open] .fq-x::after { transform: rotate(0deg); }
+.fq-a { max-width: 68ch; margin: -4px 0 0; padding: 0 40px 24px 0; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+.fq-a a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 3px; }
+.fq-a a:hover { text-decoration-color: currentColor; }
+@media (max-width: 600px) {
+  .fq-i > summary { padding: 18px 0; gap: 16px; }
+  .fq-q { font-size: 16.5px; }
+  .fq-a { padding-right: 0; font-size: 15px; }
+}
+
+/* phones: each use case is its name, type and line, then its own app preview (finished state) */
+.m-prev { display: none; }
+@media (max-width: 760px) {
+  .pane { display: none !important; }
+  .ix-it { padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+  .ix-it .row { border-bottom: 0; cursor: default; padding-bottom: 14px; }
+  .ix-it .row.on { background: transparent; box-shadow: none; }
+  .m-prev { display: block; }
+  .m-prev .rs { position: relative; display: block; overflow: hidden; aspect-ratio: 512 / 356; border: 1px solid var(--line-2); background: var(--fx-panel); container-type: inline-size; }
+  /* the whole window, scaled to the card: no cropping */
+  .m-prev .rc { left: 0; right: auto; font-size: calc(100cqw / 51.2); }
+}
