@@ -164,18 +164,12 @@
       flows: [['shopify', 'Finds the order', 'Status, shipping and delivery date.'], ['freshdesk', 'Updates the ticket', 'With the real status, then marks it solved.'], ['gmail', 'Emails the customer', 'With the tracking link.']] },
     { name: 'Clinic booking app', cat: 'apps', type: 'Booking app', apps: ['calendar', 'whatsapp'], line: 'Patients book a slot and get reminders on WhatsApp.',
       flows: [['calendar', 'Books the slot', 'In the doctor’s own calendar.'], ['whatsapp', 'Sends reminders', 'A day before and an hour before.']] },
-    { name: 'Deal desk', cat: 'internal', type: 'CRM tool', apps: ['salesforce', 'slack'], line: 'Approvals for big discounts, right in Slack.',
-      flows: [['salesforce', 'Spots the big deal', 'When a discount crosses your limit.'], ['slack', 'Asks for approval', 'The approver answers in Slack.']] },
     { name: 'Expense approvals', cat: 'internal', type: 'Internal tool', apps: ['xero', 'slack'], line: 'Approved spend becomes a purchase order in Xero.',
       flows: [['xero', 'Creates the purchase order', 'As soon as finance approves.'], ['slack', 'Tells the team', 'Posts it to #finance.']] },
-    { name: 'Store ops dashboard', cat: 'internal', type: 'Dashboard', apps: ['shopify', 'sheets'], line: 'Orders, refunds and stock in one view.',
-      flows: [['shopify', 'Reads orders and stock', 'From the store, in real time.'], ['sheets', 'Writes the daily report', 'Into a shared Google Sheet.']] },
     { name: 'Meeting notes agent', cat: 'agents', type: 'AI agent', apps: ['notion', 'calendar'], line: 'Files notes and action items after every call.',
       flows: [['calendar', 'Knows when a call ends', 'From the user’s calendar.'], ['notion', 'Files the notes', 'With action items on a Notion page.']] },
     { name: 'Integrations page for your SaaS', cat: 'apps', type: 'SaaS feature', apps: ['hubspot', 'salesforce', 'slack'], line: 'Each customer connects their own apps, in your UI.',
-      flows: [['hubspot', 'Customers connect their CRM', 'HubSpot or Salesforce, with their own account.'], ['slack', 'Alerts to their Slack', 'Set up per customer.']] },
-    { name: 'Board updates to Slack', cat: 'internal', type: 'Team workflow', apps: ['trello', 'slack'], line: 'Moving a Trello card posts the update in Slack.',
-      flows: [['trello', 'Watches the board', 'When a card moves to Done.'], ['slack', 'Posts the update', 'In the team’s channel, with who moved it.']] }
+      flows: [['hubspot', 'Customers connect their CRM', 'HubSpot or Salesforce, with their own account.'], ['slack', 'Alerts to their Slack', 'Set up per customer.']] }
   ];
 
   /* ---------- the preview: the real app each use case works in, with the agent at work inside it ----------
@@ -207,7 +201,7 @@
   var SCN = [];
 
   // 0 · Hotelator OS (live): the hotel's WhatsApp; a guest asks, the auto-reply answers and housekeeping gets it
-  SCN[0] = SC('700,1300,1500', WIN('web.whatsapp.com',
+  SCN[0] = SC('700,1300,1500', WIN('yourapp.com',
     '<span class="wa">' +
       '<span class="wa-l">' +
         '<span class="wa-lh">' + AV('GP', 5) + '<b>Grand Palms Hotel</b></span>' +
@@ -237,7 +231,7 @@
   // 1 · Inbox assistant: in Gmail, it sorts what needs a reply and drafts the answer
   SCN[1] = (function () {
     function row(from, sub, snip, time, un, lab) { return '<span class="gm-row' + (un ? ' un' : '') + '"><i class="cbx"></i><span class="gm-fr">' + from + '</span><span class="gm-sb"><b>' + sub + '</b> – ' + snip + '</span>' + (lab ? '<span class="gm-lb st1">To reply</span>' : '') + '<small class="gm-tm">' + time + '</small></span>'; }
-    return SC('700,900,2700', WIN('mail.google.com',
+    return SC('700,900,2700', WIN('yourapp.com',
       '<span class="gm">' +
         GTOP('gmail', 'Gmail', 'Search mail', BURGER) +
         '<span class="g-main">' +
@@ -267,7 +261,7 @@
   })();
 
   // 2 · Demo follow-up agent: in HubSpot, the follow-up email shows on the contact and the deal moves on
-  SCN[2] = SC('900,1400', WIN('app.hubspot.com/contacts',
+  SCN[2] = SC('900,1400', WIN('yourapp.com',
     '<span class="hs">' +
       '<span class="hs-top">' + im('hubspot') + '<span class="hs-nav"><span class="on">Contacts</span><span>Deals</span><span>Inbox</span><span>Reports</span></span><span class="g-srch">' + SRCH + 'Search HubSpot</span><span class="g-r">' + AV('R', 0) + '</span></span>' +
       '<span class="hs-main">' +
@@ -303,7 +297,7 @@
     '</span>'));
 
   // 3 · AI support agent: in Freshdesk, it looks up the order in Shopify, answers, and solves the ticket
-  SCN[3] = SC('800,900,3300', WIN('northwind.freshdesk.com/a/tickets/1042',
+  SCN[3] = SC('800,900,3300', WIN('yourapp.com',
     '<span class="fd">' +
       '<span class="fd-top">' + im('freshdesk') + '<b>Tickets</b><small>› #1042</small><span class="g-srch">' + SRCH + 'Search</span><span class="g-r">' + AV('R', 0) + '</span></span>' +
       '<span class="fd-main">' +
@@ -337,7 +331,7 @@
       '</span>' +
       '<span class="ph-f"><span>Message</span></span>' +
     '</span>' +
-    WIN('calendar.google.com',
+    WIN('yourapp.com',
       '<span class="gc gc-day">' +
         '<span class="g-top">' + im('calendar') + '<b class="g-nm">Calendar</b><span class="gc-btn">Day ▾</span><span class="g-r">' + AV('DM', 3) + '</span></span>' +
         '<span class="gc-dh"><small>WED</small><b>14</b><span>Dr. Mehta</span></span>' +
@@ -355,34 +349,11 @@
         '<span class="gc-note">' + AGT('Booked by Clinic booking app') + '</span>' +
       '</span>', 'cl-cal'));
 
-  // 5 · Deal desk: the approval request lands in Slack; the approver says yes right there
-  SCN[5] = SC('800,1500,700', WIN('app.slack.com',
-    '<span class="sl">' +
-      '<span class="sl-top"><span class="sl-srch">' + SRCH + 'Search Northwind</span></span>' +
-      '<span class="sl-main">' +
-        '<span class="sl-side"><b class="sl-ws">Northwind</b>' +
-          '<small>Channels</small><span># general</span><span># sales</span><span class="on"># deal-desk</span><span># launch</span>' +
-          '<small>Direct messages</small><span>' + AV('SL', 0) + 'Sam Lee</span><span>' + AV('MR', 1) + 'Maya Rao</span></span>' +
-        '<span class="sl-ch">' +
-          '<span class="sl-h"><b># deal-desk</b><small>6 members</small></span>' +
-          '<span class="sl-msgs">' +
-            '<span class="sl-m">' + AV('MR', 1) + '<span class="sl-mb"><span class="sl-mh"><b>Maya Rao</b><small>3:41 PM</small></span><span>Can we close Northwind this week?</span></span></span>' +
-            '<span class="sl-m">' + AV('SL', 0) + '<span class="sl-mb"><span class="sl-mh"><b>Sam Lee</b><small>3:58 PM</small></span><span>Heads up: Northwind wants a 3-year deal before Friday.</span></span></span>' +
-            GR(1, '<span class="sl-m">' + '<span class="sl-bot">D</span>' + '<span class="sl-mb"><span class="sl-mh"><b>Deal desk</b><i class="sl-app">APP</i><small>4:02 PM</small></span><span><b>Approval needed</b> for a large discount.</span>' +
-              '<span class="sl-att"><b>Northwind · 3-year plan</b><span>Discount <b>32%</b> · your limit is 20%</span><span>ARR <b>$86,400</b></span><span class="sl-sf">' + im('salesforce') + 'Opportunity in Salesforce</span></span>' +
-              '<span class="sl-act">' + SW(3, '<span class="sl-btn ok">Approve' + '<span class="sl-pt st2">' + PTR + '</span></span><span class="sl-btn">Decline</span>', '<span class="sl-done">' + CKS + 'Approved by Sam Lee · Salesforce updated</span>') + '</span>' +
-            '</span></span>') +
-          '</span>' +
-          '<span class="sl-in">Message #deal-desk</span>' +
-        '</span>' +
-      '</span>' +
-    '</span>'), 'r');
-
-  // 6 · Expense approvals: the approved request becomes a purchase order in Xero
-  SCN[6] = (function () {
+  // 5 · Expense approvals: the approved request becomes a purchase order in Xero
+  SCN[5] = (function () {
     function r(no, ref, to, date, amt, st, cls) { return '<span class="xe-row' + (cls ? ' ' + cls : '') + '"><b>' + no + '</b><span>' + ref + '</span><span>' + to + '</span><span>' + date + '</span><span class="xe-am">' + amt + '</span><span>' + st + '</span></span>'; }
     var OK = '<span class="pill ok">Approved</span>', BL = '<span class="pill">Billed</span>';
-    return SC('900,1300', WIN('go.xero.com/Accounts/PurchaseOrders',
+    return SC('900,1300', WIN('yourapp.com',
       '<span class="xe">' +
         '<span class="xe-top">' + im('xero') + '<b>Northwind Ltd ▾</b><span class="xe-nav"><span>Home</span><span class="on">Business</span><span>Accounting</span><span>Payroll</span><span>Contacts</span></span><span class="g-r">' + AV('R', 0) + '</span></span>' +
         '<span class="xe-pg">' +
@@ -402,28 +373,8 @@
       '</span>'));
   })();
 
-  // 7 · Store ops dashboard: the day's numbers from Shopify fill the next row of the Google Sheet
-  SCN[7] = (function () {
-    var rows = [['Oct 8', '164', '3', '$11,020', '5', 'Linen shirt'], ['Oct 9', '171', '2', '$11,640', '6', 'Canvas tote'], ['Oct 10', '158', '5', '$10,380', '9', 'Linen shirt'], ['Oct 11', '190', '4', '$12,950', '8', 'Wool beanie'], ['Oct 12', '176', '3', '$12,010', '7', 'Linen shirt']];
-    var today = ['Oct 13', '182', '4', '$12,480', '7', 'Linen shirt'];
-    var g = '<span class="gs-r gs-ch"><span></span><span>A</span><span>B</span><span>C</span><span>D</span><span>E</span><span>F</span><span>G</span></span>';
-    g += '<span class="gs-r"><span>1</span><b>Date</b><b>Orders</b><b>Refunds</b><b>Revenue</b><b>Low stock</b><b>Top product</b><span></span></span>';
-    rows.forEach(function (r, i) { g += '<span class="gs-r"><span>' + (i + 2) + '</span>' + r.map(function (c) { return '<span>' + c + '</span>'; }).join('') + '<span></span></span>'; });
-    g += '<span class="gs-r today"><span>7</span>' + today.map(function (c, i) { return '<span>' + TY(i + 1, c) + '</span>'; }).join('') + '<span></span></span>';
-    for (var k = 8; k <= 16; k++) g += '<span class="gs-r"><span>' + k + '</span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span>';
-    return SC('800,650,500,500,650,550', WIN('docs.google.com/spreadsheets',
-      '<span class="gs">' +
-        '<span class="gs-top">' + im('sheets') + '<span class="gs-tt"><b>Daily store report</b><span class="gs-menu"><span>File</span><span>Edit</span><span>View</span><span>Insert</span><span>Format</span><span>Data</span><span>Tools</span><span>Extensions</span></span></span>' +
-          '<span class="g-r">' + AGT('Store ops') + AV('R', 0) + '<span class="gs-share">Share</span></span></span>' +
-        '<span class="gs-tool"><i></i><i></i><i></i><b></b><i></i><i></i><b></b><i></i><i></i><i></i><b></b><i></i><i></i></span>' +
-        '<span class="gs-fx"><span class="gs-ref">A7</span><i>fx</i><span>Daily totals from Shopify</span></span>' +
-        '<span class="gs-grid">' + g + '<span class="gs-sel"><span class="gs-flag">' + SPARK + 'Store ops</span></span></span>' +
-        '<span class="gs-tabs"><span>+</span><span>≡</span><span class="on">Daily</span><span>Weekly</span></span>' +
-      '</span>'));
-  })();
-
-  // 8 · Meeting notes agent: after the call, it writes the notes and action items on the Notion page
-  SCN[8] = SC('700,1900,1700,600', WIN('notion.so/northwind/weekly-sync',
+  // 6 · Meeting notes agent: after the call, it writes the notes and action items on the Notion page
+  SCN[6] = SC('700,1900,1700,600', WIN('yourapp.com',
     '<span class="nt">' +
       '<span class="no-side">' +
         '<span class="no-ws"><i>N</i><b>Northwind</b></span>' +
@@ -449,12 +400,12 @@
       '</span>' +
     '</span>'));
 
-  // 9 · Integrations page for your SaaS: inside your own app, a customer connects Salesforce
-  SCN[9] = (function () {
+  // 7 · Integrations page for your SaaS: inside your own app, a customer connects Salesforce
+  SCN[7] = (function () {
     function c(k, name, desc, btn) { return '<span class="ys-c">' + im(k) + '<b>' + name + '</b><small>' + desc + '</small>' + btn + '</span>'; }
     var ON = '<span class="ys-btn ok">' + CKS + 'Connected</span>', CON = '<span class="ys-btn">Connect</span>';
     var SF = '<span class="ys-sf"><span class="sw"><span class="hd2"><span class="ys-btn pr">Connect<span class="ys-pt st1 hd3">' + PTR + '</span></span></span><span class="st2 hd3"><span class="ys-btn">' + SPN + 'Connecting…</span></span><span class="st3"><span class="ys-btn ok">' + CKS + 'Connected</span></span></span><small class="st3">acme.my.salesforce.com</small></span>';
-    return SC('800,800,1600', WIN('app.yoursaas.com/settings/integrations',
+    return SC('800,800,1600', WIN('yourapp.com',
       '<span class="ys">' +
         '<span class="ys-side"><span class="ys-lg"><i>A</i><b>Acme</b></span><span>Dashboard</span><span>Projects</span><span>Reports</span><span class="on">Settings</span><span class="sub">Profile</span><span class="sub">Team</span><span class="sub">Billing</span><span class="sub on">Integrations</span></span>' +
         '<span class="ys-main"><b class="ys-h">Integrations</b><small>Connect the tools your team already uses.</small>' +
@@ -469,31 +420,6 @@
       '</span>'));
   })();
 
-  // 10 · Board updates to Slack: a card moved to Done in Trello posts the update in the team's Slack channel
-  SCN[10] = SC('700,600,1100',
-    WIN('trello.com/b/website-launch',
-      '<span class="tr">' +
-        '<span class="tr-top">' + im('trello') + '<b>Trello</b><small>Workspaces ▾</small><small>Recent ▾</small><span class="tr-cr">Create</span><span class="g-r">' + AV('M', 1) + '</span></span>' +
-        '<span class="tr-bd">' +
-          '<span class="tr-bh"><b>Website launch</b><span>☆</span><span class="tr-v">Board</span><span class="g-r tr-mem">' + AV('M', 1) + AV('S', 0) + AV('L', 2) + '</span></span>' +
-          '<span class="tr-ls">' +
-            '<span class="tr-l"><b>To do</b><span class="tr-c">Pricing FAQ</span><span class="tr-c"><i class="tr-lb" style="--c:#f5cd47"></i>Press kit</span><span class="tr-c">Launch email</span><small>+ Add a card</small></span>' +
-            '<span class="tr-l"><b>In progress</b><span class="tr-go"><span><span class="tr-c tr-mv"><i class="tr-lb" style="--c:#4bce97"></i>Homepage copy<span class="tr-cm">' + AV('M', 1) + '</span>' + PTR + '</span></span></span><span class="tr-c">Signup flow<span class="tr-cm">' + AV('S', 0) + '</span></span><small>+ Add a card</small></span>' +
-            '<span class="tr-l"><b>Done</b>' + GR(2, '<span class="tr-c tr-in"><i class="tr-lb" style="--c:#4bce97"></i>Homepage copy<span class="tr-cm">' + AV('M', 1) + '</span></span>') + '<span class="tr-c">Brand refresh</span><span class="tr-c">Domain setup</span><small>+ Add a card</small></span>' +
-          '</span>' +
-        '</span>' +
-      '</span>', 'tr-w') +
-    WIN('app.slack.com',
-      '<span class="sl sl-mini">' +
-        '<span class="sl-h"><b># launch</b><small>' + im('slack') + '</small></span>' +
-        '<span class="sl-msgs">' +
-          '<span class="sl-m">' + AV('MR', 1) + '<span class="sl-mb"><span class="sl-mh"><b>Maya Rao</b><small>2:41 PM</small></span><span>Copy review at 3?</span></span></span>' +
-          '<span class="sl-m">' + AV('SL', 0) + '<span class="sl-mb"><span class="sl-mh"><b>Sam Lee</b><small>2:44 PM</small></span><span>Works for me.</span></span></span>' +
-          GR(3, '<span class="sl-m new"><span class="sl-bot img">' + im('trello') + '</span><span class="sl-mb"><span class="sl-mh"><b>Launch bot</b><i class="sl-app">APP</i><small>3:06 PM</small></span><span><b>Homepage copy</b> moved to <b>Done</b></span><small>by Maya Rao · Website launch</small></span></span>') +
-        '</span>' +
-        '<span class="sl-in">Message #launch</span>' +
-      '</span>', 'sl-w'), 'r');
-
   // under each scene: the integrations it uses and the role each plays — [app, Trigger | Action | Connect, what it does, the scene step it lights up at]
   var USES = {
     0: [['whatsapp', 'Trigger', 'A guest asks for towels', 1], ['whatsapp', 'Action', 'Replies and sends it to housekeeping', 2], ['gmail', 'Action', 'Emails the invoice at check-out']],
@@ -501,12 +427,9 @@
     2: [['hubspot', 'Trigger', 'Demo marked as done', 0], ['gmail', 'Action', 'Sends the follow-up from Ravi’s inbox', 1], ['hubspot', 'Action', 'Logs the email, moves the deal', 2]],
     3: [['freshdesk', 'Trigger', 'New ticket: where’s my order?', 0], ['shopify', 'Action', 'Looks up order #1042', 1], ['freshdesk', 'Action', 'Replies and solves the ticket', 3], ['gmail', 'Action', 'Emails the tracking link', 3]],
     4: [['calendar', 'Trigger', 'Appointment is tomorrow', 1], ['whatsapp', 'Action', 'Sends the reminder', 1], ['whatsapp', 'Trigger', 'Patient taps Confirm', 2], ['calendar', 'Action', 'Marks the slot confirmed', 2]],
-    5: [['salesforce', 'Trigger', 'Discount above the 20% limit', 1], ['slack', 'Action', 'Asks #deal-desk to approve', 1], ['slack', 'Trigger', 'Sam clicks Approve', 2], ['salesforce', 'Action', 'Updates the opportunity', 3]],
-    6: [['xero', 'Action', 'Creates purchase order PO-0042', 1], ['slack', 'Action', 'Posts it to #finance', 2]],
-    7: [['shopify', 'Action', 'Reads today’s orders and stock', 1], ['sheets', 'Action', 'Fills in today’s row', 1]],
-    8: [['calendar', 'Trigger', 'The weekly sync ends', 1], ['notion', 'Action', 'Writes the notes and action items', 1]],
-    9: [['salesforce', 'Connect', 'A customer links their account', 3], ['hubspot', 'Action', 'Syncs their contacts and deals'], ['slack', 'Action', 'Sends alerts to their channels']],
-    10: [['trello', 'Trigger', 'Card moved to Done', 2], ['slack', 'Action', 'Posts the update in #launch', 3]]
+    5: [['xero', 'Action', 'Creates purchase order PO-0042', 1], ['slack', 'Action', 'Posts it to #finance', 2]],
+    6: [['calendar', 'Trigger', 'The weekly sync ends', 1], ['notion', 'Action', 'Writes the notes and action items', 1]],
+    7: [['salesforce', 'Connect', 'A customer links their account', 3], ['hubspot', 'Action', 'Syncs their contacts and deals'], ['slack', 'Action', 'Sends alerts to their channels']],
   };
   function uses(gi) {
     var U = USES[gi];
@@ -550,7 +473,7 @@
   function tag(a) { return '<span class="gtag' + (a.live ? ' is-live' : '') + '"><i class="dot' + (a.live ? '' : ' ex') + '" aria-hidden="true"></i>' + (a.live ? 'Live' : 'Example') + '</span>'; }
 
   /* ---------- the index: a numbered list on the left (agents first, then apps, then internal tools), one preview pane on the right ---------- */
-  var IX_ORDER = [3, 1, 2, 8, 0, 4, 9, 10, 5, 6, 7];
+  var IX_ORDER = [3, 1, 2, 6, 0, 4, 7, 5];
   var TABS = [['all', 'All'], ['agents', 'Agents'], ['apps', 'Apps'], ['internal', 'Internal tools']];
   function pad(n) { return (n < 10 ? '0' : '') + n; }
   function count(k) { return k === 'all' ? GAL.length : GAL.filter(function (a) { return a.cat === k; }).length; }
@@ -561,7 +484,7 @@
   list.innerHTML = IX_ORDER.map(function (gi, n) {
     var a = GAL[gi];
     return '<div class="ix-it" role="listitem" data-k="' + a.cat + '"><button type="button" class="row" data-g="' + gi + '" data-n="' + (n + 1) + '" aria-controls="pane" aria-current="false">' +
-      '<span class="st' + (a.live ? ' live' : '') + '" role="img" aria-label="' + (a.live ? 'Live' : 'Example') + '"></span><span class="nmw"><span class="nm">' + a.name + '</span><span class="chip">' + a.type + '</span></span>' +
+      '<span class="st' + (a.live ? ' live' : '') + '" role="img" aria-label="' + (a.live ? 'Live' : 'Example') + '"></span><span class="nmw"><span class="nm-t"><span class="nm">' + a.name + '</span><span class="chip">' + a.type + '</span></span><span class="ds">' + a.line + '</span></span>' +
       '<span class="ics" aria-hidden="true">' + a.apps.map(function (k) { return ico(k); }).join('') + '</span></button></div>';
   }).join('');
 
@@ -643,12 +566,12 @@
   /* ---------- sample prompts: what a founder asks their AI to add so their customers get integrations, AI agents and automations; clicking a card copies it with the setup prompt ---------- */
   // what a founder wants their own customers to be able to do: connect apps, use an AI agent, run automations (one of each per row)
   var PR = [
-    ['Let my customers connect any of 2,300+ apps from inside my app.'],
-    ['Give my customers an AI assistant in my app that can act in their Gmail, Slack and CRM.'],
-    ['Let my customers build “when this happens, do that” automations inside my app.'],
-    ['Let my customers connect their own HubSpot or Salesforce and sync contacts into my app.'],
-    ['Let my customers choose which apps and actions my AI agent can use for them.'],
-    ['Let my customers get a daily AI summary of their inbox in Slack, set up from my app.']
+    ['Add integrations to my app so users can connect the tools they already use, like Slack, HubSpot and Gmail.'],
+    ['Add a chat assistant to my app that can actually do things in my users’ Gmail, Slack and CRM.'],
+    ['My users keep asking for automations. Add a simple “when this happens, do that” builder to my app.'],
+    ['Let customers connect their HubSpot or Salesforce and pull their contacts straight into my app.'],
+    ['Before my agent touches anyone’s apps, let each user choose what it’s allowed to do.'],
+    ['Send each user a short morning summary of their inbox in Slack. Let them switch it on from settings.']
   ];
   var prList = $('#pr-list');
   prList.innerHTML = PR.map(function (p, i) {
