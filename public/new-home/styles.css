@@ -1354,3 +1354,18 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
   .fq-x { width: 28px; height: 28px; }
   .fq-a { padding: 0 16px 20px 54px; }
 }
+
+/* one spacing rhythm: every section is 2 × --sec-pad apart (96px on phones, ~110px at 1024, 160px on desktop) */
+:root { --sec-pad: clamp(48px, 5.4vw, 80px); }
+@media (max-width: 600px) { :root { --sec-pad: 48px; } }
+/* the hero centres its content in the first screen, but never taller than 760px, so big monitors don't get a huge empty band */
+@media (min-width: 761px) {
+  .hero { min-height: min(calc(100svh - 65px), 760px); padding-block: 48px; }
+  .hero + .sec { padding-top: 40px; }
+}
+/* big monitors: let the page use more of the screen instead of a narrow 1240px column */
+@media (min-width: 1800px) { :root { --wrap: min(1360px, 100% - 96px); } }
+@media (min-width: 2300px) { :root { --wrap: min(1480px, 100% - 96px); } }
+/* the wider column makes the preview taller; roomier rows keep the list level with it */
+@media (min-width: 1800px) { .row { padding-block: 15px; } }
+@media (min-width: 2300px) { .row { padding-block: 18px; } }
