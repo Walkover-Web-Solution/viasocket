@@ -1369,3 +1369,7 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 /* the wider column makes the preview taller; roomier rows keep the list level with it */
 @media (min-width: 1800px) { .row { padding-block: 15px; } }
 @media (min-width: 2300px) { .row { padding-block: 18px; } }
+/* brand logos (X, Discord) are solid shapes, not outlines */
+.ft .vf-social svg.fill { fill: currentColor; stroke: none; }
+/* badges are self-hosted; if one ever fails to load, don't print its alt text over the footer */
+.ft .vf-badges img { overflow: hidden; color: transparent; font-size: 0; }
