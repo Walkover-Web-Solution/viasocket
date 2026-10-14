@@ -588,8 +588,8 @@
     ['Add integrations to my app so users can connect the tools they already use, like Slack, HubSpot and Gmail.'],
     ['Add a chat assistant to my app that can actually do things in my users’ Gmail, Slack and CRM.'],
     ['My users keep asking for automations. Add a simple “when this happens, do that” builder to my app.'],
-    ['Let customers connect their HubSpot or Salesforce and pull their contacts straight into my app.'],
-    ['Before my agent touches anyone’s apps, let each user choose what it’s allowed to do.'],
+    ['Most of my customers use HubSpot or Salesforce. Let them connect it and bring their contacts into my app.'],
+    ['Let users choose what my AI agent can do in their apps, like reading their Gmail but not sending from it.'],
     ['Send each user a short morning summary of their inbox in Slack. Let them switch it on from settings.']
   ];
   var prList = $('#pr-list');
