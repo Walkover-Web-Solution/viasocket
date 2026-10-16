@@ -28,6 +28,7 @@ const IntegrationsMain = (props) => {
                     navbarData={data.navbarData}
                     templateToShow={data.templateToShow}
                     appCount={data.appCount}
+                    automationIdeasData={data.automationIdeasData}
                     skipHeadComp={true}
                     hasToken={hasToken}
                 />
@@ -69,6 +70,7 @@ const IntegrationsMain = (props) => {
                         getDoFollowUrlStatusArray={data.getDoFollowUrlStatusArray}
                         navbarData={data.navbarData}
                         templateToShow={data.templateToShow}
+                        automationIdeasData={data.automationIdeasData}
                         skipHeadComp={true}
                     />
                 </div>
