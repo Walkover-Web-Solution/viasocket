@@ -103,7 +103,7 @@ export const INDEX_COPY = {
     metaTitle: 'App Integrations for Your Product | viaSocket',
     metaDesc:
         'Integrate 2,300+ apps into your product with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
-    h1: 'Integrate 2,300+ Apps into Your Product',
+    h1: 'Integrate 2,300+ Apps into Your Products & agents',
     categoryH1: 'Integrate {category} Apps into Your Product',
     sub: 'Build and manage secure app integrations with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
     listYourApp: 'Want to list your app?',

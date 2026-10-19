@@ -100,18 +100,13 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
     const prevUrl = page - 1 > 0 ? `/integrations/${current ? `category/${current}/` : ''}page/${page - 1}` : `/integrations${current ? `/category/${current}` : ''}`;
     const showNext = apps.length > 0 && apps.length >= APPERPAGE;
 
-    const count = current ? `${categoryData?.appcount || 300}+` : `${(+appCount || 0) + 300}+`;
-    const label = current ? decodeURIComponent(categoryData?.name || current) : 'Apps';
 
     return (
         <section className={`${s.sec} ${s['dir-sec']}`} id="apps">
             <div className={s.wrap}>
                 <div className={s['dir-head']}>
                     <div className={s.sh}>
-                        <h2 className={s.h2}>
-                            <span className={s['dir-count']}>{count}</span> {label}
-                        </h2>
-                        {current && categoryData?.subheading && <p className={s.lead}>{categoryData.subheading}</p>}
+                        {current && categoryData?.subheading && <p className={s['dir-sub']}>{categoryData.subheading}</p>}
                     </div>
                     <label className={s['dir-search']} htmlFor="app-search">
                         <SearchIcon />
