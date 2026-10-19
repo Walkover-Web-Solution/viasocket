@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
@@ -9,6 +10,7 @@ import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import RotatingWord from './RotatingWord';
 import OAuthDemo from './OAuthDemo';
 import EventsList from './EventsList';
+import BetaNotice from './BetaNotice';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
 // the HTML; only the rotating word, the sign-in animation, "Show all" and the copy buttons run
@@ -173,29 +175,35 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                         </div>
                     </section>
 
-                    <section className={s.sec} id="actions-triggers">
-                        <div className={s.wrap}>
-                            <div className={s.sh}>
-                                <h2 className={s.h2}>{f(COPY.atTitle)}</h2>
-                            </div>
-                            <div className={s.at}>
-                                <div className={s['at-group']}>
-                                    <div>
-                                        <h3>{f(COPY.actTitle)}</h3>
-                                        <p>{f(COPY.actSub)}</p>
-                                    </div>
-                                    <EventsList kind="action" items={app.actions} appName={app.name} iconUrl={app.iconUrl} />
+                    {app.actions.length || app.triggers.length ? (
+                        <section className={s.sec} id="actions-triggers">
+                            <div className={s.wrap}>
+                                <div className={s.sh}>
+                                    <h2 className={s.h2}>{f(COPY.atTitle)}</h2>
                                 </div>
-                                <div className={s['at-group']}>
-                                    <div>
-                                        <h3>{f(COPY.trgTitle)}</h3>
-                                        <p>{f(COPY.trgSub)}</p>
+                                <div className={s.at}>
+                                    <div className={s['at-group']}>
+                                        <div>
+                                            <h3>{f(COPY.actTitle)}</h3>
+                                            <p>{f(COPY.actSub)}</p>
+                                        </div>
+                                        <EventsList kind="action" items={app.actions} appName={app.name} iconUrl={app.iconUrl} />
                                     </div>
-                                    <EventsList kind="trigger" items={app.triggers} appName={app.name} iconUrl={app.iconUrl} />
+                                    <div className={s['at-group']}>
+                                        <div>
+                                            <h3>{f(COPY.trgTitle)}</h3>
+                                            <p>{f(COPY.trgSub)}</p>
+                                        </div>
+                                        <EventsList kind="trigger" items={app.triggers} appName={app.name} iconUrl={app.iconUrl} />
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        </section>
+                    ) : (
+                        <Suspense>
+                            <BetaNotice appInfo={appOneDetails} />
+                        </Suspense>
+                    )}
 
                     <BlogPosts title={f(COPY.learnTitle)} lead={f(COPY.learnSub)} posts={blogs} viewAllUrl={COPY.blogCategoryUrl} />
 
