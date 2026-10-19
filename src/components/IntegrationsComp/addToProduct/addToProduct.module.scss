@@ -396,9 +396,9 @@
 .dir-app { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--s1); text-decoration: none; color: var(--ink); font-size: 15px; font-weight: 500; min-width: 0; transition: background-color .15s; }
 .dir-app:hover { background: var(--s2); }
 .dir-app span { min-width: 0; overflow-wrap: anywhere; }
-// "Request an App" is the grid's last cell, the same size as an app. It has no right or bottom
-// line: the grid stays open after it instead of boxing in the empty space.
-.dir-req { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding: 14px 16px; background: transparent; min-width: 0; }
+// "Request an App" is the grid's last cell, the same size as an app and closed like one. The
+// grid stays open after it: no lines around the empty space that follows.
+.dir-req { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding: 14px 16px; background: transparent; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); min-width: 0; }
 .dir-req b { font-size: 15px; font-weight: 600; }
 .dir-req button { background: none; border: 0; padding: 0; font-size: 13.5px; font-weight: 500; color: var(--ink-2); cursor: pointer; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; }
 .dir-req button:hover { color: var(--ink); text-decoration-color: var(--ink); }
