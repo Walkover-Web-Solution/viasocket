@@ -193,24 +193,27 @@
 .at-group { display: grid; gap: 20px; min-width: 0; }
 .at-group h3 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
 .at-group > div > p { color: var(--ink-2); font-size: 15px; margin-top: 6px; max-width: 60ch; }
-.ops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.ops li { background: var(--s1); padding: 18px 20px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+// Each card draws its own right and bottom line; the first row adds the top line and the first
+// column the left one. A row that isn't full just ends: no empty box, every card the same size.
+.ops { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ops li { background: var(--s1); padding: 18px 20px; display: grid; gap: 6px; align-content: start; min-width: 0;
+  border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.ops li:nth-child(-n + 3) { border-top: 1px solid var(--line); }
+.ops li:nth-child(3n + 1) { border-left: 1px solid var(--line); }
 .ops li > .appicon, .ops li > .appmark { margin-bottom: 6px; }
 .ops b { font-weight: 600; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
 .ops span { font-size: 14px; color: var(--ink-2); line-height: 1.45; overflow-wrap: anywhere; }
 .ops-foot { display: flex; justify-content: flex-start; }
-// The last card stretches over whatever the last row leaves free, so the grid never shows an
-// empty cell (the 1px gaps are the grid's background).
-.ops li:last-child:nth-child(3n + 1) { grid-column: span 3; }
-.ops li:last-child:nth-child(3n + 2) { grid-column: span 2; }
 @media (max-width: 900px) {
   .ops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .ops li:last-child:nth-child(3n + 1), .ops li:last-child:nth-child(3n + 2) { grid-column: auto; }
-  .ops li:last-child:nth-child(2n + 1) { grid-column: span 2; }
+  .ops li:nth-child(-n + 3), .ops li:nth-child(3n + 1) { border-top: 0; border-left: 0; }
+  .ops li:nth-child(-n + 2) { border-top: 1px solid var(--line); }
+  .ops li:nth-child(2n + 1) { border-left: 1px solid var(--line); }
 }
 @media (max-width: 560px) {
   .ops { grid-template-columns: minmax(0, 1fr); }
-  .ops li:last-child:nth-child(2n + 1) { grid-column: auto; }
+  .ops li:nth-child(n) { border-left: 1px solid var(--line); border-top: 0; }
+  .ops li:first-child { border-top: 1px solid var(--line); }
 }
 
 /* About the app / about viaSocket: two cards, as on the current integration pages */
