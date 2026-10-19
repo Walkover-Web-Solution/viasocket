@@ -141,7 +141,9 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                                 </nav>
                                 {isBeta ? (
                                     <>
-                                        <h1>Integrate {app.name} with your favorite apps</h1>
+                                        <h1>
+                                            <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
+                                        </h1>
                                         <p className={s['hero-sub']}>
                                             The app you are looking for is in <b>beta</b>, and we are awaiting verification from the app
                                             builders before making it accessible to end users.
