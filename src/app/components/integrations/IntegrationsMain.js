@@ -53,7 +53,7 @@ const IntegrationsMain = (props) => {
             );
         } else if (data.actionLayerBlogs) {
             // "Add {app} to Your Product" (see lib/integration-data.js, single-app branch)
-            return <AddToProductPage appOneDetails={data.appOneDetails} blogs={data.actionLayerBlogs} />;
+            return <AddToProductPage appOneDetails={data.appOneDetails} blogs={data.actionLayerBlogs} doFollowApps={data.getDoFollowUrlStatusArray} />;
         } else {
             return (
                 <div className="cont md:gap-20 sm:gap-16 gap-12">

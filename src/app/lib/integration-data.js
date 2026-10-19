@@ -168,6 +168,7 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 appOneDetails,
                 actionLayerBlogs: actionLayerBlogs || [],
                 appCount: appCount || 0,
+                getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                 footerData: footerData || {},
                 navbarData: navbarData || {},
                 noData: false,

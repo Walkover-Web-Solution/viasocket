@@ -11,6 +11,7 @@ import RotatingWord from './RotatingWord';
 import OAuthDemo from './OAuthDemo';
 import EventsList from './EventsList';
 import BetaRequestButton from './BetaNotice';
+import { appWebsiteUrl, relForApp } from '@/utils/ExternalLink';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
 // the HTML; only the rotating word, the sign-in animation, "Show all" and the copy buttons run
@@ -117,7 +118,7 @@ function JsonLd({ app }) {
     );
 }
 
-export default function AddToProductPage({ appOneDetails, blogs = [] }) {
+export default function AddToProductPage({ appOneDetails, blogs = [], doFollowApps = [] }) {
     const app = toPageApp(appOneDetails);
     const f = (str) => fill(str, app.name);
     // No published actions or triggers: the hero leads with the beta message and the request button.
@@ -245,7 +246,12 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                                         </div>
                                     )}
                                     {app.domain && (
-                                        <a className={s.ulink} href={`https://${app.domain}`} rel="nofollow noopener" target="_blank">
+                                        <a
+                                            className={s.ulink}
+                                            href={appWebsiteUrl(appOneDetails?.domain)}
+                                            rel={relForApp(appOneDetails?.appslugname, doFollowApps)}
+                                            target="_blank"
+                                        >
                                             Learn more
                                         </a>
                                     )}
