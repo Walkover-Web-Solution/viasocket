@@ -523,3 +523,48 @@ export async function updateAbTestVisit(rowid, fields, pageUrl) {
         return null;
     }
 }
+
+const ACTION_LAYER_FEED = 'https://viasocket.com/blog/feed.xml';
+const ACTION_LAYER_CATEGORY = 'Action Layer for AI Products';
+const decodeXml = (s = '') =>
+    s
+        .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;|&#x27;|&apos;/g, "'")
+        .replace(/&amp;/g, '&')
+        .trim();
+
+/**
+ * The latest posts in the blog's "Action Layer for AI Products" category, for the single-app
+ * integration page: title, link, date and the post's og:image. Read from the blog's RSS feed
+ * (which has no images), so each post page is fetched once for its og:image. Fails soft to [].
+ */
+export async function getActionLayerBlogs(pageUrl, limit = 3) {
+    const cache = { ttl: 1000 * 60 * 60, interpretHeader: false }; // 1 hour
+    try {
+        const { data: xml } = await axiosWithCache.get(ACTION_LAYER_FEED, { responseType: 'text', cache });
+        const items = [...String(xml).matchAll(/<item>([\s\S]*?)<\/item>/g)].map(([, item]) => {
+            const tag = (name) => decodeXml(item.match(new RegExp(`<${name}>([\\s\\S]*?)</${name}>`))?.[1]);
+            return { title: tag('title'), link: tag('link'), date: tag('pubDate'), category: tag('category') };
+        });
+        const posts = items.filter((p) => p.category === ACTION_LAYER_CATEGORY && p.link).slice(0, limit);
+
+        return await Promise.all(
+            posts.map(async (p) => {
+                let image = null;
+                try {
+                    const { data: html } = await axiosWithCache.get(p.link, { responseType: 'text', cache });
+                    image = String(html).match(/<meta[^>]+property="og:image"[^>]+content="([^"]+)"/)?.[1] || null;
+                } catch {
+                    // the card shows without an image
+                }
+                return { title: p.title, link: p.link, date: p.date, image: image && decodeXml(image) };
+            })
+        );
+    } catch (error) {
+        sendErrorMessage({ error, pageUrl, source: ACTION_LAYER_FEED });
+        return [];
+    }
+}
