@@ -30,7 +30,7 @@ function SearchIcon() {
 function AppCard({ app }) {
     return (
         <Link href={createURL(`/integrations/${app?.appslugname}`)} className={s['dir-app']}>
-            <img className={s.appicon} src={app?.iconurl || 'https://placehold.co/36x36'} alt="" width={40} height={40} style={{ width: 40, height: 40 }} loading="lazy" />
+            <img className={s.appicon} src={app?.iconurl || 'https://placehold.co/36x36'} alt="" width={32} height={32} style={{ width: 32, height: 32 }} loading="lazy" />
             <span>{app?.name}</span>
         </Link>
     );
