@@ -1,0 +1,97 @@
+// Copy for the single-app integration page ("Add {appName} to Your Product"). {appName} is
+// filled with the app's name. Kept word for word with the approved design.
+
+export const fill = (str, appName) => str.replace(/\{appName\}|\[appName\]/g, appName);
+
+export const COPY = {
+    metaTitle: 'Add [appName] Integration to Your Product | viaSocket',
+    metaDesc:
+        'Add [appName] to your product with managed authentication, actions, triggers, and customer connections using viaSocket.',
+    h1Lead: 'Add {appName} to Your',
+    h1Words: ['Product', 'AI Agent', 'Internal Tool'],
+    sub: 'Give your customers access to {appName} from within your product. Use viaSocket to manage authentication, execute actions, and receive events from connected accounts.',
+    copyHint: 'Paste it into Cursor, Claude Code or Codex.',
+
+    featEyebrow: 'Integration Infrastructure',
+    featTitle: 'Everything You Need to Manage {appName} Integrations',
+    featLead:
+        'Add {appName} to your product today. viaSocket runs the infrastructure; your AI coding assistant does the setup.',
+    feats: [
+        ['Managed Authentication', 'Let your customers connect their {appName} accounts without building and maintaining OAuth flows yourself.', 'key'],
+        ['Customer-Specific Connections', 'Manage separate {appName} connections for each customer in your product.', 'users'],
+        ['Actions, Triggers and Webhooks', 'Execute supported {appName} actions and receive events through a consistent integration interface.', 'bolt'],
+        ['Managed Data Mapping', 'Map data between your product and the formats expected by {appName}.', 'map'],
+        ['Monitoring and Debugging', 'Track executions, inspect errors, and troubleshoot integration issues.', 'pulse'],
+        ['Your Product, Your Experience', 'Offer {appName} integrations under your own branding and within your existing product experience.', 'brand'],
+    ],
+    featsShort: [
+        ['Managed auth', 'key'],
+        ['Per-customer connections', 'users'],
+        ['Actions & triggers', 'bolt'],
+        ['Data mapping', 'map'],
+        ['Monitoring & logs', 'pulse'],
+        ['Your branding', 'brand'],
+    ],
+
+    atTitle: 'Available Actions and Triggers for {appName}',
+    actTitle: 'What You Can Do with {appName}',
+    actSub: 'Explore available actions to let your product interact with {appName}.',
+    trgTitle: 'Respond to Events in {appName}',
+    trgSub: 'Use triggers to let your product respond to events from connected {appName} accounts.',
+
+    learnTitle: 'Learn more about adding {appName} Integrations',
+    learnSub: 'Explore guides and resources to help you implement and use {appName} integrations.',
+    blogCategoryUrl: 'https://viasocket.com/blog/category/Action%20Layer%20for%20AI%20Products',
+
+    aboutViasocket:
+        'Connect 2,300+ apps to your product or AI agent with one prompt. Auth, events and actions handled. Free to start.',
+
+    faqEyebrow: 'Frequently Asked Questions',
+    faqTitle: 'FAQs about adding {appName} to your product',
+    faqSub: 'Find answers to common questions about integrating {appName} into your product, including authentication, supported actions, triggers, and implementation.',
+    faqs: [
+        ['How can I integrate {appName} into my product?', 'You can use viaSocket to add {appName} integration to your product. viaSocket provides APIs, managed authentication, actions, and triggers to help you build integration features for your customers.'],
+        ['Do I need to build and maintain the integration infrastructure myself?', 'No. viaSocket manages the integration infrastructure, including authentication, customer connections, and supported actions and triggers.'],
+        ['Can my customers connect their own {appName} accounts?', 'Yes. viaSocket supports customer-specific connections, allowing each customer to authorize their own {appName} account.'],
+        ['Can I offer {appName} integration under my own branding?', "Yes. You can provide the integration experience under your own branding and within your product's existing interface."],
+        ['Can I connect {appName} with other apps?', 'Yes. viaSocket supports integrations with 2,300+ apps, allowing your product to work with {appName} and other supported services.'],
+        ['How do I execute actions in {appName}?', "Use viaSocket's supported actions and APIs to perform operations in connected {appName} accounts. Available operations depend on the integration's supported capabilities and the permissions granted."],
+        ['Can my product respond to events from {appName}?', 'Yes. You can use supported triggers and webhooks to receive events from {appName} and respond within your product.'],
+    ],
+
+    endTitle: 'Bring {appName} Into Your Product',
+};
+
+// The homepage's setup prompt (public/new-home/index.html #promptText).
+const BASE_PROMPT = `Integrate apps into this product with viaSocket.
+Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
+Keep it there for next time; download it again if a call in it fails.
+My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
+Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's "Finished when" list.`;
+
+/** The setup prompt with a brief in front for adding this app to the reader's product. */
+export function promptFor({ name, actions = [], triggers = [] }) {
+    const list = (items) => items.slice(0, 3).map((o) => o.name).join(', ');
+    const lines = [
+        `Add ${name} to my product with viaSocket, so my users can use ${name} from inside my product.`,
+        `- Add a "Connect ${name}" option to my product's integrations or settings screen. Use viaSocket's managed authentication so each user (or workspace) signs in to their own ${name} account; keep one connection per user and show whether it is connected, with a way to disconnect.`,
+        actions.length ? `- Let my product run ${name} actions for the connected account through viaSocket, for example: ${list(actions)}.` : '',
+        triggers.length ? `- Subscribe to ${name} triggers through viaSocket, for example: ${list(triggers)}, and handle those events in my product.` : '',
+        `- Map my product's data to the fields ${name} expects, and surface failed executions so I can debug them.`,
+    ].filter(Boolean);
+    return `${lines.join('\n')}\n\n${BASE_PROMPT}`;
+}
+
+export const NAV = [
+    ['Docs', '/developers/docs'],
+    ['Apps', '/integrations'],
+    ['Pricing', '/pricing'],
+];
+
+export const FOOTER_GROUPS = [
+    ['Product', [['Integrations', '/integrations'], ['Discover top apps', '/discovery'], ['Security', '/help/security-and-compliance']]],
+    ['Build', [['List your app', 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'], ['Build your own plug', '/help/plugin-builder'], ['Billing partners', '/help/viasocket-embed/billing-partner']]],
+    ['Partners', [['Become a partner', '/help/partners'], ['Partner program', '/experts'], ['Agency partners', '/agency-partner']]],
+    ['Support', [['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'], ['Contact support', '/support'], ['Request a feature', 'https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas'], ['Request an integration', '/integrations']]],
+    ['Company', [['About', '/help/about-us'], ['We’re hiring', 'https://walkover.in/careers'], ['Culture we foster', 'https://walkover.in/about/culture-we-foster'], ['Roadmap', 'https://roadmap.viasocket.com/roadmap'], ['AI transparency', '/help/security-and-compliance/ai-transparency']]],
+];

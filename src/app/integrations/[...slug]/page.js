@@ -2,20 +2,37 @@ import { notFound, redirect } from 'next/navigation';
 import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../../lib/getAuth';
+import { COPY as ADD_TO_PRODUCT_COPY, fill } from '@/components/IntegrationsComp/addToProduct/copy';
 
 export const runtime = 'edge';
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({ params, searchParams }) {
     const resolvedParams = await params;
     const slug = resolvedParams?.slug || [];
-    
+
     try {
-        const data = await getIntegrationsPageData(slug);
-        
+        const data = await getIntegrationsPageData(slug, (await searchParams) || {});
+
         if (data.noData) {
             return {
                 title: '404 - Page not found',
                 description: 'The page you are looking for does not exist.',
+            };
+        }
+
+        // Single-app page ("Add {app} to Your Product"): its title and description come from the
+        // page's own copy, with a canonical URL.
+        if (data.actionLayerBlogs && data.appOneDetails?.name) {
+            const name = data.appOneDetails.name;
+            const title = fill(ADD_TO_PRODUCT_COPY.metaTitle, name);
+            const description = fill(ADD_TO_PRODUCT_COPY.metaDesc, name);
+            const url = `https://viasocket.com/integrations/${data.appOneDetails.appslugname}`;
+            return {
+                title,
+                description,
+                alternates: { canonical: url },
+                openGraph: { title, description, url, siteName: 'viaSocket', type: 'website' },
+                twitter: { card: 'summary_large_image', title, description },
             };
         }
 

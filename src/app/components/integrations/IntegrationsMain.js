@@ -2,6 +2,7 @@ import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsInd
 import IntegrationsAppOneComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp';
 import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAppTwoComp/integrationsAppTwoComp';
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
+import AddToProductPage from '@/components/IntegrationsComp/addToProduct/AddToProductPage';
 import React from 'react'
 
 const IntegrationsMain = (props) => {
@@ -49,6 +50,9 @@ const IntegrationsMain = (props) => {
                     navbarData={data.navbarData}
                 />
             );
+        } else if (data.actionLayerBlogs) {
+            // "Add {app} to Your Product" (see lib/integration-data.js, single-app branch)
+            return <AddToProductPage appOneDetails={data.appOneDetails} blogs={data.actionLayerBlogs} />;
         } else {
             return (
                 <div className="cont md:gap-20 sm:gap-16 gap-12">
