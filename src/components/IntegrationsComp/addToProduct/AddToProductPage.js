@@ -2,8 +2,9 @@ import Link from 'next/link';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
-import { COPY, FOOTER_GROUPS, NAV, fill, promptFor } from './copy';
-import { Chevron, FeatureIcon, Logo, SOCIAL } from './icons';
+import { COPY, fill, promptFor } from './copy';
+import { Chevron, FeatureIcon } from './icons';
+import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import RotatingWord from './RotatingWord';
 import OAuthDemo from './OAuthDemo';
@@ -15,10 +16,6 @@ import EventsList from './EventsList';
 
 const cx = (...names) => names.filter(Boolean).map((n) => s[n]).join(' ');
 
-const fmtDate = (d) => {
-    const t = Date.parse(d);
-    return Number.isNaN(t) ? '' : new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });
-};
 
 const categorySlug = (c) => c.replace(/\.$/, '').trim().toLowerCase().replace(/\s+/g, '-');
 
@@ -126,21 +123,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
             <JsonLd app={app} />
             <CopyPromptProvider prompt={promptFor(app)}>
-                <header className={s.top}>
-                    <div className={s.wrap}>
-                        <Link className={s.logo} href="/" aria-label="viaSocket home">
-                            <Logo height={24} />
-                        </Link>
-                        <nav className={s['top-nav']}>
-                            {NAV.map(([label, href]) => (
-                                <Link key={href} href={href}>
-                                    {label}
-                                </Link>
-                            ))}
-                            <CopyPromptButton small />
-                        </nav>
-                    </div>
-                </header>
+                <SiteHeader />
 
                 <main>
                     <section className={s.hero}>
@@ -214,33 +197,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                         </div>
                     </section>
 
-                    {blogs.length > 0 && (
-                        <section className={s.sec}>
-                            <div className={s.wrap}>
-                                <div className={s['sh-row']}>
-                                    <div className={s.sh}>
-                                        <h2 className={s.h2}>{f(COPY.learnTitle)}</h2>
-                                        <p className={s.lead}>{f(COPY.learnSub)}</p>
-                                    </div>
-                                    <a className={s['btn-o']} style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} href={COPY.blogCategoryUrl}>
-                                        View all articles
-                                    </a>
-                                </div>
-                                <div className={s.posts}>
-                                    {blogs.map((b) => (
-                                        <a key={b.link} className={s.post} href={b.link}>
-                                            {b.image && <img className={s['post-img']} src={b.image} alt="" loading="lazy" />}
-                                            <span className={s['post-body']}>
-                                                <span className={s['post-meta']}>{fmtDate(b.date)}</span>
-                                                <h3>{b.title}</h3>
-                                                <span className={s.go}>Read article →</span>
-                                            </span>
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-                    )}
+                    <BlogPosts title={f(COPY.learnTitle)} lead={f(COPY.learnSub)} posts={blogs} viewAllUrl={COPY.blogCategoryUrl} />
 
                     <section className={s.sec} id="about">
                         <div className={s.wrap}>
@@ -284,23 +241,12 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                         </div>
                     </section>
 
-                    <section className={s.sec} id="faq">
-                        <div className={cx('wrap', 'faq-grid')}>
-                            <div className={s.sh}>
-                                <span className={s.eyebrow}>{COPY.faqEyebrow}</span>
-                                <h2 className={s.h2}>{f(COPY.faqTitle)}</h2>
-                                <p className={s.lead}>{f(COPY.faqSub)}</p>
-                            </div>
-                            <div className={s.faq}>
-                                {COPY.faqs.map(([q, a], i) => (
-                                    <details key={q} open={i === 0}>
-                                        <summary>{f(q)}</summary>
-                                        <p>{f(a)}</p>
-                                    </details>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
+                    <FaqSection
+                        eyebrow={COPY.faqEyebrow}
+                        title={f(COPY.faqTitle)}
+                        lead={f(COPY.faqSub)}
+                        faqs={COPY.faqs.map(([q, a]) => [f(q), f(a)])}
+                    />
 
                     <section className={s['end-cta']} id="get-started-cta">
                         <div className={s.wrap}>
@@ -325,67 +271,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                     </section>
                 </main>
 
-                <footer className={s.ft} aria-label="viaSocket">
-                    <div className={cx('wrap', 'ft-in')}>
-                        <div className={s['ft-top']}>
-                            <div className={s['ft-brand']}>
-                                <Link className={s.logo} href="/" aria-label="viaSocket home">
-                                    <Logo height={49} />
-                                </Link>
-                                <p className={s['ft-tag']}>Integration Layer for your products &amp; agents.</p>
-                                <p className={s['ft-sub']}>You build the app or agent. viaSocket handles the connections and actions.</p>
-                                <CopyPromptButton />
-                            </div>
-                            <nav className={s['ft-links']} aria-label="Footer">
-                                {FOOTER_GROUPS.map(([heading, links]) => (
-                                    <div key={heading}>
-                                        <p className={s['ft-gh']}>{heading}</p>
-                                        <ul>
-                                            {links.map(([label, href]) => (
-                                                <li key={label}>
-                                                    <a href={href}>{label}</a>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </nav>
-                        </div>
-                        <div className={s['ft-bar']}>
-                            <div className={s['ft-legal']}>
-                                <p>
-                                    © {new Date().getFullYear()} viaSocket<i aria-hidden="true">·</i>
-                                    <a href="/privacy">Privacy</a>
-                                    <i aria-hidden="true">·</i>
-                                    <a href="/terms">Terms</a>
-                                    <i aria-hidden="true">·</i>
-                                    <a href="/data-retention-deletion">Data retention &amp; deletion</a>
-                                </p>
-                                <p>Walkover Web Solutions Pvt Ltd. All rights reserved.</p>
-                            </div>
-                            <div className={s['ft-trust']}>
-                                <div className={s['ft-badges']}>
-                                    <a href="https://www.capterra.com/p/10020406/viaSocket/" target="_blank" rel="noopener noreferrer" aria-label="viaSocket on Capterra">
-                                        <img src="/new-home/assets/badge-capterra.svg" alt="" width={44} height={34} loading="lazy" />
-                                    </a>
-                                    <a href="https://www.g2.com/products/viasocket/reviews" target="_blank" rel="noopener noreferrer" aria-label="viaSocket reviews on G2">
-                                        <img src="/new-home/assets/badge-g2.svg" alt="" width={50} height={60} loading="lazy" />
-                                    </a>
-                                </div>
-                                <div className={s['ft-social']}>
-                                    {SOCIAL.map((x) => (
-                                        <a key={x.href} href={x.href} target="_blank" rel="noopener noreferrer" aria-label={x.label} className={x.fill ? s.fill : undefined}>
-                                            {x.icon}
-                                        </a>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={s['ft-mark']} aria-hidden="true">
-                        viaSocket
-                    </div>
-                </footer>
+                <SiteFooter />
             </CopyPromptProvider>
         </div>
     );

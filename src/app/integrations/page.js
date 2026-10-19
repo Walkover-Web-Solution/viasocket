@@ -3,6 +3,7 @@ import ErrorComp from '@/components/404/404Comp';
 import { getIntegrationsPageData } from '../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../lib/getAuth';
+import { INDEX_COPY } from '@/components/IntegrationsComp/addToProduct/copy';
 
 export const runtime = 'edge';
 
@@ -18,20 +19,27 @@ export async function generateMetadata() {
         }
 
         const { metadata } = data;
-        
+        const title = INDEX_COPY.metaTitle;
+        const description = INDEX_COPY.metaDesc;
+        const url = 'https://viasocket.com/integrations';
+
         return {
-            title: metadata?.title || 'Integrations - viaSocket',
-            description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
+            title,
+            description,
             keywords: metadata?.keywords,
+            alternates: { canonical: url },
             openGraph: {
-                title: metadata?.title || 'Integrations - viaSocket',
-                description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
+                title,
+                description,
+                url,
+                siteName: 'viaSocket',
+                type: 'website',
                 images: metadata?.image ? [{ url: metadata.image }] : undefined,
             },
             twitter: {
                 card: 'summary_large_image',
-                title: metadata?.title || 'Integrations - viaSocket',
-                description: metadata?.description || 'Connect your favorite apps with viaSocket integrations',
+                title,
+                description,
                 images: metadata?.image ? [metadata.image] : undefined,
             },
         };

@@ -17,7 +17,7 @@ import {
 } from '@/const/fields';
 import { getVideoData } from '@/utils/getVideoData';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
-import { getAppCount, getTemplates, getApps, getCombos, getCategoryBlogs, getActionLayerBlogs } from '@/utils/axiosCalls';
+import { getAppCount, getTemplates, getApps, getCombos, getActionLayerBlogs } from '@/utils/axiosCalls';
 import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
@@ -227,20 +227,19 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 };
             }
         } else {
-            // Integrations index page
-            const [metadata, faqData, categoryData, categories, blogData] = await Promise.all([
+            // Integrations index page (/integrations, /integrations/category/{name}): the directory,
+            // the Action Layer blog posts; copy and FAQs live in the page component.
+            const [metadata, categoryData, categories, actionLayerBlogs] = await Promise.all([
                 getMetaData('/integrations', pageUrl),
-                getFaqData('/integrations', pageUrl),
                 getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${integrationsInfo?.category || 'all'}'`, pageUrl),
                 getCategoryData(INTECATEGORYlIST_FILED, '', pageUrl),
-                getBlogData({ tag1: 'integration' }, pageUrl),
+                getActionLayerBlogs(pageUrl),
             ]);
 
             const apps = pinCategoryApp(
                 await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl),
                 integrationsInfo?.category
             );
-            const categoryBlogs = await getCategoryBlogs({ page: integrationsInfo?.page, categoryData }, pageUrl);
             const categoryName = integrationsInfo?.category || 'all';
 
             return {
@@ -248,20 +247,18 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 footerData: footerData || {},
                 apps: apps || [],
                 metadata: metadata || {},
-                faqData: faqData || [],
                 integrationsInfo: integrationsInfo || {},
                 combosData: {},
                 appOneDetails: {},
                 appTwoDetails: {},
                 categoryData: (categoryData?.length > 0 && categoryData[0]) || {},
                 categories: categories || [],
-                blogData: blogData || [],
+                actionLayerBlogs: actionLayerBlogs || [],
                 appCount: appCount || 0,
                 getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                 navbarData: navbarData || {},
                 templateToShow: [],
                 noData: false,
-                categoryBlogs: categoryBlogs || [],
                 categoryName: categoryName || 'all',
             };
         }

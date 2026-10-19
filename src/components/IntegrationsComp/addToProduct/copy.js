@@ -63,7 +63,7 @@ export const COPY = {
 };
 
 // The homepage's setup prompt (public/new-home/index.html #promptText).
-const BASE_PROMPT = `Integrate apps into this product with viaSocket.
+export const BASE_PROMPT = `Integrate apps into this product with viaSocket.
 Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
 Keep it there for next time; download it again if a call in it fails.
 My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
@@ -95,3 +95,33 @@ export const FOOTER_GROUPS = [
     ['Support', [['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'], ['Contact support', '/support'], ['Request a feature', 'https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas'], ['Request an integration', '/integrations']]],
     ['Company', [['About', '/help/about-us'], ['We’re hiring', 'https://walkover.in/careers'], ['Culture we foster', 'https://walkover.in/about/culture-we-foster'], ['Roadmap', 'https://roadmap.viasocket.com/roadmap'], ['AI transparency', '/help/security-and-compliance/ai-transparency']]],
 ];
+
+// /integrations and /integrations/category/{name}
+export const INDEX_COPY = {
+    metaTitle: 'App Integrations for Your Product | viaSocket',
+    metaDesc:
+        'Integrate 2,300+ apps into your product with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
+    h1: 'Integrate 2,300+ Apps into Your Product',
+    categoryH1: 'Integrate {category} Apps into Your Product',
+    sub: 'Build and manage secure app integrations with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
+    listYourApp: 'Want to list your app?',
+    listYourAppLink: 'Build viaSocket integration',
+    listYourAppUrl: 'https://viasocket.com/help/plugin-builder',
+    searchPlaceholder: 'Search apps or categories',
+    blogTitle: 'Learn more about adding app integrations',
+    blogLead: 'Explore guides and resources to help you implement and use integrations in your product.',
+    faqEyebrow: 'Frequently Asked Questions',
+    faqTitle: 'FAQs about app integrations',
+    faqs: [
+        ['What is an app integration layer?', 'An integration layer lets you connect your product to third-party apps through a common interface, without building and maintaining every integration independently.'],
+        ['How can I add app integrations to my product?', "With viaSocket, you can select supported apps, use their available actions and triggers, and integrate them into your product through viaSocket's APIs."],
+        ['How many app integrations does viaSocket support?', 'viaSocket supports 2,300+ app integrations. Available actions, triggers, and capabilities vary by app.'],
+        ['Are viaSocket integrations secure?', 'viaSocket provides managed authentication and customer-specific connections to help you manage access to connected apps. Security also depends on your configuration, permissions, and implementation.'],
+        ['Can my customers connect their own app accounts?', 'Yes. viaSocket supports customer-specific connections, allowing your customers to authorize their own accounts within your product.'],
+        ['Can I customize the integration experience with my own branding?', "Yes. You can offer integrations under your own branding and within your product's existing user experience."],
+        ['Do I need to build and maintain OAuth authentication for every app?', 'viaSocket provides managed authentication for supported integrations, reducing the need to implement and maintain individual authentication flows yourself.'],
+        ['Can I choose which actions and triggers my product supports?', "Yes. You can use the supported actions and triggers relevant to your product's requirements."],
+        ['Can I integrate apps that are not listed in the directory?', "You can explore custom integration options based on the app's API availability and your requirements."],
+    ],
+    browseByName: 'Browse apps by name',
+};

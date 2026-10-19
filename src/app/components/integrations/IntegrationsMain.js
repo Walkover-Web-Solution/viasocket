@@ -1,4 +1,5 @@
-import IntegrationsIndexComp from '@/components/IntegrationsComp/IntegrationsIndexComp/IntegrationsIndexComp';
+import IntegrationsIndexPage from '@/components/IntegrationsComp/addToProduct/IntegrationsIndexPage';
+import ErrorComp from '@/components/404/404Comp';
 import IntegrationsAppOneComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp';
 import IntegrationsAppTwoComp from '@/components/IntegrationsComp/integrationsAppTwoComp/integrationsAppTwoComp';
 import IntegrationsDisconnectedComp from '@/components/IntegrationsComp/integrationsAppOneComp/integrationsDisconnectedComp/integrationsDisconnectedComp';
@@ -79,26 +80,11 @@ const IntegrationsMain = (props) => {
             );
         }
     } else {
-        // Integrations index page
-        return (
-            <div className="cont md:gap-18 sm:gap-16 gap-12">
-                <IntegrationsIndexComp
-                    pageInfo={data.pageInfo}
-                    integrationsInfo={data.integrationsInfo}
-                    footerData={data.footerData}
-                    apps={data.apps}
-                    blogsData={data.blogData}
-                    categoryData={data.categoryData}
-                    categories={data.categories}
-                    faqData={data.faqData}
-                    appCount={data.appCount}
-                    navbarData={data.navbarData}
-                    skipHeadComp={true}
-                    categoryBlogs={data.categoryBlogs}
-                    categoryName={data.categoryName}
-                />
-            </div>
-        );
+        // Integrations index page (/integrations, /integrations/category/{name})
+        if (!data.categoryData || Object.keys(data.categoryData).length === 0) {
+            return <ErrorComp />;
+        }
+        return <IntegrationsIndexPage data={data} />;
     }
 }
 
