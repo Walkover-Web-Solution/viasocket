@@ -131,14 +131,16 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                 </div>
 
                 <div className={s.dir}>
-                    <nav className={s['dir-cats']} aria-label="App categories">
-                        {shownCats.map((c) => (
-                            <Link key={c.slug} href={createURL(`/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
-                                {c.name}
-                            </Link>
-                        ))}
-                        {query && !shownCats.length && <span className={s['dir-none']}>No category matches “{query}”.</span>}
-                    </nav>
+                    <div className={s['dir-side']}>
+                        <nav className={s['dir-cats']} aria-label="App categories">
+                            {shownCats.map((c) => (
+                                <Link key={c.slug} href={createURL(`/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
+                                    {c.name}
+                                </Link>
+                            ))}
+                            {query && !shownCats.length && <span className={s['dir-none']}>No category matches “{query}”.</span>}
+                        </nav>
+                    </div>
 
                     <div className={s['dir-main']}>
                         {found === null ? (
@@ -170,23 +172,23 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                                 </div>
                             </div>
                         )}
-
-                        {found === null && (page > 0 || showNext) && (
-                            <div className={s['dir-pager']}>
-                                {page > 0 && (
-                                    <Link className={s['btn-o']} href={createURL(prevUrl)}>
-                                        ← Prev
-                                    </Link>
-                                )}
-                                {showNext && (
-                                    <Link className={s['btn-o']} href={createURL(nextUrl)}>
-                                        Next →
-                                    </Link>
-                                )}
-                            </div>
-                        )}
                     </div>
                 </div>
+
+                {found === null && (page > 0 || showNext) && (
+                    <div className={s['dir-pager']}>
+                        {page > 0 && (
+                            <Link className={s['btn-o']} href={createURL(prevUrl)}>
+                                ← Prev
+                            </Link>
+                        )}
+                        {showNext && (
+                            <Link className={s['btn-o']} href={createURL(nextUrl)}>
+                                Next →
+                            </Link>
+                        )}
+                    </div>
+                )}
             </div>
             {request.open && <IntegrationsRequestComp onClose={request.hide} />}
         </section>

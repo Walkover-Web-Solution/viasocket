@@ -4,7 +4,7 @@ import { GeistMono } from 'geist/font/mono';
 import Link from 'next/link';
 import s from './addToProduct.module.scss';
 import { BASE_PROMPT, COPY, INDEX_COPY } from './copy';
-import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
+import { CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import AppDirectory from './AppDirectory';
 
@@ -49,10 +49,6 @@ export default function IntegrationsIndexPage({ data }) {
                                 )}
                                 <h1>{h1}</h1>
                                 <p className={s['hero-sub']}>{sub}</p>
-                                <div className={s['hero-cta']}>
-                                    <CopyPromptButton />
-                                    <span className={s.hint}>{COPY.copyHint}</span>
-                                </div>
                             </div>
                             <p className={s['dir-list']}>
                                 <span>{INDEX_COPY.listYourApp}</span>

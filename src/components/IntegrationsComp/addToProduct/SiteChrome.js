@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import s from './addToProduct.module.scss';
-import { FOOTER_GROUPS, NAV } from './copy';
+import { FOOTER_GROUPS, NAV, START_URL } from './copy';
 import { Logo, SOCIAL } from './icons';
 import { CopyPromptButton } from './CopyPrompt';
 
@@ -12,16 +12,18 @@ export function SiteHeader() {
         <header className={s.top}>
             <div className={s.wrap}>
                 <Link className={s.logo} href="/" aria-label="viaSocket home">
-                    <Logo height={24} />
+                    <Logo height={27} />
                 </Link>
-                <nav className={s['top-nav']}>
+                <nav className={s['top-nav']} aria-label="Main">
                     {NAV.map(([label, href]) => (
-                        <Link key={href} href={href}>
+                        <a key={label} href={href}>
                             {label}
-                        </Link>
+                        </a>
                     ))}
-                    <CopyPromptButton small />
                 </nav>
+                <a className={s.start} href={START_URL}>
+                    Start free <span aria-hidden="true">→</span>
+                </a>
             </div>
         </header>
     );

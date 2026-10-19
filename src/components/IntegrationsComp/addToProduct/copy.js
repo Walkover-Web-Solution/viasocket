@@ -82,11 +82,13 @@ export function promptFor({ name, actions = [], triggers = [] }) {
     return `${lines.join('\n')}\n\n${BASE_PROMPT}`;
 }
 
+// The homepage header (public/new-home/index.html).
 export const NAV = [
-    ['Docs', '/developers/docs'],
-    ['Apps', '/integrations'],
-    ['Pricing', '/pricing'],
+    ['Features', '/#features'],
+    ['Pricing', 'https://viasocket.com/developers/pricing'],
+    ['Log in', 'https://flow.viasocket.com/integrations'],
 ];
+export const START_URL = 'https://flow.viasocket.com/integrations';
 
 export const FOOTER_GROUPS = [
     ['Product', [['Integrations', '/integrations'], ['Discover top apps', '/discovery'], ['Security', '/help/security-and-compliance']]],
