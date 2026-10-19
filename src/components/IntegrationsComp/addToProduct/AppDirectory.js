@@ -55,15 +55,12 @@ function useRequestForm() {
     return { open, show: () => set(true), hide: () => set(false) };
 }
 
-function RequestCard({ onRequest, wide = false }) {
+function RequestCard({ onRequest }) {
     return (
-        <div className={`${s['dir-req']} ${wide ? s['dir-req-wide'] : ''}`}>
-            <div>
-                <b>Can’t find an app?</b>
-                <span>Request it and we’ll try to add it within 48 hours.</span>
-            </div>
-            <button type="button" className={`${s.btn} ${s.sm}`} onClick={onRequest}>
-                Request an app
+        <div className={s['dir-req']}>
+            <b>Can’t find an app?</b>
+            <button type="button" onClick={onRequest}>
+                Request it →
             </button>
         </div>
     );
@@ -148,14 +145,14 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                                 {apps.map((app) => (
                                     <AppCard key={app?.rowid || app?.appslugname} app={app} />
                                 ))}
-                                <RequestCard onRequest={request.show} wide />
+                                <RequestCard onRequest={request.show} />
                             </div>
                         ) : found.length ? (
                             <div className={s['dir-grid']}>
                                 {found.map((app) => (
                                     <AppCard key={app?.rowid || app?.appslugname} app={app} />
                                 ))}
-                                <RequestCard onRequest={request.show} wide />
+                                <RequestCard onRequest={request.show} />
                             </div>
                         ) : (
                             <div className={s['dir-empty']}>
