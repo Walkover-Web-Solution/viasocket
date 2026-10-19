@@ -69,17 +69,9 @@ Keep it there for next time; download it again if a call in it fails.
 My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
 Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's "Finished when" list.`;
 
-/** The setup prompt with a brief in front for adding this app to the reader's product. */
-export function promptFor({ name, actions = [], triggers = [] }) {
-    const list = (items) => items.slice(0, 3).map((o) => o.name).join(', ');
-    const lines = [
-        `Add ${name} to my product with viaSocket, so my users can use ${name} from inside my product.`,
-        `- Add a "Connect ${name}" option to my product's integrations or settings screen. Use viaSocket's managed authentication so each user (or workspace) signs in to their own ${name} account; keep one connection per user and show whether it is connected, with a way to disconnect.`,
-        actions.length ? `- Let my product run ${name} actions for the connected account through viaSocket, for example: ${list(actions)}.` : '',
-        triggers.length ? `- Subscribe to ${name} triggers through viaSocket, for example: ${list(triggers)}, and handle those events in my product.` : '',
-        `- Map my product's data to the fields ${name} expects, and surface failed executions so I can debug them.`,
-    ].filter(Boolean);
-    return `${lines.join('\n')}\n\n${BASE_PROMPT}`;
+/** The setup prompt for this app: the base prompt, naming the app in its first line. */
+export function promptFor({ name }) {
+    return BASE_PROMPT.replace('Integrate apps into', `Integrate ${name} into`);
 }
 
 // The homepage header (public/new-home/index.html).
