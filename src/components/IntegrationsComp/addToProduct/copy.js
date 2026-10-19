@@ -4,12 +4,12 @@
 export const fill = (str, appName) => str.replace(/\{appName\}|\[appName\]/g, appName);
 
 export const COPY = {
-    metaTitle: 'Add [appName] Integration to Your Product | viaSocket',
+    metaTitle: 'Add [appName] Integration to Your Product & Agent | viaSocket',
     metaDesc:
-        'Add [appName] to your product with managed authentication, actions, triggers, and customer connections using viaSocket.',
+        'Add [appName] to your product & agent with managed authentication, actions, triggers, and customer connections using viaSocket.',
     h1Lead: 'Add {appName} to Your',
     h1Words: ['Product', 'AI Agent', 'Internal Tool'],
-    sub: 'Give your customers access to {appName} from within your product. Use viaSocket to manage authentication, execute actions, and receive events from connected accounts.',
+    sub: 'Give your customers access to {appName} from within your product & agent. Use viaSocket to manage authentication, execute actions, and receive events from connected accounts.',
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
 
     featEyebrow: 'Integration Infrastructure',
