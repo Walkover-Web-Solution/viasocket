@@ -4,25 +4,25 @@
 export const fill = (str, appName) => str.replace(/\{appName\}|\[appName\]/g, appName);
 
 export const COPY = {
-    metaTitle: 'Add [appName] Integration to Your Product & Agent | viaSocket',
+    metaTitle: 'Add [appName] Integration to Your Product & Agents | viaSocket',
     metaDesc:
-        'Add [appName] to your product & agent with managed authentication, actions, triggers, and customer connections using viaSocket.',
+        'Add [appName] to your product & agents with managed authentication, actions, triggers, and customer connections using viaSocket.',
     h1Lead: 'Add {appName} to Your',
     h1Words: ['Product', 'AI Agent', 'Internal Tool'],
-    sub: 'Give your customers access to {appName} from within your product & agent. Use viaSocket to manage authentication, execute actions, and receive events from connected accounts.',
+    sub: 'Give your customers access to {appName} from within your product & agents. Use viaSocket to manage authentication, execute actions, and receive events from connected accounts.',
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
 
     featEyebrow: 'Integration Infrastructure',
     featTitle: 'Everything You Need to Manage {appName} Integrations',
     featLead:
-        'Add {appName} to your product today. viaSocket runs the infrastructure; your AI coding assistant does the setup.',
+        'Add {appName} to your product & agents today. viaSocket runs the infrastructure; your AI coding assistant does the setup.',
     feats: [
         ['Managed Authentication', 'Let your customers connect their {appName} accounts without building and maintaining OAuth flows yourself.', 'key'],
-        ['Customer-Specific Connections', 'Manage separate {appName} connections for each customer in your product.', 'users'],
+        ['Customer-Specific Connections', 'Manage separate {appName} connections for each customer in your product & agents.', 'users'],
         ['Actions, Triggers and Webhooks', 'Execute supported {appName} actions and receive events through a consistent integration interface.', 'bolt'],
-        ['Managed Data Mapping', 'Map data between your product and the formats expected by {appName}.', 'map'],
+        ['Managed Data Mapping', 'Map data between your product & agents and the formats expected by {appName}.', 'map'],
         ['Monitoring and Debugging', 'Track executions, inspect errors, and troubleshoot integration issues.', 'pulse'],
-        ['Your Product, Your Experience', 'Offer {appName} integrations under your own branding and within your existing product experience.', 'brand'],
+        ['Your Product & Agents, Your Experience', 'Offer {appName} integrations under your own branding and within your existing product & agents.', 'brand'],
     ],
     featsShort: [
         ['Managed auth', 'key'],
@@ -35,31 +35,31 @@ export const COPY = {
 
     atTitle: 'Available Actions and Triggers for {appName}',
     actTitle: 'What You Can Do with {appName}',
-    actSub: 'Explore available actions to let your product interact with {appName}.',
+    actSub: 'Explore available actions to let your product & agents interact with {appName}.',
     trgTitle: 'Respond to Events in {appName}',
-    trgSub: 'Use triggers to let your product respond to events from connected {appName} accounts.',
+    trgSub: 'Use triggers to let your product & agents respond to events from connected {appName} accounts.',
 
     learnTitle: 'Learn more about adding {appName} Integrations',
     learnSub: 'Explore guides and resources to help you implement and use {appName} integrations.',
     blogCategoryUrl: 'https://viasocket.com/blog/category/Action%20Layer%20for%20AI%20Products',
 
     aboutViasocket:
-        'Connect 2,300+ apps to your product or AI agent with one prompt. Auth, events and actions handled. Free to start.',
+        'Connect 2,300+ apps to your product & agents with one prompt. Auth, events and actions handled. Free to start.',
 
     faqEyebrow: 'Frequently Asked Questions',
-    faqTitle: 'FAQs about adding {appName} to your product',
-    faqSub: 'Find answers to common questions about integrating {appName} into your product, including authentication, supported actions, triggers, and implementation.',
+    faqTitle: 'FAQs about adding {appName} to your product & agents',
+    faqSub: 'Find answers to common questions about integrating {appName} into your product & agents, including authentication, supported actions, triggers, and implementation.',
     faqs: [
-        ['How can I integrate {appName} into my product?', 'You can use viaSocket to add {appName} integration to your product. viaSocket provides APIs, managed authentication, actions, and triggers to help you build integration features for your customers.'],
+        ['How can I integrate {appName} into my product & agents?', 'You can use viaSocket to add {appName} integration to your product & agents. viaSocket provides APIs, managed authentication, actions, and triggers to help you build integration features for your customers.'],
         ['Do I need to build and maintain the integration infrastructure myself?', 'No. viaSocket manages the integration infrastructure, including authentication, customer connections, and supported actions and triggers.'],
         ['Can my customers connect their own {appName} accounts?', 'Yes. viaSocket supports customer-specific connections, allowing each customer to authorize their own {appName} account.'],
-        ['Can I offer {appName} integration under my own branding?', "Yes. You can provide the integration experience under your own branding and within your product's existing interface."],
-        ['Can I connect {appName} with other apps?', 'Yes. viaSocket supports integrations with 2,300+ apps, allowing your product to work with {appName} and other supported services.'],
+        ['Can I offer {appName} integration under my own branding?', "Yes. You can provide the integration experience under your own branding and within the existing interface of your product & agents."],
+        ['Can I connect {appName} with other apps?', 'Yes. viaSocket supports integrations with 2,300+ apps, allowing your product & agents to work with {appName} and other supported services.'],
         ['How do I execute actions in {appName}?', "Use viaSocket's supported actions and APIs to perform operations in connected {appName} accounts. Available operations depend on the integration's supported capabilities and the permissions granted."],
-        ['Can my product respond to events from {appName}?', 'Yes. You can use supported triggers and webhooks to receive events from {appName} and respond within your product.'],
+        ['Can my product & agents respond to events from {appName}?', 'Yes. You can use supported triggers and webhooks to receive events from {appName} and respond within your product & agents.'],
     ],
 
-    endTitle: 'Bring {appName} Into Your Product',
+    endTitle: 'Bring {appName} Into Your Product & Agents',
 };
 
 // The homepage's setup prompt (public/new-home/index.html #promptText).
