@@ -1390,3 +1390,16 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 }
 /* use-case status dots: one monochrome dot for every row (no live/example colours, no legend) */
 .st, .st.live { background: var(--ink); }
+
+/* visitors from ads: talk to an expert in the hero, book a demo in the nav and closing box, a chat button everywhere */
+.hero-cta { row-gap: 12px; }
+.hero-ex { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px; border: 1px solid var(--line-2); background: var(--s1); color: var(--ink); font-size: 15px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: border-color .15s ease; }
+.hero-ex:hover { border-color: var(--ink); }
+.hero-live { width: 8px; height: 8px; border-radius: 50% !important; background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
+.hero-cta .hero-hint { flex-basis: 100%; }
+.vt-f-alt { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.vt-f-alt .btn { width: 100%; }
+.chat-fab { position: fixed; right: 20px; bottom: 20px; z-index: 60; display: inline-flex; align-items: center; gap: 8px; height: 46px; padding: 0 18px; background: var(--btn-bg); color: var(--btn-ink); font-size: 15px; font-weight: 600; text-decoration: none; box-shadow: var(--sh-dlg); }
+.chat-fab:hover { background: var(--btn-hover); }
+.chat-fab svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
+@media (max-width: 600px) { .hero-ex { width: 100%; justify-content: center; } .chat-fab { right: 14px; bottom: 14px; height: 42px; padding: 0 14px; } }
