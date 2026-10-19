@@ -199,8 +199,19 @@
 .ops b { font-weight: 600; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
 .ops span { font-size: 14px; color: var(--ink-2); line-height: 1.45; overflow-wrap: anywhere; }
 .ops-foot { display: flex; justify-content: flex-start; }
-@media (max-width: 900px) { .ops { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .ops { grid-template-columns: minmax(0, 1fr); } }
+// The last card stretches over whatever the last row leaves free, so the grid never shows an
+// empty cell (the 1px gaps are the grid's background).
+.ops li:last-child:nth-child(3n + 1) { grid-column: span 3; }
+.ops li:last-child:nth-child(3n + 2) { grid-column: span 2; }
+@media (max-width: 900px) {
+  .ops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ops li:last-child:nth-child(3n + 1), .ops li:last-child:nth-child(3n + 2) { grid-column: auto; }
+  .ops li:last-child:nth-child(2n + 1) { grid-column: span 2; }
+}
+@media (max-width: 560px) {
+  .ops { grid-template-columns: minmax(0, 1fr); }
+  .ops li:last-child:nth-child(2n + 1) { grid-column: auto; }
+}
 
 /* About the app / about viaSocket: two cards, as on the current integration pages */
 .about { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
