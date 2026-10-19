@@ -241,6 +241,34 @@
 @media (max-width: 900px) { .feats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .feats { grid-template-columns: minmax(0, 1fr); } }
 
+/* Integration Infrastructure as a bento: Managed Authentication is the large card (the hardest
+   part to build), the other five sit around it. */
+.bento { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.bcard { background: var(--s1); border: 1px solid var(--line); padding: 26px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.bcard h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.bcard p { color: var(--ink-2); font-size: 15px; }
+.bcard .feat-ico { margin-bottom: 6px; }
+.bcard.big { grid-column: span 2; grid-row: span 2; padding: 32px; gap: 12px; }
+.bcard.big h3 { font-size: clamp(22px, 2.2vw, 28px); letter-spacing: -0.025em; line-height: 1.15; }
+.bcard.big p { font-size: 16px; max-width: 46ch; }
+.auth-vis { margin-top: auto; padding-top: 22px; }
+.auth-panel { border: 1px solid var(--line); background: var(--bg); }
+.auth-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.auth-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); min-width: 0; }
+.auth-row:last-child { border-bottom: 0; }
+.auth-who { flex: 1; min-width: 0; display: grid; }
+.auth-who b { font-size: 14px; font-weight: 600; }
+.auth-who small { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 900px) {
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bcard.big { grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .bento { grid-template-columns: minmax(0, 1fr); }
+  .bcard.big { grid-column: auto; padding: 26px; }
+  .auth-who small { white-space: normal; }
+}
+
 /* Blog posts from the "Action Layer for AI Products" category */
 .sh-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 32px; margin-bottom: var(--content-gap); }
 .sh-row .sh { margin-bottom: 0; }

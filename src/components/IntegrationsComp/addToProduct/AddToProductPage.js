@@ -43,6 +43,40 @@ export function toPageApp(appOneDetails) {
     };
 }
 
+// The large Managed Authentication card's picture: each customer's own connection to the app,
+// kept signed in. Example customers, the same on every app page.
+const AUTH_ROWS = [
+    ['Acme Corp', 'token refreshed 2h ago'],
+    ['Globex', 'token refreshed 9m ago'],
+    ['Initech', 'connected today'],
+];
+
+function AuthPanel({ app }) {
+    return (
+        <div className={s['auth-vis']} aria-hidden="true">
+            <div className={s['auth-panel']}>
+                <div className={s['auth-head']}>
+                    <span>Customer connections</span>
+                    <span>{app.name}</span>
+                </div>
+                {AUTH_ROWS.map(([who, note]) => (
+                    <div key={who} className={s['auth-row']}>
+                        <AppIcon src={app.iconUrl} size={26} />
+                        <span className={s['auth-who']}>
+                            <b>{who}</b>
+                            <small>{note}</small>
+                        </span>
+                        <span className={s.gtag}>
+                            <span className={s.dot} />
+                            Connected
+                        </span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+}
+
 /** The structured data the old page carried, with this page's FAQs. */
 function JsonLd({ app }) {
     const software = {
@@ -141,14 +175,15 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                                     <p className={s.lead}>{f(COPY.featLead)}</p>
                                 </div>
                             </div>
-                            <div className={s.feats}>
-                                {COPY.feats.map(([h, p, k]) => (
-                                    <div key={h} className={s.feat}>
+                            <div className={s.bento}>
+                                {COPY.feats.map(([h, p, k], i) => (
+                                    <div key={h} className={cx('bcard', i === 0 && 'big')}>
                                         <span className={s['feat-ico']}>
                                             <FeatureIcon name={k} />
                                         </span>
                                         <h3>{h}</h3>
                                         <p>{f(p)}</p>
+                                        {i === 0 && <AuthPanel app={app} />}
                                     </div>
                                 ))}
                             </div>
