@@ -10,7 +10,7 @@ import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import RotatingWord from './RotatingWord';
 import OAuthDemo from './OAuthDemo';
 import EventsList from './EventsList';
-import BetaNotice from './BetaNotice';
+import BetaRequestButton from './BetaNotice';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
 // the HTML; only the rotating word, the sign-in animation, "Show all" and the copy buttons run
@@ -120,6 +120,8 @@ function JsonLd({ app }) {
 export default function AddToProductPage({ appOneDetails, blogs = [] }) {
     const app = toPageApp(appOneDetails);
     const f = (str) => fill(str, app.name);
+    // No published actions or triggers: the hero leads with the beta message and the request button.
+    const isBeta = !app.actions.length && !app.triggers.length;
 
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
@@ -137,14 +139,35 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                                     <Chevron />
                                     <span aria-current="page">{app.name}</span>
                                 </nav>
-                                <h1>
-                                    <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
-                                </h1>
-                                <p className={s['hero-sub']}>{f(COPY.sub)}</p>
-                                <div className={s['hero-cta']}>
-                                    <CopyPromptButton />
-                                    <span className={s.hint}>{COPY.copyHint}</span>
-                                </div>
+                                {isBeta ? (
+                                    <>
+                                        <h1>Integrate {app.name} with your favorite apps</h1>
+                                        <p className={s['hero-sub']}>
+                                            The app you are looking for is in <b>beta</b>, and we are awaiting verification from the app
+                                            builders before making it accessible to end users.
+                                        </p>
+                                        <p className={s['beta-note']}>This process may take 15 to 30 days.</p>
+                                        <p className={s['hero-sub']}>
+                                            If you can’t wait, we can add the beta version to your viaSocket workspace within <b>24 hours</b>.
+                                        </p>
+                                        <div className={s['hero-cta']}>
+                                            <Suspense>
+                                                <BetaRequestButton appInfo={appOneDetails} />
+                                            </Suspense>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <h1>
+                                            <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
+                                        </h1>
+                                        <p className={s['hero-sub']}>{f(COPY.sub)}</p>
+                                        <div className={s['hero-cta']}>
+                                            <CopyPromptButton />
+                                            <span className={s.hint}>{COPY.copyHint}</span>
+                                        </div>
+                                    </>
+                                )}
                             </div>
                             <OAuthDemo app={app} />
                         </div>
@@ -175,7 +198,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                         </div>
                     </section>
 
-                    {app.actions.length || app.triggers.length ? (
+                    {!isBeta && (
                         <section className={s.sec} id="actions-triggers">
                             <div className={s.wrap}>
                                 <div className={s.sh}>
@@ -199,10 +222,6 @@ export default function AddToProductPage({ appOneDetails, blogs = [] }) {
                                 </div>
                             </div>
                         </section>
-                    ) : (
-                        <Suspense>
-                            <BetaNotice appInfo={appOneDetails} />
-                        </Suspense>
                     )}
 
                     <BlogPosts title={f(COPY.learnTitle)} lead={f(COPY.learnSub)} posts={blogs} viewAllUrl={COPY.blogCategoryUrl} />
