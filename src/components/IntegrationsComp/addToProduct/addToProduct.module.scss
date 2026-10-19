@@ -380,7 +380,7 @@
 .dir-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 32px; margin-bottom: 20px; }
 .dir-head .sh { margin-bottom: 0; }
 .dir-head .h2 { margin-top: 0; }
-.dir-sub { font-size: 16px; color: var(--ink-2); max-width: 60ch; }
+.dir-count { font-variant-numeric: tabular-nums; }
 .dir-search { display: flex; align-items: center; gap: 10px; width: min(400px, 100%); height: 46px; padding: 0 14px; border: 1px solid var(--line-2); background: var(--s1); cursor: text; }
 .dir-search:focus-within { border-color: var(--ink-3); }
 .dir-search svg { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--ink-3); stroke-width: 2; }

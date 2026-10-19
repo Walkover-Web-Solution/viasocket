@@ -106,7 +106,15 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
             <div className={s.wrap}>
                 <div className={s['dir-head']}>
                     <div className={s.sh}>
-                        {current && categoryData?.subheading && <p className={s['dir-sub']}>{categoryData.subheading}</p>}
+                        {current && (
+                            <>
+                                <h2 className={s.h2}>
+                                    <span className={s['dir-count']}>{categoryData?.appcount || 300}+</span>{' '}
+                                    {decodeURIComponent(categoryData?.name || current)}
+                                </h2>
+                                {categoryData?.subheading && <p className={s.lead}>{categoryData.subheading}</p>}
+                            </>
+                        )}
                     </div>
                     <label className={s['dir-search']} htmlFor="app-search">
                         <SearchIcon />
