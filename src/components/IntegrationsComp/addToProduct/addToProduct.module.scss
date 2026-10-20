@@ -447,6 +447,7 @@
   background-size: 24px 24px; background-position: center center;
   -webkit-mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); }
 .fx-hero h1 { max-width: 20ch; font-size: clamp(38px, 5vw, 68px); }
+.fx-hero-full h1 { max-width: none; }
 .fx-hero .hero-sub { max-width: 40em; }
 .fx-hero .hero-cta { row-gap: 12px; }
 .fx-hint { flex-basis: 100%; }
@@ -462,6 +463,19 @@
 .fxg + .fxg { margin-top: clamp(56px, 7vw, 96px); }
 .fxg-h { display: grid; gap: 8px; margin-bottom: 24px; }
 .fxg-h .h2 { margin-top: 0; font-size: clamp(24px, 2.4vw, 32px); }
+// The featured group (Build with AI): every card carries an illustration. AI Agents runs across the
+// top; the other two sit side by side below it, text over illustration.
+.fx-ai { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fx-ai > li.fx-big { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.fx-ai > li:not(.fx-big) { padding: 32px; gap: 12px; justify-content: flex-start; }
+.fxg-feat .fx-sm-h { gap: 14px; }
+.fxg-feat .fx-sm-h .feat-ico { width: 40px; height: 40px; }
+.fxg-feat .fx-sm-h h3 { font-size: clamp(19px, 1.7vw, 22px); letter-spacing: -0.02em; }
+.fxg-feat .fx > li > p { font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+// The two lower visuals fill their card, so side-by-side cards end level with no gap below.
+.fx-vis-sm { padding-top: 12px; flex: 1; display: flex; flex-direction: column; }
+.fx-vis-sm > * { flex: 1; display: flex; flex-direction: column; }
+@media (max-width: 760px) { .fx-ai { grid-template-columns: minmax(0, 1fr); } .fx-ai > li:not(.fx-big) { padding: 22px 20px; } }
 .fx { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: dense; gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .fx-has-big { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .fx-flat { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -548,8 +562,8 @@
 .uc-card { position: relative; width: 100%; display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 0; background: var(--s1); color: var(--ink); text-align: left; cursor: pointer; transition: background-color .15s, box-shadow .15s; }
 .uc-card:hover { z-index: 1; background: var(--s2); box-shadow: inset 0 0 0 1px var(--ink-3); }
 .uc-card:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
-.uc-t { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; line-height: 1.4; color: var(--ink-3); }
-.uc-q { flex: 1; display: flex; gap: 12px; align-items: flex-start; font-size: 17px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.5; color: var(--ink); text-wrap: pretty; }
+.uc-t { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); }
+.uc-q { flex: 1; display: flex; gap: 12px; align-items: flex-start; font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
 .uc-q > span:last-child::before { content: "\201C"; }
 .uc-q > span:last-child::after { content: "\201D"; }
 // The homepage's AI sparkle in front of each prompt.
@@ -599,3 +613,37 @@
 .lt-sign b { font-size: 16px; font-weight: 600; color: var(--ink); }
 .lt-cta { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 @media (max-width: 600px) { .lt-cta .btn { width: 100%; } .lt-sig { font-size: 38px; } }
+
+/* Build with AI demos (AIDemos.js): minimal panels, parts fade in as each loop plays */
+.ad-body { padding: 16px; display: grid; gap: 12px; }
+.ad-me, .ad-ans, .ad-dots { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
+.ad-me.is-on, .ad-ans.is-on, .ad-dots.is-on { opacity: 1; transform: none; }
+// Chatbot
+.ad-chat .ad-body { flex: 1; min-height: 168px; align-content: start; }
+.ad-me { justify-self: end; max-width: 85%; padding: 9px 12px; background: var(--btn-bg); color: var(--btn-ink); font-size: 13.5px; line-height: 1.45; }
+.ad-reply { position: relative; min-height: 76px; }
+.ad-dots { position: absolute; left: 0; top: 0; display: inline-flex; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); background: var(--s1); }
+.ad-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); animation: blink 1.2s infinite; }
+.ad-dots i:nth-child(2) { animation-delay: .2s; } .ad-dots i:nth-child(3) { animation-delay: .4s; }
+.ad-ans { max-width: 92%; padding: 10px 12px; border: 1px solid var(--line); background: var(--s1); display: grid; gap: 8px; justify-items: start; }
+.ad-ans p { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
+.ad-src { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.ad-src .appicon { padding: 1px; }
+// Browser: a small job board; the listing being read is outlined with the element it is reading.
+.ad-site { padding: 14px; display: grid; gap: 8px; }
+.ad-site-h { display: block; height: 8px; width: 40%; margin-bottom: 4px; background: var(--line-2); }
+.ad-job { position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid var(--line); background: var(--bg); transition: border-color .25s, box-shadow .25s; }
+.ad-job-t { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.ad-job-t b { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.ad-job-t small { font-size: 11px; color: var(--ink-3); }
+.ad-apply { flex: none; font-size: 11px; font-weight: 600; padding: 4px 8px; border: 1px solid var(--line-2); color: var(--ink-2); }
+.ad-tag { position: absolute; right: 6px; top: -9px; padding: 1px 6px; background: var(--green); color: var(--on-green); font-family: var(--mono); font-size: 10px; line-height: 1.5; opacity: 0; transition: opacity .2s; }
+.ad-job.is-scan { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
+.ad-job.is-scan .ad-tag { opacity: 1; }
+.ad-job.is-read:not(.is-scan) { border-color: var(--line-2); }
+.ad-out { display: grid; gap: 5px; padding: 12px 14px 14px; border-top: 1px solid var(--win-line); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.ad-out-h { color: var(--ink-3); }
+.ad-out-l { opacity: 0; transform: translateY(3px); transition: opacity .3s, transform .3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ad-out-l::before { content: "+ "; color: var(--green); }
+.ad-out-l.is-on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .ad-dots i { animation: none; } }
