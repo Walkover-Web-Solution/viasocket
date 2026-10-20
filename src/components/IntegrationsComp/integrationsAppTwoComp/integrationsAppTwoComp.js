@@ -18,6 +18,7 @@ export default function IntegrationsAppTwoComp({
     navbarData,
     templateToShow,
     appCount,
+    automationIdeasData,
     skipHeadComp,
     hasToken,
 }) {
@@ -49,6 +50,7 @@ export default function IntegrationsAppTwoComp({
                 getDoFollowUrlStatusArray={getDoFollowUrlStatusArray}
                 templateToShow={templateToShow}
                 appCount={appCount}
+                automationIdeasData={automationIdeasData}
                 hasToken={hasToken}
             />
         </div>

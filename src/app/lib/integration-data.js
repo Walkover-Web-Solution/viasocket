@@ -22,6 +22,7 @@ import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
 import { getBlogData } from '@/utils/getBlogData';
+import { getAutomationIdeasData, getAutomationIdeasDataForPair } from '@/utils/getAutomationIdeasData';
 import { CATEGORY_PINNED_APPS } from '@/const/integrations';
 
 // Moves a category's pinned app to the first grid position when that app is on
@@ -111,12 +112,13 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
 
             if (appOneDetails && appTwoDetails) {
                 const excludeSlugs = [appOneDetails?.appslugname, appTwoDetails?.appslugname];
-                const [blogData, videoData, templateData, similarAppsOne, similarAppsTwo] = await Promise.all([
+                const [blogData, videoData, templateData, similarAppsOne, similarAppsTwo, automationIdeasData] = await Promise.all([
                     getBlogData({ tag1: appOneDetails?.appslugname, tag2: appTwoDetails?.appslugname }, pageUrl),
                     getVideoData({ tag1: appOneDetails?.appslugname, tag2: appTwoDetails?.appslugname }, pageUrl),
                     getTemplates(pageUrl),
                     getSimilarApps(appOneDetails, excludeSlugs, pageUrl),
                     getSimilarApps(appTwoDetails, excludeSlugs, pageUrl),
+                    getAutomationIdeasDataForPair(appOneDetails?.appslugname, appTwoDetails?.appslugname, pageUrl),
                 ]);
 
                 const validTemplates = templateData.filter(
@@ -142,6 +144,7 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                     navbarData: navbarData || {},
                     templateToShow: validTemplates || [],
+                    automationIdeasData: automationIdeasData || [],
                     noData: false,
                 };
             } else {
@@ -189,10 +192,11 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
 
             if (appOneDetails) {
-                const [blogData, videoData, templateData] = await Promise.all([
+                const [blogData, videoData, templateData, automationIdeasData] = await Promise.all([
                     getBlogData({ tag1: appOneDetails?.appslugname }, pageUrl),
                     getVideoData({ tag1: appOneDetails?.appslugname }, pageUrl),
                     getTemplates(pageUrl),
+                    getAutomationIdeasData(appOneDetails?.appslugname, pageUrl),
                 ]);
 
                 const validTemplates = templateData.filter(
@@ -218,6 +222,7 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                     getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                     navbarData: navbarData || {},
                     templateToShow: validTemplates || [],
+                    automationIdeasData: automationIdeasData || [],
                     noData: false,
                 };
             } else {
