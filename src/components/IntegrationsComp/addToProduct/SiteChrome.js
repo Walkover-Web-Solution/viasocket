@@ -12,11 +12,11 @@ export function SiteHeader() {
         <header className={s.top}>
             <div className={s.wrap}>
                 <Link className={s.logo} href="/" aria-label="viaSocket home">
-                    <Logo height={27} />
+                    <Logo height={22} />
                 </Link>
                 <nav className={s['top-nav']} aria-label="Main">
                     {NAV.map(([label, href]) => (
-                        <a key={label} href={href}>
+                        <a key={label} href={href} {...(href.startsWith('https://cal.id') && { target: '_blank', rel: 'noopener' })}>
                             {label}
                         </a>
                     ))}

@@ -6,11 +6,12 @@ import { CopyIcon } from './icons';
 
 // Every "Copy setup prompt" button on the page copies the same app-specific prompt. One provider
 // holds the prompt, the toast and the fallback box shown when the browser blocks the clipboard.
+// useCopyPrompt() copies other text (a use-case prompt) through the same toast and fallback.
 const CopyCtx = createContext(null);
 
 export function CopyPromptProvider({ prompt, children }) {
     const [toast, setToast] = useState('');
-    const [manual, setManual] = useState(false);
+    const [manual, setManual] = useState(''); // the text to copy by hand, when the clipboard is blocked
     const toastTimer = useRef();
     const textRef = useRef(null);
 
@@ -22,15 +23,15 @@ export function CopyPromptProvider({ prompt, children }) {
         }
     }, [manual]);
 
-    const copy = useCallback(async () => {
+    const copy = useCallback(async (text = prompt) => {
         try {
-            await navigator.clipboard.writeText(prompt);
+            await navigator.clipboard.writeText(text);
             setToast('Copied. Paste it into your AI.');
             clearTimeout(toastTimer.current);
             toastTimer.current = setTimeout(() => setToast(''), 2400);
             return true;
         } catch {
-            setManual(true);
+            setManual(text);
             return false;
         }
     }, [prompt]);
@@ -46,14 +47,19 @@ export function CopyPromptProvider({ prompt, children }) {
             {manual && (
                 <div className={s['copy-fb']} role="dialog" aria-label="Copy the prompt">
                     <p>Your browser blocked copying. The prompt is selected: press Ctrl+C or ⌘C.</p>
-                    <textarea ref={textRef} readOnly rows={7} value={prompt} />
-                    <button type="button" className={`${s.btn} ${s.sm}`} onClick={() => setManual(false)}>
+                    <textarea ref={textRef} readOnly rows={7} value={manual} />
+                    <button type="button" className={`${s.btn} ${s.sm}`} onClick={() => setManual('')}>
                         Done
                     </button>
                 </div>
             )}
         </CopyCtx.Provider>
     );
+}
+
+/** Copies `text` (default: the page's setup prompt). Resolves true when it reached the clipboard. */
+export function useCopyPrompt() {
+    return useContext(CopyCtx);
 }
 
 export function CopyPromptButton({ small = false }) {
