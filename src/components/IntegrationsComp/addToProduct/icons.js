@@ -1,4 +1,4 @@
-// Line icons used on the single-app integration page (stroke follows currentColor).
+// Line icons used on the single-app integration page and /features (stroke follows currentColor).
 
 const PATHS = {
     key: (
@@ -26,6 +26,60 @@ const PATHS = {
         <>
             <rect x="3" y="4" width="18" height="16" />
             <path d="M3 9h18M8 14h5" />
+        </>
+    ),
+    apps: (
+        <>
+            <rect x="3" y="3" width="7" height="7" />
+            <rect x="14" y="3" width="7" height="7" />
+            <rect x="3" y="14" width="7" height="7" />
+            <rect x="14" y="14" width="7" height="7" />
+        </>
+    ),
+    code: <path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />,
+    chat: (
+        <>
+            <path d="M3 4h18v13H9l-5 4v-4H3z" />
+            <path d="M8 9h8M8 12.5h5" />
+        </>
+    ),
+    agent: (
+        <>
+            <rect x="4" y="7" width="16" height="13" />
+            <path d="M12 3v4M9 12v2M15 12v2M9 17h6" />
+        </>
+    ),
+    browser: (
+        <>
+            <rect x="3" y="4" width="18" height="16" />
+            <path d="M3 9h18M6 6.5h.01M9 6.5h.01" />
+            <path d="M11 13l2 6 1.2-2.4L17 19l1-1-2.4-1.8L18 15z" />
+        </>
+    ),
+    globe: (
+        <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z" />
+        </>
+    ),
+    fast: <path d="M2 8h6M2 12h4M2 16h6M13 3l-3 9h5l-2 9 8-11h-5l3-7z" />,
+    retry: (
+        <>
+            <path d="M20 12a8 8 0 11-2.3-5.7" />
+            <path d="M20 4v5h-5" />
+        </>
+    ),
+    clock: (
+        <>
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+        </>
+    ),
+    replay: (
+        <>
+            <path d="M4 12a8 8 0 102.3-5.7" />
+            <path d="M4 4v5h5" />
+            <path d="M10.5 9.5v5l4-2.5z" />
         </>
     ),
 };

@@ -60,8 +60,9 @@
 :where(.root) ::selection { background: var(--line-2); }
 :where(.root) :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
-.wrap { max-width: var(--w); margin-inline: auto; padding-left: max(24px, env(safe-area-inset-left, 0px)); padding-right: max(24px, env(safe-area-inset-right, 0px)); }
-@media (max-width: 600px) { .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); } }
+// The homepage's --wrap: 1240px of content, 24px gutters (16px on phones).
+.wrap { width: min(var(--w), 100% - 48px); margin-inline: auto; }
+@media (max-width: 600px) { .wrap { width: calc(100% - 32px); } }
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
 
 /* Header, as on the homepage */
@@ -338,7 +339,7 @@
 .ft-mark { margin: 8px 0 -0.22em; text-align: center; font-size: clamp(90px, 20.5vw, 300px); font-weight: 700; letter-spacing: -0.06em; line-height: 0.9; color: var(--s3); user-select: none; white-space: nowrap; }
 @media (min-width: 1025px) { .ft-links a { white-space: nowrap; } }
 @media (max-width: 1024px) { .ft-top { grid-template-columns: minmax(0, 1fr); gap: 44px; } .ft-links { padding-top: 0; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; } }
-@media (max-width: 560px) { .ft-in { padding-top: 56px; } .ft-brand .logo-svg { height: 44px; } .ft-tag { font-size: 21px; } .ft-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; } .ft-bar { align-items: flex-start; } .ft-legal i { margin: 0 7px; } }
+@media (max-width: 560px) { .ft-brand img { height: 44px !important; } .ft-in { padding-top: 56px; } .ft-brand .logo-svg { height: 44px; } .ft-tag { font-size: 21px; } .ft-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; } .ft-bar { align-items: flex-start; } .ft-legal i { margin: 0 7px; } }
 
 /* Copy feedback */
 .toast { position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 80; transform: translateX(-50%); background: var(--ink); color: var(--bg); padding: 10px 16px; font-size: 14px; box-shadow: var(--sh-dlg); }
@@ -434,3 +435,215 @@
 /* Beta hero: an app with no actions or triggers leads with the beta message */
 .hero .beta-note { margin-top: 8px; font-size: 14px; color: var(--ink-3); }
 .hero .hero-sub b { color: var(--ink); font-weight: 600; }
+
+/* ---------- /features: the integration layer's features ---------- */
+.fx-hero { padding-block: clamp(48px, 9vh, 96px) clamp(48px, 6vw, 72px); }
+.fx-hero-in { position: relative; z-index: 1; }
+// The homepage hero's faint line grid: 1px every 24px (5% ink light, 7% dark), strongest in the middle, gone by the edges.
+.fx-hero { --grid-line: rgba(17, 17, 19, 0.05); }
+@media (prefers-color-scheme: dark) { .fx-hero { --grid-line: rgba(241, 239, 233, 0.07); } }
+.fx-hero .hero-grid { z-index: 0;
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); }
+.fx-hero h1 { max-width: 20ch; font-size: clamp(38px, 5vw, 68px); }
+.fx-hero-full h1 { max-width: none; }
+.fx-hero .hero-sub { max-width: 40em; }
+.fx-hero .hero-cta { row-gap: 12px; }
+.fx-hint { flex-basis: 100%; }
+// "Talk to an expert", as in the homepage hero
+.hero-ex { display: inline-flex; align-items: center; gap: 8px; height: 48px; padding: 0 18px; border: 1px solid var(--line-2); background: var(--s1); color: var(--ink); font-size: 15px; font-weight: 500; text-decoration: none; white-space: nowrap; transition: border-color .15s ease; }
+.hero-ex:hover { border-color: var(--ink); }
+.hero-live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
+@media (max-width: 600px) { .fx-hero .hero-cta .btn, .hero-ex { width: 100%; justify-content: center; } }
+
+// Feature groups: a heading row, then a hairline grid (1px gaps show the background as rules).
+.fx-sec { padding-block: 0 var(--sec-pad); }
+.fxg { scroll-margin-top: 88px; }
+.fxg + .fxg { margin-top: clamp(56px, 7vw, 96px); }
+.fxg-h { display: grid; gap: 8px; margin-bottom: 24px; }
+.fxg-h .h2 { margin-top: 0; font-size: clamp(24px, 2.4vw, 32px); }
+// The featured group (Build with AI): every card carries an illustration. AI Agents runs across the
+// top; the other two sit side by side below it, text over illustration.
+.fx-ai { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.fx-ai > li.fx-big { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.fx-ai > li:not(.fx-big) { padding: 32px; gap: 12px; justify-content: flex-start; }
+.fxg-feat .fx-sm-h { gap: 14px; }
+.fxg-feat .fx-sm-h .feat-ico { width: 40px; height: 40px; }
+.fxg-feat .fx-sm-h h3 { font-size: clamp(19px, 1.7vw, 22px); letter-spacing: -0.02em; }
+.fxg-feat .fx > li > p { font-size: 16px; line-height: 1.55; color: var(--ink-2); }
+// The two lower visuals fill their card, so side-by-side cards end level with no gap below.
+.fx-vis-sm { padding-top: 12px; flex: 1; display: flex; flex-direction: column; }
+.fx-vis-sm > * { flex: 1; display: flex; flex-direction: column; }
+@media (max-width: 760px) { .fx-ai { grid-template-columns: minmax(0, 1fr); } .fx-ai > li:not(.fx-big) { padding: 22px 20px; } }
+.fx { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: dense; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.fx-has-big { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fx-flat { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fx > li { background: var(--s1); padding: 22px 24px; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; transition: background-color .15s; }
+.fx > li:hover { background: var(--s2); }
+.fx-has-big > li:not(.fx-big) { grid-column: 3; }
+.fx-has-big:has(.fx-r) > li:not(.fx-big) { grid-column: 1; }
+// Short cards: icon beside the title, one line under it.
+.fx-sm-h { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.fx-sm-h .feat-ico { width: 32px; height: 32px; flex: none; }
+.fx-sm-h h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
+.fx-link { align-self: flex-start; margin-top: 2px; font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; transition: text-decoration-color .15s; }
+.fx-link:hover { text-decoration-color: var(--ink); }
+.fx > li > p { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
+.fx .feat-ico { display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); transition: background-color .15s, color .15s, border-color .15s; }
+.fx > li:hover .feat-ico { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-ink); }
+// The large card: two columns, as tall as the short cards beside it; text beside an illustration.
+.fx > li.fx-big { grid-column: 1 / span 2; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 36px; align-items: center; padding: 36px; }
+.fx > li.fx-big.fx-r { grid-column: 2 / span 2; }
+.fx > li.fx-big:hover { background: var(--s1); }
+.fx-tx { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.fx-tx .feat-ico { width: 40px; height: 40px; margin-bottom: 12px; }
+.fx-tx h3 { font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; }
+.fx-tx p { color: var(--ink-2); font-size: 16px; line-height: 1.55; }
+.fx-vis { min-width: 0; }
+.fx-vis .auth-panel, .fx-vis .win { background: var(--bg); box-shadow: var(--sh-win); }
+.fx-vis .auth-row { padding: 13px 14px; }
+@media (max-width: 900px) {
+  .fx-has-big, .fx-flat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fx > li.fx-big, .fx > li.fx-big.fx-r { grid-column: 1 / -1; grid-row: auto !important; }
+  .fx-has-big > li:not(.fx-big), .fx-has-big:has(.fx-r) > li:not(.fx-big) { grid-column: auto; }
+  // An odd short card at the end takes the full row instead of leaving an empty cell.
+  .fx-has-big > li:last-child:nth-child(even) { grid-column: 1 / -1; }
+}
+@media (max-width: 680px) { .fx > li.fx-big { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 20px 26px; } }
+@media (max-width: 560px) { .fx-has-big, .fx-flat { grid-template-columns: minmax(0, 1fr); } .fx-has-big > li:last-child:nth-child(even) { grid-column: auto; } .fx > li { padding: 20px; } }
+
+/* Large-card illustrations */
+.fxv-av { width: 26px; height: 26px; flex: none; display: grid; place-items: center; background: var(--btn-bg); color: var(--btn-ink); font-size: 13px; font-weight: 600; }
+.fxv-stack { display: inline-flex; flex: none; }
+.fxv-stack img + img { margin-left: -6px; }
+.fxv-count { flex: none; min-width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--line-2); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+// AI agent: a chat panel, then a bus line down to the apps the agent can use.
+.fxv-chat { padding: 14px; display: grid; gap: 10px; }
+.fxv-me { justify-self: end; max-width: 85%; padding: 9px 12px; background: var(--btn-bg); color: var(--btn-ink); font-size: 13.5px; line-height: 1.45; }
+.fxv-bot { justify-self: start; max-width: 92%; padding: 10px 12px; border: 1px solid var(--line); background: var(--s1); display: grid; gap: 8px; justify-items: start; }
+.fxv-bot p { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
+.fxv-used { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.fxv-used .appicon { padding: 1px; }
+.fxv-input { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 14px 14px; height: 36px; padding: 0 6px 0 12px; border: 1px solid var(--line-2); background: var(--s1); font-size: 13px; color: var(--ink-4); }
+.fxv-input i { width: 24px; height: 24px; flex: none; background: var(--btn-bg); position: relative; }
+.fxv-input i::after { content: ""; position: absolute; inset: 0; margin: auto; width: 7px; height: 7px; border-top: 1.6px solid var(--btn-ink); border-right: 1.6px solid var(--btn-ink); transform: translate(-1px, 1px) rotate(45deg); }
+.fxv-bus { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-top: 28px; }
+// A stem from the panel, a rail across the icon centres, and a drop to each icon.
+.fxv-bus::before { content: ""; position: absolute; left: 50%; top: 0; height: 14px; border-left: 1px dashed var(--line-3); }
+.fxv-bus::after { content: ""; position: absolute; left: 10%; right: 10%; top: 14px; border-top: 1px dashed var(--line-3); }
+.fxv-bus > span { position: relative; display: grid; place-items: center; }
+.fxv-bus > span::before { content: ""; position: absolute; left: 50%; top: -14px; height: 14px; border-left: 1px dashed var(--line-3); }
+.fxv-bus .appicon { width: 36px !important; height: 36px !important; padding: 5px; background: #fff; box-shadow: var(--sh-win); }
+.fxv-bus b { height: 36px; display: grid; place-items: center; padding: 0 8px; border: 1px solid var(--line-2); background: var(--s1); font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: var(--ink-2); }
+// Agent animation states: chat parts fade in (.is-on); the app being called lights up on the bus (.is-live + .is-on).
+.fxv-me, .fxv-bot, .fxv-used, .fxv-bot p { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
+.fxv-me.is-on, .fxv-bot.is-on, .fxv-used.is-on, .fxv-bot p.is-on { opacity: 1; transform: none; }
+.fxv-tick { color: var(--green); }
+// Typed text stays on one line; as it grows past the box the start scrolls out of view, like a real input.
+.fxv-input > span { min-width: 0; flex: 1; display: flex; justify-content: flex-end; overflow: hidden; white-space: nowrap; }
+.fxv-input > span:not(.fxv-typing) { justify-content: flex-start; }
+.fxv-typing { color: var(--ink); }
+.fxv-typing::after { content: ""; display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: text-bottom; background: var(--ink); animation: blink 1s steps(1) infinite; }
+.fxv-input i { transition: transform .12s; }
+.fxv-input i.is-on { transform: scale(.88); }
+.fxv-bus .appicon { transition: box-shadow .2s, transform .2s; }
+.fxv-bus > span::before { transition: border-color .2s; }
+.fxv-bus.is-live::before { border-left-style: solid; border-left-color: var(--green); }
+.fxv-bus > span.is-on::before { border-left-style: solid; border-left-color: var(--green); }
+.fxv-bus > span.is-on .appicon { transform: translateY(-2px); box-shadow: 0 0 0 2px var(--green), var(--sh-win); }
+@media (prefers-reduced-motion: reduce) { .fxv-typing::after { animation: none; } }
+
+/* ---------- /use-cases ---------- */
+// Cards: two per row; the title, the prompt, then the apps.
+.uc { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.uc > li { display: flex; min-width: 0; }
+// The card is one button that copies its prompt; hover greys it and outlines it.
+.uc-card { position: relative; width: 100%; display: flex; flex-direction: column; gap: 16px; padding: 28px; border: 0; background: var(--s1); color: var(--ink); text-align: left; cursor: pointer; transition: background-color .15s, box-shadow .15s; }
+.uc-card:hover { z-index: 1; background: var(--s2); box-shadow: inset 0 0 0 1px var(--ink-3); }
+.uc-card:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.uc-t { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); }
+.uc-q { flex: 1; display: flex; gap: 12px; align-items: flex-start; font-size: 16px; font-weight: 400; line-height: 1.6; color: var(--ink-2); text-wrap: pretty; }
+.uc-q > span:last-child::before { content: "\201C"; }
+.uc-q > span:last-child::after { content: "\201D"; }
+// The homepage's AI sparkle in front of each prompt.
+.uc-ai { flex: none; width: 18px; height: 18px; margin-top: 4px; background: linear-gradient(135deg, #8b5cf6, #3b82f6 55%, #ec4899);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5.5C10.55 10.1 13.9 13.45 18.5 14 13.9 14.55 10.55 17.9 10 22.5 9.45 17.9 6.1 14.55 1.5 14 6.1 13.45 9.45 10.1 10 5.5zM19 1.5C19.25 3.4 20.6 4.75 22.5 5 20.6 5.25 19.25 6.6 19 8.5 18.75 6.6 17.4 5.25 15.5 5 17.4 4.75 18.75 3.4 19 1.5z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M10 5.5C10.55 10.1 13.9 13.45 18.5 14 13.9 14.55 10.55 17.9 10 22.5 9.45 17.9 6.1 14.55 1.5 14 6.1 13.45 9.45 10.1 10 5.5zM19 1.5C19.25 3.4 20.6 4.75 22.5 5 20.6 5.25 19.25 6.6 19 8.5 18.75 6.6 17.4 5.25 15.5 5 17.4 4.75 18.75 3.4 19 1.5z'/%3E%3C/svg%3E") center / contain no-repeat; }
+@media (prefers-color-scheme: dark) { .uc-ai { background: linear-gradient(135deg, #a78bfa, #60a5fa 55%, #f472b6); } }
+.uc-apps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; min-width: 0; }
+.uc-apps .appicon { width: 28px; height: 28px; }
+@media (max-width: 760px) { .uc { grid-template-columns: minmax(0, 1fr); } .uc-card { padding: 22px 20px; } .uc-q { font-size: 16px; } }
+
+/* ---------- /new-direction: the founder's letter ---------- */
+// A sheet of paper centred on the homepage's line grid, one comfortable reading column.
+.lt { position: relative; padding-block: clamp(32px, 6vw, 72px) var(--sec-pad); --grid-line: rgba(17, 17, 19, 0.05); }
+@media (prefers-color-scheme: dark) { .lt { --grid-line: rgba(241, 239, 233, 0.07); } }
+.lt-grid { z-index: 0; bottom: auto; height: 640px;
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 0%, #000 20%, transparent 78%); mask-image: radial-gradient(ellipse 70% 80% at 50% 0%, #000 20%, transparent 78%); }
+.lt-paper { position: relative; z-index: 1; width: min(920px, 100% - 48px); margin-inline: auto; padding: clamp(28px, 6vw, 72px); background: var(--s1); border: 1px solid var(--line); box-shadow: var(--sh-win); }
+@media (max-width: 600px) { .lt-paper { width: calc(100% - 32px); padding: 28px 20px 32px; } }
+.lt-head { padding-bottom: 32px; margin-bottom: 36px; border-bottom: 1px solid var(--line); }
+.lt-head h1 { font-size: clamp(34px, 4.4vw, 52px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.08; }
+.lt-dek { margin-top: 18px; font-size: clamp(18px, 1.6vw, 21px); line-height: 1.5; color: var(--ink-2); }
+.lt-by { margin-top: 28px; display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--ink-3); }
+.lt-by b { font-weight: 600; color: var(--ink); }
+.lt-avs { display: flex; flex: none; }
+.lt-av { width: 48px; height: 48px; flex: none; display: block; object-fit: cover; border-radius: 50%; border: 2px solid var(--s1); box-shadow: 0 0 0 1px var(--line-2); }
+.lt-av + .lt-av { margin-left: -12px; }
+// The letter body: headings mark the turns; a line that stands alone gets weight.
+.lt-body { display: grid; gap: 20px; font-size: 18px; line-height: 1.7; color: var(--ink-2); }
+.lt-body p { text-wrap: pretty; }
+.lt-body h2 { margin-top: 28px; font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); }
+.lt-strong { font-weight: 600; color: var(--ink); }
+.lt-body blockquote { margin: 8px 0; padding: 4px 0 4px 22px; border-left: 2px solid var(--ink); font-size: clamp(20px, 1.9vw, 23px); font-weight: 500; letter-spacing: -0.015em; line-height: 1.45; color: var(--ink); }
+.lt-body ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.lt-body li { position: relative; padding: 14px 18px 14px 40px; background: var(--bg); font-size: 16.5px; line-height: 1.55; }
+.lt-body li::before { content: ""; position: absolute; left: 18px; top: 23px; width: 8px; height: 8px; background: var(--ink); }
+@media (max-width: 600px) { .lt-body { font-size: 17px; gap: 18px; } .lt-body h2 { margin-top: 20px; } }
+// Sign-off: the name in handwriting, then printed.
+.lt-sign { margin-top: 44px; display: flex; flex-wrap: wrap; gap: 32px 72px; font-size: 15px; color: var(--ink-3); }
+.lt-sign > div { display: grid; justify-items: start; gap: 2px; }
+.lt-sig { font-size: 44px; line-height: 1; white-space: nowrap; color: var(--ink); margin-bottom: 10px; transform: rotate(-3deg); transform-origin: left center; }
+.lt-who { display: flex; align-items: center; gap: 14px; }
+.lt-who img { width: 56px; height: 56px; flex: none; object-fit: cover; border-radius: 50%; border: 1px solid var(--line-2); }
+.lt-who > span { display: grid; gap: 2px; }
+.lt-sign b { font-size: 16px; font-weight: 600; color: var(--ink); }
+.lt-cta { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+@media (max-width: 600px) { .lt-cta .btn { width: 100%; } .lt-sig { font-size: 38px; } }
+
+/* Build with AI demos (AIDemos.js): minimal panels, parts fade in as each loop plays */
+.ad-body { padding: 16px; display: grid; gap: 12px; }
+.ad-me, .ad-ans, .ad-dots { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
+.ad-me.is-on, .ad-ans.is-on, .ad-dots.is-on { opacity: 1; transform: none; }
+// Chatbot
+.ad-chat .ad-body { flex: 1; min-height: 168px; align-content: start; }
+.ad-me { justify-self: end; max-width: 85%; padding: 9px 12px; background: var(--btn-bg); color: var(--btn-ink); font-size: 13.5px; line-height: 1.45; }
+.ad-reply { position: relative; min-height: 76px; }
+.ad-dots { position: absolute; left: 0; top: 0; display: inline-flex; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); background: var(--s1); }
+.ad-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); animation: blink 1.2s infinite; }
+.ad-dots i:nth-child(2) { animation-delay: .2s; } .ad-dots i:nth-child(3) { animation-delay: .4s; }
+.ad-ans { max-width: 92%; padding: 10px 12px; border: 1px solid var(--line); background: var(--s1); display: grid; gap: 8px; justify-items: start; }
+.ad-ans p { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
+.ad-src { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+.ad-src .appicon { padding: 1px; }
+// Browser: a small job board; the listing being read is outlined with the element it is reading.
+.ad-site { padding: 14px; display: grid; gap: 8px; }
+.ad-site-h { display: block; height: 8px; width: 40%; margin-bottom: 4px; background: var(--line-2); }
+.ad-job { position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid var(--line); background: var(--bg); transition: border-color .25s, box-shadow .25s; }
+.ad-job-t { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.ad-job-t b { font-size: 12.5px; font-weight: 600; color: var(--ink); }
+.ad-job-t small { font-size: 11px; color: var(--ink-3); }
+.ad-apply { flex: none; font-size: 11px; font-weight: 600; padding: 4px 8px; border: 1px solid var(--line-2); color: var(--ink-2); }
+.ad-tag { position: absolute; right: 6px; top: -9px; padding: 1px 6px; background: var(--green); color: var(--on-green); font-family: var(--mono); font-size: 10px; line-height: 1.5; opacity: 0; transition: opacity .2s; }
+.ad-job.is-scan { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
+.ad-job.is-scan .ad-tag { opacity: 1; }
+.ad-job.is-read:not(.is-scan) { border-color: var(--line-2); }
+.ad-out { display: grid; gap: 5px; padding: 12px 14px 14px; border-top: 1px solid var(--win-line); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.ad-out-h { color: var(--ink-3); }
+.ad-out-l { opacity: 0; transform: translateY(3px); transition: opacity .3s, transform .3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ad-out-l::before { content: "+ "; color: var(--green); }
+.ad-out-l.is-on { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .ad-dots i { animation: none; } }

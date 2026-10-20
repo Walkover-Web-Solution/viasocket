@@ -1,76 +1,30 @@
-import { getFeaturesPageData } from '@/app/lib/feature-data';
-import FeaturesClient from '@/app/components/features/FeaturesClient';
-import { getHasToken } from '@/app/lib/getAuth';
+import FeaturesPage from '@/components/IntegrationsComp/addToProduct/FeaturesPage';
+import { FEATURES_COPY } from '@/components/IntegrationsComp/addToProduct/copy';
+import { getActionLayerBlogs } from '@/utils/axiosCalls';
 
 export const runtime = 'edge';
 
-export async function generateMetadata({ params }) {
-    try {
-        const resolvedParams = await params;
-        const feature = resolvedParams.feature || [];
-        const data = await getFeaturesPageData(feature);
-        
-        if (data.noData) {
-            return {
-                title: '404 - Page not found',
-                description: 'The page you are looking for does not exist.',
-            };
-        }
+const URL = 'https://viasocket.com/features';
 
-        const { metaData } = data;
+export const metadata = {
+    title: FEATURES_COPY.metaTitle,
+    description: FEATURES_COPY.metaDesc,
+    alternates: { canonical: URL },
+    openGraph: {
+        title: FEATURES_COPY.metaTitle,
+        description: FEATURES_COPY.metaDesc,
+        url: URL,
+        siteName: 'viaSocket',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: FEATURES_COPY.metaTitle,
+        description: FEATURES_COPY.metaDesc,
+    },
+};
 
-        let title = metaData?.title || 'Features | viaSocket';
-        let description = metaData?.description || 'Explore powerful features that help you automate workflows and connect your favorite apps.';
-        
-        return {
-            title,
-            description,
-            keywords: metaData?.keywords,
-            openGraph: {
-                title,
-                description,
-                images: metaData?.image ? [{ url: metaData.image }] : undefined,
-            },
-            twitter: {
-                card: 'summary_large_image',
-                title,
-                description,
-                images: metaData?.image ? [metaData.image] : undefined,
-            },
-        };
-    } catch (error) {
-        console.error('Error generating metadata:', error);
-        return {
-            title: 'Features | viaSocket',
-            description: 'Explore powerful features that help you automate workflows.',
-        };
-    }
-}
-
-export default async function FeaturesPage({ params }) {
-    try {
-        const resolvedParams = await params;
-        const feature = resolvedParams.feature || [];
-        const data = await getFeaturesPageData(feature);
-        const hasToken = await getHasToken();
-        
-        if (data.noData) {
-            return (
-                <div className="container py-20 text-center">
-                    <h1 className="text-2xl font-bold">Page Not Found</h1>
-                    <p>The page you are looking for does not exist.</p>
-                </div>
-            );
-        }
-        
-        return <FeaturesClient data={data} hasToken={hasToken} />;
-    } catch (error) {
-        console.error('Error in FeaturesPage:', error);
-        return (
-            <div className="container py-20 text-center">
-                <h1 className="text-2xl font-bold">Error</h1>
-                <p>Something went wrong while loading the page.</p>
-            </div>
-        );
-    }
+export default async function FeaturesIndexPage() {
+    const blogs = await getActionLayerBlogs(URL);
+    return <FeaturesPage blogs={blogs} />;
 }
