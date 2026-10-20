@@ -31,6 +31,22 @@ Many pages call viaSocket APIs and databases. For a full production-like experie
 
 Do not commit secrets or `.env.local`.
 
+## Tests
+
+This repo does not define an automated unit or end-to-end test suite yet (there is no `npm test` script). Use these checks before you open a PR:
+
+```bash
+npm run build
+```
+
+That runs the production Next.js build and the `prebuild` step that generates `robots.txt`.
+
+Optional — verify formatting with Prettier:
+
+```bash
+npx prettier --check .
+```
+
 ## Other commands
 
 | Command | Purpose |
@@ -42,4 +58,4 @@ Do not commit secrets or `.env.local`.
 ## Pull requests
 
 - Keep changes focused and match existing code style.
-- Run `npm run build` before opening a PR if you touched routing, data loading, or build scripts.
+- Run `npm run build` (see [Tests](#tests)) before opening a PR if you touched routing, data loading, or build scripts.
