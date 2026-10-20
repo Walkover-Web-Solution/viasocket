@@ -82,19 +82,6 @@ const PATHS = {
             <path d="M10.5 9.5v5l4-2.5z" />
         </>
     ),
-    tool: (
-        <>
-            <path d="M9 3v5M15 3v5" />
-            <path d="M6 8h12v4a6 6 0 01-12 0z" />
-            <path d="M12 18v3" />
-        </>
-    ),
-    link: (
-        <>
-            <path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1" />
-            <path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1" />
-        </>
-    ),
 };
 
 export function FeatureIcon({ name }) {
