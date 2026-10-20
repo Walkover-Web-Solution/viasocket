@@ -449,10 +449,8 @@
 .fx { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
 .fx li { background: var(--s1); padding: 28px 28px 32px; display: flex; flex-direction: column; gap: 10px; min-width: 0; transition: background-color .15s; }
 .fx li:hover { background: var(--s2); }
-.fx-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.fx .feat-ico { width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); }
+.fx .feat-ico { margin-bottom: 14px; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); }
 .fx li:hover .feat-ico { background: var(--s1); }
-.fx-n { font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; color: var(--ink-4); font-variant-numeric: tabular-nums; }
 .fx h2 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; }
 .fx p { color: var(--ink-2); font-size: 15px; line-height: 1.55; }
 @media (max-width: 900px) { .fx { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

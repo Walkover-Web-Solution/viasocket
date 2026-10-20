@@ -44,14 +44,11 @@ export default function FeaturesPage({ blogs = [] }) {
                     <section className={s['fx-sec']} aria-label="Features">
                         <div className={s.wrap}>
                             <ul className={s.fx}>
-                                {C.features.map(([title, desc, icon], i) => (
+                                {C.features.map(([title, desc, icon]) => (
                                     <li key={title}>
-                                        <div className={s['fx-top']}>
-                                            <span className={s['feat-ico']}>
-                                                <FeatureIcon name={icon} />
-                                            </span>
-                                            <span className={s['fx-n']}>{String(i + 1).padStart(2, '0')}</span>
-                                        </div>
+                                        <span className={s['feat-ico']}>
+                                            <FeatureIcon name={icon} />
+                                        </span>
                                         <h2>{title}</h2>
                                         <p>{desc}</p>
                                     </li>
