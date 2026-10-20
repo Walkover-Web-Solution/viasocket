@@ -126,7 +126,7 @@ export const FEATURES_COPY = {
     metaDesc:
         "Explore viaSocket's integration layer features, including 2,300+ app integrations, managed authentication, data mapping, AI agents, browser automation, and more.",
     eyebrow: 'Features',
-    h1: 'Everything You Need to Build Connected Products',
+    h1: 'Everything You Need to Build Connected Products and Agents',
     sub: 'Give your SaaS products and AI applications the infrastructure to connect apps, manage authentication, execute actions, and build AI-powered experiences.',
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
     // [title, description, icon]
@@ -167,14 +167,5 @@ export const FEATURES_COPY = {
         ['Can I deploy viaSocket in different regions?', 'viaSocket supports regional infrastructure deployment to serve customers in their preferred regions, subject to available deployment options.'],
         ['How can I monitor and debug integrations?', 'viaSocket provides execution monitoring and debugging capabilities to help developers inspect execution status, review logs, identify errors, and troubleshoot integration issues.'],
         ['Does viaSocket support scheduled and background execution?', 'Yes. viaSocket supports scheduled execution and background processing, with retry capabilities for eligible failed executions.'],
-    ],
-    endTitle: 'Build Connected Products with viaSocket',
-    endChips: [
-        ['2,300+ apps', 'apps'],
-        ['Managed auth', 'key'],
-        ['Multi-tenant', 'users'],
-        ['AI agents & MCP', 'agent'],
-        ['Monitoring & replay', 'pulse'],
-        ['Your branding', 'brand'],
     ],
 };

@@ -1,7 +1,7 @@
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
-import { BASE_PROMPT, COPY, FEATURES_COPY as C, START_URL } from './copy';
+import { BASE_PROMPT, COPY, FEATURES_COPY as C } from './copy';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import { FeatureIcon } from './icons';
@@ -33,9 +33,6 @@ export default function FeaturesPage({ blogs = [] }) {
                             <p className={s['hero-sub']}>{C.sub}</p>
                             <div className={s['hero-cta']}>
                                 <CopyPromptButton />
-                                <a className={`${s['btn-o']} ${s['fx-start']}`} href={START_URL}>
-                                    Start free <span aria-hidden="true">→</span>
-                                </a>
                             </div>
                             <p className={`${s.hint} ${s['fx-hint']}`}>{C.copyHint}</p>
                         </div>
@@ -61,27 +58,6 @@ export default function FeaturesPage({ blogs = [] }) {
 
                     <FaqSection eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
 
-                    <section className={s['end-cta']}>
-                        <div className={s.wrap}>
-                            <div className={s['end-box']}>
-                                <div className={s['end-copy']}>
-                                    <h2>{C.endTitle}</h2>
-                                    <div className={s['hero-cta']}>
-                                        <CopyPromptButton />
-                                        <span className={s.hint}>{C.copyHint}</span>
-                                    </div>
-                                </div>
-                                <ul className={s['end-chips']} aria-label="What viaSocket handles">
-                                    {C.endChips.map(([label, k]) => (
-                                        <li key={label}>
-                                            <FeatureIcon name={k} />
-                                            <span>{label}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
-                    </section>
                 </main>
 
                 <SiteFooter />
