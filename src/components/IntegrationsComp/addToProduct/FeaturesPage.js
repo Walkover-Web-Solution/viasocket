@@ -18,7 +18,8 @@ function FaqJsonLd({ faqs }) {
     return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
 }
 
-function SmallCard({ title, desc, icon, href, cta }) {
+function SmallCard({ title, desc, icon, href, cta, visual }) {
+    const Visual = visual && VISUALS[visual];
     return (
         <li>
             <div className={s['fx-sm-h']}>
@@ -33,22 +34,28 @@ function SmallCard({ title, desc, icon, href, cta }) {
                     {cta} <span aria-hidden="true">→</span>
                 </a>
             )}
+            {Visual && (
+                <div className={`${s['fx-vis']} ${s['fx-vis-sm']}`} aria-hidden="true">
+                    <Visual />
+                </div>
+            )}
         </li>
     );
 }
 
-/** One group: its heading, then the large card (text beside an illustration) with the short cards next to it. */
+/** One group: its heading, then the large card (text beside an illustration) with the short cards next to it.
+ * The featured group (Build with AI) gives every card an illustration: the large one across the top, two below. */
 function FeatureGroup({ group }) {
-    const { id, title, big, side, items } = group;
+    const { id, title, big, side, items, featured } = group;
     const Visual = big && VISUALS[big[3]];
     return (
-        <div className={s.fxg} id={id}>
+        <div className={`${s.fxg} ${featured ? s['fxg-feat'] : ''}`} id={id}>
             <div className={s['fxg-h']}>
                 <h2 className={s.h2}>{title}</h2>
             </div>
-            <ul className={`${s.fx} ${big ? s['fx-has-big'] : s['fx-flat']}`}>
+            <ul className={`${s.fx} ${featured ? s['fx-ai'] : big ? s['fx-has-big'] : s['fx-flat']}`}>
                 {big && (
-                    <li className={`${s['fx-big']} ${side === 'right' ? s['fx-r'] : ''}`} style={{ gridRow: `span ${items.length}` }}>
+                    <li className={`${s['fx-big']} ${side === 'right' ? s['fx-r'] : ''}`} style={featured ? undefined : { gridRow: `span ${items.length}` }}>
                         <div className={s['fx-tx']}>
                             <span className={s['feat-ico']}>
                                 <FeatureIcon name={big[2]} />
@@ -79,7 +86,7 @@ export default function FeaturesPage({ blogs = [] }) {
                 <SiteHeader />
 
                 <main>
-                    <section className={`${s.hero} ${s['fx-hero']}`}>
+                    <section className={`${s.hero} ${s['fx-hero']} ${s['fx-hero-full']}`}>
                         <div className={s['hero-grid']} aria-hidden="true" />
                         <div className={`${s.wrap} ${s['fx-hero-in']}`}>
                             <h1>{C.h1}</h1>

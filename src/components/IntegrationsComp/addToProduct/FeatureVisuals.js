@@ -1,6 +1,7 @@
 import s from './addToProduct.module.scss';
 import OAuthDemo from './OAuthDemo';
 import AgentDemo from './AgentDemo';
+import { BrowserDemo, ChatbotDemo } from './AIDemos';
 
 // Small illustrations for the large cards on /features. Decorative: each is aria-hidden.
 
@@ -60,4 +61,4 @@ function TenantVisual() {
     );
 }
 
-export const VISUALS = { auth: AuthVisual, tenant: TenantVisual, agent: AgentDemo };
+export const VISUALS = { auth: AuthVisual, tenant: TenantVisual, agent: AgentDemo, chatbot: ChatbotDemo, browser: BrowserDemo };

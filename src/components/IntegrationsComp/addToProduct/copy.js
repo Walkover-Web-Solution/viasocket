@@ -132,7 +132,7 @@ export const FEATURES_COPY = {
     expert: 'Talk to an expert',
     expertUrl: 'https://viasocket.com/experts-are-live',
     // Four groups, each led by a large card with an illustration (except the last), then short
-    // cards: [title, description, icon, { href, cta }].
+    // cards: [title, description, icon, { href, cta, visual }].
     groups: [
         {
             id: 'connect',
@@ -157,10 +157,11 @@ export const FEATURES_COPY = {
         {
             id: 'ai',
             title: 'Build with AI',
+            featured: true,
             big: ['AI Agents', 'Build powerful AI agents with 50+ AI models, memory, connected apps and tools, and multi-step workflows that enable agents to reason, make decisions, and execute tasks autonomously.', 'agent', 'agent'],
             items: [
-                ['In-app AI Chatbots', 'Add chat interfaces that let users retrieve information and perform actions using your product and its connected apps.', 'chat'],
-                ['Browser Actions', 'Give AI agents the ability to browse websites, navigate pages, interact with web elements, and complete tasks in a browser when needed.', 'browser'],
+                ['In-app AI Chatbots', 'Add chat interfaces that let users retrieve information and perform actions using your product and its connected apps.', 'chat', { visual: 'chatbot' }],
+                ['Browser Actions', 'Give AI agents the ability to browse websites, navigate pages, interact with web elements, and complete tasks in a browser when needed.', 'browser', { visual: 'browser' }],
             ],
         },
         {
