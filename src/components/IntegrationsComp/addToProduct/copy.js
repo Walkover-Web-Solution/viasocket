@@ -77,6 +77,7 @@ export function promptFor({ name }) {
 // The homepage header (public/new-home/index.html).
 export const NAV = [
     ['Features', '/#features'],
+    ['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'],
     ['Pricing', 'https://viasocket.com/developers/pricing'],
     ['Log in', 'https://flow.viasocket.com/integrations'],
 ];
@@ -129,6 +130,8 @@ export const FEATURES_COPY = {
     h1: 'Everything You Need to Build Connected Products and Agents',
     sub: 'Give your SaaS products and AI applications the infrastructure to connect apps, manage authentication, execute actions, and build AI-powered experiences.',
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
+    expert: 'Talk to an expert',
+    expertUrl: 'https://viasocket.com/experts-are-live',
     // [title, description, icon]
     features: [
         ['2,300+ App Integrations', 'Connect your product to thousands of apps with ready-to-use actions to read, create, update, and manage data.', 'apps'],

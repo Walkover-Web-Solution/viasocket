@@ -33,8 +33,12 @@ export default function FeaturesPage({ blogs = [] }) {
                             <p className={s['hero-sub']}>{C.sub}</p>
                             <div className={s['hero-cta']}>
                                 <CopyPromptButton />
+                                <a className={s['hero-ex']} href={C.expertUrl}>
+                                    <span className={s['hero-live']} aria-hidden="true" />
+                                    {C.expert} <span aria-hidden="true">→</span>
+                                </a>
+                                <span className={`${s.hint} ${s['fx-hint']}`}>{C.copyHint}</span>
                             </div>
-                            <p className={`${s.hint} ${s['fx-hint']}`}>{C.copyHint}</p>
                         </div>
                     </section>
 
