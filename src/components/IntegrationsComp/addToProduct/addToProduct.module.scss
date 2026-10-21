@@ -647,3 +647,48 @@
 .ad-out-l::before { content: "+ "; color: var(--green); }
 .ad-out-l.is-on { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .ad-dots i { animation: none; } }
+
+/* /integrations/{app}: use cases from the admin panel, one at a time. A tab list on the left, one
+   large inverted panel on the right; the active tab's bar fills, then the next one shows. */
+.ucx { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); border: 1px solid var(--line-2); }
+.ucx-tabs { display: grid; grid-auto-rows: 1fr; align-content: stretch; border-right: 1px solid var(--line-2); }
+.ucx-tab { position: relative; display: flex; align-items: center; text-align: left; padding: 20px 22px; border: 0; border-bottom: 1px solid var(--line); background: transparent; cursor: pointer; color: var(--ink-3); transition: color .15s, background-color .15s; }
+.ucx-tab:last-child { border-bottom: 0; }
+.ucx-tab:hover { color: var(--ink-2); background: var(--tint-1); }
+.ucx-tab[aria-selected="true"] { color: var(--ink); background: var(--s1); }
+.ucx-tab:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.ucx-t { font-size: 16px; font-weight: 500; line-height: 1.35; letter-spacing: -0.01em; }
+.ucx-bar { position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%; background: var(--ink); transform-origin: left; transform: scaleX(0); }
+.ucx-tab[aria-selected="true"] .ucx-bar { animation: ucx-fill 7s linear forwards; }
+.ucx:hover .ucx-bar, .ucx:focus-within .ucx-bar { animation-play-state: paused !important; }
+@keyframes ucx-fill { to { transform: scaleX(1); } }
+
+.ucx-panel { position: relative; overflow: hidden; background: var(--btn-bg); color: var(--btn-ink); padding: clamp(28px, 4vw, 48px); display: flex; flex-direction: column; gap: 22px; min-height: 380px; min-width: 0; }
+.ucx-panel::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--btn-ink) 14%, transparent) 1px, transparent 1.3px); background-size: 22px 22px; -webkit-mask-image: linear-gradient(200deg, #000, transparent 55%); mask-image: linear-gradient(200deg, #000, transparent 55%); }
+.ucx-swap { position: relative; display: grid; gap: 22px; transition: opacity .25s ease, transform .25s ease; }
+.ucx-swap[hidden] { display: none; }
+.ucx-panel.is-out .ucx-swap { opacity: 0; transform: translateY(6px); }
+.ucx-swap h3 { margin: 0; font-size: clamp(26px, 2.6vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; max-width: 20ch; }
+.ucx-swap p { margin: 0; font-size: 17px; line-height: 1.6; color: color-mix(in srgb, var(--btn-ink) 76%, transparent); max-width: 52ch; }
+
+.ucx-flow { position: relative; margin-top: auto; padding-top: 22px; border-top: 1px solid color-mix(in srgb, var(--btn-ink) 16%, transparent); display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.ucx-node { display: inline-flex; align-items: center; gap: 9px; font-size: 14px; font-weight: 500; color: var(--btn-ink); white-space: nowrap; }
+.ucx-node .appicon { border-color: transparent; }
+.ucx-tile { width: 26px; height: 26px; display: inline-grid; place-items: center; background: var(--btn-ink); color: var(--btn-bg); flex: none; }
+.ucx-tile img { width: 18px; height: 18px; display: block; }
+.ucx-tile svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: square; }
+.ucx-vs-dark { display: none !important; }
+@media (prefers-color-scheme: dark) { .ucx-vs-light { display: none !important; } .ucx-vs-dark { display: block !important; } }
+.ucx-wire { position: relative; flex: 1 1 28px; min-width: 28px; height: 1px; background: color-mix(in srgb, var(--btn-ink) 30%, transparent); overflow: hidden; }
+.ucx-wire i { position: absolute; top: -1px; left: 0; width: 18px; height: 3px; background: var(--btn-ink); animation: ucx-wire 1.8s linear infinite; }
+.ucx-wire + .ucx-node + .ucx-wire i { animation-delay: .9s; }
+@keyframes ucx-wire { from { transform: translateX(-20px); } to { transform: translateX(200px); } }
+
+@media (max-width: 900px) {
+  .ucx { grid-template-columns: minmax(0, 1fr); }
+  .ucx-tabs { display: flex; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--line-2); scrollbar-width: none; }
+  .ucx-tab { flex: 0 0 auto; max-width: 240px; border-bottom: 0; border-right: 1px solid var(--line); padding: 14px 16px; }
+  .ucx-t { font-size: 14px; }
+  .ucx-panel { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ucx-bar, .ucx-wire i { display: none; } .ucx-swap { transition: none; } }

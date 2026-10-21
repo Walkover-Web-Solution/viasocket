@@ -20,16 +20,18 @@ export async function generateMetadata({ params, searchParams }) {
             };
         }
 
-        // Single-app page ("Add {app} to Your Product"): its title and description come from the
-        // page's own copy, with a canonical URL.
+        // Single-app page ("Add {app} to Your Product"): its title, description and keywords come from
+        // the admin panel's copy for the app when there is some, else from the page's fixed copy.
         if (data.actionLayerBlogs && data.appOneDetails?.name) {
             const name = data.appOneDetails.name;
-            const title = fill(ADD_TO_PRODUCT_COPY.metaTitle, name);
-            const description = fill(ADD_TO_PRODUCT_COPY.metaDesc, name);
+            const admin = data.adminContent;
+            const title = admin?.pageTitle || fill(ADD_TO_PRODUCT_COPY.metaTitle, name);
+            const description = admin?.metaDescription || fill(ADD_TO_PRODUCT_COPY.metaDesc, name);
             const url = `https://viasocket.com/integrations/${data.appOneDetails.appslugname}`;
             return {
                 title,
                 description,
+                ...(admin?.keywords?.length ? { keywords: admin.keywords } : {}),
                 alternates: { canonical: url },
                 openGraph: { title, description, url, siteName: 'viaSocket', type: 'website' },
                 twitter: { card: 'summary_large_image', title, description },
