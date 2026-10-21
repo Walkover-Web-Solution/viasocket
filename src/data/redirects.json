@@ -1,0 +1,80 @@
+{
+    "_comment": "Fallback for src/middleware.js when the admin panel cannot be reached. The live list is managed in the admin (Pages > Redirects); refresh this copy from its /api/public/redirects now and then.",
+    "redirects": [
+        {
+            "source": "/about",
+            "destination": "/help/about-us",
+            "statusCode": 308
+        },
+        {
+            "source": "/data-retention-deletion-policy",
+            "destination": "/data-retention-deletion",
+            "statusCode": 308
+        },
+        {
+            "source": "/department/*",
+            "destination": "/departments/*",
+            "statusCode": 308
+        },
+        {
+            "source": "/embed",
+            "destination": "/developers",
+            "statusCode": 308
+        },
+        {
+            "source": "/help/*",
+            "destination": "/new-direction",
+            "statusCode": 301
+        },
+        {
+            "source": "/help/about-us/*",
+            "destination": "",
+            "statusCode": 0
+        },
+        {
+            "source": "/help/partners/*",
+            "destination": "",
+            "statusCode": 0
+        },
+        {
+            "source": "/help/plugin-builder/*",
+            "destination": "",
+            "statusCode": 0
+        },
+        {
+            "source": "/help/security-and-compliance/*",
+            "destination": "",
+            "statusCode": 0
+        },
+        {
+            "source": "/help/viasocket-embed/billing-partner/*",
+            "destination": "",
+            "statusCode": 0
+        },
+        {
+            "source": "/home",
+            "destination": "/",
+            "statusCode": 307
+        },
+        {
+            "source": "/login",
+            "destination": "https://flow.viasocket.com/",
+            "statusCode": 307
+        },
+        {
+            "source": "/mcp",
+            "destination": "https://mushrooms.viasocket.com/",
+            "statusCode": 308
+        },
+        {
+            "source": "/mcp/invgate-service-desk",
+            "destination": "/mcp/invgateservicemanagement",
+            "statusCode": 308
+        },
+        {
+            "source": "/variables",
+            "destination": "/features/variables",
+            "statusCode": 308
+        }
+    ]
+}
