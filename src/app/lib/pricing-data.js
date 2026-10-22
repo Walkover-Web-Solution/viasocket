@@ -3,7 +3,6 @@ import {
     FOOTER_FIELDS,
     NAVBAR_FIELDS,
     PRICINGFEATURE_FIELDS,
-    COUNTRIES_FIELDS,
     REVIEWSECTION_FIELDS,
 } from '@/const/fields';
 import getCountries from '@/utils/getCountries';
@@ -24,7 +23,7 @@ export async function getPricingPageData() {
             getFooterData(FOOTER_FIELDS, '', pageUrl),
             getFaqData('/pricing', pageUrl),
             getPricingFeatureData(PRICINGFEATURE_FIELDS, '', pageUrl),
-            getCountries(COUNTRIES_FIELDS, '', pageUrl),
+            getCountries(),
             getAppCount(pageUrl),
             getNavbarData(NAVBAR_FIELDS, '', pageUrl),
             getReviewSectionData(REVIEWSECTION_FIELDS, '', pageUrl),
