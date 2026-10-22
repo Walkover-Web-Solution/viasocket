@@ -567,5 +567,8 @@ export const BLOGS_COPY = {
     backLink: 'All posts',
     shareLabel: 'Share this article',
     tocTitle: 'Jump to section',
+    // The card that slides in on a post once the reader scrolls down
+    promoTitle: '100K calls and 50K trigger events free every month.',
+    promoCta: 'Start free',
     moreTitle: 'Keep reading',
 };

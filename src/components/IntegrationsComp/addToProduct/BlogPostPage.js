@@ -5,6 +5,7 @@ import { BlogFrame, PostCard } from './BlogsPage';
 import { Chevron } from './icons';
 import ShareButtons from './ShareButtons';
 import PostToc from './PostToc';
+import BlogPromo from './BlogPromo';
 import { BLOGS_URL, formatBlogDate } from '@/app/lib/blogs';
 
 // /blogs/{slug}: one post, then a few more to read.
@@ -109,6 +110,7 @@ export default function BlogPostPage({ post, related }) {
                     </div>
                 </div>
             </article>
+            <BlogPromo />
 
             {related.length > 0 && (
                 <section className={s.sec}>

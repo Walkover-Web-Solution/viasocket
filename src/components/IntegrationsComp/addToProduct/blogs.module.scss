@@ -144,3 +144,18 @@
 .prose :global(.faq) details > :not(summary) { margin: 0 0 20px; max-width: 64ch; }
 .prose :global(.faq) details > :not(summary) + :not(summary) { margin-top: -8px; }
 @media (max-width: 600px) { .prose { font-size: 16.5px; } }
+
+/* "Start free" card on posts: slides in on the right, centred in the screen, after some scrolling */
+// Narrow enough to sit in the empty space right of the 720px article: half of what's left beside it,
+// less its 24px edge and a 16px gap from the text (200px at least, 260px at most).
+.promo { position: fixed; z-index: 40; right: 24px; top: 50%; translate: 0 -50%; width: clamp(200px, calc((100vw - 720px) / 2 - 40px), 260px); padding: 32px 22px 22px; background: var(--s1); border: 1px solid var(--line-2); box-shadow: var(--sh-dlg); display: grid; gap: 20px;
+  opacity: 0; visibility: hidden; transform: translateY(16px); pointer-events: none; transition: opacity .25s ease, transform .3s cubic-bezier(.2, .8, .2, 1), visibility 0s .3s; }
+.promo-open { opacity: 1; visibility: visible; transform: none; pointer-events: auto; transition: opacity .25s ease, transform .3s cubic-bezier(.2, .8, .2, 1), visibility 0s; }
+.promo-h { padding-right: 12px; font-size: 19px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.35; color: var(--ink); }
+.promo .promo-cta { width: 100%; margin-top: 8px; text-decoration: none; }
+.promo-x { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; display: grid; place-items: center; padding: 0; border: 1px solid transparent; background: transparent; color: var(--ink-3); cursor: pointer; transition: color .15s, border-color .15s; }
+.promo-x:hover { color: var(--ink); border-color: var(--line-2); }
+.promo-x svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: square; }
+// Phones: full width at the bottom, above the chat button, so it doesn't sit over the text being read
+@media (max-width: 600px) { .promo { left: 16px; right: 16px; top: auto; bottom: 86px; translate: none; width: auto; } }
+@media (prefers-reduced-motion: reduce) { .promo { transition: opacity .2s ease; transform: none; } }
