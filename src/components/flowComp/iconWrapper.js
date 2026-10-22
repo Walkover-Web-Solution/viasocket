@@ -1,4 +1,3 @@
-const { de } = require('date-fns/locale');
 import Image from 'next/image';
 
 function IconWrapper({

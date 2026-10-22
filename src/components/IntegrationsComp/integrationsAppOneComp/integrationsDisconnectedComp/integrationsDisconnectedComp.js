@@ -8,7 +8,6 @@ import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter'
 import BlogGrid from '@/components/blogGrid/blogGrid';
 import { LinkText } from '@/components/uiComponents/buttons';
 import createURL from '@/utils/createURL';
-import IntegrationsHeadComp from '../../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsEventsComp from '../../integrationsEventsComp/integrationsEventsComp';
 import ExternalLink from '@/utils/ExternalLink';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
@@ -35,15 +34,6 @@ export default function IntegrationsDisconnectedComp({
             <ConditionalNavbar>
                 <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
             </ConditionalNavbar>
-            <IntegrationsHeadComp
-                metaData={metaData}
-                page={'/integrations/AppOne'}
-                plugins={[appOneDetails]}
-                type={'appOne'}
-                pageInfo={pageInfo}
-                integrationsInfo={integrationsInfo}
-            />
-
             <div className="container cont cont__gap  global-top-space pt-12">
                 <div className="flex items-center gap-2 text-lg">
                     <Link href={createURL(`/integrations`)} className="flex items-center gap-0 underline">
