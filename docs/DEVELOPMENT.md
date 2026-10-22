@@ -23,7 +23,7 @@ How to install, run, build and verify this repo, which environment variables it 
    ```
 2. **Environment**: there is **no `.env.example`**. Get a `.env` from a teammate. It is gitignored, as are `.env*.local` files. Next loads `.env` at dev and build time (the baseline build log shows `Environments: .env`). The variables are listed in the [reference table](#environment-variables-reference). Never commit `.env` or paste its values into docs, PRs or chat. <!-- verify:ignore -->
    > [!TODO]
-   > Decide whether to add a tracked `.env.example` with names only. Until then this table is the only list. <!-- verify:ignore -->
+   > Recommended (D-07, team answers to OPEN_QUESTIONS, 2026-10-22, not yet done): add a tracked `.env.example` with names only. Until then the reference table is the only list. <!-- verify:ignore -->
 3. **Dev server**
    ```bash
    npm run dev        # next dev -p 1111
@@ -43,7 +43,7 @@ How to install, run, build and verify this repo, which environment variables it 
 | `deploy` | `npm run pages:build && wrangler pages deploy` | Manual deploy from a laptop. **This is not the normal release path** (see [PR & deployment](#pr-workflow--deployment-pipeline)). Do not run it. |
 
 > [!TODO]
-> `wrangler.toml` contains only `compatibility_flags = ["nodejs_compat"]`, with no `name` and no `pages_build_output_dir`, so `wrangler pages deploy` with no arguments would need a project and directory supplied interactively. Confirm whether `npm run deploy` is ever used, or whether releases happen only through the Cloudflare Pages git integration. If it is never used, the script could be removed (decision for the team). <!-- verify:ignore -->
+> `wrangler.toml` contains only `compatibility_flags = ["nodejs_compat"]`, with no `name` and no `pages_build_output_dir`, so `wrangler pages deploy` with no arguments would need a project and directory supplied interactively. Recommended (D-02, team answers to OPEN_QUESTIONS, 2026-10-22): releases go only through the Cloudflare Pages git integration (`test` and `main`), as every release so far has; remove `npm run deploy`. **Never run `npm run deploy` or `npm run preview` as part of a change.** <!-- verify:ignore -->
 
 ## Environment Variables Reference
 
@@ -159,7 +159,7 @@ Environments are listed in [Environments](#environments) (local, test.viasocket.
 
 ### Pipeline
 
-Confirmed by the human on 2026-10-21:
+Confirmed by the human on 2026-10-21, with details from the team answers to OPEN_QUESTIONS, 2026-10-22 (D-03: how releases #1830, #1834 and #1838 shipped):
 
 ```mermaid
 graph LR
@@ -169,8 +169,10 @@ graph LR
     M -->|Cloudflare Pages build| P["viasocket.com"]
 ```
 
-1. **Feature branch → PR into `test`.** After the merge, Cloudflare Pages builds and deploys test.viasocket.com. Verify there. <!-- verify:ignore -->
-2. **PR from `test` into `main`.** After the merge, Cloudflare Pages builds and deploys production viasocket.com. Then check production behaviour (checklist step 5), because the production cache rule differs from test. <!-- verify:ignore -->
+1. **Feature branch → PR into `test`.** After the merge, Cloudflare Pages builds and deploys test. Check it on https://test.viasocket-website.pages.dev (and test.viasocket.com). <!-- verify:ignore -->
+2. **PR from `test` into `main`, merged with a merge commit.** Cloudflare Pages then builds and deploys production viasocket.com. `main` is protected, but needs no review or status check. Then check production behaviour (checklist step 5), because the production cache rule differs from test. <!-- verify:ignore -->
+   - **After any change to `/`, purge `https://viasocket.com/` in Cloudflare.** The zone rule keeps `/` at the edge for more than a day and ignores the middleware's `no-store`, so without a purge visitors keep the old homepage (D-10, [current-infrastructure/cloudflare](current-infrastructure/cloudflare.md)). <!-- verify:ignore -->
+   - **Homepage changes start in the `viasocket-site` repo** (`variants/simple-bento`), are exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` like any other change ([modules/01-homepage](modules/01-homepage.md)). <!-- verify:ignore -->
 3. **`prod` branch:** legacy. Do not target it.
 
 There are no CI checks in the repo. The only gate is the Cloudflare Pages build succeeding.
@@ -187,16 +189,14 @@ There are no CI checks in the repo. The only gate is the Cloudflare Pages build 
 
 - **Observed path: a revert PR.** Bad changes have been undone with GitHub's "Revert" button, which opens a `revert-<pr>-<branch>` branch that is merged like any PR (e.g. #1809 `revert-1805-VSWEB-833`, #1792 `revert-1790-VSWEB-824`, #1765 `revert-1762-VSWEB-811-2`). The revert then travels the same feature → `test` → `main` path, and the next Cloudflare Pages build redeploys the previous code (inferred from the pipeline). <!-- verify:ignore -->
 
-> [!TODO]
-> Not evidenced in the repo: whether the team also uses Cloudflare Pages' "rollback to a previous deployment" in the dashboard, who may do it, and how a rolled-back deployment is reconciled with `main`. Needs a human.
+- **Recommended policy** (D-11, team answers to OPEN_QUESTIONS, 2026-10-22, to confirm): roll back with a revert PR on `main` (for example, revert the merge commit); use the Cloudflare dashboard rollback only in an emergency; require a PR into `main`.
 
 ### Branching
 
-- **Agents work on the branch that is already checked out** and never create or switch branches; the human owns branching. Commit or push only when asked.
+- **Agents edit on the branch that is already checked out** and commit or push only when asked. **Never commit on `main`:** when asked to commit while on `main`, create a branch from `origin/test` (repo convention `<name>-test`), commit there and open a PR into `test` (maintainer instruction, 2026-10-22; PR #1841 shipped this way).
 - Observed names (merge subjects of the last 200 merges): Jira-style `VSWEB-NNN` (most common, also `VSWEB-NNN-N`, `VSWEB-NNN-MAIN`), `SKTF-NNN`, fork branches such as `ankitw22/feat/<topic>` and `ui/<topic>`, and `revert-<pr>-<branch>`. About a quarter of merges are `test` → `main` release PRs. <!-- verify:ignore -->
 
-> [!TODO]
-> Not evidenced in the repo: whether new feature branches start from `test` or `main`. Needs a human.
+- Feature branches start from `origin/test`, which is the target of their PR (D-03). `origin/main` only gains `test` merge commits, so the two trees match after each release.
 
 ### Commits
 
@@ -208,8 +208,7 @@ There are no CI checks in the repo. The only gate is the Cloudflare Pages build 
 - One concern per PR, small, following [22-definition-of-done](22-definition-of-done.md). PRs are merged with GitHub merge commits (`Merge pull request #NNNN from <owner>/<branch>`). <!-- verify:ignore -->
 - There is no PR template and no `CODEOWNERS` in the repo. <!-- verify:ignore -->
 
-> [!TODO]
-> Not evidenced in the repo: whether PRs need reviewer approval or branch protection on `test` and `main`. Needs a human.
+- `main` is protected but needs no review or status check (D-03). Requiring a PR into `main` is recommended (D-11, to confirm). Protection on `test` is not stated.
 
 ### Deployment adapter: Cloudflare next-on-pages
 

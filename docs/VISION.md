@@ -27,7 +27,7 @@ The site's jobs, in the order the code puts effort into them:
 
 ## Authoritative Sources & Status
 
-Sources mined: `public/new-home/index.html` (homepage copy, FAQ, JSON-LD), `public/llms.txt`, `src/app/layout.js` metadata, page metadata and copy constants under `src/app/**`, `next.config.js` redirects, git history (`git log -300` and the bodies of the "New homepage" and `/developers` commits), and the user's Claude memory files. The README is empty and there is no PRD in the repo.
+Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the session by the user; each answer is marked decided or proposed), `public/new-home/index.html` (homepage copy, FAQ, JSON-LD), `public/llms.txt`, `src/app/layout.js` metadata, page metadata and copy constants under `src/app/**`, `next.config.js` redirects, git history (`git log -300` and the bodies of the "New homepage" and `/developers` commits), and the user's Claude memory files. The README is empty and there is no PRD in the repo.
 
 - **Approved Direction** (stated by the human or recorded as a deliberate decision in git):
   - The homepage at `/` is the static site in `public/new-home/`, served by a `beforeFiles` rewrite in `next.config.js`. It went to production as indexable with a canonical of https://viasocket.com/ (commits `1f911f58`, `a8f48657`, merged in PR #1830/#1831).
@@ -37,17 +37,26 @@ Sources mined: `public/new-home/index.html` (homepage copy, FAQ, JSON-LD), `publ
   - `/embed` redirects permanently to `/developers`, which is described as "the action layer for AI products" (`7fd1dc19`, `src/app/developers/page.js:generateMetadata`). Bare `/mcp` redirects permanently to mushrooms.viasocket.com.
   - Releases flow from a feature branch to `test` (test.viasocket.com) to `main` (viasocket.com). Both are hosted on Cloudflare Pages (see [DEVELOPMENT.md](DEVELOPMENT.md)).
   - The working rules listed under Core Principles, which come from the user's memory.
+  - **The integration layer is canonical everywhere** (P-01, decided, team answers to OPEN_QUESTIONS, 2026-10-22). Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions." Pages that still say workflow automation are out of date, not a second positioning: the root `metadata` in `src/app/layout.js`, `public/llms.txt` and `/pricing` are pending an update to match the homepage.
+  - **The static homepage's design system is the target for the whole site** (U-01, decided): Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc ([DESIGN.md](DESIGN.md)).
+  - **The homepage source of truth is outside this repo** (C-01 and D-03, decided): `public/new-home/` is exported from the `viasocket-site` repo (`variants/simple-bento`) by `deploy/export-to-viasocket-repo.py --prod` and pushed to `test`. The old Next homepage tree is kept as the rollback path (reverting merge `cfdae23e` on `main` restores the A/B homepage) until the new homepage has run stably for a few weeks.
 - **Current Implementation** (shipped at `17b99cd8`; the code does this, but no direction confirms it should stay):
-  - Most other routes still use the earlier positioning, including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `public/llms.txt` opens with "AI-powered automation platform … no-code workflows". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans.
+  - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `public/llms.txt` opens with "AI-powered automation platform … no-code workflows". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans.
   - `src/app/page.js` and its A/B Index* components in `src/app/front-page/` are no longer what visitors see at `/`. See [DECISIONS.md](DECISIONS.md) and [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Do not delete them.
   - `/home` redirects to `/` in `src/middleware.js`, but it is still listed in `src/app/sitemap.js`.
-- **Proposals & Roadmaps:** the repo contains none. The public roadmap is hosted externally at roadmap.viasocket.com, linked from the homepage footer. No open branch or doc in the repo describes upcoming site work.
+- **Proposals & Roadmaps** (from the team answers to OPEN_QUESTIONS, 2026-10-22; each needs the named owner's yes before it counts as approved):
+  - **ICP and metrics** (P-02, proposed, Ankit to confirm): see [Target Audience](#target-audience--ideal-customer-profile-icp) and [Strategic Priorities](#strategic-priorities--success-measures).
+  - **Pricing** (P-03, proposed): `/developers/pricing` is the canonical pricing page; `/pricing` sells the older workflow product and should either redirect or be rewritten.
+  - **App count** (P-04, proposed, marketing to confirm 2,300+ vs 2,200+): use "2,300+ apps" everywhere, or tie all copy to the live count.
+  - **Homepage attribution** (T-04, proposed): "Start free" and "Log in" carry `utm_source=/`, and the homepage passes incoming `utm_*`/`gclid` to flow.viasocket.com; done in `viasocket-site` and exported.
+  - **Title format** (U-05, proposed): "X | viaSocket" via a `title.template` of `%s | viaSocket`.
+- The public roadmap is hosted externally at roadmap.viasocket.com, linked from the homepage footer. No open branch or doc in the repo describes upcoming site work.
 - **Unknowns & Ambiguities:** listed at the end of this doc. The canonical list is in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md).
 
 ## Target Audience & Ideal Customer Profile (ICP)
 
 > [!TODO]
-> No ICP is stated anywhere in the repo or by the human. The personas below are **inferred from copy**, not approved. Confirm which persona the site optimises for now that the homepage leads with Embed.
+> **Proposed ICP, not yet approved** (P-02, team answers to OPEN_QUESTIONS, 2026-10-22, Ankit to confirm): developers and founders building a SaaS product or an AI agent who need their users to connect other apps (solution-aware, comparing ways to get integrations). Second: agencies building for clients. A large share of traffic is paid ads, which is why the homepage now offers Chat, Talk to an expert and Book a demo. Until confirmed, treat this as the working assumption and the list below as what the copy addresses.
 
 Audiences the copy addresses (evidence in parentheses):
 - **Developers building a SaaS product or an AI agent.** They want their users to connect third-party apps without building OAuth, mapping or webhooks themselves. They work in Cursor, Claude Code or Codex. (Homepage hero and FAQ; `/developers`; JSON-LD `applicationCategory: DeveloperApplication`.)
@@ -73,7 +82,7 @@ The current lead story, taken from the homepage's "What viaSocket handles" table
 Older story, still live on most pages: no-code AI workflow automation with a large free tier ("100x the Free Tasks" versus Zapier on `/migration/zapier`), unlimited team members, free migration, and expert help.
 
 > [!WARNING]
-> The app count is claim-bearing copy, and it is not one number across the site. The homepage and `/developers` say "2,300+". `src/app/lifetime-deal/page.js` computes `appCount + 300`. `/mcp/aiagent` falls back to "1000+". Some copy is fetched from table-api. Never change one of these in isolation. Ask which figure is authoritative.
+> The app count is claim-bearing copy, and it is not one number across the site. The proposed answer (P-04, pending marketing) is "2,300+" everywhere. The homepage and `/developers` say "2,300+". `src/app/lifetime-deal/page.js` computes `appCount + 300`. `/mcp/aiagent` falls back to "1000+". Some copy is fetched from table-api. Never change one of these in isolation. Ask which figure is authoritative.
 
 ## Core Principles & Design Philosophy
 
@@ -95,7 +104,7 @@ These are the site's operating principles. Each one is backed by code, a commit,
 - **Key Success Metrics:**
 
 > [!TODO]
-> The repo, git history and memory state no success metric or target (signup conversion, organic traffic, Embed activations, campaign CPA and so on). Do not invent one. Ask the human which numbers a site change is judged by.
+> **Proposed metrics, not yet approved** (P-02, Ankit to confirm): setup-prompt copies and "Start free" signups first, then demo bookings and chat starts from ad traffic. Proposed performance targets are in [14-performance](14-performance.md#budgets) (D-12).
 
 ## Boundaries & Non-Goals
 
@@ -106,13 +115,12 @@ These are the site's operating principles. Each one is backed by code, a commit,
 
 ## Unknowns Affecting Direction
 
+The team answers to OPEN_QUESTIONS, 2026-10-22 settled the positioning (P-01) and the old homepage tree (C-01); both are recorded under Approved Direction above. What is still open:
+
 > [!TODO]
-> 1. **Which positioning is canonical for the rest of the site?** The homepage, `/developers`, `/integrations`, `/features`, `/use-cases` and `/new-direction` say "integration/action layer"; the layout defaults, `public/llms.txt`, `/pricing` and the campaign pages say "no-code workflow automation". The letter at `/new-direction` moves the workflow editor out of the centre but does not say what happens to the automation pages: retired, kept as a second product line, or kept only for SEO. This decides whether `public/llms.txt`, the root metadata and the nav should be rewritten.
-> 2. **Homepage attribution.** "Start free" and "Log in" on `/` link straight to https://flow.viasocket.com/integrations with no `utm_source` and no `utmData` write. Is GTM considered enough, or should `/` stamp its source like every other page?
-> 3. **Two pricing pages.** `/pricing` (workflow plans) and `/developers/pricing` (task-metered Action Layer plans). The homepage nav links only to the second. Which one is canonical, and should `/pricing` keep ranking?
-> 4. **What is the future of `src/app/page.js` and `src/app/front-page/*`** now that `/` no longer renders them?
-> 5. **Who owns `/help/*`, `/blog`, `/discovery` and `/community`?** Production serves them, but no route here matches. Which deployment or Cloudflare route serves them, and should the other help deployment also send retired `/help/*` pages to `/new-direction`? On 2026-10-21 only bare `/help` redirected on production.
-> 6. **ICP and success metrics** (see the TODOs above).
+> 1. **Confirmations pending:** the ICP and metrics (P-02, Ankit), the canonical pricing page and what happens to `/pricing` (P-03), the app count (P-04, marketing), homepage attribution (T-04) and the title format (U-05). Proposed answers are under Proposals & Roadmaps.
+> 2. **Who owns `/help/*`, `/blog`, `/discovery` and `/community`?** They are other deployments (help centre, blog, discovery app); the team still needs to name the repo behind each path (P-05).
+> 3. **When to retire the old homepage tree:** after the new homepage has run stably for a few weeks (C-01); no date is set.
 
 ## How Future Agents Must Evaluate Requests
 

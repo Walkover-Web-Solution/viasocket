@@ -27,6 +27,8 @@ Status values: **Accepted** (current, keep it), **Superseded** (code may remain,
 | 2025-02-26 | [ADR-012: UTM attribution conventions](#adr-012-utm-attribution-conventions) | Accepted | Signup attribution | Keeps paid and external attribution intact |
 | 2026 | [ADR-013: Working conventions](#adr-013-working-conventions-maintainer-guidance) | Accepted | Process | Diffs are reviewed closely and out-of-scope edits get reverted |
 | 2026-10-21 | [ADR-014: Evidence-based dead-code cleanup](#adr-014-evidence-based-dead-code-cleanup) | Accepted | Maintenance | Unreachable code misled agents and shipped unused bytes |
+| 2026-10-22 | [ADR-015: The integration layer is the canonical positioning](#adr-015-the-integration-layer-is-the-canonical-positioning) | Accepted | Product / copy | One story across the site; automation copy is out of date |
+| 2026-10-22 | [ADR-016: The static homepage's design system is the site-wide target](#adr-016-the-static-homepages-design-system-is-the-site-wide-target) | Accepted | Design | One visual system instead of five |
 
 ---
 
@@ -188,20 +190,20 @@ Accepted (in production since `12b97eb9`, which merged PR #1831).
 
 ### Decision & Implementation
 - In `next.config.js`, a `beforeFiles` rewrite maps `/` to `/new-home/index.html`. `public/new-home/` holds `index.html`, `main.js` and `styles.css` (plain HTML, CSS and JS), and it loads the same GTM container as the rest of the site.
-- `src/app/page.js`, its A/B variants and `src/app/front-page/*` are therefore **not rendered at `/`**. Whether to keep them is an open question, so do not delete them.
+- `src/app/page.js`, its A/B variants and `src/app/front-page/*` are therefore **not rendered at `/`**. They are kept on purpose as the rollback path: reverting merge `cfdae23e` on `main` restores the A/B homepage. Retire them once the new homepage has run stably for a few weeks (C-01, decided for now, Team answers to OPEN_QUESTIONS, 2026-10-22).
+- **The source of `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`). `deploy/export-to-viasocket-repo.py --prod` exports it into this repo and the result is pushed to `test` (D-03, decided). Since 14 October the export runs in production mode for test too, so the page itself carries no `noindex`. <!-- verify:ignore -->
 
 ### Supporting Evidence & Past Incidents
 - `1f911f58` (2026-10-13) explains the choice: the static site "renders on its own: the old homepage route (src/app/page.js), its A/B variants and the site's global CSS are not involved."
-- `a8f48657` (2026-10-14) removed the page-level `noindex` and added a canonical to `https://viasocket.com/`. Test stays out of search through `src/app/robots.txt/route.js` and Cloudflare's preview noindex header.
+- `a8f48657` (2026-10-14) removed the page-level `noindex` and added a canonical to `https://viasocket.com/`. Test was expected to stay out of search through `src/app/robots.txt/route.js` and Cloudflare's preview noindex header; in fact only the `*.pages.dev` host sends `x-robots-tag: noindex`, and test.viasocket.com does not (D-09, see [current-infrastructure/cloudflare](current-infrastructure/cloudflare.md)).
 - Earlier attempts: the redesign was first built in App Router at `src/app/index` (`a2d0e415`, then `5693d3db` reverted the same day, then `dd4d76e1` re-landed it). It was moved to `/front-page` because `index` is reserved (see Incidents), and the `/index` → `/front-page` redirect was removed in `49401a1c`. <!-- verify:ignore -->
 
 ### Consequences & Trade-offs
 - The static homepage is outside the root layout. It has no `TrackingCookies`, no `VariantTracker`, no `utmData` stamping and no A/B split. Its CTAs link straight to `flow.viasocket.com` and to absolute `viasocket.com` URLs.
-- Homepage edits are made in `public/new-home/*`, not in React components. Maintainer guidance from 2026-09 says the redesign lives in `/index` and the old Home is untouched; both pages that guidance names have since been replaced by this site.
+- Homepage edits are made in the `viasocket-site` source and exported into `public/new-home/*`, not in React components. A hand edit to `public/new-home/*` is overwritten by the next export unless it is also made in `viasocket-site`. Maintainer guidance from 2026-09 says the redesign lives in `/index` and the old Home is untouched; both pages that guidance names have since been replaced by this site.
 - This runs opposite to `d0dff32c` (2026-09-28), which *rebuilt* `/developers` from static `public/developers/*.html` into a native App Router route "so it matches this codebase's own conventions". <!-- verify:ignore -->
 
-> [!TODO]
-> Confirm whether the static homepage is the long-term shape or a stop-gap, and whether `/` should get A/B tracking again. See [OPEN_QUESTIONS](OPEN_QUESTIONS.md).
+- The static homepage is the long-term shape, and its design system is the site-wide target ([ADR-016](#adr-016-the-static-homepages-design-system-is-the-site-wide-target)). Server-side A/B testing of `/` stays off; GTM carries analytics (T-01, recommended).
 
 ---
 
@@ -305,7 +307,46 @@ Agents reading the tree could not tell live code from leftovers: 66 source files
 
 ### Consequences & Trade-offs
 - Tailwind generates only classes found in `src/**`, so deleting a file can drop utilities. That is safe here because no CMS HTML is injected (every `dangerouslySetInnerHTML` is a script or JSON-LD) and no class names are built from template strings.
-- Deliberately kept, pending a human decision: the old homepage tree, the Decap CMS blog, unreferenced `public/assets/**`, and `husky`/`lint-staged`/`prettier` ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) C-01 to C-03, D-08).
+- Deliberately kept: the old homepage tree (the rollback path, C-01, decided for now), plus the Decap CMS blog, unreferenced `public/assets/**` and `husky`/`lint-staged`/`prettier`, whose removal the team recommended on 2026-10-22 but has not yet done ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) C-02, C-03, D-08).
+
+---
+
+## ADR-015: The integration layer is the canonical positioning
+
+### Status
+Accepted (Team answers to OPEN_QUESTIONS, 2026-10-22: P-01, decided).
+
+### Context & Problem Statement
+After the October relaunch the site told two stories: the homepage, `/developers`, `/integrations`, `/features`, `/use-cases` and `/new-direction` said "integration layer for products and AI agents", while the root metadata, `public/llms.txt`, `/pricing` and the campaign pages still sold no-code workflow automation.
+
+### Decision & Implementation
+- The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
+- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. Pending: `src/app/layout.js` root `metadata`, `public/llms.txt` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+
+### Supporting Evidence & Past Incidents
+- The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).
+
+### Consequences & Trade-offs
+- Copy that still says "workflow automation" is a bug to fix when touched, not an alternative positioning to preserve. Agents should flag it rather than extend it.
+- ICP and success metrics are proposed, not approved ([VISION](VISION.md#target-audience--ideal-customer-profile-icp)).
+
+---
+
+## ADR-016: The static homepage's design system is the site-wide target
+
+### Status
+Accepted (Team answers to OPEN_QUESTIONS, 2026-10-22: U-01, decided). U-07 (accepting the `addToProduct` `copy.js` and SCSS module for now) is proposed, pending the maintainer.
+
+### Context & Problem Statement
+The site had five visual systems ([DESIGN](DESIGN.md)): legacy daisyUI + SCSS, the static homepage, `/developers`, the dormant front-page and the `addToProduct` pages.
+
+### Decision & Implementation
+- The static homepage's system is the target for the rest of the site: Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules live in the external "viaSocket Brand Guidelines" doc.
+- The `addToProduct` pages carried that design into Next quickly through a shared `copy.js` and a SCSS module; that is accepted for now (proposed) and revisited when the design system becomes Tailwind tokens.
+
+### Consequences & Trade-offs
+- New or reworked pages should converge on these tokens (expressed as Tailwind tokens per [DESIGN](DESIGN.md)), not on legacy daisyUI styling.
+- This settles the tension noted in ADR-008 between the static homepage and the native `/developers` rebuild: the direction is the homepage look, built natively.
 
 ---
 

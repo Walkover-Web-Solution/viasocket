@@ -10,7 +10,7 @@ Written for AI coding agents and new engineers. Every claim was checked against 
 
 - **Name:** viaSocket marketing site (`viasocket.com`), package `next-socket`.
 - **Summary:** the public website for viaSocket. It runs the static homepage, SEO landing pages, an integrations directory, automation templates, campaign and program pages, lead forms and the `/developers` (Embed) funnel. It hands visitors to `/signup` or to the product at flow.viasocket.com with their attribution. It is not the product itself ([VISION](VISION.md#what-this-site-is-vs-what-the-product-is)).
-- **Current phase:** live in production, mid-repositioning. Since October 2026, `/`, `/developers`, `/integrations`, `/features`, `/use-cases` and `/new-direction` pitch an "integration layer for your product and AI agents", while other pages still sell no-code workflow automation ([OPEN_QUESTIONS P-01](OPEN_QUESTIONS.md)).
+- **Current phase:** live in production, mid-repositioning. Since October 2026, `/`, `/developers`, `/integrations`, `/features`, `/use-cases` and `/new-direction` pitch an "integration layer for your product and AI agents", which is now the canonical positioning everywhere ([DECISIONS ADR-015](DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)); pages that still sell no-code workflow automation are out of date.
 - **Key features**, one module doc each:
   1. **Homepage:** the static site in `public/new-home/`, outside Next.js ([modules/01-homepage](modules/01-homepage.md)).
   2. **Integrations directory:** `/integrations`, app pages and app-pair pages ([modules/02-integrations-directory](modules/02-integrations-directory.md)).
@@ -52,9 +52,10 @@ Written for AI coding agents and new engineers. Every claim was checked against 
 ## Needs a human
 
 Each item below is a `[!TODO]` callout in the linked doc; the full list of decisions is in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md).
-- Target audience (ICP), success metrics and the canonical positioning: [VISION](VISION.md#target-audience--ideal-customer-profile-icp)
-- Why the Next 16 / OpenNext attempts failed, and whether the static homepage is long-term: [DECISIONS](DECISIONS.md)
-- Cloudflare Pages build settings, per-environment env values, rollback, branch protection and `npm run deploy`: [DEVELOPMENT](DEVELOPMENT.md)
-- Performance budgets: [14-performance](14-performance.md#budgets)
-- Open design choices (canonical in server metadata, `primary` colour, homepage tokens, `addToProduct` styling): [DESIGN](DESIGN.md)
+On 2026-10-22 the team answered most open questions; many answers are **proposed** or **recommended** and still need an owner's yes ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) labels each one).
+- Confirm the proposed ICP and metrics (Ankit), pricing page and app count: [VISION](VISION.md#target-audience--ideal-customer-profile-icp)
+- Why the Next 16 / OpenNext attempts failed (ask Krish, D-05): [DECISIONS](DECISIONS.md)
+- Cloudflare Pages build settings, per-environment env values, `.env.example`: [DEVELOPMENT](DEVELOPMENT.md) <!-- verify:ignore -->
+- Confirm the proposed performance targets: [14-performance](14-performance.md#budgets)
+- Confirm the proposed design answers (canonical in server metadata, title format, `addToProduct` styling): [DESIGN](DESIGN.md)
 - Business value or liveness per feature area: one callout in each of [modules/01](modules/01-homepage.md) to [modules/09](modules/09-lead-and-support-forms.md), except 05 and 07

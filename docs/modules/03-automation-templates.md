@@ -19,10 +19,10 @@ These pages cover ready-made workflow templates and the content around them:
 ## Business Value
 
 - Template CTAs open the template in the product (`https://flow.viasocket.com/template/<id>`). Inference: the module turns template browsing into product signups.
-- These pages sell **workflow automation**, while `/`, `/integrations` and `/developers` lead with the integration layer. Which positioning wins is open ([OPEN_QUESTIONS P-01](../OPEN_QUESTIONS.md)).
+- These pages sell **workflow automation**, while `/`, `/integrations` and `/developers` lead with the integration layer. The integration layer is now the canonical positioning everywhere (P-01, decided 2026-10-22; [DECISIONS ADR-015](../DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)), so this copy is out of date.
 
 > [!TODO]
-> No commit or copy states what these pages are judged on, or whether they stay in scope after the integration-layer shift ([OPEN_QUESTIONS P-01](../OPEN_QUESTIONS.md), [P-02](../OPEN_QUESTIONS.md)).
+> The positioning is decided (P-01), but not what happens to these workflow-automation pages: reworded, kept for SEO, or retired. Proposed site metrics (P-02, pending) do not mention them ([OPEN_QUESTIONS](../OPEN_QUESTIONS.md)).
 
 ---
 
@@ -97,6 +97,6 @@ Shared: `DashboardButton`, `FAQSection`, `Footer`, `NavbarServer`, `ConditionalN
 
 ## Development Tasks (Open Items)
 - [ ] Decide whether unknown template slugs, and a failed template fetch, should 404 rather than redirect ([OPEN_QUESTIONS C-06](../OPEN_QUESTIONS.md)).
-- [ ] Settle the positioning for these workflow-automation pages ([OPEN_QUESTIONS P-01](../OPEN_QUESTIONS.md)).
+- [ ] Decide whether these pages are reworded to the integration-layer positioning, kept for SEO, or retired ([OPEN_QUESTIONS P-01](../OPEN_QUESTIONS.md)).
 - [ ] Keep `axiosCalls.js` out of client components ([OPEN_QUESTIONS S-01](../OPEN_QUESTIONS.md)).
 - [ ] The CTA `handleRedirect` puts the whole cookie, prompt included, into `?state=` ([OPEN_QUESTIONS T-06](../OPEN_QUESTIONS.md)).

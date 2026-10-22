@@ -17,7 +17,7 @@ verified_on: 2026-10-22
 
 - The page titles ("viaSocket — The action layer for AI products", "Managed auth · viaSocket", "Pricing · viaSocket", "Integrations Quickstart · viaSocket") and `src/app/developers/skill.js:SKILL` target developers who integrate through a coding agent.
 - `/developers/pricing` is the only pricing page the homepage links to ([OPEN_QUESTIONS P-03](../OPEN_QUESTIONS.md)).
-- Commit `d0dff32c` ("Rebuild /developers landing page as native Next.js/Tailwind, drop static HTML") moved `/developers` off static HTML (see [OPEN_QUESTIONS U-01](../OPEN_QUESTIONS.md)).
+- Commit `d0dff32c` ("Rebuild /developers landing page as native Next.js/Tailwind, drop static HTML") moved `/developers` off static HTML. The site-wide design target is now the static homepage's system (U-01, decided; [DECISIONS ADR-016](../DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).
 
 > [!TODO]
 > Not stated: how Embed signups are counted, or whether the `/embed/*` subpages are meant to stay now that `/embed` points at `/developers`.

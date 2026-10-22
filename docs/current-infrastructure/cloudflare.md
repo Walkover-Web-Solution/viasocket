@@ -24,7 +24,7 @@ Hosting and edge runtime for every Next.js route; CDN cache for production; path
 |---|---|
 | Pages project (test / production) | Builds each branch with next-on-pages; serves the worker |
 | Edge runtime | Every server-rendered page and route handler exports `export const runtime = 'edge'` (why: [ARCHITECTURE.md](../ARCHITECTURE.md)) |
-| Zone cache rule | Caches production HTML (`max-age=10800` observed on `/`, `/pricing`, `/sitemap.xml`, `/llms.txt`); not present on test |
+| Zone cache rule | Caches production HTML (`max-age=10800` observed on `/`, `/pricing`, `/sitemap.xml`, `/llms.txt`); not present on test. The team observed (D-10, team answers to OPEN_QUESTIONS, 2026-10-22) that it keeps `/` at the edge for **more than a day** (copies with `age` over 80,000 s) and rewrites `cache-control` to `private, max-age=10800`, ignoring the middleware's `no-store`. **After every homepage deploy someone must purge `https://viasocket.com/`.** Recommended: make the rule respect origin headers for `/`, or give it an edge TTL of about 5 minutes. The exact rule is dashboard-only. |
 | Other zone deployments | `/help/*`, `/blog`, `/discovery`, `/community` (and `/faq`) answer from other apps; on 2026-10-22 they returned `private, no-store` / `no-cache, no-store`, `DYNAMIC`, and no `x-matched-path` header ([OPEN_QUESTIONS P-05](../OPEN_QUESTIONS.md)) |
 | `public/_redirects` | One Pages redirect rule (`/faq/a-step-by-step-guide`), possibly unreachable ([OPEN_QUESTIONS C-07](../OPEN_QUESTIONS.md)) |
 | Zaraz | Loaded by `src/app/providers.js:loadZarazManually`; configured in the dashboard ([third-party-services.md](third-party-services.md)) |
@@ -40,7 +40,7 @@ Full routing order: [ARCHITECTURE.md](../ARCHITECTURE.md) "Request Path". Route 
 Search-engine posture per environment:
 - **robots.txt** comes from `src/app/robots.txt/route.js:GET` at request time (and an identical prebuild file from `build-utilities/generate-robots-txt.js`, [OPEN_QUESTIONS D-01](../OPEN_QUESTIONS.md)). Only `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod'` on a host without `integrate`/`integration` gets `Disallow: /admin/` plus two `Sitemap:` lines; everything else gets `Disallow: /`.
 - **noindex**: the root layout `metadata` sets `robots: 'noindex, nofollow'` when not `prod` (React pages only; the static `/` has its own canonical).
-- **Preview noindex header**: [DECISIONS](../DECISIONS.md) (ADR-008) credits "Cloudflare's preview noindex header" for keeping test out of search, but on 2026-10-22 `https://test.viasocket.com/` returned no `x-robots-tag` header. Treat robots `Disallow: /` and the layout `noindex` as the only evidenced guards.
+- **Preview noindex header**: only the `*.pages.dev` host (e.g. https://test.viasocket-website.pages.dev) sends `x-robots-tag: noindex`; `https://test.viasocket.com/` does not (checked 2026-10-22, and confirmed in D-09). Since 14 October the homepage is exported in production mode for test too, so the static `/` on test has no page-level `noindex` either. **On test.viasocket.com, robots `Disallow: /` is the only guard** for `/`, plus the layout `noindex` for React pages. Fix (needs dashboard access): add a noindex header for the test host in Cloudflare. <!-- verify:ignore -->
 
 ## Functions We Call
 | Function | Returns | Used by |
@@ -50,4 +50,4 @@ Search-engine posture per environment:
 | `GET /robots.txt` | text, see above | crawlers |
 
 ## Degradation
-If the zone cache serves a stale page, content edits in table-api appear only after up to 3 hours plus the in-process TTL. Zaraz returns 404 outside Cloudflare (local), which is harmless. A failed Pages build leaves the previous deployment live; there is no other CI gate ([DEVELOPMENT.md](../DEVELOPMENT.md)).
+If the zone cache serves a stale page, content edits in table-api appear only after up to 3 hours plus the in-process TTL, and a changed homepage can stay stale for more than a day until `/` is purged (D-10). Zaraz returns 404 outside Cloudflare (local), which is harmless. A failed Pages build leaves the previous deployment live; there is no other CI gate ([DEVELOPMENT.md](../DEVELOPMENT.md)).

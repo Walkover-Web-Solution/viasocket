@@ -5,7 +5,12 @@ verified_on: 2026-10-22
 ---
 # Design System & UI Standards
 
-The site does not have one design system. It has **five visual systems**, and each one has its own token source. Find out which one a page belongs to before you style anything:
+The site does not have one design system yet. It has **five visual systems**, and each one has its own token source. Find out which one a page belongs to before you style anything.
+
+> [!NOTE]
+> **Target (U-01, decided, team answers to OPEN_QUESTIONS 2026-10-22):** the static homepage's system is the target for the whole site: Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc. New and reworked pages converge on it, expressed as Tailwind tokens ([DECISIONS ADR-016](DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).
+
+The five systems today:
 
 | System | Where it renders | Token source | Fonts | Dark mode |
 |---|---|---|---|---|
@@ -269,4 +274,4 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
 - **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown index of the site for LLM crawlers (1141 lines). When you add or rename a public section, update it by hand.
 
 > [!TODO]
-> Open: should canonical move into server metadata, is daisyUI `primary: '#0000'` meant to be black, is the static homepage's token set the future direction for the rest of the site, and are the `addToProduct` CSS module and shared `copy.js` accepted? All four are listed in [OPEN_QUESTIONS](OPEN_QUESTIONS.md) (U-01 to U-03, U-07).
+> Answered 2026-10-22 but not yet confirmed or implemented ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)): move canonicals into server metadata and drop the client-side rewrite in `HeadComp` (U-03, recommended fix); daisyUI `primary: '#0000'` rendering black is intended (U-02, recommended); page titles use "X | viaSocket" through a `title.template` of `%s | viaSocket` (U-05, proposed); the `addToProduct` `copy.js` and SCSS module are accepted for now and revisited when the design system becomes Tailwind tokens (U-07, proposed, maintainer to confirm).

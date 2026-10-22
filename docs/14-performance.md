@@ -10,7 +10,7 @@ Home of the caching, rendering and bundle facts. The request path these apply to
 ## Budgets
 
 > [!TODO]
-> No performance budgets exist. Nothing in the repo sets one: no budget config, no bundle-size check, no Lighthouse config, no CI. The observed numbers under [Known Hot Paths](#known-hot-paths) are the only baseline. A human needs to set the targets, such as First Load JS per route or a response-time goal.
+> **Proposed targets, not yet confirmed** (D-12, team answers to OPEN_QUESTIONS, 2026-10-22), measured on mobile: LCP under 2.5 s, CLS under 0.1, homepage JS under 100 KB. Nothing in the repo enforces them (no budget config, bundle-size check, Lighthouse config or CI). The observed numbers under [Known Hot Paths](#known-hot-paths) are the baseline.
 
 Until targets exist, treat a change that raises a route's First Load JS in the `npm run build` route table as a regression to explain ([DEVELOPMENT](DEVELOPMENT.md#build--preview-verification)).
 

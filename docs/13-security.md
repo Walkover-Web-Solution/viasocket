@@ -31,7 +31,7 @@ This file covers the site's security posture: who can do what, which values are 
   - A key that must stay secret needs a name without the prefix, read only in a route handler or server loader. No such variable exists yet, so adding one means setting it in the Cloudflare Pages dashboard for both environments.
   - Never copy `.env` values into docs, code comments, commits or chat. Refer to variables by name.
 - **Hardcoded client-visible tokens:**
-  - The gtwy chatbot `embedToken`, a JWT in `src/app/providers.js` and `public/new-home/assets/support.js` ([OPEN_QUESTIONS S-04](OPEN_QUESTIONS.md)).
+  - The gtwy chatbot `embedToken`, a JWT in `src/app/providers.js` and `public/new-home/assets/support.js`. It is **public by design**: a front-end embed token, reused on the homepage on purpose so its Chat button opens the same support bot (S-04, decided 2026-10-22). Pending: a check with the gtwy team that it is scoped to the chatbot only.
   - The ids of the GTM, Google Ads, X and cr-relay tags.
   - Every flow.sokt.io script id ([flow-webhooks.md](current-infrastructure/flow-webhooks.md)).
 
@@ -81,7 +81,7 @@ The sensitive surface is visitor PII sent to third parties, unauthenticated publ
 | Unhappy-feedback link | `client_email` and the other URL params forwarded to tally.so in the link (`tallyHref`) | `src/app/components/feedback/FeedbackUnsatisfiedClient.js` | [OPEN_QUESTIONS S-06](OPEN_QUESTIONS.md) |
 | Feedback pages | PII arrives in the page URL (`client_email`, `request_id`) and the page **submits on load**, so scanners and reloads resubmit it | `src/app/components/feedback/**` | [FLOWS](FLOWS.md#detailed-journey-lead-and-contact-forms) |
 | Prompt and UTM in `?state=` | a typed prompt can show in the address bar and the referrer | `src/utils/handleRedirection.js:handleRedirect` | [OPEN_QUESTIONS T-06](OPEN_QUESTIONS.md) |
-| Chatbot `embedToken` | hardcoded JWT, the same in two places | `src/app/providers.js`, `public/new-home/assets/support.js` | [OPEN_QUESTIONS S-04](OPEN_QUESTIONS.md) |
+| Chatbot `embedToken` | hardcoded JWT, the same in two places; public by design | `src/app/providers.js`, `public/new-home/assets/support.js` | [OPEN_QUESTIONS S-04](OPEN_QUESTIONS.md) (scope check pending) |
 | Public webhooks | every flow.sokt.io form endpoint is unauthenticated, its script id ships in client code, and no form has a CAPTCHA, honeypot or rate limit, so it can be spammed directly | [flow-webhooks.md](current-infrastructure/flow-webhooks.md) | reCAPTCHA is unused ([CONTRACTS](CONTRACTS.md#required--unavailable-backend-capabilities)); any bot check must be verified server-side with a key outside the `NEXT_PUBLIC_*` prefix |
 | Error webhook | anyone can call `func/scrixVwRkMy0` and forge error reports | `src/utils/SendErrorMessage.js` | inferred; [18-error-handling](18-error-handling.md#api-layer) |
 | Tracking route | no auth or rate limit; bot filtering is by user agent only | `src/app/api/track-variant/route.js` | writes are off (T-01) |

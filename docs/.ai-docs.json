@@ -3,10 +3,10 @@
   "skill_version": "2.0.0",
   "created": "2026-10-21",
   "last_run": {
-    "mode": "init",
-    "commit": "17b99cd8",
+    "mode": "update",
+    "commit": "fa36c6d5",
     "date": "2026-10-22",
-    "note": "run 2: doc set rebuilt from assets/templates per references/brief.md; run 1 (2026-10-21) was prepare (uncommitted cleanup)"
+    "note": "recorded the team answers to OPEN_QUESTIONS (2026-10-22); no code changed"
   },
   "docs": {
     "AGENTS.md": "assets/templates/AGENTS.md (ROOT_AGENTS)",
