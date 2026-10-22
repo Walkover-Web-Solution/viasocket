@@ -1,0 +1,146 @@
+// /blogs and /blogs/{slug}: the pieces only the blog has. Tokens, header, footer, the post cards
+// (.posts / .post) and buttons come from addToProduct.module.scss, inside its .root.
+
+.list { padding-block: clamp(36px, 6vh, 64px) var(--sec-pad); }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.excerpt { font-size: 15px; color: var(--ink-2); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.post-body h3 { flex: 0 0 auto; }
+.grid { margin-top: 16px; }
+@media (max-width: 900px) { .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* Newest post, full width */
+.featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); border: 1px solid var(--line); background: var(--s1); text-decoration: none; color: inherit; transition: background-color .15s; }
+.featured:hover { background: var(--s2); }
+// Title on the left, image on the right (the image comes first in the markup, so it stays on top on phones)
+.featured > img { order: 2; display: block; width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-left: 1px solid var(--line); background: var(--s2); }
+.featured.no-img { grid-template-columns: minmax(0, 1fr); }
+.featured-body { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 40px); min-width: 0; }
+.featured h2 { font-size: clamp(26px, 2.6vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; max-width: 24ch; }
+.featured p { font-size: 16px; color: var(--ink-2); max-width: 56ch; }
+.featured-foot { margin-top: auto; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 6px 16px; align-items: baseline; }
+.by { font-size: 13.5px; color: var(--ink-3); }
+// The writer, with their photo when there is one
+.author { display: inline-flex; align-items: center; gap: 8px; }
+.author img { flex: none; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--s2); }
+@media (max-width: 900px) {
+  .featured { grid-template-columns: minmax(0, 1fr); }
+  .featured > img { order: 0; height: auto; border-left: 0; border-bottom: 1px solid var(--line); }
+}
+
+/* No posts yet */
+.empty { border: 1px dashed var(--line-2); padding: clamp(32px, 5vw, 64px); display: grid; gap: 12px; justify-items: start; }
+.empty h2 { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.empty p { color: var(--ink-2); max-width: 52ch; }
+
+/* Article */
+.art-head { padding-block: clamp(48px, 8vh, 88px) 48px; }
+.art-head h1 { margin-top: clamp(28px, 4vh, 44px); font-size: clamp(38px, 5vw, 64px); font-weight: 600; letter-spacing: -0.04em; line-height: 1.05; }
+// Breadcrumbs: Home › Blog › the post, the title cut to one line
+.crumbs { list-style: none; padding: 0; margin-top: 0; margin-bottom: 0; flex-wrap: nowrap; min-width: 0; }
+.crumbs li { display: inline-flex; align-items: center; gap: 6px; flex: none; }
+.crumbs li[aria-current] { flex: 1 1 auto; min-width: 0; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+// Under the title: the meta line on the left, share buttons on the right
+.art-bar { margin-top: clamp(32px, 4vh, 48px); padding-top: 20px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+.art-meta { display: flex; flex-wrap: wrap; gap: 6px 10px; font-family: var(--mono); font-size: 12.5px; letter-spacing: 0.02em; color: var(--ink-3); }
+.art-meta > * + *::before { content: "·"; margin-right: 10px; color: var(--ink-4); }
+.art-meta > span:first-child { color: var(--ink); }
+.art-meta { align-items: center; }
+.art-meta .author img { width: 28px; height: 28px; }
+.cover { margin-bottom: 48px; }
+.cover img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--s2); }
+// After the article: share again, and the way back
+.art-end { margin: 56px 0 var(--sec-pad); padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
+
+/* Share buttons: square, hairline, ink on hover */
+.share { position: relative; display: flex; align-items: center; gap: 6px; }
+.share-k { margin-right: 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.share a, .share button { width: 34px; height: 34px; display: inline-grid; place-items: center; padding: 0; border: 1px solid var(--line-2); background: var(--s1); color: var(--ink-2); cursor: pointer; transition: color .15s, border-color .15s, background-color .15s; }
+.share a:hover, .share button:hover { color: var(--ink); border-color: var(--ink-3); }
+.share svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.share svg.fill { fill: currentColor; stroke: none; width: 13px; height: 13px; }
+.share button.done { color: var(--on-green); background: var(--green); border-color: var(--green); }
+.share-toast { position: absolute; left: 100%; margin-left: 10px; font-size: 13px; color: var(--green); white-space: nowrap; }
+.share-toast:empty { display: none; }
+@media (max-width: 600px) { .share-toast { left: auto; right: 0; top: 100%; margin: 6px 0 0; } }
+
+/* Article: the quicklinks in the left margin from the top (level with the breadcrumbs), the title and text centred.
+   Below 1180px there's no room for the margin column: the quicklinks become a toggle above the text. */
+.body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 720px) minmax(0, 1fr); column-gap: 48px; align-items: start; }
+.side { grid-column: 1; justify-self: end; width: 100%; max-width: 250px; margin-top: clamp(48px, 8vh, 88px); position: sticky; top: 96px; max-height: calc(100vh - 120px); overflow-y: auto; }
+.main { grid-column: 2; min-width: 0; }
+@media (max-width: 1180px) {
+  .body { grid-template-columns: minmax(0, 1fr); max-width: 720px; }
+  .side { display: none; }
+  .main { grid-column: 1; }
+}
+
+/* Quicklinks in the sidebar: underlined links; the section being read has an arrow in the margin and no underline */
+.toc { padding-left: 22px; } // room for the arrow, which the scrolling sidebar would otherwise clip
+.toc-h { font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.toc ol { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 2px; }
+.toc li a { position: relative; display: inline-block; padding: 7px 0; font-size: 14.5px; line-height: 1.4; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-3); text-decoration-thickness: 1px; text-underline-offset: 4px; transition: text-decoration-color .15s; }
+.toc li a:hover { text-decoration-color: var(--ink); }
+.toc li a[aria-current] { text-decoration: none; font-weight: 500; }
+.toc li a[aria-current]::before { content: "→"; position: absolute; right: 100%; margin-right: 8px; top: 7px; font-weight: 400; }
+
+/* Quicklinks on narrower screens: collapsed above the text */
+.toc-m { display: none; margin-bottom: 36px; border: 1px solid var(--line); background: var(--s1); }
+@media (max-width: 1180px) { .toc-m { display: block; } }
+.toc-m summary { list-style: none; cursor: pointer; position: relative; padding: 14px 44px 14px 18px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
+.toc-m summary::-webkit-details-marker { display: none; }
+.toc-m summary::before, .toc-m summary::after { content: ""; position: absolute; right: 18px; top: 50%; width: 11px; height: 1.5px; background: var(--ink-2); transition: transform .2s; }
+.toc-m summary::after { transform: rotate(90deg); }
+.toc-m[open] summary::after { transform: rotate(0deg); }
+.toc-m ol { list-style: none; margin: 0; padding: 4px 18px 14px; border-top: 1px solid var(--line); counter-reset: toc; }
+.toc-m li { counter-increment: toc; display: flex; gap: 10px; align-items: baseline; padding: 6px 0; font-size: 15px; line-height: 1.4; }
+.toc-m li::before { content: counter(toc, decimal-leading-zero); flex: none; font-family: var(--mono); font-size: 11.5px; color: var(--ink-4); }
+.toc-m a { color: var(--ink-2); text-decoration: none; }
+.toc-m a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+
+// Jumping to a section: smooth, and clear of the sticky header
+:global(html):has(.body) { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { :global(html):has(.body) { scroll-behavior: auto; } }
+.prose h2[id] { scroll-margin-top: 96px; }
+
+/* Markdown body */
+.prose { font-size: 17.5px; line-height: 1.72; color: var(--ink-2); overflow-wrap: break-word; }
+.prose > * + * { margin-top: 1.15em; }
+.prose h2 { margin-top: 2.1em; font-size: clamp(24px, 2.2vw, 30px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.2; color: var(--ink); }
+.prose h3 { margin-top: 1.8em; font-size: 20px; font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); }
+.prose h4 { margin-top: 1.6em; font-size: 17.5px; font-weight: 600; color: var(--ink); }
+.prose h2 + *, .prose h3 + *, .prose h4 + * { margin-top: 0.6em; }
+.prose strong { color: var(--ink); font-weight: 600; }
+// Links in the article: classic link blue (lighter in dark mode so it stays readable)
+.prose { --link: #1a0dab; }
+@media (prefers-color-scheme: dark) { .prose { --link: #8ab4f8; } }
+.prose a { color: var(--link); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent); text-underline-offset: 4px; transition: text-decoration-color .15s; }
+.prose a:hover { text-decoration-color: var(--link); }
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose ul { list-style: square; }
+.prose ol { list-style: decimal; }
+.prose li + li { margin-top: 0.4em; }
+.prose li::marker { color: var(--ink-4); }
+.prose blockquote { margin-inline: 0; padding: 4px 0 4px 20px; border-left: 2px solid var(--ink); color: var(--ink); font-size: 19px; }
+.prose hr { border: 0; border-top: 1px solid var(--line-2); margin-block: 2.4em; }
+.prose img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); }
+.prose code { font-family: var(--mono); font-size: 0.86em; padding: 2px 5px; background: var(--s2); border: 1px solid var(--line); color: var(--ink); }
+.prose pre { overflow-x: auto; padding: 18px 20px; background: var(--s1); border: 1px solid var(--line-2); font-size: 14px; line-height: 1.6; }
+.prose pre code { padding: 0; background: none; border: 0; font-size: inherit; }
+.prose table { display: block; overflow-x: auto; width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.prose th, .prose td { padding: 10px 14px; text-align: left; border: 1px solid var(--line-2); }
+.prose th { color: var(--ink); font-weight: 600; background: var(--s2); }
+.prose del { color: var(--ink-3); }
+// FAQ toggles, built from a "## FAQ" section by build-utilities/generate-blogs.js; same look as the site's FAQ sections
+.prose :global(.faq) { border-top: 1px solid var(--line-2); }
+.prose :global(.faq) details { border-bottom: 1px solid var(--line-2); }
+.prose :global(.faq) details + details { margin-top: 0; }
+.prose :global(.faq) summary { list-style: none; cursor: pointer; position: relative; padding: 18px 40px 18px 0; font-size: 17.5px; font-weight: 500; letter-spacing: -0.01em; line-height: 1.45; color: var(--ink); }
+.prose :global(.faq) summary::-webkit-details-marker { display: none; }
+.prose :global(.faq) summary::before, .prose :global(.faq) summary::after { content: ""; position: absolute; right: 4px; top: 50%; width: 13px; height: 1.6px; background: var(--ink-2); transition: transform .2s; }
+.prose :global(.faq) summary::after { transform: rotate(90deg); }
+.prose :global(.faq) details[open] summary::after { transform: rotate(0deg); }
+.prose :global(.faq) details > :not(summary) { margin: 0 0 20px; max-width: 64ch; }
+.prose :global(.faq) details > :not(summary) + :not(summary) { margin-top: -8px; }
+@media (max-width: 600px) { .prose { font-size: 16.5px; } }

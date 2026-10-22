@@ -1,3 +1,5 @@
+import { getAllBlogs } from './lib/blogs';
+
 export const runtime = 'edge';
 
 const SITE_URL = 'https://viasocket.com';
@@ -14,13 +16,13 @@ const STATIC_ROUTES = [
     '/agency-partner/success',
     '/automations',
     '/black-friday-sale',
+    '/blogs',
     '/data-deletion-policy',
     '/data-retention-deletion',
     '/departments',
     '/developers',
     '/developers/auth',
     '/developers/docs',
-    '/developers/pricing',
     '/embed/actions-for-ai',
     '/embed/actions-via-webhook',
     '/embed/app-integration',
@@ -40,6 +42,7 @@ const STATIC_ROUTES = [
     '/migration/n8n',
     '/migration/relay',
     '/migration/zapier',
+    '/pass',
     '/pricing',
     '/privacy',
     '/signup',
@@ -51,10 +54,18 @@ const STATIC_ROUTES = [
 ];
 
 export default function sitemap() {
-    return STATIC_ROUTES.map((route) => ({
+    const pages = STATIC_ROUTES.map((route) => ({
         url: `${SITE_URL}${route}`,
         lastModified: new Date(),
         changeFrequency: 'daily',
         priority: 1.0,
     }));
+    // The /blogs posts are bundled with the site (src/data/blogs.json), so they're listed here too.
+    const posts = getAllBlogs().map((p) => ({
+        url: `${SITE_URL}/blogs/${p.slug}`,
+        lastModified: new Date(p.date),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+    }));
+    return [...pages, ...posts];
 }

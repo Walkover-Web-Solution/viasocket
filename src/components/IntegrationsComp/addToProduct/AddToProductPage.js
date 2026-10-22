@@ -152,7 +152,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                 <SiteHeader />
 
                 <main>
-                    <section className={s.hero}>
+                    <section className={cx('hero', 'app-hero')}>
                         <div className={s['hero-grid']} aria-hidden="true" />
                         <div className={cx('wrap', 'hero-in')}>
                             <div>
