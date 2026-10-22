@@ -18,6 +18,7 @@ import {
 import { getVideoData } from '@/utils/getVideoData';
 import getIntegrationsInfo from '@/utils/getInterationsInfo';
 import { getAppCount, getTemplates, getApps, getCombos, getActionLayerBlogs } from '@/utils/axiosCalls';
+import { getAdminContent } from './admin-content';
 import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
@@ -153,10 +154,12 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             }
         } else if (integrationsInfo?.appone && pageInfo?.qurey?.status !== 'disconnected') {
             // Single app integration page ("Add {app} to Your Product"): the app, its actions and
-            // triggers, and the latest Action Layer blog posts are all it needs.
-            const [combosData, actionLayerBlogs] = await Promise.all([
+            // triggers, and the latest Action Layer blog posts are all it needs, plus any copy written
+            // for it in the admin panel (null when there is none: the page's fixed copy is used).
+            const [combosData, actionLayerBlogs, adminContent] = await Promise.all([
                 getCombos(integrationsInfo, pageUrl),
                 getActionLayerBlogs(pageUrl),
+                getAdminContent(integrationsInfo?.appone),
             ]);
             const appOneDetails = getAppDetails(combosData, integrationsInfo?.appone);
             if (!appOneDetails) {
@@ -167,6 +170,7 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 integrationsInfo: integrationsInfo || {},
                 appOneDetails,
                 actionLayerBlogs: actionLayerBlogs || [],
+                adminContent,
                 appCount: appCount || 0,
                 getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
                 footerData: footerData || {},

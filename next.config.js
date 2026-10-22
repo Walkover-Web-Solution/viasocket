@@ -1,7 +1,3 @@
-// /help pages linked from the site footer (SiteChrome and public/new-home). They and every page
-// under them are kept out of the /help redirect.
-const FOOTER_HELP_PAGES = ['about-us', 'partners', 'plugin-builder', 'security-and-compliance', 'viasocket-embed/billing-partner'];
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
@@ -39,62 +35,7 @@ const nextConfig = {
         };
     },
 
-    async redirects() {
-        return [
-            // The help centre is retired: /help and every page under it go to the founders' letter,
-            // except the help pages the site footer links to and anything under them, which stay where they are.
-            {
-                source: '/help',
-                destination: '/new-direction',
-                statusCode: 301,
-            },
-            {
-                source: `/help/:path((?!(?:${FOOTER_HELP_PAGES.join('|')})(?:/|$)).+)`,
-                destination: '/new-direction',
-                statusCode: 301,
-            },
-            {
-                source: '/department/:path*',
-                destination: '/departments/:path*',
-                permanent: true,
-            },
-            {
-                source: '/data-retention-deletion-policy',
-                destination: '/data-retention-deletion',
-                permanent: true,
-            },
-            {
-                source: '/about',
-                destination: '/help/about-us',
-                permanent: true,
-            },
-            {
-                source: '/variables',
-                destination: '/features/variables',
-                permanent: true,
-            },
-            {
-                source: '/login',
-                destination: 'https://flow.viasocket.com/',
-                permanent: false,
-            },
-            {
-                source: '/mcp/invgate-service-desk',
-                destination: '/mcp/invgateservicemanagement',
-                permanent: true,
-            },
-            {
-                source: '/mcp',
-                destination: 'https://mushrooms.viasocket.com/',
-                permanent: true,
-            },
-            {
-                source: '/embed',
-                destination: '/developers',
-                permanent: true,
-            },
-        ];
-    },
+    // Redirects are managed in the admin panel (Pages → Redirects) and applied by src/middleware.js.
 
     turbopack: {},
 

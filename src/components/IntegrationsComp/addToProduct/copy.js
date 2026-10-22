@@ -39,6 +39,11 @@ export const COPY = {
     trgTitle: 'Respond to Events in {appName}',
     trgSub: 'Use triggers to let your product & agents respond to events from connected {appName} accounts.',
 
+    // The use cases section under the hero, shown only when the admin panel has use cases for the app.
+    buildEyebrow: 'Use cases',
+    buildTitle: 'What our users are building with {appName} Integration',
+    buildSub: 'Explore ways to use {appName} capabilities to build features your customers need.',
+
     learnTitle: 'Learn more about adding {appName} Integrations',
     learnSub: 'Explore guides and resources to help you implement and use {appName} integrations.',
     blogCategoryUrl: 'https://viasocket.com/blog/category/Action%20Layer%20for%20AI%20Products',
