@@ -11,6 +11,7 @@ import RotatingWord from './RotatingWord';
 import OAuthDemo from './OAuthDemo';
 import EventsList from './EventsList';
 import BetaRequestButton from './BetaNotice';
+import UseCaseTabs from './UseCaseTabs';
 import { appWebsiteUrl, relForApp } from '@/utils/ExternalLink';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
@@ -78,7 +79,7 @@ function AuthPanel({ app }) {
 }
 
 /** The structured data the old page carried, with this page's FAQs. */
-function JsonLd({ app }) {
+function JsonLd({ app, faqs, description }) {
     const software = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
@@ -86,7 +87,7 @@ function JsonLd({ app }) {
         applicationCategory: 'BusinessApplication',
         operatingSystem: 'Web',
         url: `https://viasocket.com/integrations/${app.slug}`,
-        description: fill(COPY.metaDesc, app.name),
+        description,
         featureList: [
             ...(app.triggers.length ? [`${app.triggers.length} triggers`] : []),
             ...(app.actions.length ? [`${app.actions.length} actions`] : []),
@@ -104,10 +105,10 @@ function JsonLd({ app }) {
     const faq = {
         '@context': 'https://schema.org',
         '@type': 'FAQPage',
-        mainEntity: COPY.faqs.map(([q, a]) => ({
+        mainEntity: faqs.map(([q, a]) => ({
             '@type': 'Question',
-            name: fill(q, app.name),
-            acceptedAnswer: { '@type': 'Answer', text: fill(a, app.name) },
+            name: q,
+            acceptedAnswer: { '@type': 'Answer', text: a },
         })),
     };
     return (
@@ -118,15 +119,35 @@ function JsonLd({ app }) {
     );
 }
 
-export default function AddToProductPage({ appOneDetails, blogs = [], doFollowApps = [] }) {
+/** Use cases written for this app in the admin panel; the section is only there when it has some. */
+function UseCases({ app, items }) {
+    return (
+        <section className={s.sec} id="use-cases">
+            <div className={s.wrap}>
+                <div className={s.sh}>
+                    <span className={s.eyebrow}>{COPY.buildEyebrow}</span>
+                    <h2 className={s.h2}>{fill(COPY.buildTitle, app.name)}</h2>
+                    <p className={s.lead}>{fill(COPY.buildSub, app.name)}</p>
+                </div>
+                <UseCaseTabs items={items} app={app} />
+            </div>
+        </section>
+    );
+}
+
+// `content` is the copy written for this app in the admin panel (lib/admin-content.js), or null.
+// Each part of it replaces the matching fixed copy only when it is there.
+export default function AddToProductPage({ appOneDetails, blogs = [], doFollowApps = [], content = null }) {
     const app = toPageApp(appOneDetails);
     const f = (str) => fill(str, app.name);
     // No published actions or triggers: the hero leads with the beta message and the request button.
     const isBeta = !app.actions.length && !app.triggers.length;
+    const faqs = content?.faqs?.length ? content.faqs : COPY.faqs.map(([q, a]) => [f(q), f(a)]);
+    const useCases = !isBeta && content?.useCases?.length ? content.useCases : [];
 
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
-            <JsonLd app={app} />
+            <JsonLd app={app} faqs={faqs} description={content?.metaDescription || f(COPY.metaDesc)} />
             <CopyPromptProvider prompt={promptFor(app)}>
                 <SiteHeader />
 
@@ -161,10 +182,14 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                     </>
                                 ) : (
                                     <>
-                                        <h1>
-                                            <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
-                                        </h1>
-                                        <p className={s['hero-sub']}>{f(COPY.sub)}</p>
+                                        {content?.h1 ? (
+                                            <h1>{content.h1}</h1>
+                                        ) : (
+                                            <h1>
+                                                <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
+                                            </h1>
+                                        )}
+                                        <p className={s['hero-sub']}>{content?.sub || f(COPY.sub)}</p>
                                         <div className={s['hero-cta']}>
                                             <CopyPromptButton />
                                             <span className={s.hint}>{COPY.copyHint}</span>
@@ -175,6 +200,8 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                             <OAuthDemo app={app} />
                         </div>
                     </section>
+
+                    {useCases.length > 0 && <UseCases app={app} items={useCases} />}
 
                     <section className={s['cta-sec']} id="get-started">
                         <div className={s['hero-grid']} aria-hidden="true" />
@@ -280,7 +307,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                         eyebrow={COPY.faqEyebrow}
                         title={f(COPY.faqTitle)}
                         lead={f(COPY.faqSub)}
-                        faqs={COPY.faqs.map(([q, a]) => [f(q), f(a)])}
+                        faqs={faqs}
                     />
 
                     <section className={s['end-cta']} id="get-started-cta">
