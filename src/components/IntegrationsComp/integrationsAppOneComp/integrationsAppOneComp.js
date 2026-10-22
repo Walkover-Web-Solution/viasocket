@@ -1,4 +1,3 @@
-import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppOneClientComp from './integrationsAppOneClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
@@ -20,7 +19,6 @@ export default async function IntegrationsAppOneComp({
     getDoFollowUrlStatusArray,
     navbarData,
     templateToShow,
-    skipHeadComp,
 }) {
     const getTriggersAndActionsCount = (events) => {
         let triggersCount = 0;
@@ -123,16 +121,6 @@ export default async function IntegrationsAppOneComp({
                 <NavbarServer navbarData={navbarData} utm={'/integrations/appone'} />
             </ConditionalNavbar>
 
-            {!skipHeadComp && (
-                <IntegrationsHeadComp
-                    metaData={metaData}
-                    page={'/integrations/AppOne'}
-                    plugins={[appOneDetails]}
-                    type={'appOne'}
-                    pageInfo={pageInfo}
-                    integrationsInfo={integrationsInfo}
-                />
-            )}
             <IntegrationsAppOneClientComp
                 pageInfo={pageInfo}
                 integrationsInfo={integrationsInfo}

@@ -1,4 +1,3 @@
-import McpHeadComp from '../mcpHeadComp/McpHeadComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import McpAppClientComp from './McpAppClientComp';
 
@@ -20,7 +19,6 @@ export default function McpAppComp({
     return (
         <>
             <div className="cont md:gap-20 sm:gap-16 gap-12">
-                <McpHeadComp metaData={metaData} page={'/mcp/appName'} appName={appOneDetails?.name} />
                 <div className="cont gap-6">
                     <NavbarServer navbarData={navbarData} utm={'/mcp'} />
                     <McpAppClientComp

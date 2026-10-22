@@ -1,4 +1,3 @@
-import IntegrationsHeadComp from '../integrationsHeadComp/integrationsHeadComp';
 import IntegrationsAppTwoClientComp from './integrationsAppTwoClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
@@ -18,7 +17,6 @@ export default function IntegrationsAppTwoComp({
     navbarData,
     templateToShow,
     appCount,
-    skipHeadComp,
     hasToken,
 }) {
     return (
@@ -26,16 +24,6 @@ export default function IntegrationsAppTwoComp({
             <ConditionalNavbar>
                 <NavbarServer navbarData={navbarData} utm={'/integrations/apptwo'} />
             </ConditionalNavbar>
-
-            {!skipHeadComp && (
-                <IntegrationsHeadComp
-                    metaData={metaData}
-                    page={'/integrations/AppOne'}
-                    plugins={[appOneDetails, appTwoDetails]}
-                    type={'appTwo'}
-                    pageInfo={pageInfo}
-                />
-            )}
 
             <IntegrationsAppTwoClientComp
                 blogsData={blogsData}
