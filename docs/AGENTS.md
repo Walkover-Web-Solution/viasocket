@@ -1,7 +1,10 @@
 ---
+status: approved
+owner: unassigned (engineering rules)
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: dbc4292c
+verified_on: 2026-10-23
+sources: ["AGENTS.md", "docs/DECISIONS.md", "src/middleware.js", "src/const/admin.js", "src/app/lib/admin-content.js", "maintainer guidance (2026)"]
 ---
 # AI Agent Guidelines (viaSocket marketing site)
 
@@ -20,6 +23,7 @@ The site is fully integrated with live backends; there is no mock layer and none
 - `/` is **not** a Next.js page. It is the static site in `public/new-home/`, served through a `beforeFiles` rewrite in `next.config.js`. Its source of truth is the `viasocket-site` repo, exported into `public/new-home/` ([modules/01-homepage](modules/01-homepage.md)). `src/app/page.js`, `src/app/home/page.js` and `src/app/front-page/**` build but never render; they are kept only as the rollback path, so do not edit them ([OPEN_QUESTIONS C-01](OPEN_QUESTIONS.md#c-01-the-old-homepage-tree-still-builds-but-never-renders)).
 - A page MAY read table-api only through `src/utils/getData.js` getters or `src/utils/axiosCalls.js` functions, called from its `src/app/lib/*-data.js` loader. To add a table, put its id in `src/const/tables.js` and its columns in `src/const/fields.js`; never hardcode the URL ([database/entities](database/entities.md)).
 - If a feature needs a backend capability that does not exist (for example deleting a table row), write the needed contract in [CONTRACTS](CONTRACTS.md#required--unavailable-backend-capabilities). **Do NOT** fake it with fixtures, a stub route or a mock.
+- **viasocket-admin** (an Embarko app, `src/const/admin.js`) is a live backend too: `src/middleware.js` reads every redirect from its `/api/public/redirects` (fallback `src/data/redirects.json`), and `/integrations/{app}` reads its copy from `/api/public/content/{slug}` through `src/app/lib/admin-content.js`. Production behaviour can change there without a commit ([DECISIONS ADR-021](DECISIONS.md#adr-021-redirects-and-integration-page-copy-are-managed-in-viasocket-admin)).
 - `/help/*` footer pages, `/blog`, `/discovery` and `/community` are served by **other deployments** on the same Cloudflare zone. Never add a route that would shadow them ([05-navigation](05-navigation.md), [current-infrastructure/cloudflare](current-infrastructure/cloudflare.md)).
 
 ## 2. Server vs Client Boundaries
@@ -64,4 +68,4 @@ If you learn something new about infrastructure, or change an API/data contract,
 **must** update the corresponding file in `docs/api/`, `docs/database/`, `docs/modules/`,
 or `docs/current-infrastructure/` in the same change, and bump its `verified_at` / `verified_on`. <!-- verify:ignore -->
 Routes and redirects go in [05-navigation](05-navigation.md), env vars in [DEVELOPMENT](DEVELOPMENT.md#environment-variables-reference),
-decisions in [DECISIONS](DECISIONS.md), and unknowns in [OPEN_QUESTIONS](OPEN_QUESTIONS.md). The docs are the source of truth.
+decisions in [DECISIONS](DECISIONS.md), and unknowns in [OPEN_QUESTIONS](OPEN_QUESTIONS.md). Copy, claims and CTAs go in [POSITIONING](POSITIONING.md), brand rules in [DESIGN](DESIGN.md), indexing and redirects in [SEO](SEO.md), tracking definitions in [MEASUREMENT](MEASUREMENT.md), and competitor facts in [COMPETITORS](COMPETITORS.md). Every doc's frontmatter carries `status`, `owner`, `sources`, `covers`, `verified_at` and `verified_on`; keep them current. The docs are the source of truth.

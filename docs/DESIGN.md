@@ -1,28 +1,166 @@
 ---
-covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+status: approved
+owner: Ankit Dongre (brand); unassigned (legacy implementation notes)
+covers: ["public/new-home/**", "src/components/IntegrationsComp/addToProduct/**", "tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/providers.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js"]
+verified_at: dbc4292c
+verified_on: 2026-10-23
+sources:
+  - Claude Doc "viaSocket Brand Guidelines" by Ankit, 2026-10-16 (https://claude.ai/code/artifact/f777c297-6960-4b5b-8ba2-6e77b1edeb8a)
+  - public/new-home/styles.css and index.html (generated from viasocket-site/variants/simple-bento)
+  - Founder memory notes: viasocket-repositioning-2026-10 (banned phrases), walkover-brand-assets-source (logos), viasocket-homepage-version-b (Version B)
+  - https://stuff.walkover.in/ (official logos)
+  - DECISIONS ADR-016; team answers to OPEN_QUESTIONS 2026-10-22 (U-01, U-07)
 ---
-# Design System & UI Standards
+# Brand & Design System
 
-The site does not have one design system yet. It has **five visual systems**, and each one has its own token source. Find out which one a page belongs to before you style anything.
+Part 1 is the **brand**: the approved rules for how viaSocket looks and sounds on every page. The full source is the "viaSocket Brand Guidelines" doc (Ankit, 2026-10-16); this section is its working summary for the repo. If they disagree, the Brand Guidelines doc wins; flag the difference. Part 2 describes the **current implementation**: the five visual systems that exist in code today and how to work inside each.
 
-> [!NOTE]
-> **Target (U-01, decided, team answers to OPEN_QUESTIONS 2026-10-22):** the static homepage's system is the target for the whole site: Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc. New and reworked pages converge on it, expressed as Tailwind tokens ([DECISIONS ADR-016](DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).
+Labels: **Approved**, **Current implementation**, **Proposed**.
 
-The five systems today:
+# Part 1 · Brand (Approved)
+
+## Principles
+
+1. **Product-led.** Show the product working inside real apps. The hero is an app with the connected app's own consent popup, not an illustration.
+2. **Calm and monochrome.** Ink on paper. One colour, green, only for live, done or checked states.
+3. **Square.** Nothing we draw has rounded corners. Only other people's apps (product windows and previews) keep their own rounded look.
+4. **Honest.** No invented metrics, customer logos or testimonials. Hotelator OS is the only app marked live; everything else is an example.
+5. **Agents first.** AI-agent use cases lead every list; products follow.
+6. **Follows the system.** Light by default, dark when the OS is dark. Both palettes are first-class.
+
+## Voice and terminology
+
+- **Boundary line, used as is:** "You build the app or agent. viaSocket handles the connections and actions."
+- **Category:** "Integration Layer for your products & agents." ([POSITIONING](POSITIONING.md))
+- Plain, short, human. Sentences under 25 words. Second person. Contractions are fine.
+- Concrete over abstract: name the app and the action ("looks up Shopify orders and emails customers through Gmail").
+- Plain definition before jargon: "your AI builds the UI, viaSocket handles the backend" before "action layer" or "infrastructure".
+- Headlines and section titles are short sentences with a full stop. Sentence case everywhere.
+- Sample prompts read like something a developer would type to their coding agent, in a founder's voice, with one concrete example.
+- FAQ answers: the answer in the first sentence, 40 to 60 words, facts from the SDK/skill only, the same text in the page and in the FAQ schema.
+- Numbers only when true and confirmed ([claim register](POSITIONING.md#claim-register)). Don't call prompt-based setup "unique" or "first" ([COMPETITORS](COMPETITORS.md)).
+
+**Terminology**
+
+| Use | Avoid |
+|---|---|
+| integration layer | workflow automation tool, iPaaS (on lead pages), action layer (older name) |
+| connections and actions | powers, superpowers |
+| your app or agent; your users | the outside world |
+| handles | runs, hosts (about the builder's app) |
+| setup prompt, the viaSocket skill | magic, one-click anything |
+| connect, authorize, call an action, subscribe to events, expose as tools | leverage, seamless, robust |
+
+**Banned phrases:** "build anything", "give it powers", "the outside world", "business operating system", "seamless", "leverage", "robust". Never say viaSocket runs or hosts the app. Never use "engine" or "bike" in copy (the owner's explanation, not copy).
+
+## Logo and assets
+
+- Use the official files from **https://stuff.walkover.in/**. Never redraw the mark.
+  - Wordmark: `socket.svg` (black, light theme) and `socketWhite.svg` (white, dark theme). Inline both and switch with `prefers-color-scheme`; do not recolour one.
+  - Icon: `socketIcon.svg` (works with `fill="currentColor"`).
+- Logo size: 22px tall in the header; 168px wide in the footer (150px on phones).
+- Favicon: the black mark on light browser themes, the white mark on dark. Never the old green icon.
+- App icons: official brand icons from stuff.thingsofbrand.com in a square tile, greyed until their row is active. Brand app icons keep their own colours.
+- Badges: Capterra and G2 hosted locally (not hotlinked), each linked to its review page. No security badges until a certification is confirmed (P-09).
+- No stock photos, illustrations, 3D or mascots.
+
+## Colour
+
+Every colour is a token. Text is only `ink`, `ink-2` or `ink-3`.
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `bg` | #fafaf9 | #0b0b0c | Page; header at 84% with blur |
+| `s1` | #ffffff | #111113 | Boxes, cards, preview pane, tabs |
+| `s2` | #f4f4f2 | #161618 | Emphasis: "With viaSocket" column, open FAQ row, footer panel |
+| `s3` | #ececea | #1d1d20 | Hover of emphasis column, footer wordmark |
+| `ink` | #111113 | #f1efe9 | Headings, body, primary button fill |
+| `ink-2` | #4a4946 | #a9a7a1 | Secondary text, nav links, hero subline |
+| `ink-3` | #75736e | #85837d | Eyebrows, labels, hints |
+| `ink-4` | #8c8a85 | #55534f | Faint marks only |
+| `line` / `line-2` / `line-3` | ink at 8 / 14 / 24% | white at 8 / 14 / 26% | Hairlines / interactive borders / strong separators |
+| `green` | #15803d | #3ddc84 | Check marks, "Copied", live indicators only |
+| button text | #ffffff | #0b0b0c | Text on the ink button |
+
+The only multicolour element is the 20px AI sparkle on prompt cards (#8b5cf6 → #3b82f6 → #ec4899). It is an icon, never text. No coloured text, no gradients on text, no second accent colour.
+
+## Brand typography
+
+Geist (400, 500, 600, 700) for everything readable; Geist Mono (400, 500) for labels, counts and URLs only, never sentences. Fallbacks: Helvetica Neue, Arial; ui-monospace, Menlo. Weight never above 700. Uppercase only in mono labels.
+
+| Role | Size | Weight / line height / tracking |
+|---|---|---|
+| H1 (hero) | clamp(38px, 4.1vw, 60px) | 600 / 1.08 / −0.035em |
+| H2 (section) | clamp(30px, 3.2vw, 44px), max 32ch, ends with a full stop | 600 / 1.1 / −0.03em |
+| H3 (box title) | 22px | 700 / 1.5 / −0.025em |
+| Hero subline | clamp(17px, 1.3vw, 19px), max 30em, `ink-2` | 400 / 1.5 |
+| Body, FAQ answer | 16px (15 phone), max 64–72ch, `ink-2` | 400 / 1.6 |
+| Eyebrow, column heads | Geist Mono 11–12px uppercase, `ink-3` | 500 / 1.5 / 0.08–0.1em |
+| Button | 15px (small 14px) | 500 / 1 |
+
+The full scale (FAQ question, prompt text, table cells, footer tagline, nav) is in the Brand Guidelines doc.
+
+## Layout and spacing
+
+- One column: `min(1240px, 100% − 48px)`; 16px gutters at ≤600px; 1360px from 1800px and 1480px from 2300px.
+- Section padding: `clamp(48px, 5.4vw, 80px)` top and bottom. Eyebrow → title 18px; title → content 52px (36px on phones).
+- Inside boxes: 24px padding (18px on phones). Card grid gap 16px (12px on phones).
+- Header: 64px, sticky, blurred, hairline bottom. The hero fills the first screen, capped at 760px tall.
+- Don't break the rhythm with custom margins; use the spacing tokens.
+
+## Shape, surfaces and components
+
+- Square corners everywhere, enforced by one `border-radius: 0 !important` rule. **Approved exceptions:** product windows (`.pw`), use-case previews (`.gpv`, `.rs`) and 8px status dots.
+- 1px hairlines; clickable boxes use `line-2`; a 2px ink line marks the active tab.
+- No shadows on anything we draw. Only product windows and the consent popup carry one.
+- Buttons are solid ink blocks (48px, small 38px); outlined buttons are 1px `line-2`; the "Copied" state is green.
+- Core components (header, primary button, filter chips, use-case row, preview pane, prompt card, the nine-row handles table, closing box, FAQ, footer, toast) are specified in the Brand Guidelines doc. Reuse them; don't invent variants.
+
+## Motion
+
+Motion only shows the product working; nothing moves for decoration. The hero app swap runs every 2.4s; use cases auto-switch every 9s on desktop; both stop on pointer, focus, off-screen or hidden tab. Hover changes take 150ms. With `prefers-reduced-motion: reduce`, everything shows its final state with no animation.
+
+## Responsive
+
+Design for phone, tablet and desktop together. Key breakpoints (widest first): 2300, 1800, 1199, 1099, 1024, 1000 (hero stacks), 900 (use cases stack), 760 (phone: nav hidden, table stacks), 640, 600, 560. No horizontal scroll at 375px.
+
+## Accessibility
+
+**Target: WCAG 2.2 AA** (Proposed as the formal target; the homepage already follows most of it).
+- Focus: 2px ink outline, 3px offset; none on mouse click.
+- Contrast: body text `ink` or `ink-2` only; `ink-3` only for labels at 11px+. Open items: tab counts and some preview micro-text are below 4.5:1.
+- Tap targets: 36px minimum for controls. Open item: footer legal links are under 24px on phones (fails WCAG 2.2 target size).
+- Semantics: one H1, H2 per section, H3 per FAQ question; tables use table roles; decorative scenes are `aria-hidden`; a skip link to `#main`.
+
+## Do and don't
+
+| Do | Don't |
+|---|---|
+| "You build the app or agent. viaSocket handles the connections and actions." | "viaSocket runs your app." / "Give your agent superpowers." |
+| "Connect 2,300+ apps to your product or AI agent with one prompt." (once the count is confirmed) | "Thousands of happy customers." / "Trusted by 10,000+ businesses." (unverified) |
+| Show Slack's own consent screen inside an app like yours | A generic illustration of connected nodes |
+| Green check for "done" | Green, blue or gradient headline text |
+| Square cards with hairline borders | Rounded, shadowed cards (except product windows) |
+| Mono for "THE JOB", URLs and counts | Mono for a sentence |
+| A comparison table where every competitor cell cites its source | SOC 2 / ISO badges, or competitor prices with no source |
+
+## Experiments are not the brand
+
+**Version B** of the homepage (`viasocket-site/variants/simple-bento-b`: warm pastel, soft corners, ink band, lego hero) is a local A/B experiment that has never been deployed. Its colours and corners do not change these rules. Older prototype variants (`night`, `blueprint`, `showcase`, `story` …) are history. <!-- verify:ignore -->
+
+# Part 2 · Current implementation
+
+The site has **five visual systems** in code today. Each has its own token source. Find out which one a page belongs to before you style anything. New and reworked pages converge on the homepage system (U-01, [ADR-016](DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).
 
 | System | Where it renders | Token source | Fonts | Dark mode |
 |---|---|---|---|---|
-| **Legacy site** | Most Next.js routes: `/pricing`, app-pair pages `/integrations/<app>/<app2>`, `/integrations/<app>?status=disconnected`, `/features/{slug}`, `/automations`, `/departments`, `/support`, `/experts`, legal pages, campaign pages | daisyUI theme in `tailwind.config.js` + SCSS globals in `src/scss/` + CSS vars in `src/scss/_variables.scss` and `src/scss/newtheme.scss` | Inter Tight | None (light only) |
-| **Static homepage** | `/` only (served from `public/new-home/`, see [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages)) | CSS custom properties at the top of `public/new-home/styles.css` | Geist, Geist Mono | Yes, follows `prefers-color-scheme` |
-| **Homepage system in Next (`addToProduct`)** | `/integrations`, `/integrations/category/*`, `/integrations/{app}`, `/features`, `/use-cases`, `/new-direction` | CSS custom properties on `.root` in `src/components/IntegrationsComp/addToProduct/addToProduct.module.scss` (a re-implementation of the static homepage's tokens, not an import of them) | Geist, Geist Mono (`geist` package); Caveat for the letter's signatures | Yes, follows `prefers-color-scheme` |
-| **/developers** | `/developers`, `/developers/auth`, `/developers/pricing`, `/developers/docs` | `dev-*` and `docs-*` color/font families in `tailwind.config.js` | Albert Sans, JetBrains Mono | None (light only, on purpose) |
-| **front-page (`index-*`)** | Not rendered anywhere today. It was the A/B variant B of `src/app/page.js`, which the `/` rewrite now hides | `index-*` colors, font sizes, spacing, shadows and keyframes in `tailwind.config.js` | Instrument Serif, DM Sans | None |
+| **Legacy site** | Most other Next.js routes: app-pair pages `/integrations/<app>/<app2>`, `/integrations/<app>?status=disconnected`, `/features/{slug}`, `/automations`, `/departments`, `/support`, `/experts`, `/embed/*`, `/mcp/*`, legal and campaign pages | daisyUI theme in `tailwind.config.js` + SCSS globals in `src/scss/` + CSS vars in `src/scss/_variables.scss` and `src/scss/newtheme.scss` | Inter Tight | None (light only) |
+| **Static homepage** (the brand reference) | `/` only (served from `public/new-home/`, see [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages)) | CSS custom properties at the top of `public/new-home/styles.css` | Geist, Geist Mono | Yes, follows `prefers-color-scheme` |
+| **Homepage system in Next (`addToProduct`)** | `/integrations`, `/integrations/category/*`, `/integrations/{app}`, `/features`, `/use-cases`, `/new-direction`, `/pricing`, `/pass`, `/blogs`, `/blogs/{slug}` | CSS custom properties on `.root` in `src/components/IntegrationsComp/addToProduct/addToProduct.module.scss` (a re-implementation of the homepage tokens), plus `pricing.module.scss` and `blogs.module.scss` | Geist, Geist Mono (`geist` package); Caveat for the letter's signatures | Yes, follows `prefers-color-scheme` |
+| **/developers** | `/developers/auth`, `/developers/docs` (bare `/developers` 301s to `/` via the admin redirects, observed 2026-10-23; `/developers/pricing` was removed in `304bf6d`) | `dev-*` and `docs-*` color/font families in `tailwind.config.js` | Albert Sans, JetBrains Mono | None (light only, on purpose) |
+| **front-page (`index-*`)** | Not rendered anywhere today. It was the A/B variant B of `src/app/page.js` | `index-*` colors, font sizes, spacing, shadows and keyframes in `tailwind.config.js` | Instrument Serif, DM Sans | None |
 
-**Where each design concern lives in this file:** Tokens → [Design Tokens & Styling Primitives](#design-tokens--styling-primitives) · Typography → [Typography](#typography) · Theming (light/dark) → [Theming](#theming-light-and-dark-per-visual-system) · Component primitives → [Reusable Component Catalog](#reusable-component-catalog) · Voice & copy → [Website Messaging & Copy Guidelines](#website-messaging--copy-guidelines) · Examples → [Representative Examples](#representative-examples). How code is written (copy placement, file naming, server/client split) is in [09-coding-guidelines](09-coding-guidelines.md).
-
-Styling stack: Tailwind 3.4 (`tailwindcss` ^3.4.16) with the daisyUI 4 plugin (`daisyui` ^4.7.2, 4.12.24 installed), plus Sass (`sass` ^1.69.4) for globals and per-component CSS modules (`src/**/*.module.scss`). PostCSS runs only `tailwindcss` and `autoprefixer` (`postcss.config.js`). The site has no component library such as Radix or shadcn and no CSS-in-JS. `next/font` is used only by the `addToProduct` pages (`geist/font/sans`, `geist/font/mono`, and `Caveat` from `next/font/google` in `LetterPage.js`).
+Styling stack: Tailwind 3.4 (`tailwindcss` ^3.4.16) with the daisyUI 4 plugin, plus Sass for globals and per-component CSS modules (`src/**/*.module.scss`). PostCSS runs only `tailwindcss` and `autoprefixer`. No component library and no CSS-in-JS. `next/font` is used only by the `addToProduct` pages.
 
 ## Visual & Interaction Principles
 
@@ -100,7 +238,7 @@ A `@media (prefers-color-scheme: dark)` block redefines all of them (see [Themin
 
 - **Colors:** `dev.bg`, `dev.surface`, `dev.surface-2`, `dev.ink`, `dev.ink-2`, `dev.ink-3`, `dev.ink-inv`, `dev.line`, `dev.line-2`, `dev.accent` (`#2B5BFF`), `dev.accent-soft`, `dev.ok`, `dev.ok-soft`, `dev.warn`, `dev.bad`. `docs.*` uses the same ground with its own ink, accent and status tones.
 - **Fonts:** `font-dev-sans` / `font-docs-sans` / `font-docs-serif` (all Albert Sans), `font-dev-mono` / `font-docs-mono` (JetBrains Mono). They are loaded by `@import url(...)` in `src/app/developers/fonts.scss`.
-- **Wrapper:** `src/app/developers/layout.js` wraps every page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `.dev-grid` (96px grid background) is the only global class. Section-specific motion and connectors live in `Hero.module.scss`, `Turn.module.scss`, `OneAction.module.scss`, `Production.module.scss`, `src/app/developers/auth/AuthHero.module.scss` and `src/app/developers/pricing/OverageTicker.module.scss`.
+- **Wrapper:** `src/app/developers/layout.js` wraps every page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `.dev-grid` (96px grid background) is the only global class. Section-specific motion and connectors live in `Hero.module.scss`, `Turn.module.scss`, `OneAction.module.scss`, `Production.module.scss` and `src/app/developers/auth/AuthHero.module.scss`.
 - The root layout still wraps /developers, so `global.scss` applies there too, including the overrides in the warning above.
 
 ### front-page (`index-*`), dormant
@@ -207,12 +345,12 @@ What the code actually does. Match the stronger patterns in new work:
 
 ## Website Messaging & Copy Guidelines
 
-- **Voice:** plain and concrete. Copy describes the job being done, not features in the abstract. The static homepage's FAQ, in the JSON-LD in `public/new-home/index.html`, is the current tone reference. Positioning is owned by [VISION](VISION.md).
-- **Primary CTA labels:** "Start for free" (`DashboardButton`) or "Start free" on signup buttons, and "Dashboard" for signed-in users (the `prod` cookie). "Book a demo" is the secondary CTA. The navbar's Pricing link carries the badge `free forever`.
-- **Claim-bearing figures:** "2,300+" (apps) is hardcoded in about 14 `src/` files and 9 times in `public/new-home/index.html`, while other components render the live `appCount` from table-api. If you change the number, grep for both "2,300+" and "2300+". Where two places show the same figure, leave a comment at each copy that names the other.
-- **Signup links** carry the page path as `utm_source`. This is owned by [FLOWS](FLOWS.md#detailed-journey-landing-utm-capture-and-signup) and [DECISIONS](DECISIONS.md#adr-012-utm-attribution-conventions).
-- **Where copy lives in code:** as constants in the component file; see [09-coding-guidelines](09-coding-guidelines.md#component-conventions) for the rule and its two exceptions.
-- **Empty states:** components return `null` rather than render an empty state. `FAQSection` and `Footer` do this when their data is empty. The site has no empty-state illustration pattern.
+Voice, terminology and banned phrases are in [Part 1 · Voice and terminology](#voice-and-terminology); positioning, CTAs and the claim register are in [POSITIONING](POSITIONING.md). Implementation notes:
+- **CTA labels in code:** "Start free" (homepage design pages, to `START_URL` = flow.viasocket.com/integrations) and "Start for free" on legacy pages (`DashboardButton`, to `/signup`); "Dashboard" for signed-in users (the `prod` cookie). "Copy setup prompt", "Talk to an expert", "Book a demo" and "Chat with us" are the homepage-design secondary CTAs.
+- **Claim-bearing figures:** "2,300+" is hardcoded in about 14 `src/` files and 9 times in `public/new-home/index.html`, while other components render the live `appCount` from table-api. If you change the number, grep for both "2,300+" and "2300+" and check the [claim register](POSITIONING.md#claim-register).
+- **Signup links** carry the page path as `utm_source` ([MEASUREMENT](MEASUREMENT.md), [ADR-012](DECISIONS.md#adr-012-utm-attribution-conventions)).
+- **Where copy lives:** as constants in the component file ([09-coding-guidelines](09-coding-guidelines.md#component-conventions)); the `addToProduct` pages keep theirs in `copy.js` (U-07, proposed exception).
+- **Empty states:** components return `null` rather than render an empty state.
 
 ## Representative Examples
 
@@ -255,23 +393,4 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
 
 ## SEO & Metadata Expectations
 
-- **Server metadata is the source of truth.** Every `page.js` (or its `layout.js`, for `/automations` and `/automations/[...slug]`) exports `generateMetadata` or `metadata`: 44 files export `generateMetadata` and 7 export `metadata`. The `addToProduct` pages (`/features`, `/use-cases`, `/new-direction`, and the index and single-app branches of `/integrations`) take their title and description from `copy.js`, not table-api. The standard pattern (`src/app/pricing/page.js`) is:
-  1. A `src/app/lib/*-data.js` loader calls `src/utils/getMetaData.js:getMetaData` with `(name, pageUrl)`.
-  2. `getMetaData` reads the shared meta table through `src/utils/axiosCalls.js:getMeta` (20-minute cache) and picks the row whose `name` is the page key, for example `'/pricing'`.
-  3. The page returns `title`, `description`, `keywords`, `openGraph` and `twitter`, with hardcoded fallbacks.
-
-  To change a page's title or description, edit the table row, not the fallback ([current-infrastructure/table-api](current-infrastructure/table-api.md)). Dynamic integration pages replace `[AppOne]`/`[AppTwo]` in the server metadata (`src/app/integrations/[...slug]/page.js`).
-- **Titles** are not uniform. The fallbacks use "Pricing - viaSocket", "viaSocket — The action layer…" and "… | viaSocket". The root layout sets no `title.template`. Match the table row's existing style.
-- **Root defaults** (`src/app/layout.js`): site-wide OG and Twitter image `https://files.msg91.com/342616/wnitwkyk` (1200×630), `twitter.card: summary_large_image`, favicons from `public/assets/brand/`, and `robots: 'noindex, nofollow'` unless `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`.
-- **Canonical:** Next pages get a canonical only **client-side**. `src/app/providers.js:AppProvider` computes `https://viasocket.com${pathname}`, collapsing `/page/N` pagination for `/integrations` and `/mcp`, and `src/components/headComp/headComp.js:HeadComp` injects the `<link rel="canonical">` in a `useEffect`. Only `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction` also set `alternates.canonical` on the server; `HeadComp` then rewrites that same link. The static homepage has a real `<link rel="canonical" href="https://viasocket.com/">` (commit `a8f48657`). Always use the bare domain, never `www`. <!-- verify:ignore -->
-- **Never use `next/head`.** In the App Router it renders nothing (its head manager context is only `{ appDir: true }`), so the old `next/head` head components were removed on 2026-10-21. Put metadata in `generateMetadata`. <!-- verify:ignore -->
-- **JSON-LD** (`<script type="application/ld+json">`):
-  - `Organization` in `src/app/layout.js`, on every Next page.
-  - `SoftwareApplication` + `FAQPage` in `src/components/IntegrationsComp/addToProduct/AddToProductPage.js` (single-app pages); `FAQPage` in `FeaturesPage.js`, `UseCasesPage.js` and `IntegrationsIndexPage.js` (index only, not categories), all built from `copy.js`. The older `integrationsAppOneComp.js` has the same pair but no longer renders ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) C-08).
-  - `Organization`, `WebSite`, `SoftwareApplication`, `WebPage` and `FAQPage` in `public/new-home/index.html`. If you edit the homepage FAQ, update both the visible FAQ and the JSON-LD: they are separate copies.
-  - The dormant front-page builds its graph from visible copy (`src/app/front-page/seo.js:schemaGraph`).
-- **Headings:** one `<h1>` per page, styled with `.h1`, and section titles as `<h2 className="h2">`. Footers use `<h2>` for column titles (`src/components/footer/footer.js`).
-- **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown index of the site for LLM crawlers (1141 lines). When you add or rename a public section, update it by hand.
-
-> [!TODO]
-> Answered 2026-10-22 but not yet confirmed or implemented ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)): move canonicals into server metadata and drop the client-side rewrite in `HeadComp` (U-03, recommended fix); daisyUI `primary: '#0000'` rendering black is intended (U-02, recommended); page titles use "X | viaSocket" through a `title.template` of `%s | viaSocket` (U-05, proposed); the `addToProduct` `copy.js` and SCSS module are accepted for now and revisited when the design system becomes Tailwind tokens (U-07, proposed, maintainer to confirm).
+Moved to [SEO](SEO.md): page map, canonicals, robots and sitemap, redirects, structured data and metadata conventions. In short: server metadata (`generateMetadata`) is the source of truth, never `next/head`; most titles and descriptions come from a table-api row, so edit the row, not the fallback; one `<h1>` per page; if you edit the homepage FAQ, update the JSON-LD copy too.
