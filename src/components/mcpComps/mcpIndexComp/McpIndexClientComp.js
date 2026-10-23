@@ -244,7 +244,7 @@ export default function McpIndexClientComp({
                                 ) : (
                                     <>
                                         {apps?.map((app, index) => (
-                                            <AppVisual redirectPart="mcp" app={app} index={index} />
+                                            <AppVisual key={app?.appslugname || index} redirectPart="mcp" app={app} index={index} />
                                         ))}
                                         <AppVisual
                                             redirectPart="mcp"
