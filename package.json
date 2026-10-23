@@ -10,7 +10,8 @@
         "start": "next start -p 1111",
         "pages:build": "npx @cloudflare/next-on-pages",
         "preview": "npm run pages:build && wrangler pages dev",
-        "deploy": "npm run pages:build && wrangler pages deploy"
+        "deploy": "npm run pages:build && wrangler pages deploy",
+        "check:routes": "node scripts/check-routes.mjs"
     },
     "dependencies": {
         "@dotlottie/player-component": "^2.7.12",
