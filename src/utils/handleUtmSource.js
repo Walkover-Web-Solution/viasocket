@@ -20,7 +20,10 @@ export const setCookie = (name, value, days) => {
     const domain = getCookieDomain();
     const domainAttr = domain ? `;domain=${domain}` : '';
     const secureAttr = window.location.protocol === 'https:' ? ';secure' : '';
-    document.cookie = `${name}=${value};${expires};path=/${domainAttr}${secureAttr}`;
+    // A ";" would end the cookie value early and leave half a JSON string behind (S-11). Readers
+    // JSON.parse the raw value, so only that character is escaped, not the whole value.
+    const safeValue = String(value).replace(/;/g, '%3B');
+    document.cookie = `${name}=${safeValue};${expires};path=/${domainAttr}${secureAttr}`;
 };
 
 export const getUtmSource = () => {
@@ -94,11 +97,19 @@ export const setUtmSource = ({ source = 'index' } = {}) => {
         }
     }
 
+    if (utmData) {
+        // A cookie written before the ";" escape, or edited by hand, may not be valid JSON. Treat it
+        // as absent rather than letting the signup widget fail to start (S-11).
+        try {
+            queryObject = JSON.parse(utmData);
+        } catch {
+            utmData = undefined;
+        }
+    }
+
     if (!utmData) {
         queryObject = { utm_source: source };
         utmData = JSON.stringify(queryObject);
-    } else {
-        queryObject = JSON.parse(utmData);
     }
 
     const queryString = Object.entries(queryObject)
