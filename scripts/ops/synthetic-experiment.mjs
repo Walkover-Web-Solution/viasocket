@@ -191,7 +191,7 @@ async function main() {
 
     // ---- exclusions ----------------------------------------------------------------------
     const bot = await fetch(`${BASE}/`, { headers: { 'user-agent': 'curl/8.7.1' }, redirect: 'manual' });
-    check('bots get the baseline, no cookies', (bot.headers.get('x-vs-exp') || '').startsWith('excluded') && !(bot.headers.getSetCookie?.() || []).some((c) => c.startsWith('vs_')), bot.headers.get('x-vs-exp'));
+    check('bots are excluded (no cookies, not counted) and not pinned by user agent', (bot.headers.get('x-vs-exp') || '').startsWith('excluded:bot') && !(bot.headers.getSetCookie?.() || []).some((c) => c.startsWith('vs_')), bot.headers.get('x-vs-exp'));
     const internal = await req('/', { jar: new Jar({ vs_internal: '1' }) });
     check('internal traffic gets the baseline, no cookies', (internal.headers.get('x-vs-exp') || '').startsWith('excluded') && !(internal.headers.getSetCookie?.() || []).some((c) => c.startsWith('vs_')));
 

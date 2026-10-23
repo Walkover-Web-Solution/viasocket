@@ -109,11 +109,24 @@ export async function experimentResponse(request, ctx) {
 
     const ua = request.headers.get('user-agent') || '';
     const synthetic = cookies.get(SYNTHETIC_COOKIE)?.value === '1';
-    // Bots and internal traffic never enter the evaluation: they get the baseline, uncached.
-    if (!synthetic && (isBotUA(ua) || cookies.get(INTERNAL_COOKIE)?.value === '1')) {
+    // Internal traffic (an operator's own browser, by cookie) gets the baseline, uncached.
+    if (!synthetic && cookies.get(INTERNAL_COOKIE)?.value === '1') {
         const base = active.variants.find((v) => v.key === 'A');
         const res = noStore(base ? rewriteTo(request, base.target) : NextResponse.next());
-        res.headers.set('x-vs-exp', `excluded:${active.expId}`);
+        res.headers.set('x-vs-exp', `excluded:internal:${active.expId}`);
+        return res;
+    }
+    // Crawlers are never assigned or counted, but they are not pinned to the baseline either:
+    // choosing content by user agent is the cloaking pattern Google's website-testing guidance
+    // names ("always serving the original content when you see Googlebot"). They get a variant
+    // drawn like a first-time visitor's, with no cookies and no record. OPS_EXPERIMENTS_BOT_POLICY
+    // =baseline restores baseline-for-bots if the team decides otherwise (docs/EXPERIMENTS.md §9).
+    if (!synthetic && isBotUA(ua)) {
+        const pinBaseline = process.env.OPS_EXPERIMENTS_BOT_POLICY === 'baseline';
+        const key = pinBaseline ? 'A' : await assignVariant(randomId(16), { id: active.expId, phase: active.phase, variants: active.variants });
+        const v = active.variants.find((x) => x.key === key) || active.variants[0];
+        const res = noStore(rewriteTo(request, v.target));
+        res.headers.set('x-vs-exp', `excluded:bot:${active.expId}`);
         return res;
     }
 

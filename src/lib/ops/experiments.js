@@ -245,14 +245,24 @@ export async function releaseSlots(store, surface, expId, user) {
 
 // ---- launch gates ----------------------------------------------------------------------
 
+// Per variant: reachable, loads /exp.js, and search-safe for a same-URL test (no noindex, and a
+// canonical, if any, pointing at the surface URL rather than at the variant's own path).
 export async function instrumentationCheck(exp, origin) {
+    const surfacePath = SURFACES[exp.surface]?.path || '/';
     const results = await Promise.all(
         exp.variants.map(async (v) => {
             try {
-                const res = await fetch(new URL(v.target, origin), { headers: { 'x-vs-ops-check': '1' }, cache: 'no-store', signal: AbortSignal.timeout(8000) });
+                const res = await fetch(new URL(v.target, origin), { headers: { 'x-vs-ops-check': '1' }, cache: 'no-store', signal: AbortSignal.timeout(15000) });
                 const body = await res.text();
-                const hasSnippet = /<script[^>]+src=["'][^"']*\/exp\.js/i.test(body);
-                return { key: v.key, target: v.target, status: res.status, pass: res.ok && hasSnippet, detail: !res.ok ? `HTTP ${res.status}` : hasSnippet ? 'loads /exp.js' : 'does not load /exp.js, so exposures and outcomes cannot be measured' };
+                const problems = [];
+                if (!res.ok) problems.push(`HTTP ${res.status}`);
+                if (!/<script[^>]+src=["'][^"']*\/exp\.js/i.test(body)) problems.push('does not load /exp.js, so exposures and outcomes cannot be measured');
+                const robots = /<meta[^>]+name=["']robots["'][^>]*>/i.exec(body)?.[0] || '';
+                if (/noindex/i.test(robots) || /noindex/i.test(res.headers.get('x-robots-tag') || '')) problems.push(`noindex would de-index ${surfacePath} while this variant is served there`);
+                const canon = /<link[^>]+rel=["']canonical["'][^>]*>/i.exec(body)?.[0];
+                const href = canon ? /href=["']([^"']+)["']/i.exec(canon)?.[1] : null;
+                if (href && new URL(href, origin).pathname !== surfacePath) problems.push(`canonical points to ${href}, not the original ${surfacePath}`);
+                return { key: v.key, target: v.target, status: res.status, pass: problems.length === 0, detail: problems.length ? problems.join('; ') : 'loads /exp.js; search-safe (no noindex, canonical to the original)' };
             } catch (err) {
                 return { key: v.key, target: v.target, pass: false, detail: `fetch failed: ${err.message}` };
             }
@@ -432,7 +442,7 @@ export function changeBrief(exp, variantKey) {
         `1. Create the challenger page at ${v.target} as a copy of the baseline with only the change under test. For the homepage, make the change in viasocket-site (variants/simple-bento-b is the local Version B) and export it to a path that is not "/".`,
         '2. Keep copy, claims and links identical to the baseline except for what the hypothesis tests (docs/POSITIONING.md claim register).',
         '3. Load /exp.js on the page (<script src="/exp.js" defer></script>) so exposure and outcomes are measured; keep the Start free links pointing at flow.viasocket.com so vs_exp/vs_vid can be appended.',
-        `4. Add <link rel="canonical" href="https://viasocket.com${SURFACES[exp.surface]?.path || '/'}"> and <meta name="robots" content="noindex"> to the challenger so search engines index only the original.`,
+        `4. Keep <link rel="canonical" href="https://viasocket.com${SURFACES[exp.surface]?.path || '/'}"> (the original URL) and do NOT add noindex: the variant is served on the original URL by rewrite, so noindex would de-index it.`,
         '5. Do not add the page to the sitemap. Run the instrumentation check on the Experiments page; launch stays blocked until it passes.',
         '',
         `Rollback: ${exp.rollbackPlan || '(missing)'}`,

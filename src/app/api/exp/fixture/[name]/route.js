@@ -20,13 +20,14 @@ export async function GET(request, { params }) {
     const res = await fetch(new URL('/new-home/index.html', request.url), { cache: 'no-store' });
     if (!res.ok) return new Response(`Baseline unavailable (HTTP ${res.status})`, { status: 502 });
     let html = await res.text();
-    html = html.replace('</head>', '<meta name="robots" content="noindex, nofollow">\n</head>');
+    // No noindex here: a variant is served on the surface URL itself, so a noindex in its HTML
+    // would de-index "/". The page keeps the original canonical (https://viasocket.com/).
     if (name === 'home-b') {
         html = html.replace(/<h1 id="h1">[\s\S]*?<\/h1>/, H1_B);
         html = html.replace('</body>', `${RIBBON}\n</body>`);
     }
     html = html.replace('</body>', '<script src="/exp.js" defer></script>\n</body>');
     return new Response(html, {
-        headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store', 'x-robots-tag': 'noindex, nofollow' },
+        headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'private, no-store' },
     });
 }
