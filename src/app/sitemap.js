@@ -42,6 +42,7 @@ const STATIC_ROUTES = [
     '/migration/n8n',
     '/migration/relay',
     '/migration/zapier',
+    '/new',
     '/pass',
     '/pricing',
     '/privacy',
