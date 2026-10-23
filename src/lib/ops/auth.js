@@ -37,7 +37,7 @@ export const csrfFor = (secret, sid) => hmacB64url(secret, `csrf:${sid}`);
 export async function checkLogin(email, password, cfg = authConfig()) {
     const user = cfg.users.find((u) => u.email === String(email || '').trim().toLowerCase());
     // Hash even for an unknown user so timing does not reveal which emails exist.
-    const ok = await verifyPassword(password, user?.password_hash || 'pbkdf2$100000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    const ok = await verifyPassword(password, user?.password_hash || 'pbkdf2:100000:AAAAAAAAAAAAAAAAAAAAAA:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
     return ok && user ? user : null;
 }
 

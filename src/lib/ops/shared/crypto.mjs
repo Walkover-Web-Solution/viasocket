@@ -76,7 +76,8 @@ export async function hmacB64url(secret, message) {
 }
 
 // PBKDF2-SHA256. Cloudflare Workers refuse more than 100,000 iterations, so that is the
-// ceiling and the default. Format: pbkdf2$<iterations>$<salt b64url>$<hash b64url>
+// ceiling and the default. Format: pbkdf2:<iterations>:<salt b64url>:<hash b64url>
+// (colons, not '$': Next's .env loader expands $NAME, which silently corrupts '$' hashes).
 export const PBKDF2_ITERATIONS = 100000;
 
 async function pbkdf2(password, saltBytes, iterations) {
@@ -89,11 +90,11 @@ export async function hashPassword(password, iterations = PBKDF2_ITERATIONS) {
     const salt = new Uint8Array(16);
     globalThis.crypto.getRandomValues(salt);
     const hash = await pbkdf2(password, salt, iterations);
-    return `pbkdf2$${iterations}$${bytesToB64url(salt)}$${bytesToB64url(hash)}`;
+    return `pbkdf2:${iterations}:${bytesToB64url(salt)}:${bytesToB64url(hash)}`;
 }
 
 export async function verifyPassword(password, stored) {
-    const parts = String(stored || '').split('$');
+    const parts = String(stored || '').split(/[:$]/);
     if (parts.length !== 4 || parts[0] !== 'pbkdf2') return false;
     const iterations = Number(parts[1]);
     if (!Number.isInteger(iterations) || iterations < 10000 || iterations > PBKDF2_ITERATIONS) return false;
