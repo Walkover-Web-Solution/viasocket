@@ -1,7 +1,7 @@
 ---
-covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js", "scripts/ops/**", "scripts/analyses/**", ".github/workflows/**"]
+verified_at: 845da954
+verified_on: 2026-10-23
 ---
 # Development & Verification Guide
 
@@ -40,6 +40,7 @@ How to install, run, build and verify this repo, which environment variables it 
 | `start` | `next start -p 1111` | Serves a local `next build`. Not verified in this pass. |
 | `pages:build` | `npx @cloudflare/next-on-pages` | The Cloudflare adapter. It runs `vercel build` internally, which runs `npm run build` and therefore `prebuild`, and writes `.vercel/output/`. Not run in this pass. |
 | `preview` | `npm run pages:build && wrangler pages dev` | Runs the Cloudflare Pages build locally in workerd. Closest to production, and slow. Not run in this pass. |
+| `ops:store` / `ops:hash-password` / `ops:synthetic` / `analyze` | website-ops scripts | See [Website Ops: Local Setup](#website-ops-local-setup). |
 | `deploy` | `npm run pages:build && wrangler pages deploy` | Manual deploy from a laptop. **This is not the normal release path** (see [PR & deployment](#pr-workflow--deployment-pipeline)). Do not run it. |
 
 > [!TODO]
@@ -226,3 +227,41 @@ There are no CI checks in the repo. The only gate is the Cloudflare Pages build 
 
 > [!WARNING]
 > **URL joining is slash-sensitive.** `NEXT_PUBLIC_INTEGRATION_URL` must end in `/`. `NEXT_PUBLIC_BASE_URL` and `NEXT_PUBLIC_FLOW_URL` must not end in `/`.
+
+## Website Ops: Local Setup
+
+The private `/internal` area, experiments and analyses ([ops/README.md](ops/README.md)). Everything below is server-only env; **never** give these a `NEXT_PUBLIC_` prefix, and never commit values. Locally they go in `.env.local` (gitignored, read by `next dev` and by the `ops:*`/`analyze` scripts via `node --env-file-if-exists`).
+
+| Variable | Needed for | Notes |
+|---|---|---|
+| `OPS_SESSION_SECRET` | admin at all | 32+ random characters (`node -e "console.log(crypto.randomUUID()+crypto.randomUUID())"`) |
+| `OPS_USERS` | admin at all | JSON array on one line: `[{"email","role":"viewer|editor|owner","password_hash"}]`; hashes from `npm run ops:hash-password` (colon format, safe in .env files) |
+| `OPS_ZONE_BYPASS_CONFIRMED` | production only | `true` once the zone cache bypasses `/internal*` (blocker B-1); without it production answers 503 |
+| `OPS_STORE_URL`, `OPS_STORE_TOKEN` | dev store | `http://127.0.0.1:4799` and a 16+ char token shared with `npm run ops:store` (`OPS_STORE_PORT` to change the port) |
+| `OPS_TABLE_BASE_URL`, `OPS_TABLE_DB_ID`, `OPS_TABLE_KEY`, `OPS_TABLE_DOCS`, `OPS_TABLE_LOG` | production store | tables in [CONTRACTS § Ops store](CONTRACTS.md#ops-store) |
+| `OPS_GITHUB_TOKEN`, `OPS_GITHUB_REPO`, `OPS_GITHUB_BASE`, `OPS_GITHUB_API_URL` | production knowledge writeback | repo defaults to `Walkover-Web-Solution/viasocket`, base `test` |
+| `OPS_INGEST_TOKEN` | analysis ingest | same value in the deployment and the analysis runner |
+| `OPS_INGEST_URL` | analysis runner | `<site>/api/internal/analyses/ingest` |
+| `OPS_SITE_URL` | checks, scripts | origin the server uses for instrumentation/cache checks (default: request origin) |
+| `OPS_EXPERIMENTS_LIVE` | production experiments | `true` to assign visitors on production (default off) |
+| `OPS_EXPERIMENTS_FIXTURES` | dev only | `true` serves `/api/exp/fixture/home-a|home-b`; ignored on production |
+| `OPS_EXPERIMENTS_BOT_POLICY` | optional | `baseline` pins crawlers to A (default: drawn like a visitor, never counted) |
+| `OPS_TEST_OWNER_PASSWORD`, `OPS_TEST_EDITOR_PASSWORD`, `OPS_TEST_VIEWER_PASSWORD` | `npm run ops:synthetic` | local test users `owner@ops.test`, `editor@ops.test`, `viewer@ops.test` |
+
+Run it:
+
+```bash
+npm run ops:hash-password -- --email owner@ops.test --role owner   # once per user; paste into OPS_USERS
+npm run ops:store                 # terminal 1: dev store on 127.0.0.1:4799, data in .ops-data/
+npx next dev -p 1152              # terminal 2; open http://localhost:1152/internal
+```
+
+Without the store server the admin still loads and says "storage not connected"; without `OPS_SESSION_SECRET`/`OPS_USERS` it answers 503.
+
+**Analyses.** `npm run analyze -- <links|indexability|claims|metadata|watch-urls|experiment-health|all> [--force] [--base-url URL]`. `BASE_URL` defaults to `OPS_SITE_URL`. With `OPS_INGEST_URL`/`OPS_INGEST_TOKEN` the result is recorded and a second run in the same window is skipped; use a generous `OPS_ANALYSIS_TIMEOUT_MS` (e.g. 90000) against `next dev`, whose first compile of a route can take tens of seconds. Pause: Analyses page (per analysis or all), or repo variable `OPS_ANALYSES_PAUSED=true` for the scheduled workflow. Schedules: edit `.github/workflows/website-analyses.yml` (scheduled runs only fire from `main`).
+
+**Experiments.** Create and run them on `/internal/experiments` ([EXPERIMENTS.md](EXPERIMENTS.md)). `npm run ops:synthetic` runs the end-to-end check with synthetic traffic against `OPS_SITE_URL` (refuses viasocket.com); it waits 31 s several times for the middleware cache and retires its own experiment. Synthetic traffic never reaches customer counts.
+
+**Recovering changes.** Knowledge edits in dev are plain working-tree changes: `git diff`, `git checkout -- <file>`, or the History page's "Restore as draft". Store state is JSON under `.ops-data/` (delete the folder to reset dev). Production: knowledge changes are PRs (close to discard, revert the merge to undo); the store has no delete, so experiments are retired, never removed.
+
+**Verifying.** In addition to the checklist above: unauthenticated `curl -sI` on `/internal` → 303 to the login (503 when unconfigured) with `cache-control: private, no-store` and `x-robots-tag: noindex`; `POST /api/internal/*` without a session → 401; and `grep -rl "Website ops\|OPS_\|vs_ops" .next/static` finds nothing.

@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "updated_on": "2026-10-23",
+  "_fixture": "Schema fixture for the ops admin. The real list is docs/research/watchlist.json, owned by the research agent; the admin reads this file only while that one is missing. Entries here are placeholders, not research.",
+  "review_cadence_days": { "direct": 14, "indirect": 30, "substitute": 60 },
+  "research_scope": "Fixture: products a SaaS team or AI-agent builder would compare with viaSocket's integration layer.",
+  "competitors": [
+    {
+      "id": "composio",
+      "name": "Composio",
+      "url": "https://composio.dev",
+      "category": "direct",
+      "status": "active",
+      "relevance": "high",
+      "overlap": "fixture",
+      "last_checked": "2026-10-01",
+      "report": "docs/research/composio.md",
+      "sources": [],
+      "watch": ["https://composio.dev/pricing"],
+      "notes": "Fixture entry."
+    },
+    {
+      "id": "paragon",
+      "name": "Paragon",
+      "url": "https://www.useparagon.com",
+      "category": "direct",
+      "status": "active",
+      "relevance": "high",
+      "overlap": "fixture",
+      "last_checked": "2026-10-20",
+      "report": "docs/research/paragon.md",
+      "sources": [],
+      "watch": ["https://www.useparagon.com/pricing"],
+      "notes": "Fixture entry."
+    },
+    {
+      "id": "merge",
+      "name": "Merge",
+      "url": "https://www.merge.dev",
+      "category": "indirect",
+      "status": "watch",
+      "relevance": "medium",
+      "overlap": "fixture",
+      "last_checked": null,
+      "report": null,
+      "sources": [],
+      "watch": ["https://www.merge.dev/pricing"],
+      "notes": "Fixture entry; never checked, so it shows as overdue."
+    },
+    {
+      "id": "zapier",
+      "name": "Zapier",
+      "url": "https://zapier.com",
+      "category": "substitute",
+      "status": "paused",
+      "relevance": "low",
+      "overlap": "fixture",
+      "last_checked": "2026-06-01",
+      "report": null,
+      "sources": [],
+      "watch": ["https://zapier.com/pricing"],
+      "notes": "Fixture entry; paused, so it is neither checked nor overdue."
+    }
+  ]
+}

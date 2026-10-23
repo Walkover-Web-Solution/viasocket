@@ -1,7 +1,7 @@
 ---
-covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**", "src/lib/ops/**", "src/app/internal/**", "scripts/ops/**", "scripts/analyses/**", ".github/workflows/**", "public/exp.js"]
+verified_at: 845da954
+verified_on: 2026-10-23
 ---
 # Architecture & Mental Model
 
@@ -94,7 +94,7 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
 1. **Cloudflare zone.** A zone cache rule lives outside the repo (see [DECISIONS](DECISIONS.md)). Production `/` is publicly cached for 3 hours ([14-performance](14-performance.md#known-hot-paths)), so check behaviour on production, not only on a local build.
 2. **`public/_redirects`.** One `/faq/*` rule. `/faq` itself is answered by another deployment.
 3. **`next.config.js` `redirects()`.** These run *before* middleware. Because of them, `src/app/embed/page.js` and `src/app/mcp/page.js` never render. Their sub-routes, such as `/embed/app-integration` and `/mcp/[...slug]`, still do.
-4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot. Middleware does three things:
+4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot. It first gates `/internal*` ([Website Ops](#website-ops-admin-experiments-and-analyses)), applies the admin-managed redirects, and runs experiment assignment on surface paths with a running experiment. Then it does three things:
    - It redirects `/home` to `/` with a 307, so `src/app/home/page.js` never renders.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
@@ -249,3 +249,36 @@ The pieces, in order:
 2. **The keys reach the browser:** every table-api key is a `NEXT_PUBLIC_*` build-time variable, so the site has no server-only secret. Treat the keys as public, and never import `src/utils/axiosCalls.js` into a `'use client'` file (see the warning above).
 3. **Least privilege:** the content, A/B and blog databases each have their own key. Nothing in the repo shows whether any key is read-only.
 4. **Write isolation:** server-side, the only write is `POST /api/track-variant`, which writes the A/B table with `NEXT_PUBLIC_DB_KEY_ABTEST`. Every other write is a browser POST to a flow.sokt.io webhook, and some forms send PII in query parameters. See [13-security](13-security.md).
+
+## Website Ops (Admin, Experiments and Analyses)
+
+A private operations area and an experiment layer added on top of the public site. Operator guide and blockers: [ops/README.md](ops/README.md); policy: [EXPERIMENTS.md](EXPERIMENTS.md); contracts: [CONTRACTS § Website ops](CONTRACTS.md#website-ops-contracts).
+
+```mermaid
+graph TD
+    B["Browser"] --> MW["src/middleware.js"]
+    MW -->|"/internal*"| GATE["src/lib/ops/internal-gate.js: 503 / login redirect / no-store, noindex, CSP"]
+    GATE --> PG["src/app/internal/** (server components)"]
+    PG --> LIB["src/lib/ops/* (auth, knowledge, research, analyses, experiments)"]
+    B -->|"forms"| API["src/app/api/internal/** (session + CSRF)"]
+    API --> LIB
+    MW -->|"/ with a running experiment"| EXP["src/lib/ops/edge-experiments.js: assign, cookies, rewrite"]
+    EXP --> VAR["variant target (/new-home/index.html, challenger)"]
+    VAR --> JS["public/exp.js"]
+    JS --> EV["src/app/api/exp/event/route.js"]
+    LIB --> ST["src/lib/ops/store: dev-http | table-api | not connected"]
+    EXP --> ST
+    EV --> ST
+    LIB --> KS["knowledge source: dev store server (working tree) | GitHub PRs"]
+    GH["GitHub Actions: website-analyses.yml → scripts/analyses/run.mjs"] --> ING["src/app/api/internal/analyses/ingest (bearer token)"]
+    ING --> ST
+    ST --> DEV["scripts/ops/store-server.mjs (.ops-data/, dev only)"]
+```
+
+- **Edge only.** Every page and route exports `runtime = 'edge'`; nothing touches the filesystem at request time. Local dev gets file access through `scripts/ops/store-server.mjs`, an HTTP server the edge code calls like any backend. Shared pure modules live in `src/lib/ops/shared/*.mjs` (Web Crypto, no aliases) so the Node scripts import the same code.
+- **Access.** `src/middleware.js` sends `/internal*` to `internalGate` before anything else: missing `OPS_SESSION_SECRET`/`OPS_USERS` (or, on production, `OPS_ZONE_BYPASS_CONFIRMED`) → 503; no valid `vs_ops` session → 303 to `/internal/login`. Pages re-check with `src/lib/ops/page.js:requireUser`, routes with `src/lib/ops/http.js:guard` (role + same-origin + CSRF token). All ops responses are `private, no-store`, `X-Robots-Tag: noindex`; `/internal/` is in both robots generators.
+- **No internal content in public bundles.** `src/app/internal/**` has no `'use client'` file; forms post to route handlers and come back with a 303. The root layout still wraps `/internal` (third-party tags render but the CSP blocks them, blocker B-8).
+- **Experiments in middleware.** `experimentResponse` runs only for paths in `SURFACES` (`/` today), reads `exp_active/<surface>` from the store (cached 30 s per isolate; fails to baseline), and on production only with `OPS_EXPERIMENTS_LIVE=true`. It returns a rewrite to the variant target with `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store`, `Vary: Cookie`; otherwise the request continues exactly as before (managed redirects, `rdt_cid`, Reddit CAPI and the `/` headers are unchanged). Assignment writes use `event.waitUntil`. The middleware bundle grew from 35.3 kB to 40.8 kB (`npm run build`, 2026-10-23).
+- **Knowledge is the repo.** `src/lib/ops/knowledge.js` reads and writes the files themselves (dev: working tree with a git-blob base-sha check; production: GitHub branch + PR into `test`). The store holds drafts and writeback state only.
+- **Analyses** are Node scripts with no dependencies (`scripts/analyses/checks/*.mjs`), scheduled by `.github/workflows/website-analyses.yml` and recorded through the ingest endpoint; the registry of questions is `src/lib/ops/shared/analyses-registry.mjs`.
+- **Module boundary.** `src/lib/ops/**` imports nothing from the rest of `src/` (it keeps its own bot list), so the sections can move into viasocket-admin later (open decision in [ops/README.md](ops/README.md#open-decisions)).
