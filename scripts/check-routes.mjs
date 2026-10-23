@@ -135,8 +135,8 @@ const ROUTES = [
 ];
 
 // SEO files: checked by content, not by HTML fields.
-const SITEMAP_MUST = ['/', '/integrations', '/pricing', '/features', '/blogs'];
-const SITEMAP_BANNED = [];
+const SITEMAP_MUST = ['/', '/integrations', '/pricing', '/features', '/blogs', '/use-cases', '/new-direction'];
+const SITEMAP_BANNED = ['/home', '/feedback']; // a redirect and a 404 (C-04)
 const SEO_FILES = [
     {
         path: '/robots.txt',
