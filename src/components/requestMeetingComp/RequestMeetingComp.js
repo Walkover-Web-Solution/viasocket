@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import PhoneInput, { DEFAULT_COUNTRY_ISO, countryByIso } from '@/components/phoneInput/phoneInput';
 
-const RequestMeeting = ({ agencyName }) => {
+const RequestMeeting = ({ agencyName, dialogId }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
@@ -81,7 +81,7 @@ const RequestMeeting = ({ agencyName }) => {
 
             if (response.ok) {
                 alert('Meeting request submitted successfully!');
-                document.getElementById('meeting_request_form').close();
+                document.getElementById(dialogId).close();
             } else {
                 throw new Error('Failed to submit meeting request');
             }
@@ -207,7 +207,7 @@ const RequestMeeting = ({ agencyName }) => {
                         </button>
                         <button
                             className="btn btn-primary btn-outline"
-                            onClick={() => document.getElementById('meeting_request_form').close()}
+                            onClick={() => document.getElementById(dialogId).close()}
                         >
                             Cancel
                         </button>
@@ -218,10 +218,14 @@ const RequestMeeting = ({ agencyName }) => {
     );
 };
 
-const RequestMeetingComp = ({ agencyName }) => {
+// Each card on /experts renders its own dialog, so each needs its own id; with a shared id every
+// "Schedule a meet" opened the first card's form and sent the first agency's name (U-09).
+export const MEETING_DIALOG_ID = 'meeting_request_form';
+
+const RequestMeetingComp = ({ agencyName, dialogId = MEETING_DIALOG_ID }) => {
     return (
-        <dialog id="meeting_request_form" className="modal rounded-none">
-            <RequestMeeting agencyName={agencyName} />
+        <dialog id={dialogId} className="modal rounded-none">
+            <RequestMeeting agencyName={agencyName} dialogId={dialogId} />
         </dialog>
     );
 };
