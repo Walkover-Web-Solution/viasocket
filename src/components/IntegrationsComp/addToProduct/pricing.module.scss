@@ -1,0 +1,179 @@
+// /pricing: the pieces only the pricing page has. Everything else (tokens, header, footer,
+// section headings, buttons, feature columns) comes from addToProduct.module.scss, inside its .root.
+
+/* Hero: centred, the plans directly under the heading */
+.hero { padding-bottom: clamp(56px, 7vw, 96px); }
+// The homepage hero's line grid (public/new-home/styles.css): 1px every 24px in the text colour,
+// strongest behind the centre and gone by the edges. It covers the first screen, around the heading.
+.hero { --grid-line: rgba(17, 17, 19, 0.05); }
+@media (prefers-color-scheme: dark) { .hero { --grid-line: rgba(241, 239, 233, 0.07); } }
+.hero-grid { z-index: 0; bottom: auto; height: min(100svh, 760px);
+  background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 24px 24px; background-position: center center;
+  -webkit-mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); }
+@media (max-width: 760px) { .hero-grid { -webkit-mask-image: radial-gradient(ellipse 70% 40% at 50% 50%, #000 10%, transparent 72%); mask-image: radial-gradient(ellipse 70% 40% at 50% 50%, #000 10%, transparent 72%); } }
+.hero-in { position: relative; z-index: 1; display: grid; justify-items: center; text-align: center; }
+.hero-in h1 { max-width: 18ch; }
+.hero-in > p { margin-inline: auto; }
+
+/* Monthly / annual */
+.billing { margin-top: 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 16px; }
+.switch { display: inline-flex; border: 1px solid var(--line-2); background: var(--s1); padding: 3px; gap: 3px; }
+.switch button { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 16px; border: 0; background: transparent; color: var(--ink-2); font-size: 14px; font-weight: 500; cursor: pointer; transition: background-color .15s, color .15s; }
+.switch button:hover { color: var(--ink); }
+.switch button[aria-pressed='true'] { background: var(--btn-bg); color: var(--btn-ink); }
+.save { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; color: var(--green); background: var(--green-soft); }
+.switch button[aria-pressed='true'] .save { color: var(--on-green); background: var(--green); }
+
+/* Plans: four joined cards, hairlines between them */
+.plans { list-style: none; margin: 32px 0 0; padding: 0; width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); text-align: left; }
+.plans > li { position: relative; background: var(--s1); padding: 28px 24px 24px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.plans > li.pop { background: var(--bg); box-shadow: inset 0 2px 0 var(--ink); }
+.plan-h { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; }
+.plan-h h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.badge { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 7px; background: var(--btn-bg); color: var(--btn-ink); white-space: nowrap; }
+.tagline { margin-top: -6px; font-size: 15px; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
+// The price block: "Launch price" above Pro and Business prices, "Billed annually" under Enterprise's
+.price-box { margin-top: 8px; display: grid; gap: 4px; }
+.launchTag { justify-self: start; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; color: var(--green); background: var(--green-soft); }
+.price { display: flex; align-items: baseline; gap: 6px; }
+.price b { font-size: clamp(36px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.price small { font-size: 14px; color: var(--ink-2); }
+// The small line under a price ("Billed annually")
+.desc { font-size: 14px; color: var(--ink-2); }
+.perks { list-style: none; margin: 6px 0 0; padding: 14px 0 0; border-top: 1px solid var(--line); display: grid; gap: 9px; font-size: 14px; line-height: 1.45; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); flex: 1; align-content: start; }
+.perks li { display: flex; gap: 10px; align-items: baseline; }
+.perks li::before { content: ""; width: 9px; height: 5px; flex: none; border-left: 1.6px solid var(--ink-3); border-bottom: 1.6px solid var(--ink-3); transform: rotate(-45deg) translateY(-2px); }
+// A limit ("Stops at the limit"): an empty box instead of a check
+.perks li.limit::before { width: 9px; height: 9px; border: 1.5px solid var(--ink-3); transform: none; align-self: center; }
+.plans > li > a:last-child { margin-top: 10px; width: 100%; text-decoration: none; }
+.btn-o { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; font-size: 15px; color: var(--ink); }
+@media (max-width: 1000px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+
+/* Under the plans: what every plan gets, and what a task is */
+.every { width: 100%; margin-top: 20px; display: grid; gap: 6px; text-align: left; font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
+.every a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-3); text-underline-offset: 4px; }
+.every a:hover { text-decoration-color: var(--ink); }
+
+/* Fine print under a block */
+.fine { margin-top: 16px; max-width: 90ch; font-size: 13.5px; line-height: 1.55; color: var(--ink-3); }
+
+/* Savings calculator: sliders on the left, the answer on the right */
+.calc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); border: 1px solid var(--line); background: var(--s1); }
+.calc-in { padding: clamp(24px, 3vw, 36px); display: grid; gap: 32px; align-content: center; border-right: 1px solid var(--line); }
+.slider-h { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; }
+.slider-h label { font-size: 15px; font-weight: 500; color: var(--ink); }
+.slider-h output { font-family: var(--mono); font-size: 22px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.calc-out { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.calc-out > div { padding: clamp(20px, 2.4vw, 28px); display: grid; gap: 8px; align-content: start; border-bottom: 1px solid var(--line); }
+.calc-out > div:nth-child(odd) { border-right: 1px solid var(--line); }
+.calc-out > div:nth-last-child(-n + 2) { border-bottom: 0; }
+.calc-out dt { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.calc-out dd { margin: 0; font-size: clamp(26px, 2.6vw, 34px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.calc-out .calc-save { background: var(--green-soft); }
+.calc-out .calc-save dd { color: var(--green); }
+@media (max-width: 860px) { .calc { grid-template-columns: minmax(0, 1fr); } .calc-in { border-right: 0; border-bottom: 1px solid var(--line); } }
+
+.range { -webkit-appearance: none; appearance: none; display: block; width: 100%; height: 4px; margin-top: 16px; cursor: pointer; background: linear-gradient(to right, var(--ink) var(--pct), var(--line-2) var(--pct)); outline-offset: 6px; }
+.range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; background: var(--ink); border: 3px solid var(--s1); box-shadow: 0 0 0 1px var(--ink); transition: transform .15s; }
+.range::-webkit-slider-thumb:hover { transform: scale(1.12); }
+.range::-moz-range-thumb { width: 12px; height: 12px; border-radius: 0; background: var(--ink); border: 3px solid var(--s1); box-shadow: 0 0 0 1px var(--ink); }
+.range::-moz-range-track { height: 4px; background: transparent; }
+
+/* /pass hero: text on the left, an example balance on the right */
+.pass-hero .pass-in { position: relative; z-index: 1; }
+.pass-hero h1 { margin-top: 18px; font-size: clamp(38px, 4.4vw, 60px); }
+.pass-hero .hero-cta a { text-decoration: none; }
+.pass-hero .hero-cta a:not(.btn) { text-decoration: underline; }
+// Jumping to #rates (from /pricing) lands clear of the sticky header
+.anchor { scroll-margin-top: 80px; }
+
+/* The Pass: text on the left, an example balance on the right */
+.pass-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 440px); gap: 40px clamp(32px, 5vw, 80px); align-items: center; }
+.pass-in .btn { text-decoration: none; }
+.pass-note { margin-top: 16px; font-size: 14px; color: var(--ink-3); max-width: 48ch; }
+.wallet { margin: 0; border: 1px solid var(--line-2); background: var(--s1); box-shadow: var(--sh-win); }
+.wallet-h { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.wallet-h b { font-size: 15px; font-weight: 600; }
+.live { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em; color: var(--green); }
+.live::before { content: ""; width: 7px; height: 7px; background: var(--green); }
+.wallet-bal { padding: 22px 20px; display: grid; gap: 6px; border-bottom: 1px solid var(--line); }
+.wallet-bal b { font-size: 44px; font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.wallet-bal small { font-size: 13px; color: var(--ink-3); }
+.wallet ul { list-style: none; margin: 0; padding: 6px 20px; }
+.wallet li { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; font-size: 14px; color: var(--ink-2); border-bottom: 1px solid var(--line); }
+.wallet li:last-child { border-bottom: 0; }
+.wallet li span:last-child { font-family: var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.wallet figcaption { padding: 12px 20px; border-top: 1px solid var(--line); font-size: 12.5px; color: var(--ink-3); background: var(--s2); }
+@media (max-width: 900px) { .pass-in { grid-template-columns: minmax(0, 1fr); } }
+
+/* Rate tables */
+.table { overflow-x: auto; border: 1px solid var(--line); background: var(--s1); }
+.table table { width: 100%; min-width: 680px; border-collapse: collapse; font-size: 15px; }
+.table th, .table td { padding: 14px 20px; text-align: left; border-bottom: 1px solid var(--line); }
+.table tbody:last-child tr:last-child th, .table tbody:last-child tr:last-child td { border-bottom: 0; }
+.table thead th { font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); padding-block: 16px; }
+.table thead th:first-child { width: 26%; }
+.table thead th.hi { color: var(--ink); }
+.table tbody th { font-weight: 500; color: var(--ink); }
+.table td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.table .hi { background: var(--tint-2); }
+.table td.alt { color: var(--ink-3); }
+.table td.tbd { color: var(--ink-4); font-style: italic; }
+.table tr.group th { padding-block: 10px; background: var(--s2); font-family: var(--mono); font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+.sub { margin-top: 64px; margin-bottom: 24px; max-width: 62ch; }
+.sub h3 { font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -0.02em; }
+.sub p { margin-top: 8px; color: var(--ink-2); }
+
+/* One Pass vs separate subscriptions */
+.vs { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: stretch; }
+.vs-col { border: 1px solid var(--line); background: var(--s1); padding: 24px; display: flex; flex-direction: column; gap: 14px; }
+.vs-col ul { list-style: none; margin: 0; padding: 0; flex: 1; }
+.vs-col li { display: flex; justify-content: space-between; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
+.vs-col li span:last-child { font-family: var(--mono); color: var(--ink); font-variant-numeric: tabular-nums; }
+.vs-total { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding-top: 6px; font-size: 15px; color: var(--ink-2); }
+.vs-total b { font-size: 30px; font-weight: 600; letter-spacing: -0.03em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.vs-pass { border-color: var(--ink); box-shadow: inset 0 2px 0 var(--ink); }
+.vs-pass .vs-total b { color: var(--green); }
+.vs-mid { align-self: center; padding: 0 20px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); }
+@media (max-width: 760px) { .vs { grid-template-columns: minmax(0, 1fr); } .vs-mid { justify-self: center; padding: 12px 0; } }
+
+/* You stay in control: two notes under the three features */
+.notes { margin-top: 56px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.notes > div { background: var(--s1); padding: 24px 26px; display: grid; gap: 10px; align-content: start; }
+.notes h3 { font-size: 19px; font-weight: 600; letter-spacing: -0.015em; }
+.notes ul { list-style: none; margin: 4px 0 0; padding: 0; display: grid; gap: 8px; font-size: 15px; color: var(--ink-2); }
+.notes li { display: flex; gap: 10px; align-items: baseline; }
+.notes li::before { content: ""; width: 9px; height: 5px; flex: none; border-left: 1.6px solid var(--ink-3); border-bottom: 1.6px solid var(--ink-3); transform: rotate(-45deg) translateY(-2px); }
+@media (max-width: 760px) { .notes { grid-template-columns: minmax(0, 1fr); } }
+
+/* FAQs as on the homepage (public/new-home/styles.css .fq): one box of numbered rows, a square toggle tile */
+.fq { counter-reset: fq; border: 1px solid var(--line); background: var(--s1); }
+.fq-i { counter-increment: fq; border-top: 1px solid var(--line); transition: background-color .15s ease; }
+.fq-i:first-child { border-top: 0; }
+.fq-i > summary { display: grid; grid-template-columns: 40px minmax(0, 1fr) 30px; align-items: center; gap: 0 16px; padding: 20px 22px; list-style: none; cursor: pointer; transition: background-color .15s ease; }
+.fq-i > summary::-webkit-details-marker { display: none; }
+.fq-i > summary::before { content: counter(fq, decimal-leading-zero); font-family: var(--mono); font-size: 12px; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-3); }
+.fq-i > summary:hover { background: var(--tint-1); }
+.fq-i > summary:focus { outline: none; }
+.fq-i > summary:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.fq-i[open] { background: var(--s2); }
+.fq-i[open] > summary:hover { background: transparent; }
+.fq-i[open] > summary::before { color: var(--ink); }
+.fq-q { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.35; letter-spacing: -0.015em; color: var(--ink); }
+.fq-x { position: relative; width: 30px; height: 30px; border: 1px solid var(--line-2); background: var(--tint-1); transition: background-color .15s ease, border-color .15s ease; }
+.fq-x::before, .fq-x::after { content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -0.75px 0 0 -6px; background: var(--ink-2); transition: transform .2s ease; }
+.fq-x::after { transform: rotate(90deg); }
+.fq-i[open] .fq-x { background: var(--ink); border-color: var(--ink); }
+.fq-i[open] .fq-x::before, .fq-i[open] .fq-x::after { background: var(--bg); }
+.fq-i[open] .fq-x::after { transform: rotate(0deg); }
+.fq-a a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-3); text-underline-offset: 3px; }
+.fq-a a:hover { text-decoration-color: currentColor; }
+.fq-a { max-width: calc(72ch + 78px); margin: 0; padding: 0 22px 24px 78px; font-size: 16px; line-height: 1.6; color: var(--ink-2); }
+@media (max-width: 600px) {
+  .fq-i > summary { grid-template-columns: 26px minmax(0, 1fr) 28px; gap: 0 12px; padding: 16px; }
+  .fq-q { font-size: 16px; }
+  .fq-x { width: 28px; height: 28px; }
+  .fq-a { padding: 0 16px 20px 54px; font-size: 15px; }
+}

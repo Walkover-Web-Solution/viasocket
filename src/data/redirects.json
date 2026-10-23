@@ -75,6 +75,11 @@
             "source": "/variables",
             "destination": "/features/variables",
             "statusCode": 308
+        },
+        {
+            "source": "/developers/pricing",
+            "destination": "/pricing",
+            "statusCode": 308
         }
     ]
 }

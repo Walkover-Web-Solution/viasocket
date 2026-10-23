@@ -369,7 +369,7 @@
 /* ---------- /integrations and /integrations/category/{name}: the app directory ---------- */
 .dir-hero { padding-block: clamp(28px, 4vh, 48px) 28px; }
 .dir-hero h1 { font-size: clamp(34px, 3.6vw, 54px); }
-.dir-hero-in { position: relative; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; }
+.dir-hero-in { position: relative; z-index: 1; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 28px 48px; }
 .dir-hero-in > div { min-width: 0; flex: 1 1 40rem; }
 .dir-hero-in .hero-sub { max-width: 46rem; margin-top: 16px; }
 .dir-list { display: grid; gap: 4px; font-size: 14px; color: var(--ink-3); }
@@ -440,9 +440,10 @@
 .fx-hero { padding-block: clamp(48px, 9vh, 96px) clamp(48px, 6vw, 72px); }
 .fx-hero-in { position: relative; z-index: 1; }
 // The homepage hero's faint line grid: 1px every 24px (5% ink light, 7% dark), strongest in the middle, gone by the edges.
-.fx-hero { --grid-line: rgba(17, 17, 19, 0.05); }
-@media (prefers-color-scheme: dark) { .fx-hero { --grid-line: rgba(241, 239, 233, 0.07); } }
-.fx-hero .hero-grid { z-index: 0;
+// Also behind the /integrations directory hero and the /integrations/{app} hero.
+.fx-hero, .dir-hero, .app-hero { --grid-line: rgba(17, 17, 19, 0.05); }
+@media (prefers-color-scheme: dark) { .fx-hero, .dir-hero, .app-hero { --grid-line: rgba(241, 239, 233, 0.07); } }
+.fx-hero .hero-grid, .dir-hero .hero-grid, .app-hero .hero-grid { z-index: 0;
   background-image: linear-gradient(to right, var(--grid-line) 1px, transparent 1px), linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 24px 24px; background-position: center center;
   -webkit-mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); mask-image: radial-gradient(ellipse 62% 66% at 50% 50%, #000 18%, transparent 78%); }
@@ -457,102 +458,87 @@
 .hero-live { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
 @media (max-width: 600px) { .fx-hero .hero-cta .btn, .hero-ex { width: 100%; justify-content: center; } }
 
-// Feature groups: a heading row, then a hairline grid (1px gaps show the background as rules).
+// Every feature in one hairline grid: three across, two, then one. The grid draws only its top and left
+// line on the page background; each card draws its own right and bottom line, so a part-filled last row
+// leaves plain page, not an empty box.
 .fx-sec { padding-block: 0 var(--sec-pad); }
-.fxg { scroll-margin-top: 88px; }
-.fxg + .fxg { margin-top: clamp(56px, 7vw, 96px); }
-.fxg-h { display: grid; gap: 8px; margin-bottom: 24px; }
-.fxg-h .h2 { margin-top: 0; font-size: clamp(24px, 2.4vw, 32px); }
-// The featured group (Build with AI): every card carries an illustration. AI Agents runs across the
-// top; the other two sit side by side below it, text over illustration.
-.fx-ai { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.fx-ai > li.fx-big { grid-column: 1 / -1; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-.fx-ai > li:not(.fx-big) { padding: 32px; gap: 12px; justify-content: flex-start; }
-.fxg-feat .fx-sm-h { gap: 14px; }
-.fxg-feat .fx-sm-h .feat-ico { width: 40px; height: 40px; }
-.fxg-feat .fx-sm-h h3 { font-size: clamp(19px, 1.7vw, 22px); letter-spacing: -0.02em; }
-.fxg-feat .fx > li > p { font-size: 16px; line-height: 1.55; color: var(--ink-2); }
-// The two lower visuals fill their card, so side-by-side cards end level with no gap below.
-.fx-vis-sm { padding-top: 12px; flex: 1; display: flex; flex-direction: column; }
-.fx-vis-sm > * { flex: 1; display: flex; flex-direction: column; }
-@media (max-width: 760px) { .fx-ai { grid-template-columns: minmax(0, 1fr); } .fx-ai > li:not(.fx-big) { padding: 22px 20px; } }
-.fx { list-style: none; margin: 0; padding: 0; display: grid; grid-auto-flow: dense; gap: 1px; background: var(--line); border: 1px solid var(--line); }
-.fx-has-big { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fx { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; background: var(--bg); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
 .fx-flat { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-.fx > li { background: var(--s1); padding: 22px 24px; display: flex; flex-direction: column; justify-content: center; gap: 8px; min-width: 0; transition: background-color .15s; }
-.fx > li:hover { background: var(--s2); }
-.fx-has-big > li:not(.fx-big) { grid-column: 3; }
-.fx-has-big:has(.fx-r) > li:not(.fx-big) { grid-column: 1; }
-// Short cards: icon beside the title, one line under it.
-.fx-sm-h { display: flex; align-items: center; gap: 12px; min-width: 0; }
-.fx-sm-h .feat-ico { width: 32px; height: 32px; flex: none; }
-.fx-sm-h h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.3; }
-.fx-link { align-self: flex-start; margin-top: 2px; font-size: 14px; font-weight: 500; color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 4px; transition: text-decoration-color .15s; }
-.fx-link:hover { text-decoration-color: var(--ink); }
-.fx > li > p { color: var(--ink-2); font-size: 14.5px; line-height: 1.5; }
-.fx .feat-ico { display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); transition: background-color .15s, color .15s, border-color .15s; }
-.fx > li:hover .feat-ico { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-ink); }
-// The large card: two columns, as tall as the short cards beside it; text beside an illustration.
-.fx > li.fx-big { grid-column: 1 / span 2; display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 36px; align-items: center; padding: 36px; }
-.fx > li.fx-big.fx-r { grid-column: 2 / span 2; }
-.fx > li.fx-big:hover { background: var(--s1); }
-.fx-tx { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.fx-tx .feat-ico { width: 40px; height: 40px; margin-bottom: 12px; }
-.fx-tx h3 { font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; }
-.fx-tx p { color: var(--ink-2); font-size: 16px; line-height: 1.55; }
-.fx-vis { min-width: 0; }
-.fx-vis .auth-panel, .fx-vis .win { background: var(--bg); box-shadow: var(--sh-win); }
-.fx-vis .auth-row { padding: 13px 14px; }
-@media (max-width: 900px) {
-  .fx-has-big, .fx-flat { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .fx > li.fx-big, .fx > li.fx-big.fx-r { grid-column: 1 / -1; grid-row: auto !important; }
-  .fx-has-big > li:not(.fx-big), .fx-has-big:has(.fx-r) > li:not(.fx-big) { grid-column: auto; }
-  // An odd short card at the end takes the full row instead of leaving an empty cell.
-  .fx-has-big > li:last-child:nth-child(even) { grid-column: 1 / -1; }
+.fx > li { display: flex; min-width: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+// Each feature is a tile (FeatureGrid.js): icon and title, the description, and an example on a few.
+// Tiles in a row share a height. Hover shades the tile and inks the icon; a tile with a feature page is
+// a link: it also gets an inner edge and "→", and the arrow nudges right on hover.
+.fx-card { position: relative; flex: 1; min-width: 0; padding: 24px; display: flex; flex-direction: column; background: var(--s1); color: inherit; text-decoration: none; transition: background-color .2s, box-shadow .2s; }
+.fx-card:hover, .fx-card:focus-visible { background: var(--s2); }
+.fx-card:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.fx-linked { cursor: pointer; }
+.fx-linked:hover, .fx-linked:focus-visible { box-shadow: inset 0 0 0 1px var(--ink-3); }
+.fx-h { margin: 0; display: flex; align-items: center; gap: 14px; }
+.fx-h .feat-ico { width: 36px; height: 36px; flex: none; }
+.fx-t { min-width: 0; font-size: clamp(19px, 1.6vw, 22px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); }
+.fx-pre { margin-top: 16px; display: grid; gap: 14px; }
+.fx-pre p { color: color-mix(in srgb, var(--ink) 85%, var(--bg)); font-size: 15px; line-height: 1.55; } // brighter than --ink-2 for easy reading
+.fx-go { margin-top: auto; padding-top: 16px; font-size: 14px; font-weight: 500; color: var(--ink); }
+.fx-go span { display: inline-block; transition: transform .2s ease; }
+.fx-card:hover .fx-go span { transform: translateX(4px); }
+.fx .feat-ico { display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); transition: background-color .2s, color .2s, border-color .2s; }
+.fx-card:hover .feat-ico, .fx-card:focus-visible .feat-ico { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-ink); }
+@media (prefers-reduced-motion: reduce) { .fx-go span { transition: none; transform: none; } }
+// The three AI tiles: a mesh gradient (aqua and cyan pools, a blue and a periwinkle one, a near-white wash)
+// on an oversized layer that slowly drifts and turns inside the tile; still for reduced motion. The same
+// in both themes: in dark mode these tiles keep the light theme's colours, so text stays readable on it.
+.fx-ai { --ai-wash: .9; isolation: isolate; overflow: hidden; }
+@media (prefers-color-scheme: dark) {
+  .fx-ai {
+    --bg: #fafaf9; --s1: #ffffff; --s2: #f4f4f2;
+    --ink: #111113; --ink-2: #4a4946; --ink-3: #75736e; --ink-4: #8c8a85;
+    --line: rgba(17, 17, 19, 0.08); --line-2: rgba(17, 17, 19, 0.14); --line-3: rgba(17, 17, 19, 0.24);
+    --tint-1: rgba(17, 17, 19, 0.025); --tint-2: rgba(17, 17, 19, 0.045);
+    --btn-bg: #111113; --btn-ink: #ffffff; --btn-hover: #000000;
+    --green: #15803d; --green-soft: rgba(21, 128, 61, 0.1);
+    color-scheme: light;
+  }
 }
-@media (max-width: 680px) { .fx > li.fx-big { grid-template-columns: minmax(0, 1fr); gap: 24px; padding: 24px 20px 26px; } }
-@media (max-width: 560px) { .fx-has-big, .fx-flat { grid-template-columns: minmax(0, 1fr); } .fx-has-big > li:last-child:nth-child(even) { grid-column: auto; } .fx > li { padding: 20px; } }
-
-/* Large-card illustrations */
-.fxv-av { width: 26px; height: 26px; flex: none; display: grid; place-items: center; background: var(--btn-bg); color: var(--btn-ink); font-size: 13px; font-weight: 600; }
-.fxv-stack { display: inline-flex; flex: none; }
-.fxv-stack img + img { margin-left: -6px; }
-.fxv-count { flex: none; min-width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--line-2); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
-// AI agent: a chat panel, then a bus line down to the apps the agent can use.
-.fxv-chat { padding: 14px; display: grid; gap: 10px; }
-.fxv-me { justify-self: end; max-width: 85%; padding: 9px 12px; background: var(--btn-bg); color: var(--btn-ink); font-size: 13.5px; line-height: 1.45; }
-.fxv-bot { justify-self: start; max-width: 92%; padding: 10px 12px; border: 1px solid var(--line); background: var(--s1); display: grid; gap: 8px; justify-items: start; }
-.fxv-bot p { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
-.fxv-used { display: inline-flex; align-items: center; gap: 7px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
-.fxv-used .appicon { padding: 1px; }
-.fxv-input { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0 14px 14px; height: 36px; padding: 0 6px 0 12px; border: 1px solid var(--line-2); background: var(--s1); font-size: 13px; color: var(--ink-4); }
-.fxv-input i { width: 24px; height: 24px; flex: none; background: var(--btn-bg); position: relative; }
-.fxv-input i::after { content: ""; position: absolute; inset: 0; margin: auto; width: 7px; height: 7px; border-top: 1.6px solid var(--btn-ink); border-right: 1.6px solid var(--btn-ink); transform: translate(-1px, 1px) rotate(45deg); }
-.fxv-bus { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); padding-top: 28px; }
-// A stem from the panel, a rail across the icon centres, and a drop to each icon.
-.fxv-bus::before { content: ""; position: absolute; left: 50%; top: 0; height: 14px; border-left: 1px dashed var(--line-3); }
-.fxv-bus::after { content: ""; position: absolute; left: 10%; right: 10%; top: 14px; border-top: 1px dashed var(--line-3); }
-.fxv-bus > span { position: relative; display: grid; place-items: center; }
-.fxv-bus > span::before { content: ""; position: absolute; left: 50%; top: -14px; height: 14px; border-left: 1px dashed var(--line-3); }
-.fxv-bus .appicon { width: 36px !important; height: 36px !important; padding: 5px; background: #fff; box-shadow: var(--sh-win); }
-.fxv-bus b { height: 36px; display: grid; place-items: center; padding: 0 8px; border: 1px solid var(--line-2); background: var(--s1); font-family: var(--mono); font-size: 11.5px; font-weight: 500; color: var(--ink-2); }
-// Agent animation states: chat parts fade in (.is-on); the app being called lights up on the bus (.is-live + .is-on).
-.fxv-me, .fxv-bot, .fxv-used, .fxv-bot p { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
-.fxv-me.is-on, .fxv-bot.is-on, .fxv-used.is-on, .fxv-bot p.is-on { opacity: 1; transform: none; }
-.fxv-tick { color: var(--green); }
-// Typed text stays on one line; as it grows past the box the start scrolls out of view, like a real input.
-.fxv-input > span { min-width: 0; flex: 1; display: flex; justify-content: flex-end; overflow: hidden; white-space: nowrap; }
-.fxv-input > span:not(.fxv-typing) { justify-content: flex-start; }
-.fxv-typing { color: var(--ink); }
-.fxv-typing::after { content: ""; display: inline-block; width: 1px; height: 1.1em; margin-left: 1px; vertical-align: text-bottom; background: var(--ink); animation: blink 1s steps(1) infinite; }
-.fxv-input i { transition: transform .12s; }
-.fxv-input i.is-on { transform: scale(.88); }
-.fxv-bus .appicon { transition: box-shadow .2s, transform .2s; }
-.fxv-bus > span::before { transition: border-color .2s; }
-.fxv-bus.is-live::before { border-left-style: solid; border-left-color: var(--green); }
-.fxv-bus > span.is-on::before { border-left-style: solid; border-left-color: var(--green); }
-.fxv-bus > span.is-on .appicon { transform: translateY(-2px); box-shadow: 0 0 0 2px var(--green), var(--sh-win); }
-@media (prefers-reduced-motion: reduce) { .fxv-typing::after { animation: none; } }
+.fx-ai::before { content: ""; position: absolute; inset: -35%; z-index: -1; pointer-events: none; opacity: var(--ai-wash);
+  background:
+    radial-gradient(30% 34% at 22% 26%, #a5f3fc 0%, transparent 70%),
+    radial-gradient(32% 30% at 78% 22%, #99f6e4 0%, transparent 70%),
+    radial-gradient(30% 32% at 68% 78%, #93c5fd 0%, transparent 72%),
+    radial-gradient(26% 28% at 30% 74%, #c7d2fe 0%, transparent 70%),
+    radial-gradient(22% 22% at 50% 48%, #ffffff 0%, transparent 70%),
+    linear-gradient(135deg, #cffafe, #e0f2fe 55%, #dbeafe);
+  animation: fx-ai-drift 9s ease-in-out infinite alternate; transition: opacity .2s; }
+.fx-ai:hover::before { opacity: min(1, calc(var(--ai-wash) * 1.2)); }
+@keyframes fx-ai-drift {
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(-15%, 10%) rotate(25deg) scale(1.12); }
+  100% { transform: translate(12%, -9%) rotate(-18deg) scale(1.05); }
+}
+@media (prefers-reduced-motion: reduce) { .fx-ai::before { animation: none; } }
+// Most tiles are plain. A few carry a small example in their preview (FeatureGrid.js FeatureExample), a
+// few only a hint on the title. Monochrome, hairline, square; colour only from app logos and green for success.
+.fe { min-width: 0; }
+.fe-apps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.fe-apps .appicon { width: 28px; height: 28px; }
+.fe-more { height: 28px; display: inline-grid; place-items: center; padding: 0 8px; border: 1px solid var(--line-2); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
+.fe-code { display: block; padding: 8px 10px; border: 1px solid var(--line-2); background: var(--bg); font-family: var(--mono); font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fe-code b { font-weight: 600; color: var(--green); }
+.fe-map { display: flex; align-items: center; gap: 8px; min-width: 0; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.fe-map code { min-width: 0; padding: 5px 9px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font-family: inherit; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fe-chat { display: grid; gap: 6px; font-size: 12.5px; line-height: 1.4; }
+.fe-me { justify-self: end; max-width: 88%; padding: 6px 10px; background: var(--btn-bg); color: var(--btn-ink); }
+.fe-bot { justify-self: start; max-width: 88%; padding: 6px 10px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); }
+.fe-status { display: flex; gap: 3px; }
+.fe-status i { width: 14px; height: 6px; background: var(--green); opacity: .85; }
+.fe-status i.fe-x { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink-3); opacity: 1; }
+// Hints: a green check on the icon tile (connected), a live dot after the title
+.fx .fe-check { position: relative; }
+.fx .fe-check::after { content: ""; position: absolute; right: -4px; bottom: -4px; width: 12px; height: 12px; background: var(--green) no-repeat center / 8px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.2 2.2 4.8-4.8' fill='none' stroke='white' stroke-width='1.8'/%3E%3C/svg%3E"); box-shadow: 0 0 0 2px var(--s1); }
+.fe-live { flex: none; width: 7px; height: 7px; margin-left: -6px; background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); animation: fe-pulse 2s ease-in-out infinite; }
+@keyframes fe-pulse { 50% { box-shadow: 0 0 0 5px transparent; } }
+@media (prefers-reduced-motion: reduce) { .fe-live { animation: none; } }
+@media (max-width: 900px) { .fx-flat { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .fx-flat { grid-template-columns: minmax(0, 1fr); } .fx-card { padding: 20px; } }
 
 /* ---------- /use-cases ---------- */
 // Cards: two per row; the title, the prompt, then the apps.
@@ -614,39 +600,6 @@
 .lt-cta { margin-top: 36px; padding-top: 28px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
 @media (max-width: 600px) { .lt-cta .btn { width: 100%; } .lt-sig { font-size: 38px; } }
 
-/* Build with AI demos (AIDemos.js): minimal panels, parts fade in as each loop plays */
-.ad-body { padding: 16px; display: grid; gap: 12px; }
-.ad-me, .ad-ans, .ad-dots { opacity: 0; transform: translateY(4px); transition: opacity .3s ease, transform .3s ease; }
-.ad-me.is-on, .ad-ans.is-on, .ad-dots.is-on { opacity: 1; transform: none; }
-// Chatbot
-.ad-chat .ad-body { flex: 1; min-height: 168px; align-content: start; }
-.ad-me { justify-self: end; max-width: 85%; padding: 9px 12px; background: var(--btn-bg); color: var(--btn-ink); font-size: 13.5px; line-height: 1.45; }
-.ad-reply { position: relative; min-height: 76px; }
-.ad-dots { position: absolute; left: 0; top: 0; display: inline-flex; gap: 4px; padding: 12px 14px; border: 1px solid var(--line); background: var(--s1); }
-.ad-dots i { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-3); animation: blink 1.2s infinite; }
-.ad-dots i:nth-child(2) { animation-delay: .2s; } .ad-dots i:nth-child(3) { animation-delay: .4s; }
-.ad-ans { max-width: 92%; padding: 10px 12px; border: 1px solid var(--line); background: var(--s1); display: grid; gap: 8px; justify-items: start; }
-.ad-ans p { font-size: 13.5px; line-height: 1.45; color: var(--ink); }
-.ad-src { display: inline-flex; align-items: center; gap: 6px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
-.ad-src .appicon { padding: 1px; }
-// Browser: a small job board; the listing being read is outlined with the element it is reading.
-.ad-site { padding: 14px; display: grid; gap: 8px; }
-.ad-site-h { display: block; height: 8px; width: 40%; margin-bottom: 4px; background: var(--line-2); }
-.ad-job { position: relative; display: flex; align-items: center; gap: 10px; padding: 9px 10px; border: 1px solid var(--line); background: var(--bg); transition: border-color .25s, box-shadow .25s; }
-.ad-job-t { flex: 1; min-width: 0; display: grid; gap: 1px; }
-.ad-job-t b { font-size: 12.5px; font-weight: 600; color: var(--ink); }
-.ad-job-t small { font-size: 11px; color: var(--ink-3); }
-.ad-apply { flex: none; font-size: 11px; font-weight: 600; padding: 4px 8px; border: 1px solid var(--line-2); color: var(--ink-2); }
-.ad-tag { position: absolute; right: 6px; top: -9px; padding: 1px 6px; background: var(--green); color: var(--on-green); font-family: var(--mono); font-size: 10px; line-height: 1.5; opacity: 0; transition: opacity .2s; }
-.ad-job.is-scan { border-color: var(--green); box-shadow: 0 0 0 3px var(--green-soft); }
-.ad-job.is-scan .ad-tag { opacity: 1; }
-.ad-job.is-read:not(.is-scan) { border-color: var(--line-2); }
-.ad-out { display: grid; gap: 5px; padding: 12px 14px 14px; border-top: 1px solid var(--win-line); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
-.ad-out-h { color: var(--ink-3); }
-.ad-out-l { opacity: 0; transform: translateY(3px); transition: opacity .3s, transform .3s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.ad-out-l::before { content: "+ "; color: var(--green); }
-.ad-out-l.is-on { opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .ad-dots i { animation: none; } }
 
 /* /integrations/{app}: use cases from the admin panel, one at a time. A tab list on the left, one
    large inverted panel on the right; the active tab's bar fills, then the next one shows. */

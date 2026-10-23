@@ -3,7 +3,7 @@
 import { usePathname } from 'next/navigation';
 import React from 'react';
 import Link from 'next/link';
-import { LinkText } from '../ui/buttons';
+import { LinkText } from '@/components/uiComponents/buttons';
 import Image from 'next/image';
 
 const BlogGrid = ({ posts, isBlack = false, showHeading = true }) => {
