@@ -4,10 +4,9 @@ import s from './addToProduct.module.scss';
 import { BASE_PROMPT, COPY, FEATURES_COPY as C } from './copy';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
-import { FeatureIcon } from './icons';
-import { VISUALS } from './FeatureVisuals';
+import FeatureGrid from './FeatureGrid';
 
-// /features: the integration layer's features in the homepage design.
+// /features: every feature of the integration layer in one grid of toggle cards (FeatureGrid.js), in the homepage design.
 
 function FaqJsonLd({ faqs }) {
     const data = {
@@ -16,66 +15,6 @@ function FaqJsonLd({ faqs }) {
         mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
     };
     return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
-}
-
-function SmallCard({ title, desc, icon, href, cta, visual }) {
-    const Visual = visual && VISUALS[visual];
-    return (
-        <li>
-            <div className={s['fx-sm-h']}>
-                <span className={s['feat-ico']}>
-                    <FeatureIcon name={icon} />
-                </span>
-                <h3>{title}</h3>
-            </div>
-            <p>{desc}</p>
-            {href && (
-                <a className={s['fx-link']} href={href}>
-                    {cta} <span aria-hidden="true">→</span>
-                </a>
-            )}
-            {Visual && (
-                <div className={`${s['fx-vis']} ${s['fx-vis-sm']}`} aria-hidden="true">
-                    <Visual />
-                </div>
-            )}
-        </li>
-    );
-}
-
-/** One group: its heading, then the large card (text beside an illustration) with the short cards next to it.
- * The featured group (Build with AI) gives every card an illustration: the large one across the top, two below. */
-function FeatureGroup({ group }) {
-    const { id, title, big, side, items, featured } = group;
-    const Visual = big && VISUALS[big[3]];
-    return (
-        <div className={`${s.fxg} ${featured ? s['fxg-feat'] : ''}`} id={id}>
-            <div className={s['fxg-h']}>
-                <h2 className={s.h2}>{title}</h2>
-            </div>
-            <ul className={`${s.fx} ${featured ? s['fx-ai'] : big ? s['fx-has-big'] : s['fx-flat']}`}>
-                {big && (
-                    <li className={`${s['fx-big']} ${side === 'right' ? s['fx-r'] : ''}`} style={featured ? undefined : { gridRow: `span ${items.length}` }}>
-                        <div className={s['fx-tx']}>
-                            <span className={s['feat-ico']}>
-                                <FeatureIcon name={big[2]} />
-                            </span>
-                            <h3>{big[0]}</h3>
-                            <p>{big[1]}</p>
-                        </div>
-                        {Visual && (
-                            <div className={s['fx-vis']} aria-hidden="true">
-                                <Visual />
-                            </div>
-                        )}
-                    </li>
-                )}
-                {items.map(([t, d, icon, opts]) => (
-                    <SmallCard key={t} title={t} desc={d} icon={icon} {...opts} />
-                ))}
-            </ul>
-        </div>
-    );
 }
 
 export default function FeaturesPage({ blogs = [] }) {
@@ -104,9 +43,7 @@ export default function FeaturesPage({ blogs = [] }) {
 
                     <section className={s['fx-sec']} aria-label="Features">
                         <div className={s.wrap}>
-                            {C.groups.map((g) => (
-                                <FeatureGroup key={g.id} group={g} />
-                            ))}
+                            <FeatureGrid features={C.features} />
                         </div>
                     </section>
 

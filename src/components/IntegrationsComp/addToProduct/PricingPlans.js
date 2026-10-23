@@ -26,24 +26,29 @@ function Plan({ plan, yearly }) {
     return (
         <li className={plan.popular ? p.pop : undefined}>
             <div className={p['plan-h']}>
-                <span className={s.eyebrow}>{plan.name}</span>
-                {plan.tag && <span className={p.tag}>{plan.tag}</span>}
+                <h3>{plan.name}</h3>
                 {plan.badge && <span className={p.badge}>{plan.badge}</span>}
             </div>
-            <p className={p.price}>
-                <b>{yearly ? plan.y : plan.m}</b>
-                {plan.per && <small>{plan.per[i]}</small>}
-            </p>
-            <p className={p.desc}>{plan.note ? plan.note[i] : plan.desc}</p>
+            <p className={p.tagline}>{plan.tagline}</p>
+            <div className={p['price-box']}>
+                {plan.launch && <span className={p.launchTag}>{C.launchLabel}</span>}
+                <p className={p.price}>
+                    <b>{yearly ? plan.y : plan.m}</b>
+                    {plan.per && <small>{plan.per[i]}</small>}
+                </p>
+                {plan.note && <p className={p.desc}>{plan.note}</p>}
+            </div>
             <ul className={p.perks}>
-                {plan.perks.map((x) => (
-                    <li key={x}>{x}</li>
-                ))}
+                {plan.perks.map((x) =>
+                    typeof x === 'string' ? (
+                        <li key={x}>{x}</li>
+                    ) : (
+                        <li key={x.text} className={x.limit ? p.limit : undefined}>
+                            {x.text}
+                        </li>
+                    )
+                )}
             </ul>
-            {plan.foot && <p className={p.foot}>{plan.foot}</p>}
-            <a className={p['rate-link']} href="/pass#rates">
-                {C.rateCard}
-            </a>
             <a className={plan.popular ? s.btn : `${s['btn-o']} ${p['btn-o']}`} href={plan.href} {...external(plan.href)}>
                 {plan.cta} <span aria-hidden="true">→</span>
             </a>
@@ -57,7 +62,6 @@ export default function PricingPlans() {
         <>
             <div className={p.billing}>
                 <BillingSwitch yearly={yearly} onChange={setYearly} />
-                <span className={p.currency}>{C.currency}</span>
             </div>
             <ul className={p.plans}>
                 {C.plans.map((plan) => (
@@ -68,25 +72,13 @@ export default function PricingPlans() {
     );
 }
 
-// The savings calculator. The free amounts (100K calls, 50K trigger events) cost nothing; above them the
-// cheaper of Pro and Business wins (each at least its monthly price). Typical alternatives charge
-// $0.0003 a call and $0.003 a trigger event, at least $29 a month once anything is used.
-const fmtCount = (n) => (n >= 1e6 ? `${(n / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 })}M` : n >= 1e3 ? `${Math.round(n / 1e3)}K` : String(n));
-const usd = (n) => `$${Math.round(n).toLocaleString('en-US')}`;
+// The plan finder: the cheapest plan whose included tasks and AI credits (each plan's `limits` in copy.js,
+// the same numbers as its card) cover the usage on the sliders. Past the largest, Enterprise.
+const fmtCount = (n) => (n >= 1e6 ? `${(n / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 })}M` : n >= 1e3 ? `${(n / 1e3).toLocaleString('en-US', { maximumFractionDigits: 1 })}K` : String(n));
 
-function estimate(calls, triggers) {
-    const overCalls = Math.max(0, calls - 100e3);
-    const overTriggers = Math.max(0, triggers - 50e3);
-    let plan = 'Free';
-    let us = 0;
-    if (overCalls > 0 || overTriggers > 0) {
-        const pro = Math.max(19, overCalls * 0.00015 + overTriggers * 0.0015);
-        const business = Math.max(99, overCalls * 0.0001 + overTriggers * 0.001);
-        [plan, us] = pro <= business ? ['Pro', pro] : ['Business', business];
-    }
-    const altUsage = overCalls * 0.0003 + overTriggers * 0.003;
-    const alt = altUsage > 0 ? Math.max(29, altUsage) : 0;
-    return { plan, us, alt, save: Math.max(0, (alt - us) * 12) };
+function bestPlan(tasks, credits) {
+    const fits = C.plans.find((pl) => pl.limits && tasks <= pl.limits.tasks && credits <= pl.limits.credits);
+    return fits || C.plans.find((pl) => !pl.limits);
 }
 
 function Slider({ label, steps, value, onChange, id }) {
@@ -113,33 +105,34 @@ function Slider({ label, steps, value, onChange, id }) {
     );
 }
 
-export function SavingsCalculator() {
-    const { calls, triggers, callsStart, triggersStart } = C.calcSteps;
-    const [ci, setCi] = useState(callsStart);
-    const [ti, setTi] = useState(triggersStart);
-    const r = estimate(calls[ci], triggers[ti]);
+export function PlanFinder() {
+    const { tasks, credits, tasksStart, creditsStart } = C.calcSteps;
+    const [ti, setTi] = useState(tasksStart);
+    const [ci, setCi] = useState(creditsStart);
+    const plan = bestPlan(tasks[ti], credits[ci]);
+    const l = plan.limits;
     return (
         <div className={p.calc}>
             <div className={p['calc-in']}>
-                <Slider id="calc-calls" label={C.calcCalls} steps={calls} value={ci} onChange={setCi} />
-                <Slider id="calc-triggers" label={C.calcTriggers} steps={triggers} value={ti} onChange={setTi} />
+                <Slider id="calc-tasks" label={C.calcTasks} steps={tasks} value={ti} onChange={setTi} />
+                <Slider id="calc-credits" label={C.calcCredits} steps={credits} value={ci} onChange={setCi} />
             </div>
             <dl className={p['calc-out']} aria-live="polite">
-                <div>
-                    <dt>{C.calcPlan}</dt>
-                    <dd>{r.plan}</dd>
-                </div>
-                <div>
-                    <dt>{C.calcUs}</dt>
-                    <dd>{usd(r.us)}</dd>
-                </div>
-                <div>
-                    <dt>{C.calcAlt}</dt>
-                    <dd>{usd(r.alt)}</dd>
-                </div>
                 <div className={p['calc-save']}>
-                    <dt>{C.calcSave}</dt>
-                    <dd>{usd(r.save)}</dd>
+                    <dt>{C.calcPlan}</dt>
+                    <dd>{plan.name}</dd>
+                </div>
+                <div>
+                    <dt>{C.calcPrice}</dt>
+                    <dd>{l ? `$${l.price}` : C.calcCustom}</dd>
+                </div>
+                <div>
+                    <dt>{C.calcTasksIncl}</dt>
+                    <dd>{l ? fmtCount(l.tasks) : C.calcCustom}</dd>
+                </div>
+                <div>
+                    <dt>{C.calcCreditsIncl}</dt>
+                    <dd>{l ? l.credits.toLocaleString('en-US') : C.calcCustom}</dd>
                 </div>
             </dl>
         </div>
