@@ -84,7 +84,8 @@
 .ops-muted { color: var(--ink-3); }
 .ops-small { font-size: 12px; }
 .ops-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-.ops-stack { display: grid; gap: 10px; }
+.ops-stack { display: grid; gap: 10px; align-content: start; }
+.ops-stack > .ops-pill { justify-self: start; }
 
 .ops-table { width: 100%; border-collapse: collapse; background: var(--s1); border: 1px solid var(--line); }
 .ops-table th, .ops-table td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
@@ -169,3 +170,7 @@
   .ops-main { padding: 20px 16px 48px; }
   .ops-attn li { grid-template-columns: 1fr; }
 }
+
+/* The root layout still renders the public site's chat button on /internal (its script is blocked by
+   the CSP, so it would do nothing). Hide it here; the real fix is a separate root layout (B-8). */
+body:has(.ops) [class*='chat_widget'] { display: none !important; }
