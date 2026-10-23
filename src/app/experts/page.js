@@ -125,7 +125,7 @@ export default async function ExpertsPage() {
                                         {expertsHelpBlog?.link && (
                                             <Link
                                                 target="_blank"
-                                                href="https://viasocket.com/help/partners/experts-partner-program"
+                                                href="https://viasocket.com/help/partners/agency-partner-program"
                                                 className="flex items-center mt-auto text-[#4485F2]"
                                             >
                                                 Learn More <ChevronRight className="w-5 h-5" />
