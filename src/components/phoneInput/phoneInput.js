@@ -8,6 +8,18 @@ const regionNames = new Intl.DisplayNames(['en'], { type: 'region' });
 
 export const DEFAULT_COUNTRY_ISO = 'IN';
 
+// One lookup per page load, shared by every PhoneInput on the page. /experts renders a form per
+// agency card, and a lookup each sent a dozen requests that ipapi.co rate-limited (HTTP 429).
+let countryIsoPromise = null;
+const detectCountryIso = () =>
+    (countryIsoPromise ??= fetch('https://ipapi.co/json/', { headers: { Accept: 'application/json' } })
+        .then((response) => (response.ok ? response.json() : null))
+        .then((data) => data?.country_code || null)
+        .catch((error) => {
+            console.error('Could not detect the country:', error?.message || error);
+            return null;
+        }));
+
 // Dial codes come from google-libphonenumber rather than a list of our own, so
 // they stay correct as the library is updated. Built once per page load.
 export const COUNTRY_CODES = phoneUtil
@@ -63,21 +75,10 @@ export default function PhoneInput({
     useEffect(() => {
         let active = true;
 
-        const detectCountry = async () => {
-            try {
-                const response = await fetch('https://ipapi.co/json/', { headers: { Accept: 'application/json' } });
-                if (!response.ok) return;
-
-                const { country_code: iso } = await response.json();
-                if (!active || !COUNTRY_CODES.some((country) => country.iso === iso)) return;
-
-                emit(iso, valueRef.current);
-            } catch (error) {
-                console.error('Could not detect the country:', error?.message || error);
-            }
-        };
-
-        detectCountry();
+        detectCountryIso().then((iso) => {
+            if (!active || !COUNTRY_CODES.some((country) => country.iso === iso)) return;
+            emit(iso, valueRef.current);
+        });
         return () => {
             active = false;
         };
