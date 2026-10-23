@@ -57,16 +57,21 @@ export async function generateMetadata({ params }) {
 export default async function McpPage({ params }) {
     const { slug = [] } = await params;
     
+    let data;
     try {
-        const data = await getMCPPageData(slug);
-        
-        if (data.noData) {
-            return <ErrorComp footerData={data.footerData} />;
-        }
-
-      return <McpMain data={data} />;
+        data = await getMCPPageData(slug);
     } catch (error) {
         console.error('Error rendering MCP page:', error);
         return notFound();
     }
+
+    // An app or category the data source doesn't know is a real 404 (C-09). When the source failed,
+    // the page keeps rendering its error state instead, so a valid URL isn't reported as gone.
+    if (data.unknownSlug) notFound();
+
+    if (data.noData) {
+        return <ErrorComp footerData={data.footerData} />;
+    }
+
+    return <McpMain data={data} />;
 }

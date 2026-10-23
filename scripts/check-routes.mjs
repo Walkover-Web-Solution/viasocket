@@ -126,6 +126,12 @@ const ROUTES = [
     { path: '/blogs/zz-unknown-post', status: 404, notFound: true },
     { path: '/departments/zz-unknown-dept', status: 404, notFound: true },
     { path: '/feedback', status: 404, notFound: true },
+    // Unknown slugs that were soft 404s (HTTP 200) until 2026-10-23 (C-09)
+    { path: '/find-apps/a/slack', status: 404, notFound: true },
+    { path: '/mcp/zz-unknown-app-xyz', status: 404, notFound: true },
+    { path: '/mcp/category/zz-unknown-cat', status: 404, notFound: true },
+    { path: '/integrations/category/zz-unknown-cat', status: 404, notFound: true },
+    { path: '/features/zz-unknown-feature', status: 404, notFound: true },
 ];
 
 // SEO files: checked by content, not by HTML fields.

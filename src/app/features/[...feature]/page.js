@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getFeaturesPageData } from '@/app/lib/feature-data';
 import FeaturesClient from '@/app/components/features/FeaturesClient';
 import { getHasToken } from '@/app/lib/getAuth';
@@ -53,6 +54,10 @@ export default async function FeaturesPage({ params }) {
         const feature = resolvedParams.feature || [];
         const data = await getFeaturesPageData(feature);
         const hasToken = await getHasToken();
+
+        // A feature slug the table doesn't have is a real 404 (C-09). notFound() throws, so the
+        // catch below re-throws it instead of rendering its error message.
+        if (data.unknownFeature) notFound();
         
         if (data.noData) {
             return (
@@ -65,6 +70,7 @@ export default async function FeaturesPage({ params }) {
         
         return <FeaturesClient data={data} hasToken={hasToken} />;
     } catch (error) {
+        if (error?.digest?.startsWith?.('NEXT_HTTP_ERROR_FALLBACK')) throw error;
         console.error('Error in FeaturesPage:', error);
         return (
             <div className="container py-20 text-center">
