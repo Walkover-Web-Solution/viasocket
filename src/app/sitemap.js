@@ -49,6 +49,7 @@ const STATIC_ROUTES = [
     '/support',
     '/terms',
     '/webinar',
+    '/welcome',
     '/workflow-automation-ideas',
     '/workflow-automations',
 ];
