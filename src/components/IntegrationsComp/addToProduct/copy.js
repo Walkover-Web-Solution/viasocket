@@ -83,7 +83,7 @@ export function promptFor({ name }) {
 export const NAV = [
     ['Features', '/features'],
     ['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'],
-    ['Pricing', 'https://viasocket.com/developers/pricing'],
+    ['Pricing', '/pricing'],
     ['Log in', 'https://flow.viasocket.com/integrations'],
 ];
 export const START_URL = 'https://flow.viasocket.com/integrations';
@@ -350,4 +350,225 @@ export const LETTER_COPY = {
         ['p', 'Earlier, you came to viaSocket to build an automation.'],
         ['strong', 'Now, bring viaSocket into what you’re building.'],
     ],
+};
+
+// /pricing: plans, the savings calculator and the viaSocket Pass
+const SALES_URL = 'https://cal.id/team/viasocket/embed-viasocket';
+export const PRICING_COPY = {
+    metaTitle: 'Pricing · viaSocket',
+    metaDesc: '100K calls and 50K trigger events free every month, on every plan. Higher plans take more off your usage.',
+
+    h1: 'Cheaper than building and maintaining it yourself.',
+    sub: '100K calls and 50K trigger events free every month, on every plan. Higher plans take more off your usage.',
+    launch: 'Launch pricing, for a limited time. Subscribe to Pro or Business now and pay the launch price for your first 6 months, or your first year on annual. Launch pricing may end any time.',
+    currency: 'Prices in USD',
+    yearlyNote: '2 months free',
+    rateCard: 'See full rate card',
+
+    // m / y: the price monthly and on annual billing; per: the suffix; note: the line under the price
+    plans: [
+        {
+            name: 'Free',
+            m: '$0',
+            y: '$0',
+            desc: 'For building and testing',
+            perks: ['100K calls a month', '50K trigger events a month', '$2 in your viaSocket Pass, on us for your first month, at standard usage rates'],
+            foot: 'Stops when the free usage is used up.',
+            cta: 'Start free',
+            href: START_URL,
+        },
+        {
+            name: 'Pro',
+            tag: 'Launch price',
+            m: '$19',
+            y: '$190',
+            per: ['/mo', '/yr'],
+            note: ['For your first 6 months', 'For your first year'],
+            perks: ['Everything in Free', '$19 of usage in your viaSocket Pass every month', 'Usage 40% cheaper', 'Worth about 225K calls a month', 'Lower prices on AI and tools'],
+            cta: 'Start with Pro',
+            href: START_URL,
+        },
+        {
+            name: 'Business',
+            tag: 'Launch price',
+            badge: 'Best value',
+            m: '$99',
+            y: '$990',
+            per: ['/mo', '/yr'],
+            note: ['For your first 6 months', 'For your first year'],
+            perks: ['Everything in Free', '$99 of usage in your viaSocket Pass every month', 'Usage 60% cheaper', 'Worth about 1.1M calls a month', 'Our lowest prices on AI and tools'],
+            cta: 'Start with Business',
+            href: START_URL,
+            popular: true,
+        },
+        {
+            name: 'Enterprise',
+            m: 'Custom',
+            y: 'Custom',
+            note: ['Billed annually', 'Billed annually'],
+            perks: ['Everything in Business', 'Usage up to 75% cheaper', 'Custom terms and support'],
+            cta: 'Talk to us',
+            href: SALES_URL,
+        },
+    ],
+    everyPlanLabel: 'Every plan:',
+    everyPlan: ['2,300+ integrations', 'Unlimited connected accounts', 'Unlimited users and seats', 'Unlimited workflows, projects and environments'],
+    passLinkLead: 'Usage rates, beyond the free amounts',
+    passLink: 'See viaSocket Pass ›',
+
+    // The savings calculator: the sliders step through these amounts
+    calcTitle: "See what you'd save",
+    calcLead: 'Move the sliders to your monthly usage.',
+    calcCalls: 'Calls a month',
+    calcTriggers: 'Trigger events a month',
+    calcPlan: 'Best plan for you',
+    calcUs: 'viaSocket a month',
+    calcAlt: 'Typical alternatives a month',
+    calcSave: 'You save a year',
+    calcNote: "At launch prices, billed monthly. Typical alternatives use public per-call and per-event pricing from leading integration platforms, October 2026. AI and tools from your Pass aren't included.",
+    calcSteps: {
+        calls: [0, 50e3, 100e3, 150e3, 200e3, 300e3, 400e3, 500e3, 750e3, 1e6, 1.5e6, 2e6, 3e6, 4e6, 5e6, 7.5e6, 10e6, 12e6, 20e6, 30e6],
+        triggers: [0, 25e3, 50e3, 75e3, 100e3, 150e3, 200e3, 300e3, 500e3, 750e3, 1e6, 1.5e6, 2e6, 3e6],
+        callsStart: 5,
+        triggersStart: 3,
+    },
+
+    salesUrl: SALES_URL,
+
+    faqEyebrow: 'FAQ',
+    faqTitle: 'Pricing questions, answered',
+    // [question, answer, optional link at the end of the answer]
+    faqs: [
+        ['What counts as a call?', 'An action your product runs through viaSocket, or one step of an automation. Connected accounts, users and seats are never billed.'],
+        ['And trigger events?', "A trigger event is billed only when it's delivered. A poll that finds nothing is free."],
+        ['What does the included usage cover?', "Free gets $2 on us for the first month. Pro includes $19 and Business $99 of usage in your viaSocket Pass every month, at your plan's rates. It resets each month."],
+        ['What does launch pricing mean?', 'Subscribe to Pro or Business while launch pricing lasts and you pay the launch price for your first 6 months, or your first year on annual. After that, Pro is $25/mo and Business $199/mo. Launch pricing may end any time.'],
+        ['What is the Pass?', 'Your balance for usage beyond the free amounts, and for paid AI and tools with no API keys of your own.', ['How the Pass works', '/pass']],
+        ['Can I change plans later?', 'Yes, upgrade or downgrade any time. Annual plans get 2 months free.'],
+    ],
+};
+
+// /pass: the viaSocket Pass, the balance that pays for usage, AI and tools
+export const PASS_COPY = {
+    metaTitle: 'viaSocket Pass · viaSocket',
+    metaDesc: "One Pass for everything your product uses. It pays for calls, trigger events and AI at your plan's rates, plus built-in tools and other platforms with no keys to manage.",
+
+    passEyebrow: 'viaSocket Pass',
+    passTitle: 'One Pass for everything your product uses',
+    passLead: "Your plan's included usage and anything you add sit in one Pass. It pays for calls, trigger events and AI at your plan's rates, plus built-in tools and other platforms with no keys to manage.",
+    passCta: 'Get your Pass',
+    passNote: 'Every plan includes 100K calls and 50K trigger events a month before the Pass is used.',
+    passCard: {
+        title: 'viaSocket Pass',
+        status: 'Auto top-up on',
+        label: 'Balance',
+        balance: '$42.30',
+        sub: 'Top-ups never expire',
+        rows: [
+            ['Calls, 1,000', '$0.15'],
+            ['AI model, summary', '$0.004'],
+            ['Web search', '$0.005'],
+            ['Contact enrichment', '$0.020'],
+        ],
+        note: 'Example charges on Pro.',
+    },
+
+    ratesTitle: 'Rates: calls, trigger events and AI',
+    ratesCols: ['Beyond the free amounts', 'Free', 'Pro', 'Business', 'Typical alternatives'],
+    ratesRows: [
+        ['Call', '$0.00025', '$0.00015', '$0.0001', '$0.0003'],
+        ['Trigger event', '$0.0025', '$0.0015', '$0.001', '$0.003'],
+        ['AI calls, per model', 'Standard', 'Lower', 'Lowest', 'Varies'],
+        ['Usage', 'Standard rates', '40% cheaper', '60% cheaper', 'n/a'],
+        ['Included in your Pass', '$2 on us, first month', '$19 a month', '$99 a month', 'n/a'],
+        ['Worth, with the free calls', 'n/a', 'About 225K calls', 'About 1.1M calls', 'n/a'],
+    ],
+    ratesNote: "A call is an action run or an automation step. A trigger event is billed only when it's delivered; a poll that finds nothing is free. Free stops when its free amounts and the $2 on us are used. Enterprise rates are custom.",
+
+    toolsTitle: 'Pass: built-in tools and other platforms',
+    toolsLead: 'Paid per use from your Pass, on every plan. Pro pays less and Business pays least.',
+    toolsCols: ['Tool', 'Charged per', 'Free', 'Pro', 'Business'],
+    // [group, [[tool, charged per, free, pro, business]]]
+    toolsGroups: [
+        [
+            'Built-in tools',
+            [
+                ['Web search', 'Search', 'To be set', 'To be set', 'To be set'],
+                ['Page reading', 'Page', 'To be set', 'To be set', 'To be set'],
+                ['SMS', 'Message, by country', 'To be set', 'To be set', 'To be set'],
+                ['WhatsApp message', 'Message', 'To be set', 'To be set', 'To be set'],
+            ],
+        ],
+        [
+            'Other platforms',
+            [
+                ['Contact and company data', 'Lookup', 'To be set', 'To be set', 'To be set'],
+                ['Web scraping', 'Page', 'To be set', 'To be set', 'To be set'],
+                ['Voice generation', 'Minute', 'To be set', 'To be set', 'To be set'],
+                ['Transcription', 'Minute', 'To be set', 'To be set', 'To be set'],
+                ['Image generation', 'Image', 'To be set', 'To be set', 'To be set'],
+            ],
+        ],
+    ],
+    toolsNote: 'Every other tool is charged at its own listed price per use, shown before you use it and in your logs.',
+
+    vsTitle: 'One Pass instead of a pile of subscriptions',
+    vsLead: 'Your product only needs a few calls from each tool. Pay for those calls, not for the plans.',
+    vsSubs: {
+        title: 'Separate subscriptions',
+        rows: [['Search', '$49/mo'], ['Email finder', '$49/mo'], ['Voice', '$22/mo'], ['Scraping', '$19/mo']],
+        total: ['Every month, used or not', '$139'],
+    },
+    vsPass: {
+        title: 'viaSocket Pass',
+        rows: [['Search, 1 call', '$0.005'], ['Email finder, 1 call', '$0.020'], ['Voice, 1 call', '$0.090'], ['Scraping, 1 call', '$0.003']],
+        total: ['Only what you use', '$0.118'],
+    },
+    vsNote: 'Illustrative prices.',
+
+    controlTitle: 'You stay in control',
+    // [title, text, icon]
+    control: [
+        ['Fill it your way', 'Add any amount. Pro and Business include monthly usage. What you add never expires.', 'apps'],
+        ['Auto top-up', 'Refill automatically when it runs low, so your product never stops mid-run.', 'retry'],
+        ['See and switch off', "Every run's cost shows in your logs, by tool and by user. Turn the Pass off for a project in one click.", 'pulse'],
+    ],
+    // [title, lead, points]
+    controlNotes: [
+        ["Your users' own accounts", 'Never charged to your Pass', ['Calls through accounts your users connect count toward your plan', 'Use them alongside Pass tools in the same run']],
+        ['When your Pass runs out', 'Only Pass tools pause', ["Your users' connected accounts keep working", 'Add funds or turn on auto top-up to carry on']],
+    ],
+    salesUrl: SALES_URL,
+    pricingLink: ['See plans and pricing', '/pricing'],
+
+    faqEyebrow: 'FAQ',
+    faqTitle: 'Pass questions, answered',
+    faqs: [
+        ['What is the Pass?', "Your viaSocket balance. It holds your plan's included usage and anything you add, and pays for calls, trigger events, AI, built-in tools and other platforms, with no API keys of your own."],
+        ['How does it work with my plan?', 'Your plan sets your rates and puts its included usage in your Pass each month. Everything your product uses is paid from the Pass at those rates.'],
+        ['Does my balance expire?', "What you add never expires. Your plan's monthly usage resets each month."],
+        ['Which plans can use it?', 'All of them. Free pays per use; Pro pays less; Business pays least.'],
+        ['How do I build with it?', 'Your coding agent calls Pass tools the same way as any integration. No keys to add.'],
+        ['How do I see what I spent?', 'Billing shows your balance and spend by tool. Logs show the cost of every run.'],
+    ],
+};
+
+// /blogs and /blogs/{slug}
+export const BLOGS_COPY = {
+    metaTitle: 'Blog · viaSocket',
+    metaDesc: 'Guides, product updates and lessons from building the integration layer for products and AI agents.',
+
+    eyebrow: 'Blog',
+
+    emptyTitle: 'The first posts are on their way.',
+    emptyText: 'We are writing them now. Until then, see what the integration layer does.',
+    emptyLink: 'Explore the features',
+
+    backLink: 'All posts',
+    shareLabel: 'Share this article',
+    tocTitle: 'Jump to section',
+    // The card that slides in on a post once the reader scrolls down
+    promoTitle: '100K calls and 50K trigger events free every month.',
+    promoCta: 'Start free',
+    moreTitle: 'Keep reading',
 };
