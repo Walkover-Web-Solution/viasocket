@@ -36,3 +36,6 @@ yarn-error.log*
 next-env.d.ts
 .claude/
 
+
+# website-ops local dev store (scripts/ops/store-server.mjs)
+/.ops-data/
