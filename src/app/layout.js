@@ -3,6 +3,7 @@ import AppProvider from './providers';
 import RedditPixel from './components/RedditPixel/RedditPixel';
 import VariantTracker from './components/VariantTracker/VariantTracker';
 import TrackingCookies from './components/VariantTracker/TrackingCookies';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 export const metadata = {
     title: 'viaSocket',
@@ -51,7 +52,7 @@ export default function RootLayout({ children }) {
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
+                        __html: serializeJsonLd({
                             '@context': 'https://schema.org',
                             '@type': 'Organization',
                             '@id': 'https://viasocket.com/#organization',

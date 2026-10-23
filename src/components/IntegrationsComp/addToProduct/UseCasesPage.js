@@ -5,6 +5,7 @@ import { BASE_PROMPT, USECASES_COPY as C } from './copy';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import { FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import UseCaseGrid from './UseCaseGrid';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // /use-cases: what people build with viaSocket, in the homepage design.
 
@@ -14,7 +15,7 @@ function FaqJsonLd({ faqs }) {
         '@type': 'FAQPage',
         mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
     };
-    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />;
 }
 
 export default function UseCasesPage() {
