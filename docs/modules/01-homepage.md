@@ -28,7 +28,7 @@ verified_on: 2026-10-22
 ---
 
 ## Navigation Flow
-1. Visitors land on `/` directly (ads, search). Middleware also 307s `/home` to `/`.
+1. Visitors land on `/` directly (ads, search). `/home` is a separate minimal Next route (`src/app/home/page.js`), not the static homepage.
 2. On the page they copy the setup prompt (hero), filter and preview use cases, copy a sample prompt, read the features table and FAQ, or open the support chat.
 3. Every link leaves the page as an absolute URL: `/features`, `/use-cases`, `/integrations`, `/developers/pricing` and `/experts-are-live` on viasocket.com, "Start free"/"Log in" on flow.viasocket.com/integrations, and cal.id for "Book a demo". The page has no `/signup` CTA and writes no `utmData` cookie ([FLOWS](../FLOWS.md#4-alternative-branches)).
 
@@ -51,10 +51,10 @@ verified_on: 2026-10-22
 
 All content is hardcoded in the HTML and in `main.js` constants (`IC` app icons, `GAL` examples, `PR` prompts). The page fetches no data.
 
-### 2. Dormant Next homepage (`src/app/page.js`, `src/app/home/page.js`, `src/app/front-page/**`)
+### 2. Dormant Next homepage (`src/app/page.js`, `src/app/front-page/**`)
 
 > [!WARNING]
-> **Do not edit these for homepage changes.** `src/app/page.js:HomePage` (A/B variants via `src/utils/getVariant.js:getVariant`, `IndexPageContent` for the front-page design) and `src/app/home/page.js` still build but never render, because of the rewrite and the `/home` redirect in `src/middleware.js`. They are kept on purpose as the rollback path (reverting merge `cfdae23e` on `main` restores the A/B homepage) and will be retired once the new homepage has run stably for a few weeks (C-01, decided for now; [DECISIONS ADR-008](../DECISIONS.md#adr-008-serve--from-the-static-site-in-publicnew-home)).
+> **Do not edit these for homepage changes.** `src/app/page.js:HomePage` (A/B variants via `src/utils/getVariant.js:getVariant`, `IndexPageContent` for the front-page design) still builds but never renders, because `/` is rewritten to `public/new-home/`. It is kept on purpose as the rollback path (reverting merge `cfdae23e` on `main` restores the A/B homepage) and will be retired once the new homepage has run stably for a few weeks (C-01, decided for now; [DECISIONS ADR-008](../DECISIONS.md#adr-008-serve--from-the-static-site-in-publicnew-home)). `/home` is unrelated: it is a minimal placeholder in `src/app/home/page.js`.
 
 ---
 

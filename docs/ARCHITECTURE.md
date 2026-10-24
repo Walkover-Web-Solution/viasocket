@@ -95,7 +95,7 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
 2. **`public/_redirects`.** One `/faq/*` rule. `/faq` itself is answered by another deployment.
 3. **`next.config.js` `redirects()`.** These run *before* middleware. Because of them, `src/app/embed/page.js` and `src/app/mcp/page.js` never render. Their sub-routes, such as `/embed/app-integration` and `/mcp/[...slug]`, still do.
 4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot. Middleware does three things:
-   - It redirects `/home` to `/` with a 307, so `src/app/home/page.js` never renders.
+   - `/home` is served by `src/app/home/page.js` (minimal placeholder). Middleware skips managed redirects for that path; the admin panel should drop its legacy `/home` → `/` rule to match.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
 5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html`. Production shows `x-matched-path: /new-home/index.html` for `/`.
@@ -117,7 +117,7 @@ Every `page.js` and route handler that is not static exports `runtime = 'edge'`.
 
 **Static homepage (`/`).** It consists of `public/new-home/index.html`, `public/new-home/main.js` and `public/new-home/styles.css`. It is plain HTML and ES5 JavaScript with its own GTM snippet (`GTM-THTCRSLN`), canonical tag and JSON-LD. It does not load `src/app/layout.js`, `src/scss/global.scss`, Tailwind, Zaraz, `TrackingCookies` or `VariantTracker`. It loads the gtwy.ai chat itself through `public/new-home/assets/support.js` (opened by `[data-chat]` buttons). It also never calls `/api/track-variant`. Its links are absolute `https://viasocket.com/...` URLs.
 
-**Unused React homepage.** `src/app/page.js` (A/B variants A and B, with B rendering `src/app/front-page/IndexPageContent.js`) and `src/app/home/page.js` (with `src/app/components/new-home/*`) still compile, but neither is reachable. Whether to keep them is open. Do not delete them ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)).
+**Unused React homepage.** `src/app/page.js` (A/B variants A and B, with B rendering `src/app/front-page/IndexPageContent.js`) still compiles but is unreachable because `/` is rewritten to the static site. Whether to keep it is open. Do not delete it ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). `/home` is a separate minimal route in `src/app/home/page.js`.
 
 **Every other route** goes through the root layout, `src/app/layout.js:RootLayout`:
 1. It imports `src/scss/global.scss`, which applies to every React page.
@@ -235,7 +235,7 @@ The pieces, in order:
 
 ## SEO Files: Sitemap & Robots
 
-- `src/app/sitemap.js:STATIC_ROUTES` produces `/sitemap.xml` with the routes that have no params, except `/use-cases` and `/new-direction`, which it does not list yet ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08). Dynamic pages are listed in the plug-service sitemap, which robots.txt references. The list still includes `/home`, which 307-redirects to `/`.
+- `src/app/sitemap.js:STATIC_ROUTES` produces `/sitemap.xml` with the routes that have no params, except `/use-cases` and `/new-direction`, which it does not list yet ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08). Dynamic pages are listed in the plug-service sitemap, which robots.txt references. The list includes `/home`, which renders `src/app/home/page.js`.
 - **robots.txt is defined twice with the same content.** `build-utilities/generate-robots-txt.js:generateRobots` runs as `prebuild` and writes `public/robots.txt`. `src/app/robots.txt/route.js:GET` decides at request time, from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` and the hostname. **Production appears to serve the route.** On 2026-10-21, `/robots.txt` returned `content-type: text/plain` with no charset, which matches the route's explicit header. Static files such as `/llms.txt` return `text/plain; charset=utf-8`. To change robots, edit both files, or settle which one stays ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). <!-- verify:ignore -->
 - Non-prod environments are kept out of search in three ways: `Disallow: /` in both robots generators, `noindex` in the root `metadata`, and the `Disallow` that applies to integration subdomains.
 
