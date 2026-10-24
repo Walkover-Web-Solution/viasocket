@@ -1,0 +1,617 @@
+{
+  "version": 1,
+  "updated_on": "2026-10-23",
+  "review_cadence_days": {
+    "direct": 30,
+    "indirect": 90,
+    "substitute": 90
+  },
+  "research_scope": "Compare products that let SaaS and AI-agent builders give their end users connections to third-party apps: managed OAuth and token refresh, per-user (multi-tenant) connections, actions callable from code or as agent tools/MCP, triggers and webhooks, embeddable branded connect UI, custom connectors, monitoring, setup via coding agents, app-count claims, public pricing model and starting price, compliance badges and customer proof. Look first at each vendor's homepage hero, pricing page, docs (auth, white-label, MCP) and changelog; use search results only to find pages, and mark search-only facts. Record URL and date for every fact, quote at most 15 words, and treat missing public evidence as 'not found on public pages'. Generic substitutes (build in-house, spreadsheets/manual, doing nothing) are tracked in docs/COMPETITORS.md, not here.",
+  "competitors": [
+    {
+      "id": "composio",
+      "name": "Composio",
+      "url": "https://composio.dev",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Per-user managed auth, agent tools, MCP and triggers for developers building AI apps and agents.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/composio.md",
+      "sources": [
+        "https://composio.dev",
+        "https://composio.dev/pricing",
+        "https://composio.dev/toolkits",
+        "https://docs.composio.dev/docs/auth-configuration/white-labeling",
+        "https://composio.dev/blog/composio-may-2026-security-incident"
+      ],
+      "watch": [
+        "https://composio.dev/pricing",
+        "https://docs.composio.dev/reference/changelog",
+        "https://composio.dev/blog",
+        "https://composio.dev"
+      ],
+      "notes": "Pro $29/mo; 1,500+ apps claimed. May 2026 security incident documented by Composio; do not use in copy."
+    },
+    {
+      "id": "pipedream-connect",
+      "name": "Pipedream Connect",
+      "url": "https://pipedream.com/connect",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Managed end-user auth, actions, triggers and MCP for apps and agents; hero line nearly identical to viaSocket's.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/pipedream-connect.md",
+      "sources": [
+        "https://pipedream.com/connect",
+        "https://pipedream.com/pricing",
+        "https://pipedream.com/docs/connect",
+        "https://pipedream.com/docs/workflows"
+      ],
+      "watch": [
+        "https://pipedream.com/pricing",
+        "https://pipedream.com/docs/changelog",
+        "https://pipedream.com/docs/workflows",
+        "https://pipedream.com/connect"
+      ],
+      "notes": "Bills $2/external user/mo after 100. Workflows product shuts down 2027-03-31; Connect continues. Workday ownership per press/SEC, not on site."
+    },
+    {
+      "id": "nango",
+      "name": "Nango",
+      "url": "https://nango.dev",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Code-first integration infrastructure (auth, actions, syncs, MCP) for SaaS products and AI agents.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/nango.md",
+      "sources": [
+        "https://nango.dev/",
+        "https://nango.dev/pricing",
+        "https://nango.dev/docs/guides/auth/customize-connect-ui",
+        "https://nango.dev/docs/updates/changelog"
+      ],
+      "watch": [
+        "https://nango.dev/pricing",
+        "https://nango.dev/docs/updates/changelog",
+        "https://nango.dev/"
+      ],
+      "notes": "Agent-led onboarding (paste prompt into coding agent) since 2026-06-01. Open source; branding needs $450/mo add-on."
+    },
+    {
+      "id": "paragon",
+      "name": "Paragon",
+      "url": "https://www.useparagon.com",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Embedded Connect Portal for end-user auth plus ActionKit actions/MCP for AI agents and SaaS products.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/paragon.md",
+      "sources": [
+        "https://www.useparagon.com/",
+        "https://www.useparagon.com/pricing",
+        "https://www.useparagon.com/actionkit",
+        "https://www.useparagon.com/product/actionkit",
+        "https://docs.useparagon.com/changelog/product-updates"
+      ],
+      "watch": [
+        "https://www.useparagon.com/pricing",
+        "https://docs.useparagon.com/changelog/product-updates",
+        "https://www.useparagon.com/product/actionkit",
+        "https://www.useparagon.com/"
+      ],
+      "notes": "No public price; action counts conflict (1000+/300+/130+). Existing site tables cite unsourced Paragon values."
+    },
+    {
+      "id": "prismatic",
+      "name": "Prismatic",
+      "url": "https://www.prismatic.io",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Embedded iPaaS for B2B SaaS whose built flows are exposed to AI agents via MCP.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/prismatic.md",
+      "sources": [
+        "https://www.prismatic.io/",
+        "https://prismatic.io/pricing/",
+        "https://prismatic.io/platform/mcp-for-ai-agents/",
+        "https://prismatic.io/docs/changelog/"
+      ],
+      "watch": [
+        "https://prismatic.io/pricing/",
+        "https://prismatic.io/docs/changelog/",
+        "https://prismatic.io/platform/mcp-for-ai-agents/"
+      ],
+      "notes": "190+ connectors; per-instance pricing not public. Site table's '~$500/mo, no free tier' is unsupported."
+    },
+    {
+      "id": "stackone",
+      "name": "StackOne",
+      "url": "https://www.stackone.com",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "AI agent integration platform with per-user linked accounts, MCP per connector and a white-label OEM plan.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/stackone.md",
+      "sources": [
+        "https://www.stackone.com/",
+        "https://www.stackone.com/pricing",
+        "https://www.stackone.com/changelog"
+      ],
+      "watch": [
+        "https://www.stackone.com/pricing",
+        "https://www.stackone.com/changelog",
+        "https://www.stackone.com/"
+      ],
+      "notes": "570+ connectors, 35,000+ actions. Leads on agent security (prompt-injection guard, PII redaction)."
+    },
+    {
+      "id": "membrane",
+      "name": "Membrane (formerly Integration.app)",
+      "url": "https://getmembrane.com",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Per-tenant connections, actions and events for products and agents, with AI-generated connectors.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/membrane.md",
+      "sources": [
+        "https://getmembrane.com/",
+        "https://getmembrane.com/articles/all/membrane-core-start-building-product-integrations-for-free",
+        "https://docs.getmembrane.com/"
+      ],
+      "watch": [
+        "https://getmembrane.com/pricing",
+        "https://changelog.getmembrane.com/",
+        "https://getmembrane.com/"
+      ],
+      "notes": "integration.app 301-redirects here. Claims 100,000+ integrations. Pricing page rendered empty; figures from Jan 2026 article."
+    },
+    {
+      "id": "albato-embedded",
+      "name": "Albato Embedded",
+      "url": "https://albato.com/embedded",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "White-label integrations and embeddable AI agents inside SaaS products, sold to SaaS companies.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/albato-embedded.md",
+      "sources": [
+        "https://albato.com/",
+        "https://albato.com/embedded",
+        "https://albato.com/embedded/pricing",
+        "https://albato.com/embedded/security"
+      ],
+      "watch": [
+        "https://albato.com/embedded/pricing",
+        "https://albato.com/embedded",
+        "https://albato.com/embedded/ai-rollups"
+      ],
+      "notes": "From $3,000/mo, sales-led, 4-8 week rollout. No public changelog found."
+    },
+    {
+      "id": "arcade",
+      "name": "Arcade.dev",
+      "url": "https://www.arcade.dev",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Per-user OAuth agent tools and MCP runtime, positioned as enterprise governance for agent actions.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/arcade.md",
+      "sources": [
+        "https://www.arcade.dev",
+        "https://www.arcade.dev/pricing",
+        "https://docs.arcade.dev"
+      ],
+      "watch": [
+        "https://www.arcade.dev/pricing",
+        "https://docs.arcade.dev/en/home/changelog",
+        "https://www.arcade.dev"
+      ],
+      "notes": "Triggers and white-label connect UI not found on public pages. Team $25/mo + usage."
+    },
+    {
+      "id": "cyclr",
+      "name": "Cyclr",
+      "url": "https://cyclr.com",
+      "category": "direct",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Embedded iPaaS marketplace where SaaS end users connect apps, plus MCP PaaS.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/cyclr.md",
+      "sources": [
+        "https://cyclr.com/",
+        "https://cyclr.com/pricing",
+        "https://cyclr.com/product/mcp-paas",
+        "https://cyclr.com/security-and-compliance"
+      ],
+      "watch": [
+        "https://cyclr.com/pricing",
+        "https://cyclr.com/product/mcp-paas",
+        "https://cyclr.com/blog"
+      ],
+      "notes": "600+ connectors; from $1,595/mo."
+    },
+    {
+      "id": "zapier",
+      "name": "Zapier (MCP / Embedded MCP / Powered by Zapier)",
+      "url": "https://zapier.com/developer-platform",
+      "category": "indirect",
+      "status": "confirmed",
+      "relevance": "high",
+      "overlap": "Pitches 'your product or AI agent' with embedded per-user MCP, but embed routes depend on Zapier accounts and an App Directory listing.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/zapier.md",
+      "sources": [
+        "https://zapier.com/developer-platform",
+        "https://zapier.com/mcp",
+        "https://zapier.com/pricing",
+        "https://docs.zapier.com/mcp/embed/getting-started",
+        "https://docs.zapier.com/powered-by-zapier/introduction"
+      ],
+      "watch": [
+        "https://zapier.com/pricing",
+        "https://zapier.com/mcp",
+        "https://zapier.com/developer-platform",
+        "https://docs.zapier.com/mcp/embed/getting-started"
+      ],
+      "notes": "9,000+ apps; MCP call = 2 tasks; embed pricing not public. AI Actions deprecation seen only in search/community."
+    },
+    {
+      "id": "merge",
+      "name": "Merge (Unified API + Agent Handler)",
+      "url": "https://www.merge.dev",
+      "category": "indirect",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Unified API with normalised data models; Agent Handler offers per-user MCP tools to agent builders.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/merge.md",
+      "sources": [
+        "https://www.merge.dev/",
+        "https://www.merge.dev/pricing",
+        "https://www.merge.dev/agent-handler",
+        "https://www.merge.dev/pricing/agent-handler"
+      ],
+      "watch": [
+        "https://www.merge.dev/pricing",
+        "https://www.merge.dev/pricing/agent-handler",
+        "https://www.merge.dev/changelog"
+      ],
+      "notes": "Launch $650/mo for 10 linked accounts; Agent Handler Pro $1,000/mo."
+    },
+    {
+      "id": "unified-to",
+      "name": "Unified.to",
+      "url": "https://unified.to",
+      "category": "indirect",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Real-time unified API with embedded auth and per-connection MCP for B2B SaaS and agents.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/unified-to.md",
+      "sources": [
+        "https://unified.to/",
+        "https://unified.to/pricing",
+        "https://unified.to/mcp"
+      ],
+      "watch": [
+        "https://unified.to/pricing",
+        "https://unified.to/changelog"
+      ],
+      "notes": "From $750/mo; no free tier."
+    },
+    {
+      "id": "workato-embedded",
+      "name": "Workato Embedded",
+      "url": "https://workato.com/ai/embedded",
+      "category": "indirect",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Enterprise embedded iPaaS that SaaS companies white-label for their customers.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/workato-embedded.md",
+      "sources": [
+        "https://workato.com/ai/embedded",
+        "https://www.workato.com/pricing",
+        "https://docs.workato.com/en/oem.html"
+      ],
+      "watch": [
+        "https://workato.com/ai/embedded",
+        "https://www.workato.com/pricing",
+        "https://docs.workato.com/en/oem.html"
+      ],
+      "notes": "Pricing not public; trust center did not load."
+    },
+    {
+      "id": "tray-embedded",
+      "name": "Tray Embedded (Tray.ai)",
+      "url": "https://tray.ai/embedded",
+      "category": "indirect",
+      "status": "confirmed",
+      "relevance": "low",
+      "overlap": "Enterprise platform with an embedded use case: build once, each customer connects own accounts under your brand.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/tray-embedded.md",
+      "sources": [
+        "https://tray.ai/",
+        "https://tray.ai/embedded",
+        "https://tray.ai/pricing"
+      ],
+      "watch": [
+        "https://tray.ai/pricing",
+        "https://tray.ai/embedded"
+      ],
+      "notes": "700+ connectors; tiers sales-only."
+    },
+    {
+      "id": "make",
+      "name": "Make",
+      "url": "https://www.make.com/en",
+      "category": "substitute",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "End users automate across apps themselves; MCP exposes the owner's scenarios, OEM white-label only in developer docs.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/make.md",
+      "sources": [
+        "https://www.make.com/en",
+        "https://www.make.com/en/mcp",
+        "https://www.make.com/en/pricing",
+        "https://developers.make.com/white-label-documentation"
+      ],
+      "watch": [
+        "https://www.make.com/en/pricing",
+        "https://www.make.com/en/mcp",
+        "https://developers.make.com/white-label-documentation"
+      ],
+      "notes": "Paid prices did not render on 2026-10-23; not verified."
+    },
+    {
+      "id": "n8n",
+      "name": "n8n",
+      "url": "https://n8n.io",
+      "category": "substitute",
+      "status": "confirmed",
+      "relevance": "medium",
+      "overlap": "Self-hostable automation used by teams themselves or as a hidden backend; OEM embed requires n8n branding.",
+      "last_checked": "2026-10-23",
+      "report": "docs/research/competitors/n8n.md",
+      "sources": [
+        "https://n8n.io/",
+        "https://n8n.io/pricing/",
+        "https://docs.n8n.io/embed/",
+        "https://docs.n8n.io/advanced-ai/accessing-n8n-mcp-server/"
+      ],
+      "watch": [
+        "https://n8n.io/pricing/",
+        "https://docs.n8n.io/embed/"
+      ],
+      "notes": "Embed pricing not public (~$50K/yr per third parties, unverified)."
+    },
+    {
+      "id": "activepieces-embed",
+      "name": "Activepieces Embed",
+      "url": "https://www.activepieces.com/embed",
+      "category": "direct",
+      "status": "candidate",
+      "relevance": "medium",
+      "overlap": "Embedded white-label flow builder with customer connections via API or connect dialog.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.activepieces.com/embed"
+      ],
+      "watch": [
+        "https://www.activepieces.com/embed"
+      ],
+      "notes": "Scan only (2026-10-23). Sales-only yearly contract; 770+ pieces, MCP, self-host on main site. Deep-dive next cycle."
+    },
+    {
+      "id": "truto",
+      "name": "Truto",
+      "url": "https://truto.one",
+      "category": "direct",
+      "status": "candidate",
+      "relevance": "medium",
+      "overlap": "Integration platform for AI with 900+ integrations, each exposable as an MCP server.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://truto.one"
+      ],
+      "watch": [
+        "https://truto.one"
+      ],
+      "notes": "Scan only. No public pricing; 30-day sandbox."
+    },
+    {
+      "id": "ampersand",
+      "name": "Ampersand",
+      "url": "https://www.ampersand.ai",
+      "category": "direct",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Integration infrastructure for enterprise products with embeddable setup and per-tenant credentials.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.ampersand.ai"
+      ],
+      "watch": [
+        "https://www.ampersand.ai"
+      ],
+      "notes": "Scan only. withampersand.com redirects here. No count, pricing or MCP on homepage."
+    },
+    {
+      "id": "alloy-automation",
+      "name": "Alloy Automation",
+      "url": "https://runalloy.com",
+      "category": "direct",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Site navigation lists MCP, Embedded iPaaS and a Connectivity API.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://runalloy.com"
+      ],
+      "watch": [
+        "https://runalloy.com"
+      ],
+      "notes": "Scan only. /mcp 404 and /embedded-ipaas empty on 2026-10-23; re-check."
+    },
+    {
+      "id": "boomi-embedded",
+      "name": "Boomi Embedded",
+      "url": "https://boomi.com/platform/embedded/",
+      "category": "indirect",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Enterprise native integrations inside your product, embeddable or headless UI.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://boomi.com/platform/embedded/"
+      ],
+      "watch": [
+        "https://boomi.com/platform/embedded/"
+      ],
+      "notes": "Scan only. Enterprise, pricing not public."
+    },
+    {
+      "id": "klavis-ai",
+      "name": "Klavis AI",
+      "url": "https://www.klavis.ai",
+      "category": "direct",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Docs describe per-user managed OAuth MCP servers with a white-label API; homepage now pitches agent training environments.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.klavis.ai"
+      ],
+      "watch": [
+        "https://www.klavis.ai"
+      ],
+      "notes": "Possible pivot; re-check overlap."
+    },
+    {
+      "id": "apideck",
+      "name": "Apideck",
+      "url": "https://www.apideck.com",
+      "category": "indirect",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Unified API (now accounting-focused, 55+ systems) with embeddable white-label connect UI.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.apideck.com"
+      ],
+      "watch": [
+        "https://www.apideck.com"
+      ],
+      "notes": "Unified-API substitute type; no MCP found."
+    },
+    {
+      "id": "hotglue",
+      "name": "Hotglue",
+      "url": "https://hotglue.com",
+      "category": "indirect",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "Embedded data-sync integrations with white-label widget, 600+ connectors.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://hotglue.com"
+      ],
+      "watch": [
+        "https://hotglue.com"
+      ],
+      "notes": "Data sync, not actions/agents."
+    },
+    {
+      "id": "smithery",
+      "name": "Smithery",
+      "url": "https://smithery.ai",
+      "category": "indirect",
+      "status": "candidate",
+      "relevance": "low",
+      "overlap": "MCP registry handling OAuth/credentials for agent builders.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://smithery.ai"
+      ],
+      "watch": [
+        "https://smithery.ai"
+      ],
+      "notes": "Banner says MCP Proxy and managed identity shut down on Oct 31 (year not stated); likely to drop."
+    },
+    {
+      "id": "integrately-embed",
+      "name": "Integrately Embed",
+      "url": "https://integrately.com/embed",
+      "category": "indirect",
+      "status": "dropped",
+      "relevance": "low",
+      "overlap": "Widget lets SaaS users run the vendor's pre-built automations.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://integrately.com/embed"
+      ],
+      "watch": [
+        "https://integrately.com/embed"
+      ],
+      "notes": "Dropped: only pre-built automations, no per-user action layer or agent tools found."
+    },
+    {
+      "id": "mulesoft",
+      "name": "MuleSoft",
+      "url": "https://www.mulesoft.com",
+      "category": "indirect",
+      "status": "dropped",
+      "relevance": "low",
+      "overlap": "Internal enterprise iPaaS for connecting a company's own systems.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.mulesoft.com"
+      ],
+      "watch": [
+        "https://www.mulesoft.com"
+      ],
+      "notes": "Dropped: no embedded/OEM product found in search."
+    },
+    {
+      "id": "pabbly",
+      "name": "Pabbly Connect",
+      "url": "https://www.pabbly.com/connect/",
+      "category": "substitute",
+      "status": "dropped",
+      "relevance": "low",
+      "overlap": "End-user automation tool.",
+      "last_checked": "2026-10-23",
+      "report": "",
+      "sources": [
+        "https://www.pabbly.com/connect/"
+      ],
+      "watch": [
+        "https://www.pabbly.com/connect/"
+      ],
+      "notes": "Dropped: no embed or white-label offer found in search."
+    }
+  ]
+}

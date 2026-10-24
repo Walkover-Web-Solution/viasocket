@@ -1,7 +1,7 @@
 ---
-covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/const/**", "src/app/api/**", "src/lib/ops/**", "public/exp.js", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
+verified_at: 845da954
+verified_on: 2026-10-23
 ---
 # Contracts & Data Schemas
 
@@ -41,7 +41,7 @@ Rules for every new call: table-api calls go through `src/utils/axiosCalls.js` w
 Table ids, purposes, fields, getters and the A/B row columns: [database/entities.md](database/entities.md).
 
 ### Internal API routes
-The site serves one API route, `POST /api/track-variant` (edge; visitor-tracking upsert keyed by the `visitor_id` and `variant` cookies, always HTTP 200, currently answers `{ success: false, reason: 'lookup failed' }`). Full contract and the `/robots.txt` and `/sitemap.xml` handlers: [api/track-variant.md](api/track-variant.md).
+Besides the website-ops routes (`/api/internal/*`, `/api/exp/*`; [below](#website-ops-contracts)), the site serves one API route, `POST /api/track-variant` (edge; visitor-tracking upsert keyed by the `visitor_id` and `variant` cookies, always HTTP 200, currently answers `{ success: false, reason: 'lookup failed' }`). Full contract and the `/robots.txt` and `/sitemap.xml` handlers: [api/track-variant.md](api/track-variant.md).
 
 ## Authentication & Authorization Assumptions
 
@@ -148,3 +148,87 @@ No proposed endpoints. Known gaps a change may run into:
 - **Environment-scoped visitor lookup** is not in the filter today. A fix belongs in `getAbTestVisitorRows` (add `environment = '<env>'`), after confirming with maintainers why `8ca11b93` reverted it ([OPEN_QUESTIONS T-02](OPEN_QUESTIONS.md)).
 - **Server-side reCAPTCHA verification** does not exist; no form uses reCAPTCHA. The unimported provider and `react-google-recaptcha-v3` were removed on 2026-10-21, and the site-key env var in `.env` is now unread ([DEVELOPMENT.md](DEVELOPMENT.md)). If a form needs bot protection, design a server route using a key without the `NEXT_PUBLIC_*` prefix; do not ship a client-only check.
 - **Visitor tracking writes** are disabled by `77b3dec5` ([OPEN_QUESTIONS T-01](OPEN_QUESTIONS.md)). Re-enabling is a product decision.
+- **Website ops backends** (owners and resolutions in [ops/README.md § Blockers](ops/README.md#blockers-production)): the ops store tables below are not provisioned; no GitHub token for knowledge PRs; signup completion is not observable (flow-app contract below); GA4, Search Console and Cloudflare analytics are not connected; no AI-interpretation or coding-agent service; no notification delivery.
+
+## Website ops contracts
+
+The private ops area (`/internal`, [ops/README.md](ops/README.md)) and the experiment machinery. All env vars here are **server-only** (never `NEXT_PUBLIC_*`); names in [DEVELOPMENT § Website ops](DEVELOPMENT.md#website-ops-local-setup).
+
+### Ops store
+
+One interface (`src/lib/ops/store/index.js`): `get`, `put` with compare-and-swap on `version` (`expectedVersion` 0 = create only if absent), `list` by prefix, `append`/`readLog`. Adapter by env: `OPS_STORE_URL` → dev store server (`scripts/ops/store-server.mjs`, localhost, JSON under `.ops-data/`); `OPS_TABLE_*` → table-api; neither → "storage not connected" (every call throws, every write is refused, pages say so).
+
+Production tables (table-api, one database, a key scoped to these two tables):
+
+| Table (env) | Column | Type | Notes |
+|---|---|---|---|
+| docs (`OPS_TABLE_DOCS`) | `key` | text, **unique** if supported | `<collection>:<id>`, charset `[A-Za-z0-9._:-]` |
+| | `collection` | text | for listing |
+| | `doc_id` | text | |
+| | `version` | number | CAS: `PATCH where key = '…' AND version = n` sets n+1 |
+| | `data` | long text | JSON document |
+| | `write_id` | text | random per write; read-back must match (CAS proof) |
+| | `updated_at` | text (ISO) | |
+| log (`OPS_TABLE_LOG`) | `stream` | text | `audit` today |
+| | `at` | text (ISO) | |
+| | `data` | long text | JSON entry |
+
+Collections: `settings/main`; `knowledge_drafts/<path with / → :>` (drafts and writeback state only, never a second copy of a doc); `analysis_runs/<runId>`, `analysis_idem/<sha256(key)[0..40]>`, `analysis_latest/<name>`; `experiments/<id>`, `exp_active/<surface>`, `exp_slots/<surface>`, `exp_counts/<exp>.<phase>`, `exp_uniq/<exp>.<phase>.<bucket>.<event>.<vid>`, `exp_dedupe/<exp>.<eventId>`. The table-api adapter is **unverified** against live tables; without a unique `key`, duplicate creates resolve to the oldest autonumber (the loser sees a conflict and its row is orphaned, since the API has no delete). Volume note: each counted event costs up to three writes (dedupe, unique-visitor, counter); at real traffic, move counting to an append log aggregated by the experiment-health job.
+
+### Ops cookies
+
+| Cookie | Format | Set by | Read by |
+|---|---|---|---|
+| `vs_ops` | signed session `base64url(payload).HMAC`, HttpOnly, SameSite=Strict, Secure (except http://localhost), 12 h | `POST /api/internal/auth/login` | middleware gate, `/internal` pages, `/api/internal/*` |
+| `vs_vid` | random 22-char id, 1 year, host-only, SameSite=Lax, readable by JS | middleware on an experimented surface | middleware, `/exp.js`, `/api/exp/event` |
+| `vs_x_<exp>` | `<variant>.<phase>.<surface>`, 90 days, host-only | middleware when the assignment is new or the phase changed; deleted when the experiment stops | `/exp.js` |
+| `vs_internal` | `1`, 1 year | Experiments page toggle | middleware (baseline, not counted), event route |
+| `vs_synthetic` | `1` | test scripts only | middleware (assigned, counted in synthetic buckets), event route |
+
+Production caveat: the zone cache rule strips `Set-Cookie` from responses it caches ([cloudflare.md](current-infrastructure/cloudflare.md)); assignment cookies only work once `/` bypasses that cache (blocker B-1).
+
+### Experiment events and registry
+
+`POST /api/exp/event` (public, edge, no-store), body ≤ 2 KB JSON, sent by `/exp.js` with `sendBeacon`:
+
+```json
+{ "id": "<pageview>-<event>-<n>", "exp": "home-hero-v1", "phase": 1, "variant": "B", "vid": "<vs_vid>", "event": "exposure", "path": "/" }
+```
+
+- `event`: `exposure` (once per page view after render), `cta_click`, `setup_prompt_copy`, `signup_start`. `assignment` is recorded only by the middleware.
+- Validation: id `[A-Za-z0-9_-]{8,80}`, exp id pattern, variant A/B/C of that experiment, integer phase, vid pattern. Bad input → 400; storage missing → 503.
+- Bucket: `synthetic` (cookie) → `bot` (UA) → `internal` (cookie) → otherwise `customer`; customer/synthetic events for a stopped experiment or an old phase go to `late`/`synthetic_late`, and a variant that is not the deterministic assignment for that vid (or a vid that differs from the cookie) goes to `unassigned`/`synthetic_unassigned`. Only `customer` is evaluated.
+- Dedupe: one count per event id; visitor counts are unique per (exp, phase, bucket, event, vid). Response 202 `{ ok, counted: true, bucket }`, or 200 `counted: false` for a duplicate.
+- No rate limit or auth (like `/api/track-variant`); anyone can post events for a vid they know. The `unassigned` check limits the damage; add a Cloudflare rate-limit rule on `/api/exp/event` before live use.
+
+Registry fields (`experiments/<id>`): `id, surface, title, hypothesis, audience, assignmentUnit, exposureDefinition, primaryOutcome, supportingOutcomes, guardrails, decisionMethod, minSamplePerVariant, plannedDays, reviewCondition, owner, authority, rollbackPlan, status (draft|ready|running|paused|concluded|retired), phase, phaseStartedAt, variants [{key, label, target, weight}], decisions [{at, actor, role, action, note, phase}], lastChecks, synthetic, rolledBack, promoted`. `exp_active/<surface>` is the only thing the middleware reads (cached 30 s per isolate).
+
+Preview: `/?vs_preview=<exp>:<variant>&vs_pt=<expiry>.<HMAC(OPS_SESSION_SECRET, "preview:exp:variant:expiry")>`, valid 24 h, generated on the experiment page for editors; no assignment cookie, `X-Robots-Tag: noindex`.
+
+### Flow-app experiment parameters
+
+`/exp.js` appends to every Start free / signup link (flow.viasocket.com or `/signup`) at click time:
+
+- `vs_exp` = comma-separated `<exp>.<variant>.<phase>` for each assignment on the page, e.g. `home-hero-v1.B.2`
+- `vs_vid` = the visitor's `vs_vid`
+
+Required from flow.viasocket.com (not implemented; owner: flow app team): keep both values through signup (store them with the new account), never use them for anything but attribution, and expose completed signups as `GET <OPS_SIGNUP_EVENTS_URL>?since=<iso>` → `[{ vs_exp, vs_vid, completed_at }]` (server-to-server, bearer token). Until then "signup completion" is not observable and cannot be a primary outcome.
+
+### Analysis ingest API
+
+`/api/internal/analyses/ingest`, header `Authorization: Bearer <OPS_INGEST_TOKEN>` (no session). 503 when the token or storage is not configured, 401 on a bad token.
+
+- `GET ?analysis=<name>&key=<idempotency key>` → `{ paused, enabled, existing: { runId, status, attempts } | null, previous: { runId, finishedAt, results? }, budgets }`
+- `GET ?data=experiments` → running/paused experiments with their counters (for `experiment-health`)
+- `POST` run update: `{ runId: "<analysis>.<yyyymmddHHMMSS>.<rand>", analysis, idempotencyKey: "<analysis>|<input revision>|<window>", status: queued|running|succeeded|failed|insufficient-data|not-connected, attempt, trigger, codeRevision, inputRevision, baseUrl, window, startedAt, finishedAt, results, findings: [{ severity: high|medium|low|info, title, evidence }], error, notes }`. 409 `duplicate` when the key already has a final or live (< 30 min) run, 429 `exhausted` after 3 attempts, 409 when the run is already final. Payload ≤ 400 KB.
+
+### Knowledge writeback (GitHub)
+
+Production path (`src/lib/ops/github.js`), repo `OPS_GITHUB_REPO` (default `Walkover-Web-Solution/viasocket`), base `OPS_GITHUB_BASE` (default `test`):
+
+1. `GET /repos/{repo}/contents/{path}?ref=test` — current blob sha; if it differs from the editor's base sha → **conflict**, nothing written.
+2. `GET /git/ref/heads/test` → `POST /git/refs` `refs/heads/ops/knowledge/<path-slug>-<ts>`.
+3. `PUT /contents/{path}` on that branch with `sha: <base sha>` (GitHub's own 409/422 → conflict).
+4. `POST /pulls` into `test` → state **pending**; `GET /pulls/{n}` merged → **effective** ("merged into test; Cloudflare deploy status not observable"), closed unmerged → **sync-failed**.
+
+History = `GET /commits?path=&sha=test`, old content = contents at a commit sha, diff computed in-process. Dev path: the dev store server reads/writes the working-tree file with the same base-sha (git blob sha) check and serves `git log`/`git show`. The token needs Contents and Pull requests read/write on that one repo. Unverified live (blocker B-3).

@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation';
 import { getFindAppsPageData } from '@/app/lib/data';
 import FindAppsClient from '@/app/components/find-apps/FindAppsClient';
 
@@ -49,9 +50,12 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function FindAppsPage({ params }) {
+    const { slug = [] } = await params;
+    // Only /find-apps/{letter} exists. Deeper paths (old /find-apps/{letter}/{app} links) are a real
+    // 404 rather than a 200 "Page Not Found" (C-09). Outside the try, which would swallow it.
+    if (slug.length !== 1) notFound();
+
     try {
-        const resolvedParams = await params;
-        const slug = resolvedParams.slug || [];
         const data = await getFindAppsPageData(slug);
         
         if (data.noData) {

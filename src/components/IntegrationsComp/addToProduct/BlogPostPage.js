@@ -7,6 +7,7 @@ import ShareButtons from './ShareButtons';
 import PostToc from './PostToc';
 import BlogPromo from './BlogPromo';
 import { BLOGS_URL, formatBlogDate } from '@/app/lib/blogs';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // /blogs/{slug}: one post, then a few more to read.
 
@@ -43,7 +44,7 @@ function PostJsonLd({ post }) {
     return (
         <>
             {[data, crumbs, faq].filter(Boolean).map((d) => (
-                <script key={d['@type']} type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(d) }} />
+                <script key={d['@type']} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(d) }} />
             ))}
         </>
     );

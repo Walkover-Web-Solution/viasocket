@@ -132,6 +132,8 @@ export async function getMCPPageData(slug = []) {
             } else {
                 return {
                     noData: true,
+                    // The plug service answered and doesn't know this app, as opposed to failing (C-09).
+                    unknownSlug: Boolean(combosData?.plugins && typeof combosData.plugins === 'object'),
                     footerData: footerData || {},
                     navbarData: navbarData || {},
                 };
@@ -251,6 +253,8 @@ export async function getMCPPageData(slug = []) {
                 blogsData: blogData || [],
                 categoryData: categoryData || {},
                 categories: categories || [],
+                // The category table answered with no row for this slug, as opposed to failing (C-09).
+                unknownSlug: (mcpInfo?.category || 'all') !== 'all' && Array.isArray(categoryData) && categoryData.length === 0,
                 mcpSteps: mcpSteps || [],
                 faqData: faqData || [],
                 tableData: tableData || [],

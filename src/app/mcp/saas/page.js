@@ -126,7 +126,7 @@ export default async function MCPSaasPage() {
                         through AI.
                     </p>
                     <Link
-                        href="https://viasocket.com/help/developer-hub"
+                        href="https://viasocket.com/help/plugin-builder"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-accent"

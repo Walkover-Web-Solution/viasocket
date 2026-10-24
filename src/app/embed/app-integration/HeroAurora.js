@@ -25,7 +25,7 @@ export default function HeroAurora({ appCount }) {
 
                     <div className="relative z-10 p-6 lg:p-12 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:min-h-[580px] items-center">
                         <div className="flex flex-col items-start gap-4">
-                            <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/actions-for-ai" />
+                            <LimitedTimeOffer href="https://viasocket.com/signup?utm_source=/embed/app-integration" />
                             <h1 className="h1 !text-white">Integrate {appCount + 300}+ apps with your product</h1>
 
                             <p className="text-base sm:text-lg md:text-xl text-white/[0.72] max-w-[480px] mb-6 md:mb-8 leading-[1.55] font-normal max-lg:mx-auto">

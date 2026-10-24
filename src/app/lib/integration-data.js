@@ -257,6 +257,8 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 appOneDetails: {},
                 appTwoDetails: {},
                 categoryData: (categoryData?.length > 0 && categoryData[0]) || {},
+                // The category table answered with no row for this slug, as opposed to failing (C-09).
+                unknownCategory: categoryName !== 'all' && Array.isArray(categoryData) && categoryData.length === 0,
                 categories: categories || [],
                 actionLayerBlogs: actionLayerBlogs || [],
                 appCount: appCount || 0,

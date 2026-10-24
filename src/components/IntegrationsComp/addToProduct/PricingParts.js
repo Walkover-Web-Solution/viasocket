@@ -5,6 +5,7 @@ import p from './pricing.module.scss';
 import { BASE_PROMPT } from './copy';
 import { CopyPromptProvider } from './CopyPrompt';
 import { SiteFooter, SiteHeader } from './SiteChrome';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // Shared by /pricing and /pass: the homepage frame, section headings and the homepage-style FAQ.
 
@@ -40,7 +41,7 @@ function FaqJsonLd({ faqs }) {
         '@type': 'FAQPage',
         mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
     };
-    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />;
 }
 
 /** FAQs as on the homepage: a heading, then one boxed list of numbered rows with a square toggle.

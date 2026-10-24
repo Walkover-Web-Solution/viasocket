@@ -30,22 +30,22 @@ export async function getDepartmentsPageData() {
 
         return {
             metaData: metaData || {},
-            navbarData: navbarData || {},
-            footerData: footerData || {},
-            departmentData: departmentData || {},
-            faqData: faqData || {},
-            reviewData: reviewData || {},
+            navbarData: navbarData || [],
+            footerData: footerData || [],
+            departmentData: departmentData || [],
+            faqData: faqData || [],
+            reviewData: reviewData || [],
             appCount: appCount || 1764,
         };
     } catch (error) {
         console.error('Error fetching departments page data:', error);
         return {
             metaData: {},
-            navbarData: {},
-            footerData: {},
-            departmentData: {},
-            faqData: {},
-            reviewData: {},
+            navbarData: [],
+            footerData: [],
+            departmentData: [],
+            faqData: [],
+            reviewData: [],
             appCount: 1764,
         };
     }

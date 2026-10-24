@@ -166,7 +166,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                                     <button type="button" className={s.btn} onClick={request.show}>
                                         Request an app
                                     </button>
-                                    <a className={s['btn-o']} style={{ display: 'inline-flex', alignItems: 'center' }} href="https://viasocket.com/help/developer-hub" target="_blank" rel="noopener noreferrer">
+                                    <a className={s['btn-o']} style={{ display: 'inline-flex', alignItems: 'center' }} href="https://viasocket.com/help/plugin-builder" target="_blank" rel="noopener noreferrer">
                                         Read our playbook
                                     </a>
                                 </div>
