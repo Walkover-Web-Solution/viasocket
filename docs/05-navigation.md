@@ -39,7 +39,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/find-apps/[...slug]` | `src/app/components/find-apps/FindAppsClient.js`; `src/app/lib/data.js:getFindAppsPageData` | A–Z app list for one letter. Any other segment count renders an inline "Page Not Found" with HTTP 200 |
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
 | `/hire-an-expert` | `src/app/hire-an-expert/HireExpertClient.js` | Hire-an-expert CTA to signup or cal.id |
-| `/home` | `src/app/home/page.js`. **Never renders**: middleware 307s to `/` | (retired) |
+| `/home` | `src/app/home/page.js` | Minimal placeholder page (heading "Home") |
 | `/integrations` | `src/app/components/integrations/IntegrationsMain.js` → `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js`; `src/app/lib/integration-data.js:getIntegrationsPageData` | Integrations directory |
 | `/integrations-script` | `src/app/components/integrations-script/SetupBuilder.js` and sections | Embed-script setup builder (`?templateId=`, `?app=`) |
 | `/integrations/[...slug]` | `IntegrationsMain` (branches in [Deep links](#deep-link-conventions)) | Category, single-app or app-pair pages |
@@ -67,7 +67,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 
 ### Redirects, rewrites and middleware
 
-Order of evaluation: `public/_redirects`, then `next.config.js` `redirects()`, then `src/middleware.js`, then the `beforeFiles` rewrite, then the filesystem, then the `afterFiles` rewrites. In Next, `permanent: true` produces a 308 and `permanent: false` a 307.
+Order of evaluation: `public/_redirects`, then `next.config.js` `redirects()`, then `src/middleware.js`, then the `beforeFiles` rewrite, then the filesystem, then the `afterFiles` rewrites. In Next, `permanent: true` produces a 308 and `permanent: false` a 307. Managed redirects from the admin API (fallback `src/data/redirects.json`) do not apply to `/home`; remove any `/home` rule in the admin panel so the two stay aligned.
 
 | Source | Destination | Status | Defined in |
 |---|---|---|---|
@@ -82,7 +82,6 @@ Order of evaluation: `public/_redirects`, then `next.config.js` `redirects()`, t
 | `/mcp/invgate-service-desk` | `/mcp/invgateservicemanagement` | 308 | `next.config.js` |
 | `/mcp` | https://mushrooms.viasocket.com/ | 308 | `next.config.js` ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
 | `/embed` | `/developers` | 308 | `next.config.js` |
-| `/home` | `/` | 307 | `src/middleware.js:middleware` |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
 

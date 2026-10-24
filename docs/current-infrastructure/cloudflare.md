@@ -45,7 +45,7 @@ Search-engine posture per environment:
 ## Functions We Call
 | Function | Returns | Used by |
 |---|---|---|
-| `middleware(request)` | `/home` 307 to `/`; sets `Cache-Control: private, no-store, must-revalidate` and `CDN-Cache-Control: no-store` on `/` (**ineffective in production**, [OPEN_QUESTIONS C-05](../OPEN_QUESTIONS.md)); `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths) |
+| `middleware(request)` | Managed redirects from the admin API (fallback `src/data/redirects.json`); sets `Cache-Control: private, no-store, must-revalidate` and `CDN-Cache-Control: no-store` on `/` (**ineffective in production**, [OPEN_QUESTIONS C-05](../OPEN_QUESTIONS.md)); `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths) |
 | `loadZarazManually()` | injects `/cdn-cgi/zaraz/i.js` once | `src/app/providers.js:AppProvider` |
 | `GET /robots.txt` | text, see above | crawlers |
 

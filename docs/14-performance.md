@@ -55,7 +55,7 @@ First Load JS from the `npm run build` route table at `17b99cd8` plus the workin
 | Route | First Load JS | Note |
 |---|---|---|
 | `/` (`src/app/page.js`) | 373 kB | Built but never served: the rewrite serves the static homepage instead |
-| `/home` | 309 kB | Unreachable (middleware 307s to `/`) |
+| `/home` | (re-measure after change) | Minimal placeholder page |
 | `/automations/[...slug]`, `/integrations`, `/integrations/[...slug]` | 289 kB | Heaviest live routes |
 | `/automations` | 286 kB | |
 | `/integrations-script` | 281 kB | |
