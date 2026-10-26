@@ -126,6 +126,8 @@ viaSocket's [Actions for AI](/embed/actions-for-ai) product is built specificall
 
 This is distinct from viaSocket's [white-label MCP server](/mcp/saas), which is for giving users a branded MCP endpoint they configure in their AI client (Claude, Cursor). Actions for AI is for your agent making server-side calls. Both can be used in the same product.
 
+Adding managed OAuth for the third-party apps an agent will call is covered in [How to Handle OAuth for an AI Agent Acting on a User's Apps](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
 ## FAQ
 
 ### Can my AI agent complete the OAuth flow on behalf of the user?
