@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js"]
-verified_at: 17b99cd8
+verified_at: 8fb15ca8
 verified_on: 2026-10-26
 ---
 # 05 Navigation Structure
