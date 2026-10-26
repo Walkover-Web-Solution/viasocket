@@ -144,4 +144,6 @@ Adding the managed OAuth layer on top of this architecture is covered in [Multi-
 
 When an AI agent acts on a tenant's connected apps, see [Multi-Tenant Integration Architecture](/blogs/oauth-for-ai-agents).
 
+How this [multi-tenant integration architecture](/blogs/nango-alternative) compares with Nango and other API auth platforms is covered in that alternatives guide.
+
 Choosing viaSocket over Composio for AI agent tool-calling on this architecture is covered in [multi-tenant integration architecture](/blogs/composio-alternative).
