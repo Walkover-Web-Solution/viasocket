@@ -100,6 +100,78 @@
       "faqs": []
     },
     {
+      "slug": "webhook-trigger-multi-app-actions",
+      "title": "Webhook-to-Multi-App Actions: Technical Guide to viaSocket Embed via Webhook",
+      "description": "A technical implementation guide to viaSocket's Actions via Webhook embed product: how to generate per-user webhook URLs with JWT signing, POST events from your backend, and trigger multi-app workflows across 2,300+ connected apps.",
+      "date": "2026-10-26",
+      "author": "Abhijeet Singh",
+      "authorImage": "/blogs/authors/abhijeet-singh.jpg",
+      "category": "Technical Guide",
+      "image": "",
+      "minutes": 4,
+      "html": "<p>Webhook-based integration is one of the most efficient patterns for connecting your SaaS product to your users' other apps. Instead of building individual API integrations, you POST a single event from your backend and let a workflow layer handle the fan-out. viaSocket's Actions via Webhook embed product is built specifically for this pattern.</p>\n<p>This guide covers the complete technical implementation: how the webhook URL is generated, how your backend calls it, how workflows execute, and what the current reliability guarantees are.</p>\n<h2 id=\"how-actions-via-webhook-works\">How Actions via Webhook Works</h2>\n<p>When something happens in your product — a user completes onboarding, places an order, submits a form — your backend POSTs an event payload to a user-specific webhook URL. viaSocket receives that event and executes whatever workflows the user has configured, across any of the 2,300+ connected apps on the platform.</p>\n<p>The model has three components:</p>\n<ol>\n<li>Your backend — fires the event as an HTTP POST</li>\n<li>viaSocket's webhook endpoint — receives, authenticates, and routes the event</li>\n<li>User workflows — the automations the user has configured (send email, update CRM, notify Slack, etc.)</li>\n</ol>\n<p>Your code never changes as users connect new apps. You POST the same event regardless of what the user has wired up on their end.</p>\n<h2 id=\"generating-the-webhook-url\">Generating the Webhook URL</h2>\n<p>Each user gets their own webhook URL. You generate it on your backend by signing a JWT and constructing the URL.</p>\n<h3>JWT Payload</h3>\n<p>Sign a JWT with your embed secret key using HS256. The payload must include exactly these three fields:</p>\n<pre><code>{\n  org_id: your viaSocket organisation ID,\n  project_id: the project within your organisation,\n  unique_identifier: a stable unique ID for the end user\n}\n</code></pre>\n<p>Never expose the embed secret or sign JWTs on the client side.</p>\n<h3>Webhook URL Format</h3>\n<p>Once you have the signed token, the URL takes this form:</p>\n<pre><code>https://flow.viasocket.com/webhook/{token}\n</code></pre>\n<p>Replace {token} with the signed JWT. This URL is unique to that user — POSTing to it triggers only that user's configured workflows.</p>\n<h2 id=\"posting-an-event\">Posting an Event</h2>\n<p>POST JSON to the URL from any backend, language, or framework. Include whatever fields your workflows need to act on — there is no required schema. viaSocket passes the entire payload to the workflow as trigger data.</p>\n<p>Example using curl:</p>\n<pre><code>curl -X POST https://flow.viasocket.com/webhook/YOUR_TOKEN\n  -H Content-Type: application/json\n  -d {event: order.placed, user_id: usr_123, amount: 49.99}\n</code></pre>\n<h2 id=\"workflow-execution\">Workflow Execution</h2>\n<p>When viaSocket receives the POST, it matches the event against the user's active workflows and executes the configured action steps. A single POST can trigger multiple workflows — for example, one workflow sends a welcome email, another creates a HubSpot deal, and a third posts to Slack.</p>\n<p>Action execution happens asynchronously after your POST returns. Your backend does not wait for downstream app actions to complete. If you need confirmation that a specific action succeeded, handle that through your own logging or a callback pattern.</p>\n<h2 id=\"reliability-automatic-retries\">Reliability: Automatic Retries</h2>\n<p>viaSocket automatically retries failed event deliveries. If a downstream app action fails due to a temporary error, the platform retries the step to ensure the event reaches its destination.</p>\n<p>The exact retry count and backoff intervals are not currently published in the public documentation. For specific retry configuration questions — particularly for high-stakes workflows where you need guaranteed delivery semantics — contact viaSocket support or check your workflow settings.</p>\n<h2 id=\"per-user-data-isolation\">Per-User Data Isolation</h2>\n<p>Each webhook URL is scoped to a single user's connected apps and data. User A's event cannot trigger User B's workflows. The unique_identifier field in the JWT enforces this boundary — the platform resolves which user's workflow set to execute based on that field.</p>\n<p>This is a meaningful security property for multi-tenant SaaS products: you never need to worry about cross-tenant action bleed from a shared webhook endpoint.</p>\n<h2 id=\"setup-checklist\">Setup Checklist</h2>\n<p>Before going live:</p>\n<ul>\n<li>Generate your org_id and project_id from the viaSocket dashboard</li>\n<li>Store your embed secret securely (server-side only; never in client code)</li>\n<li>Implement JWT signing on your backend using HS256</li>\n<li>Test the webhook URL with a sample payload in a sandbox environment</li>\n<li>Confirm the user's workflows are active before firing production events</li>\n<li>Add error handling for non-2xx responses from the webhook endpoint</li>\n<li>Review retry behaviour with your team for any critical workflows</li>\n</ul>\n<h2 id=\"when-to-use-actions-via-webhook-vs-other-embed-products\">When to Use Actions via Webhook vs. Other Embed Products</h2>\n<p>Actions via Webhook is the right choice when your backend can fire events but you do not want to build or maintain individual app integrations. It requires no public API on your side and works from any backend stack.</p>\n<p>Use App Integrations (embedded iPaaS) if you want users to build their own workflows visually. Use Actions for AI if your AI agent needs to call third-party app actions.</p>\n<h2 id=\"faq\">FAQ</h2>\n<div class=\"faq\">\n<details open><summary>What does the webhook URL look like?</summary>\n<p>The URL follows the format <a href=\"https://flow.viasocket.com/webhook/%7Btoken%7D\">https://flow.viasocket.com/webhook/{token}</a>, where {token} is a signed JWT containing your org_id, project_id, and the user's unique_identifier.</p>\n</details>\n<details><summary>Is the webhook URL unique per user?</summary>\n<p>Yes. Each user gets their own URL generated from a JWT signed with their unique_identifier. Events posted to one user's URL only trigger that user's workflows.</p>\n</details>\n<details><summary>Do I need a public API to use Actions via Webhook?</summary>\n<p>No. Your backend fires HTTP POSTs to viaSocket's endpoint. viaSocket handles all the downstream app API calls. Your product never needs to be publicly accessible.</p>\n</details>\n<details><summary>What happens if a workflow action fails?</summary>\n<p>viaSocket automatically retries failed steps. The exact retry count and backoff duration are not currently published; contact support for specifics on your plan.</p>\n</details>\n<details><summary>Can one event trigger multiple workflows?</summary>\n<p>Yes. A single POST can match and execute multiple workflows the user has configured.</p>\n</details>\n</div>\n",
+      "toc": [
+        {
+          "id": "how-actions-via-webhook-works",
+          "text": "How Actions via Webhook Works"
+        },
+        {
+          "id": "generating-the-webhook-url",
+          "text": "Generating the Webhook URL"
+        },
+        {
+          "id": "posting-an-event",
+          "text": "Posting an Event"
+        },
+        {
+          "id": "workflow-execution",
+          "text": "Workflow Execution"
+        },
+        {
+          "id": "reliability-automatic-retries",
+          "text": "Reliability: Automatic Retries"
+        },
+        {
+          "id": "per-user-data-isolation",
+          "text": "Per-User Data Isolation"
+        },
+        {
+          "id": "setup-checklist",
+          "text": "Setup Checklist"
+        },
+        {
+          "id": "when-to-use-actions-via-webhook-vs-other-embed-products",
+          "text": "When to Use Actions via Webhook vs. Other Embed Products"
+        },
+        {
+          "id": "faq",
+          "text": "FAQ"
+        }
+      ],
+      "faqs": [
+        {
+          "q": "What does the webhook URL look like?",
+          "a": "The URL follows the format https://flow.viasocket.com/webhook/{token}, where {token} is a signed JWT containing your org_id, project_id, and the user's unique_identifier."
+        },
+        {
+          "q": "Is the webhook URL unique per user?",
+          "a": "Yes. Each user gets their own URL generated from a JWT signed with their unique_identifier. Events posted to one user's URL only trigger that user's workflows."
+        },
+        {
+          "q": "Do I need a public API to use Actions via Webhook?",
+          "a": "No. Your backend fires HTTP POSTs to viaSocket's endpoint. viaSocket handles all the downstream app API calls. Your product never needs to be publicly accessible."
+        },
+        {
+          "q": "What happens if a workflow action fails?",
+          "a": "viaSocket automatically retries failed steps. The exact retry count and backoff duration are not currently published; contact support for specifics on your plan."
+        },
+        {
+          "q": "Can one event trigger multiple workflows?",
+          "a": "Yes. A single POST can match and execute multiple workflows the user has configured."
+        }
+      ]
+    },
+    {
       "slug": "white-label-mcp-server-for-saas",
       "title": "White-Label MCP Server for SaaS: Ship Native AI Agent Support in Days",
       "description": "Launch a white-label MCP server for your SaaS to power native AI agent tool-calling in days. Architecture, deployment model, and how viaSocket fits.",
