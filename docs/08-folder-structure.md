@@ -1,7 +1,10 @@
 ---
+status: current-implementation
+owner: unassigned
 covers: ["src/**", "public/**", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
 verified_at: 17b99cd8
 verified_on: 2026-10-22
+sources: ["repo tree at 17b99cd8", "src/middleware.js and src/data/redirects.json at dbc4292c (redirect row)"]
 ---
 # 08 Folder Structure
 
@@ -75,7 +78,7 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | `/developers` piece | `src/app/developers/**` | No `@/` imports, only its own tokens and copy ([DESIGN](DESIGN.md)). |
 | Homepage (`/`) change or asset | `public/new-home/index.html`, `styles.css`, `main.js`, `public/new-home/assets/` | Never `src/app/page.js` (AGENTS rule 3). Reference assets as `/new-home/assets/…`, and bump the `?v=` query on `styles.css`/`main.js` after editing them ([14-performance](14-performance.md#rendering)). |
 | Image for a React page | `public/assets/<kind>/` | `next/image` does not optimize, so compress the file first ([14-performance](14-performance.md#rendering)). |
-| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds only `/home`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Redirect | the viasocket-admin panel (Pages → Redirects) | Redirects are admin-managed: `src/middleware.js` reads them from the admin's `/api/public/redirects` and falls back to `src/data/redirects.json` when the admin can't be reached ([DECISIONS ADR-021](DECISIONS.md#adr-021-redirects-and-integration-page-copy-are-managed-in-viasocket-admin)). Add or change a rule in the admin, and refresh `src/data/redirects.json` from the admin API in the same change. `next.config.js` keeps only the `/` rewrite, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware) and [SEO](SEO.md#redirects), and never shadow a path that another deployment serves (AGENTS rule 15). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
 | Styles | Tailwind utilities, with tokens and keyframes in `tailwind.config.js` | AGENTS rule 14. `src/scss/` is legacy, so add nothing there unless Tailwind cannot do it. |

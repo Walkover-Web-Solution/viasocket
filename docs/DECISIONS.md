@@ -1,13 +1,21 @@
 ---
+status: approved
+owner: unassigned (engineering ADRs); Ankit Dongre (product and website ADRs)
 covers: ["*"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: dbc4292c
+verified_on: 2026-10-23
+sources:
+  - git history (3,477+ commits to 2026-10-23), PR #1830, #1840, #1844, #1846
+  - Team answers to OPEN_QUESTIONS, 2026-10-22 (commit e5cc0bf)
+  - Founder memory notes (viasocket-repositioning-2026-10, viasocket-website-repo-deploy)
+  - https://viasocket-admin.embarko.app/api/public/redirects and curl of viasocket.com, 2026-10-23
+  - docs/COMPETITORS.md
 ---
 # Architectural & Design Decisions (ADRs)
 
 Decisions recovered from git history (3,477 commits, 2024-03-12 to 2026-10-15) and from the maintainer's own working notes, cited as **maintainer guidance (2026)**. Read this before you touch hosting, caching, the homepage, tracking or UTM attribution. Each of those areas has already had at least one change shipped and then reverted.
 
-Status values: **Accepted** (current, keep it), **Superseded** (code may remain, but it no longer holds at runtime), **Rejected** (tried and reverted, so do not retry it casually).
+Status values: **Accepted** (current, keep it), **Superseded** (code may remain, but it no longer holds at runtime), **Rejected** (tried and reverted, so do not retry it casually), **Proposed** (written down, not yet approved by its owner).
 
 ## Decision Index
 
@@ -29,6 +37,13 @@ Status values: **Accepted** (current, keep it), **Superseded** (code may remain,
 | 2026-10-21 | [ADR-014: Evidence-based dead-code cleanup](#adr-014-evidence-based-dead-code-cleanup) | Accepted | Maintenance | Unreachable code misled agents and shipped unused bytes |
 | 2026-10-22 | [ADR-015: The integration layer is the canonical positioning](#adr-015-the-integration-layer-is-the-canonical-positioning) | Accepted | Product / copy | One story across the site; automation copy is out of date |
 | 2026-10-22 | [ADR-016: The static homepage's design system is the site-wide target](#adr-016-the-static-homepages-design-system-is-the-site-wide-target) | Accepted | Design | One visual system instead of five |
+| 2026-10-14 | [ADR-017: The static new-home replaces the homepage in production](#adr-017-the-static-new-home-replaces-the-homepage-in-production) | Accepted | Homepage | Shipped through PR #1830 |
+| 2026-10-10 | [ADR-018: Integration and action layer for apps and agents; boundary line and banned phrases](#adr-018-integration-and-action-layer-for-apps-and-agents-boundary-line-and-banned-phrases) | Accepted | Product / copy | Owner's brief; extends ADR-015 |
+| 2026-10-19 | [ADR-019: Support options on the homepage for paid-ads traffic](#adr-019-support-options-on-the-homepage-for-paid-ads-traffic) | Accepted | Conversion | Much traffic is paid ads |
+| 2026-10-15 | [ADR-020: "What viaSocket handles" lists the nine capabilities from /embed](#adr-020-what-viasocket-handles-lists-the-nine-capabilities-from-embed) | Accepted (three claims unverified) | Copy | Reused the Embed capability list |
+| 2026-10-21 | [ADR-021: Redirects and integration-page copy are managed in viasocket-admin](#adr-021-redirects-and-integration-page-copy-are-managed-in-viasocket-admin) | Accepted | Routing / content | Non-developers change redirects and copy without a deploy |
+| 2026-10-22 | [ADR-022: One pricing page at /pricing, priced in tasks and AI credits](#adr-022-one-pricing-page-at-pricing-priced-in-tasks-and-ai-credits) | Accepted (prices: approval unknown) | Pricing | Replaces /developers/pricing |
+| 2026-10-23 | [ADR-023: Website ops admin lives in-repo at /internal pending the viasocket-admin decision](#adr-023-website-ops-admin-lives-in-repo-at-internal-pending-the-viasocket-admin-decision) | Proposed | Ops | Needs a home before viasocket-admin's owner is known |
 
 ---
 
@@ -250,7 +265,7 @@ Accepted.
 ## ADR-011: `/embed` → `/developers` and `/mcp` → mushrooms.viasocket.com
 
 ### Status
-Accepted.
+Partly superseded. `/mcp` → mushrooms.viasocket.com holds. The redirects now live in the admin panel ([ADR-021](#adr-021-redirects-and-integration-page-copy-are-managed-in-viasocket-admin)), and on 2026-10-23 the live admin list sends `/embed` and `/developers` to `/` (301). The repo fallback still says `/embed` → `/developers` ([OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md)). The text below is the 2026-10-01 decision.
 
 ### Decision & Implementation
 - In `next.config.js` `redirects()`: `/embed` → `/developers` and `/mcp` → `https://mushrooms.viasocket.com/` are permanent. `/login` → `https://flow.viasocket.com/` is not permanent. Only the bare paths redirect; sub-pages such as `/embed/app-integration` and `/mcp/aiagent` are still served here.
@@ -321,7 +336,7 @@ After the October relaunch the site told two stories: the homepage, `/developers
 
 ### Decision & Implementation
 - The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
-- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. Pending: `src/app/layout.js` root `metadata`, `public/llms.txt` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+- Shipped on `/`, `/features`, `/integrations`, `/use-cases`, `/pricing`, `/pass` and `/blogs`. Pending (2026-10-23): the root `metadata` in `src/app/layout.js`, `public/llms.txt` and the legacy campaign pages still say workflow automation ([POSITIONING](POSITIONING.md#inconsistencies-found-2026-10-23)). The boundary line, banned phrases and claim rules are in [ADR-018](#adr-018-integration-and-action-layer-for-apps-and-agents-boundary-line-and-banned-phrases).
 
 ### Supporting Evidence & Past Incidents
 - The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).
@@ -347,6 +362,125 @@ The site had five visual systems ([DESIGN](DESIGN.md)): legacy daisyUI + SCSS, t
 ### Consequences & Trade-offs
 - New or reworked pages should converge on these tokens (expressed as Tailwind tokens per [DESIGN](DESIGN.md)), not on legacy daisyUI styling.
 - This settles the tension noted in ADR-008 between the static homepage and the native `/developers` rebuild: the direction is the homepage look, built natively.
+
+---
+
+## ADR-017: The static new-home replaces the homepage in production
+
+### Status
+Accepted (live since 2026-10-14; PR #1830 `test` → `main`, merge `cfdae23`, export `a8f4865`).
+
+### Decision & Implementation
+- `/` serves the static homepage from `public/new-home/`, generated from the `viasocket-site` repo (`variants/simple-bento`) by `deploy/export-to-viasocket-repo.py --prod`. Mechanics are in [ADR-008](#adr-008-serve--from-the-static-site-in-publicnew-home). <!-- verify:ignore -->
+- Always export with `--prod`, for test pushes too: `test` merges straight into `main`, so a test-mode export (page `noindex`) would de-index viasocket.com on the next release.
+- After each homepage deploy, purge `https://viasocket.com/` in Cloudflare ([SEO](SEO.md#edge-cache)).
+
+### Consequences & Trade-offs
+- A hand edit to `public/new-home/` is lost on the next export. Edit the source, then export.
+- The page sits outside the Next layout, so site-wide tracking does not reach it ([MEASUREMENT](MEASUREMENT.md#attribution-limitations)).
+- Version B (`variants/simple-bento-b`) is a local experiment, not deployed; deploying it needs a split the owner has not chosen. <!-- verify:ignore -->
+
+---
+
+## ADR-018: Integration and action layer for apps and agents; boundary line and banned phrases
+
+### Status
+Accepted (owner's "Landing Page Story and Build Brief", 2026-10-10; Brand Guidelines, 2026-10-16). Extends [ADR-015](#adr-015-the-integration-layer-is-the-canonical-positioning).
+
+### Decision & Implementation
+- viaSocket is "the integration and action layer for applications and AI agents". Category line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
+- Never say viaSocket runs or hosts the app (owner's correction, 2026-10-08). Banned: "build anything", "give it powers", "the outside world", "business operating system".
+- No invented metrics, prices, customer logos or testimonials. Agents lead use cases; apps are included; one product.
+- Details: [VISION](VISION.md), [POSITIONING](POSITIONING.md), [DESIGN](DESIGN.md#voice-and-terminology).
+
+### Consequences & Trade-offs
+- Competitor research (2026-10-23, [COMPETITORS](COMPETITORS.md)) shows prompt-based setup is no longer unique, so copy must not claim it is. Comparison tables need a source for every competitor cell.
+
+### Superseded / Rejected Alternatives
+- "Infrastructure for AI-built apps" (2026-10-08), "Action Layer for AI-built apps" and "Action Layer for your products & agents" (2026-10-09): superseded.
+- "AI creates. viaSocket connects, acts and runs." (strategy doc, Tab 8): rejected wording, because viaSocket does not run the app.
+
+---
+
+## ADR-019: Support options on the homepage for paid-ads traffic
+
+### Status
+Accepted (`d1d0be8`, 2026-10-19; shipped to production with the next release).
+
+### Context & Problem Statement
+A large share of homepage traffic comes from paid ads. Those visitors may not paste a prompt into a coding agent; they want a person.
+
+### Decision & Implementation
+- A floating **Chat** button opens the same gtwy support bot as the old site (`public/new-home/assets/support.js`; its public embed token is by design, S-04).
+- **Talk to an expert** in the hero links to `/experts-are-live`. **Book a demo** in the nav and the closing box links to cal.id.
+- The homepage-design pages in Next carry the same header and "Talk to an expert".
+
+### Consequences & Trade-offs
+- None of these clicks is measured as an event yet ([MEASUREMENT](MEASUREMENT.md#instrumentation-gaps-in-priority-order)).
+
+---
+
+## ADR-020: "What viaSocket handles" lists the nine capabilities from /embed
+
+### Status
+Accepted (`75d86c9`, 2026-10-15). Three of the nine are unverified claims.
+
+### Decision & Implementation
+The homepage table pairs each job with the pain of building it yourself: managed auth, managed mapping, multi-tenant, customizable UI and branding, monitoring, triggers and webhooks, server localization, real-time latency, Slack support. The list was taken from the older `/embed` page.
+
+### Consequences & Trade-offs
+- Server localization, real-time latency and Slack support have no evidence in hand; they stay flagged in the [claim register](POSITIONING.md#claim-register) until the product team confirms them.
+- The table is the brand's "handles" component; keep it at nine rows unless the owner changes it.
+
+---
+
+## ADR-021: Redirects and integration-page copy are managed in viasocket-admin
+
+### Status
+Accepted (PR #1840: `40bbd9b`, `06175bd`, 2026-10-21).
+
+### Decision & Implementation
+- Every redirect lives in the viasocket-admin panel on Embarko (Pages → Redirects). `src/middleware.js` reads `/api/public/redirects`, keeps the list for a minute and falls back to `src/data/redirects.json`. Exact sources beat wildcards; `statusCode: 0` is an exception. Admin redirects are browser-cached for five minutes.
+- `/integrations/{app}` reads SEO title, description, keywords, hero, use cases and FAQs from `/api/public/content/{slug}` (`src/app/lib/admin-content.js`), part by part, with the fixed copy as fallback.
+- `src/const/admin.js` holds the admin URL; `NEXT_PUBLIC_ADMIN_URL` overrides it.
+
+### Consequences & Trade-offs
+- Live behaviour can change without a commit. Check the admin API before you trust `src/data/redirects.json` ([SEO](SEO.md#redirects)).
+- Where the admin's source code lives and who owns it is not recorded ([OPEN_QUESTIONS P-07](OPEN_QUESTIONS.md)).
+
+---
+
+## ADR-022: One pricing page at /pricing, priced in tasks and AI credits
+
+### Status
+Accepted as shipped (`304bf6d`, `aa290ba`; PR #1844 and #1846; live 2026-10-23). Owner approval of the prices themselves is **unknown**. Resolves OPEN_QUESTIONS P-03.
+
+### Decision & Implementation
+- `/pricing` was rebuilt in the homepage design and replaces `/developers/pricing`, which now redirects to `/pricing`. The header "Pricing" link points to `/pricing`.
+- Plans: Free, Pro and Business (marked "Launch price") and Enterprise, each with monthly tasks and AI credits; a plan finder replaces the savings calculator.
+- A separate `/pass` page describes the prepaid viaSocket Pass.
+
+### Consequences & Trade-offs
+- `/pass` uses different units (calls and trigger events) and shows "To be set" rates and illustrative competitor prices in production ([OPEN_QUESTIONS P-08](OPEN_QUESTIONS.md)).
+- The `/embed/*` comparison tables still say viaSocket is "then $99/mo", which conflicts with Pro at $19.
+- Do not reuse plan prices in other copy until the owner confirms them ([claim register](POSITIONING.md#claim-register)).
+
+---
+
+## ADR-023: Website ops admin lives in-repo at /internal pending the viasocket-admin decision
+
+### Status
+**Proposed** (2026-10-23). Not approved; nothing is built on this branch.
+
+### Context & Problem Statement
+Site operations (redirects, integration copy) already live in viasocket-admin, an Embarko app whose source and owner are not recorded. A website ops admin (doc status, checks, ops views) needs a home now.
+
+### Decision & Implementation (proposed)
+- Build it inside this repo under `/internal`, kept out of search and the sitemap, until the team decides whether it belongs in viasocket-admin.
+- Revisit once P-07 (who owns viasocket-admin, where its source lives) is answered.
+
+### Consequences & Trade-offs
+- Two admin surfaces for a while. Anything that changes live behaviour (redirects, copy) stays in viasocket-admin.
 
 ---
 

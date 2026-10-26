@@ -84,6 +84,12 @@ export default async function IntegrationsPage({ params, searchParams }) {
     const hasToken = await getHasToken();
     
     const data = await getIntegrationsPageData(slug, resolvedSearchParams);
+
+    // /integrations/category/{slug} for a category the table doesn't have is a real 404 (C-09). If
+    // the table can't be read, the page keeps its error state rather than reporting the URL as gone.
+    if (data.unknownCategory) {
+        notFound();
+    }
     
     // Only redirect if there's a slug (prevents infinite loop on base /integrations page)
     if (data.noData && slug.length > 0) {

@@ -1,7 +1,7 @@
 ---
-covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "public/new-home/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "public/new-home/**", "src/app/internal/**", "src/app/api/internal/**", "src/app/api/exp/**", "src/lib/ops/**", "public/exp.js", "scripts/analyses/**"]
+verified_at: 845da954
+verified_on: 2026-10-23
 ---
 # User Flows & Critical Journeys
 
@@ -254,3 +254,62 @@ None of these forms uses reCAPTCHA (the unimported provider and its dependency w
 ## Cross-cutting failure handling
 
 The site-wide failure policy (no error boundary, helpers that never throw, `sendErrorMessage` only in production, `notFound()` vs redirect vs soft-404 pages, form failure UI) lives in [18-error-handling](18-error-handling.md). Each journey above notes only the failures specific to it.
+
+## Website Ops Journeys
+
+Operator guide: [ops/README.md](ops/README.md). Roles: viewer < editor < owner (from `OPS_USERS`).
+
+### Sign in
+
+1. `GET /internal/...` → middleware `internalGate`: config missing → **503** "Ops admin not configured" (names of missing vars only); no valid `vs_ops` cookie → **303** `/internal/login?next=<path>`.
+2. `POST /api/internal/auth/login` (same-origin only, else 403) → PBKDF2 check against `OPS_USERS` → **303** to `next` with the session cookie. Wrong email or password → back to the login page with "Email or password is incorrect." (same message for both). Five failures per IP in 10 minutes (per edge isolate) → "Too many attempts. Wait 10 minutes".
+3. Sign out: `POST /api/internal/auth/logout` clears the cookie.
+
+### Edit a knowledge doc
+
+1. Knowledge → document → **Edit** (editor). The form carries the file's git blob sha (`baseSha`).
+2. **Save draft** → `knowledge_drafts` in the store (state *draft*). **Submit** → writeback:
+   - dev: the dev store server compares `baseSha` with the file on disk; equal → writes the file (*effective*, uncommitted); different → **409 conflict**, the text stays as a draft and the edit page shows the drift.
+   - production: GitHub branch + commit + PR into `test` (*pending*); "Check PR status" moves it to *effective* when merged or *sync-failed* when closed. A GitHub error is *sync-failed* and nothing changed.
+3. Errors: viewer → 403; storage not connected → 503 "edits are refused"; knowledge source not connected → 503; a path outside AGENTS.md/docs → 400; invalid JSON for a `.json` file → 400.
+4. **History** lists commits touching the file, diffs any commit against the current file, and **Restore as draft** loads an old version into a draft (it changes nothing until submitted).
+
+### Research
+
+Research shows the watchlist with freshness (`last_checked` + cadence by category; paused/retired entries are not tracked). **Run now** (editor) fetches each active `watch` URL within the URL budget, hashes the visible text and compares with the last successful run; first sightings record a baseline, failures keep the old hash. Paused → the button is disabled and scheduled runs skip. Entry and cadence edits write the watchlist file through the knowledge writeback with a base-sha check (409 on a stale page).
+
+### Analyses
+
+`scripts/analyses/run.mjs <name>` → `GET ingest?analysis&key` (paused? disabled? already ran this window?) → `POST` *running* (claims the idempotency key; a live or final claim → skip) → run with a request budget, per-request timeout, run deadline, up to 3 attempts → `POST` final status with results and findings. No ingest config → runs and prints, not recorded. The workflow skips with a notice when paused (`OPS_ANALYSES_PAUSED`) or when its secrets are missing.
+
+### Experiment lifecycle
+
+draft → (editor: Mark ready, all pre-launch fields) → ready → (owner: Launch; checks: fields, instrumentation per variant, single experiment per surface, slots; production also `OPS_EXPERIMENTS_LIVE` + cache safety) → running ⇄ paused (editor pause, owner resume) → concluded (owner promote, with note) or retired (owner, with note). Rollback (editor, with reason) stops serving challengers and leaves it paused. A material change is a new phase (owner): counts restart. Every action is in the decisions log and History; a blocked launch lists every failed gate.
+
+### Experiment visitor journey
+
+```mermaid
+sequenceDiagram
+    participant V as Visitor
+    participant M as middleware (edge)
+    participant S as ops store
+    participant P as variant page
+    participant E as /api/exp/event
+    V->>M: GET /
+    M->>S: exp_active/home (cached 30 s)
+    alt no running experiment, store down, or prod without OPS_EXPERIMENTS_LIVE
+        M-->>V: unchanged (beforeFiles rewrite to /new-home/index.html)
+    else bot / internal
+        M-->>V: variant (bot: drawn per request) or A (internal), no cookies, not counted
+    else visitor
+        M->>M: vs_vid (new if missing), variant = hash(vid:exp:phase) by weights
+        M-->>V: rewrite to target, Set-Cookie vs_vid + vs_x_<exp>, no-store, Vary: Cookie
+        M--)S: assignment (waitUntil, first time per phase)
+        V->>P: page renders, /exp.js
+        P->>E: exposure (once per page view), then cta_click / setup_prompt_copy / signup_start
+        E->>S: dedupe + unique visitor + counter (bucket by traffic class)
+        P-->>V: Start free link gets vs_exp & vs_vid
+    end
+```
+
+Failure modes: store unreachable → baseline for everyone (last known state kept one more TTL); event route without storage → 503 and the page is unaffected (beacon); a cached `/` on production would replay one visitor's variant and strip cookies — that is why launch requires the cache-safety check (blocker B-1); an exposure whose variant does not match the visitor's hash is quarantined in `unassigned`; events after pause or a phase bump land in `late`.

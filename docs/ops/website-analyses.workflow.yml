@@ -1,0 +1,83 @@
+# Deterministic website analyses (scripts/analyses). Results go to the ops admin through
+# /api/internal/analyses/ingest. Docs: docs/DEVELOPMENT.md § Website analyses, docs/ops/README.md.
+#
+# Configuration (Settings → Secrets and variables → Actions):
+#   secrets.OPS_INGEST_URL     https://<host>/api/internal/analyses/ingest
+#   secrets.OPS_INGEST_TOKEN   same value as OPS_INGEST_TOKEN on that deployment
+#   vars.OPS_ANALYSES_BASE_URL site to analyse (default https://viasocket.com)
+#   vars.OPS_ANALYSES_PAUSED   "true" pauses every scheduled and manual run
+# Without the two secrets the job skips with a notice: it never runs against production
+# unconfigured. Scheduled workflows only run from the default branch (main).
+name: website-analyses
+
+on:
+  schedule:
+    - cron: '30 3 * * *' # daily: links, indexability, claims, metadata, watch-urls
+    - cron: '15 */6 * * *' # every 6 hours: experiment-health
+  workflow_dispatch:
+    inputs:
+      analysis:
+        description: 'Analysis to run'
+        type: choice
+        default: all
+        options: [all, links, indexability, claims, metadata, watch-urls, experiment-health]
+      force:
+        description: 'Run again even if this window already has a result'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-analyses-${{ github.event.inputs.analysis || github.event.schedule || 'all' }}
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      OPS_INGEST_URL: ${{ secrets.OPS_INGEST_URL }}
+      OPS_INGEST_TOKEN: ${{ secrets.OPS_INGEST_TOKEN }}
+      BASE_URL: ${{ vars.OPS_ANALYSES_BASE_URL || 'https://viasocket.com' }}
+      OPS_ANALYSIS_BUDGET: '300'
+      OPS_ANALYSIS_TIMEOUT_MS: '10000'
+      OPS_ANALYSIS_DEADLINE_S: '240'
+    steps:
+      - name: Check pause switch and configuration
+        id: gate
+        run: |
+          if [ "${{ vars.OPS_ANALYSES_PAUSED }}" = "true" ]; then
+            echo "::notice::Paused by repo variable OPS_ANALYSES_PAUSED=true. Nothing ran."
+            echo "run=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ -z "$OPS_INGEST_URL" ] || [ -z "$OPS_INGEST_TOKEN" ]; then
+            echo "::notice::Skipped: OPS_INGEST_URL / OPS_INGEST_TOKEN secrets are not configured, so results could not be recorded. See docs/ops/README.md."
+            echo "run=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          echo "run=true" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'true'
+        with:
+          node-version: '22'
+
+      # The analyses use only Node built-ins, so no npm install is needed.
+      - name: Run analyses
+        if: steps.gate.outputs.run == 'true'
+        timeout-minutes: 15
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            if [ "${{ github.event.schedule }}" = "15 */6 * * *" ]; then set -- experiment-health; else set -- links indexability claims metadata watch-urls; fi
+          else
+            if [ "${{ github.event.inputs.analysis }}" = "all" ]; then set -- links indexability claims metadata watch-urls experiment-health; else set -- "${{ github.event.inputs.analysis }}"; fi
+          fi
+          FORCE=""
+          if [ "${{ github.event.inputs.force }}" = "true" ]; then FORCE="--force"; fi
+          status=0
+          for a in "$@"; do node scripts/analyses/run.mjs "$a" $FORCE || status=1; done
+          exit $status

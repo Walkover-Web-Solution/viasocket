@@ -1,6 +1,7 @@
 import IntegrationsAppOneClientComp from './integrationsAppOneClientComp';
 import NavbarServer from '@/app/components/navbar/NavbarServer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 export default async function IntegrationsAppOneComp({
     appOneDetails,
@@ -107,13 +108,13 @@ export default async function IntegrationsAppOneComp({
         <div>
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+                dangerouslySetInnerHTML={{ __html: serializeJsonLd(schemaData) }}
             />
 
             {faqSchemaData && (
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchemaData) }}
+                    dangerouslySetInnerHTML={{ __html: serializeJsonLd(faqSchemaData) }}
                 />
             )}
 

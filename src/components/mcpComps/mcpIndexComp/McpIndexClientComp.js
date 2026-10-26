@@ -244,7 +244,7 @@ export default function McpIndexClientComp({
                                 ) : (
                                     <>
                                         {apps?.map((app, index) => (
-                                            <AppVisual redirectPart="mcp" app={app} index={index} />
+                                            <AppVisual key={app?.appslugname || index} redirectPart="mcp" app={app} index={index} />
                                         ))}
                                         <AppVisual
                                             redirectPart="mcp"
@@ -277,7 +277,7 @@ export default function McpIndexClientComp({
                     title="Build your app to be MCP-Ready"
                     description="List your app on the viaSocket Marketplace and connect it to AI assistants like Cursor, Claude, Windsurf, and many others—enabling your users to perform actions within your app directly through AI."
                     buttonLabel="Quick start guide"
-                    buttonLink="https://viasocket.com/help/developer-hub"
+                    buttonLink="https://viasocket.com/help/plugin-builder"
                 />
 
                 <FeaturesGrid featuresData={featuresData} />

@@ -13,10 +13,8 @@ import {
     TRUSTEDBY,
     EMBED,
     USECASES,
-    COUNTRIES,
     TEMPLATES,
     MCP,
-    PRICINGFEATURE,
     INDEXTEMPLATE,
     FOOTER,
     DOFOLLOWLINK,
@@ -131,11 +129,6 @@ export async function getUsecasesData(fields, filter, pageUrl) {
     return handleData(data);
 }
 
-export async function getCountriesData(fields, filter, pageUrl) {
-    const data = await getDataFromTable(COUNTRIES, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
 export async function getValidTemplatesData(fields, filter, pageUrl) {
     const data = await getDataFromTable(TEMPLATES, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
@@ -143,11 +136,6 @@ export async function getValidTemplatesData(fields, filter, pageUrl) {
 
 export async function getMCPPromptData(fields, filter, pageUrl) {
     const data = await getDataFromTable(MCP, handleFieldsFilter(fields, filter), pageUrl);
-    return handleData(data);
-}
-
-export async function getPricingFeatureData(fields, filter, pageUrl) {
-    const data = await getDataFromTable(PRICINGFEATURE, handleFieldsFilter(fields, filter), pageUrl);
     return handleData(data);
 }
 

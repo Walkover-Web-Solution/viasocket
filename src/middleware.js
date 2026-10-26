@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
+import { internalGate, isInternalPath } from './lib/ops/internal-gate';
+import { experimentResponse } from './lib/ops/edge-experiments';
 
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
@@ -69,13 +71,19 @@ function managedRedirect(request, list) {
     return response;
 }
 
-export async function middleware(request) {
+export async function middleware(request, event) {
     const { pathname, searchParams } = request.nextUrl;
+
+    // The private website-ops area (src/app/internal): signed session or login redirect, never
+    // cached, never indexed. Handled before anything else so no redirect rule can touch it.
+    if (isInternalPath(pathname)) return internalGate(request);
 
     const redirect = managedRedirect(request, await managedRedirects());
     if (redirect) return redirect;
 
-    const response = NextResponse.next();
+    // A/B/C experiments (src/lib/ops/edge-experiments.js): only on a surface path with a running
+    // experiment; otherwise null and the request is untouched. See docs/EXPERIMENTS.md.
+    const response = (await experimentResponse(request, event)) || NextResponse.next();
 
     // The variant and visitor id cookies are written by the browser (see
     // TrackingCookies), not here: Cloudflare strips Set-Cookie from the HTML

@@ -5,6 +5,7 @@ import { BASE_PROMPT, COPY, FEATURES_COPY as C } from './copy';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import FeatureGrid from './FeatureGrid';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // /features: every feature of the integration layer in one grid of toggle cards (FeatureGrid.js), in the homepage design.
 
@@ -14,7 +15,7 @@ function FaqJsonLd({ faqs }) {
         '@type': 'FAQPage',
         mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
     };
-    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />;
 }
 
 export default function FeaturesPage({ blogs = [] }) {

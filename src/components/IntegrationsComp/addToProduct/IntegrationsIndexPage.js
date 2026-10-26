@@ -7,6 +7,7 @@ import { BASE_PROMPT, COPY, INDEX_COPY } from './copy';
 import { CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import AppDirectory from './AppDirectory';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // /integrations and /integrations/category/{name}: the app directory in the homepage design.
 
@@ -18,7 +19,7 @@ function FaqJsonLd({ faqs }) {
         '@type': 'FAQPage',
         mainEntity: faqs.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
     };
-    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }} />;
+    return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(data) }} />;
 }
 
 export default function IntegrationsIndexPage({ data }) {

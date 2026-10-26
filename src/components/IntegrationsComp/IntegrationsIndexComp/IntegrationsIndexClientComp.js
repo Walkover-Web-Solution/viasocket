@@ -450,7 +450,7 @@ export function RequestIntegrationPopupOpener({
                             Build its plug and make it live today!
                         </h2>
                     </div>
-                    <Link href="https://viasocket.com/help/developer-hub" target="_blank" className="max-w-max">
+                    <Link href="https://viasocket.com/help/plugin-builder" target="_blank" className="max-w-max">
                         <button className="ml-8 btn text-xs sm:text-sm text-wrap btn-accent">Read our playbook</button>
                     </Link>
                 </div>

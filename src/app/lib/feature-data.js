@@ -31,6 +31,7 @@ export async function getFeaturesPageData(feature = []) {
         let featureSlug = null;
         let features = [];
         let featureData = {};
+        let unknownFeature = false;
 
         if (feature?.length > 0) {
             featureSlug = feature[0];
@@ -43,6 +44,8 @@ export async function getFeaturesPageData(feature = []) {
             // Single feature page
             const featureDataArray = await getFeatureData(ALLFEATURES_FIELDS, `filter=slug='${featureSlug}'`, pageUrl);
             featureData = (featureDataArray?.length > 0 && featureDataArray[0]) || {};
+            // The features table answered with no row for this slug, as opposed to failing (C-09).
+            unknownFeature = Array.isArray(featureDataArray) && featureDataArray.length === 0;
         }
 
         const blogTags = 'feature';
@@ -51,6 +54,7 @@ export async function getFeaturesPageData(feature = []) {
         return {
             features: features || [],
             featureData: featureData || {},
+            unknownFeature,
             footerData: footerData || [],
             metaData: metaData || {},
             pageInfo: pageInfo || {},

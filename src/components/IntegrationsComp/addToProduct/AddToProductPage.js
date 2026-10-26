@@ -13,6 +13,7 @@ import EventsList from './EventsList';
 import BetaRequestButton from './BetaNotice';
 import UseCaseTabs from './UseCaseTabs';
 import { appWebsiteUrl, relForApp } from '@/utils/ExternalLink';
+import { serializeJsonLd } from '@/utils/jsonLd';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
 // the HTML; only the rotating word, the sign-in animation, "Show all" and the copy buttons run
@@ -113,8 +114,8 @@ function JsonLd({ app, faqs, description }) {
     };
     return (
         <>
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(software) }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(software) }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(faq) }} />
         </>
     );
 }

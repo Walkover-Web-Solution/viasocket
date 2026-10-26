@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
 import { CheckCircle, ChevronRight } from 'lucide-react';
 import Script from 'next/script';
-import RequestMeetingComp from '@/components/requestMeetingComp/RequestMeetingComp';
+import RequestMeetingComp, { MEETING_DIALOG_ID } from '@/components/requestMeetingComp/RequestMeetingComp';
 
 const AgencyList = ({ agencies, type }) => {
     const itemsPerPage = 12;
@@ -27,6 +27,7 @@ const AgencyList = ({ agencies, type }) => {
                             (type === 'verified' && agency?.verified) ||
                             (type === 'nonverified' && agency?.verified == null)
                         ) {
+                            const dialogId = `${MEETING_DIALOG_ID}_${type}_${index + offset}`;
                             return (
                                 <div className="" key={index + offset}>
                                     <div className="flex flex-col col-span-1 bg-white border overflow-hidden  border-slate-200  h-full">
@@ -66,14 +67,14 @@ const AgencyList = ({ agencies, type }) => {
                                             </p>
                                             <button
                                                 onClick={() =>
-                                                    document.getElementById('meeting_request_form').showModal()
+                                                    document.getElementById(dialogId).showModal()
                                                 }
                                                 className="col-link text-blue-500 text-sm text-start flex items-center gap-1"
                                             >
                                                 Schedule a meet
                                                 <ChevronRight className="w-4 h-4" />
                                             </button>
-                                            <RequestMeetingComp agencyName={agency?.name} />
+                                            <RequestMeetingComp agencyName={agency?.name} dialogId={dialogId} />
                                         </div>
                                     </div>
                                 </div>
