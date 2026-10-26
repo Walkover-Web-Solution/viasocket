@@ -2,6 +2,74 @@
   "_comment": "Generated from _posts/blogs by build-utilities/generate-blogs.js. Edit the Markdown, not this file.",
   "posts": [
     {
+      "slug": "receiving-webhooks-in-viasocket",
+      "title": "Webhook Triggers in viaSocket: Technical Implementation Guide",
+      "description": "A technical guide to receiving and processing inbound webhooks in viaSocket: how to configure a webhook trigger, retrieve your endpoint URL, validate payloads, and build reliable event-driven workflows.",
+      "date": "2026-10-26",
+      "author": "Abhijeet Singh",
+      "authorImage": "/blogs/authors/abhijeet-singh.jpg",
+      "category": "Technical Guide",
+      "image": "",
+      "minutes": 5,
+      "html": "<p>Webhooks let external services push events directly to your viaSocket workflows the moment something happens — a payment completes, a form is submitted, a record changes. Instead of polling an API, your workflow waits and reacts.</p>\n<p>This guide explains how to set up a webhook trigger in viaSocket, get your inbound endpoint URL, validate incoming payloads, and handle events reliably.</p>\n<h2 id=\"how-inbound-webhooks-work-in-viasocket\">How Inbound Webhooks Work in viaSocket</h2>\n<p>Every workflow in viaSocket can start with a webhook trigger. When you add a webhook trigger step, viaSocket generates a unique endpoint URL for that workflow. Any HTTP POST to that URL fires the workflow with the posted payload as the trigger data.</p>\n<p>The pattern is:</p>\n<ol>\n<li>You create a workflow and add a webhook trigger</li>\n<li>viaSocket gives you a unique endpoint URL</li>\n<li>You register that URL with the external service (Stripe, GitHub, your own app, etc.)</li>\n<li>The external service POSTs events to the URL</li>\n<li>viaSocket executes the workflow with the event payload</li>\n</ol>\n<h2 id=\"getting-your-webhook-endpoint-url\">Getting Your Webhook Endpoint URL</h2>\n<p>The endpoint URL is generated when you add a webhook trigger to a workflow. The URL follows this format:</p>\n<pre><code>https://flow.viasocket.com/webhook/{token}\n</code></pre>\n<p>where {token} is a unique identifier tied to that workflow. You can find the URL in the trigger step configuration inside the workflow editor. Copy it and paste it into the external service's webhook settings.</p>\n<p>Each workflow gets its own distinct URL. If you need to handle events from multiple services, create a separate workflow for each source.</p>\n<h2 id=\"validating-incoming-payloads\">Validating Incoming Payloads</h2>\n<p>Most webhook senders include a signature header so you can verify the request is genuine and has not been tampered with. How you handle this in viaSocket depends on the sender.</p>\n<h3>Using a Custom Code Step for Signature Verification</h3>\n<p>For services that sign their payloads (Stripe uses a Stripe-Signature header with HMAC-SHA256; GitHub uses X-Hub-Signature-256; others follow similar patterns), the reliable approach in viaSocket is to add a code step immediately after the webhook trigger.</p>\n<p>In that code step:</p>\n<ol>\n<li>Read the raw request body and the signature header from the trigger data</li>\n<li>Recompute the expected signature using the shared secret the service gave you</li>\n<li>Compare the computed signature against the received header using a constant-time comparison</li>\n<li>Return an error or stop the workflow if the signatures do not match</li>\n</ol>\n<p>This approach works for any signing scheme and gives you full control over the validation logic. It is the recommended pattern until viaSocket publishes confirmed native signature verification settings for specific sources.</p>\n<h3>Filtering by IP Allowlist</h3>\n<p>Some services publish a list of IP addresses their webhooks originate from. If the service you are integrating with provides one, you can add a filter step that checks the source IP against the allowlist as a secondary control. This is a defence-in-depth measure, not a replacement for signature verification.</p>\n<h2 id=\"handling-event-payloads\">Handling Event Payloads</h2>\n<p>The entire POST body is available as trigger data in your workflow steps. You can reference any field in subsequent steps using viaSocket's variable picker.</p>\n<p>A few practical considerations:</p>\n<ul>\n<li>Most services send JSON. viaSocket parses the body automatically and makes fields accessible as named variables.</li>\n<li>Some services send form-encoded data. Check the sender's documentation and parse accordingly in a code step if needed.</li>\n<li>If the sender retries on non-2xx responses, make your workflow idempotent where possible — processing the same event twice should not create duplicate side effects.</li>\n</ul>\n<h2 id=\"responding-to-the-sender\">Responding to the Sender</h2>\n<p>viaSocket returns a 200 response to the sender as soon as the webhook is received. Workflow execution happens after acknowledgement. This means:</p>\n<ul>\n<li>The sender gets a fast acknowledgement and will not time out waiting for your workflow to finish</li>\n<li>If your workflow fails partway through, the sender has already received its 200 and will not automatically retry unless it has its own retry logic</li>\n</ul>\n<p>For critical workflows, log incoming events at the trigger step so you have a record independent of whether downstream steps succeed.</p>\n<h2 id=\"reliability-and-retries\">Reliability and Retries</h2>\n<p>viaSocket retries failed workflow steps automatically when a downstream action fails due to a temporary error. This covers failures in action steps (writing to a CRM, sending a message) but not the initial webhook receipt — once viaSocket has acknowledged the POST, the event is in the system.</p>\n<p>The exact retry count and backoff schedule are not currently published in the public documentation. For high-stakes workflows where you need specific delivery guarantees, contact viaSocket support.</p>\n<h2 id=\"common-setup-mistakes\">Common Setup Mistakes</h2>\n<h3>Registering the wrong URL</h3>\n<p>Double-check the URL you paste into the external service. A single character difference means events go nowhere. Test with a sample payload immediately after registering.</p>\n<h3>Not activating the workflow</h3>\n<p>A workflow must be active to receive events. A draft or paused workflow will not process incoming webhooks even if the URL is correct.</p>\n<h3>Skipping payload validation</h3>\n<p>Without signature verification, anyone who discovers your webhook URL can POST arbitrary data and trigger your workflow. Always validate signatures for production workflows connected to external services.</p>\n<h3>Assuming synchronous execution</h3>\n<p>viaSocket acknowledges the webhook immediately and runs the workflow asynchronously. Do not design your integration to depend on a result returned in the HTTP response body.</p>\n<h2 id=\"faq\">FAQ</h2>\n<div class=\"faq\">\n<details open><summary>What is the inbound webhook URL format?</summary>\n<p>It follows the format <a href=\"https://flow.viasocket.com/webhook/%7Btoken%7D\">https://flow.viasocket.com/webhook/{token}</a>, where {token} is unique to the workflow. Find the full URL in the webhook trigger step inside your workflow editor.</p>\n</details>\n<details><summary>Can I use the same webhook URL for multiple services?</summary>\n<p>Technically yes, but it is not recommended. Use separate workflows with separate URLs for each source so you can apply source-specific validation and routing logic independently.</p>\n</details>\n<details><summary>How do I verify a Stripe or GitHub webhook signature?</summary>\n<p>viaSocket does not currently have confirmed native signature verification toggles for specific sources. The recommended approach is a custom code step immediately after the webhook trigger, where you recompute the expected signature and compare it against the header the sender provides.</p>\n</details>\n<details><summary>What happens if my workflow fails after viaSocket acknowledges the webhook?</summary>\n<p>viaSocket retries failed action steps automatically. However, the sender has already received its 200 acknowledgement and will not re-send the event. Log trigger data at the start of your workflow so you can replay events manually if needed.</p>\n</details>\n<details><summary>Does viaSocket support webhook authentication headers?</summary>\n<p>You can add filter or code steps that inspect any header included in the incoming request. For standard signing schemes, use a code step to perform the verification as described above.</p>\n</details>\n</div>\n",
+      "toc": [
+        {
+          "id": "how-inbound-webhooks-work-in-viasocket",
+          "text": "How Inbound Webhooks Work in viaSocket"
+        },
+        {
+          "id": "getting-your-webhook-endpoint-url",
+          "text": "Getting Your Webhook Endpoint URL"
+        },
+        {
+          "id": "validating-incoming-payloads",
+          "text": "Validating Incoming Payloads"
+        },
+        {
+          "id": "handling-event-payloads",
+          "text": "Handling Event Payloads"
+        },
+        {
+          "id": "responding-to-the-sender",
+          "text": "Responding to the Sender"
+        },
+        {
+          "id": "reliability-and-retries",
+          "text": "Reliability and Retries"
+        },
+        {
+          "id": "common-setup-mistakes",
+          "text": "Common Setup Mistakes"
+        },
+        {
+          "id": "faq",
+          "text": "FAQ"
+        }
+      ],
+      "faqs": [
+        {
+          "q": "What is the inbound webhook URL format?",
+          "a": "It follows the format https://flow.viasocket.com/webhook/{token}, where {token} is unique to the workflow. Find the full URL in the webhook trigger step inside your workflow editor."
+        },
+        {
+          "q": "Can I use the same webhook URL for multiple services?",
+          "a": "Technically yes, but it is not recommended. Use separate workflows with separate URLs for each source so you can apply source-specific validation and routing logic independently."
+        },
+        {
+          "q": "How do I verify a Stripe or GitHub webhook signature?",
+          "a": "viaSocket does not currently have confirmed native signature verification toggles for specific sources. The recommended approach is a custom code step immediately after the webhook trigger, where you recompute the expected signature and compare it against the header the sender provides."
+        },
+        {
+          "q": "What happens if my workflow fails after viaSocket acknowledges the webhook?",
+          "a": "viaSocket retries failed action steps automatically. However, the sender has already received its 200 acknowledgement and will not re-send the event. Log trigger data at the start of your workflow so you can replay events manually if needed."
+        },
+        {
+          "q": "Does viaSocket support webhook authentication headers?",
+          "a": "You can add filter or code steps that inspect any header included in the incoming request. For standard signing schemes, use a code step to perform the verification as described above."
+        }
+      ]
+    },
+    {
       "slug": "api-rate-limiting-for-multi-tenant-integrations",
       "title": "API Rate Limiting for Multi-Tenant Integrations",
       "description": "In a multi-tenant product, rate limiting stops being \"catch the 429 and back off\" and becomes a resource-allocation problem. How to track and enforce limits per tenant, not just per provider.",
