@@ -151,8 +151,18 @@ Once a user connects an app through the SDK:
 
 You do not need to implement any of this per-integration. The same pattern works across all 2,300+ supported apps.
 
+How [managed OAuth for SaaS integrations](/blogs/merge-alternative) compares with Merge.dev is covered in the alternatives guide.
+
+For how this managed auth layer compares with Nango and other API auth platforms, see [managed OAuth for SaaS integrations](/blogs/nango-alternative).
+
 ## Next Steps
 
 - [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)
 - [Add AI agent tool-calling to your product](/embed/actions-for-ai)
 - [Browse the full developer documentation](/developers/docs)
+
+The steps for adding this managed OAuth layer to a product are in [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a user's connected apps after that authorisation, see [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/oauth-for-ai-agents).
+
+How that managed OAuth layer compares with Composio for AI agent tool-calling is in [managed OAuth for SaaS integrations](/blogs/composio-alternative).

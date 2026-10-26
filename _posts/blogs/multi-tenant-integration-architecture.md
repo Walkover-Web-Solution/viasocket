@@ -51,6 +51,8 @@ Each tenant's OAuth tokens are stored under their `unique_identifier`. Two tenan
 
 Your responsibility: ensure the `unique_identifier` in every JWT you sign is correct for the authenticated session. This is a backend concern — the JWT is signed server-side with your `embed_secret` and delivered to the frontend via a protected API endpoint.
 
+Where this [multi-tenant integration architecture](/blogs/merge-alternative) differs from Merge.dev's per-customer OAuth is covered in the alternatives guide.
+
 ### 2. Connection State Isolation
 
 Each tenant sees only their own connected apps. The SDK methods are automatically scoped to the `unique_identifier` from the initialisation token:
@@ -139,3 +141,11 @@ If your product includes AI agent features, the same multi-tenant isolation mode
 - [How to Handle OAuth for Multi-Tenant SaaS Integrations with viaSocket](/help/integration-guides/managed-oauth-for-saas-integrations)
 - [Embed Integrations in Your SaaS Product](/embed/app-integration)
 - [Developer Documentation](/developers/docs)
+
+Adding the managed OAuth layer on top of this architecture is covered in [Multi-Tenant Integration Architecture](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a tenant's connected apps, see [Multi-Tenant Integration Architecture](/blogs/oauth-for-ai-agents).
+
+How this [multi-tenant integration architecture](/blogs/nango-alternative) compares with Nango and other API auth platforms is covered in that alternatives guide.
+
+Choosing viaSocket over Composio for AI agent tool-calling on this architecture is covered in [multi-tenant integration architecture](/blogs/composio-alternative).
