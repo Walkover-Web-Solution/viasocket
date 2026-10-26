@@ -62,6 +62,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/terms` | `src/app/terms/page.js` (copy in the file) | Legal |
 | `/use-cases` | `src/components/IntegrationsComp/addToProduct/UseCasesPage.js` (`USECASES_COPY`) | Use cases, homepage design |
 | `/webinar` | `src/app/components/webinar/WebinarCard.js`; `src/app/lib/webinar-data.js:getWebinarPageData` | Webinar registrations |
+| `/welcome` | `src/app/welcome/page.js` (copy in the file) | Welcome landing |
 | `/workflow-automation-ideas` | `src/app/components/workflow-automation-ideas/AutomationSuggestionsClient.js` | AI automation-idea suggestions |
 | `/workflow-automations` | `src/app/workflow-automations/page.js` (copy in the file) | Workflow-automation SEO landing page |
 
