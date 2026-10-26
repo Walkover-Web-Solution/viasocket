@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 8fb15ca8
+verified_on: 2026-10-26
 ---
 # 05 Navigation Structure
 
@@ -50,7 +50,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/mcp/aiagent` | `src/app/mcp/aiagent/page.js` | MCP for AI agents |
 | `/mcp/saas` | `src/app/mcp/saas/page.js` | MCP for SaaS |
 | `/migration/n8n` | `src/app/migration/n8n/page.js` | Switch-from-n8n campaign |
-| `/migration/relay` | `src/app/migration/relay/page.js` | Switch-from-Relay paid campaign (own `utm_source`) |
+| `/migration/relay` | `src/app/migration/relay/page.js` | Relay.app alternative page; paid campaign (own `utm_source`) |
 | `/migration/zapier` | `src/app/migration/zapier/page.js` | Switch-from-Zapier campaign |
 | `/new-direction` | `src/components/IntegrationsComp/addToProduct/LetterPage.js` (`LETTER_COPY`) | Founders' letter; target of `/help` |
 | `/pricing` | `src/app/pricing/page.js` with `src/components/pricing/*`; `src/app/lib/pricing-data.js:getPricingPageData` | Pricing plans |
