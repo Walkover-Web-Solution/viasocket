@@ -130,6 +130,8 @@ Adding managed OAuth for the third-party apps an agent will call is covered in [
 
 How that tool-calling layer compares with Nango and other API auth platforms is covered in [OAuth for AI agents](/blogs/nango-alternative).
 
+How viaSocket compares with Composio for that tool-calling setup is in [OAuth for AI agents](/blogs/composio-alternative).
+
 ## FAQ
 
 ### Can my AI agent complete the OAuth flow on behalf of the user?
