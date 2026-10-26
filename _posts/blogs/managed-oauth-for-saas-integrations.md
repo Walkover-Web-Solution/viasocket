@@ -151,6 +151,8 @@ Once a user connects an app through the SDK:
 
 You do not need to implement any of this per-integration. The same pattern works across all 2,300+ supported apps.
 
+How [managed OAuth for SaaS integrations](/blogs/merge-alternative) compares with Merge.dev is covered in the alternatives guide.
+
 ## Next Steps
 
 - [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)

@@ -51,6 +51,8 @@ Each tenant's OAuth tokens are stored under their `unique_identifier`. Two tenan
 
 Your responsibility: ensure the `unique_identifier` in every JWT you sign is correct for the authenticated session. This is a backend concern — the JWT is signed server-side with your `embed_secret` and delivered to the frontend via a protected API endpoint.
 
+Where this [multi-tenant integration architecture](/blogs/merge-alternative) differs from Merge.dev's per-customer OAuth is covered in the alternatives guide.
+
 ### 2. Connection State Isolation
 
 Each tenant sees only their own connected apps. The SDK methods are automatically scoped to the `unique_identifier` from the initialisation token:

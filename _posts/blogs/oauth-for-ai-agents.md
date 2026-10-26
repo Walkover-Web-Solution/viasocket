@@ -128,6 +128,8 @@ This is distinct from viaSocket's [white-label MCP server](/mcp/saas), which is 
 
 Adding managed OAuth for the third-party apps an agent will call is covered in [How to Handle OAuth for an AI Agent Acting on a User's Apps](/blogs/how-to-add-managed-oauth-for-third-party-apps).
 
+How [OAuth for AI agents](/blogs/merge-alternative) compares with Merge Agent Handler is covered in the alternatives guide.
+
 ## FAQ
 
 ### Can my AI agent complete the OAuth flow on behalf of the user?
