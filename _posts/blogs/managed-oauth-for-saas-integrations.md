@@ -156,3 +156,5 @@ You do not need to implement any of this per-integration. The same pattern works
 - [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)
 - [Add AI agent tool-calling to your product](/embed/actions-for-ai)
 - [Browse the full developer documentation](/developers/docs)
+
+When an AI agent acts on a user's connected apps after that authorisation, see [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/oauth-for-ai-agents).

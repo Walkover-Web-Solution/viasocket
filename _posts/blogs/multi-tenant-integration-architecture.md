@@ -139,3 +139,5 @@ If your product includes AI agent features, the same multi-tenant isolation mode
 - [How to Handle OAuth for Multi-Tenant SaaS Integrations with viaSocket](/help/integration-guides/managed-oauth-for-saas-integrations)
 - [Embed Integrations in Your SaaS Product](/embed/app-integration)
 - [Developer Documentation](/developers/docs)
+
+When an AI agent acts on a tenant's connected apps, see [Multi-Tenant Integration Architecture](/blogs/oauth-for-ai-agents).
