@@ -1,41 +1,24 @@
-import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import RelaySignupCTA from './RelaySignupCTA';
+
+// "2,300+" also appears in RelayOffers and RelayComparisonTable.
+const HERO = {
+    title: 'The Relay.app Alternative for Developers and SaaS Builders',
+    lede: 'Relay.app has shut down. If you were using Relay for workflow automation or are researching what to use instead, this page covers what viaSocket offers and how it compares.',
+    sub: 'viaSocket is an Integration Layer for developers and SaaS builders. You can use it to run personal or team automations, or embed 2,300+ app integrations directly into your own product without building OAuth, token storage, or API clients yourself.',
+    cta: 'Get started free — 100,000 tasks/month, no credit card required',
+};
 
 export default function RelayHero() {
     return (
         <div className="flex flex-col gap-8 items-center justify-center py-12 lg:py-20 container">
-            <div className="border py-1 px-3 bg-white w-fit text-sm flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-accent"></span>
-                Relay.app shuts down Sep 14
-            </div>
+            <h1 className="h1 text-center max-w-4xl">{HERO.title}</h1>
+            <p className="text-base md:text-lg text-center max-w-3xl">{HERO.lede}</p>
+            <p className="text-base md:text-lg text-center max-w-3xl">{HERO.sub}</p>
 
-            <h1 className="h1 text-center">
-                The Relay.app Alternative With <br className="hidden lg:inline" /> a Free Migration Path
-            </h1>
-            <p className="text-base md:text-lg">
-                Relay shuts down Sep 14. Paste your Relay export data into viaSocket's AI and watch
-                <br className="hidden lg:inline" /> your workflows come back to life. Migration is free, and your first
-                year is on us.
-            </p>
-
-            <div className="flex flex-col md:flex-row items-stretch md:items-center md:justify-center gap-2 w-full sm:w-auto">
-                <RelaySignupCTA className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
-                    Import my Relay workflows <ArrowRight size={14} />{' '}
-                </RelaySignupCTA>
-                <Link
-                    href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                    className="btn btn-outline flex items-center justify-center w-full md:max-w-fit"
-                >
-                    Book a free migration call <ArrowRight />{' '}
-                </Link>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
-                <span className="text-xs text-gray-500 font-medium">4.6/5 on G2 (90+ Reviews)</span>
-                <span className="text-xs text-gray-500 font-medium">10,000+ businesses</span>
-                <span className="text-xs text-gray-500 font-medium">SOC 2 Type II</span>
-            </div>
+            <RelaySignupCTA className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit text-center">
+                {HERO.cta} <ArrowRight size={14} />
+            </RelaySignupCTA>
         </div>
     );
 }

@@ -1,53 +1,56 @@
+import Link from 'next/link';
+
+// "2,300+" also appears in RelayHero and RelayOffers.
 const comparisonRows = [
+    {
+        feature: 'Status',
+        relay: 'Shut down',
+        viasocket: 'Active',
+    },
     {
         feature: 'Free plan',
         relay: '200 steps/month',
-        viasocket: '2,000 tasks + 500 AI credits/month',
+        viasocket: '100,000 tasks/month + 1,000 AI credits',
     },
     {
         feature: 'Paid entry',
-        relay: '$19/mo (Team $69 for 2,000 steps)',
-        viasocket: 'Free plan covers most Relay workloads; pay as you go beyond',
+        relay: '$9/mo',
+        viasocket: '$19/mo (Pro)',
     },
     {
         feature: 'Integrations',
         relay: '200+',
-        viasocket: '2,200+',
+        viasocket: '2,300+',
     },
     {
         feature: 'Human-in-the-loop',
         relay: 'Yes',
-        viasocket: 'Human Intervention steps: pause for email approval, resume, full audit trail',
+        viasocket: 'Yes',
     },
     {
         feature: 'AI in workflows',
         relay: 'Yes',
-        viasocket: 'AI agents that analyze, decide and act',
+        viasocket: 'Yes',
     },
     {
-        feature: 'Tables',
+        feature: 'Tables / data storage',
         relay: 'Yes',
-        viasocket: 'Built in; import your Relay tables as CSV',
+        viasocket: 'Yes',
     },
     {
         feature: 'Templates',
         relay: 'Yes',
-        viasocket: 'Template library with one-click deploy',
+        viasocket: 'Yes',
     },
     {
-        feature: 'Support',
-        relay: 'Until Sep 14, 2026',
-        viasocket: 'Real human support on every plan',
+        feature: 'SaaS embed / white-label',
+        relay: 'No',
+        viasocket: 'Yes — Embed product',
     },
     {
         feature: 'Security',
-        relay: 'Not listed',
-        viasocket: 'SOC 2 Type II, ISO, GDPR & CCPA',
-    },
-    {
-        feature: 'Still in business',
-        relay: 'Shutting down Sep 14, 2026',
-        viasocket: 'Here to stay: built by Walkover, 10,000+ businesses',
+        relay: '—',
+        viasocket: 'SOC 2 Type II, ISO, GDPR and CCPA',
     },
 ];
 
@@ -55,9 +58,7 @@ export default function RelayComparisonTable() {
     return (
         <div className="bg-[#F9F6F1]">
             <div className="container py-12 lg:py-16">
-                <h2 className="h2 mb-6 lg:mb-8 text-center lg:text-left">
-                    Everything you had on Relay, and then some.
-                </h2>
+                <h2 className="h2 mb-6 lg:mb-8 text-center lg:text-left">viaSocket vs Relay.app</h2>
 
                 <div className="border border-black rounded-2xl overflow-hidden hidden lg:block">
                     <div className="grid grid-cols-[0.8fr_1fr_1.5fr] bg-black text-white text-xs font-semibold uppercase tracking-wider">
@@ -105,6 +106,18 @@ export default function RelayComparisonTable() {
                         </div>
                     ))}
                 </div>
+
+                <p className="text-sm text-gray-700 mt-8 max-w-3xl">
+                    The same kind of switch is documented if you{' '}
+                    <Link href="/migration/zapier" className="text-accent underline underline-offset-4">
+                        migrate from Zapier
+                    </Link>{' '}
+                    or{' '}
+                    <Link href="/migration/n8n" className="text-accent underline underline-offset-4">
+                        migrate from n8n
+                    </Link>
+                    .
+                </p>
             </div>
         </div>
     );

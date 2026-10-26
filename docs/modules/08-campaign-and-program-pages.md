@@ -1,14 +1,14 @@
 ---
 covers: ["src/app/migration/**", "src/app/lifetime-deal/**", "src/app/black-friday-sale/**", "src/app/components/black-friday-sale/**", "src/app/webinar/**", "src/app/components/webinar/**", "src/app/free-access-programs/**", "src/app/experts-are-live/**", "src/app/departments/**", "src/app/components/department/**", "src/app/lib/lifetime-deal-data.js", "src/app/lib/black-friday-sale-data.js", "src/app/lib/webinar-data.js", "src/app/lib/department-data.js", "src/app/privacy/**", "src/app/terms/**", "src/app/data-deletion-policy/**", "src/app/data-retention-deletion/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 8fb15ca8
+verified_on: 2026-10-26
 ---
 # Module: Campaign, Program and Static Pages
 
 Self-contained landing pages for paid campaigns and offers (migration, lifetime deal, Black Friday), programs (webinars, free access, departments, live experts) and the legal pages. Each one is a `page.js` plus a loader, rendered on the legacy daisyUI + Tailwind stack. `/embed/*` belongs to [module 04](./04-developers-embed.md).
 
 ## Purpose
-- **Migration** (`/migration/zapier`, `/migration/n8n`, `/migration/relay`): "switch from X to viaSocket, and we migrate for you".
+- **Migration** (`/migration/zapier`, `/migration/n8n`, `/migration/relay`): "switch from X to viaSocket". Zapier and n8n still offer a hands-on migration. Relay is an evergreen alternative page: the copy says Relay.app has shut down, and it no longer offers a dated free year or a booked migration call.
 - **Offers:** `/lifetime-deal` (Stripe one-off licences) with `/lifetime-deal/success`, and `/black-friday-sale` (a directory of partner-app deals).
 - **Programs:** `/webinar` (upcoming webinars), `/free-access-programs` (free plans for specific groups), `/departments` and `/departments/[slug]` (automation ideas per team), `/experts-are-live` (live help: Google Meet, cal.id, phone, WhatsApp, email).
 - **Legal:** `/privacy`, `/terms`, `/data-deletion-policy`, `/data-retention-deletion`.
@@ -50,8 +50,9 @@ Self-contained landing pages for paid campaigns and offers (migration, lifetime 
 
 ## Screens
 ### 1. Migration (`src/app/migration/{zapier,n8n,relay}/page.js`)
-- These are server pages with sections from their own folder: Hero, StatCompare (zapier, n8n), Ways, ComparisonTable, reviews, UseCases, CTABanner, `SecuritySection`, footer. Relay adds `RelayRescueDeal`, and its hero and banners book cal.id `workflow-setup-discussion`.
-- Data: only `getFooterData` and `getReviewSectionData`. Titles are hardcoded in `generateMetadata`. Relay use-case cards open `/automations/<slug>` in a new tab.
+- These are server pages with sections from their own folder: Hero, StatCompare (zapier, n8n), Ways (zapier, n8n), ComparisonTable, reviews, UseCases, CTABanner, `SecuritySection`, footer. Zapier and n8n heroes and banners book cal.id `workflow-setup-discussion`.
+- Relay (`src/app/migration/relay/`) renders Hero, Offers, ComparisonTable, GetStarted, automation patterns, reviews, a security paragraph plus `SecuritySection`, Explore further, and CTABanner. Signup still goes through `RelaySignupCTA` (`relay-switch-google-ads`). The comparison section links `/migration/zapier` and `/migration/n8n`. Offers link `/embed/app-integration` and `/use-cases`. Explore further repeats those destinations, and the closing banner links `/use-cases` with the anchor "see integration use cases". The top bar on this page (`src/app/components/navbar/Relay.js`) is a static shutdown line, not a Sep 14 countdown. `RelayRescueDeal` and the cal.id buttons are gone. Pattern cards do not link out to templates.
+- Data: only `getFooterData` and `getReviewSectionData`. Titles are hardcoded in `generateMetadata`. Zapier and n8n use-case cards open `/automations/<slug>` in a new tab.
 
 ### 2. Lifetime deal (`src/app/lifetime-deal/page.js` → `LifetimeDealClient.js`)
 - Sections: Hero, Comparison, HowItWorks, AIWorkflows, Integrations, Pricing, Unlock, Testimonials, Faq, FinalCta, `LifetimeDealFooter`. The page has **no site navbar or footer**.
