@@ -1,46 +1,25 @@
-import Link from 'next/link';
-import { ArrowRight, Briefcase, LayoutGrid, Activity } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import N8nSignupCTA from './N8nSignupCTA';
 
-const stats = [
-    { icon: <Briefcase className="w-5 h-5" />, value: '10,000+', label: 'businesses' },
-    { icon: <LayoutGrid className="w-5 h-5" />, value: '2,200+', label: 'apps' },
-    { icon: <Activity className="w-5 h-5" />, value: '99.99%', label: 'uptime' },
-];
+// "2,300+" also appears in N8nDifference and N8nComparisonTable.
+// "100,000 tasks/month" also appears in N8nGetStarted and N8nCTABanner.
+const HERO = {
+    title: 'n8n Alternative for SaaS Builders: Why Teams Choose viaSocket',
+    lede: "If you're evaluating n8n alternatives, the right answer depends on what you're actually trying to build. n8n is a workflow automation tool — powerful for internal ops teams running self-hosted pipelines. viaSocket is an Integration Layer: infrastructure that lets your SaaS product offer 2,300+ app integrations to your customers, without your team building or maintaining them.",
+    sub: 'Those are different jobs. This page explains the distinction clearly, so you can make the right call.',
+    cta: 'Get started free — 100,000 tasks/month',
+};
 
 export default function N8nHero() {
     return (
         <div className="flex flex-col gap-8 items-center justify-center py-12 lg:py-20 container">
-            <h1 className="h1 text-center">
-                The n8n Alternative for <br className="hidden lg:inline" /> People Done Self-Hosting
-            </h1>
-            <p className="text-base md:text-lg text-center">
-                Export your workflow JSON, paste it into viaSocket's AI, and it runs managed: no updates, no
-                <br className="hidden lg:inline" /> credential rotation, no container that needs restarting at 2 a.m.
-                Migration is free and our engineers help you do it.
-            </p>
+            <h1 className="h1 text-center max-w-4xl">{HERO.title}</h1>
+            <p className="text-base md:text-lg text-center max-w-3xl">{HERO.lede}</p>
+            <p className="text-base md:text-lg text-center max-w-3xl">{HERO.sub}</p>
 
-            <div className="flex flex-col sm:flex-row items-center gap-6 md:gap-10">
-                {stats.map((stat) => (
-                    <div key={stat.label} className="flex items-center gap-2">
-                        <span className="text-accent">{stat.icon}</span>
-                        <span className="text-xl md:text-2xl font-semibold text-accent leading-none">{stat.value}</span>
-                        <span className="text-sm text-gray-500">{stat.label}</span>
-                    </div>
-                ))}
-            </div>
-
-            <div className="flex flex-col md:flex-row items-stretch md:items-center md:justify-center gap-2 w-full sm:w-auto">
-                <N8nSignupCTA className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit">
-                    Import my n8n workflows <ArrowRight size={14} />{' '}
-                </N8nSignupCTA>
-                <Link
-                    href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                    className="btn btn-outline flex items-center justify-center w-full md:max-w-fit"
-                >
-                    Book a free migration call <ArrowRight />{' '}
-                </Link>
-            </div>
+            <N8nSignupCTA className="btn btn-accent flex items-center gap-1 justify-center w-full md:max-w-fit text-center">
+                {HERO.cta} <ArrowRight size={14} />
+            </N8nSignupCTA>
         </div>
     );
 }
