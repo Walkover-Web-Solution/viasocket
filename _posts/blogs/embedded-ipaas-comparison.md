@@ -138,6 +138,8 @@ For a closer look at how viaSocket compares to specific alternatives:
 - [Composio Alternative](/alternatives/composio)
 - [Paragon Alternative](/alternatives/paragon)
 
+How to add managed OAuth once you pick a platform is in [Embedded iPaaS Comparison](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
 ## FAQ
 
 ### What is the difference between embedded iPaaS and a native integration?
