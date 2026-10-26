@@ -6,11 +6,12 @@ import Footer from '@/components/footer/footer';
 import { getFooterData, getReviewSectionData } from '@/utils/getData';
 import { FOOTER_FIELDS, REVIEWSECTION_FIELDS } from '@/const/fields';
 import N8nHero from './N8nHero';
-import N8nStatCompare from './N8nStatCompare';
-import N8nMaintenanceRelief from './N8nMaintenanceRelief';
-import N8nWays from './N8nWays';
+import N8nBuiltFor from './N8nBuiltFor';
+import N8nShortfalls from './N8nShortfalls';
+import N8nDifference from './N8nDifference';
 import N8nComparisonTable from './N8nComparisonTable';
-import N8nUseCases from './N8nUseCases';
+import N8nAudience from './N8nAudience';
+import N8nGetStarted from './N8nGetStarted';
 import N8nCTABanner from './N8nCTABanner';
 import ReviewIframeOptimized from '@/app/components/home/ReviewIframeOptimized';
 import SecuritySection from '@/app/components/SecuritySection';
@@ -18,17 +19,18 @@ import SecuritySection from '@/app/components/SecuritySection';
 export const runtime = 'edge';
 
 export async function generateMetadata() {
+    // "2,300+" also appears in N8nHero, N8nDifference and N8nComparisonTable.
     return {
-        title: 'n8n Alternative Without the Self-Hosting: Free Migration | viaSocket',
+        title: 'n8n Alternative for SaaS Builders | viaSocket',
         description:
-            "Love n8n but tired of running it? Export your workflow JSON, paste it into viaSocket's AI, and it runs fully managed. Free assisted migration by real engineers.",
+            'n8n automates internal workflows. viaSocket is an Integration Layer that lets your SaaS product offer 2,300+ app integrations to your customers, without your team building or maintaining them.',
         keywords:
-            'n8n alternative, n8n migration, migrate n8n workflows, managed n8n, self-hosted automation alternative, workflow automation migration',
+            'n8n alternative, n8n for SaaS, integration layer, embedded iPaaS, managed OAuth, SaaS integrations, viaSocket',
         openGraph: {
             siteName: 'viaSocket',
-            title: 'n8n Alternative Without the Self-Hosting: Free Migration | viaSocket',
+            title: 'n8n Alternative for SaaS Builders | viaSocket',
             description:
-                "Love n8n but tired of running it? Export your workflow JSON, paste it into viaSocket's AI, and it runs fully managed. Free assisted migration by real engineers.",
+                'n8n automates internal workflows. viaSocket is an Integration Layer that lets your SaaS product offer 2,300+ app integrations to your customers, without your team building or maintaining them.',
             url: 'https://viasocket.com/migration/n8n',
             type: 'website',
             images: [
@@ -42,9 +44,9 @@ export async function generateMetadata() {
         },
         twitter: {
             card: 'summary_large_image',
-            title: 'n8n Alternative Without the Self-Hosting: Free Migration | viaSocket',
+            title: 'n8n Alternative for SaaS Builders | viaSocket',
             description:
-                "Love n8n but tired of running it? Export your workflow JSON, paste it into viaSocket's AI, and it runs fully managed.",
+                'n8n automates internal workflows. viaSocket is an Integration Layer that lets your SaaS product offer 2,300+ app integrations to your customers.',
             images: ['https://files.msg91.com/342616/wnitwkyk'],
         },
     };
@@ -90,15 +92,16 @@ export default async function N8nMigrationPage() {
 
             <div className="global-top-space dotted-background">
                 <N8nHero />
-                <N8nStatCompare />
-                <N8nMaintenanceRelief />
-                <N8nWays />
+                <N8nBuiltFor />
+                <N8nShortfalls />
+                <N8nDifference />
                 <N8nComparisonTable />
+                <N8nAudience />
+                <N8nGetStarted />
+                <N8nCTABanner />
                 <div className="bg-[#F9F6F1]">
                     <ReviewIframeOptimized reviewData={reviewData} showless={false} />
                 </div>
-                <N8nUseCases />
-                <N8nCTABanner />
                 <div className="bg-[#F9F6F1] pt-12">
                     <SecuritySection />
                 </div>
