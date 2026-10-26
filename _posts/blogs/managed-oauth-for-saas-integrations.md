@@ -158,3 +158,5 @@ You do not need to implement any of this per-integration. The same pattern works
 - [Browse the full developer documentation](/developers/docs)
 
 The steps for adding this managed OAuth layer to a product are in [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a user's connected apps after that authorisation, see [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/oauth-for-ai-agents).

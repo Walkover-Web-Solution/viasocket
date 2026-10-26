@@ -141,3 +141,5 @@ If your product includes AI agent features, the same multi-tenant isolation mode
 - [Developer Documentation](/developers/docs)
 
 Adding the managed OAuth layer on top of this architecture is covered in [Multi-Tenant Integration Architecture](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a tenant's connected apps, see [Multi-Tenant Integration Architecture](/blogs/oauth-for-ai-agents).
