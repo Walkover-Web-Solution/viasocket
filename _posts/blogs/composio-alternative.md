@@ -28,6 +28,8 @@ Composio's core strengths:
 
 If you are building an AI agent that needs to act on behalf of users across a defined set of apps, Composio is a reasonable starting point and should stay on your shortlist.
 
+How this [Composio alternative](/blogs/merge-alternative) compares with Merge.dev is covered in the alternatives guide.
+
 ## Where Teams Look for Alternatives
 
 Teams typically look for Composio alternatives when:

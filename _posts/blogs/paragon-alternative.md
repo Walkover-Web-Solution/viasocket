@@ -28,6 +28,8 @@ Paragon's core strengths:
 
 If you need a polished embedded integration experience for enterprise SaaS customers and your team has implementation bandwidth to configure per-connector workflows, Paragon is a serious contender.
 
+How this [Paragon alternative](/blogs/merge-alternative) compares with Merge.dev is covered in the alternatives guide.
+
 ## Where Teams Look for Alternatives
 
 Teams typically look for Paragon alternatives when:

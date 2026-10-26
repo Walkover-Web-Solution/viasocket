@@ -128,6 +128,8 @@ This is distinct from viaSocket's [white-label MCP server](/mcp/saas), which is 
 
 Adding managed OAuth for the third-party apps an agent will call is covered in [How to Handle OAuth for an AI Agent Acting on a User's Apps](/blogs/how-to-add-managed-oauth-for-third-party-apps).
 
+How [OAuth for AI agents](/blogs/merge-alternative) compares with Merge Agent Handler is covered in the alternatives guide.
+
 How that tool-calling layer compares with Nango and other API auth platforms is covered in [OAuth for AI agents](/blogs/nango-alternative).
 
 How viaSocket compares with Composio for that tool-calling setup is in [OAuth for AI agents](/blogs/composio-alternative).
