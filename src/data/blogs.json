@@ -2,6 +2,86 @@
   "_comment": "Generated from _posts/blogs by build-utilities/generate-blogs.js. Edit the Markdown, not this file.",
   "posts": [
     {
+      "slug": "what-is-model-context-protocol-mcp",
+      "title": "What Is MCP (Model Context Protocol)? How It Works and Why Developers Use It",
+      "description": "An in-depth explanation of the Model Context Protocol (MCP): how it works, why developers adopt it, and where it fits alongside viaSocket's Integration Layer and embeds.",
+      "date": "2026-10-26",
+      "author": "Abhijeet Singh",
+      "authorImage": "/blogs/authors/abhijeet-singh.jpg",
+      "category": "CL-1 — MCP & AI Agent Integration",
+      "image": "",
+      "minutes": 8,
+      "html": "<p>The Model Context Protocol (MCP) is an open standard that lets AI assistants and agents call external tools and services in a structured, predictable way. If you have ever wanted Claude, Cursor, or another AI client to read your database, post to Slack, or trigger a workflow — MCP is the protocol that makes that possible without custom glue code for every integration.</p>\n<p>This guide explains what MCP is, how it works technically, where it fits in your architecture, and when you should use it versus other integration patterns.</p>\n<h2 id=\"what-mcp-actually-is\">What MCP Actually Is</h2>\n<p>MCP stands for Model Context Protocol. Anthropic published the specification in late 2024 as an open standard; it is not proprietary to any single AI provider or tool platform.</p>\n<p>At its core, MCP defines a client–server protocol:</p>\n<ul>\n<li><strong>MCP server</strong>: exposes a set of named tools (functions) that an AI can call, along with their input schemas.</li>\n<li><strong>MCP client</strong>: an AI assistant or agent that discovers available tools, decides when to call them, and processes the results.</li>\n</ul>\n<p>When an AI assistant is connected to an MCP server, it can see the tool list and invoke any tool during a conversation or agentic task. The server executes the call and returns a structured result.</p>\n<p>The specification covers tool discovery, invocation, streaming, error handling, and authentication patterns. Because it is an open standard, any AI client that implements MCP can connect to any compliant MCP server — no bespoke API client required on the AI side.</p>\n<h2 id=\"how-mcp-works-the-request-cycle\">How MCP Works: The Request Cycle</h2>\n<p>Here is the basic flow when an AI agent uses an MCP server:</p>\n<ol>\n<li><strong>Discovery</strong>: The AI client connects to the MCP server and requests the tool list. Each tool has a name, description, and JSON Schema for its inputs.</li>\n<li><strong>Decision</strong>: During a task, the AI model decides which tool (if any) to call based on the user's request and the tool descriptions.</li>\n<li><strong>Invocation</strong>: The client sends a structured tool-call request to the MCP server with the tool name and arguments.</li>\n<li><strong>Execution</strong>: The MCP server executes the action — calling an API, reading a database, triggering a workflow, or anything else it is built to do.</li>\n<li><strong>Response</strong>: The server returns a structured result. The AI incorporates the result into its reasoning and response.</li>\n</ol>\n<p>This cycle can repeat multiple times in a single agentic task. A well-designed MCP server exposes tools at the right granularity — not too coarse (one mega-tool that does everything) and not too fine (hundreds of raw API endpoints).</p>\n<h2 id=\"what-mcp-is-not\">What MCP Is Not</h2>\n<p>Understanding the boundaries helps you make better architectural decisions.</p>\n<p><strong>MCP is not a workflow automation platform.</strong> It does not handle scheduling, branching logic, error recovery, or multi-step orchestration on its own. It is a call-and-response protocol.</p>\n<p><strong>MCP is not an OAuth provider.</strong> The protocol does not specify how the MCP server authenticates with downstream services (Slack, Salesforce, GitHub). That is the server's responsibility. You still need to handle OAuth flows, token storage, and refresh — either yourself or via an integration platform.</p>\n<p><strong>MCP is not a universal AI API.</strong> It works with AI clients that have implemented the MCP client spec. Not every AI model or product supports MCP natively today, though adoption is growing quickly.</p>\n<h2 id=\"why-developers-adopt-mcp\">Why Developers Adopt MCP</h2>\n<p>Before MCP, connecting an AI agent to external services required:</p>\n<ul>\n<li>Writing a custom function or tool definition for each service.</li>\n<li>Building the API client, auth handling, and error handling for each service.</li>\n<li>Keeping tool definitions in sync with each AI client's proprietary format (OpenAI function calling, Anthropic tool use, etc.).</li>\n</ul>\n<p>MCP standardizes the tool-calling layer. Once you have an MCP server that exposes your integrations, any MCP-compatible AI client can use it without client-specific rewiring. That is the main developer productivity argument for MCP.</p>\n<p>For SaaS builders specifically, there is a second argument: your users are already using AI assistants. If you expose your product's capabilities as MCP tools, your users can invoke your product from inside Claude, Cursor, or any other MCP client — without leaving their AI environment.</p>\n<h2 id=\"mcp-in-a-saas-product-two-different-problems\">MCP in a SaaS Product: Two Different Problems</h2>\n<p>When you are building a SaaS product, MCP appears in two distinct contexts. It is worth being clear about which one you are solving.</p>\n<h3>1. Your AI agent needs to call third-party apps</h3>\n<p>You are building an AI feature inside your product, and that AI needs to read from or write to external services — a CRM, a ticketing system, a communication tool. You need a reliable way to make those calls.</p>\n<p>For this use case, <a href=\"/embed/actions-for-ai\">Embed Actions for AI</a> provides your AI agent with a tool-calling endpoint backed by 2,300+ app integrations, with OAuth and token management handled for you. You do not need to build or host an MCP server for this; your AI calls the viaSocket endpoint directly.</p>\n<h3>2. Your users' AI agents need to call your product</h3>\n<p>Your users are using Claude, Cursor, or another AI assistant. They want to invoke your product's features directly from that AI client — for example, asking Claude to create a project in your tool, or asking Cursor to run a build pipeline.</p>\n<p>For this use case, you need to expose your product as an MCP server that your users can configure in their AI client. This is what a white-label MCP server does: your users get an MCP endpoint branded to your product, which they paste into their AI client configuration.</p>\n<p><a href=\"/mcp/saas\">viaSocket's MCP for SaaS</a> provides this: a white-label MCP server that exposes your product's actions to your users' AI clients without requiring you to build and maintain an MCP server from scratch.</p>\n<h2 id=\"the-mcp-ecosystem-today\">The MCP Ecosystem Today</h2>\n<p>MCP adoption has grown significantly since Anthropic published the spec. Major AI clients including Claude (Desktop and API), Cursor, and others have added MCP client support. A growing number of developer tools, platforms, and SaaS products are publishing MCP servers.</p>\n<p>The ecosystem is still maturing. Tool discovery (how users find and install MCP servers), security standards for MCP server authentication, and enterprise-grade management patterns are active areas of development.</p>\n<p>For developers building on MCP now, the practical advice is:</p>\n<ul>\n<li>Use MCP where the AI client your users already use supports it natively.</li>\n<li>Do not assume every AI client your users might want will support MCP on the same timeline.</li>\n<li>Design your MCP server tools to be stable — AI clients cache tool descriptions, and breaking changes are disruptive.</li>\n</ul>\n<h2 id=\"mcp-and-viasockets-integration-layer\">MCP and viaSocket's Integration Layer</h2>\n<p>viaSocket's Integration Layer lets developers connect 2,300+ apps to their SaaS products and AI agents — handling OAuth, token storage, and API execution so you do not have to build that infrastructure yourself.</p>\n<p>MCP is one of the ways that integration layer can be exposed to end-users and AI agents:</p>\n<ul>\n<li><strong><a href=\"/mcp/saas\">White-label MCP server</a></strong>: your users get a branded MCP endpoint they configure in their AI client. viaSocket handles the server, the tool definitions, and the downstream app execution.</li>\n<li><strong><a href=\"/embed/actions-for-ai\">Embed Actions for AI</a></strong>: your AI agent gets a tool-calling endpoint it can call directly — useful when you control the AI agent and do not need a user-facing MCP server.</li>\n<li><strong><a href=\"/embed/app-integration\">App Integrations (embedded iPaaS)</a></strong>: your users build workflows visually inside your product, connecting 2,300+ apps without code.</li>\n</ul>\n<p>MCP and embeds are not competing approaches — they serve different user interactions. MCP serves users who are operating from inside an AI client. Embeds serve users who are configuring integrations inside your product's UI.</p>\n<h2 id=\"when-to-use-mcp-vs-other-patterns\">When to Use MCP vs. Other Patterns</h2>\n<table>\n<thead>\n<tr>\n<th>Scenario</th>\n<th>Recommended pattern</th>\n</tr>\n</thead>\n<tbody>\n<tr>\n<td>Your AI agent needs to call third-party APIs</td>\n<td>Embed Actions for AI (tool-calling endpoint)</td>\n</tr>\n<tr>\n<td>Your users want to use your product from Claude/Cursor</td>\n<td>White-label MCP server</td>\n</tr>\n<tr>\n<td>Your users need to automate workflows between apps</td>\n<td>Embedded iPaaS (visual workflow builder)</td>\n</tr>\n<tr>\n<td>You need a webhook to trigger multi-app actions</td>\n<td>Embed Actions via Webhook</td>\n</tr>\n</tbody>\n</table>\n<h2 id=\"key-takeaways\">Key Takeaways</h2>\n<ul>\n<li>MCP is an open protocol for AI tool-calling — not a platform, not an automation engine.</li>\n<li>It standardizes how AI clients discover and invoke external tools.</li>\n<li>For SaaS builders, MCP is most relevant for letting your users' AI agents call your product, or for letting your AI agent call external services.</li>\n<li>Building and maintaining an MCP server from scratch is non-trivial; white-label MCP infrastructure (like viaSocket's) handles the server layer so you ship faster.</li>\n<li>MCP and embedded integration (workflow builders, action embeds) serve different user interactions and often coexist in the same product.</li>\n</ul>\n<h2 id=\"faq\">FAQ</h2>\n<div class=\"faq\">\n<details open><summary>Who created MCP?</summary>\n<p>Anthropic published the Model Context Protocol specification. It is an open standard and not proprietary to Anthropic or any single AI vendor.</p>\n</details>\n<details><summary>Does MCP replace function calling or tool use APIs?</summary>\n<p>No. MCP is a transport and discovery protocol that sits on top of tool-calling. An MCP server exposes tools; the AI model's function-calling or tool-use capability is what invokes them. They work together.</p>\n</details>\n<details><summary>Which AI clients support MCP?</summary>\n<p>Claude (Desktop and API), Cursor, and a growing number of other AI clients and development environments support MCP. The list is expanding as the standard gains adoption.</p>\n</details>\n<details><summary>Do I need to build an MCP server to use viaSocket's integrations in my AI agent?</summary>\n<p>No. If you are building an AI agent inside your product, <a href=\"/embed/actions-for-ai\">Embed Actions for AI</a> gives your agent a tool-calling endpoint backed by 2,300+ apps without requiring you to build or host an MCP server. A white-label MCP server is the right choice when your users need to call your product from their own AI client.</p>\n</details>\n<details><summary>Is MCP secure for production use?</summary>\n<p>MCP servers can be built to production security standards. Authentication between the AI client and MCP server, and between the MCP server and downstream APIs, is the server implementer's responsibility. viaSocket's integration layer handles OAuth and token management for the downstream app connections.</p>\n</details>\n</div>\n<h2 id=\"further-reading\">Further Reading</h2>\n<ul>\n<li><a href=\"/developers/docs\">viaSocket Developers Docs</a></li>\n<li><a href=\"/use-cases\">Integration Layer use cases</a></li>\n<li><a href=\"/mcp/saas\">White-label MCP for SaaS</a></li>\n<li><a href=\"/mcp/aiagent\">MCP for AI agent builders</a></li>\n<li><a href=\"/embed/actions-for-ai\">Embed Actions for AI</a></li>\n</ul>",
+      "toc": [
+        {
+          "id": "what-mcp-actually-is",
+          "text": "What MCP Actually Is"
+        },
+        {
+          "id": "how-mcp-works-the-request-cycle",
+          "text": "How MCP Works: The Request Cycle"
+        },
+        {
+          "id": "what-mcp-is-not",
+          "text": "What MCP Is Not"
+        },
+        {
+          "id": "why-developers-adopt-mcp",
+          "text": "Why Developers Adopt MCP"
+        },
+        {
+          "id": "mcp-in-a-saas-product-two-different-problems",
+          "text": "MCP in a SaaS Product: Two Different Problems"
+        },
+        {
+          "id": "the-mcp-ecosystem-today",
+          "text": "The MCP Ecosystem Today"
+        },
+        {
+          "id": "mcp-and-viasockets-integration-layer",
+          "text": "MCP and viaSocket's Integration Layer"
+        },
+        {
+          "id": "when-to-use-mcp-vs-other-patterns",
+          "text": "When to Use MCP vs. Other Patterns"
+        },
+        {
+          "id": "key-takeaways",
+          "text": "Key Takeaways"
+        },
+        {
+          "id": "faq",
+          "text": "FAQ"
+        },
+        {
+          "id": "further-reading",
+          "text": "Further Reading"
+        }
+      ],
+      "faqs": [
+        {
+          "q": "Who created MCP?",
+          "a": "Anthropic published the Model Context Protocol specification. It is an open standard and not proprietary to Anthropic or any single AI vendor."
+        },
+        {
+          "q": "Does MCP replace function calling or tool use APIs?",
+          "a": "No. MCP is a transport and discovery protocol that sits on top of tool-calling. An MCP server exposes tools; the AI model's function-calling or tool-use capability is what invokes them. They work together."
+        },
+        {
+          "q": "Which AI clients support MCP?",
+          "a": "Claude (Desktop and API), Cursor, and a growing number of other AI clients and development environments support MCP. The list is expanding as the standard gains adoption."
+        },
+        {
+          "q": "Do I need to build an MCP server to use viaSocket's integrations in my AI agent?",
+          "a": "No. If you are building an AI agent inside your product, Embed Actions for AI gives your agent a tool-calling endpoint backed by 2,300+ apps without requiring you to build or host an MCP server. A white-label MCP server is the right choice when your users need to call your product from their own AI client."
+        },
+        {
+          "q": "Is MCP secure for production use?",
+          "a": "MCP servers can be built to production security standards. Authentication between the AI client and MCP server, and between the MCP server and downstream APIs, is the server implementer's responsibility. viaSocket's integration layer handles OAuth and token management for the downstream app connections."
+        }
+      ]
+    },
+    {
       "slug": "api-rate-limiting-for-multi-tenant-integrations",
       "title": "API Rate Limiting for Multi-Tenant Integrations",
       "description": "In a multi-tenant product, rate limiting stops being \"catch the 429 and back off\" and becomes a resource-allocation problem. How to track and enforce limits per tenant, not just per provider.",
