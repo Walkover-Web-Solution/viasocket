@@ -151,6 +151,8 @@ Once a user connects an app through the SDK:
 
 You do not need to implement any of this per-integration. The same pattern works across all 2,300+ supported apps.
 
+For how this managed auth layer compares with Nango and other API auth platforms, see [managed OAuth for SaaS integrations](/blogs/nango-alternative).
+
 ## Next Steps
 
 - [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)
