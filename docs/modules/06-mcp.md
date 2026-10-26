@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/mcp/**", "src/components/mcpComps/**", "src/app/lib/mcp-data.js", "src/app/components/mcp/**", "src/utils/getMcpInfo.js"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-26
 ---
 # Module: MCP
 
@@ -34,7 +34,7 @@ The `/mcp/*` pages sell viaSocket's MCP endpoint (a URL that lets an AI assistan
 - Routing: `src/utils/getMcpInfo.js:getMcpInfo` parses `['mcp', ...slug]` into `{appone, apptwo, category, page}`. Any first segment other than `category` or `page` is an app.
 - Data (`src/app/lib/mcp-data.js:getMCPPageData`, app branch): meta under `/mcp/appName`, FAQs under `[mcpApp]`, category row, `getCombos`, 16 apps (`getApps`), then `getAppDetails`. When the app exists it also loads blogs tagged `mcp` and `getMCPPromptData` (filter `slug_names='<appslugname>'`).
 - The step texts (`mcpAppSteps`) and benefit strings (`mcpAIIntegrationData`) are hardcoded in the loader, not in the component.
-- Metadata replaces `[app_name]` in the table-api title and description.
+- Metadata for an app page is built in `generateMetadata`, not from the table-api title. The title is `{App Name} MCP Server | Free, Instant Setup | viaSocket`. When that is longer than 60 characters the middle phrase is dropped and the name is cut at 35 characters (`{App Name} MCP Server | viaSocket`). The description is `Connect {App Name} to ChatGPT, Claude, and Cursor with viaSocket's free MCP Server. Get a secure endpoint in minutes — no API wrangling needed.` A name that would push it past 155 characters is shortened on a word boundary. Keywords and the social image still come from the `/mcp/appName` table row. Category and index pages still use `getMetaData('/mcp')`. `/mcp/aiagent` and `/mcp/saas` are unchanged.
 - Client half `McpAppClientComp`: hero and CTA, events list, app search (debounced `src/utils/searchApps.js`), related apps with Prev/Next, categories, FAQ (`FAQSection`), `BlogGrid`, `Cta`, `Footer`.
 
 ### 2. MCP index / category (`/mcp/category/<c>[/page/<n>]`, `/mcp/page/<n>` → `src/components/mcpComps/mcpIndexComp/McpIndexComp.js`) <!-- verify:ignore -->
@@ -83,6 +83,7 @@ The `/mcp/*` pages sell viaSocket's MCP endpoint (a URL that lets an AI assistan
 ---
 
 ## Development Tasks (Next Phases)
-- [ ] Decide the authoritative app-count copy ("1000+" in MCP metadata and loader text) ([OPEN_QUESTIONS P-04](../OPEN_QUESTIONS.md#active-questions-table)).
+- [ ] Decide the authoritative app-count copy ("1000+" in MCP metadata and loader text) ([OPEN_QUESTIONS P-04](../OPEN_QUESTIONS.md#active-questions-table)). The app-page benefit line in `src/app/lib/mcp-data.js` (`1,000+ apps`) stays until that decision: the TP-6 refresh asked not to ship the "2,300+" sentence before it.
 - [ ] Register or path-shape the MCP app-slug source ([OPEN_QUESTIONS T-07](../OPEN_QUESTIONS.md#active-questions-table)).
 - [ ] Decide where the `/help/viaSocket-MCP*` and `/help/developer-hub` links should point, and whether unknown MCP slugs should 404 (new questions in M2 notes). <!-- verify:ignore -->
+- [ ] `/mcp/page/<n>` for n greater than 0 returns 500: `McpIndexClientComp` renders `ChevronLeft` without importing it. Seen on local `/mcp/page/1` while checking the title change. Not part of that change.
