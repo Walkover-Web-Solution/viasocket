@@ -72,6 +72,17 @@ export default function PricingPlans() {
     );
 }
 
+/** For now: the Free plan beside a "Contact us" card, without the billing switch. */
+export function FreeAndContact() {
+    return (
+        <ul className={`${p.plans} ${p['plans-2']}`}>
+            {[C.plans[0], C.contactPlan].map((plan) => (
+                <Plan key={plan.name} plan={plan} yearly={false} />
+            ))}
+        </ul>
+    );
+}
+
 // The plan finder: the cheapest plan whose included tasks and AI credits (each plan's `limits` in copy.js,
 // the same numbers as its card) cover the usage on the sliders. Past the largest, Enterprise.
 const fmtCount = (n) => (n >= 1e6 ? `${(n / 1e6).toLocaleString('en-US', { maximumFractionDigits: 1 })}M` : n >= 1e3 ? `${(n / 1e3).toLocaleString('en-US', { maximumFractionDigits: 1 })}K` : String(n));

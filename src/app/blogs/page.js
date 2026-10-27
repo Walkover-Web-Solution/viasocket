@@ -1,6 +1,7 @@
 import BlogsPage from '@/components/IntegrationsComp/addToProduct/BlogsPage';
 import { BLOGS_COPY } from '@/components/IntegrationsComp/addToProduct/copy';
 import { BLOGS_URL, getAllBlogs } from '../lib/blogs';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -9,6 +10,7 @@ export const metadata = {
     description: BLOGS_COPY.metaDesc,
     alternates: { canonical: BLOGS_URL },
     openGraph: {
+        images: ogImages('/blogs'),
         title: BLOGS_COPY.metaTitle,
         description: BLOGS_COPY.metaDesc,
         url: BLOGS_URL,
@@ -17,6 +19,7 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
+        images: twitterImages('/blogs'),
         title: BLOGS_COPY.metaTitle,
         description: BLOGS_COPY.metaDesc,
     },

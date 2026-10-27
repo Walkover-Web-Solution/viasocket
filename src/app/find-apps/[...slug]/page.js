@@ -1,5 +1,6 @@
 import { getFindAppsPageData } from '@/app/lib/data';
 import FindAppsClient from '@/app/components/find-apps/FindAppsClient';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -30,11 +31,13 @@ export async function generateMetadata({ params }) {
             title,
             description,
             openGraph: {
+                images: ogImages(`/find-apps/${slug.join('/')}`),
                 title,
                 description,
             },
             twitter: {
                 card: 'summary_large_image',
+                images: twitterImages(`/find-apps/${slug.join('/')}`),
                 title,
                 description,
             },

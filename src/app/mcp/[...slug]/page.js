@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import ErrorComp from '@/components/404/404Comp';
 import { getMCPPageData } from '../../lib/mcp-data';
 import McpMain from '@/app/components/mcp/McpMain';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -36,13 +37,13 @@ export async function generateMetadata({ params }) {
             openGraph: {
                 title,
                 description,
-                images: metaData?.image ? [{ url: metaData.image }] : [{ url: "https://files.msg91.com/342616/wnitwkyk" }],
+                images: ogImages(`/mcp/${slug.join('/')}`, metaData?.image),
             },
             twitter: {
                 card: 'summary_large_image',
                 title,
                 description,
-                images: metaData?.image ? [metaData.image] : ["https://files.msg91.com/342616/wnitwkyk"],
+                images: twitterImages(`/mcp/${slug.join('/')}`, metaData?.image),
             },
         };
     } catch (error) {

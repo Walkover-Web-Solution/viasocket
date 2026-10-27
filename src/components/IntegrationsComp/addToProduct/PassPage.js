@@ -103,6 +103,7 @@ function Rates() {
                     </table>
                 </div>
                 <p className={p.fine}>{C.toolsNote}</p>
+                <p className={p.fine}>{C.toolsMsgNote}</p>
             </div>
         </section>
     );

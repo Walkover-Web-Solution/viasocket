@@ -2,9 +2,11 @@ import s from './addToProduct.module.scss';
 import p from './pricing.module.scss';
 import { PRICING_COPY as C } from './copy';
 import { Faq, Head, PageFrame } from './PricingParts';
-import PricingPlans, { PlanFinder } from './PricingPlans';
+import PricingPlans, { FreeAndContact, PlanFinder } from './PricingPlans';
 
-// /pricing in the homepage design: the plans, a plan finder and the pricing FAQs.
+// /pricing in the homepage design. For now the Free plan and a "Contact us" card, what every plan gets, links
+// to /features and /use-cases, and FAQs on the Free plan and viaSocket; the paid plans and the plan finder (PricingPlans, Calculator) are kept for
+// when they come back.
 
 function Calculator() {
     return (
@@ -25,8 +27,8 @@ export default function PricingPage() {
                 <div className={`${s['hero-grid']} ${p['hero-grid']}`} aria-hidden="true" />
                 <div className={`${s.wrap} ${p['hero-in']}`}>
                     <h1>{C.h1}</h1>
-                    <p className={s['hero-sub']}>{C.sub}</p>
-                    <PricingPlans />
+                    <p className={s['hero-sub']}>{C.contactSub}</p>
+                    <FreeAndContact />
                     <div className={p.every}>
                         <p>
                             {C.everyPlan.map((x) =>
@@ -44,8 +46,26 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            <Calculator />
-            <Faq eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
+            <section className={s.sec} aria-labelledby="h-explore">
+                <div className={s.wrap}>
+                    <Head title={C.exploreTitle} id="h-explore" />
+                    <ul className={p.explore}>
+                        {C.explore.map(([title, text, href, cta]) => (
+                            <li key={href}>
+                                <a href={href}>
+                                    <h3>{title}</h3>
+                                    <p>{text}</p>
+                                    <span className={p['explore-go']}>
+                                        {cta} <span aria-hidden="true">→</span>
+                                    </span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+
+            <Faq eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.contactFaqs} />
         </PageFrame>
     );
 }
