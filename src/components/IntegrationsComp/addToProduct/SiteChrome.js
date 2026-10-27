@@ -47,9 +47,9 @@ export function SiteFooter() {
                             <div key={heading}>
                                 <p className={s['ft-gh']}>{heading}</p>
                                 <ul>
-                                    {links.map(([label, href]) => (
+                                    {links.map(([label, href, target]) => (
                                         <li key={label}>
-                                            <a href={href}>{label}</a>
+                                            <a href={href} {...(target ? { target, rel: 'noopener' } : {})}>{label}</a>
                                         </li>
                                     ))}
                                 </ul>

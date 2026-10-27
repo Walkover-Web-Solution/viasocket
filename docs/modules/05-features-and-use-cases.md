@@ -63,7 +63,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 - All styling is the CSS module `addToProduct.module.scss` with the Geist fonts from the `geist` package. These pages use no Tailwind. Whether this pattern is accepted is [OPEN_QUESTIONS U-07](../OPEN_QUESTIONS.md#active-questions-table).
 
 > [!WARNING]
-> `SiteChrome.js` and `copy.js` (`NAV`, `FOOTER_GROUPS`, `BASE_PROMPT`) are **hand copies** of `public/new-home/index.html` (header, footer, `#promptText`). A change to the homepage nav, footer or setup prompt must be made in both places. Nothing keeps them in sync.
+> `SiteChrome.js` and `copy.js` (`NAV`, `FOOTER_GROUPS`, `BASE_PROMPT`) are **hand copies** of `public/new-home/index.html` (header, footer, `#promptText`). A change to the homepage nav, footer or setup prompt must be made in both places. Nothing keeps them in sync. `SiteFooter`'s Company column ends with "Explore more" (`https://walkover-products.embarko.app/?from=viasocket`, `target="_blank"`, `rel="noopener"`). The static homepage copy does not have that link yet: add it in `viasocket-site` and export. A hand edit of `public/new-home/index.html` is overwritten by the next export.
 
 > [!WARNING]
 > `FEATURES_COPY` is commented "Kept word for word with the approved copy" (`copy.js`). Do not reword it without a product request.

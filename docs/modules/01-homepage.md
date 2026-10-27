@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-27
 ---
 # Module: Homepage (`/`)
 
@@ -45,7 +45,7 @@ verified_on: 2026-10-22
 | `#prompts` | Six sample-prompt buttons (`[data-pr]`) | copies the sample prompt plus `PROMPT` |
 | `#features` | "What viaSocket handles": a nine-row yes/no table, Book a demo | static |
 | `#faq` | Nine `<details>` items | static; the same Q&A is duplicated in the `FAQPage` JSON-LD in `<head>` |
-| `footer.ft` | Link groups, socials, G2/Capterra badges | static |
+| `footer.ft` | Link groups, socials, G2/Capterra badges. The Company column here does not yet include the "Explore more" link that `SiteFooter` has; add that link in `viasocket-site` and export, because this file is overwritten by the next export | static |
 | `.chat-fab` | Support chat button (`[data-chat]`, `href` /support) | `public/new-home/assets/support.js` opens the gtwy chat when it loaded, otherwise the link navigates |
 | `#promptText` | Hidden (`sr-only`) setup-prompt text | `PROMPT = $('#promptText').textContent` |
 
