@@ -1,11 +1,14 @@
 ---
-covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**", "src/components/IntegrationsComp/addToProduct/PricingPage.js", "src/components/IntegrationsComp/addToProduct/PricingPlans.js", "src/components/IntegrationsComp/addToProduct/pricing.module.scss"]
+verified_at: c4bed05f
+verified_on: 2026-10-27
 ---
 # Module: Pricing (`/pricing`)
 
 The workflow-automation pricing page: the Free, Team and Premium plans, priced in tasks and AI credits. The Embed / integration-layer pricing page with the overage slider and ticker is `/developers/pricing`, owned by [module 04](./04-developers-embed.md).
+
+> [!IMPORTANT]
+> **What `/pricing` renders today (2026-10-27).** `src/app/pricing/page.js` renders `src/components/IntegrationsComp/addToProduct/PricingPage.js` in the homepage design, with copy from `copy.js:PRICING_COPY`. For now it shows only the Free plan beside a "Contact us" card (`PricingPlans.js:FreeAndContact`, `PRICING_COPY.contactPlan` → the sales cal.id link), the "every plan" lines, links to `/features` and `/use-cases` (`PRICING_COPY.explore`), and FAQs on the Free plan and viaSocket (`PRICING_COPY.contactFaqs`). There are no dollar prices. The paid plans, the billing switch and the plan finder (`PricingPlans`, `PlanFinder`, `PRICING_COPY.plans`, `faqs`) are kept, unrendered, for when they return. The rest of this page describes the earlier table-driven page (`src/components/pricing/*`, `src/app/lib/pricing-data.js`), which `/pricing` no longer uses.
 
 ## Purpose
 - Answers "what does viaSocket automation cost, and what do I get free?" with plan cards (monthly or annual), perks, a comparison, reviews and FAQs.

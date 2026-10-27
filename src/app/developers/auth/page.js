@@ -9,13 +9,18 @@ import TenantTree from './TenantTree';
 import TrustPanel from './TrustPanel';
 import CompareTable from './CompareTable';
 import AiRun from './AiRun';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
 export async function generateMetadata() {
+    const title = 'Managed auth · viaSocket';
+    const description = 'Let your users connect their apps. We handle the authentication.';
     return {
-        title: 'Managed auth · viaSocket',
-        description: 'Let your users connect their apps. We handle the authentication.',
+        title,
+        description,
+        openGraph: { title, description, url: 'https://viasocket.com/developers/auth', siteName: 'viaSocket', type: 'website', images: ogImages('/developers/auth') },
+        twitter: { card: 'summary_large_image', title, description, images: twitterImages('/developers/auth') },
     };
 }
 

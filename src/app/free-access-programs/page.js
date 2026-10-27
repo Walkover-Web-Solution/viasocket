@@ -5,6 +5,7 @@ import Footer from '@/components/footer/footer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getFreeAccessProgramsPageData } from '../lib/data';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -18,13 +19,13 @@ export async function generateMetadata() {
     openGraph: {
       title: metaData?.title || 'Free Access Programs - viaSocket',
       description: metaData?.description || '3x more for impactful organisations - viaSocket',
-      images: metaData?.image ? [{ url: metaData.image }] : undefined,
+      images: ogImages('/free-access-programs', metaData?.image),
     },
     twitter: {
       card: 'summary_large_image',
       title: metaData?.title,
       description: metaData?.description,
-      images: metaData?.image ? [metaData.image] : undefined,
+      images: twitterImages('/free-access-programs', metaData?.image),
     },
   };
 }

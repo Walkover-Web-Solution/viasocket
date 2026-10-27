@@ -15,6 +15,7 @@ import N8nGetStarted from './N8nGetStarted';
 import N8nCTABanner from './N8nCTABanner';
 import ReviewIframeOptimized from '@/app/components/home/ReviewIframeOptimized';
 import SecuritySection from '@/app/components/SecuritySection';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -33,21 +34,14 @@ export async function generateMetadata() {
                 'n8n automates internal workflows. viaSocket is an Integration Layer that lets your SaaS product offer 2,300+ app integrations to your customers, without your team building or maintaining them.',
             url: 'https://viasocket.com/migration/n8n',
             type: 'website',
-            images: [
-                {
-                    url: 'https://files.msg91.com/342616/wnitwkyk',
-                    width: 1200,
-                    height: 630,
-                    alt: 'viaSocket',
-                },
-            ],
+            images: ogImages('/migration/n8n'),
         },
         twitter: {
             card: 'summary_large_image',
             title: 'n8n Alternative for SaaS Builders | viaSocket',
             description:
                 'n8n automates internal workflows. viaSocket is an Integration Layer that lets your SaaS product offer 2,300+ app integrations to your customers.',
-            images: ['https://files.msg91.com/342616/wnitwkyk'],
+            images: twitterImages('/migration/n8n'),
         },
     };
 }

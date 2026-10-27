@@ -7,6 +7,7 @@ import { getFooterData, getNavbarData } from '@/utils/getData';
 import { FOOTER_FIELDS, NAVBAR_FIELDS } from '@/const/fields';
 import { getMetaData } from '@/utils/getMetaData';
 import HireExpertClient from './HireExpertClient';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -23,8 +24,9 @@ export async function generateMetadata() {
             description:
                 metaData?.description ||
                 'Hire a vetted viaSocket automation expert. AI-scoped, fixed-price, delivered fast.',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/hire-an-expert', metaData?.image),
         },
+        twitter: { card: 'summary_large_image', images: twitterImages('/hire-an-expert', metaData?.image) },
     };
 }
 
