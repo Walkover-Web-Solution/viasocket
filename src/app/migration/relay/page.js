@@ -15,6 +15,7 @@ import RelayExplore from './RelayExplore';
 import RelayCTABanner from './RelayCTABanner';
 import ReviewIframeOptimized from '@/app/components/home/ReviewIframeOptimized';
 import SecuritySection from '@/app/components/SecuritySection';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -32,21 +33,14 @@ export async function generateMetadata() {
                 'Relay.app has shut down. viaSocket is an Integration Layer for developers and SaaS builders, with 2,300+ integrations and 100,000 free tasks a month.',
             url: 'https://viasocket.com/migration/relay',
             type: 'website',
-            images: [
-                {
-                    url: 'https://files.msg91.com/342616/wnitwkyk',
-                    width: 1200,
-                    height: 630,
-                    alt: 'viaSocket',
-                },
-            ],
+            images: ogImages('/migration/relay'),
         },
         twitter: {
             card: 'summary_large_image',
             title: 'The Relay.app Alternative for Developers and SaaS Builders | viaSocket',
             description:
                 'Relay.app has shut down. viaSocket is an Integration Layer for developers and SaaS builders, with 2,300+ integrations and 100,000 free tasks a month.',
-            images: ['https://files.msg91.com/342616/wnitwkyk'],
+            images: twitterImages('/migration/relay'),
         },
     };
 }

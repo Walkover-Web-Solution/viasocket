@@ -147,6 +147,7 @@ export async function middleware(request) {
     return response;
 }
 
+// Not for share images (/og/...): they need no redirects or cookies, and are not page visits.
 export const config = {
-    matcher: ['/((?!_next/|api/|.*\\..*).*)'],
+    matcher: ['/((?!_next/|api/|og/|.*\\..*).*)'],
 };

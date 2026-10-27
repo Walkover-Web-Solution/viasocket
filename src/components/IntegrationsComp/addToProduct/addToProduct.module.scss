@@ -463,82 +463,49 @@
 // leaves plain page, not an empty box.
 .fx-sec { padding-block: 0 var(--sec-pad); }
 .fx { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; background: var(--bg); border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-.fx-flat { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.fx-flat { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; }
 .fx > li { display: flex; min-width: 0; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-// Each feature is a tile (FeatureGrid.js): icon and title, the description, and an example on a few.
-// Tiles in a row share a height. Hover shades the tile and inks the icon; a tile with a feature page is
-// a link: it also gets an inner edge and "→", and the arrow nudges right on hover.
-.fx-card { position: relative; flex: 1; min-width: 0; padding: 24px; display: flex; flex-direction: column; background: var(--s1); color: inherit; text-decoration: none; transition: background-color .2s, box-shadow .2s; }
+// Each feature is a tile (FeatureGrid.js): icon, then the title (up to two lines), centred in the row.
+// Every row has the same height, so all tiles are one size. Hover shades the tile and inks the icon; a
+// tile with a feature page is a link: it also gets an inner edge, and its "→" appears on hover.
+.fx-card { position: relative; flex: 1; min-width: 0; min-height: 96px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; background: var(--s1); color: inherit; text-decoration: none; transition: background-color .2s, box-shadow .2s; }
 .fx-card:hover, .fx-card:focus-visible { background: var(--s2); }
 .fx-card:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
 .fx-linked { cursor: pointer; }
 .fx-linked:hover, .fx-linked:focus-visible { box-shadow: inset 0 0 0 1px var(--ink-3); }
-.fx-h { margin: 0; display: flex; align-items: center; gap: 14px; }
-.fx-h .feat-ico { width: 36px; height: 36px; flex: none; }
-.fx-t { min-width: 0; font-size: clamp(19px, 1.6vw, 22px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; color: var(--ink); }
-.fx-pre { margin-top: 16px; display: grid; gap: 14px; }
-.fx-pre p { color: color-mix(in srgb, var(--ink) 85%, var(--bg)); font-size: 15px; line-height: 1.55; } // brighter than --ink-2 for easy reading
-.fx-go { margin-top: auto; padding-top: 16px; font-size: 14px; font-weight: 500; color: var(--ink); }
-.fx-go span { display: inline-block; transition: transform .2s ease; }
-.fx-card:hover .fx-go span { transform: translateX(4px); }
-.fx .feat-ico { display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); transition: background-color .2s, color .2s, border-color .2s; }
+.fx .feat-ico { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border: 1px solid var(--line-2); background: var(--s2); transition: background-color .2s, color .2s, border-color .2s; }
 .fx-card:hover .feat-ico, .fx-card:focus-visible .feat-ico { background: var(--btn-bg); border-color: var(--btn-bg); color: var(--btn-ink); }
-@media (prefers-reduced-motion: reduce) { .fx-go span { transition: none; transform: none; } }
-// The three AI tiles: a mesh gradient (aqua and cyan pools, a blue and a periwinkle one, a near-white wash)
-// on an oversized layer that slowly drifts and turns inside the tile; still for reduced motion. The same
-// in both themes: in dark mode these tiles keep the light theme's colours, so text stays readable on it.
-.fx-ai { --ai-wash: .9; isolation: isolate; overflow: hidden; }
-@media (prefers-color-scheme: dark) {
-  .fx-ai {
-    --bg: #fafaf9; --s1: #ffffff; --s2: #f4f4f2;
-    --ink: #111113; --ink-2: #4a4946; --ink-3: #75736e; --ink-4: #8c8a85;
-    --line: rgba(17, 17, 19, 0.08); --line-2: rgba(17, 17, 19, 0.14); --line-3: rgba(17, 17, 19, 0.24);
-    --tint-1: rgba(17, 17, 19, 0.025); --tint-2: rgba(17, 17, 19, 0.045);
-    --btn-bg: #111113; --btn-ink: #ffffff; --btn-hover: #000000;
-    --green: #15803d; --green-soft: rgba(21, 128, 61, 0.1);
-    color-scheme: light;
-  }
+.fx-t { flex: 1; min-width: 0; margin: 0; font-size: clamp(17px, 1.4vw, 19px); font-weight: 600; letter-spacing: -0.015em; line-height: 1.3; color: var(--ink); text-wrap: balance;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.fx-go { flex: none; font-size: 18px; color: var(--ink); transition: transform .2s ease, opacity .2s; }
+// With a mouse the arrow appears only on hover (and keyboard focus), sliding in; on touch screens it always shows.
+@media (hover: hover) {
+  .fx-go { opacity: 0; transform: translateX(-6px); }
+  .fx-card:hover .fx-go, .fx-card:focus-visible .fx-go { opacity: 1; transform: none; }
 }
-.fx-ai::before { content: ""; position: absolute; inset: -35%; z-index: -1; pointer-events: none; opacity: var(--ai-wash);
-  background:
-    radial-gradient(30% 34% at 22% 26%, #a5f3fc 0%, transparent 70%),
-    radial-gradient(32% 30% at 78% 22%, #99f6e4 0%, transparent 70%),
-    radial-gradient(30% 32% at 68% 78%, #93c5fd 0%, transparent 72%),
-    radial-gradient(26% 28% at 30% 74%, #c7d2fe 0%, transparent 70%),
-    radial-gradient(22% 22% at 50% 48%, #ffffff 0%, transparent 70%),
-    linear-gradient(135deg, #cffafe, #e0f2fe 55%, #dbeafe);
-  animation: fx-ai-drift 9s ease-in-out infinite alternate; transition: opacity .2s; }
-.fx-ai:hover::before { opacity: min(1, calc(var(--ai-wash) * 1.2)); }
-@keyframes fx-ai-drift {
-  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  50% { transform: translate(-15%, 10%) rotate(25deg) scale(1.12); }
-  100% { transform: translate(12%, -9%) rotate(-18deg) scale(1.05); }
-}
-@media (prefers-reduced-motion: reduce) { .fx-ai::before { animation: none; } }
-// Most tiles are plain. A few carry a small example in their preview (FeatureGrid.js FeatureExample), a
-// few only a hint on the title. Monochrome, hairline, square; colour only from app logos and green for success.
-.fe { min-width: 0; }
-.fe-apps { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-.fe-apps .appicon { width: 28px; height: 28px; }
-.fe-more { height: 28px; display: inline-grid; place-items: center; padding: 0 8px; border: 1px solid var(--line-2); font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); }
-.fe-code { display: block; padding: 8px 10px; border: 1px solid var(--line-2); background: var(--bg); font-family: var(--mono); font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.fe-code b { font-weight: 600; color: var(--green); }
-.fe-map { display: flex; align-items: center; gap: 8px; min-width: 0; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
-.fe-map code { min-width: 0; padding: 5px 9px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); font-family: inherit; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.fe-chat { display: grid; gap: 6px; font-size: 12.5px; line-height: 1.4; }
-.fe-me { justify-self: end; max-width: 88%; padding: 6px 10px; background: var(--btn-bg); color: var(--btn-ink); }
-.fe-bot { justify-self: start; max-width: 88%; padding: 6px 10px; border: 1px solid var(--line-2); background: var(--bg); color: var(--ink); }
-.fe-status { display: flex; gap: 3px; }
-.fe-status i { width: 14px; height: 6px; background: var(--green); opacity: .85; }
-.fe-status i.fe-x { background: transparent; box-shadow: inset 0 0 0 1.5px var(--ink-3); opacity: 1; }
-// Hints: a green check on the icon tile (connected), a live dot after the title
-.fx .fe-check { position: relative; }
-.fx .fe-check::after { content: ""; position: absolute; right: -4px; bottom: -4px; width: 12px; height: 12px; background: var(--green) no-repeat center / 8px url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.2 2.2 4.8-4.8' fill='none' stroke='white' stroke-width='1.8'/%3E%3C/svg%3E"); box-shadow: 0 0 0 2px var(--s1); }
-.fe-live { flex: none; width: 7px; height: 7px; margin-left: -6px; background: var(--green); box-shadow: 0 0 0 3px var(--green-soft); animation: fe-pulse 2s ease-in-out infinite; }
-@keyframes fe-pulse { 50% { box-shadow: 0 0 0 5px transparent; } }
-@media (prefers-reduced-motion: reduce) { .fe-live { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .fx-go { transition: none; transform: none; } }
+// The three AI tiles: the title and the icon's stroke take a pink-lilac-periwinkle gradient (the icon's from
+// FeatureIcon's `gradient` stops, which read these same variables); lighter stops in dark mode.
+.fx-ai { --ai-g1: #ec4899; --ai-g2: #c084fc; --ai-g3: #818cf8; }
+@media (prefers-color-scheme: dark) { .fx-ai { --ai-g1: #f9a8d4; --ai-g2: #d8b4fe; --ai-g3: #a5b4fc; } }
+.fx-ai .fx-t { background: linear-gradient(90deg, var(--ai-g1), var(--ai-g2) 50%, var(--ai-g3)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 @media (max-width: 900px) { .fx-flat { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 560px) { .fx-flat { grid-template-columns: minmax(0, 1fr); } .fx-card { padding: 20px; } }
+@media (max-width: 560px) { .fx-flat { grid-template-columns: minmax(0, 1fr); } .fx-card { min-height: 80px; padding: 16px 20px; } }
+
+/* ---------- /features/{slug} ---------- */
+// One feature (FeatureDetailPage.js): the /features hero with breadcrumbs, then the homepage's sections.
+// How it works: three numbered steps in a hairline row, one column on phones.
+.fd-hero h1 { max-width: 22ch; }
+.fd-steps { list-style: none; margin: 0; padding: 0; counter-reset: fd-step; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--line-2); }
+.fd-steps li { counter-increment: fd-step; display: grid; gap: 10px; align-content: start; padding: 24px 28px 0 0; min-width: 0; }
+.fd-steps li + li { padding-left: 28px; border-left: 1px solid var(--line); }
+.fd-steps li::before { content: counter(fd-step, decimal-leading-zero); font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.06em; color: var(--ink-3); }
+.fd-steps h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; }
+.fd-steps p { color: var(--ink-2); font-size: 15px; }
+@media (max-width: 760px) {
+  .fd-steps { grid-template-columns: minmax(0, 1fr); border-top: 0; }
+  .fd-steps li, .fd-steps li + li { padding: 20px 0; border-left: 0; border-top: 1px solid var(--line-2); }
+}
 
 /* ---------- /use-cases ---------- */
 // Cards: two per row; the title, the prompt, then the apps.

@@ -1,10 +1,11 @@
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
-import { BASE_PROMPT, COPY, FEATURES_COPY as C } from './copy';
+import { BASE_PROMPT, FEATURES_COPY as C } from './copy';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import FeatureGrid from './FeatureGrid';
+import { PostCard } from './BlogsPage';
 
 // /features: every feature of the integration layer in one grid of toggle cards (FeatureGrid.js), in the homepage design.
 
@@ -47,7 +48,7 @@ export default function FeaturesPage({ blogs = [] }) {
                         </div>
                     </section>
 
-                    <BlogPosts title={C.blogTitle} posts={blogs} viewAllUrl={COPY.blogCategoryUrl} />
+                    <BlogPosts title={C.blogTitle} posts={blogs} viewAllUrl="/blogs" Card={PostCard} />
 
                     <FaqSection eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
 

@@ -1,13 +1,36 @@
 import { getFeaturesPageData } from '@/app/lib/feature-data';
 import FeaturesClient from '@/app/components/features/FeaturesClient';
 import { getHasToken } from '@/app/lib/getAuth';
+import FeatureDetailPage, { featureBySlug } from '@/components/IntegrationsComp/addToProduct/FeatureDetailPage';
+import { featurePage } from '@/components/IntegrationsComp/addToProduct/featurePages';
+import { getActionLayerBlogs } from '@/utils/axiosCalls';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
+
+// /features/{slug}: the new feature pages (featurePages.js) first; any other slug still gets the old
+// feature page from the database until it is redirected.
+const newFeature = (feature) => (feature.length === 1 && featureBySlug(feature[0]) && featurePage(feature[0]) ? feature[0] : null);
+const pageUrl = (slug) => `https://viasocket.com/features/${slug}`; // pragma: allowlist secret
+
+function newFeatureMetadata(slug) {
+    const { metaTitle: title, metaDesc: description } = featurePage(slug);
+    const url = pageUrl(slug);
+    return {
+        title,
+        description,
+        alternates: { canonical: url },
+        openGraph: { title, description, url, siteName: 'viaSocket', type: 'website', images: ogImages(`/features/${slug}`) },
+        twitter: { card: 'summary_large_image', title, description, images: twitterImages(`/features/${slug}`) },
+    };
+}
 
 export async function generateMetadata({ params }) {
     try {
         const resolvedParams = await params;
         const feature = resolvedParams.feature || [];
+        const slug = newFeature(feature);
+        if (slug) return newFeatureMetadata(slug);
         const data = await getFeaturesPageData(feature);
         
         if (data.noData) {
@@ -29,13 +52,13 @@ export async function generateMetadata({ params }) {
             openGraph: {
                 title,
                 description,
-                images: metaData?.image ? [{ url: metaData.image }] : undefined,
+                images: ogImages(`/features/${feature.join('/')}`, metaData?.image),
             },
             twitter: {
                 card: 'summary_large_image',
                 title,
                 description,
-                images: metaData?.image ? [metaData.image] : undefined,
+                images: twitterImages(`/features/${feature.join('/')}`, metaData?.image),
             },
         };
     } catch (error) {
@@ -51,6 +74,12 @@ export default async function FeaturesPage({ params }) {
     try {
         const resolvedParams = await params;
         const feature = resolvedParams.feature || [];
+        const slug = newFeature(feature);
+        if (slug) {
+            const url = pageUrl(slug);
+            const blogs = await getActionLayerBlogs(url);
+            return <FeatureDetailPage slug={slug} page={featurePage(slug)} url={url} blogs={blogs} />;
+        }
         const data = await getFeaturesPageData(feature);
         const hasToken = await getHasToken();
         

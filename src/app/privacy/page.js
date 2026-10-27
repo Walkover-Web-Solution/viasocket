@@ -4,6 +4,7 @@ import NavbarServer from '../components/navbar/NavbarServer';
 import Footer from '@/components/footer/footer';
 import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar';
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -17,13 +18,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/privacy', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/privacy', metaData?.image),
         },
     };
 }

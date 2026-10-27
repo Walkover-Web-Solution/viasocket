@@ -2,6 +2,7 @@ import { getDepartmentPageData } from '@/app/lib/department-data';
 import DepartmentClient from '@/app/components/department/DepartmentClient';
 import { notFound } from 'next/navigation';
 import { getHasToken } from '@/app/lib/getAuth';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }) {
             title,
             description,
             openGraph: {
+                images: ogImages(`/departments/${slug}`),
                 title,
                 description,
                 url: `https://viasocket.com/departments/${slug}`,
@@ -34,6 +36,7 @@ export async function generateMetadata({ params }) {
             },
             twitter: {
                 card: 'summary_large_image',
+                images: twitterImages(`/departments/${slug}`),
                 title,
                 description,
             },

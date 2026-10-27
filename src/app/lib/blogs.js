@@ -19,6 +19,11 @@ export function getRelatedBlogs(post, limit = 3) {
     return [...same, ...others.filter((p) => !same.includes(p))].slice(0, limit);
 }
 
+/** The newest `limit` posts, for the "Learn more" section on other pages. */
+export function getLatestBlogs(limit = 3) {
+    return data.posts.slice(0, limit);
+}
+
 export function formatBlogDate(date) {
     const t = Date.parse(date);
     return Number.isNaN(t) ? '' : new Date(t).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' });

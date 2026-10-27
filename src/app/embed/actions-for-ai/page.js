@@ -17,6 +17,7 @@ import AIComparisonTable from './AIComparisonTable';
 import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 import FaqSection from '@/components/faqSection/faqSection';
 import { getFaqData } from '@/utils/getFaqData';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -32,13 +33,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || fallbackTitle,
             description: metaData?.description || fallbackDesc,
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/embed/actions-for-ai', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/embed/actions-for-ai', metaData?.image),
         },
     };
 }
