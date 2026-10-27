@@ -134,6 +134,8 @@ How that tool-calling layer compares with Nango and other API auth platforms is 
 
 How viaSocket compares with Composio for that tool-calling setup is in [OAuth for AI agents](/blogs/composio-alternative).
 
+Which integration platform supports the most apps for this setup is covered in [how OAuth works for AI agents](/blogs/integration-platform-most-apps-for-ai-agents).
+
 ## FAQ
 
 ### Can my AI agent complete the OAuth flow on behalf of the user?
