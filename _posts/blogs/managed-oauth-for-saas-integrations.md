@@ -95,6 +95,8 @@ The SDK provides a set of methods for the full connection lifecycle:
 
 Each call is automatically scoped to the `unique_identifier` from the JWT. There is no way for one user's session to access another user's connections through the SDK.
 
+How an agent should read those connection states before it calls a third-party app is covered in [managed OAuth for SaaS integrations](/blogs/tool-calling-infrastructure-for-ai-agents).
+
 ## Step 4: Execute Actions Against Connected Apps
 
 Once a user has connected an app, your backend can execute actions using the `flow.sokt.io` endpoint:

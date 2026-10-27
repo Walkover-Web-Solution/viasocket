@@ -148,7 +148,7 @@ Check connection status before the agent attempts an action. If the app is not c
 
 ### How do I prevent one user's agent from accessing another user's apps?
 
-Use a unique, stable `unique_identifier` per user in every JWT and action call. viaSocket's managed auth layer scopes all credential storage and retrieval to this identifier at the storage level. As long as your backend routes the correct identifier per user session, cross-user access is not possible.
+Use a unique, stable `unique_identifier` per user in every JWT and action call. viaSocket's managed auth layer scopes all credential storage and retrieval to this identifier at the storage level. As long as your backend routes the correct identifier per user session, cross-user access is not possible. How that per-user isolation fits into production tool-calling is covered in [OAuth for AI agents](/blogs/tool-calling-infrastructure-for-ai-agents).
 
 ### Does this work with LLM tool-calling frameworks like LangChain or LlamaIndex?
 

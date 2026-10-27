@@ -105,6 +105,8 @@ A production multi-tenant integration needs to handle the full connection lifecy
 
 **Tenant offboarding**: When a tenant leaves your product, revoke and remove their connections. This is both a security practice and a hygiene requirement for maintaining clean credential records.
 
+When one user connects more than one account for the same app, the production tool-calling side of this setup is covered in [multi-tenant integration architecture](/blogs/tool-calling-infrastructure-for-ai-agents).
+
 ## Scaling Considerations
 
 ### Don't Store OAuth Tokens Yourself

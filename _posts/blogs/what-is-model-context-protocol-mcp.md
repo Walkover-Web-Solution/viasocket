@@ -24,6 +24,8 @@ When an AI assistant is connected to an MCP server, it can see the tool list and
 
 The specification covers tool discovery, invocation, streaming, error handling, and authentication patterns. Because it is an open standard, any AI client that implements MCP can connect to any compliant MCP server — no bespoke API client required on the AI side.
 
+The tool-calling infrastructure agents need on top of this protocol, including per-user OAuth and connection state, is covered in [What is Model Context Protocol (MCP)?](/blogs/tool-calling-infrastructure-for-ai-agents).
+
 ## How MCP Works: The Request Cycle
 
 Here is the basic flow when an AI agent uses an MCP server:
