@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**"]
-verified_at: a3e9bbd0
+verified_at: 223bf95d
 verified_on: 2026-10-28
 ---
 # Module: Developers (Embed)
