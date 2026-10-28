@@ -1,7 +1,7 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: a3e9bbd0
+verified_on: 2026-10-28
 ---
 # Development & Verification Guide
 
@@ -66,7 +66,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 | `HOSTNAME` | No | No (build-time) | `''` | Read only by `build-utilities/generate-robots-txt.js`. A host containing `integrate` or `integration` forces the disallow-all robots file. |
 | `VERCEL_URL` | No | No (build-time) | `''` | Fallback for `HOSTNAME` in the same script. Set by `vercel build` (run by `pages:build`), so it is not a leftover. |
 
-`VIASOCKET_ORG_ID`, `VIASOCKET_PROJECT_ID` and `VIASOCKET_EMBED_SECRET` appear in `src/app/developers/docs/page.js` only inside **code-sample strings** shown to customers. The site never reads them. Do not add them to `.env`.
+`VIASOCKET_ORG_ID`, `VIASOCKET_PROJECT_ID` and `VIASOCKET_EMBED_SECRET` appear in `src/app/developers/docs/page.js` and in `src/app/setup-prompt/prompt.js` only inside **strings shown to the developer**. The site never reads them from the environment. `/setup-prompt` reads `org` and `project` from the page URL in the browser and does not log that query. Do not add them to `.env`.
 
 **Mismatches between `.env` and code** (names only):
 

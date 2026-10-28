@@ -1,13 +1,14 @@
 ---
-covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**"]
+verified_at: 223bf95d
+verified_on: 2026-10-28
 ---
 # Module: Developers (Embed)
 
 ## Purpose
 
 - **`/developers`, `/developers/auth`, `/developers/pricing`, `/developers/docs`** are a self-contained sub-app that sells viaSocket as "the action layer for AI products" to developers. Its primary action copies a setup prompt for the visitor's coding agent.
+- **`/setup-prompt`** is the page viaSocket SDK emails link to. It is not part of the developers sub-app chrome. It copies a keys prompt (`for=keys`) or a first-run prompt (`for=run`) and makes no API call.
 - **`/embed/actions-for-ai`, `/embed/actions-via-webhook`, `/embed/app-integration`** are older legacy-design Embed landing pages. They are still routable and listed in `src/app/sitemap.js`.
 - **Bare `/embed`** 308s to `/developers` (`next.config.js` `redirects`, `permanent: true`). That makes `src/app/embed/page.js` (`EmbedContent`) unreachable.
 
@@ -46,7 +47,10 @@ The journey and its footguns are in [FLOWS: Developers (Embed) funnel](../FLOWS.
 ### 4. Docs (`/developers/docs` → `src/app/developers/docs/page.js`, layout `src/app/developers/docs/layout.js`)
 A static quickstart (Slack example): `LangProvider`, `Header`, `Toc`, `Callout`, `Endpoint`, `ClickSteps`, `DocTable`, `StepH2`, `CodeBlock` and `LangBlock`. It has no footer. It documents the public product API for readers. It is **not** an API this site calls ([CONTRACTS: Published Contracts](../CONTRACTS.md#published-contracts-developer-docs-page)).
 
-### 5. Embed subpages (`/embed/<slug>` → `src/app/embed/<slug>/page.js`)
+### 5. SDK setup prompt (`/setup-prompt` → `src/app/setup-prompt/page.js`)
+A static edge page with one centered card and no site header, footer, chat button or login. `SetupPrompt.js` reads `for`, `org`, `project` and `name` from the query in the browser (`prompt.js`). Invalid `org` or `project` is ignored. The card shows the first two prompt lines; "Copy prompt" copies the whole prompt (`navigator.clipboard`, then a textarea that exists only for that attempt). Robots meta is `noindex, nofollow, noarchive`, with a separate `googlebot` meta of `noindex, nofollow`, and the response sends `X-Robots-Tag: noindex, nofollow`. Not in `src/app/sitemap.js`, not linked from any other page, and not `Disallow`ed in robots.txt. Visit tracking, Zaraz, GTM, the chatbot, the Reddit pixel and the signals script do not run here, and the Reddit page-visit payload omits the query.
+
+### 6. Embed subpages (`/embed/<slug>` → `src/app/embed/<slug>/page.js`)
 All three pages use the legacy chrome (`NavbarServer`, `Footer`, `RedditPixel`, `MetaHeadComp`) and share `EmbedPricing`, `RelatedEmbeds`, `ShowBadges`, `SecuritySection`, `BlogGrid` and `FaqSection`.
 - `actions-for-ai`: `HeroAurora`, `EmbedImageSelector`, `UseCaseSection`, `EmbedSetupSteps`, `AIComparisonTable`, `HowFlowBecomesAiTool`, `DarkCta`.
 - `actions-via-webhook`: `WebhookHero`, `WebhookFeatureHighlights`, `WebhookUseCase`, `WebhookSetup`, `HowWebhookBecomes`, and the `actions-for-ai` `DarkCta`.
@@ -64,7 +68,7 @@ The developers primitives (`Header`/`Footer`, `Label`/`H2`/`Lead`/`Scene`, `Butt
 ---
 
 ## Data Dependencies
-1. **`/developers/**`:** none. These are static server components (`runtime = 'edge'`) with copy constants and no loader.
+1. **`/developers/**` and `/setup-prompt`:** none. These are static server components (`runtime = 'edge'`) with copy constants and no loader. `/setup-prompt` does not read `org` or `project` on the server.
 2. **`/embed/*`:** `src/app/lib/data.js:getEmbedPageData(slug)`. Table-api ([table-api](../current-infrastructure/table-api.md), [entities](../database/entities.md)) supplies `getMetaData('/embed/<slug>')`, `getFooterData`, `getNavbarData`, `getFaqData`, `src/utils/getData.js:getEmbedData` and `getBlogData({ tag1: 'embed' })`. The plug service ([plug-service](../current-infrastructure/plug-service.md)) supplies `getAppCount`. The loader's comparison table and "how it works" steps are static. Each page also calls `getFaqData('/embed/<slug>', '')` separately.
 
 ---

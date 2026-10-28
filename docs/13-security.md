@@ -1,7 +1,7 @@
 ---
-covers: ["src/utils/axiosCalls.js", "src/app/providers.js", "src/middleware.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/utils/axiosCalls.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
+verified_at: a3e9bbd0
+verified_on: 2026-10-28
 ---
 # 13 Security
 
@@ -15,7 +15,7 @@ This file covers the site's security posture: who can do what, which values are 
 - `public/admin/` (a Decap CMS config with `git-gateway`, branch `prod`) is served as a static file. Production robots only `Disallow: /admin/` it. Whether it is retired is [OPEN_QUESTIONS C-02](OPEN_QUESTIONS.md).
 
 ## Secrets
-- **The site has no server-only secret.** Every credential the code reads is a `NEXT_PUBLIC_*` variable. The only non-public env vars it reads are `HOSTNAME` and `VERCEL_URL`, which are build-time platform values used only by `build-utilities/generate-robots-txt.js`. `VIASOCKET_EMBED_SECRET`, `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID` appear only inside code-sample strings on `src/app/developers/docs/page.js` and are never read ([DEVELOPMENT](DEVELOPMENT.md#environment-variables-reference)).
+- **The site has no server-only secret.** Every credential the code reads is a `NEXT_PUBLIC_*` variable. The only non-public env vars it reads are `HOSTNAME` and `VERCEL_URL`, which are build-time platform values used only by `build-utilities/generate-robots-txt.js`. `VIASOCKET_EMBED_SECRET`, `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID` appear only inside strings shown to the developer (`src/app/developers/docs/page.js`, `src/app/setup-prompt/prompt.js`) and are never read from the environment ([DEVELOPMENT](DEVELOPMENT.md#environment-variables-reference)). `/setup-prompt` takes `org` and `project` from the query in the browser; that query is not written to the visit payload or the Reddit page-visit body.
 - **No secret is safe under the `NEXT_PUBLIC_*` prefix.** Next inlines these values as literals at build time into any bundle that references them.
 
 > [!WARNING]
