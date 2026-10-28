@@ -1,7 +1,7 @@
 ---
-covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
+covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-28
 ---
 # Contracts & Data Schemas
 
@@ -77,8 +77,9 @@ Rules for `utmData`: `utm_source` is the page path (`/integrations`) or a regist
 | `localStorage` | `copiedTemplateIds` | JSON array of template ids | `src/utils/templateIdManager.js`, `src/hooks/useTemplateIds.js` |
 | `localStorage` | `viasocket_chat_thread` | `{ id, createdAt }`; reused for 1 h | `src/app/providers.js`, `public/new-home/assets/support.js` |
 | `localStorage` | `vs-doc-lang` | chosen code-sample language | `src/app/developers/docs/LangContext.js` |
+| `localStorage` | `mw_visitor` | 32 hex chars; one browser, until storage is cleared | `src/utils/mwExperiment.js`. Not the `visitor_id` cookie, and not shared with test vs production by a domain. |
 
-No `sessionStorage` keys. Every `trackVisitor` storage access is wrapped in try/catch; follow that.
+No `sessionStorage` keys. Every `trackVisitor` and `mwExperiment` storage access is wrapped in try/catch; follow that.
 
 ### Server-side caches
 `axiosWithCache` in `src/utils/axiosCalls.js` is an in-memory TTL cache per server instance with no invalidation hook (TTLs per helper in [table-api.md](current-infrastructure/table-api.md)); the production Cloudflare zone cache is a separate layer. All caching layers: [14-performance.md](14-performance.md).
@@ -110,6 +111,33 @@ Common fields: `pageUrl`, `utmData` (the `utm_*` params on the current URL, not 
 `setIntent(value)` in `src/utils/userIntentTracker.js` is not an event: it stores `intent` in `utmData` (only caller: `src/app/hire-an-expert/HireExpertClient.js`, value `hireanexpert`) so signup receives it in `state`.
 
 The static homepage (`public/new-home/`) is outside the Next.js layout, so it gets no `TrackingCookies`, `VariantTracker`, Zaraz or Reddit pixel. Only GTM is in its HTML.
+
+### Middleware experiments
+
+`src/utils/mwExperiment.js` is the only copy of the middleware experiment client. It does not run an experiment, and no page calls it yet. It is separate from the visitor table above: a different id (`mw_visitor`), a different endpoint, and no read of the `variant` cookie. The owner defines and starts experiments in the middleware. Until one is running, that host refuses the events.
+
+| | |
+|---|---|
+| Endpoint | `POST https://cursor-slack-bot.embarko.app/repos/viasocket/events` |
+| Auth | JSON field `key`: the publishable `MW_KEY` in that file. It can only append. It is not a table-api key. |
+| Body | `{ key, visitor_id, event, experiment, variant, goal? }` |
+| `event` | `exposure` when the variant is shown. `conversion` when the goal happens, with `goal` (for example `signup`). |
+| Transport | `navigator.sendBeacon` with the JSON string, else `fetch` (`keepalive`, `credentials: 'omit'`, 3 s timeout). The caller does not await it, retry it, or read the response. After one failure, later sends in that page are dropped. |
+
+Assignment is local. `mwVariant(experiment, variants)` hashes `experiment:visitor_id` (FNV-1a, then the finalizer in the file) and walks `variants` in order (`[['control', 50], ['b', 50]]`). The weights are the second column. On any error, including a call during server render, it returns the first variant.
+
+A page uses it from a client component. `/developers` has no `@/` imports, so a file there imports this module by relative path.
+
+```javascript
+import { mwSend, mwVariant } from '@/utils/mwExperiment';
+
+const VARIANTS = [['control', 50], ['b', 50]];
+const variant = mwVariant('hero-cta', VARIANTS); // during render, not after a fetch
+mwSend({ event: 'exposure', experiment: 'hero-cta', variant }); // when it is shown, not inside render
+mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' }); // on the goal action
+```
+
+`mwVariant` during a server render returns the control, because the server cannot see `localStorage`. Rendering different markup from that return value in a server-rendered component will not match the browser. Keep the server HTML the same, and send the exposure from the browser after the variant is on screen. `/` does not load this module: `public/new-home/` is exported from `viasocket-site` and never runs `src/`. An experiment on the homepage belongs in that export, as a second copy only if the homepage must run one.
 
 ### Third-party tags
 

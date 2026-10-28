@@ -1,7 +1,7 @@
 ---
 covers: ["src/**", "public/**", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-28
 ---
 # 08 Folder Structure
 
@@ -50,7 +50,7 @@ viasocket/
     │   ├── footer/, faqSection/, metaHeadComp/, headComp/, pricing/, mcpComps/, breadcrumb/ …
     │   └── uiComponents/buttons.js   # LinkButton / LinkText
     ├── utils/                # axiosCalls.js (HTTP layer), getData.js (table getters), UTM,
-    │                         #   redirect, tracking and slug-parsing helpers
+    │                         #   redirect, tracking, mwExperiment.js, and slug-parsing helpers
     ├── const/                # tables.js (table ids), fields.js (column lists), abTest.js, integrations.js
     ├── hooks/                # useTemplateIds.js, useTemplateFilters.js
     ├── data/categories.json  # static category list for the legacy integrations search
@@ -78,6 +78,7 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds only `/home`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
+| Middleware experiment client | `src/utils/mwExperiment.js` | One module. A page imports `mwVariant` and `mwSend`. Do not copy the snippet into a layout or into `public/new-home/`, and do not send an event until a page runs an experiment. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments). |
 | Styles | Tailwind utilities, with tokens and keyframes in `tailwind.config.js` | AGENTS rule 14. `src/scss/` is legacy, so add nothing there unless Tailwind cannot do it. |
 | Knowledge | the doc that owns the concern ([docs/README](README.md) has the map) | Update it in the same change, and bump the doc's frontmatter commit and date. |
 

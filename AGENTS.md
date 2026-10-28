@@ -60,7 +60,7 @@ Full annotated tree and "where does a new X go" rules: [docs/08-folder-structure
 - `src/app/`: App Router routes. Each section (`integrations/`, `automations/`, `pricing/`, `developers/`, `embed/`, `migration/` …) owns its `page.js`. `src/app/developers/` is a self-contained sub-app with its own layout. <!-- verify:ignore -->
 - `src/app/components/`: section-specific components. `src/components/`: older shared components (navbar pieces, footer, FAQ, meta head, integrations).
 - `src/components/IntegrationsComp/addToProduct/`: the homepage design rebuilt in Next (own header/footer, `copy.js`, SCSS module) for `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction`.
-- `src/app/lib/*-data.js`: per-page data aggregators. `src/utils/`: table-api client (`axiosCalls.js`, `getData.js`), UTM and redirect helpers, tracking. `src/const/`: table ids, field lists, A/B config.
+- `src/app/lib/*-data.js`: per-page data aggregators. `src/utils/`: table-api client (`axiosCalls.js`, `getData.js`), UTM and redirect helpers, tracking, and `mwExperiment.js` (middleware experiment client; not the visitor table). `src/const/`: table ids, field lists, A/B config.
 - `src/middleware.js`: `/home` redirect, the `/` cache headers, Reddit click-id cookie and page-visit call.
 - `src/app/api/track-variant/route.js`: the only internal API route.
 - `next.config.js`: the `/` rewrite and permanent redirects. `tailwind.config.js` holds theme tokens; `src/scss/` holds legacy global styles.
