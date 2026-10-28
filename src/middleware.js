@@ -83,10 +83,12 @@ export async function middleware(request) {
     //
     // The homepage is still rendered from the variant cookie, so a shared cache
     // must never store it: a stored copy is replayed to everyone with one
-    // visitor's variant baked into the HTML. Cloudflare's zone cache rule is the
-    // authority in production, but the origin has to declare this too or any
+    // visitor's variant baked into the HTML. /setup-prompt is the same kind of
+    // problem for a different reason: Next's flight data echoes the request URL,
+    // and that URL carries org and project ids. Cloudflare's zone cache rule is
+    // the authority in production, but the origin has to declare this too or any
     // cache in front of it repeats the mistake.
-    if (pathname === '/') {
+    if (pathname === '/' || pathname === '/setup-prompt') {
         response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
         // Cloudflare reads this in preference to Cache-Control for its own edge
         // cache, so it is what keeps the page out of the CDN while leaving the
@@ -114,7 +116,9 @@ export async function middleware(request) {
     // Reddit tracking
     if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT === 'prod') {
         try {
-            const pageUrl = request.url;
+            // /setup-prompt puts org and project ids in the query. The page reads
+            // them in the browser; this payload must not carry the query.
+            const pageUrl = pathname === '/setup-prompt' ? `${request.nextUrl.origin}${pathname}` : request.url;
 
             const cookieClickId = request.cookies.get(RDT_CID_COOKIE)?.value;
 
