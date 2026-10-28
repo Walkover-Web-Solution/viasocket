@@ -58,7 +58,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/privacy` | `src/app/privacy/page.js` (copy in the file) | Legal |
 | `/robots.txt` | `src/app/robots.txt/route.js:GET` | Robots, decided by env and host ([CONTRACTS](CONTRACTS.md#internal-api-routes)) |
 | `/signup` | `src/app/components/customLogin/CustomLoginOptimized.js`; `src/app/lib/data.js:getSignupPageData` | MSG91 signup widget (`?redirect_to=`, `utm_*`) |
-| `/setup-prompt` | `src/app/setup-prompt/SetupPrompt.js`. The server page is a static shell; `for`, `org`, `project` and `name` are read in the browser | SDK email landing. Copies a keys or first-run prompt. No header, footer, login or API call. `noindex`, and not listed in `src/app/sitemap.js` |
+| `/setup-prompt` | `src/app/setup-prompt/SetupPrompt.js`. The server page is a static shell; `for`, `org`, `project` and `name` are read in the browser | SDK email landing. Copies a keys or first-run prompt. No header, footer, login or API call. `noindex, nofollow, noarchive` plus a `googlebot` meta and `X-Robots-Tag: noindex, nofollow`. Not listed in `src/app/sitemap.js`, not linked from any other page, and not `Disallow`ed in robots.txt |
 | `/sitemap.xml` | `src/app/sitemap.js:STATIC_ROUTES` | Sitemap of the routes without params |
 | `/support` | `src/app/components/support/SupportClient.js`; `src/app/lib/support-data.js:getSupportPageData` | Support form and live-support card |
 | `/terms` | `src/app/terms/page.js` (copy in the file) | Legal |
@@ -88,7 +88,7 @@ Order of evaluation: `public/_redirects`, then `next.config.js` `redirects()`, t
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
 
-`src/middleware.js` does not run for `/og/...` (its `matcher`): share images need no redirects or cookies and are not page visits. `/` and `/setup-prompt` are sent `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. The setup page's response echoes the request URL, and that URL carries org and project ids, so a shared cache must not store it.
+`src/middleware.js` does not run for `/og/...` (its `matcher`): share images need no redirects or cookies and are not page visits. `/` and `/setup-prompt` are sent `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. The setup page's response echoes the request URL, and that URL carries org and project ids, so a shared cache must not store it. `/setup-prompt` also sends `X-Robots-Tag: noindex, nofollow`. robots.txt does not `Disallow` that path, so a crawler can fetch the page and read the tag.
 
 In-page redirects: `/integrations/[...slug]` with no data → `redirect('/integrations')` (307). `/automations/[...slug]` with no match → `redirect('/automations')` (307). Both are soft 404s ([FLOWS](FLOWS.md#2-failure-handling), [18-error-handling](18-error-handling.md)).
 
@@ -153,4 +153,4 @@ Query parameters with meaning:
 > [!WARNING]
 > Slugs go raw into table-api filters and plug-service URLs ([FLOWS](FLOWS.md#2-failure-handling)). Never route a new deep-link segment into a lookup without validating it first.
 
-The sitemap lists only routes without params (`src/app/sitemap.js:STATIC_ROUTES`). When you add a static route, add it there too, except `/setup-prompt`, which is noindex and omitted on purpose. `/use-cases` and `/new-direction` are still missing from it ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08).
+The sitemap lists only routes without params (`src/app/sitemap.js:STATIC_ROUTES`). When you add a static route, add it there too, except `/setup-prompt`, which is omitted on purpose and must stay unlinked. `/use-cases` and `/new-direction` are still missing from it ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08).
