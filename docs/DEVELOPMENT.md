@@ -1,6 +1,6 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 17b99cd8
+verified_at: a3e9bbd0
 verified_on: 2026-10-28
 ---
 # Development & Verification Guide
