@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: a3e9bbd0
+verified_at: a261e40d
 verified_on: 2026-10-28
 ---
 # Architecture & Mental Model
@@ -167,6 +167,7 @@ Every `page.js` and route handler that is not static exports `runtime = 'edge'`.
 | Route-scoped components (newer) | `src/app/components/**` | Created in the App Router migration (`9a178617`, 2025-12-31): navbar, home sections, per-page client halves named *Client.js, tracking | props | `src/components/**`, `src/utils/*` | `src/app/lib/*` |
 | Developers sub-app | `src/app/developers/**` | `/developers`, `/developers/auth`, `/developers/docs`, `/developers/pricing` | constants in its own files | its own files only | `@/` imports (it has none today) |
 | Tracking | `src/app/components/VariantTracker/`, `src/utils/trackVisitor.js`, `src/utils/abTestVisitor.js`, `src/app/api/track-variant/route.js` | Visitor/variant cookies, view and click reporting | cookies, `localStorage` | `src/utils/axiosCalls.js` | page data |
+| Middleware experiments | `src/utils/mwExperiment.js` | Local variant assignment and fire-and-forget exposure/conversion events. No experiment runs until a page calls it. | `localStorage` `mw_visitor` | nothing in `src/` | the visitor table, `axiosCalls.js`, page data |
 
 Where a new file of each kind goes is in [08-folder-structure](08-folder-structure.md#placement-rules).
 
@@ -206,6 +207,7 @@ Four layers apply: the Cloudflare zone cache (production only), the in-memory `a
 | Attribution | `utmData` cookie (`src/utils/handleUtmSource.js`) on `.viasocket.com`, 1 day | Survives navigation and reaches the signup app | Written only when absent, except internal sources (see [FLOWS](FLOWS.md)) |
 | Auth hint | `prod` cookie (set by the product app) read by `getHasToken` / `NavbarServer` | Product session | Read-only here |
 | Tracking identity | `variant` cookie (30 d), `visitor_id` cookie (1 y) mirrored to `localStorage` `vs_visitor`, `vs_session` (30 min idle), `rdt_cid` cookie (30 d) | See left | `TrackingCookies` restores a lost `visitor_id` from the mirror |
+| Middleware experiment id | `localStorage` `mw_visitor` (`src/utils/mwExperiment.js`) | This browser, until storage is cleared | Not the `visitor_id` cookie. No server copy. Module state is per browser page, never a shared server isolate. |
 | URL state | `searchParams` in `/integrations`, `/signup`, `/feedback`. `/setup-prompt` reads `for`, `org`, `project` and `name` in the browser only | Bookmarkable | Navigation. The setup-prompt query is not sent to visit tracking or the Reddit page-visit body |
 
 ## A/B Testing & Visitor Tracking
@@ -220,6 +222,10 @@ The pieces, in order:
 
 > [!WARNING]
 > Since commit `77b3dec5` ("stop get call", 2026-10-10), `src/utils/axiosCalls.js:getAbTestVisitorRows` begins with `return null;`. As a result, `POST /api/track-variant` answers `{ success: false, reason: 'lookup failed' }` for every request that passes the cookie and bot checks, and **nothing is written to the A/B table**. The static homepage never calls the endpoint. Whether this is intended is open ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). Comments in `VariantTracker.js` that say the cookies are "set by middleware" are out of date.
+
+### Middleware experiments
+
+`src/utils/mwExperiment.js` is a second, separate client. It does not read the `variant` cookie, does not call `/api/track-variant`, and does not re-enable the table write above. A page imports `mwVariant` and `mwSend` when it runs an experiment the owner has defined in the middleware. No page does that today, so the site renders exactly as before. The contract, the server-render constraint, and the fact that `/` cannot import it are in [CONTRACTS](CONTRACTS.md#middleware-experiments).
 
 ## API Access & Contract Flow
 

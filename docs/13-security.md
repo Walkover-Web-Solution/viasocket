@@ -1,6 +1,6 @@
 ---
-covers: ["src/utils/axiosCalls.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
-verified_at: a3e9bbd0
+covers: ["src/utils/axiosCalls.js", "src/utils/mwExperiment.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
+verified_at: a261e40d
 verified_on: 2026-10-28
 ---
 # 13 Security
@@ -33,6 +33,7 @@ This file covers the site's security posture: who can do what, which values are 
 - **Hardcoded client-visible tokens:**
   - The gtwy chatbot `embedToken`, a JWT in `src/app/providers.js` and `public/new-home/assets/support.js`. It is **public by design**: a front-end embed token, reused on the homepage on purpose so its Chat button opens the same support bot (S-04, decided 2026-10-22). Pending: a check with the gtwy team that it is scoped to the chatbot only.
   - The ids of the GTM, Google Ads, X and cr-relay tags.
+  - `MW_KEY` in `src/utils/mwExperiment.js`, a publishable key that can only append experiment events. It is not a table-api key and it is not in an env var, because the middleware's client contract says to ship it in the page. Do not log the value.
   - Every flow.sokt.io script id ([flow-webhooks.md](current-infrastructure/flow-webhooks.md)).
 
 ## Data Access
@@ -43,6 +44,7 @@ This file covers the site's security posture: who can do what, which values are 
 | A/B DB (`65c4c053a3fad7804af5bba8`) | `NEXT_PUBLIC_DB_KEY_ABTEST` | GET, POST, PATCH | `POST /api/track-variant` only; the GET is short-circuited today ([OPEN_QUESTIONS T-01](OPEN_QUESTIONS.md)) |
 | Plug service | none sent | GET, plus the Reddit relay POSTs | server and browser ([plug-service.md](current-infrastructure/plug-service.md)) |
 | flow.sokt.io webhooks | none | POST/GET from the browser; `sendErrorMessage` from either side | [flow-webhooks.md](current-infrastructure/flow-webhooks.md) |
+| Experiment events (`cursor-slack-bot.embarko.app`) | publishable `MW_KEY` | POST append only, from the browser, and only once a page calls `mwSend` | `src/utils/mwExperiment.js` |
 
 - **Least privilege is one key per database.** Whether any key is scoped read-only is unknown (S-01). The database ids are string literals in `src/utils/axiosCalls.js`, not env vars ([OPEN_QUESTIONS S-02](OPEN_QUESTIONS.md)).
 - **There is no DELETE.** The table API takes GET, POST and PATCH only, so a row written by mistake (or by a test) stays forever. Duplicates become pointer rows ([table-api.md](current-infrastructure/table-api.md)). Tag every test write with its `environment`.

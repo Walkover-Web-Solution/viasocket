@@ -1,6 +1,6 @@
 ---
-covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**"]
-verified_at: a3e9bbd0
+covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**"]
+verified_at: a261e40d
 verified_on: 2026-10-28
 ---
 # User Flows & Critical Journeys
@@ -214,6 +214,10 @@ sequenceDiagram
 
 > [!WARNING]
 > Middleware's Reddit `fetch` is fire-and-forget (not awaited, no waitUntil). On the edge runtime it may be cancelled once the response returns. Also, production HTML served from the Cloudflare cache never reaches middleware. Verify on viasocket.com itself, not on test.
+
+### 4. Middleware experiments (separate from the table above)
+
+`src/utils/mwExperiment.js` does not take part in this journey. It does not set the `variant` cookie, does not post to `/api/track-variant`, and no page calls it. A later experiment imports `mwVariant` / `mwSend` and sends exposure and conversion to the middleware events URL. The page does not wait for that call. Contract and the server-render constraint: [CONTRACTS](CONTRACTS.md#middleware-experiments). `/` still cannot record these events: the static homepage does not load `src/`.
 
 ---
 
