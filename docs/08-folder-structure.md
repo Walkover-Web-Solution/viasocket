@@ -1,6 +1,6 @@
 ---
 covers: ["src/**", "public/**", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
-verified_at: 17b99cd8
+verified_at: a261e40d
 verified_on: 2026-10-28
 ---
 # 08 Folder Structure
