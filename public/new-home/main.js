@@ -611,4 +611,34 @@
   ixShow(IX_ORDER[0]);
   if (!reduced && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { if (en[0].isIntersecting) scenePlay(pane); }, { threshold: 0.35 }).observe($('.ix'));
 
+  /* ---------- product video: thumbnail until the click, then the embed. No YouTube frame or script before that. ---------- */
+  var pv = $('#pv');
+  if (pv) {
+    var poster = $('.pv-img', pv);
+    if (poster) poster.addEventListener('error', function () {
+      if (poster.getAttribute('data-fb')) return;
+      poster.setAttribute('data-fb', '1');
+      poster.src = 'https://img.youtube.com/vi/GRzkVjW839A/hqdefault.jpg';
+    });
+    pv.addEventListener('click', function () {
+      var frame = doc.createElement('iframe');
+      frame.className = 'pv-frame';
+      frame.title = 'See viaSocket in action';
+      frame.src = 'https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0';
+      frame.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+      frame.setAttribute('allowfullscreen', '');
+      pv.replaceWith(frame);
+    });
+  }
+  // fade and rise once, the first time it scrolls into view. Reduced motion, or no observer, leaves it as painted.
+  var watch = $('#in-action');
+  if (watch && !reduced && 'IntersectionObserver' in window) {
+    watch.classList.add('arm');
+    new IntersectionObserver(function (en, obs) {
+      if (!en[0].isIntersecting) return;
+      watch.classList.add('show');
+      obs.disconnect();
+    }, { threshold: 0.2 }).observe(watch);
+  }
+
 })();
