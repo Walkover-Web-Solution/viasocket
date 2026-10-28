@@ -605,7 +605,7 @@ export const BLOGS_COPY = {
     shareLabel: 'Share this article',
     tocTitle: 'Jump to section',
     // The card that slides in on a post once the reader scrolls down
-    promoTitle: '100K tasks and 1,000 AI credits free every month.',
+    promoTitle: 'Add managed auth, multi-tenant, ai agents with browser access in your products',
     promoCta: 'Start free',
     moreTitle: 'Keep reading',
 };
