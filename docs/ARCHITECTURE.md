@@ -1,7 +1,7 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 7c32792e
+verified_on: 2026-10-28
 ---
 # Architecture & Mental Model
 
@@ -206,7 +206,7 @@ Four layers apply: the Cloudflare zone cache (production only), the in-memory `a
 | Attribution | `utmData` cookie (`src/utils/handleUtmSource.js`) on `.viasocket.com`, 1 day | Survives navigation and reaches the signup app | Written only when absent, except internal sources (see [FLOWS](FLOWS.md)) |
 | Auth hint | `prod` cookie (set by the product app) read by `getHasToken` / `NavbarServer` | Product session | Read-only here |
 | Tracking identity | `variant` cookie (30 d), `visitor_id` cookie (1 y) mirrored to `localStorage` `vs_visitor`, `vs_session` (30 min idle), `rdt_cid` cookie (30 d) | See left | `TrackingCookies` restores a lost `visitor_id` from the mirror |
-| URL state | `searchParams` in `/integrations`, `/signup`, `/feedback` | Bookmarkable | Navigation |
+| URL state | `searchParams` in `/integrations`, `/signup`, `/feedback`. `/setup-prompt` reads `for`, `org`, `project` and `name` in the browser only | Bookmarkable | Navigation. The setup-prompt query is not sent to visit tracking or the Reddit page-visit body |
 
 ## A/B Testing & Visitor Tracking
 

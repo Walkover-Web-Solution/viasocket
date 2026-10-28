@@ -1,7 +1,7 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 7c32792e
+verified_on: 2026-10-28
 ---
 # Development & Verification Guide
 
@@ -66,7 +66,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 | `HOSTNAME` | No | No (build-time) | `''` | Read only by `build-utilities/generate-robots-txt.js`. A host containing `integrate` or `integration` forces the disallow-all robots file. |
 | `VERCEL_URL` | No | No (build-time) | `''` | Fallback for `HOSTNAME` in the same script. Set by `vercel build` (run by `pages:build`), so it is not a leftover. |
 
-`VIASOCKET_ORG_ID`, `VIASOCKET_PROJECT_ID` and `VIASOCKET_EMBED_SECRET` appear in `src/app/developers/docs/page.js` only inside **code-sample strings** shown to customers. The site never reads them. Do not add them to `.env`.
+`VIASOCKET_ORG_ID`, `VIASOCKET_PROJECT_ID` and `VIASOCKET_EMBED_SECRET` appear in `src/app/developers/docs/page.js` and in `src/app/setup-prompt/prompt.js` only inside **strings shown to the developer**. The site never reads them from the environment. `/setup-prompt` reads `org` and `project` from the page URL in the browser and does not log that query. Do not add them to `.env`.
 
 **Mismatches between `.env` and code** (names only):
 
@@ -102,7 +102,7 @@ npm run start          # optional: serve the build on :1111
 npm run preview        # optional, slow: real Cloudflare Pages build in workerd
 ```
 
-A passing `next build` lists **53 routes: 50 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
+A passing `next build` lists **56 routes: 53 dynamic (`ƒ`)**, including `/setup-prompt`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
 
 ## Running Automated Checks & Tests
 

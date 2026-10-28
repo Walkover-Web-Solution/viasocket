@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 7c32792e
+verified_on: 2026-10-28
 ---
 # Product Vision & Strategic Direction
 
@@ -23,7 +23,7 @@ The site's jobs, in the order the code puts effort into them:
 1. **Rank in search.** Indexable, data-driven catch-all page families (`/integrations/...`, `/mcp/...`, `/automations/...`, `/departments/...`, `/features/...`), a native sitemap (`src/app/sitemap.js`) plus a backend sitemap, `public/llms.txt` for LLM crawlers, and JSON-LD on the homepage and root layout.
 2. **Convert.** CTAs send visitors either to `/signup` or straight to flow.viasocket.com. The source is recorded in the `utmData` cookie and in the `utm_source` parameter.
 3. **Run campaigns and programs.** Lifetime deal, Black Friday, Zapier/n8n/Relay migration, agency partners, experts, free-access programs and webinars.
-4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill.
+4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill. SDK emails also link to `/setup-prompt`, a noindex page that copies a keys or first-run prompt into that agent.
 
 ## Authoritative Sources & Status
 
