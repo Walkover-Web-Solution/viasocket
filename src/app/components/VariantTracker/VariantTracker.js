@@ -62,6 +62,10 @@ export default function VariantTracker() {
     const lastTracked = useRef(null);
 
     useEffect(() => {
+        // The setup-prompt query holds org and project ids. Skip the view so
+        // pageUrl (window.location.href) is not posted for that page.
+        if (pathname === '/setup-prompt') return;
+
         const view = `${pathname}${window.location.search}`;
 
         // React runs effects twice in development, and a re-render must not count

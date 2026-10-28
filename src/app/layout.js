@@ -97,6 +97,7 @@ export default function RootLayout({ children }) {
                     dangerouslySetInnerHTML={{
                         __html: `(function() {
               if (typeof window === 'undefined') return;
+              if (location.pathname === '/setup-prompt') return;
               if (typeof window.signals !== 'undefined') return;
               var script = document.createElement('script');
               script.src = 'https://cdn.cr-relay.com/v1/site/8159c31a-0d49-4a8b-9319-f945bbb5c4cf/signals.js';
