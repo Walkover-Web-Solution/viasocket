@@ -604,7 +604,7 @@ export const BLOGS_COPY = {
     backLink: 'All posts',
     shareLabel: 'Share this article',
     tocTitle: 'Jump to section',
-    // The card that slides in on a post once the reader scrolls down
+    // The card that slides in on /blogs and on a post once the reader scrolls down
     promoTitle: 'Add managed auth, multi-tenant, ai agents with browser access in your products',
     promoCta: 'Start free',
     moreTitle: 'Keep reading',
