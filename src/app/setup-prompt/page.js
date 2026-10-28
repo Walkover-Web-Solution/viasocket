@@ -6,7 +6,17 @@ export const runtime = 'edge';
 // response never contains them and can stay out of the index.
 export const metadata = {
     title: 'Setup prompt · viaSocket',
-    robots: 'noindex',
+    // Crawlers must be allowed to fetch this URL (no robots.txt Disallow) and
+    // then drop it. noarchive keeps copies out of search caches.
+    robots: {
+        index: false,
+        follow: false,
+        noarchive: true,
+        googleBot: {
+            index: false,
+            follow: false,
+        },
+    },
 };
 
 export default function SetupPromptPage() {

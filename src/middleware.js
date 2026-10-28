@@ -96,6 +96,12 @@ export async function middleware(request) {
         response.headers.set('CDN-Cache-Control', 'no-store');
     }
 
+    // Same instruction as the page's robots meta. robots.txt does not Disallow
+    // this path: a crawler has to fetch the page to see the noindex.
+    if (pathname === '/setup-prompt') {
+        response.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    }
+
     // Read click id from URL
     const rawIncomingClickId = searchParams.get('rdt_cid');
 
