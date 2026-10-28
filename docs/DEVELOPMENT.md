@@ -102,7 +102,7 @@ npm run start          # optional: serve the build on :1111
 npm run preview        # optional, slow: real Cloudflare Pages build in workerd
 ```
 
-A passing `next build` lists **54 routes: 51 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32` and `/setup-prompt`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
+A passing `next build` lists **56 routes: 53 dynamic (`ƒ`)**, including `/setup-prompt`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
 
 ## Running Automated Checks & Tests
 

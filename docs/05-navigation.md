@@ -5,7 +5,7 @@ verified_on: 2026-10-28
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **54 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **56 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -19,6 +19,8 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |
 | `/black-friday-sale` | `src/app/components/black-friday-sale/BlackFridaySaleClient.js` | Seasonal partner-offer campaign |
+| `/blogs` | `src/components/IntegrationsComp/addToProduct/BlogsPage.js`; `src/app/lib/blogs.js:getAllBlogs` | Blog index |
+| `/blogs/[slug]` | `src/components/IntegrationsComp/addToProduct/BlogPostPage.js`; `getBlog` | One post; `notFound()` if unknown |
 | `/data-deletion-policy` | `src/app/data-deletion-policy/page.js` (copy in the file) | Legal |
 | `/data-retention-deletion` | `src/app/data-retention-deletion/page.js` (copy in the file) | Legal; target of `/data-retention-deletion-policy` |
 | `/departments` | `src/app/departments/page.js`; `src/app/lib/department-data.js:getDepartmentsPageData` | Automation ideas by department |
@@ -26,7 +28,6 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/developers` | `src/app/developers/page.js` (own `Header`/`Footer`, layout `src/app/developers/layout.js`) | Embed / developers funnel landing |
 | `/developers/auth` | `src/app/developers/auth/page.js` | Embed auth feature page |
 | `/developers/docs` | `src/app/developers/docs/page.js` (+ `src/app/developers/docs/layout.js`) | Developer docs (published contract) |
-| `/developers/pricing` | `src/app/developers/pricing/page.js` | Embed pricing |
 | `/embed` | `src/app/embed/page.js`. **Never renders**: it redirects to `/developers` | (retired) |
 | `/embed/actions-for-ai` | `src/app/embed/actions-for-ai/page.js`; `src/app/lib/data.js:getEmbedPageData` | Embed use case: actions for AI |
 | `/embed/actions-via-webhook` | `src/app/embed/actions-via-webhook/page.js` | Embed use case: webhook actions |
@@ -53,6 +54,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/migration/relay` | `src/app/migration/relay/page.js` | Relay.app alternative page; paid campaign (own `utm_source`) |
 | `/migration/zapier` | `src/app/migration/zapier/page.js` | Switch-from-Zapier campaign |
 | `/new-direction` | `src/components/IntegrationsComp/addToProduct/LetterPage.js` (`LETTER_COPY`) | Founders' letter; target of `/help` |
+| `/pass` | `src/components/IntegrationsComp/addToProduct/PassPage.js` (`PASS_COPY`) | viaSocket Pass |
 | `/pricing` | `src/app/pricing/page.js` with `src/components/pricing/*`; `src/app/lib/pricing-data.js:getPricingPageData` | Pricing plans |
 | `/privacy` | `src/app/privacy/page.js` (copy in the file) | Legal |
 | `/robots.txt` | `src/app/robots.txt/route.js:GET` | Robots, decided by env and host ([CONTRACTS](CONTRACTS.md#internal-api-routes)) |
