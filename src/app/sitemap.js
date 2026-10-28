@@ -10,6 +10,8 @@ const SITE_URL = 'https://viasocket.com';
 // build-utilities/generate-robots-txt.js and src/app/robots.txt/route.js.
 // /embed and bare /mcp are left out too — both 301 elsewhere (next.config.js
 // redirects), so they're not real destinations for crawlers to index.
+// /setup-prompt is left out on purpose: noindex, linked from SDK emails
+// (src/app/setup-prompt/page.js). Do not add it here.
 const STATIC_ROUTES = [
     '/',
     '/agency-partner',
