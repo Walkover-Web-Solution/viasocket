@@ -1,6 +1,6 @@
 ---
-covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
-verified_at: a261e40d
+covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "public/new-home/index.html", "public/new-home/main.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
+verified_at: 89b51dc7
 verified_on: 2026-10-28
 ---
 # Third-party services
@@ -39,6 +39,7 @@ Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), 
 | Stripe Payment Links `https://buy.stripe.com/<id>` | Purchase buttons in `src/app/lifetime-deal/Pricing.js` and `src/components/agencyPartner/AgencyPricing.js` (outbound only; no Stripe SDK or webhook in this repo) |
 | thingsofbrand.com | App icon image CDN in static copy (`https://thingsofbrand.com/api/icon/<domain>`) |
 | Experiment events `POST https://cursor-slack-bot.embarko.app/repos/viasocket/events` | Append-only exposure and conversion events from `src/utils/mwExperiment.js`. The publishable key is in that file. No page calls it yet. Body and rules: [CONTRACTS](../CONTRACTS.md#middleware-experiments). |
+| YouTube thumbnail and nocookie embed | Homepage `#in-action` only. The poster image is `https://img.youtube.com/vi/GRzkVjW839A/maxresdefault.jpg` (fallback `hqdefault.jpg`). The click inserts `https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0`. No YouTube player script is loaded. |
 
 Tag ids, events and the environments each tag runs in: [CONTRACTS.md](../CONTRACTS.md#third-party-tags) (analytics home).
 
@@ -61,4 +62,4 @@ GET api.docstar.io/p/getSideBarData        -> { pages: {...} }
 | ipapi `fetch` | `country_code` | `PhoneInput` |
 
 ## Degradation
-MSG91 down: the signup box shows its skeleton and nothing else; there is no fallback link. ipapi down: the default country stays. gtwy down: `[data-chat]` links do nothing. Feed down: `sendErrorMessage`, no Action Layer cards. Tags failing to load have no visible effect. The experiment endpoint is fire-and-forget: a failed send sets a latch and later sends on that page are skipped, and the page never waits. reCAPTCHA is not used anywhere (no form token, no server verification).
+MSG91 down: the signup box shows its skeleton and nothing else; there is no fallback link. ipapi down: the default country stays. gtwy down: `[data-chat]` links do nothing. Feed down: `sendErrorMessage`, no Action Layer cards. Tags failing to load have no visible effect. The experiment endpoint is fire-and-forget: a failed send sets a latch and later sends on that page are skipped, and the page never waits. YouTube thumbnail error: the poster swaps to `hqdefault.jpg`, and the play control still works on the dark frame if that fails too. The embed is not requested until the click. reCAPTCHA is not used anywhere (no form token, no server verification).
