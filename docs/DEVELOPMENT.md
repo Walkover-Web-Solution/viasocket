@@ -1,6 +1,6 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: a3e9bbd0
+verified_at: 7c32792e
 verified_on: 2026-10-28
 ---
 # Development & Verification Guide
@@ -102,7 +102,7 @@ npm run start          # optional: serve the build on :1111
 npm run preview        # optional, slow: real Cloudflare Pages build in workerd
 ```
 
-A passing `next build` lists **53 routes: 50 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
+A passing `next build` lists **54 routes: 51 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32` and `/setup-prompt`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
 
 ## Running Automated Checks & Tests
 

@@ -1,6 +1,6 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
-verified_at: a3e9bbd0
+verified_at: 7c32792e
 verified_on: 2026-10-28
 ---
 # 13 Security

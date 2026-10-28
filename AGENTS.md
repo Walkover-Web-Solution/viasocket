@@ -12,7 +12,7 @@ This repo is the public website at **viasocket.com**: the static homepage, SEO l
 | Cloudflare build / local preview | `npm run pages:build` / `npm run preview` |
 | Type check, lint, tests | **None exist.** Use the checklist in [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md#how-an-agent-checks-its-work-verification-checklist). |
 
-Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 53 routes and prints only Sass `@import` deprecation warnings.
+Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 54 routes and prints only Sass `@import` deprecation warnings.
 
 ## Reading Order Before You Change Code
 
