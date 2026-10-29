@@ -43,7 +43,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
 - **Current Implementation** (shipped at `17b99cd8`; the code does this, but no direction confirms it should stay):
   - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `public/llms.txt` opens with "AI-powered automation platform … no-code workflows". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans.
   - `src/app/page.js` and its A/B Index* components in `src/app/front-page/` are no longer what visitors see at `/`. See [DECISIONS.md](DECISIONS.md) and [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Do not delete them.
-  - `/home` redirects to `/` in `src/middleware.js`, but it is still listed in `src/app/sitemap.js`.
+  - `/home` is a minimal placeholder route (`src/app/home/page.js`) and is listed in `src/app/sitemap.js`.
 - **Proposals & Roadmaps** (from the team answers to OPEN_QUESTIONS, 2026-10-22; each needs the named owner's yes before it counts as approved):
   - **ICP and metrics** (P-02, proposed, Ankit to confirm): see [Target Audience](#target-audience--ideal-customer-profile-icp) and [Strategic Priorities](#strategic-priorities--success-measures).
   - **Pricing** (P-03, proposed): `/developers/pricing` is the canonical pricing page; `/pricing` sells the older workflow product and should either redirect or be rewritten.
