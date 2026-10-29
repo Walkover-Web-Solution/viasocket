@@ -70,7 +70,7 @@ export default function IntegrationsIndexPage({ data }) {
                         />
                     </Suspense>
 
-                    <BlogPosts title={INDEX_COPY.blogTitle} lead={INDEX_COPY.blogLead} posts={actionLayerBlogs} viewAllUrl={COPY.blogCategoryUrl} />
+                    <BlogPosts title={INDEX_COPY.blogTitle} lead={INDEX_COPY.blogLead} posts={actionLayerBlogs} viewAllUrl={COPY.blogsUrl} />
 
                     <FaqSection eyebrow={INDEX_COPY.faqEyebrow} title={INDEX_COPY.faqTitle} faqs={INDEX_COPY.faqs} />
 

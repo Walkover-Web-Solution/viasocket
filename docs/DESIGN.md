@@ -1,7 +1,7 @@
 ---
-covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt"]
+verified_at: 4b891d59
+verified_on: 2026-10-27
 ---
 # Design System & UI Standards
 
@@ -263,7 +263,8 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
   To change a page's title or description, edit the table row, not the fallback ([current-infrastructure/table-api](current-infrastructure/table-api.md)). Dynamic integration pages replace `[AppOne]`/`[AppTwo]` in the server metadata (`src/app/integrations/[...slug]/page.js`).
 - **Titles** are not uniform. The fallbacks use "Pricing - viaSocket", "viaSocket — The action layer…" and "… | viaSocket". The root layout sets no `title.template`. Match the table row's existing style.
 - **Root defaults** (`src/app/layout.js`): site-wide OG and Twitter image `https://files.msg91.com/342616/wnitwkyk` (1200×630), `twitter.card: summary_large_image`, favicons from `public/assets/brand/`, and `robots: 'noindex, nofollow'` unless `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`.
-- **Canonical:** Next pages get a canonical only **client-side**. `src/app/providers.js:AppProvider` computes `https://viasocket.com${pathname}`, collapsing `/page/N` pagination for `/integrations` and `/mcp`, and `src/components/headComp/headComp.js:HeadComp` injects the `<link rel="canonical">` in a `useEffect`. Only `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction` also set `alternates.canonical` on the server; `HeadComp` then rewrites that same link. The static homepage has a real `<link rel="canonical" href="https://viasocket.com/">` (commit `a8f48657`). Always use the bare domain, never `www`. <!-- verify:ignore -->
+- **Share images:** a page's own `openGraph`/`twitter` replace the root's whole objects, image included, so every page sets its image through `src/app/lib/share-image.js` (`ogImages(path, image)`, `twitterImages(path, image)`). A page keeps its own image (for example table-api `metaData.image`); with none, or only the root's generic image, it gets `https://viasocket.com/og/<path>`: its hero (breadcrumb, `<h1>`, the `.hero-sub` line or the meta description) drawn at 1200×630 by `src/app/og/[...path]/route.js`, which reads the live page and does not follow redirects. When you add a page, pass its path to those helpers. // pragma: allowlist secret
+- **Canonical:** Next pages get a canonical only **client-side**. `src/app/providers.js:AppProvider` computes `https://viasocket.com${pathname}`, collapsing `/page/N` pagination for `/integrations` and `/mcp`, and `src/components/headComp/headComp.js:HeadComp` injects the `<link rel="canonical">` in a `useEffect`. Only `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction` also set `alternates.canonical` on the server; `HeadComp` then rewrites that same link. The static homepage has a real `<link rel="canonical" href="https://viasocket.com/">` (commit `a8f48657`). Always use the bare domain, never `www`. <!-- verify:ignore --> // pragma: allowlist secret
 - **Never use `next/head`.** In the App Router it renders nothing (its head manager context is only `{ appDir: true }`), so the old `next/head` head components were removed on 2026-10-21. Put metadata in `generateMetadata`. <!-- verify:ignore -->
 - **JSON-LD** (`<script type="application/ld+json">`):
   - `Organization` in `src/app/layout.js`, on every Next page.

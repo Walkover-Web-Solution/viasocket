@@ -1,6 +1,7 @@
 import FeaturesPage from '@/components/IntegrationsComp/addToProduct/FeaturesPage';
 import { FEATURES_COPY } from '@/components/IntegrationsComp/addToProduct/copy';
-import { getActionLayerBlogs } from '@/utils/axiosCalls';
+import { getLatestBlogs } from '@/app/lib/blogs';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -11,6 +12,7 @@ export const metadata = {
     description: FEATURES_COPY.metaDesc,
     alternates: { canonical: URL },
     openGraph: {
+        images: ogImages('/features'),
         title: FEATURES_COPY.metaTitle,
         description: FEATURES_COPY.metaDesc,
         url: URL,
@@ -19,12 +21,12 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
+        images: twitterImages('/features'),
         title: FEATURES_COPY.metaTitle,
         description: FEATURES_COPY.metaDesc,
     },
 };
 
-export default async function FeaturesIndexPage() {
-    const blogs = await getActionLayerBlogs(URL);
-    return <FeaturesPage blogs={blogs} />;
+export default function FeaturesIndexPage() {
+    return <FeaturesPage blogs={getLatestBlogs()} />;
 }

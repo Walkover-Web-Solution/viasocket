@@ -254,7 +254,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                         </section>
                     )}
 
-                    <BlogPosts title={f(COPY.learnTitle)} lead={f(COPY.learnSub)} posts={blogs} viewAllUrl={COPY.blogCategoryUrl} />
+                    <BlogPosts title={f(COPY.learnTitle)} lead={f(COPY.learnSub)} posts={blogs} viewAllUrl={COPY.blogsUrl} />
 
                     <section className={s.sec} id="about">
                         <div className={s.wrap}>

@@ -4,13 +4,18 @@ import { LangBlock } from './LangBlock';
 import { CodeBlock } from './CodeBlock';
 import { Callout, Endpoint, ClickSteps, DocTable, StepH2, Code } from './Bits';
 import { Toc } from './Toc';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
 export async function generateMetadata() {
+    const title = 'Integrations Quickstart · viaSocket';
+    const description = 'From an empty project to a working integration. Let your users connect Slack, Gmail, HubSpot, Google Sheets and 2,300+ other apps.';
     return {
-        title: 'Integrations Quickstart · viaSocket',
-        description: 'From an empty project to a working integration. Let your users connect Slack, Gmail, HubSpot, Google Sheets and 2,300+ other apps.',
+        title,
+        description,
+        openGraph: { title, description, url: 'https://viasocket.com/developers/docs', siteName: 'viaSocket', type: 'website', images: ogImages('/developers/docs') }, // pragma: allowlist secret
+        twitter: { card: 'summary_large_image', title, description, images: twitterImages('/developers/docs') },
     };
 }
 

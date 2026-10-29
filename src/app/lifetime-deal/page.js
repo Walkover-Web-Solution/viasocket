@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { getLifetimeDealPageData } from '../lib/lifetime-deal-data';
 import LifetimeDealClient from './LifetimeDealClient';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -15,13 +16,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description: metaData?.description || fallbackDesc,
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/lifetime-deal', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title || 'viaSocket | Lifetime Deal | AI Workflow Automation Tools',
             description: metaData?.description || fallbackDesc,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/lifetime-deal', metaData?.image),
         },
     };
 }

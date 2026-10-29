@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import BlogPostPage from '@/components/IntegrationsComp/addToProduct/BlogPostPage';
 import { BLOGS_URL, getBlog, getRelatedBlogs } from '../../lib/blogs';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -11,7 +12,7 @@ export async function generateMetadata({ params }) {
 
     const url = `${BLOGS_URL}/${post.slug}`;
     const title = `${post.title} · viaSocket`;
-    const images = post.image ? [new URL(post.image, 'https://viasocket.com').href] : undefined;
+    const image = post.image ? new URL(post.image, 'https://viasocket.com').href : null; // pragma: allowlist secret
     return {
         title,
         description: post.description,
@@ -24,9 +25,9 @@ export async function generateMetadata({ params }) {
             type: 'article',
             publishedTime: post.date,
             authors: post.author ? [post.author] : undefined,
-            images,
+            images: ogImages(`/blogs/${post.slug}`, image),
         },
-        twitter: { card: 'summary_large_image', title, description: post.description, images },
+        twitter: { card: 'summary_large_image', title, description: post.description, images: twitterImages(`/blogs/${post.slug}`, image) },
     };
 }
 

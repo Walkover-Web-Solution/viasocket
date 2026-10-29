@@ -1,11 +1,11 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js"]
-verified_at: 7c32792e
+verified_at: 766f6f54
 verified_on: 2026-10-28
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **56 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **57 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -35,7 +35,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/experts` | `src/app/components/experts/AgencyList.js`; `src/app/lib/data.js:getExpertsPageData` | Expert/agency directory and meeting request |
 | `/experts-are-live` | `src/app/experts-are-live/page.js` | Contact-an-expert page |
 | `/features` | `src/components/IntegrationsComp/addToProduct/FeaturesPage.js` (copy `FEATURES_COPY`) | Key features, homepage design |
-| `/features/[...feature]` | `src/app/components/features/FeaturesClient.js`; `src/app/lib/feature-data.js:getFeaturesPageData` | One feature (first segment is the slug) |
+| `/features/[...feature]` | One feature. A slug in `src/components/IntegrationsComp/addToProduct/featurePages.js:FEATURE_PAGES` renders `FeatureDetailPage.js` (homepage design); any other slug still renders the old `src/app/components/features/FeaturesClient.js` from `src/app/lib/feature-data.js:getFeaturesPageData` until it is redirected | One feature |
 | `/feedback` | `src/app/components/feedback/FeedbackSatisfiedClient.js` or `FeedbackUnsatisfiedClient.js` by `?variant=` | Post-support feedback; any other variant gets `notFound()` |
 | `/find-apps/[...slug]` | `src/app/components/find-apps/FindAppsClient.js`; `src/app/lib/data.js:getFindAppsPageData` | A–Z app list for one letter. Any other segment count renders an inline "Page Not Found" with HTTP 200 |
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
@@ -54,8 +54,9 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/migration/relay` | `src/app/migration/relay/page.js` | Relay.app alternative page; paid campaign (own `utm_source`) |
 | `/migration/zapier` | `src/app/migration/zapier/page.js` | Switch-from-Zapier campaign |
 | `/new-direction` | `src/components/IntegrationsComp/addToProduct/LetterPage.js` (`LETTER_COPY`) | Founders' letter; target of `/help` |
+| `/og/[...path]` | `src/app/og/[...path]/route.js:GET` | Share image (og:image, twitter:image) of the page at `/<path>`: its hero drawn at 1200x630. Used by pages with no image of their own, through `src/app/lib/share-image.js` |
 | `/pass` | `src/components/IntegrationsComp/addToProduct/PassPage.js` (`PASS_COPY`) | viaSocket Pass |
-| `/pricing` | `src/app/pricing/page.js` with `src/components/pricing/*`; `src/app/lib/pricing-data.js:getPricingPageData` | Pricing plans |
+| `/pricing` | `src/components/IntegrationsComp/addToProduct/PricingPage.js` (`PRICING_COPY`) | For now the Free plan and a "Contact us" card; the paid plans and plan finder are kept in the code, unrendered |
 | `/privacy` | `src/app/privacy/page.js` (copy in the file) | Legal |
 | `/robots.txt` | `src/app/robots.txt/route.js:GET` | Robots, decided by env and host ([CONTRACTS](CONTRACTS.md#internal-api-routes)) |
 | `/signup` | `src/app/components/customLogin/CustomLoginOptimized.js`; `src/app/lib/data.js:getSignupPageData` | MSG91 signup widget (`?redirect_to=`, `utm_*`) |
@@ -88,6 +89,8 @@ Order of evaluation: `public/_redirects`, then `next.config.js` `redirects()`, t
 | `/home` | `/` | 307 | `src/middleware.js:middleware` |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
+
+`src/middleware.js` does not run for `/og/...` (its `matcher`): share images need no redirects or cookies and are not page visits.
 
 `/` and `/setup-prompt` are sent `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. The setup page's response echoes the request URL, and that URL carries org and project ids, so a shared cache must not store it. `/setup-prompt` also sends `X-Robots-Tag: noindex, nofollow`. robots.txt does not `Disallow` that path, so a crawler can fetch the page and read the tag.
 
@@ -139,7 +142,7 @@ Four header/footer systems are in use. Pick the one that matches the page's desi
 | `/automations/<category-slug>` | `src/app/lib/automationSlugResolver.js:resolveAutomationSlug` | category page. A category match **beats** a template with the same slug |
 | `/automations/<title-slug>` or `/automations/<title-slug>/<id>` | same (`generateSlug(title)`, then the id) | one template |
 | `/mcp/<app>` (also `/mcp/category/<c>[/page/<n>]`) | `src/utils/getMcpInfo.js:getMcpInfo` | MCP app page or index | <!-- verify:ignore -->
-| `/features/<slug>` | `src/app/lib/feature-data.js:getFeaturesPageData` (first segment only) | one feature |
+| `/features/<slug>` | `featurePages.js:FEATURE_PAGES`, else `src/app/lib/feature-data.js:getFeaturesPageData` (first segment only) | one feature (new design, or the old page) |
 | `/departments/<slug>` | `getDepartmentPageData` | one department, or 404 |
 | `/find-apps/<letter>` | `getFindAppsPageData` (exactly one segment) | apps starting with that letter |
 

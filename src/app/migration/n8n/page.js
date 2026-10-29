@@ -14,6 +14,7 @@ import N8nUseCases from './N8nUseCases';
 import N8nCTABanner from './N8nCTABanner';
 import ReviewIframeOptimized from '@/app/components/home/ReviewIframeOptimized';
 import SecuritySection from '@/app/components/SecuritySection';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -31,21 +32,14 @@ export async function generateMetadata() {
                 "Love n8n but tired of running it? Export your workflow JSON, paste it into viaSocket's AI, and it runs fully managed. Free assisted migration by real engineers.",
             url: 'https://viasocket.com/migration/n8n',
             type: 'website',
-            images: [
-                {
-                    url: 'https://files.msg91.com/342616/wnitwkyk',
-                    width: 1200,
-                    height: 630,
-                    alt: 'viaSocket',
-                },
-            ],
+            images: ogImages('/migration/n8n'),
         },
         twitter: {
             card: 'summary_large_image',
             title: 'n8n Alternative Without the Self-Hosting: Free Migration | viaSocket',
             description:
                 "Love n8n but tired of running it? Export your workflow JSON, paste it into viaSocket's AI, and it runs fully managed.",
-            images: ['https://files.msg91.com/342616/wnitwkyk'],
+            images: twitterImages('/migration/n8n'),
         },
     };
 }

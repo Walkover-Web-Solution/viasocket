@@ -95,8 +95,11 @@ export function SiteFooter() {
     );
 }
 
-/** The Action Layer blog posts, as on the app pages. Renders nothing when there are none. */
-export function BlogPosts({ title, lead, posts, viewAllUrl }) {
+/**
+ * "Learn more": a row of blog posts. By default the Action Layer posts, as on the app pages; pass `Card`
+ * (BlogsPage.js PostCard) to show /blogs posts as they look on /blogs. Renders nothing when there are none.
+ */
+export function BlogPosts({ title, lead, posts, viewAllUrl, Card }) {
     if (!posts?.length) return null;
     const fmtDate = (d) => {
         const t = Date.parse(d);
@@ -115,7 +118,8 @@ export function BlogPosts({ title, lead, posts, viewAllUrl }) {
                     </a>
                 </div>
                 <div className={s.posts}>
-                    {posts.map((b) => (
+                    {Card && posts.map((p) => <Card key={p.slug} post={p} />)}
+                    {!Card && posts.map((b) => (
                         <a key={b.link} className={s.post} href={b.link}>
                             {b.image && <img className={s['post-img']} src={b.image} alt="" loading="lazy" />}
                             <span className={s['post-body']}>

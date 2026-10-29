@@ -48,8 +48,25 @@
 .perks li.limit::before { width: 9px; height: 9px; border: 1.5px solid var(--ink-3); transform: none; align-self: center; }
 .plans > li > a:last-child { margin-top: 10px; width: 100%; text-decoration: none; }
 .btn-o { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; font-size: 15px; color: var(--ink); }
+// For now: two cards (Free and "Contact us"), centred at the width of two of the four
+.plans-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 720px; margin-inline: auto; }
+.plans-2 + .every { max-width: 720px; margin-inline: auto; }
 @media (max-width: 1000px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 560px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+
+/* For now: links to /features and /use-cases, two joined cards; the arrow nudges right on hover */
+.explore { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+.explore > li { display: flex; min-width: 0; }
+.explore a { flex: 1; display: flex; flex-direction: column; gap: 12px; padding: clamp(24px, 3vw, 36px); background: var(--s1); color: inherit; text-decoration: none; transition: background-color .2s; }
+.explore a:hover, .explore a:focus-visible { background: var(--s2); }
+.explore a:focus-visible { outline: 2px solid var(--ink); outline-offset: -2px; }
+.explore h3 { font-size: clamp(22px, 2vw, 26px); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; }
+.explore p { flex: 1; font-size: 15.5px; color: var(--ink-2); max-width: 48ch; }
+.explore-go { margin-top: 8px; font-size: 15px; font-weight: 500; color: var(--ink); }
+.explore-go span { display: inline-block; transition: transform .2s ease; }
+.explore a:hover .explore-go span { transform: translateX(4px); }
+@media (prefers-reduced-motion: reduce) { .explore-go span { transition: none; transform: none; } }
+@media (max-width: 700px) { .explore { grid-template-columns: minmax(0, 1fr); } }
 
 /* Under the plans: what every plan gets, and what a task is */
 .every { width: 100%; margin-top: 20px; display: grid; gap: 6px; text-align: left; font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
