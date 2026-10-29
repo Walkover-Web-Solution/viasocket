@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
 verified_at: a3e9bbd0
-verified_on: 2026-10-28
+verified_on: 2026-10-29
 ---
 # Product Vision & Strategic Direction
 
@@ -44,6 +44,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
   - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `public/llms.txt` opens with "AI-powered automation platform … no-code workflows". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans.
   - `src/app/page.js` and its A/B Index* components in `src/app/front-page/` are no longer what visitors see at `/`. See [DECISIONS.md](DECISIONS.md) and [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Do not delete them.
   - `/home` redirects to `/` in `src/middleware.js`, but it is still listed in `src/app/sitemap.js`.
+  - Bare `/embed` and bare `/developers` 301 to `/` on production and test (admin redirect list, checked 2026-10-29). That is not what [ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom) records, and not what `src/data/redirects.json` does for `/embed` (308 to `/developers`). See [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).
 - **Proposals & Roadmaps** (from the team answers to OPEN_QUESTIONS, 2026-10-22; each needs the named owner's yes before it counts as approved):
   - **ICP and metrics** (P-02, proposed, Ankit to confirm): see [Target Audience](#target-audience--ideal-customer-profile-icp) and [Strategic Priorities](#strategic-priorities--success-measures).
   - **Pricing** (P-03, proposed): `/developers/pricing` is the canonical pricing page; `/pricing` sells the older workflow product and should either redirect or be rewritten.
@@ -88,7 +89,7 @@ Older story, still live on most pages: no-code AI workflow automation with a lar
 
 These are the site's operating principles. Each one is backed by code, a commit, or an explicit statement from the user.
 
-1. **Search equity is an asset; preserve routes.** Existing URLs carry rankings and backlinks. When a page moves, add a permanent redirect in `next.config.js` (the `/embed`, `/mcp`, `/about` and `/department/*` pattern) and keep `src/app/sitemap.js` listing only final destinations (`7fd1dc19`). Production indexes; test must not. The `robots` value in `src/app/layout.js` is keyed on `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, and `src/app/robots.txt/route.js` disallows everything outside prod.
+1. **Search equity is an asset; preserve routes.** Existing URLs carry rankings and backlinks. When a page moves, add a permanent redirect in the admin list that `src/middleware.js` applies (fallback copy in `src/data/redirects.json`; `next.config.js` no longer has `redirects()`), and keep `src/app/sitemap.js` listing only final destinations (`7fd1dc19`). Production indexes; test must not. The `robots` value in `src/app/layout.js` is keyed on `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, and `src/app/robots.txt/route.js` disallows everything outside prod.
 2. **Attribution integrity beats convenience.** A page tags its own signups with its path as `utm_source`. A campaign page keeps its literal campaign tag (`INTERNAL_UTM_SOURCES` in `src/utils/handleUtmSource.js` includes `relay-switch-google-ads`). External attribution already in the `utmData` cookie is never overwritten: `src/utils/handleUtmSource.js:savePageUtmSource` refuses unless `isInternalUtmSource` passes. `utm_source` appears once in a signup URL. A typed prompt travels in `utmData`, never in the query string. Tracking runs in local, test and prod, and its rows carry `environment`. Mechanics are in [FLOWS.md](FLOWS.md) and [CONTRACTS.md](CONTRACTS.md).
 3. **Make the smallest change that does the job.** The user reviews diffs closely and has reverted edits that went beyond the request, including one that ran a repo-wide formatter during a one-line fix. Surface anything else you notice; do not fix it unprompted.
 4. **Keep the codebase one idiom.** Port the design, content and behaviour of outside work, never its code. Use Tailwind first; a stylesheet needs a reason. Copy lives as constants in the component that renders it (`src/components/footer/NewFooter.js` shape). See [DESIGN.md](DESIGN.md).
