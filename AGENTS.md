@@ -2,6 +2,13 @@
 
 This repo is the public website at **viasocket.com**: the static homepage, SEO landing pages, an integrations directory, automation templates, campaign and migration pages, lead forms, and the `/developers` (Embed) funnel. It hands visitors to signup or to the product at flow.viasocket.com, carrying attribution with them. It is not the product. Its canonical positioning is "Integration Layer for your products & agents" ([DECISIONS ADR-015](docs/DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)). It is Next.js 15 (App Router) in plain JavaScript, deployed to Cloudflare Pages with `@cloudflare/next-on-pages`. Most page content and metadata come from table-api at request time.
 
+<!-- middleware:guidance:start -->
+## Guidance for this kind of repository
+
+Kept by the middleware (version c133f420d8b7). Read these before changing anything here:
+- [docs/guidance/website.md](docs/guidance/website.md)
+<!-- middleware:guidance:end -->
+
 ## Commands
 
 | Task | Command |
