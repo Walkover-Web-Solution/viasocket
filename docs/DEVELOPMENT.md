@@ -1,7 +1,7 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: a3e9bbd0
-verified_on: 2026-10-28
+verified_at: 1ae1f9ab
+verified_on: 2026-10-29
 ---
 # Development & Verification Guide
 
@@ -138,6 +138,7 @@ This is the procedure. What "done" means is in [22-definition-of-done](22-defini
    grep -o '<title>[^<]*' /tmp/p.html; grep -o 'rel="canonical" href="[^"]*"' /tmp/p.html
    ```
    Baseline expectations: `/` returns 200 with canonical https://viasocket.com/ (from the static `public/new-home/index.html`). `/home` returns 307 to `/` (middleware). `/embed` returns 308 to `/developers`. `/about` returns 308 to `/help/about-us`. `/help` returns 301 to `/new-direction`, while `/help/about-us` (a footer help page, served by another deployment) is a 404 locally. `/login` returns 307 to flow.viasocket.com. An unknown path returns 404 with "404 - Page not found". <!-- verify:ignore -->
+   While the admin redirect list is reachable, `/embed` returns 301 to `/` with an empty body and no canonical tag; the homepage it lands on carries the canonical. If the admin cannot be reached, the fallback file returns 308 to `/developers`.
 4. **SEO files.** `curl http://localhost:1111/robots.txt` must return `Disallow: /` locally. `/sitemap.xml` must return 200. If you touched robots logic, change **both** `src/app/robots.txt/route.js` and `build-utilities/generate-robots-txt.js`.
 5. **Per-visitor, cookie or cache behaviour.** Local and test do not show it. Compare production and test headers:
    ```bash

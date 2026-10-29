@@ -1,7 +1,7 @@
 ---
 covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**"]
-verified_at: a261e40d
-verified_on: 2026-10-28
+verified_at: 1ae1f9ab
+verified_on: 2026-10-29
 ---
 # User Flows & Critical Journeys
 
@@ -245,7 +245,7 @@ None of these forms uses reCAPTCHA (the unimported provider and its dependency w
 
 ## Detailed Journey: Developers (Embed) funnel
 
-- **Routes:** `/developers` (`src/app/developers/page.js`), `/developers/auth`, `/developers/pricing`, `/developers/docs`. They share `src/app/developers/layout.js` with their own font and token scope, and their own `Header`/`Footer`, not the site navbar. `/embed` returns 308 here. The `/embed/*` subpages still exist and carry their own `/signup?utm_source=/embed/...` links.
+- **Routes:** `/developers` (`src/app/developers/page.js`), `/developers/auth`, `/developers/pricing`, `/developers/docs`. They share `src/app/developers/layout.js` with their own font and token scope, and their own `Header`/`Footer`, not the site navbar. On production and test the live admin list 301s bare `/embed` and bare `/developers` to `/`, and `/developers/pricing` to `/pricing`, so those three URLs do not render this funnel. `/developers/auth`, `/developers/docs` and the `/embed/*` subpages still return 200. The subpages carry their own `/signup?utm_source=/embed/...` links.
 - **Primary action:** `src/app/developers/CopyPromptButton.js:CopyPromptButton` copies the `SKILL` text from `src/app/developers/skill.js`. That text is an instruction for the visitor's coding agent to read flow.viasocket.com/documentation/skill.md.
 - **Signup:** the header "Signup" is a plain link to flow.viasocket.com/integrations, with **no utm or state** and no `data-track`. Pricing plan CTAs (`src/app/developers/pricing/PricingTop.js`) for Free, Growth and Scale go to `/developers#start`. Enterprise and "Talk to sales" go to cal.id. There is no checkout in this repo.
 - These pages run under the root layout, so UTM capture and the (currently disabled) view tracking apply. `/docs` is static content with example code only.

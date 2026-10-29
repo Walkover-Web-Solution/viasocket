@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**"]
-verified_at: 223bf95d
-verified_on: 2026-10-28
+verified_at: 1ae1f9ab
+verified_on: 2026-10-29
 ---
 # Module: Developers (Embed)
 
@@ -10,23 +10,23 @@ verified_on: 2026-10-28
 - **`/developers`, `/developers/auth`, `/developers/pricing`, `/developers/docs`** are a self-contained sub-app that sells viaSocket as "the action layer for AI products" to developers. Its primary action copies a setup prompt for the visitor's coding agent.
 - **`/setup-prompt`** is the page viaSocket SDK emails link to. It is not part of the developers sub-app chrome. It copies a keys prompt (`for=keys`) or a first-run prompt (`for=run`) and makes no API call.
 - **`/embed/actions-for-ai`, `/embed/actions-via-webhook`, `/embed/app-integration`** are older legacy-design Embed landing pages. They are still routable and listed in `src/app/sitemap.js`.
-- **Bare `/embed`** 308s to `/developers` (`next.config.js` `redirects`, `permanent: true`). That makes `src/app/embed/page.js` (`EmbedContent`) unreachable.
+- **Bare `/embed`** is a 301 to `/` on production and test (admin redirect list, checked 2026-10-29), with an empty body. It is not an alias of `/developers`, and the response has no document to carry `rel=canonical`. The homepage it lands on canonicalises to the site root. `src/data/redirects.json` still says 308 to `/developers` for when the admin cannot be reached. Either way `src/app/embed/page.js` (`EmbedContent`) does not render. Bare `/developers` is also a 301 to `/` in the live list, so the two URLs are not two copies of one page. `/developers/auth` and `/developers/docs` still return 200.
 
 ---
 
 ## Business Value
 
 - The page titles ("viaSocket — The action layer for AI products", "Managed auth · viaSocket", "Pricing · viaSocket", "Integrations Quickstart · viaSocket") and `src/app/developers/skill.js:SKILL` target developers who integrate through a coding agent.
-- `/developers/pricing` is the only pricing page the homepage links to ([OPEN_QUESTIONS P-03](../OPEN_QUESTIONS.md)).
+- `/developers/pricing` 301s to `/pricing` in the live admin list. Which pricing page should be canonical is still [OPEN_QUESTIONS P-03](../OPEN_QUESTIONS.md).
 - Commit `d0dff32c` ("Rebuild /developers landing page as native Next.js/Tailwind, drop static HTML") moved `/developers` off static HTML. The site-wide design target is now the static homepage's system (U-01, decided; [DECISIONS ADR-016](../DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).
 
 > [!TODO]
-> Not stated: how Embed signups are counted, or whether the `/embed/*` subpages are meant to stay now that `/embed` points at `/developers`.
+> Not stated: how Embed signups are counted, or whether the `/embed/*` subpages are meant to stay. Bare `/embed` now 301s to `/`, not to `/developers` ([OPEN_QUESTIONS P-06](../OPEN_QUESTIONS.md)).
 
 ---
 
 ## Navigation Flow
-1. Visitors arrive from the homepage "Pricing" link (`/developers/pricing`), `/embed` (308), or search.
+1. Visitors arrive from search, or from a link to `/developers/pricing` (live admin list 301s that to `/pricing`) or `/embed` (live admin list 301s that to `/`).
 2. They copy the setup prompt (`CopyPromptButton`), read auth, pricing or docs, and toggle monthly or yearly pricing.
 3. Next stops: the header "Signup" link (flow.viasocket.com/integrations, untagged), plan CTAs (`/developers#start`), or cal.id for Enterprise and "Talk to sales". The `/embed/*` CTAs go to `https://viasocket.com/signup?utm_source=/embed/...`.
 

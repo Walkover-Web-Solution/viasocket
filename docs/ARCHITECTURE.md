@@ -1,7 +1,7 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: a261e40d
-verified_on: 2026-10-28
+verified_at: 1ae1f9ab
+verified_on: 2026-10-29
 ---
 # Architecture & Mental Model
 
@@ -93,9 +93,9 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
 
 1. **Cloudflare zone.** A zone cache rule lives outside the repo (see [DECISIONS](DECISIONS.md)). Production `/` is publicly cached for 3 hours ([14-performance](14-performance.md#known-hot-paths)), so check behaviour on production, not only on a local build.
 2. **`public/_redirects`.** One `/faq/*` rule. `/faq` itself is answered by another deployment.
-3. **`next.config.js` `redirects()`.** These run *before* middleware. Because of them, `src/app/embed/page.js` and `src/app/mcp/page.js` never render. Their sub-routes, such as `/embed/app-integration` and `/mcp/[...slug]`, still do.
-4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot. Middleware does three things:
-   - It redirects `/home` to `/` with a 307, so `src/app/home/page.js` never renders.
+3. **`next.config.js` `redirects()`.** There is no `redirects()` function. Redirects are the middleware's job. The file still has the `beforeFiles` rewrite of `/` and the feedback `afterFiles` rewrites.
+4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot, and skips `/og/...`. Middleware does three things:
+   - It applies the admin redirect list (`/api/public/redirects`, else `src/data/redirects.json`) and returns that status with an empty body. That is why `src/app/embed/page.js`, `src/app/mcp/page.js` and `src/app/home/page.js` never render. On production and test (2026-10-29) bare `/embed` is **301 to `/`**, not an alias of `/developers`. The fallback file still says 308 to `/developers`, which is not what those hosts return while the admin is reachable. Sub-routes such as `/embed/app-integration` and `/mcp/[...slug]` still render.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
 5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html`. Production shows `x-matched-path: /new-home/index.html` for `/`.
@@ -247,7 +247,7 @@ The pieces, in order:
 
 ## /developers Sub-App
 
-`src/app/developers/layout.js` wraps every `/developers/*` page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `src/app/developers/docs/layout.js` adds the `docs-*` typography on top. These layouts are nested inside the root layout, so `AppProvider`, the chatbot, `TrackingCookies` and `VariantTracker` still run. The root layout's `global.scss` also applies. The pages are server components (`runtime = 'edge'`) with static copy and no data loader. `Header` and `Footer` come from `src/app/developers/`, not from the shared navbar and footer. `/embed` redirects here.
+`src/app/developers/layout.js` wraps every `/developers/*` page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `src/app/developers/docs/layout.js` adds the `docs-*` typography on top. These layouts are nested inside the root layout, so `AppProvider`, the chatbot, `TrackingCookies` and `VariantTracker` still run. The root layout's `global.scss` also applies. The pages are server components (`runtime = 'edge'`) with static copy and no data loader. `Header` and `Footer` come from `src/app/developers/`, not from the shared navbar and footer. Bare `/embed` does not redirect here on production: it 301s to `/` ([05-navigation](05-navigation.md#redirects-rewrites-and-middleware)).
 
 ## Security Model
 
