@@ -1,7 +1,7 @@
 ---
 covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt"]
-verified_at: 4b891d59
-verified_on: 2026-10-27
+verified_at: 0244e05f
+verified_on: 2026-10-30
 ---
 # Design System & UI Standards
 

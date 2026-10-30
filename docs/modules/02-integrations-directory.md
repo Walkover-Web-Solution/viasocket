@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
-verified_at: 17b99cd8
+verified_at: 0244e05f
 verified_on: 2026-10-30
 ---
 # Module: Integrations directory
