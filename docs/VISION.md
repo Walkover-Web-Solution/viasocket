@@ -1,6 +1,6 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: 1ae1f9ab
+verified_at: c0c7f48b
 verified_on: 2026-10-30
 ---
 # Product Vision & Strategic Direction
