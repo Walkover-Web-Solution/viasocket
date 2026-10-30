@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
 verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+verified_on: 2026-10-30
 ---
 # Open Questions & Known Ambiguities
 
@@ -13,7 +13,7 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 
 | ID | Topic / Question | Affected Code | Conflicting Evidence / Current Status | What Would Resolve It |
 |---|---|---|---|---|
-| P-01 | Which positioning is canonical outside `/`: integration/action layer, or no-code workflow automation? | `public/llms.txt`, `src/app/layout.js`, `src/app/pricing/page.js` | `/`, `/developers`, `/integrations`, `/features` and `/use-cases` lead with the integration layer (commits `1f911f58`, `75d86c93`, `18420492`, `b3a7ab32`), and the founders' letter at `/new-direction` announces the shift away from the workflow editor. The root metadata, `llms.txt` (last updated 2026-05) and `/pricing` still sell workflow automation. | **Decided (2026-10-22):** the integration layer is canonical everywhere ([ADR-015](DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)). Still to do: update the root metadata, `public/llms.txt` and `/pricing` to match. |
+| P-01 | Which positioning is canonical outside `/`: integration/action layer, or no-code workflow automation? | `public/llms.txt`, `src/app/layout.js`, `src/app/pricing/page.js` | `/`, `/developers`, `/integrations`, `/features` and `/use-cases` lead with the integration layer (commits `1f911f58`, `75d86c93`, `18420492`, `b3a7ab32`), and the founders' letter at `/new-direction` announces the shift away from the workflow editor. `public/llms.txt` was replaced on 2026-10-30. The root metadata and `/pricing` still sell workflow automation. | **Decided (2026-10-22):** the integration layer is canonical everywhere ([ADR-015](DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)). Still to do: update the root metadata and `/pricing` to match. |
 | P-02 | Who is the ICP, and which metric judges a site change? | n/a | Nothing in the repo or from the maintainer states either. The personas in [VISION](VISION.md) are inferred from copy. | **Proposed (Ankit to confirm):** ICP = developers and founders building a SaaS product or AI agent whose users must connect other apps; second, agencies; much traffic is paid ads. Metrics: setup-prompt copies and "Start free" signups, then demo bookings and chat starts. Recorded in [VISION](VISION.md#target-audience--ideal-customer-profile-icp). |
 | P-03 | Which pricing page is canonical, `/pricing` or `/developers/pricing`? | `src/app/pricing/page.js`, `src/app/developers/pricing/page.js` | The homepage nav links only `/developers/pricing`. | **Proposed:** `/developers/pricing` is canonical; decide whether `/pricing` redirects or is rewritten. |
 | P-04 | Which app count is authoritative ("2,300+", `appCount + 300`, "1000+")? | `public/new-home/index.html`, `src/app/lifetime-deal/page.js`, `src/app/mcp/aiagent/page.js` | Pages hardcode different figures. | **Proposed (marketing to confirm 2,300+ vs 2,200+):** "2,300+ apps" everywhere, replacing "1000+" and `appCount + 300`, or tie all copy to the live count. |
