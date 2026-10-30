@@ -24,6 +24,7 @@ const STATIC_ROUTES = [
     '/data-retention-deletion',
     '/departments',
     '/developers',
+    '/developers/apps',
     '/developers/auth',
     '/developers/docs',
     '/embed/actions-for-ai',
