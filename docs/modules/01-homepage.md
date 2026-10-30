@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: 89b51dc7
-verified_on: 2026-10-28
+verified_at: 0d14d549
+verified_on: 2026-10-30
 ---
 # Module: Homepage (`/`)
 
@@ -42,13 +42,13 @@ verified_on: 2026-10-28
 | `header.top` | Logo, nav (Features, Book a demo, Pricing, Log in), "Start free" | static links |
 | `#hero` | H1 with a rotating word (`[data-rot]`), "Copy setup prompt" (`[data-copy]`), "Talk to an expert", app/browser/AI-model strip, `#hx-panel` consent-screen carousel | the carousel pauses on hover, on focus and when the tab is hidden |
 | `#in-action` | Heading "See viaSocket in action." and a 16:9 product video (`#pv`) | Poster is the YouTube thumbnail (blurred) with a play button. The click swaps in a `youtube-nocookie.com` iframe (`autoplay=1&rel=0`). Nothing from YouTube's player loads before that click. The section fades in once on scroll unless motion is reduced or JS never runs |
-| `#use-cases` | Tabs (All / Agents / Apps / Internal tools), example list `#ix-list`, preview `#pane` | `filter`, `ixShow`; `galPrompt` builds a per-example prompt |
-| `#prompts` | Six sample-prompt buttons (`[data-pr]`) | copies the sample prompt plus `PROMPT` |
+| `#use-cases` | Tabs (All / Agents / Apps / Internal tools), example list `#ix-list`, preview `#pane` | `filter`, `ixShow`; the pane's "Copy prompt" copies the setup prompt without the ask line, then `What I want to build: ` plus that example's existing build sentence (`galPrompt`) |
+| `#prompts` | Six sample-prompt buttons (`[data-pr]`) | copies the setup prompt without "Ask me what I want to build first.", then `What I want to build: ` plus the card's own sentence |
 | `#features` | "What viaSocket handles": a nine-row yes/no table, Book a demo | static |
 | `#faq` | Nine `<details>` items | static; the same Q&A is duplicated in the `FAQPage` JSON-LD in `<head>` |
 | `footer.ft` | Link groups, socials, G2/Capterra badges | static |
 | `.chat-fab` | Support chat button (`[data-chat]`, `href` /support) | `public/new-home/assets/support.js` opens the gtwy chat when it loaded, otherwise the link navigates |
-| `#promptText` | Hidden (`sr-only`) setup-prompt text | `PROMPT = $('#promptText').textContent` |
+| `#promptText` | Hidden (`sr-only`) setup-prompt text. Org and project ids are the placeholders `<your org_id>` and `<your project_id>`: this page has no visitor ids to inject. Angle brackets are escaped in the HTML so they survive as text | `PROMPT = $('#promptText').textContent`. Every `[data-copy]` button (hero, features close, footer) copies that text alone |
 
 All content is hardcoded in the HTML and in `main.js` constants (`IC` app icons, `GAL` examples, `PR` prompts). The page fetches no content API. `#in-action` loads one YouTube thumbnail image, and the player iframe only after the visitor clicks play.
 
