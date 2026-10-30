@@ -1,7 +1,7 @@
 ---
-covers: ["src/**", "public/**", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
-verified_at: a261e40d
-verified_on: 2026-10-28
+covers: ["src/**", "public/**", "parked/llms.txt", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
+verified_at: c0c7f48b
+verified_on: 2026-10-30
 ---
 # 08 Folder Structure
 
@@ -18,6 +18,8 @@ viasocket/
 ├── build-utilities/
 │   └── generate-robots-txt.js   # prebuild: writes untracked public/robots.txt
 ├── _posts/blog/*.mdx         # legacy Decap CMS posts; nothing reads them (C-02)
+├── parked/
+│   └── llms.txt              # previous /llms.txt link directory; kept in git, not served
 ├── public/
 │   ├── new-home/             # THE HOMEPAGE "/": index.html, styles.css, main.js, assets/
 │   ├── assets/               # images for React pages (bg-img, brand, icons, img, index, shared)

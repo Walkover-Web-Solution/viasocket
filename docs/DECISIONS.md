@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+verified_at: c0c7f48b
+verified_on: 2026-10-30
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -323,7 +323,7 @@ After the October relaunch the site told two stories: the homepage, `/developers
 
 ### Decision & Implementation
 - The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
-- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. Pending: `src/app/layout.js` root `metadata`, `public/llms.txt` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. `public/llms.txt` was replaced on 2026-10-30 with the supplied integration-layer text; the previous 1,141-line directory is parked at `parked/llms.txt` and is not served. Pending: `src/app/layout.js` root `metadata` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
 
 ### Supporting Evidence & Past Incidents
 - The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).
