@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/features/**", "src/app/use-cases/**", "src/app/new-direction/**", "src/app/lib/feature-data.js", "src/app/components/features/**", "src/components/IntegrationsComp/addToProduct/FeaturesPage.js", "src/components/IntegrationsComp/addToProduct/FeatureGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js", "src/components/IntegrationsComp/addToProduct/featurePages.js", "src/components/IntegrationsComp/addToProduct/UseCasesPage.js", "src/components/IntegrationsComp/addToProduct/LetterPage.js", "src/components/IntegrationsComp/addToProduct/UseCaseGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureVisuals.js", "src/components/IntegrationsComp/addToProduct/SiteChrome.js", "src/components/IntegrationsComp/addToProduct/CopyPrompt.js", "src/components/IntegrationsComp/addToProduct/copy.js", "src/components/IntegrationsComp/addToProduct/addToProduct.module.scss"]
-verified_at: c4bed05f
+verified_at: 0d14d549
 verified_on: 2026-10-30
 ---
 # Module: Features, Use Cases and the Founders' Letter
