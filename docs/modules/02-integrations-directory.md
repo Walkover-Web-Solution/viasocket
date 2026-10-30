@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-30
 ---
 # Module: Integrations directory
 
@@ -65,7 +65,7 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 
 Shared pieces (`SiteHeader`, `SiteFooter`, `BlogPosts`, `FaqSection`, `CopyPromptProvider`, `AppDirectory`, `RequestIntegrationPopupOpener`, `FAQSection`, `MetaHeadComp`) are in the [component catalog](../DESIGN.md#reusable-component-catalog). The `addToProduct` styling (`addToProduct.module.scss`, Geist via `next/font`) is in [DESIGN](../DESIGN.md#homepage-system-in-next-addtoproductmodulescss).
 
-Module-specific: `src/components/IntegrationsComp/addToProduct/OAuthDemo.js`, `EventsList.js`, `BetaNotice.js`, `RotatingWord.js`, and the request form `src/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp.js:RequestPlugin`.
+Module-specific: `src/components/IntegrationsComp/addToProduct/OAuthDemo.js`, `EventsList.js`, `BetaNotice.js`, `RotatingWord.js`, and the request form `src/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp.js:RequestPlugin`. On the homepage-design pages the form sits inside `.root`. Dark mode restyles that copy from `addToProduct.module.scss` (`.request-form`); the daisyUI light modal is what legacy pages still show. See [DESIGN](../DESIGN.md#homepage-system-in-next-addtoproductmodulescss).
 
 ---
 

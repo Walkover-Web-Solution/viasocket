@@ -612,3 +612,55 @@
   .ucx-panel { min-height: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .ucx-bar, .ucx-wire i { display: none; } .ucx-swap { transition: none; } }
+
+// Request a new integration. The form is the shared daisyUI modal, and <html data-theme="light">
+// keeps that modal on the light tokens. This page's dark mode sets a light --ink and color-scheme: dark
+// on .root, so the white card inherits cream text and the fields (white fill, cream type, cream borders)
+// disappear. Restyle only the copy opened inside .root. Legacy pages are not under .root, and light mode
+// is outside this query, so both stay as they are. Submit stays the accent button.
+@media (prefers-color-scheme: dark) {
+  .root :global(.request-form) { color-scheme: dark; }
+  .root :global(.request-form-scrim) { background: rgba(0, 0, 0, 0.62); }
+  .root :global(.request-form) :global(.modal-box) {
+    background: var(--s1);
+    color: var(--ink);
+    border: 1px solid var(--line-2);
+    box-shadow: var(--sh-dlg);
+  }
+  .root :global(.request-form) :global(.label-text) { color: var(--ink); }
+  .root :global(.request-form) :global(.input),
+  .root :global(.request-form) :global(.textarea),
+  .root :global(.request-form) :global(.select) {
+    background-color: var(--s2);
+    color: var(--ink);
+    border-color: var(--line-3);
+    caret-color: var(--ink);
+  }
+  .root :global(.request-form) :global(.input)::placeholder,
+  .root :global(.request-form) :global(.textarea)::placeholder { color: var(--ink-3); opacity: 1; }
+  .root :global(.request-form) :global(.input):focus,
+  .root :global(.request-form) :global(.textarea):focus,
+  .root :global(.request-form) :global(.select):focus {
+    border-color: var(--ink);
+    outline-color: var(--ink);
+  }
+  .root :global(.request-form) :global(.input.input-error) { border-color: #e38b84; }
+  .root :global(.request-form) :global(.text-error) { color: #f0a8a0; }
+  .root :global(.request-form) :global(.select) :global(option) { background: var(--s1); color: var(--ink); }
+  .root :global(.request-form) :global(.input):-webkit-autofill,
+  .root :global(.request-form) :global(.input):-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--ink);
+    caret-color: var(--ink);
+    box-shadow: 0 0 0 1000px var(--s2) inset;
+  }
+  :global(#__next):has(.root) :global(.request-form) :global(.btn.btn-outline) {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--line-3) !important;
+  }
+  :global(#__next):has(.root) :global(.request-form) :global(.btn.btn-outline):hover {
+    background: var(--tint-2);
+    color: var(--ink);
+    border-color: var(--ink-3) !important;
+  }
+}
