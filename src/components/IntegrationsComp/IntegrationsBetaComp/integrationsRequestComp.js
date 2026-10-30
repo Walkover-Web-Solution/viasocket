@@ -150,7 +150,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, actionType,
 
     return (
         <div className="fixed inset-0 z-50 grid place-items-center overflow-hidden">
-            <div className="absolute inset-0 bg-black/20" />
+            <div className="absolute inset-0 bg-black/20 request-form-scrim" />
 
             {showSuccessPopup && (
                 <div className="modal-box max-w-md !p-4 shadow-2xl">
@@ -354,7 +354,7 @@ export function RequestPlugin({ appInfo, secondAppInfo = null, type, actionType,
 
 export default function IntegrationsRequestComp({ appInfo, secondAppInfo, type, actionType, pluginId, onClose }) {
     return (
-        <dialog open className="modal rounded-none">
+        <dialog open className="modal rounded-none request-form">
             <RequestPlugin
                 appInfo={appInfo}
                 secondAppInfo={secondAppInfo}
