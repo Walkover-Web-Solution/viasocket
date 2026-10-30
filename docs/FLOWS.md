@@ -1,7 +1,7 @@
 ---
 covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**"]
 verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+verified_on: 2026-10-30
 ---
 # User Flows & Critical Journeys
 
@@ -84,7 +84,7 @@ sequenceDiagram
 
 - **Signed in (`prod` cookie):** CTAs go to flow.viasocket.com through `handleRedirect` (new tab) instead of `/signup`.
 - **MCP pages (`/mcp/*`):** the navbar sends visitors to app.mushroom.viasocket.com/login with the app slug (or `'viasocket'`) as the source. Note that `/mcp` itself returns 308 to mushrooms.viasocket.com.
-- **Homepage-design Next pages** (`addToProduct`): the primary action is "Copy setup prompt" (`CopyPromptProvider`, clipboard with a select-by-hand fallback). On `/integrations/{app}` the prompt names the app (`src/components/IntegrationsComp/addToProduct/copy.js:promptFor`); on `/use-cases` a card copies its own prompt plus the setup prompt. These pages run inside the root layout, so `getUtmSource` capture and tracking still run, but no CTA on them writes `utmData` or tags `utm_source` (see [OPEN_QUESTIONS](OPEN_QUESTIONS.md) T-04).
+- **Homepage-design Next pages** (`addToProduct`): the primary action is "Copy setup prompt" (`CopyPromptProvider`, clipboard with a select-by-hand fallback). On `/integrations/{app}` the prompt names the app in its first sentence (`src/components/IntegrationsComp/addToProduct/copy.js:promptFor`); on `/use-cases` a card copies the setup prompt without the ask line, then `What I want to build: ` plus the card's prompt (`promptWithUseCase`). These pages run inside the root layout, so `getUtmSource` capture and tracking still run, but no CTA on them writes `utmData` or tags `utm_source` (see [OPEN_QUESTIONS](OPEN_QUESTIONS.md) T-04).
 - **Static homepage `/`:** it has **no** signup CTA, no UTM capture and no cookie code. Its links are absolute https://viasocket.com/... URLs, plus flow.viasocket.com/integrations. The primary action is "Copy setup prompt", which uses the clipboard.
 
 ### 5. Failure modes and footguns

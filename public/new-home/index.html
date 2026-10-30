@@ -333,13 +333,19 @@
 
 <a class="chat-fab" href="https://viasocket.com/support" data-chat aria-label="Chat with viaSocket support"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Chat</span></a>
 
-<p class="sr-only" id="promptText">Integrate apps into this product with viaSocket.
-Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
-Keep it there for next time; download it again if a call in it fails.
-My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
-Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's &quot;Finished when&quot; list.</p>
+<p class="sr-only" id="promptText">Install the viaSocket skill. Download this file exactly and save it as viasocket-integrations/SKILL.md wherever this project keeps skills or rules:
+https://beta-flow.viasocket.com/documentation/skill-install.md
+
+It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
+My viaSocket org_id is &lt;your org_id&gt; and project_id is &lt;your project_id&gt;: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
+If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://beta-flow.viasocket.com/documentation/skill.md?format=http instead.
+Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
+
+Ask me what I want to build first.
+When it works, show me what changed and what I can add next.</p>
 
 <script src="/new-home/assets/support.js?v=1" defer></script>
-<script src="/new-home/main.js?v=110"></script>
+<script src="/new-home/main.js?v=111"></script>
 </body>
 </html>

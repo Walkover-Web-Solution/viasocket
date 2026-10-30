@@ -67,16 +67,31 @@ export const COPY = {
     endTitle: 'Bring {appName} Into Your Product & Agents',
 };
 
-// The homepage's setup prompt (public/new-home/index.html #promptText).
-export const BASE_PROMPT = `Integrate apps into this product with viaSocket.
-Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
-Keep it there for next time; download it again if a call in it fails.
-My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
-Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's "Finished when" list.`;
+// The homepage's setup prompt (public/new-home/index.html #promptText). Keep the two copies identical.
+// Org and project stay placeholders: this site does not know a visitor's ids. /setup-prompt does, from the query.
+const ASK_LINE = 'Ask me what I want to build first.\n';
 
-/** The setup prompt for this app: the base prompt, naming the app in its first line. */
+export const BASE_PROMPT = `Install the viaSocket skill. Download this file exactly and save it as viasocket-integrations/SKILL.md wherever this project keeps skills or rules:
+https://beta-flow.viasocket.com/documentation/skill-install.md
+
+It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
+My viaSocket org_id is <your org_id> and project_id is <your project_id>: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
+If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://beta-flow.viasocket.com/documentation/skill.md?format=http instead.
+Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
+
+Ask me what I want to build first.
+When it works, show me what changed and what I can add next.`;
+
+/** Setup prompt for a card that already names the build: drop the ask line, then append that use case. */
+export function promptWithUseCase(useCase) {
+    const body = BASE_PROMPT.includes(ASK_LINE) ? BASE_PROMPT.replace(ASK_LINE, '') : BASE_PROMPT;
+    return `${body.replace(/\s+$/, '')}\nWhat I want to build: ${useCase}`;
+}
+
+/** The setup prompt for this app: the base prompt, naming the app in its first sentence. */
 export function promptFor({ name }) {
-    return BASE_PROMPT.replace('Integrate apps into', `Integrate ${name} into`);
+    return BASE_PROMPT.replace('Install the viaSocket skill.', `Install the viaSocket skill. Integrate ${name} into this product.`);
 }
 
 // The homepage header (public/new-home/index.html).

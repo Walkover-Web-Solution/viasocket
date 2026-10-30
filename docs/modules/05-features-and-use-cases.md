@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/features/**", "src/app/use-cases/**", "src/app/new-direction/**", "src/app/lib/feature-data.js", "src/app/components/features/**", "src/components/IntegrationsComp/addToProduct/FeaturesPage.js", "src/components/IntegrationsComp/addToProduct/FeatureGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js", "src/components/IntegrationsComp/addToProduct/featurePages.js", "src/components/IntegrationsComp/addToProduct/UseCasesPage.js", "src/components/IntegrationsComp/addToProduct/LetterPage.js", "src/components/IntegrationsComp/addToProduct/UseCaseGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureVisuals.js", "src/components/IntegrationsComp/addToProduct/SiteChrome.js", "src/components/IntegrationsComp/addToProduct/CopyPrompt.js", "src/components/IntegrationsComp/addToProduct/copy.js", "src/components/IntegrationsComp/addToProduct/addToProduct.module.scss"]
 verified_at: c4bed05f
-verified_on: 2026-10-27
+verified_on: 2026-10-30
 ---
 # Module: Features, Use Cases and the Founders' Letter
 
@@ -17,7 +17,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 
 ## Business Value
 - The letter is the repo's main **approved-direction** source for the integration-layer positioning (see [VISION](../VISION.md)). Changing its copy changes the stated product direction, so treat edits as product decisions.
-- Every screen leads with "Copy setup prompt", which sends the visitor's coding agent to flow.viasocket.com/documentation/skill.md (`src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT`). That is the funnel these pages serve. *Inferred* from the CTA order, since no metric is recorded ([OPEN_QUESTIONS P-02](../OPEN_QUESTIONS.md#active-questions-table)).
+- Every screen leads with "Copy setup prompt", which sends the visitor's coding agent to install the viaSocket skill from beta-flow.viasocket.com (`src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT`, the same text as the homepage `#promptText`). Org and project ids are placeholders. That is the funnel these pages serve. *Inferred* from the CTA order, since no metric is recorded ([OPEN_QUESTIONS P-02](../OPEN_QUESTIONS.md#active-questions-table)).
 
 ---
 
@@ -43,7 +43,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 
 ### 2. Use cases (`src/app/use-cases/page.js` → `src/components/IntegrationsComp/addToProduct/UseCasesPage.js:UseCasesPage`)
 - Sections: `FaqJsonLd`, `SiteHeader`, hero, `UseCaseGrid`, `FaqSection`, `SiteFooter`. There is no data fetch.
-- `src/components/IntegrationsComp/addToProduct/UseCaseGrid.js:UseCaseCard` copies `` `${c.prompt}\n\n${BASE_PROMPT}` `` when clicked. Cards come from `USECASES_COPY.cases` (14 entries); their app icons are URLs in the `ICONS` map in `copy.js`.
+- `src/components/IntegrationsComp/addToProduct/UseCaseGrid.js:UseCaseCard` copies `promptWithUseCase(c.prompt)` when clicked: the setup prompt without "Ask me what I want to build first.", then `What I want to build: ` plus the card's prompt. Cards come from `USECASES_COPY.cases` (14 entries); their app icons are URLs in the `APP_ICONS` map in `copy.js`.
 
 ### 3. Founders' letter (`src/app/new-direction/page.js` → `src/components/IntegrationsComp/addToProduct/LetterPage.js:LetterPage`)
 - Metadata sets `authors` and an `article` OpenGraph type whose image is the first author's photo (`LETTER_COPY.authors[0].photo`, under `public/new-home/assets/`).
