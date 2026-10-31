@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: c0c7f48b
-verified_on: 2026-10-30
+verified_at: 48f494d8
+verified_on: 2026-10-31
 ---
 # Product Vision & Strategic Direction
 
@@ -51,7 +51,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
   - **ICP and metrics** (P-02, proposed, Ankit to confirm): see [Target Audience](#target-audience--ideal-customer-profile-icp) and [Strategic Priorities](#strategic-priorities--success-measures).
   - **Pricing** (P-03, proposed): `/developers/pricing` is the canonical pricing page; `/pricing` sells the older workflow product and should either redirect or be rewritten.
   - **App count** (P-04, proposed, marketing to confirm 2,300+ vs 2,200+): use "2,300+ apps" everywhere, or tie all copy to the live count.
-  - **Homepage attribution** (T-04, proposed): "Start free" and "Log in" carry `utm_source=/`, and the homepage passes incoming `utm_*`/`gclid` to flow.viasocket.com; done in `viasocket-site` and exported.
+  - **Homepage attribution** (T-04): homepage calls to action carry `utm_source=a` or `utm_source=b` (`public/home-ab.js`). Still proposed: pass the visitor's incoming `utm_*`/`gclid` through to flow.viasocket.com. The Next header copies (`SiteHeader`) still send Start free with no `utm_source`.
   - **Title format** (U-05, proposed): "X | viaSocket" via a `title.template` of `%s | viaSocket`.
 - The public roadmap is hosted externally at roadmap.viasocket.com, linked from the homepage footer. No open branch or doc in the repo describes upcoming site work.
 - **Unknowns & Ambiguities:** listed at the end of this doc. The canonical list is in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md).
@@ -92,7 +92,7 @@ Older story, still live on most pages: no-code AI workflow automation with a lar
 These are the site's operating principles. Each one is backed by code, a commit, or an explicit statement from the user.
 
 1. **Search equity is an asset; preserve routes.** Existing URLs carry rankings and backlinks. When a page moves, add a permanent redirect in the admin list that `src/middleware.js` applies (fallback copy in `src/data/redirects.json`; `next.config.js` no longer has `redirects()`), and keep `src/app/sitemap.js` listing only final destinations (`7fd1dc19`). Production indexes; test must not. The `robots` value in `src/app/layout.js` is keyed on `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, and `src/app/robots.txt/route.js` disallows everything outside prod.
-2. **Attribution integrity beats convenience.** A page tags its own signups with its path as `utm_source`. A campaign page keeps its literal campaign tag (`INTERNAL_UTM_SOURCES` in `src/utils/handleUtmSource.js` includes `relay-switch-google-ads`). External attribution already in the `utmData` cookie is never overwritten: `src/utils/handleUtmSource.js:savePageUtmSource` refuses unless `isInternalUtmSource` passes. `utm_source` appears once in a signup URL. A typed prompt travels in `utmData`, never in the query string. Tracking runs in local, test and prod, and its rows carry `environment`. Mechanics are in [FLOWS.md](FLOWS.md) and [CONTRACTS.md](CONTRACTS.md).
+2. **Attribution integrity beats convenience.** A page tags its own signups with its path as `utm_source`. A campaign page keeps its literal campaign tag (`INTERNAL_UTM_SOURCES` in `src/utils/handleUtmSource.js` includes `relay-switch-google-ads`). Homepage versions are the other registered exception: their calls to action use `utm_source=a` or `utm_source=b`. External attribution already in the `utmData` cookie is never overwritten: `src/utils/handleUtmSource.js:savePageUtmSource` refuses unless `isInternalUtmSource` passes. `utm_source` appears once in a signup URL. A typed prompt travels in `utmData`, never in the query string. Tracking runs in local, test and prod, and its rows carry `environment`. Mechanics are in [FLOWS.md](FLOWS.md) and [CONTRACTS.md](CONTRACTS.md).
 3. **Make the smallest change that does the job.** The user reviews diffs closely and has reverted edits that went beyond the request, including one that ran a repo-wide formatter during a one-line fix. Surface anything else you notice; do not fix it unprompted.
 4. **Keep the codebase one idiom.** Port the design, content and behaviour of outside work, never its code. Use Tailwind first; a stylesheet needs a reason. Copy lives as constants in the component that renders it (`src/components/footer/NewFooter.js` shape). See [DESIGN.md](DESIGN.md).
 5. **Data-driven pages stay data-driven.** Integration, MCP, template, department and metadata content comes from table-api through `src/const/tables.js` and `src/utils/axiosCalls.js`, with errors reported through `src/utils/SendErrorMessage.js:sendErrorMessage`. Endpoints come from env vars. Do not hardcode content or endpoints to "fix" a page.

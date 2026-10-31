@@ -1,6 +1,6 @@
 ---
 covers: ["src/const/tables.js", "src/const/fields.js", "src/utils/getData.js", "src/utils/axiosCalls.js", "src/utils/abTestVisitor.js", "src/app/lib/**"]
-verified_at: 3662e484
+verified_at: 497335b1
 verified_on: 2026-10-31
 ---
 # Database — table-api entities
@@ -115,7 +115,7 @@ Rows written by older tracker versions (no `profileVersion`) are converted by `r
 ---
 
 ## Cross-System References
-- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it. The lookup also filters `environment`, which is what keeps a test visit off a production row. Homepage version B is a `page_data` event with `path` `/home-b`.
+- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it. The lookup also filters `environment`, which is what keeps a test visit off a production row. Homepage version B is a `page_data` event with `path` `/` and `variant` `B`. Rows from before both versions were served at `/` used `path` `/home-b`.
 - **`mergedInto` → `rowid`.** A merged row points at the surviving row inside its `name` JSON; not a foreign key.
 - **`utm_source` ↔ MSG91 `state`.** `utmdata` / `firstUtm` record what the visitor arrived with; the same `utmData` cookie is what `setUtmSource()` passes to MSG91 as `state` at signup. Joining a tracking row to a signup is only possible through that value; no id crosses over ([third-party-services.md](../current-infrastructure/third-party-services.md)).
 - **`appslugname` ↔ plug service.** `DOFOLLOWLINK.appslugname`, `USECASES.slugname`, `SINGLEAPPINTEGRATIONDATA.app_slug`, `MCP.slug_names` and video/blog `tags` hold plug service app slugs; `CATEGORY.slug` matches plug service categories ([plug-service.md](../current-infrastructure/plug-service.md)). A renamed slug in the plug service silently orphans these rows.

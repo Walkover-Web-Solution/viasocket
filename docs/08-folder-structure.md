@@ -1,6 +1,6 @@
 ---
 covers: ["src/**", "public/**", "parked/llms.txt", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
-verified_at: d8f8d571
+verified_at: 497335b1
 verified_on: 2026-10-31
 ---
 # 08 Folder Structure
@@ -76,9 +76,9 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | Homepage-design page or piece | `src/components/IntegrationsComp/addToProduct/` | Only for pages in that design. Its shared `copy.js` and SCSS module are an exception to AGENTS rule 14, so don't copy the pattern elsewhere (U-07). |
 | `/developers` piece | `src/app/developers/**` | No `@/` imports, only its own tokens and copy ([DESIGN](DESIGN.md)). |
 | Homepage (`/`) change or asset | `public/new-home/index.html`, `styles.css`, `main.js`, `public/new-home/assets/` | Never `src/app/page.js` (AGENTS rule 3). Reference assets as `/new-home/assets/…`, and bump the `?v=` query on `styles.css`/`main.js` after editing them ([14-performance](14-performance.md#rendering)). The `viasocket-site` export must keep the `/home-ab.js` script tag. |
-| Homepage version B | `public/home-b/index.html`, `public/home-ab.js` | Homepage only. `/home-b` rewrites to the file. Do not apply this layout to other routes ([01-homepage](modules/01-homepage.md)). |
+| Homepage version B | `public/home-b/index.html`, `public/home-ab.js` | Homepage only. Middleware rewrites `/` to the file for variant B and redirects `/home-b` to `/`. Do not apply this layout to other routes ([01-homepage](modules/01-homepage.md)). |
 | Image for a React page | `public/assets/<kind>/` | `next/image` does not optimize, so compress the file first ([14-performance](14-performance.md#rendering)). |
-| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds `/home` and the crawler redirect from `/home-b`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds `/home` and the redirect from `/home-b` to `/`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
 | Middleware experiment client | `src/utils/mwExperiment.js` | One module. A page imports `mwVariant` and `mwSend`. Do not copy the snippet into a layout or into `public/new-home/`, and do not send an event until a page runs an experiment. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments). |

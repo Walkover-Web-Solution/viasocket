@@ -1,11 +1,11 @@
 /* Homepage A/B split. Loaded by public/new-home/index.html (version A) and
    public/home-b/index.html (version B). Untranspiled ES5, same as TrackingCookies.
 
-   The CDN caches one copy of "/", so the coin flip cannot happen on the server.
-   This script assigns the variant cookie before the body paints and, for B,
-   navigates to /home-b. Bots stay on A. The cookie is the same `variant` cookie
-   the rest of the site already uses (src/const/abTest.js), on .viasocket.com,
-   so a return visit and flow.viasocket.com both see it. */
+   Middleware already chose the document and the address bar stays "/". This
+   script does not navigate. It writes the variant cookie for the page that was
+   served, because a cache in front of the origin can strip the Set-Cookie
+   header (ADR-007). Bots are not counted. The cookie is the same `variant`
+   cookie the rest of the site already uses (src/const/abTest.js). */
 (function () {
     'use strict';
 
@@ -90,51 +90,43 @@
         return id;
     }
 
-    function assignVariant() {
-        var current = readCookie('variant');
-        if (VARIANTS.indexOf(current) === -1) {
-            var mirrored = '';
-            try {
-                mirrored = localStorage.getItem(VARIANT_KEY) || '';
-            } catch (e) {}
-            current = VARIANTS.indexOf(mirrored) !== -1 ? mirrored : VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-            writeCookie('variant', current, VARIANT_MAX_AGE);
-        }
-        try {
-            localStorage.setItem(VARIANT_KEY, current);
-        } catch (e2) {}
-        return current;
+    // The served file is the version. A missing mark is version A, which is also
+    // what an export of public/new-home looks like if it drops the attribute.
+    function renderedVariant() {
+        var mark = document.documentElement.getAttribute('data-hp');
+        return mark === 'B' ? 'B' : 'A';
     }
 
-    function go(url) {
-        document.documentElement.style.visibility = 'hidden';
-        location.replace(url);
+    // ?variant=a|b is a checking tool on test and local only. Production ignores it.
+    function queryVariant() {
+        var host = location.hostname;
+        if (host !== 'test.viasocket.com' && host !== 'localhost' && host !== '127.0.0.1') return '';
+        try {
+            var raw = (new URLSearchParams(location.search).get('variant') || '').trim().toLowerCase();
+            return raw === 'a' || raw === 'b' ? raw.toUpperCase() : '';
+        } catch (e) {
+            return '';
+        }
     }
 
     function boot() {
         var path = pathName();
-        var onHome = path === '/' || path === '/home-b';
-        if (!onHome) return null;
-
-        var bot = BOT.test(navigator.userAgent || '');
-        if (bot) {
-            if (path === '/home-b') go('/' + location.search + location.hash);
-            return null;
-        }
+        if (path !== '/' && path !== '/home-b') return null;
+        if (BOT.test(navigator.userAgent || '')) return null;
 
         ensureVisitorId();
-        var variant = assignVariant();
-        var tail = location.search + location.hash;
-
-        if (path === '/' && variant === 'B') {
-            go('/home-b' + tail);
-            return null;
-        }
-        if (path === '/home-b' && variant !== 'B') {
-            go('/' + tail);
-            return null;
-        }
-        return variant;
+        var forced = queryVariant();
+        var current = forced || readCookie('variant');
+        // The edge set this on the response. When that header was stripped, the
+        // page that arrived is the assignment, and document.cookie is what
+        // reaches the browser. A valid cookie is left alone, so one cached
+        // document cannot overwrite the visitor's version.
+        if (VARIANTS.indexOf(current) === -1) current = renderedVariant();
+        if (forced || readCookie('variant') !== current) writeCookie('variant', current, VARIANT_MAX_AGE);
+        try {
+            localStorage.setItem(VARIANT_KEY, current);
+        } catch (e) {}
+        return current;
     }
 
     function utmData() {
@@ -223,15 +215,72 @@
         return 'hero';
     }
 
-    function stamp(variant) {
-        var links = document.querySelectorAll('a[href*="flow.viasocket.com"]');
-        for (var i = 0; i < links.length; i++) {
-            try {
-                var url = new URL(links[i].getAttribute('href'), location.origin);
-                url.searchParams.set('hp_variant', variant);
-                links[i].href = url.toString();
-            } catch (e) {}
+    function linkText(link) {
+        return (link.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    }
+
+    function samePage(href) {
+        if (!href || href.charAt(0) === '#') return true;
+        try {
+            var url = new URL(href, location.href);
+            return url.origin === location.origin && url.pathname === location.pathname && url.search === location.search;
+        } catch (e) {
+            return true;
         }
+    }
+
+    function isFlowHost(url) {
+        return url.hostname === 'flow.viasocket.com';
+    }
+
+    function isSignupPath(url) {
+        var path = url.pathname || '/';
+        if (path.length > 1 && path.charAt(path.length - 1) === '/') path = path.slice(0, -1);
+        return url.origin === location.origin && path === '/signup';
+    }
+
+    // Version tags go on calls to action that open another page. Anchors and
+    // copy buttons stay as they are. Other query parameters are left in place.
+    function isVersionCta(link, url) {
+        if (link.hasAttribute && link.hasAttribute('data-copy')) return false;
+        if (samePage(link.getAttribute('href'))) return false;
+        var text = linkText(link);
+        if (text.indexOf('start free') !== -1) return true;
+        if (text.indexOf('log in') !== -1 || text.indexOf('login') !== -1) return true;
+        if (text.indexOf('sign up') !== -1 || text.indexOf('signup') !== -1) return true;
+        if (text.indexOf('talk to an expert') !== -1) return true;
+        if (text.indexOf('book a demo') !== -1) return true;
+        if (link.tagName === 'A' && text.indexOf('setup prompt') !== -1) return true;
+        var inBar = link.closest && (link.closest('nav') || link.closest('header') || link.closest('aside') || link.closest('.mbar') || link.closest('footer'));
+        if (inBar && (isFlowHost(url) || isSignupPath(url))) return true;
+        if (link.tagName === 'A' && link.closest && (link.closest('.ctas') || link.closest('.vt-f-alt'))) return true;
+        return false;
+    }
+
+    function stampLink(link, variant) {
+        var raw = link.getAttribute('href');
+        if (!raw || raw.charAt(0) === '#') return;
+        var url;
+        try {
+            url = new URL(raw, location.origin);
+        } catch (e) {
+            return;
+        }
+        var changed = false;
+        if (isFlowHost(url)) {
+            url.searchParams.set('hp_variant', variant);
+            changed = true;
+        }
+        if (isVersionCta(link, url)) {
+            url.searchParams.set('utm_source', variant === 'B' ? 'b' : 'a');
+            changed = true;
+        }
+        if (changed) link.href = url.toString();
+    }
+
+    function stamp(variant) {
+        var links = document.querySelectorAll('a[href]');
+        for (var i = 0; i < links.length; i++) stampLink(links[i], variant);
     }
 
     function bind(variant) {
@@ -239,7 +288,15 @@
             var node = event.target;
             if (node && node.nodeType === 3) node = node.parentNode;
             var link = node && node.closest ? node.closest('a') : null;
-            if (!link || !link.href || link.href.indexOf('flow.viasocket.com') === -1) return;
+            if (!link) return;
+            stampLink(link, variant);
+            if (!link.href || link.href.indexOf('flow.viasocket.com') === -1) {
+                var signup = false;
+                try {
+                    signup = isSignupPath(new URL(link.href));
+                } catch (e) {}
+                if (!signup) return;
+            }
             var kind = authKind(link);
             if (!kind) return;
             var session = touchSession(true);
@@ -280,30 +337,10 @@
         bind(variant);
     }
 
-    window.addEventListener('pageshow', function (event) {
-        try {
-            var path = pathName();
-            if (path !== '/' && path !== '/home-b') return;
-            var shown = readCookie('variant');
-            var onB = path === '/home-b';
-            var wantsB = shown === 'B';
-            if (onB === wantsB) {
-                document.documentElement.style.visibility = '';
-                return;
-            }
-            // Back/forward can restore the other version from the cache, still
-            // hidden from the redirect that left it. Send them to their version.
-            if (event.persisted || document.documentElement.style.visibility === 'hidden') {
-                go((wantsB ? '/home-b' : '/') + location.search + location.hash);
-            }
-        } catch (e) {}
-    });
-
     var variant;
     try {
         variant = boot();
     } catch (e) {
-        document.documentElement.style.visibility = '';
         variant = null;
     }
     if (!variant) return;

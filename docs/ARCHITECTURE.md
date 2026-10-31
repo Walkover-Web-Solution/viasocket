@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 3662e484
+verified_at: 497335b1
 verified_on: 2026-10-31
 ---
 # Architecture & Mental Model
@@ -93,16 +93,16 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
 
 1. **Cloudflare zone.** A zone cache rule lives outside the repo (see [DECISIONS](DECISIONS.md)). Production `/` is publicly cached for 3 hours ([14-performance](14-performance.md#known-hot-paths)), so check behaviour on production, not only on a local build.
 2. **`public/_redirects`.** One `/faq/*` rule. `/faq` itself is answered by another deployment.
-3. **`next.config.js` `redirects()`.** There is no `redirects()` function. Redirects are the middleware's job. The file still has the `beforeFiles` rewrites of `/` and `/home-b`, and the feedback `afterFiles` rewrites.
+3. **`next.config.js` `redirects()`.** There is no `redirects()` function. Redirects are the middleware's job. The file still has the `beforeFiles` fallback of `/` to version A, and the feedback `afterFiles` rewrites.
 4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot, and skips `/og/...`. Middleware does three things:
    - It applies the admin redirect list (`/api/public/redirects`, else `src/data/redirects.json`) and returns that status with an empty body. That is why `src/app/embed/page.js`, `src/app/mcp/page.js` and `src/app/home/page.js` never render. On production and test (2026-10-29) bare `/embed` is **301 to `/`**, not an alias of `/developers`. The fallback file still says 308 to `/developers`, which is not what those hosts return while the admin is reachable. Sub-routes such as `/embed/app-integration` and `/mcp/[...slug]` still render.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
-5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html`. `/home-b` maps to `/home-b/index.html` (a file in `public/` is not served at the directory URL on its own). Production shows `x-matched-path: /new-home/index.html` for `/`.
+5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html` when middleware does not rewrite it. Middleware rewrites `/` to `/new-home/index.html` or `/home-b/index.html` and redirects `/home-b` to `/`. The browser URL stays `/`.
 6. **Filesystem.** This covers `public/**` and the App Router routes. The `afterFiles` rewrites map `/feedback-satisfied` and `/feedback-unsatisfied` to `/feedback?variant=…`.
 
 > [!WARNING]
-> Middleware's `/` branch sets `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. Its comment still says the homepage renders from the variant cookie. That stopped being true when `/` became static (commit `1f911f58`). Production `/` is publicly cached for 3 hours anyway. Do not trust this branch to keep anything out of the cache.
+> Middleware's `/` branch sets `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`, and rewrites the document from the `variant` cookie. Production `/` is still publicly cached for 3 hours by the zone rule (D-10). A hit skips middleware and replays one version. Test does not have that rule.
 
 ### Why `export const runtime = 'edge'` is everywhere
 
@@ -115,7 +115,7 @@ Every `page.js` and route handler that is not static exports `runtime = 'edge'`.
 
 ## Entry Points & Bootstrap Sequence
 
-**Static homepage (`/`).** Version A is `public/new-home/index.html`, `public/new-home/main.js` and `public/new-home/styles.css`. Version B is `public/home-b/index.html`. Both are plain HTML and ES5 JavaScript. A loads its own GTM snippet (`GTM-THTCRSLN`), canonical tag and JSON-LD; B does the same and is `noindex` with a canonical of `/`. Neither loads `src/app/layout.js`, `src/scss/global.scss`, Tailwind, Zaraz, `TrackingCookies` or `VariantTracker`. Both load `public/home-ab.js` (the 50/50 split) and the gtwy.ai chat through `public/new-home/assets/support.js` (opened by `[data-chat]` buttons). `home-ab.js` posts the homepage view and the Start free / Log in clicks to `/api/track-variant`. A's links stay absolute paths on this site; the script adds `hp_variant` to every flow.viasocket.com link on both versions.
+**Static homepage (`/`).** Version A is `public/new-home/index.html`, `public/new-home/main.js` and `public/new-home/styles.css`. Version B is `public/home-b/index.html`. Both are plain HTML and ES5 JavaScript. A loads its own GTM snippet (`GTM-THTCRSLN`), canonical tag and JSON-LD; B does the same and is `noindex` with a canonical of `/`. Neither loads `src/app/layout.js`, `src/scss/global.scss`, Tailwind, Zaraz, `TrackingCookies` or `VariantTracker`. Both load `public/home-ab.js` (the 50/50 split) and the gtwy.ai chat through `public/new-home/assets/support.js` (opened by `[data-chat]` buttons). `home-ab.js` posts the homepage view and the Start free / Log in clicks to `/api/track-variant`. It does not change the address bar. A's links stay absolute paths on this site; the script adds `hp_variant` to every flow.viasocket.com link on both versions, and `utm_source=a` or `utm_source=b` to each call to action that opens another page. Those tags are on the links, not on the page URL.
 
 **Unused React homepage.** `src/app/page.js` (A/B variants A and B, with B rendering `src/app/front-page/IndexPageContent.js`) and `src/app/home/page.js` (with `src/app/components/new-home/*`) still compile, but neither is reachable. Whether to keep them is open. Do not delete them ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)).
 
