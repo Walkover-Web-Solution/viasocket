@@ -291,7 +291,7 @@ export async function getCombos(pageInfo, pageUrl) {
 
 export async function fetchPluginData(slug, pageUrl) {
     let data = null;
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}&includeInactive=true`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}`;
     try {
         const response = await axiosWithCache.get(url, {
             cache: {

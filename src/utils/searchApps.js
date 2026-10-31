@@ -1,7 +1,7 @@
 import { sendErrorMessage } from './SendErrorMessage';
 
 export default async function searchApps(query) {
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?key=${query}&integrationOnly=true&includeInactive=true`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?key=${query}&integrationOnly=true`;
 
     try {
         const response = await fetch(url);
