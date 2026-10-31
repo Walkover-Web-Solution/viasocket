@@ -89,6 +89,8 @@ Version A and version B both call `POST /api/track-variant` from `public/home-ab
 
 Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `f5bfbc6a`). That file is not served. B is homepage-only: every other route keeps its own header.
 
+In B's "Plug in viaSocket, and your app or agent can act in 2,300+ apps." diagram, the middle viaSocket card uses the neutral surface (`--s3` background, a 1px `--line-3` border, no shadow) and the logo in `--ink`. Those tokens are `#ececea` / `rgba(17,17,19,.24)` / `#111113` in light mode and `#1d1d20` / `rgba(255,255,255,.26)` / `#f1efe9` in dark mode. The two neighbouring cards are unchanged.
+
 `/` is cached as one document, so the server cannot pick the version. `public/home-ab.js` runs before the body paints:
 
 1. A crawler (the same user-agent test as `src/utils/isBot.js`) stays on A. Middleware also 302s a crawler that requests `/home-b` back to `/`. `/home-b` sends `noindex` and its canonical is `/`.
@@ -103,13 +105,17 @@ Placeholders in the mockup point at the live homepage's destination. The footer'
 
 ### Carrying the version to signup
 
-Start free and Log in on both homepages go to flow.viasocket.com and never open `/signup`. Both homepages add `hp_variant=A` or `hp_variant=B` to every such link, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly). A registration that finishes there, or that leaves `/signup` before this site sees a response, is stored only if that app records the version. What this site does store is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
+Start free and Log in on both homepages go to flow.viasocket.com and never open `/signup`. Both homepages add `hp_variant=A` or `hp_variant=B` to every such link, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly).
+
+`public/home-ab.js` also sets `utm_source` on every call to action that opens another page: `a` on version A, `b` on version B. That covers Start free, Log in, Talk to an expert, Book a demo, a setup-prompt link that opens a page, nav and footer links to flow.viasocket.com or `/signup`, and the closing buttons. Query parameters already on the link stay; `utm_source` is set to the version. Anchors and copy buttons are left alone. `a` and `b` are in `INTERNAL_UTM_SOURCES`, so a later page can still overwrite them. The homepage does not write the `utmData` cookie. `utmData()` on the tracking event still reads only the `utm_*` query on the page the visitor opened.
+
+A registration that finishes on flow.viasocket.com, or that leaves `/signup` before this site sees a response, is stored only if that app records the version. It can read `utm_source` or `hp_variant` from the arrival URL. What this site does store is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
 
 ### Reading visitors, signup clicks and signups per version
 
 Stored in the A/B table `tbla8b06r` (database `65c4c053a3fad7804af5bba8`), one row per visitor **per environment**. Always filter `environment` (`production`, `test` or `local`). There is no DELETE.
 
-For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. A completed signup this site saw is `event` `signup_completed` (the version is the `variant` on that event, the homepage version held in the cookie when `/signup` saw the response). Group those by `variant` and `timestamp` the same way.
+For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. Each of those events stores `variant` (`A` or `B`) and a `destination_url` whose `utm_source` is `a` or `b`. The event's `utmData` is still the landing URL's `utm_*`, not the version tag. A completed signup this site saw is `event` `signup_completed` (the version is the `variant` on that event, the homepage version held in the cookie when `/signup` saw the response). Group those by `variant` and `timestamp` the same way.
 
 All-time totals, not sliced by date, also sit on the row: `name.homeSessions` and `name.views.home` (homepage visits), `name.variantViews` (views by version; only homepage views are written), `name.signupClicks`, `name.loginClicks`, `name.signupCompletions`, and the `signup` column (`completed_signups` is the all-time completion count, with `last_variant`). `varient` is the first version stored for that visitor, not a per-day count.
 
@@ -117,7 +123,7 @@ A visitor who was active long enough to push an event out of the 100-event windo
 
 `/signup` (`CustomLoginOptimized`) records one `signup_completed` when the MSG91 widget's POST to a URL containing `/c/register` returns HTTP 2xx and the body is not `hasError`. The widget `success` callback is not that signal: the register-and-redirect path never calls it, and some logins do. That count is readable from this table without the signup app.
 
-Still invisible here, so still a signup-app job: homepage Start free and Log in, which go to flow.viasocket.com and never hit `/signup`, and Google, Apple, or any other path that leaves `/signup` before a `/c/register` response. That app must read `hp_variant` (`A` or `B`) from the arrival URL, or the `variant` cookie on `.viasocket.com` when the query param is absent, and store it on the new account.
+Still invisible here, so still a signup-app job: homepage Start free and Log in, which go to flow.viasocket.com and never hit `/signup`, and Google, Apple, or any other path that leaves `/signup` before a `/c/register` response. That app must read `utm_source` (`a` or `b`) or `hp_variant` (`A` or `B`) from the arrival URL, or the `variant` cookie on `.viasocket.com` when the query param is absent, and store it on the new account. Signup clicks per version are already on this table, from `variant` and from `destination_url`.
 
 ---
 
@@ -134,7 +140,7 @@ Still invisible here, so still a signup-app job: homepage Start free and Log in,
 ---
 
 ## Development Tasks (Open Items)
-- [ ] Tag "Start free" and "Log in" with `utm_source=/` and pass incoming `utm_*`/`gclid` to flow.viasocket.com (T-04, proposed; change it in `viasocket-site` and export). Today, UTMs that land on `/` are lost.
+- [ ] Pass incoming `utm_*` and `gclid` from the homepage through to flow.viasocket.com (the rest of T-04). Homepage calls to action already carry `utm_source=a` or `utm_source=b`. The Next `SiteHeader` pages still send Start free with no `utm_source`.
 - [ ] Retire the dormant Next homepage tree once the new homepage has run stably for a few weeks, together with the middleware `no-store` branch for `/` once the Cloudflare rule respects origin headers ([OPEN_QUESTIONS C-01](../OPEN_QUESTIONS.md#c-01-the-old-homepage-tree-still-builds-but-never-renders), C-05, D-10).
 - [ ] Confirm the app count: the proposed figure is "2,300+" everywhere ([OPEN_QUESTIONS P-04](../OPEN_QUESTIONS.md)).
 - [x] This design system is the target for the rest of the site (U-01, decided; [DECISIONS ADR-016](../DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).

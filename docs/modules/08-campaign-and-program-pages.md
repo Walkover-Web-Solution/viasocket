@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/migration/**", "src/app/lifetime-deal/**", "src/app/black-friday-sale/**", "src/app/components/black-friday-sale/**", "src/app/webinar/**", "src/app/components/webinar/**", "src/app/free-access-programs/**", "src/app/experts-are-live/**", "src/app/departments/**", "src/app/components/department/**", "src/app/lib/lifetime-deal-data.js", "src/app/lib/black-friday-sale-data.js", "src/app/lib/webinar-data.js", "src/app/lib/department-data.js", "src/app/privacy/**", "src/app/terms/**", "src/app/data-deletion-policy/**", "src/app/data-retention-deletion/**"]
 verified_at: 6a557025
-verified_on: 2026-10-26
+verified_on: 2026-10-31
 ---
 # Module: Campaign, Program and Static Pages
 
@@ -41,7 +41,7 @@ Self-contained landing pages for paid campaigns and offers (migration, lifetime 
 | `/lifetime-deal`, `/webinar`, `/experts-are-live` | none to signup | n/a | Stripe, registration links, cal.id |
 
 > [!WARNING]
-> `zapier-migration`, `n8n-migration`, `programs` and `departments/<slug>` are neither path-shaped nor in `INTERNAL_UTM_SOURCES` (`src/utils/handleUtmSource.js`; only `relay-switch-google-ads` is). Once one of them is in the cookie, later `savePageUtmSource` calls cannot overwrite it for a day. That lock is wanted for campaign tags but probably not for `departments/<slug>` (*inferred*). This is the same issue as [OPEN_QUESTIONS T-07](../OPEN_QUESTIONS.md#active-questions-table). The migration CTAs also **drop** any external UTMs and prompt already in the cookie ([FLOWS](../FLOWS.md#3-how-each-entry-point-reaches-signup)).
+> `zapier-migration`, `n8n-migration`, `programs` and `departments/<slug>` are neither path-shaped nor in `INTERNAL_UTM_SOURCES` (`src/utils/handleUtmSource.js`; the list is `home-A`, `home-B`, `a`, `b` and `relay-switch-google-ads`). Once one of them is in the cookie, later `savePageUtmSource` calls cannot overwrite it for a day. That lock is wanted for campaign tags but probably not for `departments/<slug>` (*inferred*). This is the same issue as [OPEN_QUESTIONS T-07](../OPEN_QUESTIONS.md#active-questions-table). The migration CTAs also **drop** any external UTMs and prompt already in the cookie ([FLOWS](../FLOWS.md#3-how-each-entry-point-reaches-signup)).
 
 > [!WARNING]
 > Zapier and n8n define `gtag_report_conversion` inline but nothing calls it, so no Ads conversion fires from those pages' CTAs (*observed*: no caller in `src/`).

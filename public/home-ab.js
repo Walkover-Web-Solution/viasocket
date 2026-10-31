@@ -223,15 +223,72 @@
         return 'hero';
     }
 
-    function stamp(variant) {
-        var links = document.querySelectorAll('a[href*="flow.viasocket.com"]');
-        for (var i = 0; i < links.length; i++) {
-            try {
-                var url = new URL(links[i].getAttribute('href'), location.origin);
-                url.searchParams.set('hp_variant', variant);
-                links[i].href = url.toString();
-            } catch (e) {}
+    function linkText(link) {
+        return (link.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+    }
+
+    function samePage(href) {
+        if (!href || href.charAt(0) === '#') return true;
+        try {
+            var url = new URL(href, location.href);
+            return url.origin === location.origin && url.pathname === location.pathname && url.search === location.search;
+        } catch (e) {
+            return true;
         }
+    }
+
+    function isFlowHost(url) {
+        return url.hostname === 'flow.viasocket.com';
+    }
+
+    function isSignupPath(url) {
+        var path = url.pathname || '/';
+        if (path.length > 1 && path.charAt(path.length - 1) === '/') path = path.slice(0, -1);
+        return url.origin === location.origin && path === '/signup';
+    }
+
+    // Version tags go on calls to action that open another page. Anchors and
+    // copy buttons stay as they are. Other query parameters are left in place.
+    function isVersionCta(link, url) {
+        if (link.hasAttribute && link.hasAttribute('data-copy')) return false;
+        if (samePage(link.getAttribute('href'))) return false;
+        var text = linkText(link);
+        if (text.indexOf('start free') !== -1) return true;
+        if (text.indexOf('log in') !== -1 || text.indexOf('login') !== -1) return true;
+        if (text.indexOf('sign up') !== -1 || text.indexOf('signup') !== -1) return true;
+        if (text.indexOf('talk to an expert') !== -1) return true;
+        if (text.indexOf('book a demo') !== -1) return true;
+        if (link.tagName === 'A' && text.indexOf('setup prompt') !== -1) return true;
+        var inBar = link.closest && (link.closest('nav') || link.closest('header') || link.closest('aside') || link.closest('.mbar') || link.closest('footer'));
+        if (inBar && (isFlowHost(url) || isSignupPath(url))) return true;
+        if (link.tagName === 'A' && link.closest && (link.closest('.ctas') || link.closest('.vt-f-alt'))) return true;
+        return false;
+    }
+
+    function stampLink(link, variant) {
+        var raw = link.getAttribute('href');
+        if (!raw || raw.charAt(0) === '#') return;
+        var url;
+        try {
+            url = new URL(raw, location.origin);
+        } catch (e) {
+            return;
+        }
+        var changed = false;
+        if (isFlowHost(url)) {
+            url.searchParams.set('hp_variant', variant);
+            changed = true;
+        }
+        if (isVersionCta(link, url)) {
+            url.searchParams.set('utm_source', variant === 'B' ? 'b' : 'a');
+            changed = true;
+        }
+        if (changed) link.href = url.toString();
+    }
+
+    function stamp(variant) {
+        var links = document.querySelectorAll('a[href]');
+        for (var i = 0; i < links.length; i++) stampLink(links[i], variant);
     }
 
     function bind(variant) {
@@ -239,7 +296,15 @@
             var node = event.target;
             if (node && node.nodeType === 3) node = node.parentNode;
             var link = node && node.closest ? node.closest('a') : null;
-            if (!link || !link.href || link.href.indexOf('flow.viasocket.com') === -1) return;
+            if (!link) return;
+            stampLink(link, variant);
+            if (!link.href || link.href.indexOf('flow.viasocket.com') === -1) {
+                var signup = false;
+                try {
+                    signup = isSignupPath(new URL(link.href));
+                } catch (e) {}
+                if (!signup) return;
+            }
             var kind = authKind(link);
             if (!kind) return;
             var session = touchSession(true);
