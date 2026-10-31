@@ -8,6 +8,7 @@ import MainNavbar from './MainNavbar';
 // import MigratingBanner from './MigratingBanner';
 import Relay from './Relay';
 import WebinarBanner from '../webinar/WebinarBanner';
+import AnnouncementBar from './AnnouncementBar';
 
 // `track` is the stable name each item reports as. It is spelled out rather than
 // derived from `name` so renaming the label in the UI cannot quietly rename the
@@ -36,12 +37,13 @@ const navItems = [
     },
 ];
 
-export default function NavbarOptimized({ utm, hasToken = null }) {
+export default function NavbarOptimized({ utm, hasToken = null, announcements = null }) {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const mode = 'light';
-    // Every page except the two that already run their own banner in this slot.
-    const showWebinarBanner = utm !== '/index' && utm !== '/migration/relay' && utm !== '/webinar';
+    // The banner in this slot comes from the admin panel (Pages → Announcements). When the admin can't
+    // be reached, the webinar banner shows on every page except the ones that run their own.
+    const showWebinarBanner = !announcements && utm !== '/index' && utm !== '/migration/relay' && utm !== '/webinar';
     let borderClass;
     let backgroundClass;
     let textClass;
@@ -73,6 +75,7 @@ export default function NavbarOptimized({ utm, hasToken = null }) {
                         {/* {utm === '/index' && <MCPBanner />} */}
                         {/* {utm === '/index' && <MigratingBanner />} */}
                         {utm === '/migration/relay' && <Relay />}
+                        {announcements && <AnnouncementBar announcements={announcements} />}
                         {showWebinarBanner && <WebinarBanner />}
                         <TopNavLinks borderClass={borderClass} backgroundClass={backgroundClass} utm={utm} />
                     </div>
