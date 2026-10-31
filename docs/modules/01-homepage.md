@@ -46,7 +46,7 @@ verified_on: 2026-10-30
 | `#prompts` | Six sample-prompt buttons (`[data-pr]`) | copies the setup prompt without "Ask me what I want to build first.", then `What I want to build: ` plus the card's own sentence |
 | `#features` | "What viaSocket handles": a nine-row yes/no table, Book a demo | static |
 | `#faq` | Nine `<details>` items | static; the same Q&A is duplicated in the `FAQPage` JSON-LD in `<head>` |
-| `footer.ft` | Link groups, socials, G2/Capterra badges | static |
+| `footer.ft` | Link groups, socials, G2/Capterra badges. The Company column here does not yet include the "Explore more" link that `SiteFooter` has; add that link in `viasocket-site` and export, because this file is overwritten by the next export | static |
 | `.chat-fab` | Support chat button (`[data-chat]`, `href` /support) | `public/new-home/assets/support.js` opens the gtwy chat when it loaded, otherwise the link navigates |
 | `#promptText` | Hidden (`sr-only`) setup-prompt text. Org and project ids are the placeholders `<your org_id>` and `<your project_id>`: this page has no visitor ids to inject. Angle brackets are escaped in the HTML so they survive as text | `PROMPT = $('#promptText').textContent`. Every `[data-copy]` button (hero, features close, footer) copies that text alone |
 
