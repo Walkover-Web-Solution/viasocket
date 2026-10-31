@@ -1,11 +1,13 @@
 ---
-covers: ["public/new-home/**", "public/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
+verified_at: c0c7f48b
+verified_on: 2026-10-30
 ---
 # Product Vision & Strategic Direction
 
 This repository is the **marketing website for viaSocket**, served at the bare domain https://viasocket.com. It is not the product. Its job is to bring visitors in through search and campaigns, explain the product, and hand them off to the product app at https://flow.viasocket.com with their signup source recorded. viaSocket itself is a platform from Walkover Web Solutions Pvt Ltd. for connecting apps. At `17b99cd8` the site describes it in two ways at once: as an integration layer for SaaS products and AI agents (the homepage, `/developers`, `/integrations`, `/features`, `/use-cases` and the founders' letter at `/new-direction`), and as a no-code AI workflow automation tool (most other pages and `public/llms.txt`).
+
+`public/llms.txt` was replaced on 2026-10-30 with the integration-layer text, so the `17b99cd8` snapshot above is not the file served now. The previous directory is parked at `parked/llms.txt` and is not served.
 
 ## What This Site Is vs. What the Product Is
 
@@ -23,7 +25,7 @@ The site's jobs, in the order the code puts effort into them:
 1. **Rank in search.** Indexable, data-driven catch-all page families (`/integrations/...`, `/mcp/...`, `/automations/...`, `/departments/...`, `/features/...`), a native sitemap (`src/app/sitemap.js`) plus a backend sitemap, `public/llms.txt` for LLM crawlers, and JSON-LD on the homepage and root layout.
 2. **Convert.** CTAs send visitors either to `/signup` or straight to flow.viasocket.com. The source is recorded in the `utmData` cookie and in the `utm_source` parameter.
 3. **Run campaigns and programs.** Lifetime deal, Black Friday, Zapier/n8n/Relay migration, agency partners, experts, free-access programs and webinars.
-4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill.
+4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill. SDK emails also link to `/setup-prompt`, a noindex page that copies a keys or first-run prompt into that agent.
 
 ## Authoritative Sources & Status
 
@@ -37,13 +39,14 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
   - `/embed` redirects permanently to `/developers`, which is described as "the action layer for AI products" (`7fd1dc19`, `src/app/developers/page.js:generateMetadata`). Bare `/mcp` redirects permanently to mushrooms.viasocket.com.
   - Releases flow from a feature branch to `test` (test.viasocket.com) to `main` (viasocket.com). Both are hosted on Cloudflare Pages (see [DEVELOPMENT.md](DEVELOPMENT.md)).
   - The working rules listed under Core Principles, which come from the user's memory.
-  - **The integration layer is canonical everywhere** (P-01, decided, team answers to OPEN_QUESTIONS, 2026-10-22). Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions." Pages that still say workflow automation are out of date, not a second positioning: the root `metadata` in `src/app/layout.js`, `public/llms.txt` and `/pricing` are pending an update to match the homepage.
+  - **The integration layer is canonical everywhere** (P-01, decided, team answers to OPEN_QUESTIONS, 2026-10-22). Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions." Pages that still say workflow automation are out of date, not a second positioning: the root `metadata` in `src/app/layout.js` and `/pricing` are pending an update to match the homepage. `public/llms.txt` was replaced on 2026-10-30.
   - **The static homepage's design system is the target for the whole site** (U-01, decided): Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc ([DESIGN.md](DESIGN.md)).
   - **The homepage source of truth is outside this repo** (C-01 and D-03, decided): `public/new-home/` is exported from the `viasocket-site` repo (`variants/simple-bento`) by `deploy/export-to-viasocket-repo.py --prod` and pushed to `test`. The old Next homepage tree is kept as the rollback path (reverting merge `cfdae23e` on `main` restores the A/B homepage) until the new homepage has run stably for a few weeks.
 - **Current Implementation** (shipped at `17b99cd8`; the code does this, but no direction confirms it should stay):
-  - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `public/llms.txt` opens with "AI-powered automation platform … no-code workflows". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans.
+  - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `/pricing` sells workflow plans, while `/developers/pricing` sells task-metered "Action Layer" plans. `public/llms.txt` now describes the integration layer.
   - `src/app/page.js` and its A/B Index* components in `src/app/front-page/` are no longer what visitors see at `/`. See [DECISIONS.md](DECISIONS.md) and [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Do not delete them.
   - `/home` redirects to `/` in `src/middleware.js`, but it is still listed in `src/app/sitemap.js`.
+  - Bare `/embed` and bare `/developers` 301 to `/` on production and test (admin redirect list, checked 2026-10-29). That is not what [ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom) records, and not what `src/data/redirects.json` does for `/embed` (308 to `/developers`). See [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).
 - **Proposals & Roadmaps** (from the team answers to OPEN_QUESTIONS, 2026-10-22; each needs the named owner's yes before it counts as approved):
   - **ICP and metrics** (P-02, proposed, Ankit to confirm): see [Target Audience](#target-audience--ideal-customer-profile-icp) and [Strategic Priorities](#strategic-priorities--success-measures).
   - **Pricing** (P-03, proposed): `/developers/pricing` is the canonical pricing page; `/pricing` sells the older workflow product and should either redirect or be rewritten.
@@ -60,7 +63,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
 
 Audiences the copy addresses (evidence in parentheses):
 - **Developers building a SaaS product or an AI agent.** They want their users to connect third-party apps without building OAuth, mapping or webhooks themselves. They work in Cursor, Claude Code or Codex. (Homepage hero and FAQ; `/developers`; JSON-LD `applicationCategory: DeveloperApplication`.)
-- **Teams and operators automating business workflows without code.** (`public/llms.txt`; `/automations`; `/departments`; `/features/{slug}`; `/workflow-automation-ideas`.)
+- **Teams and operators automating business workflows without code.** (`/automations`; `/departments`; `/features/{slug}`; `/workflow-automation-ideas`.)
 - **People switching from another tool:** Zapier, n8n and Relay.app users (`src/app/migration/`). The Relay page carries its own paid-campaign tag.
 - **Deal buyers:** lifetime-deal and Black Friday visitors (`src/app/lifetime-deal/`, `src/app/black-friday-sale/`).
 - **Partners and service providers:** agencies, automation experts, billing partners and affiliates (`/agency-partner`, `/experts`, `/hire-an-expert`, links to `/help/partners`).
@@ -88,7 +91,7 @@ Older story, still live on most pages: no-code AI workflow automation with a lar
 
 These are the site's operating principles. Each one is backed by code, a commit, or an explicit statement from the user.
 
-1. **Search equity is an asset; preserve routes.** Existing URLs carry rankings and backlinks. When a page moves, add a permanent redirect in `next.config.js` (the `/embed`, `/mcp`, `/about` and `/department/*` pattern) and keep `src/app/sitemap.js` listing only final destinations (`7fd1dc19`). Production indexes; test must not. The `robots` value in `src/app/layout.js` is keyed on `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, and `src/app/robots.txt/route.js` disallows everything outside prod.
+1. **Search equity is an asset; preserve routes.** Existing URLs carry rankings and backlinks. When a page moves, add a permanent redirect in the admin list that `src/middleware.js` applies (fallback copy in `src/data/redirects.json`; `next.config.js` no longer has `redirects()`), and keep `src/app/sitemap.js` listing only final destinations (`7fd1dc19`). Production indexes; test must not. The `robots` value in `src/app/layout.js` is keyed on `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, and `src/app/robots.txt/route.js` disallows everything outside prod.
 2. **Attribution integrity beats convenience.** A page tags its own signups with its path as `utm_source`. A campaign page keeps its literal campaign tag (`INTERNAL_UTM_SOURCES` in `src/utils/handleUtmSource.js` includes `relay-switch-google-ads`). External attribution already in the `utmData` cookie is never overwritten: `src/utils/handleUtmSource.js:savePageUtmSource` refuses unless `isInternalUtmSource` passes. `utm_source` appears once in a signup URL. A typed prompt travels in `utmData`, never in the query string. Tracking runs in local, test and prod, and its rows carry `environment`. Mechanics are in [FLOWS.md](FLOWS.md) and [CONTRACTS.md](CONTRACTS.md).
 3. **Make the smallest change that does the job.** The user reviews diffs closely and has reverted edits that went beyond the request, including one that ran a repo-wide formatter during a one-line fix. Surface anything else you notice; do not fix it unprompted.
 4. **Keep the codebase one idiom.** Port the design, content and behaviour of outside work, never its code. Use Tailwind first; a stylesheet needs a reason. Copy lives as constants in the component that renders it (`src/components/footer/NewFooter.js` shape). See [DESIGN.md](DESIGN.md).

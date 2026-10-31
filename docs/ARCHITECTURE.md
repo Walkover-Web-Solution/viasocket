@@ -1,7 +1,7 @@
 ---
-covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
+verified_at: c0c7f48b
+verified_on: 2026-10-30
 ---
 # Architecture & Mental Model
 
@@ -93,9 +93,9 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
 
 1. **Cloudflare zone.** A zone cache rule lives outside the repo (see [DECISIONS](DECISIONS.md)). Production `/` is publicly cached for 3 hours ([14-performance](14-performance.md#known-hot-paths)), so check behaviour on production, not only on a local build.
 2. **`public/_redirects`.** One `/faq/*` rule. `/faq` itself is answered by another deployment.
-3. **`next.config.js` `redirects()`.** These run *before* middleware. Because of them, `src/app/embed/page.js` and `src/app/mcp/page.js` never render. Their sub-routes, such as `/embed/app-integration` and `/mcp/[...slug]`, still do.
-4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot. Middleware does three things:
-   - It redirects `/home` to `/` with a 307, so `src/app/home/page.js` never renders.
+3. **`next.config.js` `redirects()`.** There is no `redirects()` function. Redirects are the middleware's job. The file still has the `beforeFiles` rewrite of `/` and the feedback `afterFiles` rewrites.
+4. **`src/middleware.js:middleware`.** The matcher skips paths under _next/ and api/, and any path with a dot, and skips `/og/...`. Middleware does three things:
+   - It applies the admin redirect list (`/api/public/redirects`, else `src/data/redirects.json`) and returns that status with an empty body. That is why `src/app/embed/page.js`, `src/app/mcp/page.js` and `src/app/home/page.js` never render. On production and test (2026-10-29) bare `/embed` is **301 to `/`**, not an alias of `/developers`. The fallback file still says 308 to `/developers`, which is not what those hosts return while the admin is reachable. Sub-routes such as `/embed/app-integration` and `/mcp/[...slug]` still render.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
 5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html`. Production shows `x-matched-path: /new-home/index.html` for `/`.
@@ -167,6 +167,7 @@ Every `page.js` and route handler that is not static exports `runtime = 'edge'`.
 | Route-scoped components (newer) | `src/app/components/**` | Created in the App Router migration (`9a178617`, 2025-12-31): navbar, home sections, per-page client halves named *Client.js, tracking | props | `src/components/**`, `src/utils/*` | `src/app/lib/*` |
 | Developers sub-app | `src/app/developers/**` | `/developers`, `/developers/auth`, `/developers/docs`, `/developers/pricing` | constants in its own files | its own files only | `@/` imports (it has none today) |
 | Tracking | `src/app/components/VariantTracker/`, `src/utils/trackVisitor.js`, `src/utils/abTestVisitor.js`, `src/app/api/track-variant/route.js` | Visitor/variant cookies, view and click reporting | cookies, `localStorage` | `src/utils/axiosCalls.js` | page data |
+| Middleware experiments | `src/utils/mwExperiment.js` | Local variant assignment and fire-and-forget exposure/conversion events. No experiment runs until a page calls it. | `localStorage` `mw_visitor` | nothing in `src/` | the visitor table, `axiosCalls.js`, page data |
 
 Where a new file of each kind goes is in [08-folder-structure](08-folder-structure.md#placement-rules).
 
@@ -206,7 +207,8 @@ Four layers apply: the Cloudflare zone cache (production only), the in-memory `a
 | Attribution | `utmData` cookie (`src/utils/handleUtmSource.js`) on `.viasocket.com`, 1 day | Survives navigation and reaches the signup app | Written only when absent, except internal sources (see [FLOWS](FLOWS.md)) |
 | Auth hint | `prod` cookie (set by the product app) read by `getHasToken` / `NavbarServer` | Product session | Read-only here |
 | Tracking identity | `variant` cookie (30 d), `visitor_id` cookie (1 y) mirrored to `localStorage` `vs_visitor`, `vs_session` (30 min idle), `rdt_cid` cookie (30 d) | See left | `TrackingCookies` restores a lost `visitor_id` from the mirror |
-| URL state | `searchParams` in `/integrations`, `/signup`, `/feedback` | Bookmarkable | Navigation |
+| Middleware experiment id | `localStorage` `mw_visitor` (`src/utils/mwExperiment.js`) | This browser, until storage is cleared | Not the `visitor_id` cookie. No server copy. Module state is per browser page, never a shared server isolate. |
+| URL state | `searchParams` in `/integrations`, `/signup`, `/feedback`. `/setup-prompt` reads `for`, `org`, `project` and `name` in the browser only | Bookmarkable | Navigation. The setup-prompt query is not sent to visit tracking or the Reddit page-visit body |
 
 ## A/B Testing & Visitor Tracking
 
@@ -220,6 +222,10 @@ The pieces, in order:
 
 > [!WARNING]
 > Since commit `77b3dec5` ("stop get call", 2026-10-10), `src/utils/axiosCalls.js:getAbTestVisitorRows` begins with `return null;`. As a result, `POST /api/track-variant` answers `{ success: false, reason: 'lookup failed' }` for every request that passes the cookie and bot checks, and **nothing is written to the A/B table**. The static homepage never calls the endpoint. Whether this is intended is open ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). Comments in `VariantTracker.js` that say the cookies are "set by middleware" are out of date.
+
+### Middleware experiments
+
+`src/utils/mwExperiment.js` is a second, separate client. It does not read the `variant` cookie, does not call `/api/track-variant`, and does not re-enable the table write above. A page imports `mwVariant` and `mwSend` when it runs an experiment the owner has defined in the middleware. No page does that today, so the site renders exactly as before. The contract, the server-render constraint, and the fact that `/` cannot import it are in [CONTRACTS](CONTRACTS.md#middleware-experiments).
 
 ## API Access & Contract Flow
 
@@ -236,12 +242,12 @@ The pieces, in order:
 ## SEO Files: Sitemap & Robots
 
 - `src/app/sitemap.js:STATIC_ROUTES` produces `/sitemap.xml` with the routes that have no params, except `/use-cases` and `/new-direction`, which it does not list yet ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08). Dynamic pages are listed in the plug-service sitemap, which robots.txt references. The list still includes `/home`, which 307-redirects to `/`.
-- **robots.txt is defined twice with the same content.** `build-utilities/generate-robots-txt.js:generateRobots` runs as `prebuild` and writes `public/robots.txt`. `src/app/robots.txt/route.js:GET` decides at request time, from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` and the hostname. **Production appears to serve the route.** On 2026-10-21, `/robots.txt` returned `content-type: text/plain` with no charset, which matches the route's explicit header. Static files such as `/llms.txt` return `text/plain; charset=utf-8`. To change robots, edit both files, or settle which one stays ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). <!-- verify:ignore -->
+- **robots.txt is defined twice with the same content.** `build-utilities/generate-robots-txt.js:generateRobots` runs as `prebuild` and writes `public/robots.txt`. `src/app/robots.txt/route.js:GET` decides at request time, from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` and the hostname. **Production appears to serve the route.** On 2026-10-21, `/robots.txt` returned `content-type: text/plain` with no charset, which matches the route's explicit header. Static files such as `/llms.txt` return `text/plain; charset=utf-8`. `/llms.txt` is the committed file `public/llms.txt`: nothing generates it, and the `viasocket-site` export only replaces `public/new-home/`. The previous 1,141-line directory is kept at `parked/llms.txt` and is not a route. To change robots, edit both files, or settle which one stays ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). <!-- verify:ignore -->
 - Non-prod environments are kept out of search in three ways: `Disallow: /` in both robots generators, `noindex` in the root `metadata`, and the `Disallow` that applies to integration subdomains.
 
 ## /developers Sub-App
 
-`src/app/developers/layout.js` wraps every `/developers/*` page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `src/app/developers/docs/layout.js` adds the `docs-*` typography on top. These layouts are nested inside the root layout, so `AppProvider`, the chatbot, `TrackingCookies` and `VariantTracker` still run. The root layout's `global.scss` also applies. The pages are server components (`runtime = 'edge'`) with static copy and no data loader. `Header` and `Footer` come from `src/app/developers/`, not from the shared navbar and footer. `/embed` redirects here.
+`src/app/developers/layout.js` wraps every `/developers/*` page in `dev-grid font-dev-sans bg-dev-bg text-dev-ink`. `src/app/developers/docs/layout.js` adds the `docs-*` typography on top. These layouts are nested inside the root layout, so `AppProvider`, the chatbot, `TrackingCookies` and `VariantTracker` still run. The root layout's `global.scss` also applies. The pages are server components (`runtime = 'edge'`) with static copy and no data loader. `Header` and `Footer` come from `src/app/developers/`, not from the shared navbar and footer. Bare `/embed` does not redirect here on production: it 301s to `/` ([05-navigation](05-navigation.md#redirects-rewrites-and-middleware)).
 
 ## Security Model
 

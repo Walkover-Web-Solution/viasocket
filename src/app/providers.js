@@ -78,8 +78,10 @@ export default function AppProvider({ children }) {
     }, []);
 
     useEffect(() => {
+        // /setup-prompt must not send its query (org and project ids) to analytics.
+        if (pathname === '/setup-prompt') return;
         loadZarazManually();
-    }, []);
+    }, [pathname]);
 
     // Generate canonical URL logic
     const pathSegments = pathname.split('/');
@@ -103,6 +105,7 @@ export default function AppProvider({ children }) {
     }
 
     useEffect(() => {
+        if (pathname === '/setup-prompt') return undefined;
         const THREAD_TTL_MS = 60 * 60 * 1000;
         const stored = JSON.parse(localStorage.getItem('viasocket_chat_thread') || 'null');
         let threadId;
@@ -144,12 +147,12 @@ export default function AppProvider({ children }) {
             window.removeEventListener('load', handleLoad);
             document.head.removeChild(script);
         };
-    }, []);
+    }, [pathname]);
 
     return (
         <>
-            <HeadComp canonicalUrl={canonicalUrl} />
-            <ChatWidget />
+            {pathname !== '/setup-prompt' && <HeadComp canonicalUrl={canonicalUrl} />}
+            {pathname !== '/setup-prompt' && <ChatWidget />}
             {showSkeleton ? <Skeleton /> : <div>{children}</div>}
         </>
     );

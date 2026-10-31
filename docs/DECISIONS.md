@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: c0c7f48b
+verified_on: 2026-10-30
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -254,6 +254,8 @@ Accepted.
 
 ### Decision & Implementation
 - In `next.config.js` `redirects()`: `/embed` → `/developers` and `/mcp` → `https://mushrooms.viasocket.com/` are permanent. `/login` → `https://flow.viasocket.com/` is not permanent. Only the bare paths redirect; sub-pages such as `/embed/app-integration` and `/mcp/aiagent` are still served here.
+- Since `40bbd9bd` those rules are applied by `src/middleware.js` from the admin redirect list, with `src/data/redirects.json` as the fallback. `next.config.js` no longer defines `redirects()`.
+- **Production check, 2026-10-29.** The live admin list does not match this decision for `/embed`. On the production host and on the test host, `GET /embed` returns **301** to `/` with an empty body (not 302, not 308, not an alias). The same list 301s bare `/developers` to `/`. The fallback file still has `/embed` → `/developers` with 308, so an admin outage would serve the decision again. Whether to restore the admin rules or accept the homepage as the target is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md). Until that is decided, this ADR stays Accepted as the recorded intent, and [05-navigation](05-navigation.md) records what the hosts actually return.
 - `src/app/sitemap.js` leaves out the bare `/embed` and `/mcp`, so that the sitemap points at final destinations only.
 - `/help` and every `/help/*` path except `FOOTER_HELP_PAGES` (and pages under them) → `/new-direction`, permanent (301), because "The help centre is retired" (`next.config.js` comment, `b3a7ab32`, 2026-10-20). On production only requests that reach this project are redirected ([OPEN_QUESTIONS P-05](OPEN_QUESTIONS.md#p-05-paths-served-by-other-deployments)).
 
@@ -321,7 +323,7 @@ After the October relaunch the site told two stories: the homepage, `/developers
 
 ### Decision & Implementation
 - The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
-- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. Pending: `src/app/layout.js` root `metadata`, `public/llms.txt` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. `public/llms.txt` was replaced on 2026-10-30 with the supplied integration-layer text; the previous 1,141-line directory is parked at `parked/llms.txt` and is not served. Pending: `src/app/layout.js` root `metadata` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
 
 ### Supporting Evidence & Past Incidents
 - The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).

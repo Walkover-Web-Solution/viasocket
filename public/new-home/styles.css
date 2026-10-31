@@ -1403,3 +1403,23 @@ a.ha-k:hover { color: var(--ink); text-decoration-color: var(--ink); }
 .chat-fab:hover { background: var(--btn-hover); }
 .chat-fab svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linejoin: round; }
 @media (max-width: 600px) { .hero-ex { width: 100%; justify-content: center; } .chat-fab { right: 14px; bottom: 14px; height: 42px; padding: 0 14px; } }
+
+/* ---------- product video ---------- */
+/* the frame is the page's hairline (--line-2 is rgba(255,255,255,.14) when the theme is dark) and stays square with the rest of the page */
+.pv { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--line-2); background: #0b0b0c; }
+.pv-btn { position: absolute; inset: 0; display: block; width: 100%; height: 100%; margin: 0; padding: 0; border: 0; background: transparent; cursor: pointer; overflow: hidden; appearance: none; -webkit-appearance: none; }
+.pv-img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: cover; filter: blur(2px); transform: scale(1.02); }
+/* light fill and dark stroke stay put on any thumbnail: they are the dark theme's ink and page colour */
+.pv-go { position: absolute; left: 50%; top: 50%; width: 56px; height: 56px; overflow: visible; filter: drop-shadow(0 1px 1px rgba(11, 11, 12, 0.7)) drop-shadow(0 8px 16px rgba(11, 11, 12, 0.4)); transform: translate(-50%, -50%); transition: transform 0.2s ease; }
+.pv-go path { fill: #f1efe9; stroke: #0b0b0c; stroke-width: 1.5px; stroke-linejoin: miter; vector-effect: non-scaling-stroke; }
+.pv-btn:hover .pv-go { transform: translate(-50%, -50%) scale(1.08); }
+.pv-frame { position: absolute; inset: 0; display: block; width: 100%; height: 100%; border: 0; }
+@media (max-width: 599px) { .pv-go { width: 40px; height: 40px; } }
+/* the heading stays one line on a narrow phone, inside the normal gutters */
+@media (max-width: 360px) {
+  #h-act { max-width: none; white-space: nowrap; font-size: clamp(21px, 7.2vw, 28px); }
+}
+/* hidden only after JS arms it. No JS, or reduced motion, and it is on screen as written. */
+#in-action.arm { opacity: 0; transform: translateY(24px); }
+#in-action.arm.show { opacity: 1; transform: none; transition: opacity 0.8s ease, transform 0.8s ease; }
+@media (prefers-reduced-motion: reduce) { #in-action.arm { opacity: 1; transform: none; } }

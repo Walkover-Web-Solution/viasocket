@@ -1,7 +1,7 @@
 ---
-covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt"]
-verified_at: c4bed05f
-verified_on: 2026-10-27
+covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt", "parked/llms.txt"]
+verified_at: 0244e05f
+verified_on: 2026-10-30
 ---
 # Design System & UI Standards
 
@@ -93,6 +93,7 @@ A `@media (prefers-color-scheme: dark)` block redefines all of them (see [Themin
 
 - The module's header calls it "The viasocket.com homepage system (Geist, square corners, hairline rules, ink buttons)". `.root` redefines the static homepage's token names with the same light values (`--bg`, `--s1`..`--s3`, `--ink`..`--ink-4`, `--line*`, `--green*`, `--btn-*`, `--win*`, `--sh-win`, `--sh-dlg`, `--sec-pad`, `--head-gap`, `--content-gap`), plus `--w: 1240px`, and a `prefers-color-scheme: dark` block. `--sans`/`--mono` point at the `next/font` variables `--font-geist-sans`/`--font-geist-mono`, which each page puts on its root `div` (`GeistSans.variable`, `GeistMono.variable`).
 - It is a CSS module, so its class names (`s.hero`, `s.wrap`, `s['btn-o']` …) never meet daisyUI's `.btn`/`.hero`/`.toast` or the global `.h2`. `src/scss/global.scss` still loads on these pages through the root layout. There are no Tailwind classes in these files.
+- The "Request a new integration" form is the shared daisyUI modal (`integrationsRequestComp.js`), opened from `AppDirectory` and `BetaNotice` inside `.root`. `<html data-theme="light">` keeps daisyUI on its light tokens, so the card stays white. In dark mode `.root` sets a light `--ink` and `color-scheme: dark`, and the form inherits that ink: headings, labels, typed text and field borders (they follow the current text color) sit on the white card. A `prefers-color-scheme: dark` block in this module restyles `.request-form` only when it is inside `.root`, using this page's surface, ink and line tokens. The accent submit button is unchanged. Legacy pages open the same component outside `.root`, so they stay on the light modal, and light mode is outside the query.
 - Changing a token on `/` does not change these pages, and vice versa: the two token sets are separate copies. The same holds for the header and footer (`SiteChrome.js` copies `public/new-home/index.html`) and the setup prompt (`src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT` copies `#promptText`).
 - The animated demos (`OAuthDemo`, `AgentDemo`, `AIDemos`, `RotatingWord`) check `prefers-reduced-motion` and then stay still (the demos show their finished state; `RotatingWord` keeps its first word).
 
@@ -272,7 +273,7 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
   - `Organization`, `WebSite`, `SoftwareApplication`, `WebPage` and `FAQPage` in `public/new-home/index.html`. If you edit the homepage FAQ, update both the visible FAQ and the JSON-LD: they are separate copies.
   - The dormant front-page builds its graph from visible copy (`src/app/front-page/seo.js:schemaGraph`).
 - **Headings:** one `<h1>` per page, styled with `.h1`, and section titles as `<h2 className="h2">`. Footers use `<h2>` for column titles (`src/components/footer/footer.js`).
-- **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown index of the site for LLM crawlers (1141 lines). When you add or rename a public section, update it by hand.
+- **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown file for LLM crawlers, served as a static file (`text/plain; charset=utf-8`). It is not generated and it is not part of the `public/new-home/` export. The previous 1,141-line automation directory is kept at `parked/llms.txt` and is not served; do not publish it at `/llms-full.txt` or link it from `public/llms.txt`. When you add or rename a public section, update `public/llms.txt` by hand.
 
 > [!TODO]
 > Answered 2026-10-22 but not yet confirmed or implemented ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)): move canonicals into server metadata and drop the client-side rewrite in `HeadComp` (U-03, recommended fix); daisyUI `primary: '#0000'` rendering black is intended (U-02, recommended); page titles use "X | viaSocket" through a `title.template` of `%s | viaSocket` (U-05, proposed); the `addToProduct` `copy.js` and SCSS module are accepted for now and revisited when the design system becomes Tailwind tokens (U-07, proposed, maintainer to confirm).
