@@ -1,6 +1,6 @@
 ---
 covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: 0d14d549
+verified_at: d8f8d571
 verified_on: 2026-10-31
 ---
 # Module: Homepage (`/`)

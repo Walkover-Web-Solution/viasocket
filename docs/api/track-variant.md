@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/api/**", "src/app/robots.txt/**", "src/app/sitemap.js", "src/utils/trackVisitor.js", "src/utils/isBot.js", "src/const/abTest.js"]
-verified_at: 17b99cd8
+verified_at: d8f8d571
 verified_on: 2026-10-31
 ---
 # API — track-variant (the site's own HTTP routes)

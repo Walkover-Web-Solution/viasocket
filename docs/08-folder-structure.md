@@ -1,6 +1,6 @@
 ---
 covers: ["src/**", "public/**", "parked/llms.txt", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
-verified_at: c0c7f48b
+verified_at: d8f8d571
 verified_on: 2026-10-31
 ---
 # 08 Folder Structure
