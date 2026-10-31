@@ -1,11 +1,11 @@
 /* Homepage A/B split. Loaded by public/new-home/index.html (version A) and
    public/home-b/index.html (version B). Untranspiled ES5, same as TrackingCookies.
 
-   The CDN caches one copy of "/", so the coin flip cannot happen on the server.
-   This script assigns the variant cookie before the body paints and, for B,
-   navigates to /home-b. Bots stay on A. The cookie is the same `variant` cookie
-   the rest of the site already uses (src/const/abTest.js), on .viasocket.com,
-   so a return visit and flow.viasocket.com both see it. */
+   Middleware already chose the document and the address bar stays "/". This
+   script does not navigate. It writes the variant cookie for the page that was
+   served, because a cache in front of the origin can strip the Set-Cookie
+   header (ADR-007). Bots are not counted. The cookie is the same `variant`
+   cookie the rest of the site already uses (src/const/abTest.js). */
 (function () {
     'use strict';
 
@@ -90,51 +90,43 @@
         return id;
     }
 
-    function assignVariant() {
-        var current = readCookie('variant');
-        if (VARIANTS.indexOf(current) === -1) {
-            var mirrored = '';
-            try {
-                mirrored = localStorage.getItem(VARIANT_KEY) || '';
-            } catch (e) {}
-            current = VARIANTS.indexOf(mirrored) !== -1 ? mirrored : VARIANTS[Math.floor(Math.random() * VARIANTS.length)];
-            writeCookie('variant', current, VARIANT_MAX_AGE);
-        }
-        try {
-            localStorage.setItem(VARIANT_KEY, current);
-        } catch (e2) {}
-        return current;
+    // The served file is the version. A missing mark is version A, which is also
+    // what an export of public/new-home looks like if it drops the attribute.
+    function renderedVariant() {
+        var mark = document.documentElement.getAttribute('data-hp');
+        return mark === 'B' ? 'B' : 'A';
     }
 
-    function go(url) {
-        document.documentElement.style.visibility = 'hidden';
-        location.replace(url);
+    // ?variant=a|b is a checking tool on test and local only. Production ignores it.
+    function queryVariant() {
+        var host = location.hostname;
+        if (host !== 'test.viasocket.com' && host !== 'localhost' && host !== '127.0.0.1') return '';
+        try {
+            var raw = (new URLSearchParams(location.search).get('variant') || '').trim().toLowerCase();
+            return raw === 'a' || raw === 'b' ? raw.toUpperCase() : '';
+        } catch (e) {
+            return '';
+        }
     }
 
     function boot() {
         var path = pathName();
-        var onHome = path === '/' || path === '/home-b';
-        if (!onHome) return null;
-
-        var bot = BOT.test(navigator.userAgent || '');
-        if (bot) {
-            if (path === '/home-b') go('/' + location.search + location.hash);
-            return null;
-        }
+        if (path !== '/' && path !== '/home-b') return null;
+        if (BOT.test(navigator.userAgent || '')) return null;
 
         ensureVisitorId();
-        var variant = assignVariant();
-        var tail = location.search + location.hash;
-
-        if (path === '/' && variant === 'B') {
-            go('/home-b' + tail);
-            return null;
-        }
-        if (path === '/home-b' && variant !== 'B') {
-            go('/' + tail);
-            return null;
-        }
-        return variant;
+        var forced = queryVariant();
+        var current = forced || readCookie('variant');
+        // The edge set this on the response. When that header was stripped, the
+        // page that arrived is the assignment, and document.cookie is what
+        // reaches the browser. A valid cookie is left alone, so one cached
+        // document cannot overwrite the visitor's version.
+        if (VARIANTS.indexOf(current) === -1) current = renderedVariant();
+        if (forced || readCookie('variant') !== current) writeCookie('variant', current, VARIANT_MAX_AGE);
+        try {
+            localStorage.setItem(VARIANT_KEY, current);
+        } catch (e) {}
+        return current;
     }
 
     function utmData() {
@@ -345,30 +337,10 @@
         bind(variant);
     }
 
-    window.addEventListener('pageshow', function (event) {
-        try {
-            var path = pathName();
-            if (path !== '/' && path !== '/home-b') return;
-            var shown = readCookie('variant');
-            var onB = path === '/home-b';
-            var wantsB = shown === 'B';
-            if (onB === wantsB) {
-                document.documentElement.style.visibility = '';
-                return;
-            }
-            // Back/forward can restore the other version from the cache, still
-            // hidden from the redirect that left it. Send them to their version.
-            if (event.persisted || document.documentElement.style.visibility === 'hidden') {
-                go((wantsB ? '/home-b' : '/') + location.search + location.hash);
-            }
-        } catch (e) {}
-    });
-
     var variant;
     try {
         variant = boot();
     } catch (e) {
-        document.documentElement.style.visibility = '';
         variant = null;
     }
     if (!variant) return;

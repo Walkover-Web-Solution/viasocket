@@ -10,7 +10,7 @@ verified_on: 2026-10-31
 `/` is the static site in `public/new-home/`: plain HTML, CSS and JS that pitch viaSocket as an "Integration Layer for your AI agent". The primary action is "Copy setup prompt". The visitor pastes it into Cursor, Claude Code or Codex.
 
 > [!WARNING]
-> `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` before any app route runs, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Never edit `src/app/page.js` for homepage work. Version B is the separate static page `public/home-b/index.html`, served at `/home-b` by a `beforeFiles` rewrite to `/home-b/index.html`. The split script is `public/home-ab.js`, referenced from the first script tag in `public/new-home/index.html`.
+> `/` is **not** a Next.js page. Middleware rewrites `/` to `/new-home/index.html` (version A) or `/home-b/index.html` (version B). The browser URL stays `/`. `next.config.js` `rewrites().beforeFiles` still maps `/` to version A when middleware does not rewrite, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Never edit `src/app/page.js` for homepage work: that file is the old Next homepage, not version B. A direct request for `/home-b` is redirected to `/`. The split script is `public/home-ab.js`, referenced from the first script tag in `public/new-home/index.html`.
 
 > [!WARNING]
 > **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
@@ -87,17 +87,16 @@ Version A and version B both call `POST /api/track-variant` from `public/home-ab
 
 ## Homepage A/B test (version B)
 
-Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `f5bfbc6a`). That file is not served. B is homepage-only: every other route keeps its own header.
+Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `f5bfbc6a`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
 
 In B's "Plug in viaSocket, and your app or agent can act in 2,300+ apps." diagram, the middle viaSocket card uses the neutral surface (`--s3` background, a 1px `--line-3` border, no shadow) and the logo in `--ink`. Those tokens are `#ececea` / `rgba(17,17,19,.24)` / `#111113` in light mode and `#1d1d20` / `rgba(255,255,255,.26)` / `#f1efe9` in dark mode. The two neighbouring cards are unchanged.
 
-`/` is cached as one document, so the server cannot pick the version. `public/home-ab.js` runs before the body paints:
+Both versions are served at `/`. The address bar does not change, and nothing is hidden while a second page loads. `src/middleware.js` rewrites the request:
 
-1. A crawler (the same user-agent test as `src/utils/isBot.js`) stays on A. Middleware also 302s a crawler that requests `/home-b` back to `/`. `/home-b` sends `noindex` and its canonical is `/`.
-2. A person with no `variant` cookie is assigned `A` or `B` with equal probability (`Math.floor(Math.random() * 2)`), the same cookie `TrackingCookies` uses (`src/const/abTest.js`, 30 days, domain `.viasocket.com` on viasocket hosts). The version is also mirrored in `localStorage` `vs_variant`, and a missing cookie is restored from that mirror, on the homepage and on every other page, so a return visit keeps the version after the cookie expires.
-3. Variant B navigates to `/home-b` before paint (`location.replace`, query and hash kept). Variant A stays on `/`. Opening the other URL directly sends the visitor back to the version they were assigned.
-
-The `visitor_id` cookie is set the same way as `TrackingCookies`, including the `vs_visitor` mirror.
+1. A crawler (the same user-agent test as `src/utils/isBot.js`) gets A. `/home-b` and `/home-b/index.html` 302 to `/` for every caller, crawlers included.
+2. On `test.viasocket.com`, `localhost` and `127.0.0.1`, `?variant=a` or `?variant=b` forces that version for a person, sets the cookie, and leaves the path at `/`. A crawler still gets A. `viasocket.com` ignores the parameter.
+3. Otherwise a `variant` cookie of `A` or `B` selects the document. A person with no cookie is assigned one of the two with equal probability (`VARIANTS[Math.floor(Math.random() * VARIANTS.length)]`). The response sets the cookie (30 days, `src/const/abTest.js`, domain `.viasocket.com` on viasocket hosts) and sends `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`, so a shared cache cannot replay one visitor's HTML.
+4. `public/home-ab.js` does not navigate. If the `Set-Cookie` header was stripped, the script writes the same cookie with `document.cookie` from the page that arrived (`data-hp="B"` on version B; a missing mark is A). It does not replace a cookie that is already A or B. `localStorage` `vs_variant` mirrors it. The `visitor_id` cookie is still written only from the browser, the same way as `TrackingCookies`.
 
 ### Where B's links go
 
@@ -115,7 +114,7 @@ A registration that finishes on flow.viasocket.com, or that leaves `/signup` bef
 
 Stored in the A/B table `tbla8b06r` (database `65c4c053a3fad7804af5bba8`), one row per visitor **per environment**. Always filter `environment` (`production`, `test` or `local`). There is no DELETE.
 
-For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. Each of those events stores `variant` (`A` or `B`) and a `destination_url` whose `utm_source` is `a` or `b`. The event's `utmData` is still the landing URL's `utm_*`, not the version tag. A completed signup this site saw is `event` `signup_completed` (the version is the `variant` on that event, the homepage version held in the cookie when `/signup` saw the response). Group those by `variant` and `timestamp` the same way.
+For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Both versions are `path` `/`. Version A is `variant` `A` and version B is `variant` `B`. Count distinct `user_id`. Older rows from before both versions were served at `/` used `path` `/home-b` for version B. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. Each of those events stores `variant` (`A` or `B`) and a `destination_url` whose `utm_source` is `a` or `b`. The event's `utmData` is still the landing URL's `utm_*`, not the version tag. A completed signup this site saw is `event` `signup_completed` (the version is the `variant` on that event, the homepage version held in the cookie when `/signup` saw the response). Group those by `variant` and `timestamp` the same way.
 
 All-time totals, not sliced by date, also sit on the row: `name.homeSessions` and `name.views.home` (homepage visits), `name.variantViews` (views by version; only homepage views are written), `name.signupClicks`, `name.loginClicks`, `name.signupCompletions`, and the `signup` column (`completed_signups` is the all-time completion count, with `last_variant`). `varient` is the first version stored for that visitor, not a per-day count.
 
@@ -134,7 +133,7 @@ Still invisible here, so still a signup-app job: homepage Start free and Log in,
 
 > [!WARNING]
 > - Bump the `?v=` query on `styles.css` / `main.js` in `index.html` whenever you edit either file, or cached copies are served ([DESIGN](../DESIGN.md#static-homepage-publicnew-homestylescss)).
-> - Production `/` is held in the Cloudflare edge cache for more than a day, whatever the middleware says. **After every homepage deploy, purge `https://viasocket.com/`**, then verify on viasocket.com itself (D-10, [current-infrastructure/cloudflare](../current-infrastructure/cloudflare.md)).
+> - Production `/` is held in the Cloudflare edge cache for more than a day, whatever the middleware says (D-10). A cache hit skips middleware and replays one version to everyone, which breaks this split. **After every homepage deploy, purge `/`**, then verify on the production host itself. The zone rule has to honour `CDN-Cache-Control: no-store` (or bypass `/`) before production can serve both versions. Test does not have that rule ([current-infrastructure/cloudflare](../current-infrastructure/cloudflare.md)).
 > - When you change an FAQ answer, update both the `<details>` item and the JSON-LD `FAQPage` block.
 
 ---

@@ -29,7 +29,7 @@ Upsert the caller's visitor row with one event; edge runtime (`export const runt
 
 ### Callers and Cookies Read
 - `src/utils/trackVisitor.js` calls it from React pages (`trackView`, `trackInteraction`, `trackCtaClick`), via `fetch(..., { keepalive: true })` or `navigator.sendBeacon` when the page is unloading. Those calls are dropped unless the path is the homepage and the event is a view or a signup/login click.
-- `public/home-ab.js` calls it from `/` and `/home-b`: one view when the version is shown, and a click when Start free, Sign up or Log in is pressed.
+- `public/home-ab.js` calls it from `/` (both versions): one view when the version is shown, and a click when Start free, Sign up or Log in is pressed. The version is the `variant` cookie, not a different path.
 - Identity comes from cookies, never the body: `visitor_id` (`VISITOR_ID_COOKIE`, must be a UUID) and `variant` (`VARIANT_COOKIE`, must be in `VARIANTS` = `A`, `B`), from `src/const/abTest.js`. Both are written by the browser ([CONTRACTS.md](../CONTRACTS.md#cookies)).
 
 ### Request Body

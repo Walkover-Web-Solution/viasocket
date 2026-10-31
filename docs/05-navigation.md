@@ -40,7 +40,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
 | `/hire-an-expert` | `src/app/hire-an-expert/HireExpertClient.js` | Hire-an-expert CTA to signup or cal.id |
 | `/home` | `src/app/home/page.js`. **Never renders**: middleware 307s to `/` | (retired) |
-| `/home-b` | `public/home-b/index.html` (static file, not a Next route). `noindex`, canonical `/`. Middleware 302s a crawler to `/` | Homepage version B. Humans assigned A are sent back to `/` by `public/home-ab.js` |
+| `/home-b` | Middleware 302s every request, including crawlers, to `/` | Not a public page. Version B's HTML is `public/home-b/index.html`, served by a rewrite of `/` |
 | `/integrations` | `src/app/components/integrations/IntegrationsMain.js` → `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js`; `src/app/lib/integration-data.js:getIntegrationsPageData` | Integrations directory |
 | `/integrations-script` | `src/app/components/integrations-script/SetupBuilder.js` and sections | Embed-script setup builder (`?templateId=`, `?app=`) |
 | `/integrations/[...slug]` | `IntegrationsMain` (branches in [Deep links](#deep-link-conventions)) | Category, single-app or app-pair pages |
@@ -86,15 +86,15 @@ Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `be
 | `/mcp` | https://mushrooms.viasocket.com/ | 308 | `next.config.js` ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
 | `/embed` | `/` (live admin list, production and test, 2026-10-29). Fallback file still says `/developers` | 301 live; 308 in `src/data/redirects.json` | `src/middleware.js` |
 | `/home` | `/` | 307 | `src/middleware.js:middleware` |
-| `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
-| `/home-b` | `/home-b/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
+| `/` | `/new-home/index.html` or `/home-b/index.html` | rewrite (middleware; `beforeFiles` fallback is version A) | `src/middleware.js`, `next.config.js` |
+| `/home-b`, `/home-b/index.html` | `/` | 302 | `src/middleware.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
 
 Rows above whose "Defined in" column still says `next.config.js` moved to this same middleware list in `40bbd9bd`. Their destinations in `src/data/redirects.json` still match the table, except `/embed`. The live admin list, which is what production applies, also 301s `/developers` to `/`, `/automations` to `/use-cases` and `/blog` to `/blogs` (none of those three are in the fallback file) and `/developers/pricing` to `/pricing` (the fallback file has that destination with 308). Whether `/embed` and `/developers` should keep pointing at `/` is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).
 
 `/embed/` is a separate 308 to `/embed` (trailing-slash normalisation) and then follows the 301. `/embed/actions-for-ai`, `/embed/actions-via-webhook` and `/embed/app-integration` are not covered by the `/embed` rule (it is an exact match) and still return 200. Bare `/embed` is not in `src/app/sitemap.js`. Following the 301 lands on the homepage, whose HTML has a canonical link and `og:url` for the site root. There is no second copy of that document at `/embed`.
 
-`src/middleware.js` does not run for `/og/...` (its `matcher`): share images need no redirects or cookies and are not page visits. `/` and `/setup-prompt` are sent `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. The setup page's response echoes the request URL, and that URL carries org and project ids, so a shared cache must not store it. `/setup-prompt` also sends `X-Robots-Tag: noindex, nofollow`. robots.txt does not `Disallow` that path, so a crawler can fetch the page and read the tag.
+`src/middleware.js` does not run for `/og/...` (its `matcher`): share images need no redirects or cookies and are not page visits. `/` is sent `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`. `/setup-prompt` is sent `Cache-Control: private, no-store` and `CDN-Cache-Control: no-store`. The setup page's response echoes the request URL, and that URL carries org and project ids, so a shared cache must not store it. `/setup-prompt` also sends `X-Robots-Tag: noindex, nofollow`. robots.txt does not `Disallow` that path, so a crawler can fetch the page and read the tag.
 
 In-page redirects: `/integrations/[...slug]` with no data → `redirect('/integrations')` (307). `/automations/[...slug]` with no match → `redirect('/automations')` (307). Both are soft 404s ([FLOWS](FLOWS.md#2-failure-handling), [18-error-handling](18-error-handling.md)).
 

@@ -14,18 +14,13 @@ const nextConfig = {
 
     async rewrites() {
         return {
-            // The homepage is the static site in public/new-home. beforeFiles runs ahead of the
-            // app routes, so "/" is served from it and src/app/page.js (with its A/B variants) is not used.
+            // Fallback when middleware does not rewrite "/". Middleware serves version A
+            // or B at "/" (public/new-home or public/home-b) and redirects /home-b to "/".
+            // src/app/page.js is the old Next homepage and is not used.
             beforeFiles: [
                 {
                     source: '/',
                     destination: '/new-home/index.html',
-                },
-                {
-                    // Version B is a static file. public/home-b/index.html is only
-                    // served at /home-b/index.html unless this rewrite exists.
-                    source: '/home-b',
-                    destination: '/home-b/index.html',
                 },
             ],
             afterFiles: [
