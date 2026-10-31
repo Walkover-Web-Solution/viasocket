@@ -1,0 +1,1046 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>viaSocket B Story</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* tokens copied from viasocket.com */
+:root{
+  --bg:#fafaf9;--s1:#ffffff;--s2:#f4f4f2;--s3:#ececea;
+  --ink:#111113;--ink-2:#4a4946;--ink-3:#75736e;--ink-4:#8c8a85;
+  --line:rgba(17,17,19,.08);--line-2:rgba(17,17,19,.14);--line-3:rgba(17,17,19,.24);
+  --green:#15803d;--green-soft:rgba(21,128,61,.1);--amber:#b45309;--amber-soft:rgba(217,119,6,.1);
+  --btn-bg:#111113;--btn-ink:#ffffff;--btn-hover:#000;
+  --win:#ffffff;--win-2:#f7f7f6;--win-bar:#f3f3f1;
+  --ai-1:#8b5cf6;--ai-2:#3b82f6;--ai-4:#ec4899;
+  --grid-line:rgba(17,17,19,.05);--backdrop:rgba(17,17,19,.32);
+  --sh-win:0 30px 60px -32px rgba(17,17,19,.28);--sh-pop:0 24px 54px -16px rgba(17,17,19,.3);
+  --logo-inv:0;
+  --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:Geist,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0b0b0c;--s1:#111113;--s2:#161618;--s3:#1d1d20;
+  --ink:#f1efe9;--ink-2:#a9a7a1;--ink-3:#8f8d87;--ink-4:#6b6964;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);--line-3:rgba(255,255,255,.26);
+  --green:#3ddc84;--green-soft:rgba(61,220,132,.13);--amber:#f5b13d;--amber-soft:rgba(245,177,61,.13);
+  --btn-bg:#f1efe9;--btn-ink:#0b0b0c;--btn-hover:#fff;
+  --win:#141416;--win-2:#1b1b1e;--win-bar:#1c1c1f;
+  --ai-1:#a78bfa;--ai-2:#60a5fa;--ai-4:#f472b6;
+  --grid-line:rgba(241,239,233,.07);--backdrop:rgba(0,0,0,.62);
+  --sh-win:0 30px 60px -30px rgba(0,0,0,.8);--sh-pop:0 24px 54px -16px rgba(0,0,0,.7);
+  --logo-inv:1;color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0b0b0c;--s1:#111113;--s2:#161618;--s3:#1d1d20;
+  --ink:#f1efe9;--ink-2:#a9a7a1;--ink-3:#8f8d87;--ink-4:#6b6964;
+  --line:rgba(255,255,255,.08);--line-2:rgba(255,255,255,.14);--line-3:rgba(255,255,255,.26);
+  --green:#3ddc84;--green-soft:rgba(61,220,132,.13);--amber:#f5b13d;--amber-soft:rgba(245,177,61,.13);
+  --btn-bg:#f1efe9;--btn-ink:#0b0b0c;--btn-hover:#fff;
+  --win:#141416;--win-2:#1b1b1e;--win-bar:#1c1c1f;
+  --ai-1:#a78bfa;--ai-2:#60a5fa;--ai-4:#f472b6;
+  --grid-line:rgba(241,239,233,.07);--backdrop:rgba(0,0,0,.62);
+  --sh-win:0 30px 60px -30px rgba(0,0,0,.8);--sh-pop:0 24px 54px -16px rgba(0,0,0,.7);
+  --logo-inv:1;color-scheme:dark;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:40px;background:var(--bg)}
+body{background:var(--bg);color:var(--ink);font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{display:block}
+button{font:inherit;color:inherit}
+.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:.07em;font-size:11px}
+.inv{filter:invert(var(--logo-inv))}
+.logo{width:112px;height:auto;color:var(--ink)}
+.logo path,.logo polygon{fill:currentColor}
+
+/* ---------- layout: sidebar and content as one centred unit ---------- */
+.page{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:264px minmax(0,1fr);padding:0 24px}
+aside{position:sticky;top:0;height:100vh;padding:44px 60px 28px 0;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:24px;overflow:auto}
+main{padding:0 0 0 76px;min-width:0}
+.content{max-width:768px}
+
+/* human / agent switch */
+.mode{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink-3);user-select:none}
+.mode span{cursor:pointer;transition:color .2s}
+.mode span:hover{color:var(--ink-2)}
+.mode span.on{color:var(--ink);font-weight:500}
+.sw{width:40px;height:22px;border-radius:999px;border:1px solid var(--line-3);background:var(--s3);position:relative;cursor:pointer;flex:none;padding:0;transition:background .25s,border-color .25s}
+.sw i{position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--ink-2);transition:transform .25s cubic-bezier(.3,.7,.2,1),background .25s}
+.sw[aria-checked="true"]{background:var(--ink);border-color:var(--ink)}
+.sw[aria-checked="true"] i{transform:translateX(18px);background:var(--bg)}
+.sw:focus-visible{outline:2px solid var(--ink-3);outline-offset:2px}
+.nav{display:flex;flex-direction:column;gap:3px}
+.nav a{color:var(--ink-2);font-size:14px;padding:3px 0;display:flex;align-items:center;gap:6px;transition:color .15s}
+.nav a:hover{color:var(--ink)}
+.nav a.cur{color:var(--ink);font-weight:500}
+.nav small{font:11px var(--mono);color:var(--ink-3)}
+.start{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--btn-bg);color:var(--btn-ink);font-weight:500;font-size:13px;padding:9px 14px;width:max-content;border-radius:8px}
+
+/* on this page: numbered, with a progress rail */
+.toc-h{color:var(--ink-3);margin-bottom:-10px}
+.toc{position:relative;padding-left:14px;display:flex;flex-direction:column}
+.toc::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:1px;background:var(--line)}
+.toc .fill{position:absolute;left:0;top:6px;width:1px;background:var(--ink);height:0;transition:height .2s}
+.toc a{display:flex;align-items:baseline;gap:10px;color:var(--ink-3);font-size:13.5px;padding:4px 0;transition:color .2s}
+.toc a b{font:500 10.5px var(--mono);color:var(--ink-3);width:16px}
+.toc a.on{color:var(--ink)}
+.toc a.on b{color:var(--ink)}
+.side-foot{margin-top:auto;display:flex;align-items:center;justify-content:flex-start;gap:10px;padding-top:16px;border-top:1px dashed var(--line-2)}
+.status{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--ink-3)}
+.status b{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+.theme{display:inline-flex;border:1px solid var(--line-2);border-radius:7px;overflow:hidden}
+.theme button{border:0;background:none;width:26px;height:24px;display:grid;place-items:center;cursor:pointer;color:var(--ink-4)}
+.theme button.on{background:var(--s3);color:var(--ink)}
+.theme svg{width:13px;height:13px}
+
+/* ---------- sections ---------- */
+section{padding:90px 0;border-bottom:0}
+.hero{padding-bottom:40px}
+.head{margin-bottom:36px}
+.head h2{max-width:640px}
+.tag{display:block;font:500 12.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-3);margin-bottom:18px}
+h1{font:500 58px/1.04 var(--sans);letter-spacing:-.035em}
+h2{font:500 46px/1.06 var(--sans);letter-spacing:-.032em;max-width:680px}
+h3{font:500 16px/1.35 var(--sans);letter-spacing:-.01em}
+.lede{color:var(--ink-2);font-size:18px;line-height:1.55;max-width:580px;margin-top:18px}
+.head{margin-bottom:36px}
+
+/* hero */
+.hero{padding-top:80px;padding-bottom:22px}
+.pill{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:999px;font-size:12.5px;margin-bottom:30px;background:var(--s1);overflow:hidden}
+.pill span{padding:6px 12px;color:var(--ink-2);display:flex;align-items:center;gap:8px}
+.pill span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+.pill a{padding:6px 12px;border-left:1px solid var(--line-2);background:var(--s2);font-weight:500}
+.rot{display:inline-block;position:relative;vertical-align:top}
+.rot em{font-style:normal;display:inline-block;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px;text-decoration-color:var(--line-3);transition:opacity .35s,transform .35s cubic-bezier(.3,.7,.2,1),filter .35s}
+.rot em.out{opacity:0;transform:translateY(-14px);filter:blur(4px)}
+.rot em.in{opacity:0;transform:translateY(14px);filter:blur(4px);transition:none}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;font:500 13.5px var(--sans);border:1px solid var(--line-2);border-radius:8px;padding:12px 18px;cursor:pointer;background:var(--s1);color:var(--ink);transition:transform .15s,background .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.solid{background:var(--btn-bg);color:var(--btn-ink);border-color:transparent}
+.btn.solid:hover{background:var(--btn-hover)}
+.btn svg{width:15px;height:15px}
+.btn .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-soft)}
+
+/* stats: flat strip, not cards */
+.stats{display:grid;grid-template-columns:repeat(3,auto);justify-content:start;margin-top:56px;border-top:1px solid var(--line);padding-top:22px}
+.stat{display:flex;align-items:center;gap:14px;padding-right:32px;margin-right:32px;border-right:1px solid var(--line)}
+.stat:last-child{border-right:0;margin-right:0;padding-right:0}
+.stat b{font:500 26px/1 var(--sans);letter-spacing:-.03em;display:block}
+.stat .mono{color:var(--ink-3);display:block;margin-top:6px}
+.marks{display:flex}
+.marks{gap:0}
+.marks span{width:30px;height:30px;border-radius:8px;background:var(--s2);border:1px solid var(--line);display:grid;place-items:center;margin-left:-6px;box-shadow:0 0 0 3px var(--bg)}
+.marks span:first-child{margin-left:0}
+.marks img{width:15px;height:15px}
+.marks svg{width:16px;height:16px;color:var(--ink-2)}
+
+/* how: schematic */
+.fig{position:relative;padding:20px 8px 40px;display:grid;grid-template-columns:1fr 56px 1fr 56px 1.3fr;align-items:center}
+.fig::before{content:"";position:absolute;inset:0;background:linear-gradient(var(--grid-line) 1px,transparent 1px) 0 0/24px 24px,linear-gradient(90deg,var(--grid-line) 1px,transparent 1px) 0 0/24px 24px;-webkit-mask-image:radial-gradient(ellipse 70% 75% at 50% 50%,#000 35%,transparent 100%);mask-image:radial-gradient(ellipse 70% 75% at 50% 50%,#000 35%,transparent 100%)}
+.fig>*{position:relative}
+.box{height:156px;border:1px solid var(--line-2);background:var(--s1);border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:16px}
+.box b{font:500 17px/1.3 var(--sans);letter-spacing:-.01em}
+.box.dark{background:var(--btn-bg);border-color:transparent;box-shadow:var(--sh-win)}
+.box.dark .logo{width:120px;color:var(--btn-ink)}
+.box.list{align-items:stretch;justify-content:center;gap:0;padding:8px 18px;text-align:left}
+.box.list .r{display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}
+.box.list .r:last-child{border-bottom:0}
+.box.list .lg{display:flex;gap:5px;width:62px;flex:none}
+.box.list .lg img,.box.list .lg svg{width:18px;height:18px}
+.box.list .lg svg{color:var(--ink-2)}
+.box.list b{font-size:14.5px;white-space:nowrap}
+.box .lg{display:flex;gap:10px}
+.box .lg img{width:22px;height:22px}
+.wire{height:24px;margin:0 12px;position:relative}
+.wire::before{content:"";position:absolute;left:0;right:7px;top:50%;height:2px;margin-top:-1px;background:repeating-linear-gradient(90deg,var(--ink-3) 0 6px,transparent 6px 12px);background-size:12px 2px;animation:march .7s linear infinite}
+.wire::after{content:"";position:absolute;right:0;top:50%;margin-top:-5px;border-left:8px solid var(--ink-3);border-top:5px solid transparent;border-bottom:5px solid transparent}
+.wire span{position:absolute;left:0;right:7px;bottom:calc(50% + 8px);text-align:center;font:500 10px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);white-space:nowrap}
+@keyframes march{to{background-position:12px 0}}
+@keyframes marchv{to{background-position:0 12px}}
+
+
+/* ---------- see it run ---------- */
+.dtabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.dtabs button{border:1px solid var(--line-2);background:var(--s1);font:500 12.5px var(--sans);padding:7px 13px;border-radius:999px;color:var(--ink-3);cursor:pointer;position:relative;overflow:hidden}
+.dtabs button.on{color:var(--btn-ink);background:var(--btn-bg);border-color:transparent}
+.dtabs button .bar{position:absolute;left:0;bottom:0;height:2px;background:var(--green);width:0}
+.stage{position:relative;border:1px solid var(--line-2);border-radius:14px;overflow:hidden;background:var(--win);box-shadow:var(--sh-win)}
+.chrome{display:flex;align-items:center;gap:12px;height:38px;padding:0 14px;background:var(--win-bar);border-bottom:1px solid var(--line)}
+.chrome .dots{display:flex;gap:6px}
+.chrome .dots i{width:10px;height:10px;border-radius:50%;background:var(--line-2)}
+.chrome .url{flex:1;max-width:300px;margin:0 auto;height:22px;border-radius:6px;background:var(--s2);border:1px solid var(--line);font:11.5px var(--mono);color:var(--ink-3);display:flex;align-items:center;justify-content:center;gap:6px}
+.chrome .replay{border:0;background:none;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3);cursor:pointer}
+.panes{display:grid;grid-template-columns:minmax(0,1fr) 252px;grid-template-rows:100%;height:520px}
+.chat{display:flex;flex-direction:column;border-right:1px solid var(--line);position:relative;min-width:0;min-height:0;overflow:hidden}
+.chat-h{display:flex;align-items:center;gap:11px;height:60px;padding:0 20px;border-bottom:1px solid var(--line);flex:none}
+.agent{width:30px;height:30px;flex:none;display:block}
+.chat-h b{font-weight:500;font-size:13.5px;display:block;line-height:1.2}
+.chat-h span{font-size:11.5px;color:var(--ink-3)}
+.msgs{flex:1;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;gap:14px;padding:20px 22px}
+.msg{display:flex;gap:9px;align-items:flex-end;animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+.msg .agent{width:24px;height:24px}
+.msg.me{justify-content:flex-end;animation-name:send}
+.bubble:has(.connect-card),.bubble:has(.result){max-width:90%;width:90%}
+.bubble{max-width:78%;padding:9px 13px;border-radius:14px;font-size:13.5px;line-height:1.45;background:var(--s2);border:1px solid var(--line);border-bottom-left-radius:4px}
+.msg.me .bubble{background:var(--btn-bg);color:var(--btn-ink);border-color:transparent;border-radius:14px;border-bottom-right-radius:4px}
+.typing{display:inline-flex;gap:4px;padding:12px 14px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--ink-4);animation:blink 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes blink{0%,100%{opacity:.25}50%{opacity:1}}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes send{from{opacity:0;transform:translateY(26px) scale(.96);transform-origin:right bottom}to{opacity:1;transform:none}}
+.connect-card{margin-top:10px;border:1px solid var(--line-2);background:var(--win);border-radius:10px;padding:12px;display:flex;align-items:center;gap:12px;min-width:300px}
+.connect-card img{width:22px;height:22px}
+.connect-card div{flex:1;font-size:12.5px;line-height:1.35}
+.connect-card div small{display:block;color:var(--ink-3);font-size:11.5px}
+.connect-card button{border:0;background:var(--btn-bg);color:var(--btn-ink);font:500 12px var(--sans);padding:7px 11px;border-radius:7px;cursor:pointer;white-space:nowrap}
+.connect-card button.done{background:var(--green-soft);color:var(--green)}
+.result{margin-top:10px;border:1px solid var(--line);background:var(--win);border-radius:10px;padding:10px 11px;font-size:12.5px;display:flex;gap:10px;align-items:flex-start}
+.result img{width:18px;height:18px;margin-top:1px}
+.result small{display:block;color:var(--ink-3);font-size:11px}
+.done-line{display:flex;align-items:center;gap:6px;color:var(--green);font-weight:500}
+.composer{margin:0 20px 20px;border:1px solid var(--line-2);border-radius:12px;display:flex;align-items:center;gap:8px;padding:7px 7px 7px 13px;background:var(--win);transition:border-color .2s,box-shadow .2s}
+.composer.focus{border-color:var(--line-3);box-shadow:0 0 0 3px var(--line)}
+.composer .field{flex:1;font-size:13.5px;color:var(--ink);min-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.composer .field:empty::before{content:"Ask your agent to do something...";color:var(--ink-4)}
+.composer .send{width:30px;height:30px;border-radius:8px;border:0;background:var(--btn-bg);color:var(--btn-ink);display:grid;place-items:center;cursor:pointer;flex:none;transition:transform .15s}
+.composer .send.press{transform:scale(.9)}
+.composer .send svg{width:14px;height:14px}
+.caret{display:inline-block;width:1.5px;height:15px;background:var(--ink);vertical-align:-2px;animation:blink .9s infinite}
+
+.consent-wrap{position:absolute;inset:0;background:var(--backdrop);display:grid;place-items:center;opacity:0;pointer-events:none;transition:opacity .25s;z-index:5}
+.consent-wrap.show{opacity:1}
+.consent{width:min(300px,86%);background:#fff;color:#1d1c1d;border-radius:12px;box-shadow:var(--sh-pop);overflow:hidden;transform:translateY(10px) scale(.97);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.consent-wrap.show .consent{transform:none}
+.consent .top{padding:16px 16px 12px;text-align:center;border-bottom:1px solid #eee}
+.consent .pair{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:10px}
+.consent .pair img,.consent .pair .agent{width:30px;height:30px}
+.consent .pair i{font-style:normal;color:#aaa;font-size:12px}
+.consent h4{font-size:13.5px;font-weight:600;line-height:1.35}
+.consent .host{font:11px var(--mono);color:#777;margin-top:4px}
+.consent ul{list-style:none;padding:12px 16px;font-size:12px;color:#444;display:flex;flex-direction:column;gap:6px}
+.consent li::before{content:"\2713";color:#007a5a;margin-right:8px;font-weight:700}
+.consent .cbtns{display:flex;gap:8px;padding:0 16px 16px}
+.consent .cbtns span{flex:1;text-align:center;font-size:12.5px;font-weight:600;padding:8px;border-radius:7px;border:1px solid #ddd}
+.consent .cbtns .allow{background:var(--brand,#007a5a);color:#fff;border-color:transparent}
+.consent-note{position:absolute;bottom:14px;left:0;right:0;text-align:center;font:500 10px var(--mono);letter-spacing:.08em;color:#fff;opacity:.8}
+
+/* actions panel: plain language */
+.acts{display:flex;flex-direction:column;background:var(--win-2);min-width:0;min-height:0;overflow:hidden}
+.acts-h{display:flex;justify-content:space-between;align-items:center;height:60px;padding:0 18px;border-bottom:1px solid var(--line);flex:none}
+.acts-h b{font-weight:500;font-size:13.5px}
+.acts-h span{font-size:12px;color:var(--ink-3)}
+.acts-list{flex:1;min-height:0;overflow:hidden;padding:6px 18px;display:flex;flex-direction:column}
+.act{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid var(--line);animation:pop .3s cubic-bezier(.2,.8,.2,1)}
+.act:last-child{border-bottom:0}
+.act .ic{width:28px;height:28px;border-radius:8px;background:var(--win);border:1px solid var(--line);display:grid;place-items:center;flex:none}
+.act .ic img{width:16px;height:16px}
+.act .tx{flex:1;min-width:0}
+.act .tx b{display:block;font-weight:500;font-size:12.5px;line-height:1.3}
+.act .tx small{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+.act .st{flex:none;width:20px;height:20px;display:grid;place-items:center}
+.spin{width:14px;height:14px;border:1.6px solid var(--line-3);border-top-color:var(--ink);border-radius:50%;animation:sp .7s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ok{width:18px;height:18px;border-radius:50%;background:var(--green);color:var(--bg);display:grid;place-items:center;font-size:11px;font-weight:700;animation:pop .25s}
+.wait{font-size:10.5px;font-weight:500;color:var(--amber);background:var(--amber-soft);border-radius:999px;padding:2px 8px;white-space:nowrap}
+.act .st:has(.wait){width:auto}
+.acts-empty{margin:auto;text-align:center;color:var(--ink-4);font-size:12.5px;max-width:200px}
+
+.cursor{position:absolute;left:0;top:0;width:22px;height:22px;z-index:10;pointer-events:none;transform:translate(640px,520px);transition:transform .9s cubic-bezier(.65,0,.35,1);filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.cursor svg{width:22px;height:22px;transition:transform .12s}
+.cursor .lbl{position:absolute;left:18px;top:20px;background:var(--btn-bg);color:var(--btn-ink);font:500 10px var(--mono);letter-spacing:.04em;padding:3px 7px;border-radius:5px;white-space:nowrap}
+.cursor .ring{position:absolute;left:-9px;top:-9px;width:22px;height:22px;border-radius:50%;border:2px solid var(--ink-3);opacity:0}
+.cursor.click .ring{animation:ring .45s ease-out}
+.cursor.click svg{transform:scale(.85)}
+@keyframes ring{from{opacity:.9;transform:scale(.4)}to{opacity:0;transform:scale(1.8)}}
+
+/* use cases */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.filters button{border:1px solid var(--line-2);background:var(--s1);padding:7px 13px;font-size:13px;cursor:pointer;display:flex;gap:8px;align-items:center;border-radius:999px;color:var(--ink-2)}
+.filters button sup{font:500 10px var(--mono);color:var(--ink-4)}
+.filters button.on{background:var(--btn-bg);color:var(--btn-ink);border-color:transparent}
+.cases{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.case{border:1px solid var(--line);background:var(--s1);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s;cursor:pointer}
+.case:hover{border-color:var(--line-3);transform:translateY(-2px)}
+.case .top{display:flex;justify-content:space-between;align-items:center}
+.case .mono{color:var(--ink-3)}
+.case p{font-size:14px;color:var(--ink-2)}
+.case .go{margin-top:auto;padding-top:6px;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-4);display:flex;justify-content:space-between}
+.case:hover .go{color:var(--ink)}
+.case[hidden]{display:none}
+.chips{display:flex}
+.chips span{width:26px;height:26px;border-radius:7px;background:var(--s2);border:1px solid var(--line);display:grid;place-items:center;margin-left:-4px;box-shadow:0 0 0 2px var(--s1)}
+.chips img{width:14px;height:14px}
+
+/* features: quiet grid */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.feat{padding:28px 24px 26px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:16px}
+.feat .i{width:36px;height:36px;border-radius:9px;background:var(--s2);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink)}
+.feat .i svg{width:18px;height:18px}
+.feat h3{font:500 21px/1.2 var(--sans);letter-spacing:-.02em}
+.feat p{font-size:13.5px;color:var(--ink-3);margin-top:8px;line-height:1.45}
+.feat.lead{background:var(--btn-bg);color:var(--btn-ink)}
+.feat.lead .i{background:transparent;border-color:color-mix(in srgb,var(--btn-ink) 22%,transparent);color:var(--btn-ink)}
+.feat.lead p{color:color-mix(in srgb,var(--btn-ink) 62%,transparent)}
+
+/* prompts: clickable cards */
+.prompts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.pc{position:relative;text-align:left;border:1px solid var(--line-2);background:var(--s1);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;gap:14px;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;overflow:hidden}
+.pc:hover{border-color:var(--ink);transform:translateY(-2px);box-shadow:var(--sh-win)}
+.pc .top{display:flex;align-items:center;justify-content:space-between}
+.pc .kind{font-size:12px;color:var(--ink-3)}
+.pc p{font-size:14.5px;line-height:1.5;color:var(--ink)}
+.pc p::before{content:"\201C";color:var(--ink-4)}
+.pc p::after{content:"\201D";color:var(--ink-4)}
+.pc .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;padding-top:12px;border-top:1px dashed var(--line-2);font-size:12.5px;color:var(--ink-3)}
+.pc .foot .cp{display:flex;align-items:center;gap:7px;font-weight:500;color:var(--ink-2);transition:color .2s}
+.pc:hover .foot .cp{color:var(--ink)}
+.pc .foot svg{width:14px;height:14px}
+.pc .copied{position:absolute;inset:0;background:var(--btn-bg);color:var(--btn-ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;opacity:0;pointer-events:none;transition:opacity .2s;text-align:center;padding:20px}
+.pc .copied b{font-weight:500;font-size:15px}
+.pc .copied span{font-size:12.5px;opacity:.65}
+.pc.done .copied{opacity:1}
+
+/* security */
+.trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.trust>div{padding:20px;border:1px solid var(--line);background:var(--s1);border-radius:12px}
+.trust .mono{color:var(--ink-4);display:block;margin-bottom:12px}
+.badges{display:flex;gap:14px;margin-top:22px;align-items:center;flex-wrap:wrap}
+.badges img{height:40px}
+.badges a{font-size:13.5px;font-weight:500;text-decoration:underline;text-underline-offset:4px;text-decoration-color:var(--line-3)}
+
+/* faq */
+.faq{border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;padding:18px 0;display:flex;justify-content:space-between;gap:20px;font-weight:500;font-size:15.5px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--ink-3);font:400 18px var(--mono);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{color:var(--ink-2);font-size:14.5px;padding:0 40px 20px 0}
+
+.final{padding:110px 0;border-bottom:0}
+.final h2{font-size:54px;margin-bottom:8px}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:56px 0 28px}
+.f-top{display:grid;grid-template-columns:1.3fr repeat(3,1fr);gap:28px}
+.f-top p{color:var(--ink-3);font-size:13.5px;margin:14px 0 18px;max-width:230px}
+.f-top .mono{color:var(--ink-3);display:block;margin-bottom:12px}
+.f-top a.l{display:block;color:var(--ink-2);font-size:13.5px;padding:3px 0;transition:color .15s}
+.f-top a.l:hover{color:var(--ink)}
+.f-social{display:flex;gap:8px}
+.f-social a{width:32px;height:32px;border-radius:8px;border:1px solid var(--line-2);display:grid;place-items:center;color:var(--ink-2);transition:color .15s,border-color .15s}
+.f-social a:hover{color:var(--ink);border-color:var(--line-3)}
+.f-social svg{width:14px;height:14px}
+.f-mark{margin:56px 0 0;color:var(--ink);opacity:.06;line-height:0}
+.f-mark svg{width:100%;height:auto}
+.f-mark path,.f-mark polygon{fill:currentColor}
+.f-legal{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px;margin-top:18px;color:var(--ink-4);font-size:12.5px}
+.f-legal nav{display:flex;gap:18px}
+.f-legal a:hover{color:var(--ink)}
+
+.rv{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
+.rv.in{opacity:1;transform:none}
+
+#agentView{display:none;padding:56px 0}
+#agentView pre{font:13px/1.75 var(--mono);white-space:pre-wrap;color:var(--ink-2)}
+#agentView .bar{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line-2);background:var(--s2);padding:10px 10px 10px 14px;margin-bottom:28px;border-radius:10px}
+body.agent-mode #human{display:none}
+body.agent-mode #agentView{display:block}
+body.agent-mode .toc{opacity:.3;pointer-events:none}
+
+.mbar{display:none}
+@media (max-width:980px){
+  .page{grid-template-columns:1fr;padding:0 16px}
+  aside{display:none}
+  main{padding:0}
+  .mbar{display:flex;position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding:12px 16px;justify-content:space-between;align-items:center;gap:10px}
+  .mbar .logo{width:92px}
+  .mbar .r{display:flex;gap:8px;align-items:center}
+}
+@media (max-width:720px){
+  h1{font-size:40px}
+  h2,.final h2{font-size:32px}
+  .lede{font-size:16px}
+  section{padding:64px 0}
+  .stats{grid-template-columns:1fr;gap:16px}
+  .stat{border-right:0;margin-right:0;padding-right:0}
+  .cases,.trust,.prompts{grid-template-columns:1fr}
+  .fig{grid-template-columns:1fr;padding:12px 4px 24px;gap:0}
+  .wire{height:52px;width:12px;margin:10px auto}
+  .wire::before{left:50%;right:auto;top:0;bottom:7px;width:2px;height:auto;margin:0 0 0 -1px;background:repeating-linear-gradient(180deg,var(--ink-3) 0 6px,transparent 6px 12px);background-size:2px 12px;animation-name:marchv}
+  .wire::after{right:auto;left:50%;top:auto;bottom:0;margin:0 0 0 -5px;border-top:8px solid var(--ink-3);border-left:5px solid transparent;border-right:5px solid transparent;border-bottom:0}
+  .wire span{display:none}
+  .box{height:110px}
+  .box.list{height:auto}
+  .panes{grid-template-columns:1fr;grid-template-rows:auto;height:auto}
+  .chat{height:440px;border-right:0;border-bottom:1px solid var(--line)}
+  .acts{height:270px}
+  .feats{grid-template-columns:1fr 1fr}
+  .f-top{grid-template-columns:1fr 1fr}
+  .f-top>div:first-child{grid-column:1/-1}
+  .chrome .url{max-width:180px}
+  .pill a{display:none}
+  .pill span{white-space:nowrap}
+  .connect-card{flex-wrap:wrap;min-width:0}
+  .bubble:has(.connect-card),.bubble:has(.result){width:auto}
+  .connect-card button{width:100%;padding:9px}
+  .bubble{max-width:90%}
+}
+@media (max-width:420px){.feats{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="orbA" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="#c4b5fd"/><stop offset=".45" stop-color="#6366f1"/><stop offset="1" stop-color="#1e1b4b"/></radialGradient>
+    <linearGradient id="orbB" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f0abfc" stop-opacity=".9"/><stop offset="1" stop-color="#38bdf8" stop-opacity="0"/></linearGradient>
+  </defs>
+  <symbol id="agentMark" viewBox="0 0 32 32">
+    <rect width="32" height="32" rx="9" fill="#0f0f12"/>
+    <circle cx="16" cy="16" r="9.5" fill="url(#orbA)"/>
+    <ellipse cx="13" cy="12" rx="6" ry="4.2" fill="url(#orbB)" opacity=".85"/>
+    <circle cx="16" cy="16" r="9.5" fill="none" stroke="#fff" stroke-opacity=".18"/>
+  </symbol>
+</svg>
+
+<div class="mbar"><a href="#top"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 class="logo" viewBox="0 0 624 184" style="enable-background:new 0 0 624 184;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M247.9,37.9c-2.6-2.1-5.9-3.3-10-3.5h-16c-4.8,0.2-8.4,1.5-10.6,3.9c-2.2,2.4-3.3,5.1-3.3,8.3V77c0,3.3,1.7,5.8,4.9,7.3
+				c2.6,1.2,5.2,1.8,7.7,1.8h14.7c4.2,0,5.2,0.7,5.3,0.7c0.2,0.2,0.7,0.6,0.7,2v27.6c0,1.9-0.4,3.4-1.1,4.4c-0.7,1-2.5,1.2-3.8,1.2
+				h-12.2c-3.7,0-4.5-0.9-4.6-1c-0.5-0.6-1-1.9-1-4.5V97.2h-10.7v22.7c0,2.9,1.4,5.5,4.2,7.7c2.6,2.1,5.9,3.3,10,3.5h16h0
+				c4.8-0.2,8.4-1.5,10.6-3.9c2.2-2.4,3.3-5.1,3.3-8.3v-33c0-1.6-0.6-3.1-1.7-4.2c-0.9-0.9-1.9-1.8-3-2.5c-1.1-0.7-2.4-1.2-3.7-1.6
+				c-1.4-0.4-2.5-0.6-3.4-0.6h-17.2c-2.9,0-3.7-0.4-3.8-0.3c-0.3-0.6-0.5-1.5-0.5-2.7V49c0-1.9,0.3-3.5,1-4.5
+				c0.5-0.7,1.9-1.1,3.9-1.1h12.2c3.5,0,4.4,0.8,4.6,1.1c0.7,0.9,1,2.5,1,4.6v19.1h10.7V45.6C252.1,42.7,250.7,40.1,247.9,37.9z"/>
+			<path d="M318.8,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.9,0-8.5,1.3-10.7,3.8c-2.2,2.4-3.3,5.2-3.3,8.4v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.7,3.9,10.6,4.1h17.4h0.1c4.2-0.2,7.4-1.4,9.6-3.7c2.2-2.3,3.4-4.9,3.4-7.7v-74C323,42.7,321.6,40.1,318.8,37.9z
+				 M312.3,49.1v67.1c0,2.1-0.4,3.7-1,4.6c-0.2,0.3-1.1,1.1-4.6,1.1H297c-4.9,0-6.1-1-6.3-1.2c-0.8-0.9-1.2-2.4-1.2-4.4V49
+				c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5h12.2c3.5,0,4.4,0.8,4.6,1.1C311.9,45.4,312.3,47,312.3,49.1z"/>
+			<path d="M389.6,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.3,0-7.8,1.2-10.3,3.7c-2.5,2.5-3.7,5.3-3.7,8.5v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.6,3.9,10.6,4.1h17.4h0c4.2-0.2,7.4-1.4,9.7-3.7c2.2-2.3,3.4-4.9,3.4-7.7V97.2h-10.7v19.1c0,2.1-0.4,3.7-1,4.6
+				c-0.2,0.3-1.1,1.1-4.6,1.1h-9.3c-4.7,0-6.1-0.9-6.5-1.3c-0.9-0.9-1.3-2.4-1.3-4.3V49c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5
+				h12.2c3.7,0,4.5,0.9,4.6,1c0.5,0.6,1,1.9,1,4.5v19.2h10.7V45.6C393.8,42.7,392.4,40.1,389.6,37.9z"/>
+			<polygon points="466.6,34.4 454.8,34.4 431.2,75.8 431.2,34.4 420.6,34.4 420.6,131 431.2,131 431.2,95.1 437,85.5 455.7,131 
+				466.9,131 444,74.6 			"/>
+			<polygon points="492.5,131 536.8,131 536.8,121.9 503.2,121.9 503.2,85.8 533,85.8 533,76.8 503.2,76.8 503.2,43.4 536.8,43.4 
+				536.8,34.4 492.5,34.4 			"/>
+			<polygon points="563.5,34.4 563.5,43.4 580.3,43.4 580.3,131 591.2,131 591.2,43.4 608,43.4 608,34.4 			"/>
+		</g>
+		<g>
+			<path d="M76.1,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C72,69.9,76.1,65.8,76.1,60.8z"/>
+			<path d="M127.8,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C123.7,69.9,127.8,65.8,127.8,60.8z"/>
+			<path d="M164.9,153.9h-10.6v-8.3h10.6c1.9,0,3.4-1.5,3.4-3.4c0-1.9-1.5-3.4-3.4-3.4h-10.6v-1.2c0-1.9-1.5-3.4-3.4-3.4
+				c-8.5,0-14.6,3.8-16.8,10.1c-0.3-0.1-0.6-0.2-1-0.2H29.4V28h125.3v80c0,3.1,2.6,5.7,5.7,5.7c3.1,0,5.7-2.5,5.7-5.7V22.3
+				c0-3.1-2.6-5.7-5.7-5.7H23.7c-3.1,0-5.7,2.5-5.7,5.7v127.5c0,3.1,2.5,5.7,5.7,5.7h109.4c0.3,0,0.6-0.1,0.9-0.2
+				c2.5,7.3,9.9,10.1,16.9,10.1c1.9,0,3.4-1.5,3.4-3.4v-1.2h10.6c1.9,0,3.4-1.5,3.4-3.4C168.3,155.5,166.8,153.9,164.9,153.9z
+				 M147.5,158.3c-3.7-0.7-7.6-2.8-7.6-8.5c0-5.8,3.9-7.8,7.6-8.5V158.3z"/>
+			<g>
+				<path d="M94.5,112c-10.1,0-18.4-1.5-18.9-1.5c-3.4-0.6-5.6-3.8-5-7.2c0.6-3.4,3.7-5.6,7.2-5c0.2,0,17.2,3,30.5,0
+					c3.4-0.7,6.7,1.4,7.4,4.7c0.7,3.4-1.4,6.7-4.7,7.4C105.5,111.6,99.8,112,94.5,112z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg></a><div class="r"><div class="theme" data-theme-switch></div><a class="start" href="#">Start free</a></div></div>
+
+<div class="page">
+<aside>
+  <a href="#top"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 class="logo" viewBox="0 0 624 184" style="enable-background:new 0 0 624 184;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M247.9,37.9c-2.6-2.1-5.9-3.3-10-3.5h-16c-4.8,0.2-8.4,1.5-10.6,3.9c-2.2,2.4-3.3,5.1-3.3,8.3V77c0,3.3,1.7,5.8,4.9,7.3
+				c2.6,1.2,5.2,1.8,7.7,1.8h14.7c4.2,0,5.2,0.7,5.3,0.7c0.2,0.2,0.7,0.6,0.7,2v27.6c0,1.9-0.4,3.4-1.1,4.4c-0.7,1-2.5,1.2-3.8,1.2
+				h-12.2c-3.7,0-4.5-0.9-4.6-1c-0.5-0.6-1-1.9-1-4.5V97.2h-10.7v22.7c0,2.9,1.4,5.5,4.2,7.7c2.6,2.1,5.9,3.3,10,3.5h16h0
+				c4.8-0.2,8.4-1.5,10.6-3.9c2.2-2.4,3.3-5.1,3.3-8.3v-33c0-1.6-0.6-3.1-1.7-4.2c-0.9-0.9-1.9-1.8-3-2.5c-1.1-0.7-2.4-1.2-3.7-1.6
+				c-1.4-0.4-2.5-0.6-3.4-0.6h-17.2c-2.9,0-3.7-0.4-3.8-0.3c-0.3-0.6-0.5-1.5-0.5-2.7V49c0-1.9,0.3-3.5,1-4.5
+				c0.5-0.7,1.9-1.1,3.9-1.1h12.2c3.5,0,4.4,0.8,4.6,1.1c0.7,0.9,1,2.5,1,4.6v19.1h10.7V45.6C252.1,42.7,250.7,40.1,247.9,37.9z"/>
+			<path d="M318.8,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.9,0-8.5,1.3-10.7,3.8c-2.2,2.4-3.3,5.2-3.3,8.4v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.7,3.9,10.6,4.1h17.4h0.1c4.2-0.2,7.4-1.4,9.6-3.7c2.2-2.3,3.4-4.9,3.4-7.7v-74C323,42.7,321.6,40.1,318.8,37.9z
+				 M312.3,49.1v67.1c0,2.1-0.4,3.7-1,4.6c-0.2,0.3-1.1,1.1-4.6,1.1H297c-4.9,0-6.1-1-6.3-1.2c-0.8-0.9-1.2-2.4-1.2-4.4V49
+				c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5h12.2c3.5,0,4.4,0.8,4.6,1.1C311.9,45.4,312.3,47,312.3,49.1z"/>
+			<path d="M389.6,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.3,0-7.8,1.2-10.3,3.7c-2.5,2.5-3.7,5.3-3.7,8.5v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.6,3.9,10.6,4.1h17.4h0c4.2-0.2,7.4-1.4,9.7-3.7c2.2-2.3,3.4-4.9,3.4-7.7V97.2h-10.7v19.1c0,2.1-0.4,3.7-1,4.6
+				c-0.2,0.3-1.1,1.1-4.6,1.1h-9.3c-4.7,0-6.1-0.9-6.5-1.3c-0.9-0.9-1.3-2.4-1.3-4.3V49c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5
+				h12.2c3.7,0,4.5,0.9,4.6,1c0.5,0.6,1,1.9,1,4.5v19.2h10.7V45.6C393.8,42.7,392.4,40.1,389.6,37.9z"/>
+			<polygon points="466.6,34.4 454.8,34.4 431.2,75.8 431.2,34.4 420.6,34.4 420.6,131 431.2,131 431.2,95.1 437,85.5 455.7,131 
+				466.9,131 444,74.6 			"/>
+			<polygon points="492.5,131 536.8,131 536.8,121.9 503.2,121.9 503.2,85.8 533,85.8 533,76.8 503.2,76.8 503.2,43.4 536.8,43.4 
+				536.8,34.4 492.5,34.4 			"/>
+			<polygon points="563.5,34.4 563.5,43.4 580.3,43.4 580.3,131 591.2,131 591.2,43.4 608,43.4 608,34.4 			"/>
+		</g>
+		<g>
+			<path d="M76.1,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C72,69.9,76.1,65.8,76.1,60.8z"/>
+			<path d="M127.8,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C123.7,69.9,127.8,65.8,127.8,60.8z"/>
+			<path d="M164.9,153.9h-10.6v-8.3h10.6c1.9,0,3.4-1.5,3.4-3.4c0-1.9-1.5-3.4-3.4-3.4h-10.6v-1.2c0-1.9-1.5-3.4-3.4-3.4
+				c-8.5,0-14.6,3.8-16.8,10.1c-0.3-0.1-0.6-0.2-1-0.2H29.4V28h125.3v80c0,3.1,2.6,5.7,5.7,5.7c3.1,0,5.7-2.5,5.7-5.7V22.3
+				c0-3.1-2.6-5.7-5.7-5.7H23.7c-3.1,0-5.7,2.5-5.7,5.7v127.5c0,3.1,2.5,5.7,5.7,5.7h109.4c0.3,0,0.6-0.1,0.9-0.2
+				c2.5,7.3,9.9,10.1,16.9,10.1c1.9,0,3.4-1.5,3.4-3.4v-1.2h10.6c1.9,0,3.4-1.5,3.4-3.4C168.3,155.5,166.8,153.9,164.9,153.9z
+				 M147.5,158.3c-3.7-0.7-7.6-2.8-7.6-8.5c0-5.8,3.9-7.8,7.6-8.5V158.3z"/>
+			<g>
+				<path d="M94.5,112c-10.1,0-18.4-1.5-18.9-1.5c-3.4-0.6-5.6-3.8-5-7.2c0.6-3.4,3.7-5.6,7.2-5c0.2,0,17.2,3,30.5,0
+					c3.4-0.7,6.7,1.4,7.4,4.7c0.7,3.4-1.4,6.7-4.7,7.4C105.5,111.6,99.8,112,94.5,112z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg></a>
+  <div class="mode"><span data-v="human" class="on">Human</span><button class="sw" role="switch" aria-checked="false" aria-label="Show the page for AI agents"><i></i></button><span data-v="agent">Agent</span></div>
+  <nav class="nav">
+    <a class="cur" href="#top">Home</a>
+    <a href="#">Integrations <small>2,300+</small></a>
+    <a href="#">Pricing</a>
+    <a href="#">Docs <small>↗</small></a>
+    <a href="#">Book a demo</a>
+    <a href="#">Log in</a>
+  </nav>
+  <a class="start" href="#">Start free →</a>
+  <span class="mono toc-h">The story</span>
+  <div class="toc"><span class="fill" id="tocFill"></span>
+    <a href="#top"><b>01</b>The idea</a>
+    <a href="#how"><b>02</b>Plug in</a>
+    <a href="#see"><b>03</b>Connect once</a>
+    <a href="#cases"><b>04</b>What teams build</a>
+    <a href="#handles"><b>05</b>What's handled</a>
+    <a href="#security"><b>06</b>Security</a>
+    <a href="#prompts"><b>07</b>First prompt</a>
+    <a href="#faq"><b>08</b>Questions</a>
+  </div>
+  <div class="side-foot">
+    <div class="theme" data-theme-switch></div>
+  </div>
+</aside>
+
+<main><div class="content">
+<div id="human">
+
+<section class="hero" id="top">
+  <h1>Integration layer<br>for your <span class="rot"><em id="rot">AI agent.</em></span></h1>
+  <p class="lede">You build the app or agent. viaSocket handles the connections and actions.</p>
+  <div class="ctas">
+    <button class="btn solid" data-copy><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="tx">Copy setup prompt</span></button>
+    <a class="btn" href="#"><span class="dot"></span>Talk to an expert →</a>
+  </div>
+  <div class="stats">
+    <div class="stat">
+      <div class="marks">
+        <span><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt="Gmail"></span>
+        <span><img src="https://www.google.com/s2/favicons?domain=slack.com&sz=64" alt="Slack"></span>
+        <span><img src="https://www.google.com/s2/favicons?domain=hubspot.com&sz=64" alt="HubSpot"></span>
+        <span><img src="https://www.google.com/s2/favicons?domain=shopify.com&sz=64" alt="Shopify"></span>
+      </div>
+      <div><b>2,300+</b><span class="mono">Apps</span></div>
+    </div>
+    <div class="stat">
+      <div class="marks"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span></div>
+      <div><b>Browser</b><span class="mono">Built in</span></div>
+    </div>
+    <div class="stat">
+      <div class="marks">
+        <span><img class="inv" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" alt="OpenAI"></span>
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt="Claude"></span>
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt="Gemini"></span>
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Mistral_AI_logo_%282025%E2%80%93%29.svg" alt="Mistral"></span>
+      </div>
+      <div><b>50+</b><span class="mono">AI models</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="rv">
+  <div class="head">
+    <h2>Plug in viaSocket, and your app or agent can act in 2,300+ apps.</h2>
+  </div>
+  <div class="fig" id="fig">
+    <div class="box"><b>Your app<br>or AI agent</b></div>
+    <div class="wire"></div>
+    <div class="box dark"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 class="logo" viewBox="0 0 624 184" style="enable-background:new 0 0 624 184;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M247.9,37.9c-2.6-2.1-5.9-3.3-10-3.5h-16c-4.8,0.2-8.4,1.5-10.6,3.9c-2.2,2.4-3.3,5.1-3.3,8.3V77c0,3.3,1.7,5.8,4.9,7.3
+				c2.6,1.2,5.2,1.8,7.7,1.8h14.7c4.2,0,5.2,0.7,5.3,0.7c0.2,0.2,0.7,0.6,0.7,2v27.6c0,1.9-0.4,3.4-1.1,4.4c-0.7,1-2.5,1.2-3.8,1.2
+				h-12.2c-3.7,0-4.5-0.9-4.6-1c-0.5-0.6-1-1.9-1-4.5V97.2h-10.7v22.7c0,2.9,1.4,5.5,4.2,7.7c2.6,2.1,5.9,3.3,10,3.5h16h0
+				c4.8-0.2,8.4-1.5,10.6-3.9c2.2-2.4,3.3-5.1,3.3-8.3v-33c0-1.6-0.6-3.1-1.7-4.2c-0.9-0.9-1.9-1.8-3-2.5c-1.1-0.7-2.4-1.2-3.7-1.6
+				c-1.4-0.4-2.5-0.6-3.4-0.6h-17.2c-2.9,0-3.7-0.4-3.8-0.3c-0.3-0.6-0.5-1.5-0.5-2.7V49c0-1.9,0.3-3.5,1-4.5
+				c0.5-0.7,1.9-1.1,3.9-1.1h12.2c3.5,0,4.4,0.8,4.6,1.1c0.7,0.9,1,2.5,1,4.6v19.1h10.7V45.6C252.1,42.7,250.7,40.1,247.9,37.9z"/>
+			<path d="M318.8,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.9,0-8.5,1.3-10.7,3.8c-2.2,2.4-3.3,5.2-3.3,8.4v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.7,3.9,10.6,4.1h17.4h0.1c4.2-0.2,7.4-1.4,9.6-3.7c2.2-2.3,3.4-4.9,3.4-7.7v-74C323,42.7,321.6,40.1,318.8,37.9z
+				 M312.3,49.1v67.1c0,2.1-0.4,3.7-1,4.6c-0.2,0.3-1.1,1.1-4.6,1.1H297c-4.9,0-6.1-1-6.3-1.2c-0.8-0.9-1.2-2.4-1.2-4.4V49
+				c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5h12.2c3.5,0,4.4,0.8,4.6,1.1C311.9,45.4,312.3,47,312.3,49.1z"/>
+			<path d="M389.6,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.3,0-7.8,1.2-10.3,3.7c-2.5,2.5-3.7,5.3-3.7,8.5v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.6,3.9,10.6,4.1h17.4h0c4.2-0.2,7.4-1.4,9.7-3.7c2.2-2.3,3.4-4.9,3.4-7.7V97.2h-10.7v19.1c0,2.1-0.4,3.7-1,4.6
+				c-0.2,0.3-1.1,1.1-4.6,1.1h-9.3c-4.7,0-6.1-0.9-6.5-1.3c-0.9-0.9-1.3-2.4-1.3-4.3V49c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5
+				h12.2c3.7,0,4.5,0.9,4.6,1c0.5,0.6,1,1.9,1,4.5v19.2h10.7V45.6C393.8,42.7,392.4,40.1,389.6,37.9z"/>
+			<polygon points="466.6,34.4 454.8,34.4 431.2,75.8 431.2,34.4 420.6,34.4 420.6,131 431.2,131 431.2,95.1 437,85.5 455.7,131 
+				466.9,131 444,74.6 			"/>
+			<polygon points="492.5,131 536.8,131 536.8,121.9 503.2,121.9 503.2,85.8 533,85.8 533,76.8 503.2,76.8 503.2,43.4 536.8,43.4 
+				536.8,34.4 492.5,34.4 			"/>
+			<polygon points="563.5,34.4 563.5,43.4 580.3,43.4 580.3,131 591.2,131 591.2,43.4 608,43.4 608,34.4 			"/>
+		</g>
+		<g>
+			<path d="M76.1,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C72,69.9,76.1,65.8,76.1,60.8z"/>
+			<path d="M127.8,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C123.7,69.9,127.8,65.8,127.8,60.8z"/>
+			<path d="M164.9,153.9h-10.6v-8.3h10.6c1.9,0,3.4-1.5,3.4-3.4c0-1.9-1.5-3.4-3.4-3.4h-10.6v-1.2c0-1.9-1.5-3.4-3.4-3.4
+				c-8.5,0-14.6,3.8-16.8,10.1c-0.3-0.1-0.6-0.2-1-0.2H29.4V28h125.3v80c0,3.1,2.6,5.7,5.7,5.7c3.1,0,5.7-2.5,5.7-5.7V22.3
+				c0-3.1-2.6-5.7-5.7-5.7H23.7c-3.1,0-5.7,2.5-5.7,5.7v127.5c0,3.1,2.5,5.7,5.7,5.7h109.4c0.3,0,0.6-0.1,0.9-0.2
+				c2.5,7.3,9.9,10.1,16.9,10.1c1.9,0,3.4-1.5,3.4-3.4v-1.2h10.6c1.9,0,3.4-1.5,3.4-3.4C168.3,155.5,166.8,153.9,164.9,153.9z
+				 M147.5,158.3c-3.7-0.7-7.6-2.8-7.6-8.5c0-5.8,3.9-7.8,7.6-8.5V158.3z"/>
+			<g>
+				<path d="M94.5,112c-10.1,0-18.4-1.5-18.9-1.5c-3.4-0.6-5.6-3.8-5-7.2c0.6-3.4,3.7-5.6,7.2-5c0.2,0,17.2,3,30.5,0
+					c3.4-0.7,6.7,1.4,7.4,4.7c0.7,3.4-1.4,6.7-4.7,7.4C105.5,111.6,99.8,112,94.5,112z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg></div>
+    <div class="wire"></div>
+    <div class="box list">
+      <div class="r"><span class="lg"><img src="https://www.google.com/s2/favicons?domain=slack.com&sz=64" alt=""><img src="https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg" alt=""><img src="https://www.google.com/s2/favicons?domain=hubspot.com&sz=64" alt=""></span><b>2,300+ apps</b></div>
+      <div class="r"><span class="lg"><img class="inv" src="https://upload.wikimedia.org/wikipedia/commons/e/ef/ChatGPT-Logo.svg" alt=""><img src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg" alt=""><img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg" alt=""></span><b>AI agents</b></div>
+      <div class="r"><span class="lg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg></span><b>Browser agents</b></div>
+    </div>
+  </div>
+</section>
+
+<section id="see" class="rv">
+  <div class="head">
+    <h2>Your user connects an app once. After that, it just runs.</h2>
+  </div>
+  <div class="dtabs" id="dtabs"></div>
+  <div class="stage" id="stage">
+    <div class="chrome">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <div class="url"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>yourapp.com/assistant</div>
+      <button class="replay" id="replay">↻ Replay</button>
+    </div>
+    <div class="panes">
+      <div class="chat">
+        <div class="chat-h">
+          <svg class="agent"><use href="#agentMark"/></svg>
+          <div><b>Your AI agent</b><span id="thread">Launch notes</span></div>
+        </div>
+        <div class="msgs" id="msgs"></div>
+        <div class="composer" id="composer"><div class="field" id="field"></div><button class="send" id="send" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
+        <div class="consent-wrap" id="consentWrap">
+          <div class="consent" id="consent"></div>
+          <div class="consent-note" id="consentNote"></div>
+        </div>
+      </div>
+      <div class="acts">
+        <div class="acts-h"><b>What your agent did</b><span id="count"></span></div>
+        <div class="acts-list" id="acts"></div>
+      </div>
+    </div>
+    <div class="cursor" id="cursor"><svg viewBox="0 0 24 24"><path d="M4 2l15 9.5-6.6 1.4L16 21l-3 1.3-3.6-8.1L4 18.5z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><i class="ring"></i><span class="lbl">You</span></div>
+  </div>
+</section>
+
+<section id="cases" class="rv">
+  <div class="head">
+    <h2>That's how teams are building agents, apps and internal tools.</h2>
+  </div>
+  <div class="filters" id="filters">
+    <button class="on" data-f="all">All <sup>08</sup></button>
+    <button data-f="agent">Agents <sup>04</sup></button>
+    <button data-f="app">Apps <sup>03</sup></button>
+    <button data-f="tool">Internal tools <sup>01</sup></button>
+  </div>
+  <div class="cases" id="caseGrid"></div>
+</section>
+
+<section id="handles" class="rv">
+  <div class="head">
+    <h2>Behind every one of them, the hard parts are handled.</h2>
+  </div>
+  <div class="feats" id="feats"></div>
+</section>
+
+<section id="security" class="rv">
+  <div class="head">
+    <h2>And your secrets never leave your server.</h2>
+  </div>
+  <div class="trust">
+    <div><span class="mono">Compliance</span><h3>GDPR and CCPA</h3></div>
+    <div><span class="mono">Network</span><h3>HTTPS behind Cloudflare</h3></div>
+    <div><span class="mono">Protection</span><h3>DDoS protection and web firewall</h3></div>
+  </div>
+  <div class="badges">
+    <img src="https://viasocket.com/new-home/assets/badge-g2.svg" alt="G2">
+    <img src="https://viasocket.com/new-home/assets/badge-capterra.svg" alt="Capterra">
+    <a href="#">Security details →</a>
+  </div>
+</section>
+
+<section id="prompts" class="rv">
+  <div class="head">
+    <h2>You start with one prompt. Pick one and paste it in.</h2>
+  </div>
+  <div class="prompts" id="plist"></div>
+</section>
+
+
+<section id="faq" class="rv">
+  <div class="head">
+    <h2>Still wondering about something?</h2>
+  </div>
+  <div class="faq" id="faqList"></div>
+</section>
+
+<section class="final rv">
+  <h2>Your agent's powers are one prompt away.</h2>
+  <div class="ctas">
+    <button class="btn solid" data-copy><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="tx">Copy setup prompt</span></button>
+    <a class="btn" href="#">Book a demo</a>
+    <a class="btn" href="#">Chat with us</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-top">
+    <div>
+      <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 class="logo" viewBox="0 0 624 184" style="enable-background:new 0 0 624 184;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M247.9,37.9c-2.6-2.1-5.9-3.3-10-3.5h-16c-4.8,0.2-8.4,1.5-10.6,3.9c-2.2,2.4-3.3,5.1-3.3,8.3V77c0,3.3,1.7,5.8,4.9,7.3
+				c2.6,1.2,5.2,1.8,7.7,1.8h14.7c4.2,0,5.2,0.7,5.3,0.7c0.2,0.2,0.7,0.6,0.7,2v27.6c0,1.9-0.4,3.4-1.1,4.4c-0.7,1-2.5,1.2-3.8,1.2
+				h-12.2c-3.7,0-4.5-0.9-4.6-1c-0.5-0.6-1-1.9-1-4.5V97.2h-10.7v22.7c0,2.9,1.4,5.5,4.2,7.7c2.6,2.1,5.9,3.3,10,3.5h16h0
+				c4.8-0.2,8.4-1.5,10.6-3.9c2.2-2.4,3.3-5.1,3.3-8.3v-33c0-1.6-0.6-3.1-1.7-4.2c-0.9-0.9-1.9-1.8-3-2.5c-1.1-0.7-2.4-1.2-3.7-1.6
+				c-1.4-0.4-2.5-0.6-3.4-0.6h-17.2c-2.9,0-3.7-0.4-3.8-0.3c-0.3-0.6-0.5-1.5-0.5-2.7V49c0-1.9,0.3-3.5,1-4.5
+				c0.5-0.7,1.9-1.1,3.9-1.1h12.2c3.5,0,4.4,0.8,4.6,1.1c0.7,0.9,1,2.5,1,4.6v19.1h10.7V45.6C252.1,42.7,250.7,40.1,247.9,37.9z"/>
+			<path d="M318.8,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.9,0-8.5,1.3-10.7,3.8c-2.2,2.4-3.3,5.2-3.3,8.4v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.7,3.9,10.6,4.1h17.4h0.1c4.2-0.2,7.4-1.4,9.6-3.7c2.2-2.3,3.4-4.9,3.4-7.7v-74C323,42.7,321.6,40.1,318.8,37.9z
+				 M312.3,49.1v67.1c0,2.1-0.4,3.7-1,4.6c-0.2,0.3-1.1,1.1-4.6,1.1H297c-4.9,0-6.1-1-6.3-1.2c-0.8-0.9-1.2-2.4-1.2-4.4V49
+				c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5h12.2c3.5,0,4.4,0.8,4.6,1.1C311.9,45.4,312.3,47,312.3,49.1z"/>
+			<path d="M389.6,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.3,0-7.8,1.2-10.3,3.7c-2.5,2.5-3.7,5.3-3.7,8.5v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.6,3.9,10.6,4.1h17.4h0c4.2-0.2,7.4-1.4,9.7-3.7c2.2-2.3,3.4-4.9,3.4-7.7V97.2h-10.7v19.1c0,2.1-0.4,3.7-1,4.6
+				c-0.2,0.3-1.1,1.1-4.6,1.1h-9.3c-4.7,0-6.1-0.9-6.5-1.3c-0.9-0.9-1.3-2.4-1.3-4.3V49c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5
+				h12.2c3.7,0,4.5,0.9,4.6,1c0.5,0.6,1,1.9,1,4.5v19.2h10.7V45.6C393.8,42.7,392.4,40.1,389.6,37.9z"/>
+			<polygon points="466.6,34.4 454.8,34.4 431.2,75.8 431.2,34.4 420.6,34.4 420.6,131 431.2,131 431.2,95.1 437,85.5 455.7,131 
+				466.9,131 444,74.6 			"/>
+			<polygon points="492.5,131 536.8,131 536.8,121.9 503.2,121.9 503.2,85.8 533,85.8 533,76.8 503.2,76.8 503.2,43.4 536.8,43.4 
+				536.8,34.4 492.5,34.4 			"/>
+			<polygon points="563.5,34.4 563.5,43.4 580.3,43.4 580.3,131 591.2,131 591.2,43.4 608,43.4 608,34.4 			"/>
+		</g>
+		<g>
+			<path d="M76.1,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C72,69.9,76.1,65.8,76.1,60.8z"/>
+			<path d="M127.8,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C123.7,69.9,127.8,65.8,127.8,60.8z"/>
+			<path d="M164.9,153.9h-10.6v-8.3h10.6c1.9,0,3.4-1.5,3.4-3.4c0-1.9-1.5-3.4-3.4-3.4h-10.6v-1.2c0-1.9-1.5-3.4-3.4-3.4
+				c-8.5,0-14.6,3.8-16.8,10.1c-0.3-0.1-0.6-0.2-1-0.2H29.4V28h125.3v80c0,3.1,2.6,5.7,5.7,5.7c3.1,0,5.7-2.5,5.7-5.7V22.3
+				c0-3.1-2.6-5.7-5.7-5.7H23.7c-3.1,0-5.7,2.5-5.7,5.7v127.5c0,3.1,2.5,5.7,5.7,5.7h109.4c0.3,0,0.6-0.1,0.9-0.2
+				c2.5,7.3,9.9,10.1,16.9,10.1c1.9,0,3.4-1.5,3.4-3.4v-1.2h10.6c1.9,0,3.4-1.5,3.4-3.4C168.3,155.5,166.8,153.9,164.9,153.9z
+				 M147.5,158.3c-3.7-0.7-7.6-2.8-7.6-8.5c0-5.8,3.9-7.8,7.6-8.5V158.3z"/>
+			<g>
+				<path d="M94.5,112c-10.1,0-18.4-1.5-18.9-1.5c-3.4-0.6-5.6-3.8-5-7.2c0.6-3.4,3.7-5.6,7.2-5c0.2,0,17.2,3,30.5,0
+					c3.4-0.7,6.7,1.4,7.4,4.7c0.7,3.4-1.4,6.7-4.7,7.4C105.5,111.6,99.8,112,94.5,112z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>
+      <p>The integration layer for your product and your AI agent.</p>
+      <div class="f-social">
+        <a href="#" aria-label="X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.8 3h3.1l-6.8 7.7L22 21h-6.2l-4.9-6.4L5.3 21H2.2l7.3-8.3L2 3h6.4l4.4 5.8zm-1.1 16.2h1.7L7.4 4.7H5.6z"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zm7 0h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.3c0-1.3 0-2.9-1.8-2.9s-2 1.4-2 2.8V21h-4z"/></svg></a>
+        <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1c.4-1.6.5-3.2.5-4.8s-.1-3.2-.5-4.8zM9.7 15.1V8.9L15.5 12z"/></svg></a>
+      </div>
+    </div>
+    <div><span class="mono">Product</span><a class="l" href="#">Integrations</a><a class="l" href="#">Pricing</a><a class="l" href="#">Docs</a><a class="l" href="#">Plug Builder</a></div>
+    <div><span class="mono">Use cases</span><a class="l" href="#">AI agents</a><a class="l" href="#">SaaS integrations</a><a class="l" href="#">Internal tools</a></div>
+    <div><span class="mono">Company</span><a class="l" href="#">Blog</a><a class="l" href="#">Security</a><a class="l" href="#">Book a demo</a><a class="l" href="#">Contact</a></div>
+  </div>
+  <div class="f-mark"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 class="logo" viewBox="0 0 624 184" style="enable-background:new 0 0 624 184;" xml:space="preserve">
+<g>
+	<g>
+		<g>
+			<path d="M247.9,37.9c-2.6-2.1-5.9-3.3-10-3.5h-16c-4.8,0.2-8.4,1.5-10.6,3.9c-2.2,2.4-3.3,5.1-3.3,8.3V77c0,3.3,1.7,5.8,4.9,7.3
+				c2.6,1.2,5.2,1.8,7.7,1.8h14.7c4.2,0,5.2,0.7,5.3,0.7c0.2,0.2,0.7,0.6,0.7,2v27.6c0,1.9-0.4,3.4-1.1,4.4c-0.7,1-2.5,1.2-3.8,1.2
+				h-12.2c-3.7,0-4.5-0.9-4.6-1c-0.5-0.6-1-1.9-1-4.5V97.2h-10.7v22.7c0,2.9,1.4,5.5,4.2,7.7c2.6,2.1,5.9,3.3,10,3.5h16h0
+				c4.8-0.2,8.4-1.5,10.6-3.9c2.2-2.4,3.3-5.1,3.3-8.3v-33c0-1.6-0.6-3.1-1.7-4.2c-0.9-0.9-1.9-1.8-3-2.5c-1.1-0.7-2.4-1.2-3.7-1.6
+				c-1.4-0.4-2.5-0.6-3.4-0.6h-17.2c-2.9,0-3.7-0.4-3.8-0.3c-0.3-0.6-0.5-1.5-0.5-2.7V49c0-1.9,0.3-3.5,1-4.5
+				c0.5-0.7,1.9-1.1,3.9-1.1h12.2c3.5,0,4.4,0.8,4.6,1.1c0.7,0.9,1,2.5,1,4.6v19.1h10.7V45.6C252.1,42.7,250.7,40.1,247.9,37.9z"/>
+			<path d="M318.8,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.9,0-8.5,1.3-10.7,3.8c-2.2,2.4-3.3,5.2-3.3,8.4v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.7,3.9,10.6,4.1h17.4h0.1c4.2-0.2,7.4-1.4,9.6-3.7c2.2-2.3,3.4-4.9,3.4-7.7v-74C323,42.7,321.6,40.1,318.8,37.9z
+				 M312.3,49.1v67.1c0,2.1-0.4,3.7-1,4.6c-0.2,0.3-1.1,1.1-4.6,1.1H297c-4.9,0-6.1-1-6.3-1.2c-0.8-0.9-1.2-2.4-1.2-4.4V49
+				c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5h12.2c3.5,0,4.4,0.8,4.6,1.1C311.9,45.4,312.3,47,312.3,49.1z"/>
+			<path d="M389.6,37.9c-2.6-2.1-5.9-3.3-10-3.5h-15.9c-4.3,0-7.8,1.2-10.3,3.7c-2.5,2.5-3.7,5.3-3.7,8.5v72.3c0,2.9,1,5.6,3.1,8.1
+				c2.1,2.5,5.6,3.9,10.6,4.1h17.4h0c4.2-0.2,7.4-1.4,9.7-3.7c2.2-2.3,3.4-4.9,3.4-7.7V97.2h-10.7v19.1c0,2.1-0.4,3.7-1,4.6
+				c-0.2,0.3-1.1,1.1-4.6,1.1h-9.3c-4.7,0-6.1-0.9-6.5-1.3c-0.9-0.9-1.3-2.4-1.3-4.3V49c0-1.8,0.5-3.1,1.4-4.1c1-1,2.1-1.5,3.5-1.5
+				h12.2c3.7,0,4.5,0.9,4.6,1c0.5,0.6,1,1.9,1,4.5v19.2h10.7V45.6C393.8,42.7,392.4,40.1,389.6,37.9z"/>
+			<polygon points="466.6,34.4 454.8,34.4 431.2,75.8 431.2,34.4 420.6,34.4 420.6,131 431.2,131 431.2,95.1 437,85.5 455.7,131 
+				466.9,131 444,74.6 			"/>
+			<polygon points="492.5,131 536.8,131 536.8,121.9 503.2,121.9 503.2,85.8 533,85.8 533,76.8 503.2,76.8 503.2,43.4 536.8,43.4 
+				536.8,34.4 492.5,34.4 			"/>
+			<polygon points="563.5,34.4 563.5,43.4 580.3,43.4 580.3,131 591.2,131 591.2,43.4 608,43.4 608,34.4 			"/>
+		</g>
+		<g>
+			<path d="M76.1,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C72,69.9,76.1,65.8,76.1,60.8z"/>
+			<path d="M127.8,60.8c0-5-4.1-9.1-9.1-9.1c-5,0-9.1,4.1-9.1,9.1c0,5,4.1,9.1,9.1,9.1C123.7,69.9,127.8,65.8,127.8,60.8z"/>
+			<path d="M164.9,153.9h-10.6v-8.3h10.6c1.9,0,3.4-1.5,3.4-3.4c0-1.9-1.5-3.4-3.4-3.4h-10.6v-1.2c0-1.9-1.5-3.4-3.4-3.4
+				c-8.5,0-14.6,3.8-16.8,10.1c-0.3-0.1-0.6-0.2-1-0.2H29.4V28h125.3v80c0,3.1,2.6,5.7,5.7,5.7c3.1,0,5.7-2.5,5.7-5.7V22.3
+				c0-3.1-2.6-5.7-5.7-5.7H23.7c-3.1,0-5.7,2.5-5.7,5.7v127.5c0,3.1,2.5,5.7,5.7,5.7h109.4c0.3,0,0.6-0.1,0.9-0.2
+				c2.5,7.3,9.9,10.1,16.9,10.1c1.9,0,3.4-1.5,3.4-3.4v-1.2h10.6c1.9,0,3.4-1.5,3.4-3.4C168.3,155.5,166.8,153.9,164.9,153.9z
+				 M147.5,158.3c-3.7-0.7-7.6-2.8-7.6-8.5c0-5.8,3.9-7.8,7.6-8.5V158.3z"/>
+			<g>
+				<path d="M94.5,112c-10.1,0-18.4-1.5-18.9-1.5c-3.4-0.6-5.6-3.8-5-7.2c0.6-3.4,3.7-5.6,7.2-5c0.2,0,17.2,3,30.5,0
+					c3.4-0.7,6.7,1.4,7.4,4.7c0.7,3.4-1.4,6.7-4.7,7.4C105.5,111.6,99.8,112,94.5,112z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg></div>
+  <div class="f-legal">
+    <span>© 2026 viaSocket</span>
+    <nav><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></nav>
+    <span class="status"><b></b>All systems operational</span>
+  </div>
+</footer>
+</div>
+
+<div id="agentView">
+  <div class="bar"><span class="mono" style="color:var(--ink-3)">viasocket.com/index.md · for AI agents</span><button class="btn" data-copy="md" style="padding:7px 12px;font-size:12px"><span class="tx">Copy page</span></button></div>
+  <pre id="md"></pre>
+</div>
+</div></main>
+</div>
+
+<script>
+const fav=d=>`https://www.google.com/s2/favicons?domain=${d}&sz=64`;
+const LOGO={gmail:'https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg',whatsapp:'https://stuff.thingsofbrand.com/viasocket.com/images/imge_whatsapp.svg',salesforce:'https://stuff.thingsofbrand.com/salesforce.com/images/img1_salesforce.png',freshdesk:'https://stuff.thingsofbrand.com/freshdesk.com/images/imgf_freshdesk.png',gcal:'https://stuff.thingsofbrand.com/google.com/images/img7_Google-Calendar.png',gsheets:'https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg'};
+const lg=k=>LOGO[k]||fav(k);
+const SETUP="Set up viaSocket in this project. Read https://flow.viasocket.com/documentation/skill.md and follow it.";
+const AGENT='<svg class="agent"><use href="#agentMark"/></svg>';
+const $=id=>document.getElementById(id);
+
+/* theme */
+const ICONS={system:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/></svg>',light:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',dark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>'};
+let theme='system';try{theme=localStorage.getItem('vs-theme')||'system'}catch(_){}
+function applyTheme(t){theme=t;if(t==='system')delete document.documentElement.dataset.theme;else document.documentElement.dataset.theme=t;
+  try{localStorage.setItem('vs-theme',t)}catch(_){}
+  document.querySelectorAll('[data-theme-switch] button').forEach(b=>b.classList.toggle('on',b.dataset.t===t))}
+document.querySelectorAll('[data-theme-switch]').forEach(w=>{w.innerHTML=['system','light','dark'].map(t=>`<button data-t="${t}" aria-label="${t} theme">${ICONS[t]}</button>`).join('');w.onclick=e=>{const b=e.target.closest('button');if(b)applyTheme(b.dataset.t)}});
+applyTheme(theme);
+
+/* hero rotating word, same words as viasocket.com */
+const WORDS=['AI agent.','CRM.','support desk.','recruiting app.'];let wi=0;
+setInterval(()=>{const r=$('rot');r.classList.add('out');setTimeout(()=>{wi=(wi+1)%WORDS.length;r.textContent=WORDS[wi];r.classList.remove('out');r.classList.add('in');void r.offsetWidth;r.classList.remove('in')},350)},2600);
+
+/* copy */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;
+  const txt=b.dataset.copy==='md'?$('md').textContent:SETUP;try{navigator.clipboard.writeText(txt)}catch(_){}
+  const t=b.querySelector('.tx');const o=t.textContent;t.textContent='Copied';setTimeout(()=>t.textContent=o,1400)});
+
+
+
+/* ---------------- demo ---------------- */
+const demos=[
+ {tab:'AI agent',thread:'Launch notes',ask:'Post the launch notes to #marketing.',app:'Slack',key:'slack.com',brand:'#007a5a',host:'northwind.slack.com',
+  perms:['Send messages as Your AI agent','See channels it is added to'],need:'I need access to Slack to post them.',blocked:'Post to #marketing',
+  steps:[['notion.so','Reading the launch notes','Read the launch notes','In Notion'],['slack.com','Posting to #marketing','Posted to #marketing','In Slack']],
+  done:'Posted the launch notes to #marketing.',res:['slack.com','#marketing','Launch notes: v2.4 is live. 6 updates, 2 fixes.']},
+ {tab:'CRM',thread:'Webinar leads',ask:'Add Priya from the webinar to HubSpot and book a call.',app:'HubSpot',key:'hubspot.com',brand:'#ff7a59',host:'app.hubspot.com',
+  perms:['Create and update contacts','Read deals and owners'],need:'I need access to HubSpot to add her.',blocked:'Add Priya to HubSpot',
+  steps:[['hubspot.com','Adding Priya to HubSpot','Added Priya to HubSpot','New contact from the webinar'],['gcal','Finding a free slot','Booked a 30 min call','Thu, 11:00'],['gmail','Sending the invite','Sent Priya the invite','From your Gmail']],
+  done:'Priya is in HubSpot and the call is booked for Thu, 11:00.',res:['hubspot.com','Contact created','Priya Shah · Acme · Lead']},
+ {tab:'Support desk',thread:'Ticket #1042',ask:'Answer ticket #1042. The customer wants to know where their order is.',app:'Shopify',key:'shopify.com',brand:'#008060',host:'northwind.myshopify.com',
+  perms:['Read orders and fulfillments','Read customers'],need:'I need access to Shopify to look up the order.',blocked:'Look up order #1042',
+  steps:[['shopify.com','Looking up order #1042','Found order #1042','Shipped with UPS, arrives Thu'],['freshdesk','Replying to the customer','Replied and solved the ticket','In Freshdesk'],['gmail','Emailing the tracking link','Emailed the tracking link','To Maya Kapoor']],
+  done:'Replied with the UPS tracking link and solved #1042.',res:['freshdesk','Ticket #1042','Solved · reply sent to Maya Kapoor']},
+ {tab:'Recruiting',thread:'Shortlist',ask:'Schedule interviews with the three shortlisted candidates.',app:'Google Calendar',key:'gcal',brand:'#1a73e8',host:'accounts.google.com',
+  perms:['See and edit events on your calendars','See free and busy times'],need:'I need access to Google Calendar to find slots.',blocked:'Check the team calendar',
+  steps:[['gcal','Checking calendars','Found 3 free slots','Next week'],['gcal','Booking interviews','Booked 3 interviews','Tue, Wed and Thu'],['gmail','Sending invites','Sent 3 invites','From your Gmail']],
+  done:'Three interviews booked for next week and invites sent.',res:['gcal','3 interviews booked','Tue 10:00 · Wed 14:30 · Thu 11:00']}
+];
+const stage=$('stage'),cursor=$('cursor');
+let run=0,idx=0,started=false;
+$('dtabs').innerHTML=demos.map((d,i)=>`<button data-i="${i}">${d.tab}<span class="bar"></span></button>`).join('');
+$('dtabs').onclick=e=>{const b=e.target.closest('button');if(b)play(+b.dataset.i)};
+$('replay').onclick=()=>play(idx);
+
+const wait=(ms,id)=>new Promise((res,rej)=>setTimeout(()=>id===run?res():rej('x'),ms));
+function pos(el){const s=stage.getBoundingClientRect(),r=el.getBoundingClientRect();return [r.left-s.left+r.width/2-3,r.top-s.top+r.height/2-3]}
+async function moveTo(el,id){const [x,y]=pos(el);cursor.style.transform=`translate(${x}px,${y}px)`;await wait(900,id)}
+async function click(id){cursor.classList.remove('click');void cursor.offsetWidth;cursor.classList.add('click');await wait(240,id)}
+function addMsg(html,me){const m=document.createElement('div');m.className='msg'+(me?' me':'');m.innerHTML=(me?'':AGENT)+`<div class="bubble">${html}</div>`;$('msgs').appendChild(m);return m}
+function typing(){const t=addMsg('<span class="typing"><i></i><i></i><i></i></span>');t.querySelector('.bubble').style.padding='0';return t}
+let nDone=0;
+function setCount(){$('count').textContent=nDone?`${nDone} done`:''}
+function addAct(logo,title,sub,state){const acts=$('acts');if(acts.querySelector('.acts-empty'))acts.innerHTML='';
+  const el=document.createElement('div');el.className='act';
+  el.innerHTML=`<span class="ic">${logo}</span><span class="tx"><b>${title}</b><small>${sub}</small></span><span class="st"></span>`;
+  acts.appendChild(el);while(acts.children.length>5)acts.firstChild.remove();setAct(el,state);return el}
+function setAct(el,state,title,sub){const st=el.querySelector('.st');
+  st.innerHTML=state==='run'?'<i class="spin"></i>':state==='ok'?'<span class="ok">✓</span>':`<span class="wait">${state}</span>`;
+  if(title)el.querySelector('b').textContent=title;if(sub)el.querySelector('small').textContent=sub;
+  if(state==='ok'){nDone++;setCount()}}
+const img=k=>`<img src="${lg(k)}" alt="">`;
+
+async function play(i){
+  const id=++run;idx=i;const d=demos[i];
+  [...$('dtabs').children].forEach((b,k)=>{b.classList.toggle('on',k===i);const bar=b.querySelector('.bar');bar.style.transition='none';bar.style.width='0'});
+  $('msgs').innerHTML='';$('field').textContent='';$('acts').innerHTML='<div class="acts-empty">Everything your agent does shows up here.</div>';nDone=0;setCount();
+  $('consentWrap').classList.remove('show');$('thread').textContent=d.thread;$('composer').classList.remove('focus');
+  cursor.style.transition='none';cursor.style.transform=`translate(${stage.clientWidth*.45}px,${stage.clientHeight+30}px)`;void cursor.offsetWidth;cursor.style.transition='';
+  const bar=$('dtabs').children[i].querySelector('.bar');
+  try{
+    await wait(400,id);
+    await moveTo($('field'),id);await click(id);$('composer').classList.add('focus');
+    let typed='';for(const ch of d.ask){typed+=ch;$('field').innerHTML=typed+'<span class="caret"></span>';await wait(22,id)}
+    $('field').textContent=d.ask;await wait(200,id);
+    await moveTo($('send'),id);await click(id);
+    $('send').classList.add('press');setTimeout(()=>$('send').classList.remove('press'),150);
+    $('field').textContent='';$('composer').classList.remove('focus');addMsg(d.ask,true);
+    await wait(350,id);
+    const t=typing();
+    const blocked=addAct(img(d.key),d.blocked,`Needs ${d.app}`,'run');
+    await wait(900,id);
+    setAct(blocked,'Waiting for you');t.remove();
+    const m=addMsg(`${d.need}<div class="connect-card">${img(d.key)}<div>${d.app} isn't connected<small>Approve it once on ${d.app}'s own screen.</small></div><button>Connect ${d.app}</button></div>`);
+    await wait(700,id);
+    const cb=m.querySelector('.connect-card button');
+    await moveTo(cb,id);await click(id);
+    const consent=$('consent');consent.style.setProperty('--brand',d.brand);
+    consent.innerHTML=`<div class="top"><div class="pair">${AGENT}<i>⇄</i>${img(d.key)}</div><h4>Your AI agent wants to access your ${d.app} account</h4><div class="host">${d.host}</div></div><ul>${d.perms.map(p=>`<li>${p}</li>`).join('')}</ul><div class="cbtns"><span>Cancel</span><span class="allow" id="allow">Allow</span></div>`;
+    $('consentNote').textContent=`${d.app.toUpperCase()}'S OWN CONSENT SCREEN`;
+    $('consentWrap').classList.add('show');
+    await wait(500,id);
+    await moveTo($('allow'),id);await click(id);
+    $('consentWrap').classList.remove('show');
+    cb.textContent='✓ Connected';cb.classList.add('done');
+    blocked.remove();
+    addAct(img(d.key),`${d.app} connected`,'Approved by you, once','ok');
+    cursor.style.transform=`translate(${stage.clientWidth*.3}px,${stage.clientHeight+30}px)`;
+    const t2=typing();
+    for(const s of d.steps){const el=addAct(img(s[0]),s[1],s[3],'run');await wait(800,id);setAct(el,'ok',s[2])}
+    t2.remove();
+    addMsg(`<span class="done-line">✓ Done</span>${d.done}<div class="result">${img(d.res[0])}<div>${d.res[1]}<small>${d.res[2]}</small></div></div>`);
+    bar.style.transition='width 4.5s linear';bar.style.width='100%';
+    await wait(4700,id);
+    play((i+1)%demos.length);
+  }catch(e){}
+}
+new IntersectionObserver(es=>{if(es[0].isIntersecting&&!started){started=true;play(0)}},{threshold:.35}).observe(stage);
+
+/* use cases */
+const cases=[
+ ['agent','AI support agent','AI agent','Finds the order, closes the ticket and emails the customer.',['freshdesk','shopify.com','gmail']],
+ ['agent','Inbox assistant','AI agent','Sorts email, drafts replies and books meetings.',['gmail','gcal']],
+ ['agent','Demo follow-up agent','AI agent','Follows up after every demo and logs it in the CRM.',['zoom.us','hubspot.com','gmail']],
+ ['agent','Meeting notes agent','AI agent','Files notes and action items after every call.',['zoom.us','notion.so','slack.com']],
+ ['app','Hotelator OS','Hotel management','Guests book, check in and ask for anything on WhatsApp.',['whatsapp','gcal']],
+ ['app','Clinic booking app','Booking app','Patients book a slot and get reminders on WhatsApp.',['whatsapp','gcal']],
+ ['app','Integrations page for your SaaS','SaaS feature','Each customer connects their own apps, in your UI.',['slack.com','hubspot.com','salesforce']],
+ ['tool','Expense approvals','Internal tool','Approved spend becomes a purchase order in Xero.',['slack.com','xero.com']]];
+const chips=arr=>`<span class="chips">${arr.map(d=>`<span><img class="${['notion.so','vercel.com'].includes(d)?'inv':''}" src="${lg(d)}" alt=""></span>`).join('')}</span>`;
+$('caseGrid').innerHTML=cases.map(c=>`<div class="case" data-k="${c[0]}"><div class="top"><span class="mono">${c[2]}</span>${chips(c[4])}</div><h3>${c[1]}</h3><p>${c[3]}</p><span class="go"><span>Copy prompt</span><span>→</span></span></div>`).join('');
+$('filters').onclick=e=>{const b=e.target.closest('button');if(!b)return;[...$('filters').children].forEach(x=>x.classList.toggle('on',x===b));
+  document.querySelectorAll('.case').forEach(c=>c.hidden=!(b.dataset.f==='all'||c.dataset.k===b.dataset.f))};
+
+/* features */
+const I=p=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
+const feats=[
+ ['Managed auth','Their consent screen. Tokens refreshed for you.',I('<circle cx="8" cy="15" r="4"/><path d="M10.8 12.2 20 3M17 6l3 3M14 9l2 2"/>')],
+ ['Data mapping','Every app\'s data format, handled.',I('<path d="M4 7h11l-3-3M20 17H9l3 3"/>')],
+ ['Multi-tenant','Each user\'s connections, kept apart.',I('<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.4 3.4-5 6.5-5s5.7 1.6 6.5 5"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 15c2 .6 3.2 2.2 3.5 5"/>')],
+ ['Your branding','Your logo, colours and domain.',I('<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.8-.8 1.8-1.7 0-1.3-1-1.6-1-2.6 0-1 .8-1.7 1.8-1.7H17a4 4 0 0 0 4-4C21 6.6 17 3 12 3z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>')],
+ ['Monitoring','Every action logged and easy to debug.',I('<path d="M3 12h4l3-8 4 16 3-8h4"/>')],
+ ['Webhooks','Events in. Polling and retries handled.',I('<path d="M13 2 4 14h7l-1 8 9-12h-7z"/>')],
+ ['Regions','Servers where your customers are.',I('<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/>')],
+ ['Real time','Runs the moment you call it.',I('<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9.5 2h5"/>')],
+ ['Slack support','Direct help when an app\'s API changes.',I('<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-4.9A8 8 0 1 1 21 12z"/>')]];
+$('feats').innerHTML=feats.map(f=>`<div class="feat ${f[3]||''}"><span class="i">${f[2]}</span><div><h3>${f[0]}</h3><p>${f[1]}</p></div></div>`).join('');
+
+/* prompts as clickable cards */
+const prompts=[
+ ['Support chatbot',["shopify.com","gmail"],"I'm building a support chatbot. It needs to look up Shopify orders and email customers through Gmail. Use viaSocket for those integrations."],
+ ['Morning summary',["gmail","slack.com"],"Our users want a morning summary of their Gmail inbox in Slack. Set this up with viaSocket and let them choose the channel."],
+ ['Payment events',["stripe.com","discord.com"],"When a Stripe invoice is paid, mark it paid in our database and notify our Discord channel. Handle this through viaSocket."],
+ ['Automations page',["hubspot.com","gsheets"],"Customers keep asking for custom workflows. Build an Automations page where they can connect their apps and send new HubSpot contacts to Google Sheets."],
+ ['Agent tools',["vercel.com","hubspot.com","gmail"],"My agent already runs on Vercel AI SDK. Wire up viaSocket so it can update HubSpot contacts and send emails through Gmail."],
+ ['Customer connections',["slack.com","hubspot.com"],"I don't want to build OAuth flows for every integration. Use viaSocket to let each customer connect their own Slack and HubSpot accounts."]];
+const COPY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>';
+$('plist').innerHTML=prompts.map((p,i)=>`<button class="pc" data-i="${i}"><div class="top">${chips(p[1])}<span class="kind">${p[0]}</span></div><p>${p[2]}</p><div class="foot"><span class="cp">${COPY}Copy prompt</span><span>→</span></div><div class="copied"><b>✓ Copied</b><span>Paste it into Cursor, Claude Code or Codex.</span></div></button>`).join('');
+$('plist').onclick=e=>{const b=e.target.closest('.pc');if(!b)return;try{navigator.clipboard.writeText(prompts[b.dataset.i][2])}catch(_){}b.classList.add('done');setTimeout(()=>b.classList.remove('done'),1600)};
+
+/* faq */
+const faqs=[
+["What is an integration layer?","An integration layer is the part of your product that talks to other apps for you. Your code makes one kind of call, and the layer deals with each app's API, sign-in and events. viaSocket is an integration layer for SaaS products and AI agents, with 2,300+ apps behind it."],
+["How is viaSocket different from a unified API or an embedded iPaaS?","A unified API maps one category of apps, like all CRMs, onto a shared data model. viaSocket keeps every app's full set of actions and handles the mapping between their different APIs and data formats. That's how it reaches 2,300+ apps, with one way to call them, connect users and get their events. Its prebuilt screens cover what an embedded iPaaS does."],
+["How do I add integrations to my app with viaSocket?","Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your project. Your coding agent downloads the viaSocket skill, asks for your org ID, project ID and secret (they go in .env only), then builds the connect flow and the actions your use case needs. It finishes with a real test call."],
+["Do I need OAuth apps, client IDs or a token database?","No. viaSocket stores each user's grant and refreshes it, so you don't register OAuth apps, hold client secrets or write refresh logic. Your database keeps only a connection id."],
+["How do my users connect their own accounts?","They click Connect and the app's own consent screen opens in a popup, Google's or Slack's for example. They approve it there, so your code never sees a password. You get back a connection id to store against that user."],
+["Can my AI agent use these integrations as tools?","Yes. Every action comes with an input schema, so your agent can call it as a tool and fill in the fields on each run. You decide which actions it can use, or let each user choose."],
+["How do I react to events in my users' apps?","Subscribe to the event, a new Stripe payment or a new Gmail message for example, and attach a short JavaScript handler. It runs in its own sandbox and can call your API, so you don't need a public webhook endpoint. Polling and retries are handled for you."],
+["What if the app I need isn't in the catalog?","Build it once as a custom connector in viaSocket's Plug Builder. From then on it works like any other app. You can also request an integration from the viaSocket team."],
+["Can I embed viaSocket's integration screens in my product?","Yes. Mount the prebuilt screens with one component and show the whole catalog, a single app, one action's form or a saved flow. Set the labels and theme so it looks like your product."]];
+$('faqList').innerHTML=faqs.map((f,i)=>`<details ${i?'':'open'}><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join('');
+
+/* agent markdown */
+$('md').textContent=`# viaSocket
+
+> Integration layer for your AI agent, CRM, support desk or recruiting app. You build the app or agent. viaSocket handles the connections and actions.
+
+- Apps: 2,300+
+- Browser: built in
+- AI models: 50+
+- Setup: paste one prompt into Cursor, Claude Code or Codex
+
+## Setup prompt
+
+${SETUP}
+
+## What viaSocket handles
+
+${feats.map(f=>`- **${f[0]}**: ${f[1]}`).join('\n')}
+
+## Use cases
+
+${cases.map(c=>`- **${c[1]}** (${c[2]}): ${c[3]}`).join('\n')}
+
+## Sample prompts
+
+${prompts.map((p,i)=>`${i+1}. ${p[2]}`).join('\n')}
+
+## FAQ
+
+${faqs.map(f=>`### ${f[0]}\n${f[1]}`).join('\n\n')}
+
+## Links
+
+- Integrations: https://viasocket.com/integrations
+- Pricing: https://viasocket.com/pricing
+`;
+
+/* human / agent switch */
+const sw=document.querySelector('.sw');
+function setMode(agent){sw.setAttribute('aria-checked',agent);document.querySelectorAll('.mode span').forEach(s=>s.classList.toggle('on',(s.dataset.v==='agent')===agent));document.body.classList.toggle('agent-mode',agent);scrollTo(0,0)}
+sw.onclick=()=>setMode(sw.getAttribute('aria-checked')!=='true');
+document.querySelectorAll('.mode span').forEach(s=>s.onclick=()=>setMode(s.dataset.v==='agent'));
+
+/* reveal + scroll spy + progress rail */
+const io=new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting&&e.target.classList.add('in')),{threshold:0,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const links=[...document.querySelectorAll('.toc a')],secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+function spy(){let i=0;secs.forEach((s,k)=>{if(s&&s.getBoundingClientRect().top<innerHeight*.35)i=k});links.forEach((a,k)=>a.classList.toggle('on',k<=i));
+  const a=links[i];$('tocFill').style.height=(a.offsetTop+a.offsetHeight/2-6)+'px'}
+addEventListener('scroll',spy,{passive:true});spy();
+</script>
+</body>
+</html>
