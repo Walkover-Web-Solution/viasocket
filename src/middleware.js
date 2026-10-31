@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
+import { isBotRequest } from './utils/isBot';
 
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
@@ -75,20 +76,33 @@ export async function middleware(request) {
     const redirect = managedRedirect(request, await managedRedirects());
     if (redirect) return redirect;
 
+    const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+
+    // Version B of the homepage is a separate document so the cached "/" stays
+    // version A. Crawlers are sent back to "/" and the page is not indexed.
+    if (barePath === '/home-b' && isBotRequest({ userAgent: request.headers.get('user-agent') })) {
+        const url = request.nextUrl.clone();
+        url.pathname = '/';
+        const botRedirect = NextResponse.redirect(url, 302);
+        botRedirect.headers.set('Cache-Control', 'private, no-store');
+        botRedirect.headers.set('CDN-Cache-Control', 'no-store');
+        return botRedirect;
+    }
+
     const response = NextResponse.next();
 
     // The variant and visitor id cookies are written by the browser (see
     // TrackingCookies), not here: Cloudflare strips Set-Cookie from the HTML
     // responses it handles, so cookies minted at the edge never arrived.
     //
-    // The homepage is still rendered from the variant cookie, so a shared cache
-    // must never store it: a stored copy is replayed to everyone with one
-    // visitor's variant baked into the HTML. /setup-prompt is the same kind of
-    // problem for a different reason: Next's flight data echoes the request URL,
-    // and that URL carries org and project ids. Cloudflare's zone cache rule is
-    // the authority in production, but the origin has to declare this too or any
-    // cache in front of it repeats the mistake.
-    if (pathname === '/' || pathname === '/setup-prompt') {
+    // / is always version A's HTML. Version B is the separate document /home-b,
+    // chosen in the browser, so a shared cache must not store /home-b either.
+    // /setup-prompt is the same kind of problem for a different reason: Next's
+    // flight data echoes the request URL, and that URL carries org and project
+    // ids. Cloudflare's zone cache rule is the authority in production, but the
+    // origin has to declare this too or any cache in front of it repeats the
+    // mistake.
+    if (pathname === '/' || pathname === '/setup-prompt' || barePath === '/home-b') {
         response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
         // Cloudflare reads this in preference to Cache-Control for its own edge
         // cache, so it is what keeps the page out of the CDN while leaving the
@@ -98,7 +112,7 @@ export async function middleware(request) {
 
     // Same instruction as the page's robots meta. robots.txt does not Disallow
     // this path: a crawler has to fetch the page to see the noindex.
-    if (pathname === '/setup-prompt') {
+    if (pathname === '/setup-prompt' || barePath === '/home-b') {
         response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     }
 

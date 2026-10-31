@@ -1,7 +1,7 @@
 ---
-covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js"]
+covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
 verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+verified_on: 2026-10-31
 ---
 # 05 Navigation Structure
 
@@ -40,6 +40,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
 | `/hire-an-expert` | `src/app/hire-an-expert/HireExpertClient.js` | Hire-an-expert CTA to signup or cal.id |
 | `/home` | `src/app/home/page.js`. **Never renders**: middleware 307s to `/` | (retired) |
+| `/home-b` | `public/home-b/index.html` (static file, not a Next route). `noindex`, canonical `/`. Middleware 302s a crawler to `/` | Homepage version B. Humans assigned A are sent back to `/` by `public/home-ab.js` |
 | `/integrations` | `src/app/components/integrations/IntegrationsMain.js` → `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js`; `src/app/lib/integration-data.js:getIntegrationsPageData` | Integrations directory |
 | `/integrations-script` | `src/app/components/integrations-script/SetupBuilder.js` and sections | Embed-script setup builder (`?templateId=`, `?app=`) |
 | `/integrations/[...slug]` | `IntegrationsMain` (branches in [Deep links](#deep-link-conventions)) | Category, single-app or app-pair pages |
@@ -86,6 +87,7 @@ Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `be
 | `/embed` | `/` (live admin list, production and test, 2026-10-29). Fallback file still says `/developers` | 301 live; 308 in `src/data/redirects.json` | `src/middleware.js` |
 | `/home` | `/` | 307 | `src/middleware.js:middleware` |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
+| `/home-b` | `/home-b/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
 
 Rows above whose "Defined in" column still says `next.config.js` moved to this same middleware list in `40bbd9bd`. Their destinations in `src/data/redirects.json` still match the table, except `/embed`. The live admin list, which is what production applies, also 301s `/developers` to `/`, `/automations` to `/use-cases` and `/blog` to `/blogs` (none of those three are in the fallback file) and `/developers/pricing` to `/pricing` (the fallback file has that destination with 308). Whether `/embed` and `/developers` should keep pointing at `/` is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).

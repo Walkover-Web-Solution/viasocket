@@ -22,7 +22,7 @@ export const PROFILE_VERSION = 2;
 // second look at the page.
 export const VIEW_DEDUPE_WINDOW_MS = 10_000;
 
-const HOME_PATHS = new Set(['/', '/home']);
+const HOME_PATHS = new Set(['/', '/home', '/home-b']);
 
 // A visitor's history is folded in on their next visit, and each fold costs one
 // request, so a long legacy history is absorbed over several visits rather than
@@ -126,7 +126,11 @@ export const getPageKey = (pageUrl) => {
     }
 };
 
-export const isHomePath = (path) => HOME_PATHS.has(path);
+export const isHomePath = (path) => {
+    if (!path) return false;
+    const normalized = path.length > 1 ? path.replace(/\/+$/, '') : path;
+    return HOME_PATHS.has(normalized);
+};
 
 const isSignupPath = (path) => path === '/signup';
 

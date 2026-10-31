@@ -47,8 +47,22 @@ const buildScript = (renderedVariant) => `(function () {
         if (variants.indexOf(rendered) !== -1) {
             if (variant !== rendered) set('${VARIANT_COOKIE}', rendered, ${VARIANT_MAX_AGE});
         } else if (variants.indexOf(variant) === -1) {
-            set('${VARIANT_COOKIE}', variants[Math.floor(Math.random() * variants.length)], ${VARIANT_MAX_AGE});
+            // The homepage remembers the version it showed in localStorage, because
+            // the cookie is only 30 days and a returning visitor must keep the
+            // same version. A missing cookie is restored from that mirror; only a
+            // visitor with neither is assigned.
+            var mirroredVariant = '';
+            try { mirroredVariant = localStorage.getItem('vs_variant') || ''; } catch (e) {}
+            var next = variants.indexOf(mirroredVariant) !== -1
+                ? mirroredVariant
+                : variants[Math.floor(Math.random() * variants.length)];
+            set('${VARIANT_COOKIE}', next, ${VARIANT_MAX_AGE});
+            try { localStorage.setItem('vs_variant', next); } catch (e2) {}
         }
+        try {
+            var currentVariant = get('${VARIANT_COOKIE}');
+            if (variants.indexOf(currentVariant) !== -1) localStorage.setItem('vs_variant', currentVariant);
+        } catch (e3) {}
 
         // A lost cookie is restored from the localStorage mirror trackVisitor keeps,
         // so a returning visitor stays the same row; only a genuinely new visitor

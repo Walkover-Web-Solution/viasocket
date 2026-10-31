@@ -21,6 +21,12 @@ const nextConfig = {
                     source: '/',
                     destination: '/new-home/index.html',
                 },
+                {
+                    // Version B is a static file. public/home-b/index.html is only
+                    // served at /home-b/index.html unless this rewrite exists.
+                    source: '/home-b',
+                    destination: '/home-b/index.html',
+                },
             ],
             afterFiles: [
                 {

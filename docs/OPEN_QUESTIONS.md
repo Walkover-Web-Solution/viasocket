@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
 verified_at: c0c7f48b
-verified_on: 2026-10-30
+verified_on: 2026-10-31
 ---
 # Open Questions & Known Ambiguities
 
@@ -19,9 +19,6 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 | P-04 | Which app count is authoritative ("2,300+", `appCount + 300`, "1000+")? | `public/new-home/index.html`, `src/app/lifetime-deal/page.js`, `src/app/mcp/aiagent/page.js` | Pages hardcode different figures. | **Proposed (marketing to confirm 2,300+ vs 2,200+):** "2,300+ apps" everywhere, replacing "1000+" and `appCount + 300`, or tie all copy to the live count. |
 | P-05 | Who serves `/help/*`, `/blog`, `/discovery` and `/community`, and should the `/help` retirement also happen there? | `next.config.js` (`FOOTER_HELP_PAGES`, `/help` → `/new-direction`, `/about` → `/help/about-us`), `public/llms.txt` | `b3a7ab32` 301s `/help` and `/help/*` to `/new-direction`, except the footer help pages. On 2026-10-21 production `/help` returned that 301, but `/help/trigger` returned a 404 from another Next app and `/help/about-us` a 200, so the subpath rule never sees requests Cloudflare routes elsewhere. Locally `/help/about-us` is a 404. | **Recommended (owners to name the repos):** they are other deployments (help centre, blog, discovery app); old `/help/*` redirect to `/new-direction` except the footer pages. |
 | P-06 | Should bare `/embed` and `/developers` stay 301s to `/`, or go back to ADR-011 (`/embed` → `/developers`)? | `src/middleware.js`, `src/data/redirects.json`, admin Pages → Redirects | Checked 2026-10-29: the live admin list 301s both URLs to `/` (empty body). Production and test do the same. The fallback file still 308s `/embed` to `/developers` and does not redirect `/developers`, so an admin outage serves a different page. [ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom) still says `/embed` → `/developers`. Sitemap still lists `/developers`. There is no duplicate HTML today: neither URL returns a document, and the homepage canonical is the site root. | **Needs a decision from whoever edits Pages → Redirects.** If the homepage is the intended target, refresh `src/data/redirects.json` to match (301) and drop `/developers` from `src/app/sitemap.js`. If ADR-011 still holds, change the admin rules back to `/embed` → `/developers` (301 or 308) and remove `/developers` → `/`. |
-| T-01 | Is visitor/A-B tracking meant to be off? | `src/utils/axiosCalls.js:getAbTestVisitorRows`, `src/app/api/track-variant/route.js` | Commit `77b3dec5` ("stop get call", 2026-10-10) made `getAbTestVisitorRows` return `null` first, so every `POST /api/track-variant` answers "lookup failed" and writes nothing. | **Recommended:** keep it off. Re-enable only for a new A/B test, and only after T-02 and T-03 are fixed. |
-| T-02 | Should the visitor lookup filter on `environment`? | `src/utils/axiosCalls.js:getAbTestVisitorRows` | Maintainer rule: read-backs filter on `environment`. The filter was dropped in revert `8ca11b93`, and test and prod share the `visitor_id` cookie on `.viasocket.com`. | **Fix (recommended):** every read-back filters on `environment`; required before T-01 is turned back on. |
-| T-03 | `getEnvironment` falls back to the hostname when `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is unset or not a recognised value, and that fallback labels any `*.viasocket.com` host, test included, as production. | `src/app/api/track-variant/route.js` | The maintainer rule is to compare the full hostname exactly (no suffix match, no `www`). | **Fix (recommended):** compare the full hostname exactly: `viasocket.com` means prod, anything else test. No suffix match. |
 | T-04 | Should the static homepage capture UTMs and tracking cookies? | `public/new-home/index.html`, `public/new-home/main.js`, `src/components/IntegrationsComp/addToProduct/SiteChrome.js` | `/` bypasses `src/app/layout.js`, so no `TrackingCookies`, `VariantTracker` or `utmData` capture runs, and "Start free" goes to flow.viasocket.com with no `utm_source`. Only GTM loads. The Next pages that copy its header (`SiteHeader`: `/integrations`, `/features`, `/use-cases`, `/new-direction`) also link "Start free" to `START_URL` with no `utm_source`. | **Proposed:** "Start free" and "Log in" carry `utm_source=/`, and the homepage passes incoming `utm_*`/`gclid` to flow.viasocket.com; change it in `viasocket-site` and export. |
 | T-05 | Some CTAs create a `utmData` cookie with no `utm_source`. | `src/utils/userIntentTracker.js:setIntent`, `src/components/IntegrationsComp/integrationsAppOneComp/popularUseCases.js` (no longer rendered, see C-08) | Signups from those CTAs reach MSG91 untagged. | **Fix (recommended):** every CTA stamps its own page path as `utm_source`. |
 | T-06 | `handleRedirect` puts the whole `utmData` cookie, prompt included and unencoded, into `?state=`. | `src/utils/handleUtmSource.js:setUtmSource`, `src/utils/handleRedirection.js:handleRedirect` | This conflicts with the maintainer rule that the prompt never appears in a URL, which today holds only for direct `/signup?utm_source=` CTAs. | **Fix (recommended):** stop putting the whole `utmData` cookie in `?state=`; pass only an encoded `utm_source`, never the prompt. |
@@ -77,6 +74,14 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 
 ---
 
+## Resolved (2026-10-31)
+
+| ID | Answer | Recorded in |
+|---|---|---|
+| T-01 | Homepage exposures and homepage signup/login clicks are stored again, for the version B test. Every other page still writes nothing (`not a homepage event`). The `return null` kill switch in `getAbTestVisitorRows` is gone. A live write and read still needs the A/B database key in the environment. | [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version), [api/track-variant](api/track-variant.md), [ADR-017](DECISIONS.md#adr-017-homepage-version-b-is-a-client-side-5050-split) |
+| T-02 | The visitor lookup filters on `environment` as well as the visitor id. An environment outside `production` / `test` / `local` is a failed lookup. | `src/utils/axiosCalls.js:getAbTestVisitorRows`, [api/track-variant](api/track-variant.md) |
+| T-03 | When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is unset, production is exactly `viasocket.com`. `test.viasocket.com` is `test`. No suffix match. | `src/app/api/track-variant/route.js:getEnvironment` |
+
 ## Resolved (2026-10-22)
 
 | ID | Answer | Recorded in |
@@ -85,13 +90,6 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 | U-01 | The static homepage's design system (Geist + Geist Mono, its colour tokens, square corners, light/dark following the OS) is the target for the rest of the site; rules in the external "viaSocket Brand Guidelines" doc. | [DECISIONS ADR-016](DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target), [DESIGN](DESIGN.md) |
 
 ## Detailed Issue Records
-
-### T-01: Visitor and A/B tracking writes are switched off
-
-- **The ambiguity:** `src/utils/axiosCalls.js:getAbTestVisitorRows` begins with `return null;`, added in `77b3dec5` ("stop get call", 2026-10-10) with no explanation. `src/app/api/track-variant/route.js` treats a `null` lookup as failure, so no visitor row is created or updated in any environment.
-- **Potential risk:** someone "fixes" it by deleting the line. The lookup underneath does not filter on `environment` (T-02), and `getEnvironment` can label test as production (T-03), so re-enabling it as written would let test traffic update production rows.
-- **Answer (2026-10-22, recommended):** keep it off. The homepage no longer runs a server-side A/B test and GTM carries analytics. Re-enable it only for a new A/B test.
-- **What resolves it:** the team confirms the recommendation. If it is ever re-enabled, fix T-02 and T-03 first, then verify with a real write and read against the live table ([DEVELOPMENT](DEVELOPMENT.md) explains why a build alone proves nothing).
 
 ### C-01: The old homepage tree still builds but never renders
 

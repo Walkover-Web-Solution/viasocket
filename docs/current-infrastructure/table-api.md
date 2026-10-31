@@ -1,14 +1,14 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/utils/getData.js", "src/utils/getBlogData.js", "src/utils/getMetaData.js", "src/utils/getFaqData.js", "src/utils/getVideoData.js", "src/utils/getCountries.js", "src/const/tables.js", "src/const/fields.js"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-31
 ---
 # table-api.viasocket.com
 
 The viaSocket table service: the CMS behind almost every page section, the blog card list, and the A/B visitor-tracking table.
 
 > [!WARNING]
-> **There is no DELETE, and tracking writes are switched off.** The table API accepts GET, POST and PATCH only, so a test row written to the A/B table stays forever (duplicates are turned into pointers, never removed). Separately, commit `77b3dec5` ("stop get call", 2026-10-10) made `src/utils/axiosCalls.js:getAbTestVisitorRows` start with `return null;`, so `POST /api/track-variant` stops at "lookup failed" and writes nothing in any environment ([OPEN_QUESTIONS T-01](../OPEN_QUESTIONS.md)). Do not remove that line without asking, and never write to the table "just to test" without tagging the row's `environment`.
+> **There is no DELETE.** The table API accepts GET, POST and PATCH only, so a test row written to the A/B table stays forever (duplicates are turned into pointers, never removed). Homepage views and homepage signup/login clicks are written. Every other event is dropped before the lookup. Never write to the table "just to test" without tagging the row's `environment`.
 
 ## Role
 Source of truth for page content (navbar, footer, meta, FAQs, features, pricing rows, reviews, departments, MCP prompts, webinars and the rest of [database/entities.md](../database/entities.md)), blog cards, and the one-row-per-visitor A/B tracking record. Content edits made in the table go live without a deploy, after the client cache TTL below.
@@ -34,7 +34,7 @@ Rules for every new call:
 ```text
 Content  GET  ${NEXT_PUBLIC_DB_BASE_URL}/<content db id>/<table id>?fields=a&fields=b[&<filter>]   auth-key: NEXT_PUBLIC_DB_KEY
 Blog     GET  https://table-api.viasocket.com/<blog db id>/tblngzrs5?limit=200&offset=N              auth-key: NEXT_PUBLIC_BLOG_DB_KEY
-A/B      GET  ${NEXT_PUBLIC_DB_BASE_URL}/<abtest db id>/tbla8b06r?filter=name LIKE '%<visitorId>%'&fields=<ABTEST_ROW_FIELDS>&sort=autonumber&limit=200&_=<Date.now()>
+A/B      GET  ${NEXT_PUBLIC_DB_BASE_URL}/<abtest db id>/tbla8b06r?filter=name LIKE '%<visitorId>%' AND environment = '<environment>'&fields=<ABTEST_ROW_FIELDS>&sort=autonumber&limit=200&_=<Date.now()>
 A/B      POST same URL, body { records: [ <toRowFields output> ] }                                  auth-key: NEXT_PUBLIC_DB_KEY_ABTEST
 A/B      PATCH same URL, body { records: [ { where: "rowid = '<rowid>'", fields } ] }
 
@@ -51,7 +51,7 @@ Table behaviour stated in code comments and maintainer notes (describes the live
 - Reads carry `cache-control: max-age=172800`, so any read-after-write needs a unique cache-buster (`_=<timestamp>`). That is why the A/B helpers use plain `axios`, not `axiosWithCache`.
 - `limit=500` silently returns zero rows (400 works), hence `ABTEST_LOOKUP_LIMIT = 200`.
 - Column names are the table's own: `varient`, visitor JSON in `name`, no `user_info` or `referrer` column. A misspelt column, or a plain URL in the linked-record columns `first_url` / `last_url`, makes the table reject the **whole** write. Verify a column change with a real write plus a cache-busted read ([DEVELOPMENT.md](../DEVELOPMENT.md)).
-- All three environments write to the same A/B table; rows carry `environment`, but the lookup filter does not (removed by revert `8ca11b93`, [OPEN_QUESTIONS T-02](../OPEN_QUESTIONS.md)). Test and production share the `visitor_id` cookie on `.viasocket.com`, so one deployment can update another's row.
+- All three environments write to the same A/B table. Rows carry `environment`, and the lookup filters on it, because test and production share the `visitor_id` cookie on `.viasocket.com`.
 
 Client cache: `axiosWithCache = setupCache(axios)` (`axios-cache-interceptor`), in process memory per server instance, with `interpretHeader: false`, so the table's own `cache-control` is ignored and the helper's TTL applies. There is no invalidation hook. Cross-layer caching (Cloudflare zone cache on top): [../14-performance.md](../14-performance.md).
 
@@ -64,7 +64,7 @@ Client cache: `axiosWithCache = setupCache(axios)` (`axios-cache-interceptor`), 
 | `getIndustries(pageUrl)`, `getDepartments(pageUrl)` | rows of `tblxy04hk` / `tbluyx8o1`, `[]` on error; 20 min | `src/app/components/home/SearchInputHomeOptimized.js` (**browser**) |
 | `getVideos(pageUrl)` | rows of `tblh3g587`, `[]`; 1 h | `src/utils/getVideoData.js:getVideoData` (tag match, max 6) → `src/app/lib/integration-data.js`, `SearchInputHomeOptimized.js` |
 | `getBlogs(pageUrl)` | all blog rows, paged by 200 until a short page, `[]` on error; 1 h | `src/utils/getBlogData.js:getBlogData` (tag match, 4–6 cards, `index` tag fallback) → most loaders |
-| `getAbTestVisitorRows(visitorId, pageUrl)` | **always `null` today** (kill switch); when enabled, rows oldest first or `null` on error; never cached | `src/app/api/track-variant/route.js` |
+| `getAbTestVisitorRows(visitorId, pageUrl, environment)` | rows oldest first, `[]` when none, `null` on error or an unknown environment; never cached | `src/app/api/track-variant/route.js` |
 | `saveAbTestVisit(record, pageUrl)` | new row or `null` | `src/app/api/track-variant/route.js` |
 | `updateAbTestVisit(rowid, fields, pageUrl)` | `data.data`, else `true`; `null` on error or if `rowid` fails `/^row[a-z0-9]+$/i` | `src/app/api/track-variant/route.js` (canonical row and merge pointers) |
 

@@ -1,7 +1,7 @@
 ---
-covers: ["public/new-home/**", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
+covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
 verified_at: 0d14d549
-verified_on: 2026-10-30
+verified_on: 2026-10-31
 ---
 # Module: Homepage (`/`)
 
@@ -10,7 +10,7 @@ verified_on: 2026-10-30
 `/` is the static site in `public/new-home/`: plain HTML, CSS and JS that pitch viaSocket as an "Integration Layer for your AI agent". The primary action is "Copy setup prompt". The visitor pastes it into Cursor, Claude Code or Codex.
 
 > [!WARNING]
-> `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` before any app route runs, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Never edit `src/app/page.js` for homepage work.
+> `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` before any app route runs, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Never edit `src/app/page.js` for homepage work. Version B is the separate static page `public/home-b/index.html`, served at `/home-b` by a `beforeFiles` rewrite to `/home-b/index.html`. The split script is `public/home-ab.js`, referenced from the first script tag in `public/new-home/index.html`.
 
 > [!WARNING]
 > **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
@@ -83,7 +83,39 @@ The homepage uses no React components. Its tokens (`:root` in `public/new-home/s
 
 ## API Dependencies
 
-None. The page never calls `/api/track-variant` ([../api/track-variant.md](../api/track-variant.md)) or any table-api/plug-service endpoint.
+Version A and version B both call `POST /api/track-variant` from `public/home-ab.js` (one homepage view, plus Start free and Log in clicks). They call no other table-api or plug-service endpoint. The route stores those homepage events only; a view of any other page is still dropped ([../api/track-variant.md](../api/track-variant.md)).
+
+## Homepage A/B test (version B)
+
+Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `f5bfbc6a`). That file is not served. B is homepage-only: every other route keeps its own header.
+
+`/` is cached as one document, so the server cannot pick the version. `public/home-ab.js` runs before the body paints:
+
+1. A crawler (the same user-agent test as `src/utils/isBot.js`) stays on A. Middleware also 302s a crawler that requests `/home-b` back to `/`. `/home-b` sends `noindex` and its canonical is `/`.
+2. A person with no `variant` cookie is assigned `A` or `B` with equal probability (`Math.floor(Math.random() * 2)`), the same cookie `TrackingCookies` uses (`src/const/abTest.js`, 30 days, domain `.viasocket.com` on viasocket hosts). The version is also mirrored in `localStorage` `vs_variant`, and a missing cookie is restored from that mirror, on the homepage and on every other page, so a return visit keeps the version after the cookie expires.
+3. Variant B navigates to `/home-b` before paint (`location.replace`, query and hash kept). Variant A stays on `/`. Opening the other URL directly sends the visitor back to the version they were assigned.
+
+The `visitor_id` cookie is set the same way as `TrackingCookies`, including the `vs_visitor` mirror.
+
+### Where B's links go
+
+Placeholders in the mockup point at the live homepage's destination. The footer's three use-case links have no pages of their own, so each goes to `/use-cases`. Contact goes to `/support`. Cookies goes to `/privacy#cookies`, the cookies section of the privacy policy. Docs goes to `/developers/docs` (the live homepage has no Docs link). Start free and Log in go to `https://flow.viasocket.com/integrations`. Copy setup prompt copies the same text as `#promptText` on version A. Sample-prompt and use-case cards copy that text with the "Ask me what I want to build first." line replaced by the card's sentence, which is what version A's sample prompts do. B loads the same gtwy chat (`public/new-home/assets/support.js`) and the same chat button.
+
+### Carrying the version to signup
+
+Signup finishes on flow.viasocket.com, which this repo does not own. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link before the visitor can use it, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly). Completed signups are not in the visitor table. What the signup app must do is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
+
+### Reading visitors, signup clicks and signups per version
+
+Stored in the A/B table `tbla8b06r` (database `65c4c053a3fad7804af5bba8`), one row per visitor **per environment**. Always filter `environment` (`production`, `test` or `local`). There is no DELETE.
+
+For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. Group those by `variant` and `timestamp` the same way.
+
+All-time totals, not sliced by date, also sit on the row: `name.homeSessions` and `name.views.home` (homepage visits), `name.variantViews` (views by version; only homepage views are written), `name.signupClicks`, `name.loginClicks`, and the `signup` column. `varient` is the first version stored for that visitor, not a per-day count.
+
+A visitor who was active long enough to push an event out of the 100-event window will be missing from an older date range. That cap is `MAX_PAGE_EVENTS` / `MAX_CLICK_EVENTS` in `src/utils/abTestVisitor.js`.
+
+Completed signups are not stored here. The signup app has to read `hp_variant` (`A` or `B`) from the arrival URL, or the `variant` cookie on `.viasocket.com` when the query param is absent, and store that value on the new account. Until it does, signups per version cannot be counted.
 
 ---
 

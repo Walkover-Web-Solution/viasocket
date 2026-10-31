@@ -1,7 +1,7 @@
 ---
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
 verified_at: a261e40d
-verified_on: 2026-10-28
+verified_on: 2026-10-31
 ---
 # AI Agent Guidelines (viaSocket marketing site)
 
@@ -43,7 +43,7 @@ The site is fully integrated with live backends; there is no mock layer and none
 - **table-api table ids** (`tbl…`): constants in `src/const/tables.js`, e.g. `FOOTER`, `NAVBAR`, `TEMPLATES`, `ABTESTCOUNT`. Pass the constant, never the literal.
 - **table-api database ids** (24-hex): the content database id and the A/B database id are currently written inline in `src/utils/axiosCalls.js` (`getDataFromTable`, `abTestTableUrl`). That is tracked debt ([OPEN_QUESTIONS S-02](OPEN_QUESTIONS.md)), not a pattern to copy: a new database gets `NEXT_PUBLIC_DB_ID_<NAME>` / `NEXT_PUBLIC_DB_KEY_<NAME>` env vars.
 - **Row ids:** table rows are addressed by `rowid` (`row…`). `updateAbTestVisit` refuses anything else. Ordering by `autonumber` gives "the oldest row".
-- **`visitor_id` cookie** (`src/const/abTest.js:VISITOR_ID_COOKIE`, 1 year, mirrored to localStorage `vs_visitor`): the anonymous visitor identity that ties visits to one tracking row. It is shared by test and production because it is set on `.viasocket.com`, so any read-back must also filter on the row's `environment` ([OPEN_QUESTIONS T-02](OPEN_QUESTIONS.md)).
+- **`visitor_id` cookie** (`src/const/abTest.js:VISITOR_ID_COOKIE`, 1 year, mirrored to localStorage `vs_visitor`): the anonymous visitor identity that ties visits to one tracking row. It is shared by test and production because it is set on `.viasocket.com`, so any read-back must also filter on the row's `environment`. `getAbTestVisitorRows` does.
 - **`variant` cookie** (`VARIANT_COOKIE`, `VARIANTS = ['A', 'B']`, 30 days): the A/B arm. It is written by the browser (`TrackingCookies`), never by middleware ([DECISIONS ADR-007](DECISIONS.md#adr-007-tracking-cookies-are-written-by-the-browser-and--is-sent-no-store)).
 - **Middleware experiment id** (`localStorage` `mw_visitor`, `src/utils/mwExperiment.js`): a different visitor from `visitor_id`, used only to assign and record experiments the owner starts in the middleware. Do not write those events to `/api/track-variant`, and do not start an experiment from the layout. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments).
 - **`utm_source`:** a page tags its own signups with its **path** (`/integrations`, `/embed/app-integration`). `isInternalUtmSource()` in `src/utils/handleUtmSource.js` treats empty, path-shaped and `INTERNAL_UTM_SOURCES` values as the site's own. Anything else is external attribution, which `savePageUtmSource()` will not overwrite for a day. Campaign pages keep their registered tag (e.g. `relay-switch-google-ads`), stamp it into the `utmData` cookie just before navigating, and put `utm_source` in the signup URL exactly once ([FLOWS](FLOWS.md#detailed-journey-landing-utm-capture-and-signup), [DECISIONS ADR-012](DECISIONS.md#adr-012-utm-attribution-conventions)).

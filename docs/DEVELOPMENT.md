@@ -1,7 +1,7 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
 verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+verified_on: 2026-10-31
 ---
 # Development & Verification Guide
 
@@ -87,7 +87,7 @@ All three environments run the same code. `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` i
 | production | viasocket.com <!-- verify:ignore --> | `prod` | indexable, robots with two `Sitemap:` lines, Reddit pixel and CAPI on, error reports POSTed to flow.sokt.io <!-- verify:ignore --> |
 
 > [!WARNING]
-> Only the exact string `prod` switches on production behaviour in `layout.js`, both robots generators, `RedditPixel`, `SendErrorMessage` and `trackRedditEvent`. `src/app/api/track-variant/route.js:getEnvironment` is more lenient. It maps `prod`/`production` to `production`, `test`/`stage`/`staging` to `test`, and `local`/`dev`/`development` to `local`, and falls back to the hostname when the flag is unset. A value like `production` would therefore tag A/B rows as production while leaving the site noindexed. Use `prod` for production.
+> Only the exact string `prod` switches on production behaviour in `layout.js`, both robots generators, `RedditPixel`, `SendErrorMessage` and `trackRedditEvent`. `src/app/api/track-variant/route.js:getEnvironment` is more lenient. It maps `prod`/`production` to `production`, `test`/`stage`/`staging` to `test`, and `local`/`dev`/`development` to `local`, and falls back to the hostname when the flag is unset. That fallback treats only the exact host `viasocket.com` as production (`test.viasocket.com` is `test`). A value like `production` would therefore tag A/B rows as production while leaving the site noindexed. Use `prod` for production.
 
 `NEXT_PUBLIC_PROD_ENVIRONMENT` is **not** a second switch: nothing reads it. <!-- verify:ignore -->
 

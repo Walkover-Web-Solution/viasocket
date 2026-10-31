@@ -9,6 +9,7 @@ import {
     applyEvent,
     getPageKey,
     getPagePath,
+    isHomePath,
     mergedRowFields,
     newProfile,
     readProfile,
@@ -86,9 +87,11 @@ const getEnvironment = (request) => {
     if (flag === 'test' || flag === 'stage' || flag === 'staging') return 'test';
     if (flag === 'local' || flag === 'development' || flag === 'dev') return 'local';
 
+    // Exact host only. test.viasocket.com is a .viasocket.com host and must not
+    // be labelled production (a suffix match used to do that).
     const hostname = new URL(request.url).hostname;
-    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) return 'production';
-    if (hostname === 'localhost' || /^[\d.]+$/.test(hostname)) return 'local';
+    if (hostname === 'viasocket.com') return 'production';
+    if (hostname === 'localhost' || hostname === '127.0.0.1' || /^[\d.]+$/.test(hostname)) return 'local';
     return 'test';
 };
 
@@ -147,8 +150,20 @@ export async function POST(request) {
         const now = new Date();
         const nowIso = now.toISOString();
         const environment = getEnvironment(request);
+        const path = getPagePath(pageUrl || '');
 
-        const rows = await getAbTestVisitorRows(visitorId, pageUrl);
+        // Homepage exposures and the signup / login clicks on that page are the
+        // only events this test stores. Every other page keeps the previous
+        // behaviour: the request is acknowledged and nothing is written.
+        const homepageClick =
+            type === 'click' &&
+            interaction &&
+            (interaction.action === 'signup_click' || interaction.action === 'login_click');
+        if (!isHomePath(path) || (type !== 'view' && !homepageClick)) {
+            return NextResponse.json({ success: false, reason: 'not a homepage event' });
+        }
+
+        const rows = await getAbTestVisitorRows(visitorId, pageUrl, environment);
 
         // A failed lookup is not an empty history. Inserting here is exactly how a
         // visitor ends up with two rows, so the event is dropped instead — the next
@@ -248,7 +263,7 @@ export async function POST(request) {
         // Two first-ever events can be in flight at once — a second tab, a retry —
         // and both would insert. Re-reading settles it: every racer sees the same
         // oldest row and folds the rest into it, so the visitor is left with one.
-        if (saved) await collapseDuplicates(visitorId, pageUrl);
+        if (saved) await collapseDuplicates(visitorId, pageUrl, environment);
 
         return NextResponse.json({
             success: Boolean(saved),
@@ -269,8 +284,8 @@ export async function POST(request) {
  * ordered by autonumber — so they agree on which row survives and the result is
  * the same however many times it runs.
  */
-async function collapseDuplicates(visitorId, pageUrl) {
-    const rows = await getAbTestVisitorRows(visitorId, pageUrl);
+async function collapseDuplicates(visitorId, pageUrl, environment) {
+    const rows = await getAbTestVisitorRows(visitorId, pageUrl, environment);
     if (!rows) return;
 
     const liveRows = rows.filter(isLiveRow);

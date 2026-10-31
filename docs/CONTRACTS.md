@@ -1,7 +1,7 @@
 ---
 covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
 verified_at: a261e40d
-verified_on: 2026-10-28
+verified_on: 2026-10-31
 ---
 # Contracts & Data Schemas
 
@@ -77,6 +77,7 @@ Rules for `utmData`: `utm_source` is the page path (`/integrations`) or a regist
 | `localStorage` | `copiedTemplateIds` | JSON array of template ids | `src/utils/templateIdManager.js`, `src/hooks/useTemplateIds.js` |
 | `localStorage` | `viasocket_chat_thread` | `{ id, createdAt }`; reused for 1 h | `src/app/providers.js`, `public/new-home/assets/support.js` |
 | `localStorage` | `vs-doc-lang` | chosen code-sample language | `src/app/developers/docs/LangContext.js` |
+| `localStorage` | `vs_variant` | `A` or `B` | `public/home-ab.js` and `TrackingCookies`. Restores the `variant` cookie after its 30 days |
 | `localStorage` | `mw_visitor` | 32 hex chars; one browser, until storage is cleared | `src/utils/mwExperiment.js`. Not the `visitor_id` cookie, and not shared with test vs production by a domain. |
 
 No `sessionStorage` keys. Every `trackVisitor` and `mwExperiment` storage access is wrapped in try/catch; follow that.
@@ -95,14 +96,18 @@ sequenceDiagram
     participant T as table-api A/B table
     B->>B: TrackingCookies sets variant + visitor_id
     B->>R: POST {event:view|click|cta,...} (cookies attached)
-    R->>T: GET rows by visitor_id (currently short-circuited to null)
-    R-->>B: 200 {success:false, reason:'lookup failed'}
-    Note over R,T: when enabled: POST new row, or PATCH canonical row + merge duplicates
+    alt homepage view, or homepage signup/login click
+        R->>T: GET rows by visitor_id AND environment
+        R->>T: POST a new row, or PATCH the oldest live row
+        R-->>B: 200 {success, created, counted}
+    else any other page
+        R-->>B: 200 {success:false, reason:'not a homepage event'}
+    end
 ```
 
 | Event Name | Trigger Location | Required Payload Properties |
 |---|---|---|
-| `view` | every pathname change, `src/app/components/VariantTracker/VariantTracker.js` → `src/utils/trackVisitor.js:trackView` (serialized across tabs with Web Locks) | common fields + `userInfo`, `sessionId`, `isNewSession` |
+| `view` | homepage: `public/home-ab.js` when `/` or `/home-b` is shown. Other pages: `VariantTracker` still posts, and the route drops them | common fields + `userInfo`, `sessionId`, `isNewSession` |
 | `click` | any click inside an element with `data-track` (one capture listener) → `src/utils/trackVisitor.js:trackInteraction` | common fields + `element` = `data-track`, `label` = `data-track-label` or text, `section` = `data-track-section` or `other`, `action` = `data-track-action` or `click`, `destinationUrl` = `data-track-destination` or nearest `href` |
 | `cta` | hero CTAs: `src/app/components/home/CTAButtons.js`, `trackSignupClick` in `src/app/front-page/signup.js` → `src/utils/trackVisitor.js:trackCtaClick` | common fields + `ctaSource` (the utm tag), `section: 'hero'`, `element`, `label`, `action` (`signup_click` / `dashboard_click`), `destinationUrl` |
 
@@ -157,6 +162,7 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 | Destination | Built by | Parameters |
 |---|---|---|
 | `${NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/<triggerId>/action?events=<ids>...` and `/connect/<rowid>` | integrations components (`src/components/IntegrationsComp/**`) | plug service row ids |
+| `https://flow.viasocket.com/...` from `/` and `/home-b` | `public/home-ab.js` stamps every such link before the visitor can use it | `hp_variant=A` or `hp_variant=B` (the homepage version). Not a `utm_source` |
 | an app's own website | `src/utils/ExternalLink.jsx:appWebsiteUrl` (single-app page "Learn more"); `src/components/IntegrationsComp/integrationsAppTwoComp/AboutApps.js` (app pairs) appends the same tag inline | forced to `https://`, `utm_source=viasocket` appended (outbound referral tag, not a signup source); magicalapi.com gets `/integrations/viasocket/`. `rel` from `relForApp`: dofollow only for apps in the `DOFOLLOWLINK` table |
 | `/signup` | `src/app/components/home/CTAButtons.js`, `src/app/front-page/signup.js` | `utm_source=<tag>` exactly once; no `prompt` |
 | any URL via `src/utils/handleRedirection.js:handleRedirect` | CTAs to `flow.viasocket.com` and others | `state=<utmData JSON>&<utm pairs>`; with `customSource`, `state={"utm_source":...}&utm_source=...` (emitted twice, so pages with their own tag link straight to `/signup?utm_source=`) |
@@ -173,6 +179,5 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 
 No proposed endpoints. Known gaps a change may run into:
 - **Delete on the table API** does not exist. Anything that writes test rows must tag them (`environment`) and live with them.
-- **Environment-scoped visitor lookup** is not in the filter today. A fix belongs in `getAbTestVisitorRows` (add `environment = '<env>'`), after confirming with maintainers why `8ca11b93` reverted it ([OPEN_QUESTIONS T-02](OPEN_QUESTIONS.md)).
 - **Server-side reCAPTCHA verification** does not exist; no form uses reCAPTCHA. The unimported provider and `react-google-recaptcha-v3` were removed on 2026-10-21, and the site-key env var in `.env` is now unread ([DEVELOPMENT.md](DEVELOPMENT.md)). If a form needs bot protection, design a server route using a key without the `NEXT_PUBLIC_*` prefix; do not ship a client-only check.
-- **Visitor tracking writes** are disabled by `77b3dec5` ([OPEN_QUESTIONS T-01](OPEN_QUESTIONS.md)). Re-enabling is a product decision.
+- **Storing the homepage version on a new account** is not in this repo. Signup finishes on flow.viasocket.com. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link, and the `variant` cookie (same values, not HttpOnly, domain `.viasocket.com`) is readable there. The signup app must read `hp_variant` from the arrival URL, or the `variant` cookie when the query param is absent, and store that value on the new account. Until it does, signups per version cannot be counted. The paired backend is [socket-flow-backend](https://github.com/Walkover-Web-Solution/socket-flow-backend).

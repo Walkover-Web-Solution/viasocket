@@ -1,7 +1,7 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/utils/mwExperiment.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
 verified_at: a261e40d
-verified_on: 2026-10-28
+verified_on: 2026-10-31
 ---
 # 13 Security
 
@@ -10,7 +10,7 @@ This file covers the site's security posture: who can do what, which values are 
 ## Access Control
 - **There is none.** This is a public marketing site with no login, roles or admin area of its own. Login and signup belong to the viaSocket app. `/login` redirects to `https://flow.viasocket.com/` (`next.config.js`), and signup runs inside the MSG91 widget ([third-party-services.md](current-infrastructure/third-party-services.md)).
 - **"Signed in" only means a `prod` cookie exists.** `src/app/lib/getAuth.js:getHasToken` and `src/app/components/navbar/NavbarServer.js` check that the cookie is present and swap "Sign up" for "Dashboard". The value is never read, and nothing in this repo sets the cookie. Anyone can set it, so never use it to gate content, data or an API route.
-- **`POST /api/track-variant` has no auth and no rate limit.** The caller's identity is the browser-generated `visitor_id` cookie, checked only for UUID shape ([api/track-variant.md](api/track-variant.md)). Inferred: once writes are re-enabled ([OPEN_QUESTIONS T-01](OPEN_QUESTIONS.md)), anyone who knows a visitor id can append events to that visitor's row.
+- **`POST /api/track-variant` has no auth and no rate limit.** The caller's identity is the browser-generated `visitor_id` cookie, checked only for UUID shape ([api/track-variant.md](api/track-variant.md)). Homepage events are stored again. Anyone who knows a visitor id can append a homepage event to that visitor's row. The route still drops every other page.
 - **Environments are public. Robots rules only keep them out of search.** test.viasocket.com and local builds get robots `Disallow: /` from `src/app/robots.txt/route.js`, and every non-`prod` build gets the root layout's `noindex, nofollow`. No evidence was found of a preview `x-robots-tag` header ([OPEN_QUESTIONS D-09](OPEN_QUESTIONS.md)). Full posture: [cloudflare.md](current-infrastructure/cloudflare.md#schema--shape).
 - `public/admin/` (a Decap CMS config with `git-gateway`, branch `prod`) is served as a static file. Production robots only `Disallow: /admin/` it. Whether it is retired is [OPEN_QUESTIONS C-02](OPEN_QUESTIONS.md).
 
@@ -41,7 +41,7 @@ This file covers the site's security posture: who can do what, which values are 
 |---|---|---|---|
 | Content DB (`65d2ed33fa9d1a94a5224235`) | `NEXT_PUBLIC_DB_KEY` | GET only | server loaders, plus the browser (above) |
 | Blog DB (`66029bf861a15927654de175`) | `NEXT_PUBLIC_BLOG_DB_KEY` | GET only | server loaders, plus the browser (above) |
-| A/B DB (`65c4c053a3fad7804af5bba8`) | `NEXT_PUBLIC_DB_KEY_ABTEST` | GET, POST, PATCH | `POST /api/track-variant` only; the GET is short-circuited today ([OPEN_QUESTIONS T-01](OPEN_QUESTIONS.md)) |
+| A/B DB (`65c4c053a3fad7804af5bba8`) | `NEXT_PUBLIC_DB_KEY_ABTEST` | GET, POST, PATCH | `POST /api/track-variant` only, and only for homepage views and homepage signup/login clicks |
 | Plug service | none sent | GET, plus the Reddit relay POSTs | server and browser ([plug-service.md](current-infrastructure/plug-service.md)) |
 | flow.sokt.io webhooks | none | POST/GET from the browser; `sendErrorMessage` from either side | [flow-webhooks.md](current-infrastructure/flow-webhooks.md) |
 | Experiment events (`cursor-slack-bot.embarko.app`) | publishable `MW_KEY` | POST append only, from the browser, and only once a page calls `mwSend` | `src/utils/mwExperiment.js` |
@@ -49,7 +49,7 @@ This file covers the site's security posture: who can do what, which values are 
 - **Least privilege is one key per database.** Whether any key is scoped read-only is unknown (S-01). The database ids are string literals in `src/utils/axiosCalls.js`, not env vars ([OPEN_QUESTIONS S-02](OPEN_QUESTIONS.md)).
 - **There is no DELETE.** The table API takes GET, POST and PATCH only, so a row written by mistake (or by a test) stays forever. Duplicates become pointer rows ([table-api.md](current-infrastructure/table-api.md)). Tag every test write with its `environment`.
 - **The A/B table holds personal data.** Each visitor row's `name` JSON stores the client IP (`ipAddress`, resolved server-side by `getClientIp`), device, screen and browser details, UTM data and click history (`src/utils/abTestVisitor.js`). The key that can read it is a `NEXT_PUBLIC_*` variable, so the exposure in the warning above applies to this data too.
-- **Test and production share the table and the cookie.** Both write to the same A/B table, and the `visitor_id` cookie is set on `.viasocket.com`. The lookup does not filter on `environment` ([OPEN_QUESTIONS T-02](OPEN_QUESTIONS.md)), and `getEnvironment` labels `test.viasocket.com` as production when the env flag is unset ([OPEN_QUESTIONS T-03](OPEN_QUESTIONS.md)).
+- **Test and production share the table and the cookie.** Both write to the same A/B table, and the `visitor_id` cookie is set on `.viasocket.com`. The lookup filters on `environment`. When the env flag is unset, production is exactly `viasocket.com`.
 
 ## Input Handling
 - **Route input is validated in `src/app/api/track-variant/route.js`:**
@@ -86,5 +86,5 @@ The sensitive surface is visitor PII sent to third parties, unauthenticated publ
 | Chatbot `embedToken` | hardcoded JWT, the same in two places; public by design | `src/app/providers.js`, `public/new-home/assets/support.js` | [OPEN_QUESTIONS S-04](OPEN_QUESTIONS.md) (scope check pending) |
 | Public webhooks | every flow.sokt.io form endpoint is unauthenticated, its script id ships in client code, and no form has a CAPTCHA, honeypot or rate limit, so it can be spammed directly | [flow-webhooks.md](current-infrastructure/flow-webhooks.md) | reCAPTCHA is unused ([CONTRACTS](CONTRACTS.md#required--unavailable-backend-capabilities)); any bot check must be verified server-side with a key outside the `NEXT_PUBLIC_*` prefix |
 | Error webhook | anyone can call `func/scrixVwRkMy0` and forge error reports | `src/utils/SendErrorMessage.js` | inferred; [18-error-handling](18-error-handling.md#api-layer) |
-| Tracking route | no auth or rate limit; bot filtering is by user agent only | `src/app/api/track-variant/route.js` | writes are off (T-01) |
+| Tracking route | no auth or rate limit; bot filtering is by user agent, plus a platform/OS mismatch | `src/app/api/track-variant/route.js` | homepage events are stored; other pages are dropped |
 | Client-side keys | table-api keys usable by anyone with devtools, possibly the A/B write key too | the warning above | [OPEN_QUESTIONS S-01](OPEN_QUESTIONS.md) |
