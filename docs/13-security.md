@@ -10,7 +10,7 @@ This file covers the site's security posture: who can do what, which values are 
 ## Access Control
 - **There is none.** This is a public marketing site with no login, roles or admin area of its own. Login and signup belong to the viaSocket app. `/login` redirects to `https://flow.viasocket.com/` (`next.config.js`), and signup runs inside the MSG91 widget ([third-party-services.md](current-infrastructure/third-party-services.md)).
 - **"Signed in" only means a `prod` cookie exists.** `src/app/lib/getAuth.js:getHasToken` and `src/app/components/navbar/NavbarServer.js` check that the cookie is present and swap "Sign up" for "Dashboard". The value is never read, and nothing in this repo sets the cookie. Anyone can set it, so never use it to gate content, data or an API route.
-- **`POST /api/track-variant` has no auth and no rate limit.** The caller's identity is the browser-generated `visitor_id` cookie, checked only for UUID shape ([api/track-variant.md](api/track-variant.md)). Homepage events are stored again. Anyone who knows a visitor id can append a homepage event to that visitor's row. The route still drops every other page.
+- **`POST /api/track-variant` has no auth and no rate limit.** The caller's identity is the browser-generated `visitor_id` cookie, checked only for UUID shape ([api/track-variant.md](api/track-variant.md)). Homepage events and a completed `/signup` registration are stored. Anyone who knows a visitor id can append one of those events to that visitor's row. The route still drops every other event.
 - **Environments are public. Robots rules only keep them out of search.** test.viasocket.com and local builds get robots `Disallow: /` from `src/app/robots.txt/route.js`, and every non-`prod` build gets the root layout's `noindex, nofollow`. No evidence was found of a preview `x-robots-tag` header ([OPEN_QUESTIONS D-09](OPEN_QUESTIONS.md)). Full posture: [cloudflare.md](current-infrastructure/cloudflare.md#schema--shape).
 - `public/admin/` (a Decap CMS config with `git-gateway`, branch `prod`) is served as a static file. Production robots only `Disallow: /admin/` it. Whether it is retired is [OPEN_QUESTIONS C-02](OPEN_QUESTIONS.md).
 
@@ -41,7 +41,7 @@ This file covers the site's security posture: who can do what, which values are 
 |---|---|---|---|
 | Content DB (`65d2ed33fa9d1a94a5224235`) | `NEXT_PUBLIC_DB_KEY` | GET only | server loaders, plus the browser (above) |
 | Blog DB (`66029bf861a15927654de175`) | `NEXT_PUBLIC_BLOG_DB_KEY` | GET only | server loaders, plus the browser (above) |
-| A/B DB (`65c4c053a3fad7804af5bba8`) | `NEXT_PUBLIC_DB_KEY_ABTEST` | GET, POST, PATCH | `POST /api/track-variant` only, and only for homepage views and homepage signup/login clicks |
+| A/B DB (`65c4c053a3fad7804af5bba8`) | `NEXT_PUBLIC_DB_KEY_ABTEST` | GET, POST, PATCH | `POST /api/track-variant` only, and only for homepage views, homepage signup/login clicks, and `signup_completed` on `/signup` |
 | Plug service | none sent | GET, plus the Reddit relay POSTs | server and browser ([plug-service.md](current-infrastructure/plug-service.md)) |
 | flow.sokt.io webhooks | none | POST/GET from the browser; `sendErrorMessage` from either side | [flow-webhooks.md](current-infrastructure/flow-webhooks.md) |
 | Experiment events (`cursor-slack-bot.embarko.app`) | publishable `MW_KEY` | POST append only, from the browser, and only once a page calls `mwSend` | `src/utils/mwExperiment.js` |

@@ -8,7 +8,7 @@ verified_on: 2026-10-31
 > The site has one API route. Route-handler rules (edge runtime, always-200 tracking, where helpers live): [../12-api-guidelines.md](../12-api-guidelines.md).
 
 ## Purpose
-`POST /api/track-variant` records first-party visitor events against one row per anonymous visitor in the A/B table. It powers no screen; the browser never reads the response. **Homepage exposures and homepage signup/login clicks are stored.** A view or click from any other page is acknowledged and dropped (`not a homepage event`), which is what keeps the rest of the site from writing. How to read the homepage test: [../modules/01-homepage.md](../modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version). Event contract: [CONTRACTS.md](../CONTRACTS.md#first-party-visitor-tracking).
+`POST /api/track-variant` records first-party visitor events against one row per anonymous visitor in the A/B table. It powers no screen; the browser never reads the response. **Homepage exposures, homepage signup/login clicks, and a completed registration observed on `/signup` are stored.** Any other event is acknowledged and dropped (`not a homepage event`), which is what keeps the rest of the site from writing. How to read the homepage test: [../modules/01-homepage.md](../modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version). Event contract: [CONTRACTS.md](../CONTRACTS.md#first-party-visitor-tracking).
 
 ---
 
@@ -45,7 +45,7 @@ All keys optional; unknown keys ignored.
   "isNewSession": true,
   "ctaSource": "home-A (cta only)",
   "element": "header_pricing (click/cta; must match ^[a-z0-9_]{1,64}$ after lowercasing, or a click is dropped)",
-  "action": "click | signup_click | ... (^[a-z0-9_]{1,40}$, else 'click')",
+  "action": "click | signup_click | login_click | signup_completed | ... (^[a-z0-9_]{1,40}$, else 'click')",
   "label": "string, capped at 120",
   "section": "header | hero | main | footer | menu | other (capped at 40)",
   "destinationUrl": "string, capped at 500"
@@ -83,7 +83,7 @@ Always HTTP 200 JSON, including on internal errors.
 ### Behavior Notes
 - Order: cookies → body → click validation → bot check → lookup. Bots and unrecognised clicks cost no table read.
 - `getEnvironment`: flag `prod`/`production` → `production`; `test`/`stage`/`staging` → `test`; `local`/`development`/`dev` → `local`; otherwise the full hostname, exactly: `viasocket.com` → `production`, `localhost` / `127.0.0.1` / an IPv4 address → `local`, anything else (including `test.viasocket.com`) → `test`. The existing row's `environment` wins on update.
-- Homepage gate, after the bot check: the path must be `/`, `/home` or `/home-b` (trailing slash ignored), and the event must be a `view` or a click whose action is `signup_click` or `login_click`. Anything else returns `not a homepage event` and does not read the table.
+- Homepage gate, after the bot check. A view must be `/`, `/home` or `/home-b` (trailing slash ignored). A click is stored only when it is `signup_click` or `login_click` on one of those paths, or `signup_completed` on `/signup`. Anything else returns `not a homepage event` and does not read the table. `/signup` views and other clicks on `/signup` are not stored.
 - The lookup filter is `name LIKE '%<visitorId>%' AND environment = '<environment>'`. An environment outside `production` / `test` / `local` is a failed lookup, not a new row.
 - A failed lookup is **not** treated as "no history": the event is dropped rather than inserting a duplicate row.
 - Dedupe: views of the same page key within `VIEW_DEDUPE_WINDOW_MS` (10 s) and same-element clicks within `CLICK_DEDUPE_WINDOW_MS` (400 ms) are not counted; an uncounted event with nothing to merge and no new visit writes nothing. `cta` always counts.

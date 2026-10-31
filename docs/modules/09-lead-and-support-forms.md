@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/experts/**", "src/app/components/experts/**", "src/components/requestMeetingComp/**", "src/app/hire-an-expert/**", "src/app/agency-partner/**", "src/components/agencyPartner/**", "src/app/support/**", "src/app/components/support/**", "src/app/lib/support-data.js", "src/app/feedback/**", "src/app/components/feedback/**", "src/app/signup/**", "src/app/components/customLogin/**"]
 verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_on: 2026-10-31
 ---
 # Module: Lead, Support and Signup Forms
 
@@ -63,6 +63,7 @@ The pages where a visitor hands over contact details or starts an account: the e
 ### 6. Signup (`src/app/signup/page.js:SignupPage` → `src/app/components/customLogin/CustomLoginOptimized.js:CustomLoginOptimized`)
 - A two-column layout: on the left, the MSG91 widget mounts into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`; on the right, a hardcoded testimonial card and stats. `appCount + 300` comes from `src/app/lib/data.js:getSignupPageData`.
 - The widget loads MSG91's proxy-auth script once (guarded by `window.__custom_login_script_loaded__`) and calls `initVerification` once per page (guarded by `window.__init_verification_ran__`), with `state: setUtmSource()`. `?redirect_to` becomes `addInfo.redirect_path`. The env var is `NEXT_PUBLIC_REFERENCE_ID` ([DEVELOPMENT](../DEVELOPMENT.md#environment-variables-reference)).
+- A completed registration this page can see is a 2xx POST whose URL contains `/c/register` and whose body is not `hasError`. `CustomLoginOptimized` watches `fetch` and `XMLHttpRequest` for that response (once, `window.__vs_register_watch__`) and calls `trackInteraction` once (`element` and `action` `signup_completed`). The widget `success` callback only clears the skeleton: the register-and-redirect path never calls it, and some logins do. Google and Apple leave the page before a `/c/register` response, so they are not counted here.
 
 ---
 
@@ -86,7 +87,7 @@ The pages where a visitor hands over contact details or starts an account: the e
 ---
 
 ## API Dependencies
-- None of the site's own routes. Every submission goes straight from the browser to an external endpoint, and there is no server proxy or reCAPTCHA ([13-security](../13-security.md)).
+- Form submissions go straight from the browser to an external endpoint, and there is no server proxy or reCAPTCHA ([13-security](../13-security.md)). `/signup` also posts `signup_completed` to `/api/track-variant` when it sees a successful registration response.
 
 ---
 

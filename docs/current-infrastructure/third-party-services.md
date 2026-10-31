@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "public/new-home/index.html", "public/new-home/main.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
 verified_at: 89b51dc7
-verified_on: 2026-10-28
+verified_on: 2026-10-31
 ---
 # Third-party services
 
@@ -22,7 +22,7 @@ Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), 
 ## Entities / Tables / Endpoints
 | Name | Purpose |
 |---|---|
-| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: setUtmSource(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. Used by `src/app/signup/page.js`, `src/app/components/home/CTAButtons.js`, `src/app/migration/relay/RelaySignupCTA.js`. |
+| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: setUtmSource(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. `success` only clears the loading skeleton. A new account this page can see is a 2xx POST to a URL containing `/c/register` whose body is not `hasError`; the component reports that once as `signup_completed`. Used by `src/app/signup/page.js`. `CTAButtons.js` and `RelaySignupCTA.js` only mention it in comments. |
 | `https://files.msg91.com/342616/wnitwkyk` | Default OG/Twitter image in page metadata (`src/app/layout.js`, `public/new-home/index.html` and others) |
 | ipapi.co `https://ipapi.co/json/` | `src/components/phoneInput/phoneInput.js` reads `country_code` to preselect the dial code; best effort, ignored if unknown |
 | gtwy chatbot `https://chatbot.gtwy.ai/chatbot.js` | Support chat. `src/app/providers.js` (React pages) and `public/new-home/assets/support.js` (`/`) inject it with a hardcoded `embedToken`, `bridgeName: 'viasocket_chat'` and a `threadId` kept in `localStorage.viasocket_chat_thread` for 1 h; the icon is hidden and `[data-chat]` links call `window.Chatbot.open()` on `/` |

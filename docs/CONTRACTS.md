@@ -96,11 +96,11 @@ sequenceDiagram
     participant T as table-api A/B table
     B->>B: TrackingCookies sets variant + visitor_id
     B->>R: POST {event:view|click|cta,...} (cookies attached)
-    alt homepage view, or homepage signup/login click
+    alt homepage view, homepage signup/login click, or signup_completed on /signup
         R->>T: GET rows by visitor_id AND environment
         R->>T: POST a new row, or PATCH the oldest live row
         R-->>B: 200 {success, created, counted}
-    else any other page
+    else any other event
         R-->>B: 200 {success:false, reason:'not a homepage event'}
     end
 ```
@@ -180,4 +180,4 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 No proposed endpoints. Known gaps a change may run into:
 - **Delete on the table API** does not exist. Anything that writes test rows must tag them (`environment`) and live with them.
 - **Server-side reCAPTCHA verification** does not exist; no form uses reCAPTCHA. The unimported provider and `react-google-recaptcha-v3` were removed on 2026-10-21, and the site-key env var in `.env` is now unread ([DEVELOPMENT.md](DEVELOPMENT.md)). If a form needs bot protection, design a server route using a key without the `NEXT_PUBLIC_*` prefix; do not ship a client-only check.
-- **Storing the homepage version on a new account** is not in this repo. Signup finishes on flow.viasocket.com. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link, and the `variant` cookie (same values, not HttpOnly, domain `.viasocket.com`) is readable there. The signup app must read `hp_variant` from the arrival URL, or the `variant` cookie when the query param is absent, and store that value on the new account. Until it does, signups per version cannot be counted. The paired backend is [socket-flow-backend](https://github.com/Walkover-Web-Solution/socket-flow-backend).
+- **Storing the homepage version on accounts this site cannot see.** `/signup` records a completed registration it observes (a 2xx POST to a URL containing `/c/register` whose body is not `hasError`) as `signup_completed`, with the `variant` cookie, so those signups per version are readable from the A/B table. Homepage Start free and Log in go to flow.viasocket.com and never hit `/signup`. Google, Apple, and any path that leaves `/signup` before that response also finish elsewhere. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link, and the `variant` cookie (same values, not HttpOnly, domain `.viasocket.com`) is readable there. The signup app must read `hp_variant` from the arrival URL, or the `variant` cookie when the query param is absent, and store that value on the new account. Until it does, signups that never produce a `/c/register` response on `/signup` cannot be counted from this repo. The paired backend is [socket-flow-backend](https://github.com/Walkover-Web-Solution/socket-flow-backend).

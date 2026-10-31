@@ -181,7 +181,7 @@ sequenceDiagram
     TC->>B: set variant (A/B, 30d) and visitor_id (uuid, 1y; from vs_visitor mirror if lost)
     VT->>API: trackView() under Web Lock: {event:'view', userInfo, pageUrl, utmData(URL), referrer, sessionId}
     API->>API: needs valid visitor_id + variant cookies, drops bots
-    alt path is /, /home or /home-b, and the event is a view or a signup/login click
+    alt homepage view or signup/login click, or signup_completed on /signup
         API->>T: getAbTestVisitorRows(visitorId, pageUrl, environment)
         API->>T: PATCH the oldest live row, or POST a new row
     else
@@ -208,10 +208,10 @@ sequenceDiagram
 | `trackRedditEvent` | no | no | yes | prod gate, and it **has no callers** |
 | `sendErrorMessage` webhook | console only | console only | yes | prod gate in `src/utils/SendErrorMessage.js` |
 | Zaraz (`/cdn-cgi/zaraz/i.js`) | 404 | yes | yes | served only by Cloudflare |
-| Homepage A/B (`public/home-ab.js` → `/api/track-variant`) | yes, stored | yes, stored | yes, stored | only `/`, `/home` and `/home-b` views, plus signup/login clicks on those paths |
+| Homepage A/B (`public/home-ab.js` → `/api/track-variant`) | yes, stored | yes, stored | yes, stored | `/`, `/home` and `/home-b` views, signup/login clicks on those paths, and `signup_completed` on `/signup` |
 
 > [!WARNING]
-> **Only homepage events are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, and a click on those paths whose action is `signup_click` or `login_click`. Every other event returns `not a homepage event` and does not read the table. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
+> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
 
 > [!WARNING]
 > Middleware's Reddit `fetch` is fire-and-forget (not awaited, no waitUntil). On the edge runtime it may be cancelled once the response returns. Also, production HTML served from the Cloudflare cache never reaches middleware. Verify on viasocket.com itself, not on test.

@@ -10,6 +10,7 @@ import {
     getPageKey,
     getPagePath,
     isHomePath,
+    isSignupPath,
     mergedRowFields,
     newProfile,
     readProfile,
@@ -152,14 +153,20 @@ export async function POST(request) {
         const environment = getEnvironment(request);
         const path = getPagePath(pageUrl || '');
 
-        // Homepage exposures and the signup / login clicks on that page are the
-        // only events this test stores. Every other page keeps the previous
-        // behaviour: the request is acknowledged and nothing is written.
+        // Homepage exposures, the signup / login clicks on that page, and a
+        // completed registration this site saw on /signup. Every other event is
+        // acknowledged and nothing is written.
         const homepageClick =
+            isHomePath(path) &&
             type === 'click' &&
             interaction &&
             (interaction.action === 'signup_click' || interaction.action === 'login_click');
-        if (!isHomePath(path) || (type !== 'view' && !homepageClick)) {
+        const completedSignup =
+            isSignupPath(path) &&
+            type === 'click' &&
+            interaction &&
+            interaction.action === 'signup_completed';
+        if (!(isHomePath(path) && type === 'view') && !homepageClick && !completedSignup) {
             return NextResponse.json({ success: false, reason: 'not a homepage event' });
         }
 

@@ -8,7 +8,7 @@ verified_on: 2026-10-31
 The viaSocket table service: the CMS behind almost every page section, the blog card list, and the A/B visitor-tracking table.
 
 > [!WARNING]
-> **There is no DELETE.** The table API accepts GET, POST and PATCH only, so a test row written to the A/B table stays forever (duplicates are turned into pointers, never removed). Homepage views and homepage signup/login clicks are written. Every other event is dropped before the lookup. Never write to the table "just to test" without tagging the row's `environment`.
+> **There is no DELETE.** The table API accepts GET, POST and PATCH only, so a test row written to the A/B table stays forever (duplicates are turned into pointers, never removed). Homepage views, homepage signup/login clicks, and a completed `/signup` registration are written. Every other event is dropped before the lookup. Never write to the table "just to test" without tagging the row's `environment`.
 
 ## Role
 Source of truth for page content (navbar, footer, meta, FAQs, features, pricing rows, reviews, departments, MCP prompts, webinars and the rest of [database/entities.md](../database/entities.md)), blog cards, and the one-row-per-visitor A/B tracking record. Content edits made in the table go live without a deploy, after the client cache TTL below.

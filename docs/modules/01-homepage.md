@@ -83,7 +83,7 @@ The homepage uses no React components. Its tokens (`:root` in `public/new-home/s
 
 ## API Dependencies
 
-Version A and version B both call `POST /api/track-variant` from `public/home-ab.js` (one homepage view, plus Start free and Log in clicks). They call no other table-api or plug-service endpoint. The route stores those homepage events only; a view of any other page is still dropped ([../api/track-variant.md](../api/track-variant.md)).
+Version A and version B both call `POST /api/track-variant` from `public/home-ab.js` (one homepage view, plus Start free and Log in clicks). They call no other table-api or plug-service endpoint. The route also stores a completed registration it can see on `/signup`. A view of any other page is still dropped ([../api/track-variant.md](../api/track-variant.md)).
 
 ## Homepage A/B test (version B)
 
@@ -103,19 +103,21 @@ Placeholders in the mockup point at the live homepage's destination. The footer'
 
 ### Carrying the version to signup
 
-Signup finishes on flow.viasocket.com, which this repo does not own. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link before the visitor can use it, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly). Completed signups are not in the visitor table. What the signup app must do is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
+Start free and Log in on both homepages go to flow.viasocket.com and never open `/signup`. Both homepages add `hp_variant=A` or `hp_variant=B` to every such link, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly). A registration that finishes there, or that leaves `/signup` before this site sees a response, is stored only if that app records the version. What this site does store is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
 
 ### Reading visitors, signup clicks and signups per version
 
 Stored in the A/B table `tbla8b06r` (database `65c4c053a3fad7804af5bba8`), one row per visitor **per environment**. Always filter `environment` (`production`, `test` or `local`). There is no DELETE.
 
-For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. Group those by `variant` and `timestamp` the same way.
+For a date range, read `page_data` and `click_data` (JSON arrays, newest 100 events). An exposure is a `page_view` whose `timestamp` is in range. Version A is `path` `/` with `variant` `A`. Version B is `path` `/home-b` with `variant` `B`. Count distinct `user_id`. A signup click is a `click_data` event with `event` `signup_click` (the Start free control; neither homepage has a separate Sign up link) and a login click is `login_click`. A completed signup this site saw is `event` `signup_completed` (the version is the `variant` on that event, the homepage version held in the cookie when `/signup` saw the response). Group those by `variant` and `timestamp` the same way.
 
-All-time totals, not sliced by date, also sit on the row: `name.homeSessions` and `name.views.home` (homepage visits), `name.variantViews` (views by version; only homepage views are written), `name.signupClicks`, `name.loginClicks`, and the `signup` column. `varient` is the first version stored for that visitor, not a per-day count.
+All-time totals, not sliced by date, also sit on the row: `name.homeSessions` and `name.views.home` (homepage visits), `name.variantViews` (views by version; only homepage views are written), `name.signupClicks`, `name.loginClicks`, `name.signupCompletions`, and the `signup` column (`completed_signups` is the all-time completion count, with `last_variant`). `varient` is the first version stored for that visitor, not a per-day count.
 
 A visitor who was active long enough to push an event out of the 100-event window will be missing from an older date range. That cap is `MAX_PAGE_EVENTS` / `MAX_CLICK_EVENTS` in `src/utils/abTestVisitor.js`.
 
-Completed signups are not stored here. The signup app has to read `hp_variant` (`A` or `B`) from the arrival URL, or the `variant` cookie on `.viasocket.com` when the query param is absent, and store that value on the new account. Until it does, signups per version cannot be counted.
+`/signup` (`CustomLoginOptimized`) records one `signup_completed` when the MSG91 widget's POST to a URL containing `/c/register` returns HTTP 2xx and the body is not `hasError`. The widget `success` callback is not that signal: the register-and-redirect path never calls it, and some logins do. That count is readable from this table without the signup app.
+
+Still invisible here, so still a signup-app job: homepage Start free and Log in, which go to flow.viasocket.com and never hit `/signup`, and Google, Apple, or any other path that leaves `/signup` before a `/c/register` response. That app must read `hp_variant` (`A` or `B`) from the arrival URL, or the `variant` cookie on `.viasocket.com` when the query param is absent, and store it on the new account.
 
 ---
 

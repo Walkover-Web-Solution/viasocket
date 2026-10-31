@@ -223,7 +223,7 @@ Accepted.
 
 ### Consequences & Trade-offs
 > [!NOTE]
-> The exact-hostname check is back. When the env flag is missing, production is exactly `viasocket.com`. `test.viasocket.com` is `test`. The lookup filters on `environment`. Homepage views and homepage signup/login clicks are written; every other event is dropped before the lookup ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)).
+> The exact-hostname check is back. When the env flag is missing, production is exactly `viasocket.com`. `test.viasocket.com` is `test`. The lookup filters on `environment`. Homepage views, homepage signup/login clicks, and a completed `/signup` registration are written; every other event is dropped before the lookup ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)).
 
 ---
 
@@ -362,7 +362,7 @@ The homepage needs a second version, shown to half of visitors, sticky, with bot
 ### Decision & Implementation
 - Version A stays `public/new-home/` at `/`. Version B is `public/home-b/index.html`, served at `/home-b`, `noindex`, with a canonical of the site root. The mockup file is not shipped.
 - `public/home-ab.js` assigns `variant` `A` or `B` (equal probability) before paint, the same cookie `TrackingCookies` already uses (30 days, domain `.viasocket.com` on viasocket hosts). `localStorage` `vs_variant` restores it after the cookie expires, on the homepage and on every other page. A visitor assigned B is sent to `/home-b` with `location.replace`. A crawler user agent stays on A, and middleware 302s a crawler that requests `/home-b` back to `/`.
-- The route stores a view of `/`, `/home` or `/home-b`, and a homepage click whose action is `signup_click` or `login_click`. Every other caller gets `not a homepage event` and no table read. Both homepages add `hp_variant` to every `flow.viasocket.com` link. Completed signups are stored by the signup app, which this repo does not own.
+- The route stores a view of `/`, `/home` or `/home-b`, a homepage click whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup` when this site sees the registration response. Every other caller gets `not a homepage event` and no table read. Both homepages add `hp_variant` to every `flow.viasocket.com` link. Accounts created on flow.viasocket.com, and Google or Apple signups that leave `/signup` first, are still stored by the signup app, which this repo does not own.
 - B's sidebar is not applied to any other route.
 
 ### Consequences & Trade-offs
@@ -398,4 +398,4 @@ The homepage needs a second version, shown to half of visitors, sticky, with bot
    - **Prevention:** use path-shaped sources only (ADR-012).
 8. **Tracking was switched off without a recorded reason, then turned back on for one test.**
    - **Root cause:** `77b3dec5` short-circuited `getAbTestVisitorRows` (ADR-009). Re-enabling every page would have resumed writes the kill switch was stopping.
-   - **Prevention:** the route stores homepage exposures and homepage signup/login clicks only. A live write and read still needs the A/B key in the environment. Do not widen the gate without a new test.
+   - **Prevention:** the route stores homepage exposures, homepage signup/login clicks, and a completed `/signup` registration this site sees. A live write and read still needs the A/B key in the environment. Do not widen the gate without a new test.

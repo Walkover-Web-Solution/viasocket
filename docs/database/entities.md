@@ -11,7 +11,7 @@ verified_on: 2026-10-31
 All tables live in table-api.viasocket.com, in three databases: **content** (`65d2ed33fa9d1a94a5224235`, every constant in `src/const/tables.js` except `ABTESTCOUNT`, plus four tables addressed by literal id), **blog** (`66029bf861a15927654de175`) and **A/B tracking** (`65c4c053a3fad7804af5bba8`). Purposes below are inferred from table and field names and from the loaders that call them; the table service is the only authority on actual column types.
 
 **Connection:** `NEXT_PUBLIC_DB_BASE_URL` + `NEXT_PUBLIC_DB_KEY` / `NEXT_PUBLIC_BLOG_DB_KEY` / `NEXT_PUBLIC_DB_KEY_ABTEST` → `src/utils/axiosCalls.js` (via `src/utils/getData.js` for content tables)
-**Access posture:** content and blog read-only; A/B table GET/POST/PATCH from `POST /api/track-variant` only, and only for a homepage view or a homepage signup/login click. No DELETE exists.
+**Access posture:** content and blog read-only; A/B table GET/POST/PATCH from `POST /api/track-variant` only, and only for a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. No DELETE exists.
 
 To add a table: constant in `src/const/tables.js`, `*_FIELDS` in `src/const/fields.js`, wrapper in `src/utils/getData.js` (`getDataFromTable(TABLE, handleFieldsFilter(fields, filter), pageUrl)` → `data.data.rows`), call from a loader in `src/app/lib/`, then add a row here.
 
@@ -83,7 +83,7 @@ To add a table: constant in `src/const/tables.js`, `*_FIELDS` in `src/const/fiel
 | `revisit_count` | number | `view_count - 1`, min 0; `0` on merged rows |
 | `environment` | `production` \| `test` \| `local` | From the route's `getEnvironment`; kept from the canonical row on update |
 | `utmdata` | JSON string | First-touch UTM object |
-| `signup` | JSON string \| null | Signup *intent*: `signup_clicks`, `signup_page_views`, `login_clicks`, `variant`, `last_source`, journey. Null until any signup click or `/signup` view |
+| `signup` | JSON string \| null | Signup intent plus `completed_signups` (`count`, `first_at`, `last_at`, `last_variant`) when `/signup` saw a registration response. Also `signup_clicks`, `signup_page_views`, `login_clicks`, `variant`, `last_source`, journey. Null until a signup click, a `/signup` view, or a completion |
 | `timestamp` | ISO string | Time of this write |
 | `click_data` | JSON array | Last 100 click events (`MAX_CLICK_EVENTS`) |
 | `page_data` | JSON array | Last 100 page events (`MAX_PAGE_EVENTS`) |
@@ -106,7 +106,8 @@ Profile JSON in `name` (`src/utils/abTestVisitor.js:emptyProfile`, minus `clicks
   visits, visitSessionId, visitAt,                           // source of view_count / revisit_count
   homeSessions, homeSessionId, homeSessionAt,                // homepage-only A/B figure
   firstUrl, lastUrl, referrer, lastAction, lastActionAt, lastVisitAt,
-  signupClicks: { count, ... }, loginClicks: { count, ... }
+  signupClicks: { count, ... }, loginClicks: { count, ... },
+  signupCompletions: { count, firstAt, lastAt, lastVariant }
 }
 ```
 Rows written by older tracker versions (no `profileVersion`) are converted by `readProfile` and folded in by `absorbRow`, at most `MAX_MERGES_PER_REQUEST` (10) per request.

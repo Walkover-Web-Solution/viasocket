@@ -78,7 +78,7 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 
 | ID | Answer | Recorded in |
 |---|---|---|
-| T-01 | Homepage exposures and homepage signup/login clicks are stored again, for the version B test. Every other page still writes nothing (`not a homepage event`). The `return null` kill switch in `getAbTestVisitorRows` is gone. A live write and read still needs the A/B database key in the environment. | [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version), [api/track-variant](api/track-variant.md), [ADR-017](DECISIONS.md#adr-017-homepage-version-b-is-a-client-side-5050-split) |
+| T-01 | Homepage exposures, homepage signup/login clicks, and a completed registration observed on `/signup` are stored, for the version B test. Every other event still writes nothing (`not a homepage event`). The `return null` kill switch in `getAbTestVisitorRows` is gone. A live write and read still needs the A/B database key in the environment. | [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version), [api/track-variant](api/track-variant.md), [ADR-017](DECISIONS.md#adr-017-homepage-version-b-is-a-client-side-5050-split) |
 | T-02 | The visitor lookup filters on `environment` as well as the visitor id. An environment outside `production` / `test` / `local` is a failed lookup. | `src/utils/axiosCalls.js:getAbTestVisitorRows`, [api/track-variant](api/track-variant.md) |
 | T-03 | When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is unset, production is exactly `viasocket.com`. `test.viasocket.com` is `test`. No suffix match. | `src/app/api/track-variant/route.js:getEnvironment` |
 
