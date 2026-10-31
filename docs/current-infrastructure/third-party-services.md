@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "public/new-home/index.html", "public/new-home/main.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
-verified_at: 89b51dc7
+verified_at: 3662e484
 verified_on: 2026-10-31
 ---
 # Third-party services

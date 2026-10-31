@@ -1,6 +1,6 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/utils/mwExperiment.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
-verified_at: d8f8d571
+verified_at: 3662e484
 verified_on: 2026-10-31
 ---
 # 13 Security

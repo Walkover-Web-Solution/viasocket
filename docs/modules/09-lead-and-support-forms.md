@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/experts/**", "src/app/components/experts/**", "src/components/requestMeetingComp/**", "src/app/hire-an-expert/**", "src/app/agency-partner/**", "src/components/agencyPartner/**", "src/app/support/**", "src/app/components/support/**", "src/app/lib/support-data.js", "src/app/feedback/**", "src/app/components/feedback/**", "src/app/signup/**", "src/app/components/customLogin/**"]
-verified_at: 17b99cd8
+verified_at: 3662e484
 verified_on: 2026-10-31
 ---
 # Module: Lead, Support and Signup Forms
