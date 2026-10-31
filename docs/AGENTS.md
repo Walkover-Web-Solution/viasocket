@@ -1,6 +1,6 @@
 ---
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
-verified_at: d8f8d571
+verified_at: 48f494d8
 verified_on: 2026-10-31
 ---
 # AI Agent Guidelines (viaSocket marketing site)

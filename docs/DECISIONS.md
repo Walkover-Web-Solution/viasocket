@@ -1,6 +1,6 @@
 ---
 covers: ["*"]
-verified_at: 3662e484
+verified_at: 48f494d8
 verified_on: 2026-10-31
 ---
 # Architectural & Design Decisions (ADRs)

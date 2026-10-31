@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/migration/**", "src/app/lifetime-deal/**", "src/app/black-friday-sale/**", "src/app/components/black-friday-sale/**", "src/app/webinar/**", "src/app/components/webinar/**", "src/app/free-access-programs/**", "src/app/experts-are-live/**", "src/app/departments/**", "src/app/components/department/**", "src/app/lib/lifetime-deal-data.js", "src/app/lib/black-friday-sale-data.js", "src/app/lib/webinar-data.js", "src/app/lib/department-data.js", "src/app/privacy/**", "src/app/terms/**", "src/app/data-deletion-policy/**", "src/app/data-retention-deletion/**"]
-verified_at: 6a557025
+verified_at: 48f494d8
 verified_on: 2026-10-31
 ---
 # Module: Campaign, Program and Static Pages
