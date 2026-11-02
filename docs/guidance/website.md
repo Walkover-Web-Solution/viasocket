@@ -1,4 +1,4 @@
-<!-- middleware guidance: website, version c1ddb9876d30. Kept by the middleware: change it in the middleware's Workspace settings and sync again, not this file. -->
+<!-- middleware guidance: website, version 2769b521da8c. Kept by the middleware: change profiles/website.md there and sync again, not this file. -->
 
 Help users finish their task with minimal effort; reveal complexity only when needed. Follow the complete journey across roles and states. Reuse the design system; preserve accessibility, responsiveness and preferences. Avoid unnecessary fetching and rendering. Verify realistic browser journeys, including failure and recovery.
 

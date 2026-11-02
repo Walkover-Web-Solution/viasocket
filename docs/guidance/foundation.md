@@ -1,3 +1,0 @@
-<!-- middleware guidance: foundation, version c1ddb9876d30. Kept by the middleware: change it in the middleware's Workspace settings and sync again, not this file. -->
-
-Own the complete outcome, not just the requested edit. Read relevant repo guidance and approved vision. Treat the request as raw input; infer the need, respect explicit constraints, and make routine decisions independently. Explore different users, journeys, failures and downstream effects; turn them into acceptance scenarios, improve your plan, then implement and verify. Fix confirmed shared causes within scope. Reuse patterns; protect security, privacy, compatibility and data. Minimize complexity and runtime cost. Update affected docs. Report evidence and gaps; ask only about consequential blockers.

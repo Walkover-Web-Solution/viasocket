@@ -5,8 +5,7 @@ This repo is the public website at **viasocket.com**: the static homepage, SEO l
 <!-- middleware:guidance:start -->
 ## Guidance for this kind of repository
 
-Kept by the middleware (version c1ddb9876d30). Read these before changing anything here:
-- [docs/guidance/foundation.md](docs/guidance/foundation.md)
+Kept by the middleware (version 2769b521da8c). Read these before changing anything here:
 - [docs/guidance/website.md](docs/guidance/website.md)
 <!-- middleware:guidance:end -->
 
