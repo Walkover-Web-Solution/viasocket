@@ -87,7 +87,9 @@ Version A and version B both call `POST /api/track-variant` from `public/home-ab
 
 ## Homepage A/B test (version B)
 
-Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `8a6d1f18`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
+Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `c0064420`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
+
+B's product video is the section `#video`, "See viaSocket in action.", between "Connect once" and "What teams build". It is the same video as version A (YouTube `GRzkVjW839A`). The page shows that video's thumbnail and a play button, and it requests nothing from the YouTube player until the click. The click replaces the thumbnail with the `youtube-nocookie.com` embed (`autoplay=1`, `rel=0`). The sidebar lists it as "04 In action" and numbers the later chapters 05 to 09. Scroll tracking follows those nine links. The Agent view lists the video under a Video heading.
 
 In B's "Plug in viaSocket, and your app or agent can act in 2,300+ apps." diagram, the middle viaSocket card uses the neutral surface (`--s3` background, a 1px `--line-3` border, no shadow) and the logo in `--ink`. Those tokens are `#ececea` / `rgba(17,17,19,.24)` / `#111113` in light mode and `#1d1d20` / `rgba(255,255,255,.26)` / `#f1efe9` in dark mode. The two neighbouring cards are unchanged.
 
