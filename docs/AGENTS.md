@@ -1,7 +1,7 @@
 ---
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
-verified_at: d8f8d571
-verified_on: 2026-10-31
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # AI Agent Guidelines (viaSocket marketing site)
 
@@ -46,8 +46,8 @@ The site is fully integrated with live backends; there is no mock layer and none
 - **`visitor_id` cookie** (`src/const/abTest.js:VISITOR_ID_COOKIE`, 1 year, mirrored to localStorage `vs_visitor`): the anonymous visitor identity that ties visits to one tracking row. It is shared by test and production because it is set on `.viasocket.com`, so any read-back must also filter on the row's `environment`. `getAbTestVisitorRows` does.
 - **`variant` cookie** (`VARIANT_COOKIE`, `VARIANTS = ['A', 'B']`, 30 days): the A/B arm. It is written by the browser (`TrackingCookies`), never by middleware ([DECISIONS ADR-007](DECISIONS.md#adr-007-tracking-cookies-are-written-by-the-browser-and--is-sent-no-store)).
 - **Middleware experiment id** (`localStorage` `mw_visitor`, `src/utils/mwExperiment.js`): a different visitor from `visitor_id`, used only to assign and record experiments the owner starts in the middleware. Do not write those events to `/api/track-variant`, and do not start an experiment from the layout. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments).
-- **`utm_source`:** a page tags its own signups with its **path** (`/integrations`, `/embed/app-integration`). `isInternalUtmSource()` in `src/utils/handleUtmSource.js` treats empty, path-shaped and `INTERNAL_UTM_SOURCES` values as the site's own. Anything else is external attribution, which `savePageUtmSource()` will not overwrite for a day. Campaign pages keep their registered tag (e.g. `relay-switch-google-ads`), stamp it into the `utmData` cookie just before navigating, and put `utm_source` in the signup URL exactly once ([FLOWS](FLOWS.md#detailed-journey-landing-utm-capture-and-signup), [DECISIONS ADR-012](DECISIONS.md#adr-012-utm-attribution-conventions)).
-- **`utmData` cookie:** JSON, 1 day, carries `utm_*` and a typed `prompt` to signup through MSG91 `state`. Write it with `setCookie` from `src/utils/handleUtmSource.js`. Never put a prompt in a query parameter.
+- **`utm_source`:** a page tags its own signups with its **path** (`/integrations`, `/embed/app-integration`). `isInternalUtmSource()` in `src/utils/handleUtmSource.js` treats empty, path-shaped and `INTERNAL_UTM_SOURCES` values as the site's own. Anything else is external attribution, which `savePageUtmSource()` will not overwrite for 30 days. Campaign pages keep their registered tag (e.g. `relay-switch-google-ads`), stamp it into the `utmData` cookie just before navigating, and put `utm_source` in the signup URL exactly once ([FLOWS](FLOWS.md#detailed-journey-landing-utm-capture-and-signup), [DECISIONS ADR-012](DECISIONS.md#adr-012-utm-attribution-conventions)).
+- **`utmData` cookie:** JSON, 30 days, carries `utm_*`, ad click ids (`gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid`, `rdt_cid`), `affiliate_*`, `ref` and a typed `prompt` to signup through MSG91 `state`. Write it with `setCookie` from `src/utils/handleUtmSource.js`. Never put a prompt in a query parameter. `buildSignupState` adds `visitor_id` and the signup button (`cta`) to that state only; they are not written into the cookie.
 - **App slugs:** plug-service `appslugname` identifies an app across `/integrations/[app]`, the dofollow table and template lookups ([current-infrastructure/plug-service](current-infrastructure/plug-service.md)).
 
 Never assume an ID is universally available. Pass the specific ID type each data source needs.

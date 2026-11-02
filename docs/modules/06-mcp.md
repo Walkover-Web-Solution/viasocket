@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/mcp/**", "src/components/mcpComps/**", "src/app/lib/mcp-data.js", "src/app/components/mcp/**", "src/utils/getMcpInfo.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Module: MCP
 
@@ -24,7 +24,7 @@ The `/mcp/*` pages sell viaSocket's MCP endpoint (a URL that lets an AI assistan
 ## Navigation Flow
 1. Visitors land from search or the backend sitemap. `src/app/sitemap.js` lists only `/mcp/aiagent` and `/mcp/saas`; it says dynamic MCP pages are covered by "the backend's own sitemap".
 2. On an app page they read the actions and triggers (`McpEventsComp`), search other apps, or click **Get Your MCP URL**.
-3. That CTA calls `src/utils/handleRedirection.js:handleRedirect` with app.mushroom.viasocket.com/login and the app slug as `customSource`, which opens a **new tab**. The index page CTA passes no custom source. The attribution effects (a non-path source locks the cookie for a day) are in [FLOWS](../FLOWS.md#4-alternative-branches) and [OPEN_QUESTIONS T-07](../OPEN_QUESTIONS.md#active-questions-table).
+3. That CTA calls `src/utils/handleRedirection.js:handleRedirect` with app.mushroom.viasocket.com/login and the app slug as `customSource`, which opens a **new tab**. The index page CTA passes no custom source. The attribution effects (a non-path source locks the cookie for 30 days) are in [FLOWS](../FLOWS.md#4-alternative-branches) and [OPEN_QUESTIONS T-07](../OPEN_QUESTIONS.md#active-questions-table).
 4. An app with neither a stored prompt nor events shows `RequestIntegrationPopupOpener` instead (the request flow is in [FLOWS](../FLOWS.md#3-request-an-integration-modal)).
 
 ---
