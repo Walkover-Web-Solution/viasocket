@@ -167,6 +167,19 @@ h3{font:500 16px/1.35 var(--sans);letter-spacing:-.01em}
 @keyframes marchv{to{background-position:0 12px}}
 
 
+/* product video: thumbnail until the click, then the player */
+.pv{position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid var(--line-2);background:var(--s3);box-shadow:var(--sh-win)}
+.pv-btn{all:unset;display:block;position:absolute;inset:0;cursor:pointer}
+.pv-btn img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+.pv-btn:hover img{transform:scale(1.025)}
+.pv-btn::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,rgba(0,0,0,.25))}
+.pv-go{position:absolute;left:50%;top:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;background:var(--btn-bg);display:grid;place-items:center;z-index:1;box-shadow:0 10px 30px rgba(0,0,0,.35);transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.pv-go svg{width:34px;height:34px;fill:var(--btn-ink);margin-left:3px}
+.pv-btn:hover .pv-go{transform:scale(1.08)}
+.pv-btn:focus-visible{outline:3px solid var(--ink);outline-offset:-3px}
+.pv iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media (max-width:720px){.pv-go{width:60px;height:60px;margin:-30px 0 0 -30px}.pv-go svg{width:26px;height:26px}.pv{border-radius:12px}}
+
 /* ---------- see it run ---------- */
 .dtabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
 .dtabs button{border:1px solid var(--line-2);background:var(--s1);font:500 12.5px var(--sans);padding:7px 13px;border-radius:999px;color:var(--ink-3);cursor:pointer;position:relative;overflow:hidden}
@@ -261,6 +274,7 @@ h3{font:500 16px/1.35 var(--sans);letter-spacing:-.01em}
 .cursor.click .ring{animation:ring .45s ease-out}
 .cursor.click svg{transform:scale(.85)}
 @keyframes ring{from{opacity:.9;transform:scale(.4)}to{opacity:0;transform:scale(1.8)}}
+
 
 /* use cases */
 .filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
@@ -513,11 +527,12 @@ body.agent-mode .toc{opacity:.3;pointer-events:none}
     <a href="#top"><b>01</b>The idea</a>
     <a href="#how"><b>02</b>Plug in</a>
     <a href="#see"><b>03</b>Connect once</a>
-    <a href="#cases"><b>04</b>What teams build</a>
-    <a href="#handles"><b>05</b>What's handled</a>
-    <a href="#security"><b>06</b>Security</a>
-    <a href="#prompts"><b>07</b>First prompt</a>
-    <a href="#faq"><b>08</b>Questions</a>
+    <a href="#video"><b>04</b>In action</a>
+    <a href="#cases"><b>05</b>What teams build</a>
+    <a href="#handles"><b>06</b>What's handled</a>
+    <a href="#security"><b>07</b>Security</a>
+    <a href="#prompts"><b>08</b>First prompt</a>
+    <a href="#faq"><b>09</b>Questions</a>
   </div>
   <div class="side-foot">
     <div class="theme" data-theme-switch></div>
@@ -647,6 +662,18 @@ body.agent-mode .toc{opacity:.3;pointer-events:none}
       </div>
     </div>
     <div class="cursor" id="cursor"><svg viewBox="0 0 24 24"><path d="M4 2l15 9.5-6.6 1.4L16 21l-3 1.3-3.6-8.1L4 18.5z" fill="#111" stroke="#fff" stroke-width="1.4" stroke-linejoin="round"/></svg><i class="ring"></i></div>
+  </div>
+</section>
+
+<section id="video" class="rv">
+  <div class="head">
+    <h2>See viaSocket in action.</h2>
+  </div>
+  <div class="pv">
+    <button type="button" class="pv-btn" id="pv" aria-label="Play video">
+      <img src="https://img.youtube.com/vi/GRzkVjW839A/maxresdefault.jpg" alt="" width="1280" height="720">
+      <span class="pv-go"><svg viewBox="0 0 56 56" aria-hidden="true"><path d="M17 10l30 18-30 18z"/></svg></span>
+    </button>
   </div>
 </section>
 
@@ -897,6 +924,11 @@ async function play(i){
 }
 new IntersectionObserver(es=>{if(es[0].isIntersecting&&!started){started=true;play(0)}},{threshold:.35}).observe(stage);
 
+/* video: no YouTube frame or script until the click */
+$('pv').onclick=()=>{const f=document.createElement('iframe');f.src='https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0';
+  f.title='viaSocket product video';f.allow='autoplay; encrypted-media; picture-in-picture; fullscreen';f.allowFullscreen=true;
+  const box=$('pv').parentElement;box.innerHTML='';box.appendChild(f)};
+
 /* use cases */
 const cases=[
  ['agent','AI support agent','AI agent','Finds the order, closes the ticket and emails the customer.',['freshdesk','shopify.com','gmail']],
@@ -968,6 +1000,10 @@ ${SETUP}
 ## What viaSocket handles
 
 ${feats.map(f=>`- **${f[0]}**: ${f[1]}`).join('\n')}
+
+## Video
+
+https://www.youtube.com/watch?v=GRzkVjW839A
 
 ## Use cases
 
