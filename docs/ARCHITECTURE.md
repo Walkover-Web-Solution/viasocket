@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 53e86266
+verified_at: 3bb8471f
 verified_on: 2026-11-02
 ---
 # Architecture & Mental Model
