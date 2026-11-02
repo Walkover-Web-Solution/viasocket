@@ -1,6 +1,6 @@
 ---
 covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: 8772409a
+verified_at: a9853794
 verified_on: 2026-11-02
 ---
 # Contracts & Data Schemas
@@ -98,8 +98,8 @@ sequenceDiagram
     participant T as table-api A/B table
     B->>B: TrackingCookies sets variant + visitor_id
     B->>R: POST {event:view|click|cta,...} (cookies attached)
-    alt cookies and bot check pass, and both admin env vars are set
-        R->>A: POST {events:[one event]} (x-tracking-secret, 3s, errors ignored)
+    alt cookies and bot check pass, and this is not a local dev server (or ADMIN_TRACKING_URL is set)
+        R->>A: POST {events:[one event]} (built-in x-tracking-secret, 3s, errors ignored)
     end
     alt homepage view, homepage signup/login click, or signup_completed on /signup
         R->>T: GET rows by visitor_id AND environment

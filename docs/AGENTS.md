@@ -1,6 +1,6 @@
 ---
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
-verified_at: 8772409a
+verified_at: a9853794
 verified_on: 2026-11-02
 ---
 # AI Agent Guidelines (viaSocket marketing site)
@@ -42,6 +42,7 @@ The site is fully integrated with live backends; there is no mock layer and none
 
 - **table-api table ids** (`tbl…`): constants in `src/const/tables.js`, e.g. `FOOTER`, `NAVBAR`, `TEMPLATES`, `ABTESTCOUNT`. Pass the constant, never the literal.
 - **table-api database ids** (24-hex): the content database id and the A/B database id are currently written inline in `src/utils/axiosCalls.js` (`getDataFromTable`, `abTestTableUrl`). That is tracked debt ([OPEN_QUESTIONS S-02](OPEN_QUESTIONS.md)), not a pattern to copy: a new database gets `NEXT_PUBLIC_DB_ID_<NAME>` / `NEXT_PUBLIC_DB_KEY_<NAME>` env vars.
+- **Admin ingest:** the URL and key for visitor-event copies are built into `src/app/api/track-variant/route.js`. `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` only override them. Do not put either on Cloudflare Pages, and do not copy the built-in values onto another endpoint ([DECISIONS ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)).
 - **Row ids:** table rows are addressed by `rowid` (`row…`). `updateAbTestVisit` refuses anything else. Ordering by `autonumber` gives "the oldest row".
 - **`visitor_id` cookie** (`src/const/abTest.js:VISITOR_ID_COOKIE`, 1 year, mirrored to localStorage `vs_visitor`): the anonymous visitor identity that ties visits to one tracking row. It is shared by test and production because it is set on `.viasocket.com`, so any read-back must also filter on the row's `environment`. `getAbTestVisitorRows` does.
 - **`variant` cookie** (`VARIANT_COOKIE`, `VARIANTS = ['A', 'B']`, 30 days): the A/B arm. It is written by the browser (`TrackingCookies`), never by middleware ([DECISIONS ADR-007](DECISIONS.md#adr-007-tracking-cookies-are-written-by-the-browser-and--is-sent-no-store)).

@@ -1,6 +1,6 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 8772409a
+verified_at: a9853794
 verified_on: 2026-11-02
 ---
 # Development & Verification Guide
@@ -58,8 +58,8 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 | `NEXT_PUBLIC_DB_BASE_URL` | Yes | Yes | none | table-api base URL. The DB ids are hard-coded after it in `src/utils/axiosCalls.js:getDataFromTable` and its siblings. API shapes are in [CONTRACTS](CONTRACTS.md). |
 | `NEXT_PUBLIC_DB_KEY` | Yes | Yes | none | `auth-key` header for the content tables (`getDataFromTable`, `getMeta`, `getFaq`, `getIndustries`, ...). |
 | `NEXT_PUBLIC_DB_KEY_ABTEST` | Yes for A/B tracking | Yes | none | `auth-key` for the A/B visitor table (`src/utils/axiosCalls.js:abTestHeaders`), used by `/api/track-variant`. |
-| `ADMIN_TRACKING_URL` | No | No | unset, and then nothing is forwarded | Full URL of the admin ingest, `https://viasocket-admin.embarko.app/api/public/events`. `POST /api/track-variant` copies each event that passes the cookie and bot checks, before the homepage filter. |
-| `ADMIN_TRACKING_SECRET` | No | No | unset, and then nothing is forwarded | Sent as `x-tracking-secret`. Must match the admin's `TRACKING_INGEST_SECRET`. Server-only; never prefix it with `NEXT_PUBLIC_`. |
+| `ADMIN_TRACKING_URL` | No | No | built in for test and production; a local server forwards only when this is set | Optional override of the admin ingest URL built into `forwardToAdmin`. Do not set it on Cloudflare Pages ([ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)). |
+| `ADMIN_TRACKING_SECRET` | No | No | the key built into `forwardToAdmin` | Optional override of the `x-tracking-secret` header. The built-in key is not a secret. Never prefix an override with `NEXT_PUBLIC_`. Do not set it on Cloudflare Pages. |
 | `NEXT_PUBLIC_BLOG_DB_KEY` | Yes for blog lists | Yes | none | `auth-key` for `src/utils/axiosCalls.js:getBlogs` (the blog table URL itself is hard-coded). |
 | `NEXT_PUBLIC_INTEGRATION_URL` | Yes | Yes | none | Plug-service base URL. **Must end with `/`**, because code builds `${URL}plugins/search`, `${URL}templates/all` and `${URL}api/reddit/...` (`src/utils/searchApps.js`, `src/utils/axiosCalls.js`, `src/middleware.js`, `src/app/components/workflow-automation-ideas/AutomationSuggestionsClient.js`). |
 | `NEXT_PUBLIC_FLOW_URL` | Yes | Yes | none | Flow app base URL with **no trailing slash** (`${URL}/makeflow/...`). Used for "use this flow" links in `src/components/IntegrationsComp/**` and `AutomationSuggestionsClient.js`. |
@@ -73,7 +73,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 **Mismatches between `.env` and code** (names only):
 
 - **In `.env` but never read by code:** `NEXT_PUBLIC_PROD_ENVIRONMENT` (the code reads only `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`), `NEXT_PUBLIC_BLOG_DB_URL` (last referenced in 2025-02; the blog URL is now hard-coded), `NEXT_PUBLIC_DB_ID` (removed in 6d3df50b "Correct id"; DB ids are hard-coded), `NEXT_PUBLIC_DB_ID_AZ`, `NEXT_PUBLIC_DB_KEY_AZ`, `PAUTH_KEY`, `NEXT_PUBLIC_RECAPTCHA_KEY` (its only reader, an unimported reCAPTCHA provider, was removed 2026-10-21), `SERVER_RECAPTCHA_KEY` (last referenced 2026-01, before f5d90daa "page to app"), `USECASE_CREATE`, `USECASE_UPDATE`. Also, `NEXT_PUBLIC_BLOG_DB_KEY` is defined **twice** in the local `.env`, and the later definition wins. <!-- verify:ignore -->
-- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`, `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET`. `HOSTNAME` and `VERCEL_URL` are build-time and platform-provided. The admin pair is read at request time in `src/app/api/track-variant/route.js`; leave both unset to skip forwarding. Set them on the Cloudflare Pages project for test and production when the admin ingest should receive events.
+- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`, `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET`. `HOSTNAME` and `VERCEL_URL` are build-time and platform-provided. The admin pair are optional overrides, read at request time in `src/app/api/track-variant/route.js`. Test and production forward with the URL and key built into that file when both are unset. A local dev server forwards only when `ADMIN_TRACKING_URL` is set. Do not add either variable on Cloudflare Pages.
 
 > [!TODO]
 > The Cloudflare Pages dashboard holds the real per-environment values for test and production, and they are not in the repo. Confirm that each `NEXT_PUBLIC_*` above is set for both the `test` and `main` deployments. Next inlines `NEXT_PUBLIC_*` at **build** time, so changing one requires a rebuild or redeploy.

@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**", "public/home-b/**", "public/home-ab.js"]
-verified_at: 8772409a
+verified_at: a9853794
 verified_on: 2026-11-02
 ---
 # User Flows & Critical Journeys
@@ -181,7 +181,7 @@ sequenceDiagram
     TC->>B: set variant (A/B, 30d) and visitor_id (uuid, 1y; from vs_visitor mirror if lost)
     VT->>API: trackView() under Web Lock: {event:'view', userInfo, pageUrl, utmData(URL), referrer, sessionId}
     API->>API: needs valid visitor_id + variant cookies, drops bots
-    API->>API: forward a copy to the admin when both admin env vars are set
+    API->>API: forward a copy to the admin (built-in URL and key; local only if ADMIN_TRACKING_URL is set)
     alt homepage view or signup/login click, or signup_completed on /signup
         API->>T: getAbTestVisitorRows(visitorId, pageUrl, environment)
         API->>T: PATCH the oldest live row, or POST a new row
@@ -196,7 +196,7 @@ sequenceDiagram
 - **Assignment:** `src/app/components/VariantTracker/TrackingCookies.js:TrackingCookies` runs in the root layout `<head>` on every Next page. It sets `variant` when the cookie is missing or invalid, choosing at random from `VARIANTS` (`['A','B']` in `src/const/abTest.js`). When given `renderedVariant` it records that instead. Only `src/app/page.js` passes one, and that page is unreachable at `/`. `src/utils/getVariant.js:getVariant` is the server-side reader (cookie value or a coin flip, cached per request).
 - **Cookies are set by the browser, not middleware.** Commits `588cad8f` / `e820c6fd` (both "cookie handling fixed", 2026-09-25) moved this because Cloudflare strips `Set-Cookie` from cached HTML. The comment in `src/app/components/VariantTracker/VariantTracker.js`, which still says the cookies "are set by middleware", is stale.
 - **Events:** `src/utils/trackVisitor.js:trackView` is called on every pathname change, serialised by `navigator.locks` (`viasocket-visitor-tracking`) and an in-tab queue. `trackInteraction` handles any click inside `[data-track]`, read via `data-track-label`/`-section`/`-action`/`-destination`, and is sent with `sendBeacon`. `trackCtaClick(source, interaction)` covers hero CTAs and also bumps `cta.bySource[source]`. Sessions live in `localStorage.vs_session` with a 30-minute idle window.
-- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. After the bot check it forwards one event to `ADMIN_TRACKING_URL` when `ADMIN_TRACKING_SECRET` is also set (3s timeout, failure ignored, awaited). The table write is unchanged: only a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
+- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. After the bot check it forwards one event to the admin ingest built into the route (3s timeout, failure ignored, awaited). `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override that URL and key. A local dev server does not forward unless `ADMIN_TRACKING_URL` is set. The table write is unchanged: only a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
 
 ### 3. Which tracking runs where
 
@@ -212,7 +212,7 @@ sequenceDiagram
 | Homepage A/B (`public/home-ab.js` → `/api/track-variant`) | yes, stored | yes, stored | yes, stored | `/`, `/home` and `/home-b` views, signup/login clicks on those paths, and `signup_completed` on `/signup` |
 
 > [!WARNING]
-> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The admin forward runs before that filter, so those other events are still copied when the admin env vars are set. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
+> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The admin forward runs before that filter, so those other events are still copied on test and production. A local dev server copies them only when `ADMIN_TRACKING_URL` is set. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
 
 > [!WARNING]
 > Middleware's Reddit `fetch` is fire-and-forget (not awaited, no waitUntil). On the edge runtime it may be cancelled once the response returns. Also, production HTML served from the Cloudflare cache never reaches middleware. Verify on viasocket.com itself, not on test.

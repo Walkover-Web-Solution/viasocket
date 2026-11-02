@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/api/**", "src/app/robots.txt/**", "src/app/sitemap.js", "src/utils/trackVisitor.js", "src/utils/isBot.js", "src/const/abTest.js"]
-verified_at: 8772409a
+verified_at: a9853794
 verified_on: 2026-11-02
 ---
 # API — track-variant (the site's own HTTP routes)
@@ -28,7 +28,7 @@ verified_on: 2026-11-02
 Upsert the caller's visitor row with one event; edge runtime (`export const runtime = 'edge'`).
 
 ### Callers and Cookies Read
-- `src/utils/trackVisitor.js` calls it from React pages (`trackView`, `trackInteraction`, `trackCtaClick`), via `fetch(..., { keepalive: true })` or `navigator.sendBeacon` when the page is unloading. The table write is dropped unless the path is the homepage and the event is a view or a signup/login click, or the event is `signup_completed` on `/signup`. A copy is still forwarded to the admin when both admin env vars are set.
+- `src/utils/trackVisitor.js` calls it from React pages (`trackView`, `trackInteraction`, `trackCtaClick`), via `fetch(..., { keepalive: true })` or `navigator.sendBeacon` when the page is unloading. The table write is dropped unless the path is the homepage and the event is a view or a signup/login click, or the event is `signup_completed` on `/signup`. A copy is still forwarded to the admin on test and production with the URL and key built into the route. A local dev server forwards only when `ADMIN_TRACKING_URL` is set.
 - `public/home-ab.js` calls it from `/` and `/home-b`: one view when the version is shown, and a click when Start free, Sign up or Log in is pressed.
 - Identity comes from cookies, never the body: `visitor_id` (`VISITOR_ID_COOKIE`, must be a UUID) and `variant` (`VARIANT_COOKIE`, must be in `VARIANTS` = `A`, `B`), from `src/const/abTest.js`. Both are written by the browser ([CONTRACTS.md](../CONTRACTS.md#cookies)).
 
@@ -63,7 +63,7 @@ All keys optional; unknown keys ignored.
 | client IP | `x-forwarded-for` (first entry), `x-real-ip`, `cf-connecting-ip` | `getClientIp()` in the route. Stored on the table row only; the admin copy does not include it. |
 | country | `cf-ipcountry` | forwarded to the admin as `country`; not written to the table |
 | bot flag | user agent + `userInfo` | `src/utils/isBot.js:isBotRequest()` |
-| admin ingest | `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET` | `forwardToAdmin()` in the route |
+| admin ingest | URL and key built into `forwardToAdmin()`; `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override them | `forwardToAdmin()` in the route |
 
 Column meanings: [../database/entities.md](../database/entities.md#entity-abtestcount-visitor-tracking-row). Table transport: [../current-infrastructure/table-api.md](../current-infrastructure/table-api.md).
 
@@ -83,7 +83,7 @@ Always HTTP 200 JSON, including on internal errors.
 ```
 
 ### Behavior Notes
-- Order: cookies → body → click validation → bot check → admin forward → homepage filter → lookup. Bots, missing cookies and unrecognised clicks are not forwarded and cost no table read. The forward is `POST { events: [one event] }` with header `x-tracking-secret`, a 3 second abort, and a swallowed error. It is awaited on every path that starts it, including `not a homepage event`, because an edge isolate can drop a fetch once the response is sent. With either env var unset, the forward is a no-op. The admin event fields are `id`, `ts`, `type`, `visitor_id`, `session_id`, `variant`, `environment`, `url`, `path`, `referrer`, `element`, `label`, `section`, `action`, `destination`, `device` (`type`, `os`, `browser`) and `country`. UTM and click ids are not separate fields; they stay on `url` when the page URL still has them.
+- Order: cookies → body → click validation → bot check → admin forward → homepage filter → lookup. Bots, missing cookies and unrecognised clicks are not forwarded and cost no table read. The forward is `POST { events: [one event] }` with header `x-tracking-secret`, a 3 second abort, and a swallowed error. It is awaited on every path that starts it, including `not a homepage event`, because an edge isolate can drop a fetch once the response is sent. Test and production forward when both env vars are unset. A local dev server does not, unless `ADMIN_TRACKING_URL` is set. The admin event fields are `id`, `ts`, `type`, `visitor_id`, `session_id`, `variant`, `environment`, `url`, `path`, `referrer`, `element`, `label`, `section`, `action`, `destination`, `device` (`type`, `os`, `browser`) and `country`. UTM and click ids are not separate fields; they stay on `url` when the page URL still has them.
 - The stored profile referrer ignores `viasocket.com`, any `*.viasocket.com` host and `localhost`. Another site's referrer is kept. An empty or unparseable referrer stays empty.
 - `getEnvironment`: flag `prod`/`production` → `production`; `test`/`stage`/`staging` → `test`; `local`/`development`/`dev` → `local`; otherwise the full hostname, exactly: `viasocket.com` → `production`, `localhost` / `127.0.0.1` / an IPv4 address → `local`, anything else (including `test.viasocket.com`) → `test`. The existing row's `environment` wins on update.
 - Homepage gate, after the bot check. A view must be `/`, `/home` or `/home-b` (trailing slash ignored). A click is stored only when it is `signup_click` or `login_click` on one of those paths, or `signup_completed` on `/signup`. Anything else returns `not a homepage event` and does not read the table. `/signup` views and other clicks on `/signup` are not stored.

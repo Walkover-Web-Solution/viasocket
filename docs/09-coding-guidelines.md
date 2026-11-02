@@ -1,7 +1,7 @@
 ---
 covers: ["src/**", ".prettierrc", ".prettierignore", "jsconfig.json"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: a9853794
+verified_on: 2026-11-02
 ---
 # 09 Coding Guidelines
 
@@ -65,7 +65,7 @@ How code is written in this repo. Visual rules (tokens, which visual system a pa
 
 - **Don't** import `src/utils/axiosCalls.js` into a `'use client'` file: it carries the table-api keys. Three files already do (`src/app/components/home/SearchInputHomeOptimized.js`, `src/app/components/integrations-script/TemplatePreview.js`, `src/components/indexComps/CategoryAppsDisplay.js`); that is debt ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) S-01), not a pattern.
 - **Don't** add `www` handling to host checks or URLs; the domain is bare `viasocket.com` (Rule 11).
-- **Don't** hardcode endpoints, database ids or keys; compose them from env vars (Rule 6; names in [DEVELOPMENT](DEVELOPMENT.md)).
+- **Don't** hardcode endpoints, database ids or keys; compose them from env vars (Rule 6; names in [DEVELOPMENT](DEVELOPMENT.md)). The admin visitor-event forward is the named exception in [ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting).
 - **Don't** use `next/head`; it renders nothing in the App Router ([DESIGN](DESIGN.md#seo--metadata-expectations)).
 
 ## Comments

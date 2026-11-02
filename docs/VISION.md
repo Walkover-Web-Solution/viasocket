@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: c0c7f48b
-verified_on: 2026-10-30
+verified_at: a9853794
+verified_on: 2026-11-02
 ---
 # Product Vision & Strategic Direction
 
@@ -38,6 +38,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
   - `/integrations`, `/integrations/{app}` ("Add {app} to Your Product & Agents"), `/features` ("viaSocket Key Features | Integration Layer") and the new `/use-cases` were rebuilt in the homepage design with copy the commits call approved (`18420492`, `3a516576`, `0705e2f0`, `b3a7ab32`).
   - `/embed` redirects permanently to `/developers`, which is described as "the action layer for AI products" (`7fd1dc19`, `src/app/developers/page.js:generateMetadata`). Bare `/mcp` redirects permanently to mushrooms.viasocket.com.
   - Releases flow from a feature branch to `test` (test.viasocket.com) to `main` (viasocket.com). Both are hosted on Cloudflare Pages (see [DEVELOPMENT.md](DEVELOPMENT.md)).
+  - **Visitor-event copies to the admin do not use a Cloudflare Pages setting** (2026-11-02, PR #1907). The ingest URL and key are built into `src/app/api/track-variant/route.js`. `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` only override them, and a local dev server does not forward unless `ADMIN_TRACKING_URL` is set. Other endpoints still come from env vars ([ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)).
   - The working rules listed under Core Principles, which come from the user's memory.
   - **The integration layer is canonical everywhere** (P-01, decided, team answers to OPEN_QUESTIONS, 2026-10-22). Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions." Pages that still say workflow automation are out of date, not a second positioning: the root `metadata` in `src/app/layout.js` and `/pricing` are pending an update to match the homepage. `public/llms.txt` was replaced on 2026-10-30.
   - **The static homepage's design system is the target for the whole site** (U-01, decided): Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc ([DESIGN.md](DESIGN.md)).
