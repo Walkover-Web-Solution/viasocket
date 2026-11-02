@@ -250,6 +250,8 @@
         if (text.indexOf('talk to an expert') !== -1) return true;
         if (text.indexOf('book a demo') !== -1) return true;
         if (link.tagName === 'A' && text.indexOf('setup prompt') !== -1) return true;
+        // Footer calls to action. Exact text, so "Billing partners" and the rest of the footer stay untagged.
+        if (text === 'list your app' || text === 'partner program' || text === 'contact support' || text === 'contact') return true;
         var inBar = link.closest && (link.closest('nav') || link.closest('header') || link.closest('aside') || link.closest('.mbar') || link.closest('footer'));
         if (inBar && (isFlowHost(url) || isSignupPath(url))) return true;
         if (link.tagName === 'A' && link.closest && (link.closest('.ctas') || link.closest('.vt-f-alt'))) return true;

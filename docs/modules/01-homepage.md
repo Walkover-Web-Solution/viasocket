@@ -13,7 +13,7 @@ verified_on: 2026-11-02
 > `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` (version A) for every request, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Version B is written into that same document in the browser by the inline gate at the top of A's `<head>` ([below](#homepage-ab-test-version-b)). The browser URL stays `/`. Never edit `src/app/page.js` for homepage work: that file is the old Next homepage, not version B. Opening `/home-b` redirects to `/`.
 
 > [!WARNING]
-> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. The export must keep three things from this repo's copy of `public/new-home/index.html`: `data-hp="A"` on `<html>`, the inline gate `<script>` as the first script in `<head>` (copied verbatim), and `<script src="/home-ab.js?v=5"></script>` straight after it. Without the gate every visitor gets A. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
+> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. The export must keep three things from this repo's copy of `public/new-home/index.html`: `data-hp="A"` on `<html>`, the inline gate `<script>` as the first script in `<head>` (copied verbatim), and `<script src="/home-ab.js?v=6"></script>` straight after it. Without the gate every visitor gets A. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
 
 ---
 
@@ -122,7 +122,16 @@ Placeholders in the mockup point at the live homepage's destination. The footer'
 
 Start free and Log in on both homepages go to flow.viasocket.com and never open `/signup`. Both homepages add `hp_variant=A` or `hp_variant=B` to every such link, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly).
 
-`public/home-ab.js` also sets `utm_source` on every call to action that opens another page: `a` on version A, `b` on version B. That covers Start free, Log in, Talk to an expert, Book a demo, a setup-prompt link that opens a page, nav and footer links to flow.viasocket.com or `/signup`, and the closing buttons. Query parameters already on the link stay; `utm_source` is set to the version. Anchors and copy buttons are left alone. `a` and `b` are in `INTERNAL_UTM_SOURCES`, so a later page can still overwrite them. The homepage does not write the `utmData` cookie. `utmData()` on the tracking event still reads only the `utm_*` query on the page the visitor opened.
+`public/home-ab.js` sets `utm_source` to `a` on version A and `b` on version B. Query parameters already on the link stay; `utm_source` is added or replaced. These links carry it:
+
+- Start free, Log in, Talk to an expert, Book a demo
+- a setup-prompt link that opens another page
+- Chat with us, because it sits with the closing buttons (`.ctas`, `.vt-f-alt`)
+- a nav or footer link to flow.viasocket.com or `/signup`
+- List your app, Partner program and Contact support
+- Contact (version B's footer)
+
+Left untagged: anchors, copy buttons, the menu, the rest of the footer (Features, Use cases, Blog, Security, Privacy, Terms, Cookies and the others), Pricing, Docs, Integrations, social links and badges. `a` and `b` are in `INTERNAL_UTM_SOURCES`, so a later page can still overwrite them. The homepage does not write the `utmData` cookie. `utmData()` on the tracking event still reads only the `utm_*` query on the page the visitor opened.
 
 A registration that finishes on flow.viasocket.com, or that leaves `/signup` before this site sees a response, is stored only if that app records the version. It can read `utm_source` or `hp_variant` from the arrival URL. What this site does store is in [Reading the test](#reading-visitors-signup-clicks-and-signups-per-version).
 
