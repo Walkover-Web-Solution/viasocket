@@ -159,8 +159,9 @@ export async function middleware(request) {
 }
 
 // The homepage document is chosen here, before a shared cache can store one copy
-// of "/" and hand it to everyone. The browser URL stays "/". Version B's HTML
-// lives at public/home-b/index.html and is only reached by this rewrite.
+// of "/" and hand it to everyone. The browser URL stays "/". The internal edge
+// route streams the selected static file, because Pages otherwise replaces a
+// middleware header with its static-asset cache header.
 //
 // The variant cookie is set on the response and again from public/home-ab.js
 // through document.cookie. A cache that stores the HTML strips Set-Cookie
@@ -193,7 +194,11 @@ function variantCookieOptions(request) {
 // respond at "/".
 function forcedVariant(request) {
     const hostname = requestHostname(request);
-    const allowed = hostname === 'test.viasocket.com' || hostname === 'localhost' || hostname === '127.0.0.1';
+    const allowed =
+        hostname === 'test.viasocket.com' ||
+        hostname === 'localhost' ||
+        hostname === '127.0.0.1' ||
+        hostname.endsWith('.viasocket-website.pages.dev');
     if (!allowed) return '';
     const raw = (request.nextUrl.searchParams.get('variant') || '').trim().toLowerCase();
     return raw === 'a' || raw === 'b' ? raw.toUpperCase() : '';
@@ -211,8 +216,10 @@ function homepageChoice(request) {
 function rewriteHomepage(request) {
     const choice = homepageChoice(request);
     const url = request.nextUrl.clone();
-    url.pathname = choice.variant === 'B' ? '/home-b/index.html' : '/new-home/index.html';
-    const response = NextResponse.rewrite(url);
+    url.pathname = '/homepage-render';
+    const requestHeaders = new Headers(request.headers);
+    requestHeaders.set('x-homepage-variant', choice.variant);
+    const response = NextResponse.rewrite(url, { request: { headers: requestHeaders } });
     response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
     // Cloudflare reads this in preference to Cache-Control for its own edge cache.
     response.headers.set('CDN-Cache-Control', 'no-store');

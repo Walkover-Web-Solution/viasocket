@@ -41,6 +41,10 @@ const nextConfig = {
     turbopack: {},
 
     webpack(config) {
+        config.module.rules.push({
+            test: /public\/(?:new-home|home-b)\/index\.html$/,
+            type: 'asset/source',
+        });
         config.resolve.fallback = {
             ...config.resolve.fallback,
             fs: false,

@@ -98,11 +98,11 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
    - It applies the admin redirect list (`/api/public/redirects`, else `src/data/redirects.json`) and returns that status with an empty body. That is why `src/app/embed/page.js`, `src/app/mcp/page.js` and `src/app/home/page.js` never render. On production and test (2026-10-29) bare `/embed` is **301 to `/`**, not an alias of `/developers`. The fallback file still says 308 to `/developers`, which is not what those hosts return while the admin is reachable. Sub-routes such as `/embed/app-integration` and `/mcp/[...slug]` still render.
    - It sets `rdt_cid` from the `?rdt_cid=` query parameter.
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
-5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html` when middleware does not rewrite it. Middleware rewrites `/` to `/new-home/index.html` or `/home-b/index.html` and redirects `/home-b` to `/`. The browser URL stays `/`.
+5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html` when middleware does not rewrite it. Middleware rewrites `/` to the internal `/homepage-render` edge route, which streams `/new-home/index.html` or `/home-b/index.html`, and redirects `/home-b` to `/`. The browser URL stays `/`.
 6. **Filesystem.** This covers `public/**` and the App Router routes. The `afterFiles` rewrites map `/feedback-satisfied` and `/feedback-unsatisfied` to `/feedback?variant=…`.
 
 > [!WARNING]
-> Middleware's `/` branch sets `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`, and rewrites the document from the `variant` cookie. Production `/` is still publicly cached for 3 hours by the zone rule (D-10). A hit skips middleware and replays one version. Test does not have that rule.
+> Middleware's `/` branch sets `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`, and chooses the document from the `variant` cookie. The internal `/homepage-render` edge route repeats them because Pages otherwise replaces middleware's browser cache header on static files. Production `/` is still publicly cached for 3 hours by the zone rule (D-10). A hit skips middleware and replays one version. Test does not have that rule.
 
 ### Why `export const runtime = 'edge'` is everywhere
 
