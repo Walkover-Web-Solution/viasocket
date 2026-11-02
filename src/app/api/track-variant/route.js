@@ -102,10 +102,19 @@ const getEnvironment = (request) => {
 // this table an event.
 const ADMIN_FORWARD_TIMEOUT_MS = 3000;
 
+// Built in, so no deployment needs settings of its own for this; the env vars
+// only override them (a local admin, a rotated key). The key is not a secret:
+// anyone can already post events to this route, which forwards them, so a
+// private key between here and the admin would protect nothing more.
+const ADMIN_TRACKING_URL = 'https://viasocket-admin.embarko.app/api/public/events';
+const ADMIN_TRACKING_KEY = 'viasocket-website-tracking-v1';
+
 const forwardToAdmin = async (event) => {
-    const url = process.env.ADMIN_TRACKING_URL;
-    const secret = process.env.ADMIN_TRACKING_SECRET;
-    if (!url || !secret) return;
+    // A local dev server only reaches the live admin when told to, so trying
+    // the site out never fills it with test visits.
+    const url = process.env.ADMIN_TRACKING_URL || (event.environment === 'local' ? '' : ADMIN_TRACKING_URL);
+    const secret = process.env.ADMIN_TRACKING_SECRET || ADMIN_TRACKING_KEY;
+    if (!url) return;
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), ADMIN_FORWARD_TIMEOUT_MS);
