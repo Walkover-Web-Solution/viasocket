@@ -3,7 +3,73 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script src="/home-ab.js?v=3"></script>
+<script>
+/* Homepage A/B gate. It must stay inline and be the first script in <head>:
+   for a version B visitor it stops this document before anything below runs.
+   See docs/modules/01-homepage.md before editing. */
+(function (w, d) {
+    if (w.__hpGate) return;
+    w.__hpGate = 'A';
+    var BOT = /bot|crawl|spider|slurp|facebookexternalhit|meta-externalagent|bingpreview|embedly|quora link preview|whatsapp|telegrambot|discordbot|slackbot|linkedinbot|pinterest|redditbot|applebot|petalbot|yandex|baiduspider|duckduckbot|headlesschrome|phantomjs|puppeteer|playwright|selenium|lighthouse|chrome-lighthouse|gtmetrix|pingdom|uptimerobot|python-requests|python-urllib|go-http-client|java\/|okhttp|axios\/|node-fetch|got\/|curl\/|wget\/|libwww-perl|httpclient|scrapy|ahrefs|semrush|mj12bot|dotbot|screaming frog|gptbot|chatgpt-user|oai-searchbot|claudebot|claude-web|anthropic-ai|perplexitybot|ccbot|bytespider|amazonbot|google-extended/i;
+    if (location.pathname !== '/' || BOT.test(navigator.userAgent || '')) return;
+    var host = location.hostname;
+    var v = (d.cookie.match(/(?:^|; )variant=([^;]*)/) || [])[1] || '';
+    if (host === 'test.viasocket.com' || host === 'localhost' || host === '127.0.0.1' || /\.viasocket-website\.pages\.dev$/.test(host)) {
+        var q = /[?&]variant=([ab])(?:&|$)/i.exec(location.search);
+        if (q) v = q[1].toUpperCase();
+    }
+    if (v !== 'A' && v !== 'B') v = Math.random() < 0.5 ? 'A' : 'B';
+    var domain = host === 'viasocket.com' || /\.viasocket\.com$/.test(host) ? ';domain=.viasocket.com' : '';
+    d.cookie = 'variant=' + v + ';path=/;max-age=2592000;samesite=lax' + domain + (location.protocol === 'https:' ? ';secure' : '');
+    if (v !== 'B' || !w.fetch) return;
+
+    // Everything parsed so far, so version A can be rebuilt if B does not arrive.
+    var root = d.documentElement;
+    var start = '<!doctype html><html';
+    for (var i = 0; i < root.attributes.length; i++) {
+        start += ' ' + root.attributes[i].name + '="' + root.attributes[i].value.replace(/&/g, '&amp;').replace(/"/g, '&quot;') + '"';
+    }
+    start += '><head>';
+    for (var n = d.head.firstChild; n && n !== d.currentScript; n = n.nextSibling) {
+        start += n.nodeType === 1 ? n.outerHTML : n.nodeType === 3 ? n.data : '';
+    }
+
+    var decided = false;
+    function render(html, gate) {
+        w.__hpGate = gate;
+        d.open();
+        d.write(html);
+        d.close();
+    }
+    function showA() {
+        if (decided) return;
+        decided = true;
+        (function rebuild() {
+            var rest = d.getElementById('hp-rest');
+            if (d.readyState === 'loading' || !rest) return void d.addEventListener('DOMContentLoaded', rebuild);
+            render(start + rest.textContent, 'fallback');
+        })();
+    }
+    w.__hpGate = 'B';
+    root.style.visibility = 'hidden';
+    var timer = setTimeout(showA, 2000);
+    fetch('/home-b/index.html', { credentials: 'same-origin', headers: { 'X-Homepage-Fetch': 'B' } })
+        .then(function (res) {
+            if (!res.ok || res.redirected) throw new Error('home-b');
+            return res.text();
+        })
+        .then(function (html) {
+            if (decided || html.slice(0, 200).indexOf('data-hp="B"') === -1) throw new Error('home-b');
+            decided = true;
+            clearTimeout(timer);
+            render(html, 'B');
+        })
+        .catch(showA);
+    // The rest of this file becomes inert text: no script, style or tag below runs.
+    d.write('<plaintext id="hp-rest" style="display:none">');
+})(window, document);
+</script>
+<script src="/home-ab.js?v=4"></script>
 <title>Integration Layer for Your Product &amp; AI Agents | viaSocket</title>
 <link rel="canonical" href="https://viasocket.com/">
 <meta name="description" content="Connect 2,300+ apps to your product or AI agent with one prompt. Auth, events and actions handled. Free to start.">

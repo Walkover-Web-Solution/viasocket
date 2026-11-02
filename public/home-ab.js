@@ -1,11 +1,12 @@
 /* Homepage A/B split. Loaded by public/new-home/index.html (version A) and
    public/home-b/index.html (version B). Untranspiled ES5, same as TrackingCookies.
 
-   Middleware already chose the document and the address bar stays "/". This
-   script does not navigate. It writes the variant cookie for the page that was
-   served, because a cache in front of the origin can strip the Set-Cookie
-   header (ADR-007). Bots are not counted. The cookie is the same `variant`
-   cookie the rest of the site already uses (src/const/abTest.js). */
+   The inline gate at the top of version A's <head> chooses the version, writes
+   the `variant` cookie, and for B replaces the document in place, so the address
+   bar stays "/". This script runs once in whichever document is on screen. It
+   tells Tag Manager the version, tags calls to action, and records the view.
+   Bots are not counted. The cookie is the same `variant` cookie the rest of the
+   site already uses (src/const/abTest.js). */
 (function () {
     'use strict';
 
@@ -97,36 +98,34 @@
         return mark === 'B' ? 'B' : 'A';
     }
 
-    // ?variant=a|b is a checking tool on test and local only. Production ignores it.
-    function queryVariant() {
-        var host = location.hostname;
-        if (host !== 'test.viasocket.com' && host !== 'localhost' && host !== '127.0.0.1') return '';
-        try {
-            var raw = (new URLSearchParams(location.search).get('variant') || '').trim().toLowerCase();
-            return raw === 'a' || raw === 'b' ? raw.toUpperCase() : '';
-        } catch (e) {
-            return '';
-        }
+    function tellTagManager(variant) {
+        window.dataLayer = window.dataLayer || [];
+        window.dataLayer.push({ homepage_variant: variant });
     }
 
     function boot() {
-        var path = pathName();
-        if (path !== '/' && path !== '/home-b') return null;
+        if (pathName() !== '/') return null;
         if (BOT.test(navigator.userAgent || '')) return null;
 
         ensureVisitorId();
-        var forced = queryVariant();
-        var current = forced || readCookie('variant');
-        // The edge set this on the response. When that header was stripped, the
-        // page that arrived is the assignment, and document.cookie is what
-        // reaches the browser. A valid cookie is left alone, so one cached
-        // document cannot overwrite the visitor's version.
-        if (VARIANTS.indexOf(current) === -1) current = renderedVariant();
-        if (forced || readCookie('variant') !== current) writeCookie('variant', current, VARIANT_MAX_AGE);
-        try {
-            localStorage.setItem(VARIANT_KEY, current);
-        } catch (e) {}
-        return current;
+        var rendered = renderedVariant();
+        // Runs before the page's Tag Manager snippet, so its pageview carries the version on screen.
+        tellTagManager(rendered);
+        var assigned = readCookie('variant');
+        if (VARIANTS.indexOf(assigned) === -1) {
+            writeCookie('variant', rendered, VARIANT_MAX_AGE);
+            assigned = rendered;
+        }
+        // B was assigned but did not arrive in time, so A is on screen. The
+        // visitor stays B for the next visit, and this view is not counted for
+        // either version; the server reads the version from the cookie.
+        if (window.__hpGate === 'fallback' || assigned !== rendered) hpOff = true;
+        else {
+            try {
+                localStorage.setItem(VARIANT_KEY, rendered);
+            } catch (e) {}
+        }
+        return rendered;
     }
 
     function utmData() {

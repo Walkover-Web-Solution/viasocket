@@ -1,9 +1,6 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
-import { VARIANT_COOKIE, VARIANT_MAX_AGE, VARIANTS } from './const/abTest';
-import { isBotRequest } from './utils/isBot';
-
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -79,9 +76,11 @@ export async function middleware(request) {
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
 
-    // /home-b is the file middleware rewrites "/" to for version B. It is not a
-    // public URL. Anyone who asks for it, including a crawler, is sent to "/".
-    if (barePath === '/home-b' || pathname === '/home-b/index.html') {
+    // /home-b is not a public URL: opening it, as a person or a crawler, goes to
+    // "/". The gate in version A's <head> fetches the file with this header and
+    // writes it into "/" for version B visitors, so that request is let through.
+    const gateFetch = pathname === '/home-b/index.html' && request.headers.get('x-homepage-fetch') === 'B';
+    if ((barePath === '/home-b' || pathname === '/home-b/index.html') && !gateFetch) {
         const url = request.nextUrl.clone();
         url.pathname = '/';
         const homeRedirect = NextResponse.redirect(url, 302);
@@ -90,7 +89,7 @@ export async function middleware(request) {
         return homeRedirect;
     }
 
-    const response = pathname === '/' ? rewriteHomepage(request) : NextResponse.next();
+    const response = NextResponse.next();
 
     // /setup-prompt echoes org and project ids in its flight data. A shared cache
     // must not store that. Cloudflare's zone cache rule is the authority in
@@ -158,79 +157,9 @@ export async function middleware(request) {
     return response;
 }
 
-// The homepage document is chosen here, before a shared cache can store one copy
-// of "/" and hand it to everyone. The browser URL stays "/". The internal edge
-// route streams the selected static file, because Pages otherwise replaces a
-// middleware header with its static-asset cache header.
-//
-// The variant cookie is set on the response and again from public/home-ab.js
-// through document.cookie. A cache that stores the HTML strips Set-Cookie
-// (ADR-007); the script writes the same value from the page that was actually
-// served, so the assignment still arrives. private/no-store plus Vary: Cookie
-// is what tells a cache not to store that HTML. The visitor id stays
-// browser-written; the edge does not need it to choose the document.
-// The public hostname, not the socket address. A check against nextUrl alone
-// follows the connection host, so a request for viasocket.com has to be read
-// from the Host header the visitor actually used.
-function requestHostname(request) {
-    const header = (request.headers.get('host') || '').split(':')[0].trim().toLowerCase();
-    return header || request.nextUrl.hostname;
-}
-
-function variantCookieOptions(request) {
-    const hostname = requestHostname(request);
-    const options = {
-        path: '/',
-        maxAge: VARIANT_MAX_AGE,
-        sameSite: 'lax',
-        secure: request.nextUrl.protocol === 'https:',
-    };
-    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) options.domain = '.viasocket.com';
-    return options;
-}
-
-// Checking a version is ?variant=a or ?variant=b. Production ignores it.
-// test.viasocket.com and a local dev host honour it, set the cookie, and still
-// respond at "/".
-function forcedVariant(request) {
-    const hostname = requestHostname(request);
-    const allowed =
-        hostname === 'test.viasocket.com' ||
-        hostname === 'localhost' ||
-        hostname === '127.0.0.1' ||
-        hostname.endsWith('.viasocket-website.pages.dev');
-    if (!allowed) return '';
-    const raw = (request.nextUrl.searchParams.get('variant') || '').trim().toLowerCase();
-    return raw === 'a' || raw === 'b' ? raw.toUpperCase() : '';
-}
-
-function homepageChoice(request) {
-    if (isBotRequest({ userAgent: request.headers.get('user-agent') })) return { variant: 'A', setCookie: false };
-    const forced = forcedVariant(request);
-    if (forced) return { variant: forced, setCookie: true };
-    const current = request.cookies.get(VARIANT_COOKIE)?.value;
-    if (current === 'A' || current === 'B') return { variant: current, setCookie: true };
-    return { variant: VARIANTS[Math.floor(Math.random() * VARIANTS.length)], setCookie: true };
-}
-
-function rewriteHomepage(request) {
-    const choice = homepageChoice(request);
-    const url = request.nextUrl.clone();
-    url.pathname = '/homepage-render';
-    const requestHeaders = new Headers(request.headers);
-    requestHeaders.set('x-homepage-variant', choice.variant);
-    const response = NextResponse.rewrite(url, { request: { headers: requestHeaders } });
-    response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
-    // Cloudflare reads this in preference to Cache-Control for its own edge cache.
-    response.headers.set('CDN-Cache-Control', 'no-store');
-    response.headers.set('Vary', 'Cookie');
-    if (choice.setCookie) response.cookies.set(VARIANT_COOKIE, choice.variant, variantCookieOptions(request));
-    return response;
-}
-
 // Not for share images (/og/...): they need no redirects or cookies, and are not page visits.
 // /home-b/index.html has a dot, so the general matcher skips it; it is listed on
-// its own so a direct request is redirected to "/".
+// its own so opening it directly is redirected to "/".
 export const config = {
     matcher: ['/((?!_next/|api/|og/|.*\\..*).*)', '/home-b/index.html'],
 };

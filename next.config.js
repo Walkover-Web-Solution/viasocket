@@ -14,9 +14,9 @@ const nextConfig = {
 
     async rewrites() {
         return {
-            // Fallback when middleware does not rewrite "/". Middleware serves version A
-            // or B at "/" (public/new-home or public/home-b) and redirects /home-b to "/".
-            // src/app/page.js is the old Next homepage and is not used.
+            // The homepage is the static site in public/new-home. beforeFiles runs ahead of the
+            // app routes, so "/" is served from it and src/app/page.js (with its A/B variants) is not used.
+            // Version B is written into this document in the browser (see public/new-home/index.html).
             beforeFiles: [
                 {
                     source: '/',
@@ -41,10 +41,6 @@ const nextConfig = {
     turbopack: {},
 
     webpack(config) {
-        config.module.rules.push({
-            test: /public\/(?:new-home|home-b)\/index\.html$/,
-            type: 'asset/source',
-        });
         config.resolve.fallback = {
             ...config.resolve.fallback,
             fs: false,
