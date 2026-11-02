@@ -1,6 +1,6 @@
 ---
 covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/homepage-render/route.js", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
-verified_at: pending
+verified_at: 53e86266
 verified_on: 2026-11-02
 ---
 # Cloudflare (Pages hosting + viasocket.com zone)
