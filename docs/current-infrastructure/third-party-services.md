@@ -1,14 +1,14 @@
 ---
 covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "public/new-home/index.html", "public/new-home/main.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
-verified_at: 3662e484
-verified_on: 2026-10-31
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Third-party services
 
 Every service outside the table API, plug service, flow webhooks and Cloudflare that the site loads or calls: the MSG91 signup widget, country lookup, chatbot, tags, and the external pages it fetches or links to.
 
 > [!WARNING]
-> **Signup happens inside MSG91, off this site.** The site's only handle on a signup is the `state` string it passes to the widget (`setUtmSource()`, built from the `utmData` cookie). Attribution that is not in `utmData` before the widget initialises is lost. Rules for that cookie: [CONTRACTS.md](../CONTRACTS.md#cookies).
+> **Signup happens inside MSG91, off this site.** The site's only handle on a signup is the `state` string it passes to the widget (`buildSignupState()`, built from the `utmData` cookie plus `visitor_id` and `cta`). Attribution that is not in `utmData` before the widget initialises is lost, apart from those two cookies. Rules for that cookie: [CONTRACTS.md](../CONTRACTS.md#cookies).
 
 ## Role
 Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), support chat (gtwy), marketing and conversion tags, client-story content (docstar), the Action Layer blog cards (viaSocket blog RSS), and outbound booking and payment links (cal.id, Stripe). None of them is called with a secret; none has a server-side fallback.
@@ -22,7 +22,7 @@ Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), 
 ## Entities / Tables / Endpoints
 | Name | Purpose |
 |---|---|
-| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: setUtmSource(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. `success` only clears the loading skeleton. A new account this page can see is a 2xx POST to a URL containing `/c/register` whose body is not `hasError`; the component reports that once as `signup_completed`. Used by `src/app/signup/page.js`. `CTAButtons.js` and `RelaySignupCTA.js` only mention it in comments. |
+| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: buildSignupState(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. `success` only clears the loading skeleton. A new account this page can see is a 2xx POST to a URL containing `/c/register` whose body is not `hasError`; the component reports that once as `signup_completed`. Used by `src/app/signup/page.js`. `CTAButtons.js` and `RelaySignupCTA.js` only mention it in comments. |
 | `https://files.msg91.com/342616/wnitwkyk` | Default OG/Twitter image in page metadata (`src/app/layout.js`, `public/new-home/index.html` and others) |
 | ipapi.co `https://ipapi.co/json/` | `src/components/phoneInput/phoneInput.js` reads `country_code` to preselect the dial code; best effort, ignored if unknown |
 | gtwy chatbot `https://chatbot.gtwy.ai/chatbot.js` | Support chat. `src/app/providers.js` (React pages) and `public/new-home/assets/support.js` (`/`) inject it with a hardcoded `embedToken`, `bridgeName: 'viasocket_chat'` and a `threadId` kept in `localStorage.viasocket_chat_thread` for 1 h; the icon is hidden and `[data-chat]` links call `window.Chatbot.open()` on `/` |

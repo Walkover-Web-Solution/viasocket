@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**", "src/components/IntegrationsComp/addToProduct/PricingPage.js", "src/components/IntegrationsComp/addToProduct/PricingPlans.js", "src/components/IntegrationsComp/addToProduct/pricing.module.scss"]
-verified_at: c4bed05f
-verified_on: 2026-10-27
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Module: Pricing (`/pricing`)
 
@@ -30,7 +30,7 @@ The workflow-automation pricing page: the Free, Team and Premium plans, priced i
 3. They leave to `/signup` (hero `pricing_hero_signup`, plans `pricing_plan_*`, `pricing_final_cta`) or to cal.id. The signup journey itself is [FLOWS journey 1](../FLOWS.md#detailed-journey-landing-utm-capture-and-signup).
 
 > [!WARNING]
-> Pricing CTAs link to a bare `/signup` and never call `savePageUtmSource`. A visitor with no `utmData` cookie therefore reaches MSG91 with `setUtmSource`'s fallback source `'index'`, not `/pricing` (`src/utils/handleUtmSource.js:setUtmSource`). This conflicts with the "utm_source is the page path" rule ([DECISIONS ADR-012](../DECISIONS.md#adr-012-utm-attribution-conventions)).
+> Pricing CTAs link to a bare `/signup` and never call `savePageUtmSource`. A visitor with no `utmData` cookie therefore reaches MSG91 with `buildSignupState`'s fallback source `'index'`, not `/pricing` (`src/utils/handleUtmSource.js:buildSignupState`). This conflicts with the "utm_source is the page path" rule ([DECISIONS ADR-012](../DECISIONS.md#adr-012-utm-attribution-conventions)).
 
 ---
 

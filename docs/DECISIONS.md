@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: 3662e484
-verified_on: 2026-10-31
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -270,7 +270,7 @@ Accepted (maintainer guidance, 2026; the code paths are verified below).
 
 ### Decision & Implementation
 - **`utm_source` is the page path** (for example `/integrations` or `/embed`). `src/utils/handleUtmSource.js:isInternalUtmSource` treats empty values, values starting with `/` and the `INTERNAL_UTM_SOURCES` list (`home-A`, `home-B`, `relay-switch-google-ads`) as the site's own. `savePageUtmSource` only overwrites those, so an ad or referral source in the cookie survives. Section-level detail belongs in the CTA tracking event, not in `utm_source`.
-- **Attribution travels in the `utmData` cookie** (one day, set by `setCookie`). `setUtmSource` captures `utm_*`, `affiliate_*` and `ref` from the URL into it. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics.
+- **Attribution travels in the `utmData` cookie** (30 days when `src/utils/handleUtmSource.js` writes it; one day until `8772409a`). `getUtmSource` and `setUtmSource` capture `utm_*`, `affiliate_*`, `ref` and the ad click ids `gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid` and `rdt_cid`, and only when the cookie is absent. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics. The signup widget sends `buildSignupState()`: that cookie, plus `visitor_id` and `cta`. Some other writers still pass 1 day ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)).
 - **Campaign pages keep their own tag**, for example `relay-switch-google-ads` on `/migration/relay`. `utm_source` must appear once in the signup URL. `src/utils/handleRedirection.js:handleRedirect` with a `customSource` emits it twice (`state={…}&utm_source=…`), so such CTAs should stamp `utmData` and navigate to `/signup?utm_source=<tag>` directly. Keep `handleRedirect` for external apps such as `flow.viasocket.com`.
 - **No `www`:** match `viasocket.com` exactly, with no `www.` branch anywhere.
 
