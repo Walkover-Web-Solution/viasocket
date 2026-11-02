@@ -109,8 +109,6 @@
 
         ensureVisitorId();
         var rendered = renderedVariant();
-        // Runs before the page's Tag Manager snippet, so its pageview carries the version on screen.
-        tellTagManager(rendered);
         var assigned = readCookie('variant');
         if (VARIANTS.indexOf(assigned) === -1) {
             writeCookie('variant', rendered, VARIANT_MAX_AGE);
@@ -125,6 +123,8 @@
                 localStorage.setItem(VARIANT_KEY, rendered);
             } catch (e) {}
         }
+        // Runs before the page's Tag Manager snippet, so its pageview carries the version on screen.
+        tellTagManager(hpOff ? 'excluded' : rendered);
         return rendered;
     }
 
