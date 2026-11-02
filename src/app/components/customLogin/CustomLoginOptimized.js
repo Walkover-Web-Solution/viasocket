@@ -1,6 +1,6 @@
 'use client'
 
-import { setUtmSource } from '@/utils/handleUtmSource';
+import { buildSignupState } from '@/utils/handleUtmSource';
 import { trackInteraction } from '@/utils/trackVisitor';
 import React, { useLayoutEffect, useState } from 'react';
 
@@ -122,7 +122,7 @@ const CustomLoginOptimized = ({ redirect_to }) => {
             failure: (error) => {
                 console.error('failure reason', error);
             },
-            state: setUtmSource(),
+            state: buildSignupState(),
             theme: 'light',
         };
 

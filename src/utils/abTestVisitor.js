@@ -138,6 +138,22 @@ export const isSignupPath = (path) => {
     return normalized === '/signup';
 };
 
+/**
+ * The referrer, only when it is another site.
+ *
+ * Every internal link reloads the page, so from the second page on a visitor who
+ * came direct reports our own domain as their referrer — which is not where they
+ * came from.
+ */
+const externalReferrer = (referrer) => {
+    try {
+        const host = new URL(referrer).hostname;
+        return host === 'viasocket.com' || host.endsWith('.viasocket.com') || host === 'localhost' ? '' : referrer;
+    } catch {
+        return '';
+    }
+};
+
 /** Whether any utm_* parameter at all was present. */
 const hasAnyUtm = (utmData) => Boolean(utmData && Object.keys(utmData).length);
 
@@ -509,7 +525,7 @@ export const applyEvent = (profile, event) => {
         lastUtm: Object.keys(utmData || {}).length ? utmData : profile.lastUtm,
         sessionId: sessionId || profile.sessionId || '',
         firstUrl: profile.firstUrl || pageUrl || '',
-        referrer: profile.referrer || referrer || '',
+        referrer: profile.referrer || externalReferrer(referrer),
     };
 
     next.firstUtm = resolveFirstUtm(next.firstUtm, utmData);
