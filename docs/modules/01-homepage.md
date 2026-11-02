@@ -1,6 +1,6 @@
 ---
 covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: 53e86266
+verified_at: PENDING
 verified_on: 2026-11-02
 ---
 # Module: Homepage (`/`)
@@ -10,10 +10,10 @@ verified_on: 2026-11-02
 `/` is the static site in `public/new-home/`: plain HTML, CSS and JS that pitch viaSocket as an "Integration Layer for your AI agent". The primary action is "Copy setup prompt". The visitor pastes it into Cursor, Claude Code or Codex.
 
 > [!WARNING]
-> `/` is **not** a Next.js page. Middleware rewrites `/` to `/new-home/index.html` (version A) or `/home-b/index.html` (version B). The browser URL stays `/`. `next.config.js` `rewrites().beforeFiles` still maps `/` to version A when middleware does not rewrite, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Never edit `src/app/page.js` for homepage work: that file is the old Next homepage, not version B. A direct request for `/home-b` is redirected to `/`. The split script is `public/home-ab.js`, referenced from the first script tag in `public/new-home/index.html`.
+> `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` (version A) for every request, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Version B is written into that same document in the browser by the inline gate at the top of A's `<head>` ([below](#homepage-ab-test-version-b)). The browser URL stays `/`. Never edit `src/app/page.js` for homepage work: that file is the old Next homepage, not version B. Opening `/home-b` redirects to `/`.
 
 > [!WARNING]
-> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. Its `<html>` must keep `data-hp="A"` and its first script must stay `<script src="/home-ab.js?v=3"></script>`. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits; it must preserve that script tag. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
+> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. The export must keep three things from this repo's copy of `public/new-home/index.html`: `data-hp="A"` on `<html>`, the inline gate `<script>` as the first script in `<head>` (copied verbatim), and `<script src="/home-ab.js?v=5"></script>` straight after it. Without the gate every visitor gets A. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
 
 ---
 
@@ -69,7 +69,7 @@ The homepage uses no React components. Its tokens (`:root` in `public/new-home/s
 ---
 
 ## Data Dependencies
-1. **None at request time.** The HTML is a static file. App icons are hotlinked from `stuff.thingsofbrand.com` and `upload.wikimedia.org`. `main.js` drops an icon whose image fails to load.
+1. **None at request time.** The HTML is a static file. For a version B visitor the gate also fetches `/home-b/index.html`. App icons are hotlinked from `stuff.thingsofbrand.com` and `upload.wikimedia.org`. `main.js` drops an icon whose image fails to load.
 2. **Third-party scripts:** GTM `GTM-THTCRSLN` (inline in `<head>`), Google Fonts (Geist, Geist Mono), and the gtwy.ai chatbot loaded by `support.js` ([third-party services](../current-infrastructure/third-party-services.md)). The chatbot's `embedToken` is hardcoded ([OPEN_QUESTIONS S-04](../OPEN_QUESTIONS.md)).
 3. **Product video:** `https://img.youtube.com/vi/GRzkVjW839A/maxresdefault.jpg` (fallback `hqdefault.jpg` if that image errors) and, only after the click, `https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0`. No YouTube iframe API script.
 
@@ -87,16 +87,32 @@ Version A and version B both call `POST /api/track-variant` from `public/home-ab
 
 ## Homepage A/B test (version B)
 
-Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `f5bfbc6a`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
+Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `8a6d1f18`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
 
 In B's "Plug in viaSocket, and your app or agent can act in 2,300+ apps." diagram, the middle viaSocket card uses the neutral surface (`--s3` background, a 1px `--line-3` border, no shadow) and the logo in `--ink`. Those tokens are `#ececea` / `rgba(17,17,19,.24)` / `#111113` in light mode and `#1d1d20` / `rgba(255,255,255,.26)` / `#f1efe9` in dark mode. The two neighbouring cards are unchanged.
 
-Both versions are served at `/`. The address bar does not change, and nothing is hidden while a second page loads. `src/middleware.js` rewrites the request:
+Both versions are shown at `/`, and the address bar never changes. The server has no per-visitor logic: `/` is version A's static HTML for everyone, so any cache may store it. The version is chosen in the browser by the inline gate, the first `<script>` in `public/new-home/index.html`:
 
-1. A crawler (the same user-agent test as `src/utils/isBot.js`) gets A. `/home-b` and `/home-b/index.html` 302 to `/` for every caller, crawlers included.
-2. On `test.viasocket.com`, this Pages project's `*.viasocket-website.pages.dev` previews, `localhost` and `127.0.0.1`, `?variant=a` or `?variant=b` forces that version for a person, sets the cookie, and leaves the path at `/`. A crawler still gets A. `viasocket.com` ignores the parameter.
-3. Otherwise a `variant` cookie of `A` or `B` selects the document. A person with no cookie is assigned one of the two with equal probability (`VARIANTS[Math.floor(Math.random() * VARIANTS.length)]`). The response sets the cookie (30 days, `src/const/abTest.js`, domain `.viasocket.com` on viasocket hosts) and sends `Cache-Control: private, no-store`, `CDN-Cache-Control: no-store` and `Vary: Cookie`, so a shared cache cannot replay one visitor's HTML.
-4. `public/home-ab.js` does not navigate. If the `Set-Cookie` header was stripped, the script writes the same cookie with `document.cookie` from the page that arrived (`data-hp="B"` on version B; a missing mark is A). It does not replace a cookie that is already A or B. `localStorage` `vs_variant` mirrors it. The `visitor_id` cookie is still written only from the browser, the same way as `TrackingCookies`.
+1. A crawler (the same user-agent test as `src/utils/isBot.js`) gets A and no cookie. A visitor without JavaScript gets A. The gate only acts on path `/`.
+2. On `test.viasocket.com`, this Pages project's `*.viasocket-website.pages.dev` previews, `localhost` and `127.0.0.1`, `?variant=a` or `?variant=b` forces that version and sets the cookie. `viasocket.com` ignores the parameter.
+3. Otherwise a `variant` cookie of `A` or `B` keeps the visitor's version. A visitor with no cookie gets a fair coin flip (`Math.random() < 0.5`). The gate writes the cookie with `document.cookie` (30 days, the value in `src/const/abTest.js`, domain `.viasocket.com` on viasocket hosts, `secure` on https).
+4. **A:** the gate returns and the page loads as before.
+5. **B:** the gate hides `<html>`, starts `fetch('/home-b/index.html')` with the header `X-Homepage-Fetch: B`, and writes `<plaintext id="hp-rest" style="display:none">`. That tag turns the rest of A's file into inert text, so no later script, stylesheet or tag of A runs or paints. A's Tag Manager snippet and `home-ab.js` never run for a B visitor. When B arrives, the gate replaces the document with `document.open()`, `document.write(B)` and `document.close()`. The URL and history are unchanged. B's own `home-ab.js` and Tag Manager run once.
+6. **Fallback:** if B fails, is redirected, does not carry `data-hp="B"`, or has not arrived 2 seconds after the gate started, the gate waits until A has finished downloading into `#hp-rest` and writes A back: the tags parsed before the gate plus that text. `window.__hpGate` is `fallback`. A's Tag Manager runs once, with `homepage_variant: 'excluded'`. `home-ab.js` tags A's links with `utm_source=a` and posts nothing, so no exposure is counted for either version. The cookie stays `B`, so the next visit tries B again.
+7. `src/middleware.js` 302s `/home-b` and `/home-b/index.html` to `/` for every caller, crawlers included. The only exception is a request for `/home-b/index.html` carrying `X-Homepage-Fetch: B`, which is the gate's fetch.
+
+`public/home-ab.js` then runs in whichever document is on screen. Before that page's Tag Manager snippet, it pushes `{ homepage_variant: 'A' | 'B' }` (the `data-hp` of the page on screen) to `dataLayer`, or `'excluded'` after a fallback or when the cookie does not match the page, so those pageviews can be left out of both versions. It writes the cookie only if it is missing, and it posts a view only when the cookie matches the version on screen, because `/api/track-variant` reads the version from that cookie. `localStorage` `vs_variant` mirrors it. The `visitor_id` cookie is still written only from the browser, the same way as `TrackingCookies`.
+
+Measured on the PR 1904 Pages preview (Chrome 122, fresh profile per session, time from navigation start until B's headline is visible): about 0.4 s median with no throttling (A about 0.33 s), 0.58 s on fast 4G (A 0.43 s), and 2.0 s on slow 4G (A 1.4 s). No session fell back to A. The 2-second timer starts when the gate runs, after A's first bytes arrive, so slow 4G stays inside it, but a slower link than that will see A.
+
+#### Editing version A's `<head>`
+
+- Keep the gate the **first script** and keep it **inline**. Only `<meta charset>` and `<meta name="viewport">` may come before it. Anything placed above it runs for B visitors too, and anything rebuilt after a fallback is serialized from the DOM.
+- Anything after the gate (Tag Manager, `home-ab.js`, styles, JSON-LD, the body) is skipped for B visitors. Tracking that must also run on B has to be added to `public/home-b/index.html` as well.
+- Keep `home-ab.js` before the Tag Manager snippet in both files, so the pageview carries `homepage_variant`.
+- `public/home-b/index.html` must keep `data-hp="B"` within its first 200 characters. The gate checks it before writing B.
+- A script written into the document by `document.write` must be same-origin or `async`. Chrome may block cross-origin parser-blocking scripts written that way on slow connections.
+- After editing the gate or `home-ab.js`, bump `home-ab.js?v=` in both HTML files.
 
 ### Where B's links go
 
@@ -127,19 +143,19 @@ Still invisible here, so still a signup-app job: homepage Start free and Log in,
 ---
 
 ## Loading / Empty / Error States
-- **Loading:** none. The page is fully rendered HTML, and the scripts only add behaviour.
+- **Loading:** version A is fully rendered HTML, and the scripts only add behaviour. For a version B visitor the page stays blank (`<html>` hidden) until B is written, at most 2 seconds before the gate falls back to A.
 - **Empty:** not applicable (no data).
 - **Error:** if the clipboard write fails, `copyText` falls back to `manual(text)`, a select-by-hand box. A `role="status"` toast confirms a successful copy. If the chat script fails, the chat button stays a plain link to `/support`.
 
 > [!WARNING]
 > - Bump the `?v=` query on `styles.css` / `main.js` in `index.html` whenever you edit either file, or cached copies are served ([DESIGN](../DESIGN.md#static-homepage-publicnew-homestylescss)).
-> - Middleware streams the selected static document through `src/app/homepage-render/route.js`. Cloudflare Pages otherwise replaces middleware's browser `Cache-Control` with `public, max-age=0, must-revalidate` when it serves a rewritten static file. The edge route's final response sends `Cache-Control: private, no-store, must-revalidate`, `CDN-Cache-Control: no-store` and `Vary: Cookie`. Production's separate zone cache rule may still override the edge directive (D-10). A cache hit skips middleware and replays one version to everyone, which breaks this split. **After every homepage deploy, purge `/`**, then verify on the production host itself. The zone rule has to honour `CDN-Cache-Control: no-store` (or bypass `/`) before production can serve both versions. Test and the Pages previews do not have that zone rule ([current-infrastructure/cloudflare](../current-infrastructure/cloudflare.md)).
+> - `/` is the same HTML for every visitor, so the production zone cache rule (D-10) can keep it without breaking the split. **After every homepage deploy, purge `/`** so the new gate reaches visitors. If that rule ever caches the `/home-b/index.html` redirect, the gate gets A's HTML back, rejects it (no `data-hp="B"`) and shows A to B visitors, counting nothing. Check that a request carrying `X-Homepage-Fetch: B` returns B on the production host ([current-infrastructure/cloudflare](../current-infrastructure/cloudflare.md)).
 > - When you change an FAQ answer, update both the `<details>` item and the JSON-LD `FAQPage` block.
 
 ---
 
 ## Development Tasks (Open Items)
 - [ ] Pass incoming `utm_*` and `gclid` from the homepage through to flow.viasocket.com (the rest of T-04). Homepage calls to action already carry `utm_source=a` or `utm_source=b`. The Next `SiteHeader` pages still send Start free with no `utm_source`.
-- [ ] Retire the dormant Next homepage tree once the new homepage has run stably for a few weeks, together with the middleware `no-store` branch for `/` once the Cloudflare rule respects origin headers ([OPEN_QUESTIONS C-01](../OPEN_QUESTIONS.md#c-01-the-old-homepage-tree-still-builds-but-never-renders), C-05, D-10).
+- [ ] Retire the dormant Next homepage tree once the new homepage has run stably for a few weeks, ([OPEN_QUESTIONS C-01](../OPEN_QUESTIONS.md#c-01-the-old-homepage-tree-still-builds-but-never-renders)).
 - [ ] Confirm the app count: the proposed figure is "2,300+" everywhere ([OPEN_QUESTIONS P-04](../OPEN_QUESTIONS.md)).
 - [x] This design system is the target for the rest of the site (U-01, decided; [DECISIONS ADR-016](../DECISIONS.md#adr-016-the-static-homepages-design-system-is-the-site-wide-target)).

@@ -1,5 +1,5 @@
 ---
-covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/homepage-render/route.js", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
+covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
 verified_at: 53e86266
 verified_on: 2026-11-02
 ---
@@ -27,16 +27,15 @@ Hosting and edge runtime for every Next.js route; CDN cache for production; path
 | Zone cache rule | Caches production HTML (`max-age=10800` observed on `/`, `/pricing`, `/sitemap.xml`, `/llms.txt`); not present on test. The team observed (D-10, team answers to OPEN_QUESTIONS, 2026-10-22) that it keeps `/` at the edge for **more than a day** (copies with `age` over 80,000 s) and rewrites `cache-control` to `private, max-age=10800`, ignoring the middleware's `no-store`. **After every homepage deploy someone must purge `https://viasocket.com/`.** Recommended: make the rule respect origin headers for `/`, or give it an edge TTL of about 5 minutes. The exact rule is dashboard-only. |
 | Other zone deployments | `/help/*`, `/blog`, `/discovery`, `/community` (and `/faq`) answer from other apps; on 2026-10-22 they returned `private, no-store` / `no-cache, no-store`, `DYNAMIC`, and no `x-matched-path` header ([OPEN_QUESTIONS P-05](../OPEN_QUESTIONS.md)) |
 | `public/_redirects` | One Pages redirect rule (`/faq/a-step-by-step-guide`), possibly unreachable ([OPEN_QUESTIONS C-07](../OPEN_QUESTIONS.md)) |
-| `src/app/homepage-render/route.js` | Build-time imports and returns the A or B static homepage document after middleware has chosen it. Pages otherwise replaces middleware's browser `Cache-Control` when it serves a rewritten static homepage file. The route returns `Cache-Control: private, no-store, must-revalidate`, `CDN-Cache-Control: no-store` and `Vary: Cookie`. |
 | Zaraz | Loaded by `src/app/providers.js:loadZarazManually`; configured in the dashboard ([third-party-services.md](third-party-services.md)) |
 
 ## Schema / Shape
 ```text
 Request -> zone (cache rule, path routing to other apps)
-        -> Pages worker: public/_redirects -> src/middleware.js (choose A/B)
-        -> middleware rewrite (/ -> /homepage-render, `x-homepage-variant: A|B`)
-        -> edge route fetches chosen static file -> filesystem/App Router
-Response headers that identify this project: `x-matched-path` (the internal homepage route before it streams the chosen file).
+        -> Pages worker: public/_redirects -> src/middleware.js
+        -> beforeFiles rewrite (/ -> /new-home/index.html) -> filesystem/App Router
+        -> browser: the gate in A's <head> fetches /home-b/index.html for version B
+Response headers that identify this project: `x-matched-path` (`/new-home/index.html` for `/`).
 ```
 Full routing order: [ARCHITECTURE.md](../ARCHITECTURE.md) "Request Path". Route and redirect table: [../05-navigation.md](../05-navigation.md).
 
@@ -48,7 +47,7 @@ Search-engine posture per environment:
 ## Functions We Call
 | Function | Returns | Used by |
 |---|---|---|
-| `middleware(request)` | `/home` 307 to `/`; chooses A or B for `/` and rewrites to `/homepage-render`; redirects `/home-b` to `/`; sets the variant cookie and `CDN-Cache-Control: no-store`; `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths except the explicitly matched `/home-b/index.html`) |
+| `middleware(request)` | `/home` 307 to `/`; redirects `/home-b` to `/` (except the gate's fetch with `X-Homepage-Fetch: B`); `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths except the explicitly matched `/home-b/index.html`) |
 | `loadZarazManually()` | injects `/cdn-cgi/zaraz/i.js` once | `src/app/providers.js:AppProvider` |
 | `GET /robots.txt` | text, see above | crawlers |
 

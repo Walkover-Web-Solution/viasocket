@@ -60,7 +60,7 @@ There is none, on either side. Helpers catch everything and return fallbacks (`[
 | Store Name | Storage Key | Format | Owner / Invalidator |
 |---|---|---|---|
 | cookie | `utmData` | JSON (unencoded): `utm_*`, `affiliate_*`, `ref`, plus `utm_source`, `prompt`, `intent`. 1 day, `path=/`, `domain=.viasocket.com` on viasocket hosts. | Written by `src/utils/handleUtmSource.js` (`getUtmSource` on first load, `setUtmSource`, `savePageUtmSource`), `src/utils/userIntentTracker.js:setIntent`, `carryPromptToSignup` in `src/app/front-page/signup.js`, `src/components/IntegrationsComp/integrationsAppOneComp/popularUseCases.js`. Read by `setUtmSource` (signup `state`) and `savePageUtmSource`. |
-| cookie | `variant` (`VARIANT_COOKIE`) | `A` or `B`; 30 days; `samesite=lax` | Written by `src/app/components/VariantTracker/TrackingCookies.js` (inline script before paint). Read by `src/utils/getVariant.js:getVariant`, `POST /api/track-variant`. |
+| cookie | `variant` (`VARIANT_COOKIE`) | `A` or `B`; 30 days; `samesite=lax` | Written by `src/app/components/VariantTracker/TrackingCookies.js` (inline script before paint), and on `/` by the inline gate at the top of `public/new-home/index.html` (a 50/50 coin flip when missing). Read by `src/utils/getVariant.js:getVariant`, `POST /api/track-variant`. |
 | cookie | `visitor_id` (`VISITOR_ID_COOKIE`) | UUID; 1 year; `.viasocket.com`, so shared by test and production | Written by `TrackingCookies` (new UUID, or restored from `vs_visitor`); repaired by `src/utils/trackVisitor.js`. Read by `POST /api/track-variant`. |
 | cookie | `rdt_cid` | Reddit click id; 30 days; `secure`, `sameSite=lax` | `src/middleware.js` sets it from a valid `?rdt_cid=` and deletes it when an invalid one arrives; read for the Reddit CAPI call. |
 | cookie | `prod` | presence only | Set outside this repo; read by `getHasToken`, `NavbarServer`. |
@@ -115,7 +115,7 @@ Common fields: `pageUrl`, `utmData` (the `utm_*` params on the current URL, not 
 
 `setIntent(value)` in `src/utils/userIntentTracker.js` is not an event: it stores `intent` in `utmData` (only caller: `src/app/hire-an-expert/HireExpertClient.js`, value `hireanexpert`) so signup receives it in `state`.
 
-The static homepage (`public/new-home/`) is outside the Next.js layout, so it gets no `TrackingCookies`, `VariantTracker`, Zaraz or Reddit pixel. Only GTM is in its HTML.
+The static homepage (`public/new-home/`) is outside the Next.js layout, so it gets no `TrackingCookies`, `VariantTracker`, Zaraz or Reddit pixel. Only GTM is in its HTML. Version B carries its own copy of the same snippet; a B visitor runs only B's. On both versions `public/home-ab.js` pushes `{ homepage_variant: 'A' | 'B' }` to `dataLayer` before the snippet, so the container's pageview can read the version on screen. After a fallback to A, or when the cookie does not match the page on screen, it is `excluded`.
 
 ### Middleware experiments
 
@@ -162,8 +162,8 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 | Destination | Built by | Parameters |
 |---|---|---|
 | `${NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/<triggerId>/action?events=<ids>...` and `/connect/<rowid>` | integrations components (`src/components/IntegrationsComp/**`) | plug service row ids |
-| `https://flow.viasocket.com/...` from `/` and `/home-b` | `public/home-ab.js` stamps every such link before the visitor can use it | `hp_variant=A` or `hp_variant=B`. A homepage call to action also gets `utm_source=a` (version A) or `utm_source=b` (version B). Other query parameters stay |
-| Homepage calls to action on `/` and `/home-b` that leave the page | `public/home-ab.js` | `utm_source=a` or `utm_source=b`. Covers Start free, Log in, Talk to an expert, Book a demo, a setup-prompt link that opens a page, nav and footer links to flow.viasocket.com or `/signup`, and the closing buttons. Anchors and copy buttons are left alone. The tracking event's `utmData` stays the landing URL's `utm_*` |
+| `https://flow.viasocket.com/...` from `/` (version A or B) | `public/home-ab.js` stamps every such link before the visitor can use it | `hp_variant=A` or `hp_variant=B`. A homepage call to action also gets `utm_source=a` (version A) or `utm_source=b` (version B). Other query parameters stay |
+| Homepage calls to action on `/` (version A or B) that leave the page | `public/home-ab.js` | `utm_source=a` or `utm_source=b`. Covers Start free, Log in, Talk to an expert, Book a demo, a setup-prompt link that opens a page, nav and footer links to flow.viasocket.com or `/signup`, and the closing buttons. Anchors and copy buttons are left alone. The tracking event's `utmData` stays the landing URL's `utm_*` |
 | an app's own website | `src/utils/ExternalLink.jsx:appWebsiteUrl` (single-app page "Learn more"); `src/components/IntegrationsComp/integrationsAppTwoComp/AboutApps.js` (app pairs) appends the same tag inline | forced to `https://`, `utm_source=viasocket` appended (outbound referral tag, not a signup source); magicalapi.com gets `/integrations/viasocket/`. `rel` from `relForApp`: dofollow only for apps in the `DOFOLLOWLINK` table |
 | `/signup` | `src/app/components/home/CTAButtons.js`, `src/app/front-page/signup.js` | `utm_source=<tag>` exactly once; no `prompt` |
 | any URL via `src/utils/handleRedirection.js:handleRedirect` | CTAs to `flow.viasocket.com` and others | `state=<utmData JSON>&<utm pairs>`; with `customSource`, `state={"utm_source":...}&utm_source=...` (emitted twice, so pages with their own tag link straight to `/signup?utm_source=`) |
