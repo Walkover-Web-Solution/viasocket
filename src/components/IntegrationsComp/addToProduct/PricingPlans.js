@@ -21,6 +21,26 @@ function BillingSwitch({ yearly, onChange }) {
     );
 }
 
+/** A perk's text, with "tasks" and "AI credits" explained in a tooltip on hover or focus. */
+function Perk({ text }) {
+    return (
+        <span>
+            {text.split(/(tasks|AI credits)/).map((part, i) =>
+                C.tips[part] ? (
+                    <span key={i} className={p.term} tabIndex={0}>
+                        {part}
+                        <span className={p.tip} role="tooltip">
+                            {C.tips[part]}
+                        </span>
+                    </span>
+                ) : (
+                    part
+                )
+            )}
+        </span>
+    );
+}
+
 function Plan({ plan, yearly }) {
     const i = yearly ? 1 : 0;
     return (
@@ -41,7 +61,9 @@ function Plan({ plan, yearly }) {
             <ul className={p.perks}>
                 {plan.perks.map((x) =>
                     typeof x === 'string' ? (
-                        <li key={x}>{x}</li>
+                        <li key={x}>
+                            <Perk text={x} />
+                        </li>
                     ) : (
                         <li key={x.text} className={x.limit ? p.limit : undefined}>
                             {x.text}

@@ -2,11 +2,10 @@ import s from './addToProduct.module.scss';
 import p from './pricing.module.scss';
 import { PRICING_COPY as C } from './copy';
 import { Faq, Head, PageFrame } from './PricingParts';
-import PricingPlans, { FreeAndContact, PlanFinder } from './PricingPlans';
+import PricingPlans, { PlanFinder } from './PricingPlans';
 
-// /pricing in the homepage design. For now the Free plan and a "Contact us" card, what every plan gets, links
-// to /features and /use-cases, and FAQs on the Free plan and viaSocket; the paid plans and the plan finder (PricingPlans, Calculator) are kept for
-// when they come back.
+// /pricing in the homepage design: the Free, Pro, Business and Enterprise plans, what every plan gets, the plan
+// finder, links to /features and /use-cases, and the pricing FAQs.
 
 function Calculator() {
     return (
@@ -14,7 +13,6 @@ function Calculator() {
             <div className={s.wrap}>
                 <Head title={C.calcTitle} lead={C.calcLead} id="h-calc" />
                 <PlanFinder />
-                <p className={p.fine}>{C.calcNote}</p>
             </div>
         </section>
     );
@@ -27,8 +25,8 @@ export default function PricingPage() {
                 <div className={`${s['hero-grid']} ${p['hero-grid']}`} aria-hidden="true" />
                 <div className={`${s.wrap} ${p['hero-in']}`}>
                     <h1>{C.h1}</h1>
-                    <p className={s['hero-sub']}>{C.contactSub}</p>
-                    <FreeAndContact />
+                    <p className={s['hero-sub']}>{C.sub}</p>
+                    <PricingPlans />
                     <div className={p.every}>
                         <p>
                             {C.everyPlan.map((x) =>
@@ -41,10 +39,11 @@ export default function PricingPage() {
                                 )
                             )}
                         </p>
-                        <p>{C.taskNote}</p>
                     </div>
                 </div>
             </section>
+
+            <Calculator />
 
             <section className={s.sec} aria-labelledby="h-explore">
                 <div className={s.wrap}>
@@ -65,7 +64,7 @@ export default function PricingPage() {
                 </div>
             </section>
 
-            <Faq eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.contactFaqs} />
+            <Faq eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
         </PageFrame>
     );
 }
