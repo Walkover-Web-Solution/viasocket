@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
 
     const url = `${BLOGS_URL}/${post.slug}`;
     const title = `${post.title} · viaSocket`;
-    const image = post.image ? new URL(post.image, 'https://viasocket.com').href : null; // pragma: allowlist secret
+    const image = post.image ? new URL(post.image, 'https://viasocket.com').href : null;
     return {
         title,
         description: post.description,

@@ -95,6 +95,8 @@ The SDK provides a set of methods for the full connection lifecycle:
 
 Each call is automatically scoped to the `unique_identifier` from the JWT. There is no way for one user's session to access another user's connections through the SDK.
 
+How an agent should read those connection states before it calls a third-party app is covered in [managed OAuth for SaaS integrations](/blogs/tool-calling-infrastructure-for-ai-agents).
+
 ## Step 4: Execute Actions Against Connected Apps
 
 Once a user has connected an app, your backend can execute actions using the `flow.sokt.io` endpoint:
@@ -129,6 +131,8 @@ This means:
 
 Your responsibility is to ensure the `unique_identifier` you embed in the JWT is stable and maps one-to-one to your own user records. A good choice is your internal user ID or a hashed version of it. Do not use email addresses if they can change.
 
+For how this per-user model differs from Zapier MCP, see [how managed OAuth works at the per-user level](/blogs/viasocket-mcp-vs-zapier-mcp) in the viaSocket MCP vs Zapier MCP comparison.
+
 ## Security Checklist
 
 Before going to production:
@@ -151,8 +155,18 @@ Once a user connects an app through the SDK:
 
 You do not need to implement any of this per-integration. The same pattern works across all 2,300+ supported apps.
 
+How [managed OAuth for SaaS integrations](/blogs/merge-alternative) compares with Merge.dev is covered in the alternatives guide.
+
+For how this managed auth layer compares with Nango and other API auth platforms, see [managed OAuth for SaaS integrations](/blogs/nango-alternative).
+
 ## Next Steps
 
 - [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)
 - [Add AI agent tool-calling to your product](/embed/actions-for-ai)
 - [Browse the full developer documentation](/developers/docs)
+
+The steps for adding this managed OAuth layer to a product are in [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a user's connected apps after that authorisation, see [How to Handle OAuth for Multi-Tenant SaaS Integrations](/blogs/oauth-for-ai-agents).
+
+How that managed OAuth layer compares with Composio for AI agent tool-calling is in [managed OAuth for SaaS integrations](/blogs/composio-alternative).

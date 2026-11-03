@@ -23,7 +23,7 @@ function JsonLd({ url, title, page }) {
             '@context': 'https://schema.org',
             '@type': 'BreadcrumbList',
             itemListElement: [
-                { '@type': 'ListItem', position: 1, name: 'Features', item: 'https://viasocket.com/features' }, // pragma: allowlist secret
+                { '@type': 'ListItem', position: 1, name: 'Features', item: 'https://viasocket.com/features' },
                 { '@type': 'ListItem', position: 2, name: title, item: url },
             ],
         },

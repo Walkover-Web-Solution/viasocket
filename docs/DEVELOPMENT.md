@@ -1,7 +1,7 @@
 ---
 covers: ["package.json", "package-lock.json", ".npmrc", ".prettierrc", ".prettierignore", "next.config.js", "wrangler.toml", "build-utilities/**", "src/middleware.js", "src/utils/axiosCalls.js", "src/app/robots.txt/route.js", "src/app/api/track-variant/route.js"]
-verified_at: 7c32792e
-verified_on: 2026-10-28
+verified_at: a9853794
+verified_on: 2026-11-02
 ---
 # Development & Verification Guide
 
@@ -58,6 +58,8 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 | `NEXT_PUBLIC_DB_BASE_URL` | Yes | Yes | none | table-api base URL. The DB ids are hard-coded after it in `src/utils/axiosCalls.js:getDataFromTable` and its siblings. API shapes are in [CONTRACTS](CONTRACTS.md). |
 | `NEXT_PUBLIC_DB_KEY` | Yes | Yes | none | `auth-key` header for the content tables (`getDataFromTable`, `getMeta`, `getFaq`, `getIndustries`, ...). |
 | `NEXT_PUBLIC_DB_KEY_ABTEST` | Yes for A/B tracking | Yes | none | `auth-key` for the A/B visitor table (`src/utils/axiosCalls.js:abTestHeaders`), used by `/api/track-variant`. |
+| `ADMIN_TRACKING_URL` | No | No | built in for test and production; a local server forwards only when this is set | Optional override of the admin ingest URL built into `forwardToAdmin`. Do not set it on Cloudflare Pages ([ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)). |
+| `ADMIN_TRACKING_SECRET` | No | No | the key built into `forwardToAdmin` | Optional override of the `x-tracking-secret` header. The built-in key is not a secret. Never prefix an override with `NEXT_PUBLIC_`. Do not set it on Cloudflare Pages. |
 | `NEXT_PUBLIC_BLOG_DB_KEY` | Yes for blog lists | Yes | none | `auth-key` for `src/utils/axiosCalls.js:getBlogs` (the blog table URL itself is hard-coded). |
 | `NEXT_PUBLIC_INTEGRATION_URL` | Yes | Yes | none | Plug-service base URL. **Must end with `/`**, because code builds `${URL}plugins/search`, `${URL}templates/all` and `${URL}api/reddit/...` (`src/utils/searchApps.js`, `src/utils/axiosCalls.js`, `src/middleware.js`, `src/app/components/workflow-automation-ideas/AutomationSuggestionsClient.js`). |
 | `NEXT_PUBLIC_FLOW_URL` | Yes | Yes | none | Flow app base URL with **no trailing slash** (`${URL}/makeflow/...`). Used for "use this flow" links in `src/components/IntegrationsComp/**` and `AutomationSuggestionsClient.js`. |
@@ -71,7 +73,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 **Mismatches between `.env` and code** (names only):
 
 - **In `.env` but never read by code:** `NEXT_PUBLIC_PROD_ENVIRONMENT` (the code reads only `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`), `NEXT_PUBLIC_BLOG_DB_URL` (last referenced in 2025-02; the blog URL is now hard-coded), `NEXT_PUBLIC_DB_ID` (removed in 6d3df50b "Correct id"; DB ids are hard-coded), `NEXT_PUBLIC_DB_ID_AZ`, `NEXT_PUBLIC_DB_KEY_AZ`, `PAUTH_KEY`, `NEXT_PUBLIC_RECAPTCHA_KEY` (its only reader, an unimported reCAPTCHA provider, was removed 2026-10-21), `SERVER_RECAPTCHA_KEY` (last referenced 2026-01, before f5d90daa "page to app"), `USECASE_CREATE`, `USECASE_UPDATE`. Also, `NEXT_PUBLIC_BLOG_DB_KEY` is defined **twice** in the local `.env`, and the later definition wins. <!-- verify:ignore -->
-- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`. Both are build-time and platform-provided.
+- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`, `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET`. `HOSTNAME` and `VERCEL_URL` are build-time and platform-provided. The admin pair are optional overrides, read at request time in `src/app/api/track-variant/route.js`. Test and production forward with the URL and key built into that file when both are unset. A local dev server forwards only when `ADMIN_TRACKING_URL` is set. Do not add either variable on Cloudflare Pages.
 
 > [!TODO]
 > The Cloudflare Pages dashboard holds the real per-environment values for test and production, and they are not in the repo. Confirm that each `NEXT_PUBLIC_*` above is set for both the `test` and `main` deployments. Next inlines `NEXT_PUBLIC_*` at **build** time, so changing one requires a rebuild or redeploy.
@@ -87,7 +89,7 @@ All three environments run the same code. `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` i
 | production | viasocket.com <!-- verify:ignore --> | `prod` | indexable, robots with two `Sitemap:` lines, Reddit pixel and CAPI on, error reports POSTed to flow.sokt.io <!-- verify:ignore --> |
 
 > [!WARNING]
-> Only the exact string `prod` switches on production behaviour in `layout.js`, both robots generators, `RedditPixel`, `SendErrorMessage` and `trackRedditEvent`. `src/app/api/track-variant/route.js:getEnvironment` is more lenient. It maps `prod`/`production` to `production`, `test`/`stage`/`staging` to `test`, and `local`/`dev`/`development` to `local`, and falls back to the hostname when the flag is unset. A value like `production` would therefore tag A/B rows as production while leaving the site noindexed. Use `prod` for production.
+> Only the exact string `prod` switches on production behaviour in `layout.js`, both robots generators, `RedditPixel`, `SendErrorMessage` and `trackRedditEvent`. `src/app/api/track-variant/route.js:getEnvironment` is more lenient. It maps `prod`/`production` to `production`, `test`/`stage`/`staging` to `test`, and `local`/`dev`/`development` to `local`, and falls back to the hostname when the flag is unset. That fallback treats only the exact host `viasocket.com` as production (`test.viasocket.com` is `test`). A value like `production` would therefore tag A/B rows as production while leaving the site noindexed. Use `prod` for production.
 
 `NEXT_PUBLIC_PROD_ENVIRONMENT` is **not** a second switch: nothing reads it. <!-- verify:ignore -->
 
@@ -102,7 +104,7 @@ npm run start          # optional: serve the build on :1111
 npm run preview        # optional, slow: real Cloudflare Pages build in workerd
 ```
 
-A passing `next build` lists **56 routes: 53 dynamic (`ƒ`)**, including `/setup-prompt`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
+A passing `next build` lists **53 routes: 50 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
 
 ## Running Automated Checks & Tests
 
@@ -138,6 +140,7 @@ This is the procedure. What "done" means is in [22-definition-of-done](22-defini
    grep -o '<title>[^<]*' /tmp/p.html; grep -o 'rel="canonical" href="[^"]*"' /tmp/p.html
    ```
    Baseline expectations: `/` returns 200 with canonical https://viasocket.com/ (from the static `public/new-home/index.html`). `/home` returns 307 to `/` (middleware). `/embed` returns 308 to `/developers`. `/about` returns 308 to `/help/about-us`. `/help` returns 301 to `/new-direction`, while `/help/about-us` (a footer help page, served by another deployment) is a 404 locally. `/login` returns 307 to flow.viasocket.com. An unknown path returns 404 with "404 - Page not found". <!-- verify:ignore -->
+   While the admin redirect list is reachable, `/embed` returns 301 to `/` with an empty body and no canonical tag; the homepage it lands on carries the canonical. If the admin cannot be reached, the fallback file returns 308 to `/developers`.
 4. **SEO files.** `curl http://localhost:1111/robots.txt` must return `Disallow: /` locally. `/sitemap.xml` must return 200. If you touched robots logic, change **both** `src/app/robots.txt/route.js` and `build-utilities/generate-robots-txt.js`.
 5. **Per-visitor, cookie or cache behaviour.** Local and test do not show it. Compare production and test headers:
    ```bash

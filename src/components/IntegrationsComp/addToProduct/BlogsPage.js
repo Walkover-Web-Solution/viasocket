@@ -5,6 +5,7 @@ import b from './blogs.module.scss';
 import { BASE_PROMPT, BLOGS_COPY as C } from './copy';
 import { CopyPromptProvider } from './CopyPrompt';
 import { SiteFooter, SiteHeader } from './SiteChrome';
+import BlogPromo from './BlogPromo';
 import { formatBlogDate } from '@/app/lib/blogs';
 
 // /blogs and /blogs/{slug} in the homepage design: the homepage header and footer, its tokens and square cards.
@@ -118,6 +119,7 @@ export default function BlogsPage({ posts }) {
                     )}
                 </div>
             </section>
+            <BlogPromo />
         </BlogFrame>
     );
 }

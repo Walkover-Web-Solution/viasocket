@@ -43,6 +43,8 @@ Every OAuth token viaSocket stores is keyed to this identifier. When your backen
 
 **Choosing your identifier**: Use your internal tenant or user ID — a stable, immutable string that maps one-to-one to your tenants. Do not use email addresses (they can change), session tokens (they expire), or composite keys that might be reused.
 
+For how these [multi-tenant SaaS deployment patterns](/blogs/viasocket-mcp-vs-zapier-mcp) affect who should own the MCP server, see the viaSocket MCP vs Zapier MCP comparison.
+
 ## Four Isolation Dimensions
 
 ### 1. Credential Isolation
@@ -50,6 +52,8 @@ Every OAuth token viaSocket stores is keyed to this identifier. When your backen
 Each tenant's OAuth tokens are stored under their `unique_identifier`. Two tenants who both connect Slack get separate token records. Revoking one tenant's connection leaves the other's untouched.
 
 Your responsibility: ensure the `unique_identifier` in every JWT you sign is correct for the authenticated session. This is a backend concern — the JWT is signed server-side with your `embed_secret` and delivered to the frontend via a protected API endpoint.
+
+Where this [multi-tenant integration architecture](/blogs/merge-alternative) differs from Merge.dev's per-customer OAuth is covered in the alternatives guide.
 
 ### 2. Connection State Isolation
 
@@ -103,6 +107,8 @@ A production multi-tenant integration needs to handle the full connection lifecy
 
 **Tenant offboarding**: When a tenant leaves your product, revoke and remove their connections. This is both a security practice and a hygiene requirement for maintaining clean credential records.
 
+When one user connects more than one account for the same app, the production tool-calling side of this setup is covered in [multi-tenant integration architecture](/blogs/tool-calling-infrastructure-for-ai-agents).
+
 ## Scaling Considerations
 
 ### Don't Store OAuth Tokens Yourself
@@ -139,3 +145,11 @@ If your product includes AI agent features, the same multi-tenant isolation mode
 - [How to Handle OAuth for Multi-Tenant SaaS Integrations with viaSocket](/help/integration-guides/managed-oauth-for-saas-integrations)
 - [Embed Integrations in Your SaaS Product](/embed/app-integration)
 - [Developer Documentation](/developers/docs)
+
+Adding the managed OAuth layer on top of this architecture is covered in [Multi-Tenant Integration Architecture](/blogs/how-to-add-managed-oauth-for-third-party-apps).
+
+When an AI agent acts on a tenant's connected apps, see [Multi-Tenant Integration Architecture](/blogs/oauth-for-ai-agents).
+
+How this [multi-tenant integration architecture](/blogs/nango-alternative) compares with Nango and other API auth platforms is covered in that alternatives guide.
+
+Choosing viaSocket over Composio for AI agent tool-calling on this architecture is covered in [multi-tenant integration architecture](/blogs/composio-alternative).

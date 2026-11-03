@@ -1,11 +1,11 @@
 'use client';
 
 import s from './addToProduct.module.scss';
-import { BASE_PROMPT, USECASES_COPY as C } from './copy';
+import { promptWithUseCase, USECASES_COPY as C } from './copy';
 import { useCopyPrompt } from './CopyPrompt';
 
-// /use-cases: one card per use case. Clicking a card copies its prompt followed by the setup
-// prompt, as the homepage's sample prompts do.
+// /use-cases: one card per use case. Clicking a card copies the setup prompt, then the card's
+// use case, as the homepage's sample prompts do.
 
 function Apps({ apps }) {
     return (
@@ -17,12 +17,12 @@ function Apps({ apps }) {
     );
 }
 
-/** The whole card copies its prompt followed by the setup prompt. */
+/** The whole card copies the setup prompt, then this card's use case. */
 function UseCaseCard({ c }) {
     const copy = useCopyPrompt();
     return (
         <li>
-            <button type="button" className={s['uc-card']} onClick={() => copy(`${c.prompt}\n\n${BASE_PROMPT}`)} aria-label={`Copy prompt: ${c.prompt}`}>
+            <button type="button" className={s['uc-card']} onClick={() => copy(promptWithUseCase(c.prompt))} aria-label={`Copy prompt: ${c.prompt}`}>
                 <span className={s['uc-t']}>{c.title}</span>
                 <span className={s['uc-q']}>
                     <span className={s['uc-ai']} />

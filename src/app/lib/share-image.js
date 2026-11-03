@@ -1,7 +1,7 @@
 // A page's share image (og:image, twitter:image): its own image when it has one, else its hero drawn by
 // app/og/[...path]/route.js. The site's old generic share image counts as none.
 
-const SITE = 'https://viasocket.com'; // pragma: allowlist secret
+const SITE = 'https://viasocket.com';
 const GENERIC = 'https://files.msg91.com/342616/wnitwkyk';
 
 /** The hero image's URL for the page at `path` ('/pricing', '/mcp/slack'). */

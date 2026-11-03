@@ -1,7 +1,7 @@
 ---
-covers: ["src/**", "public/**", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/**", "public/**", "parked/llms.txt", "build-utilities/**", "next.config.js", "tailwind.config.js", "jsconfig.json"]
+verified_at: d8f8d571
+verified_on: 2026-10-31
 ---
 # 08 Folder Structure
 
@@ -18,6 +18,8 @@ viasocket/
 ├── build-utilities/
 │   └── generate-robots-txt.js   # prebuild: writes untracked public/robots.txt
 ├── _posts/blog/*.mdx         # legacy Decap CMS posts; nothing reads them (C-02)
+├── parked/
+│   └── llms.txt              # previous /llms.txt link directory; kept in git, not served
 ├── public/
 │   ├── new-home/             # THE HOMEPAGE "/": index.html, styles.css, main.js, assets/
 │   ├── assets/               # images for React pages (bg-img, brand, icons, img, index, shared)
@@ -50,7 +52,7 @@ viasocket/
     │   ├── footer/, faqSection/, metaHeadComp/, headComp/, pricing/, mcpComps/, breadcrumb/ …
     │   └── uiComponents/buttons.js   # LinkButton / LinkText
     ├── utils/                # axiosCalls.js (HTTP layer), getData.js (table getters), UTM,
-    │                         #   redirect, tracking and slug-parsing helpers
+    │                         #   redirect, tracking, mwExperiment.js, and slug-parsing helpers
     ├── const/                # tables.js (table ids), fields.js (column lists), abTest.js, integrations.js
     ├── hooks/                # useTemplateIds.js, useTemplateFilters.js
     ├── data/categories.json  # static category list for the legacy integrations search
@@ -73,11 +75,13 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | Component shared across routes | `src/app/components/<area>/` (for example `src/app/components/SecuritySection.js`, `src/app/components/blog/BlogGrid.js`, `src/app/components/home/ShowBadges.js`) | Inferred: most components added since the App Router migration live here. Small generic UI goes in `src/components/uiComponents/`. Edit the existing legacy components in `src/components/` in place, and check the catalog in [DESIGN](DESIGN.md#reusable-component-catalog) before adding a duplicate. |
 | Homepage-design page or piece | `src/components/IntegrationsComp/addToProduct/` | Only for pages in that design. Its shared `copy.js` and SCSS module are an exception to AGENTS rule 14, so don't copy the pattern elsewhere (U-07). |
 | `/developers` piece | `src/app/developers/**` | No `@/` imports, only its own tokens and copy ([DESIGN](DESIGN.md)). |
-| Homepage (`/`) change or asset | `public/new-home/index.html`, `styles.css`, `main.js`, `public/new-home/assets/` | Never `src/app/page.js` (AGENTS rule 3). Reference assets as `/new-home/assets/…`, and bump the `?v=` query on `styles.css`/`main.js` after editing them ([14-performance](14-performance.md#rendering)). |
+| Homepage (`/`) change or asset | `public/new-home/index.html`, `styles.css`, `main.js`, `public/new-home/assets/` | Never `src/app/page.js` (AGENTS rule 3). Reference assets as `/new-home/assets/…`, and bump the `?v=` query on `styles.css`/`main.js` after editing them ([14-performance](14-performance.md#rendering)). The `viasocket-site` export must keep the `/home-ab.js` script tag. |
+| Homepage version B | `public/home-b/index.html`, `public/home-ab.js` | Homepage only. `/home-b` rewrites to the file. Do not apply this layout to other routes ([01-homepage](modules/01-homepage.md)). |
 | Image for a React page | `public/assets/<kind>/` | `next/image` does not optimize, so compress the file first ([14-performance](14-performance.md#rendering)). |
-| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds only `/home`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds `/home` and the crawler redirect from `/home-b`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
+| Middleware experiment client | `src/utils/mwExperiment.js` | One module. A page imports `mwVariant` and `mwSend`. Do not copy the snippet into a layout or into `public/new-home/`, and do not send an event until a page runs an experiment. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments). |
 | Styles | Tailwind utilities, with tokens and keyframes in `tailwind.config.js` | AGENTS rule 14. `src/scss/` is legacy, so add nothing there unless Tailwind cannot do it. |
 | Knowledge | the doc that owns the concern ([docs/README](README.md) has the map) | Update it in the same change, and bump the doc's frontmatter commit and date. |
 

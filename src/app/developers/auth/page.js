@@ -19,7 +19,7 @@ export async function generateMetadata() {
     return {
         title,
         description,
-        openGraph: { title, description, url: 'https://viasocket.com/developers/auth', siteName: 'viaSocket', type: 'website', images: ogImages('/developers/auth') }, // pragma: allowlist secret
+        openGraph: { title, description, url: 'https://viasocket.com/developers/auth', siteName: 'viaSocket', type: 'website', images: ogImages('/developers/auth') },
         twitter: { card: 'summary_large_image', title, description, images: twitterImages('/developers/auth') },
     };
 }

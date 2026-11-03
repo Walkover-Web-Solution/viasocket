@@ -11,7 +11,7 @@ export const runtime = 'edge';
 // /features/{slug}: the new feature pages (featurePages.js) first; any other slug still gets the old
 // feature page from the database until it is redirected.
 const newFeature = (feature) => (feature.length === 1 && featureBySlug(feature[0]) && featurePage(feature[0]) ? feature[0] : null);
-const pageUrl = (slug) => `https://viasocket.com/features/${slug}`; // pragma: allowlist secret
+const pageUrl = (slug) => `https://viasocket.com/features/${slug}`;
 
 function newFeatureMetadata(slug) {
     const { metaTitle: title, metaDesc: description } = featurePage(slug);

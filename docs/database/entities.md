@@ -1,7 +1,7 @@
 ---
 covers: ["src/const/tables.js", "src/const/fields.js", "src/utils/getData.js", "src/utils/axiosCalls.js", "src/utils/abTestVisitor.js", "src/app/lib/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Database — table-api entities
 
@@ -11,7 +11,7 @@ verified_on: 2026-10-22
 All tables live in table-api.viasocket.com, in three databases: **content** (`65d2ed33fa9d1a94a5224235`, every constant in `src/const/tables.js` except `ABTESTCOUNT`, plus four tables addressed by literal id), **blog** (`66029bf861a15927654de175`) and **A/B tracking** (`65c4c053a3fad7804af5bba8`). Purposes below are inferred from table and field names and from the loaders that call them; the table service is the only authority on actual column types.
 
 **Connection:** `NEXT_PUBLIC_DB_BASE_URL` + `NEXT_PUBLIC_DB_KEY` / `NEXT_PUBLIC_BLOG_DB_KEY` / `NEXT_PUBLIC_DB_KEY_ABTEST` → `src/utils/axiosCalls.js` (via `src/utils/getData.js` for content tables)
-**Access posture:** content and blog read-only; A/B table GET/POST/PATCH from `POST /api/track-variant` only, currently short-circuited ([OPEN_QUESTIONS T-01](../OPEN_QUESTIONS.md)). No DELETE exists.
+**Access posture:** content and blog read-only; A/B table GET/POST/PATCH from `POST /api/track-variant` only, and only for a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. No DELETE exists.
 
 To add a table: constant in `src/const/tables.js`, `*_FIELDS` in `src/const/fields.js`, wrapper in `src/utils/getData.js` (`getDataFromTable(TABLE, handleFieldsFilter(fields, filter), pageUrl)` → `data.data.rows`), call from a loader in `src/app/lib/`, then add a row here.
 
@@ -83,7 +83,7 @@ To add a table: constant in `src/const/tables.js`, `*_FIELDS` in `src/const/fiel
 | `revisit_count` | number | `view_count - 1`, min 0; `0` on merged rows |
 | `environment` | `production` \| `test` \| `local` | From the route's `getEnvironment`; kept from the canonical row on update |
 | `utmdata` | JSON string | First-touch UTM object |
-| `signup` | JSON string \| null | Signup *intent*: `signup_clicks`, `signup_page_views`, `login_clicks`, `variant`, `last_source`, journey. Null until any signup click or `/signup` view |
+| `signup` | JSON string \| null | Signup intent plus `completed_signups` (`count`, `first_at`, `last_at`, `last_variant`) when `/signup` saw a registration response. Also `signup_clicks`, `signup_page_views`, `login_clicks`, `variant`, `last_source`, journey. Null until a signup click, a `/signup` view, or a completion |
 | `timestamp` | ISO string | Time of this write |
 | `click_data` | JSON array | Last 100 click events (`MAX_CLICK_EVENTS`) |
 | `page_data` | JSON array | Last 100 page events (`MAX_PAGE_EVENTS`) |
@@ -106,7 +106,8 @@ Profile JSON in `name` (`src/utils/abTestVisitor.js:emptyProfile`, minus `clicks
   visits, visitSessionId, visitAt,                           // source of view_count / revisit_count
   homeSessions, homeSessionId, homeSessionAt,                // homepage-only A/B figure
   firstUrl, lastUrl, referrer, lastAction, lastActionAt, lastVisitAt,
-  signupClicks: { count, ... }, loginClicks: { count, ... }
+  signupClicks: { count, ... }, loginClicks: { count, ... },
+  signupCompletions: { count, firstAt, lastAt, lastVariant }
 }
 ```
 Rows written by older tracker versions (no `profileVersion`) are converted by `readProfile` and folded in by `absorbRow`, at most `MAX_MERGES_PER_REQUEST` (10) per request.
@@ -114,8 +115,8 @@ Rows written by older tracker versions (no `profileVersion`) are converted by `r
 ---
 
 ## Cross-System References
-- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it while the lookup ignores `environment` ([OPEN_QUESTIONS T-02](../OPEN_QUESTIONS.md)).
+- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it. The lookup also filters `environment`, which is what keeps a test visit off a production row. Homepage version B is a `page_data` event with `path` `/home-b`.
 - **`mergedInto` → `rowid`.** A merged row points at the surviving row inside its `name` JSON; not a foreign key.
-- **`utm_source` ↔ MSG91 `state`.** `utmdata` / `firstUtm` record what the visitor arrived with; the same `utmData` cookie is what `setUtmSource()` passes to MSG91 as `state` at signup. Joining a tracking row to a signup is only possible through that value; no id crosses over ([third-party-services.md](../current-infrastructure/third-party-services.md)).
+- **`visitor_id` ↔ MSG91 `state`.** `buildSignupState()` puts the `visitor_id` cookie and the last signup button (`cta`) into the `state` string along with the `utmData` cookie, so a signed-up user can be joined to this row. `utmdata` / `firstUtm` still record the UTMs on the tracking event itself ([third-party-services.md](../current-infrastructure/third-party-services.md)).
 - **`appslugname` ↔ plug service.** `DOFOLLOWLINK.appslugname`, `USECASES.slugname`, `SINGLEAPPINTEGRATIONDATA.app_slug`, `MCP.slug_names` and video/blog `tags` hold plug service app slugs; `CATEGORY.slug` matches plug service categories ([plug-service.md](../current-infrastructure/plug-service.md)). A renamed slug in the plug service silently orphans these rows.
 - **Page path ↔ meta / FAQ rows.** Meta rows are matched by `name` (`'/'`, `'/pricing'`), FAQ rows by `page` (`'/index'` for the homepage loader). Renaming a route needs the table rows renamed too.
