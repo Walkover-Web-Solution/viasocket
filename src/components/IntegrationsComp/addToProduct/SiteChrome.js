@@ -3,29 +3,37 @@ import s from './addToProduct.module.scss';
 import { FOOTER_GROUPS, NAV, START_URL } from './copy';
 import { Logo, SOCIAL } from './icons';
 import { CopyPromptButton } from './CopyPrompt';
+import AnnouncementBar from '@/app/components/navbar/AnnouncementBar';
+import { getAnnouncements } from '@/app/lib/admin-announcements';
 
 // The homepage's header and footer, shared by the integration pages that use its design
 // (/integrations, /integrations/category/*, /integrations/{app}). Render inside CopyPromptProvider.
 
-export function SiteHeader() {
+export async function SiteHeader() {
+    // The announcement bar managed in the admin panel (Pages → Announcements); nothing when none
+    // fits the page or the admin can't be reached.
+    const announcements = await getAnnouncements();
     return (
-        <header className={s.top}>
-            <div className={s.wrap}>
-                <Link className={s.logo} href="/" aria-label="viaSocket home">
-                    <Logo height={22} />
-                </Link>
-                <nav className={s['top-nav']} aria-label="Main">
-                    {NAV.map(([label, href]) => (
-                        <a key={label} href={href} {...(href.startsWith('https://cal.id') && { target: '_blank', rel: 'noopener' })}>
-                            {label}
-                        </a>
-                    ))}
-                </nav>
-                <a className={s.start} href={START_URL}>
-                    Start free <span aria-hidden="true">→</span>
-                </a>
-            </div>
-        </header>
+        <>
+            {announcements && <AnnouncementBar announcements={announcements} className={s.ann} />}
+            <header className={s.top}>
+                <div className={s.wrap}>
+                    <Link className={s.logo} href="/" aria-label="viaSocket home">
+                        <Logo height={22} />
+                    </Link>
+                    <nav className={s['top-nav']} aria-label="Main">
+                        {NAV.map(([label, href]) => (
+                            <a key={label} href={href} {...(href.startsWith('https://cal.id') && { target: '_blank', rel: 'noopener' })}>
+                                {label}
+                            </a>
+                        ))}
+                    </nav>
+                    <a className={s.start} href={START_URL}>
+                        Start free <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </header>
+        </>
     );
 }
 
