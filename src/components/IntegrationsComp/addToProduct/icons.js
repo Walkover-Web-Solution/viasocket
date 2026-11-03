@@ -1,4 +1,4 @@
-// Line icons used on the single-app integration page and /features (stroke follows currentColor).
+// Line icons used on the single-app integration page and /features (stroke follows currentColor, or a gradient).
 
 const PATHS = {
     key: (
@@ -84,9 +84,20 @@ const PATHS = {
     ),
 };
 
-export function FeatureIcon({ name }) {
+/** `gradient`: stroke with a diagonal gradient whose stops read --ai-g1..3 (set on the AI tiles) instead of currentColor. */
+export function FeatureIcon({ name, gradient }) {
+    const id = `fi-grad-${name}`;
     return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true" style={gradient ? { stroke: `url(#${id})` } : undefined}>
+            {gradient && (
+                <defs>
+                    <linearGradient id={id} gradientUnits="userSpaceOnUse" x1="2" y1="2" x2="22" y2="22">
+                        <stop offset="0" style={{ stopColor: 'var(--ai-g1)' }} />
+                        <stop offset=".5" style={{ stopColor: 'var(--ai-g2)' }} />
+                        <stop offset="1" style={{ stopColor: 'var(--ai-g3)' }} />
+                    </linearGradient>
+                </defs>
+            )}
             {PATHS[name]}
         </svg>
     );

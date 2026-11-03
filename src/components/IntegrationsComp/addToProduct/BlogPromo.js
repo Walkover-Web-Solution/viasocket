@@ -6,7 +6,7 @@ import b from './blogs.module.scss';
 import { BLOGS_COPY as C, START_URL } from './copy';
 
 // A "Start free" card that slides in on the right, centred in the screen (at the bottom on phones),
-// once the reader is about a third of the way down a post. It doesn't block the page. Closing it (× or Esc) keeps it
+// once the reader is about a third of the way down /blogs or a post. It doesn't block the page. Closing it (× or Esc) keeps it
 // closed for the rest of the visit; that's remembered in sessionStorage when the browser allows it.
 
 const DISMISS_KEY = 'vs-blog-promo-dismissed';

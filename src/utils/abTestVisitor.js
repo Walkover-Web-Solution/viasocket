@@ -22,7 +22,7 @@ export const PROFILE_VERSION = 2;
 // second look at the page.
 export const VIEW_DEDUPE_WINDOW_MS = 10_000;
 
-const HOME_PATHS = new Set(['/', '/home']);
+const HOME_PATHS = new Set(['/', '/home', '/home-b']);
 
 // A visitor's history is folded in on their next visit, and each fold costs one
 // request, so a long legacy history is absorbed over several visits rather than
@@ -45,8 +45,8 @@ export const CLICK_DEDUPE_WINDOW_MS = 400;
 // is a revisit, which is what revisit_count counts.
 export const SESSION_IDLE_MS = 30 * 60 * 1000;
 
-// Signup completion happens inside the MSG91 widget, off this site, so a click on
-// a signup button is recorded as intent and never as a completed signup.
+// A signup button is intent. A registration this page actually saw is a separate
+// action, `signup_completed`, counted on its own below.
 const SIGNUP_ACTIONS = new Set(['signup_click']);
 const LOGIN_ACTIONS = new Set(['login_click']);
 
@@ -126,9 +126,33 @@ export const getPageKey = (pageUrl) => {
     }
 };
 
-export const isHomePath = (path) => HOME_PATHS.has(path);
+export const isHomePath = (path) => {
+    if (!path) return false;
+    const normalized = path.length > 1 ? path.replace(/\/+$/, '') : path;
+    return HOME_PATHS.has(normalized);
+};
 
-const isSignupPath = (path) => path === '/signup';
+export const isSignupPath = (path) => {
+    if (!path) return false;
+    const normalized = path.length > 1 ? path.replace(/\/+$/, '') : path;
+    return normalized === '/signup';
+};
+
+/**
+ * The referrer, only when it is another site.
+ *
+ * Every internal link reloads the page, so from the second page on a visitor who
+ * came direct reports our own domain as their referrer — which is not where they
+ * came from.
+ */
+const externalReferrer = (referrer) => {
+    try {
+        const host = new URL(referrer).hostname;
+        return host === 'viasocket.com' || host.endsWith('.viasocket.com') || host === 'localhost' ? '' : referrer;
+    } catch {
+        return '';
+    }
+};
 
 /** Whether any utm_* parameter at all was present. */
 const hasAnyUtm = (utmData) => Boolean(utmData && Object.keys(utmData).length);
@@ -231,6 +255,7 @@ export const readProfile = (row) => {
         referrer: '',
         signupClicks: { count: 0 },
         loginClicks: { count: 0 },
+        signupCompletions: { count: 0 },
         profileVersion: PROFILE_VERSION,
         visitorId: stored.visitorId || '',
         firstSeen: row?.timestamp || row?.createdat || '',
@@ -370,6 +395,7 @@ const emptyProfile = (visitorId, nowIso) => ({
     lastVisitAt: '',
     signupClicks: { count: 0 },
     loginClicks: { count: 0 },
+    signupCompletions: { count: 0 },
 });
 
 /**
@@ -439,6 +465,12 @@ export const absorbRow = (profile, row) => {
             lastAt: profile.signupClicks?.lastAt || absorbed.signupClicks?.lastAt || '',
             last: profile.signupClicks?.last || absorbed.signupClicks?.last || null,
         },
+        signupCompletions: {
+            count: toInt(profile.signupCompletions?.count) + toInt(absorbed.signupCompletions?.count),
+            firstAt: profile.signupCompletions?.firstAt || absorbed.signupCompletions?.firstAt || '',
+            lastAt: profile.signupCompletions?.lastAt || absorbed.signupCompletions?.lastAt || '',
+            lastVariant: profile.signupCompletions?.lastVariant || absorbed.signupCompletions?.lastVariant || '',
+        },
         loginClicks: {
             count: toInt(profile.loginClicks?.count) + toInt(absorbed.loginClicks?.count),
             firstAt: profile.loginClicks?.firstAt || absorbed.loginClicks?.firstAt || '',
@@ -493,7 +525,7 @@ export const applyEvent = (profile, event) => {
         lastUtm: Object.keys(utmData || {}).length ? utmData : profile.lastUtm,
         sessionId: sessionId || profile.sessionId || '',
         firstUrl: profile.firstUrl || pageUrl || '',
-        referrer: profile.referrer || referrer || '',
+        referrer: profile.referrer || externalReferrer(referrer),
     };
 
     next.firstUtm = resolveFirstUtm(next.firstUtm, utmData);
@@ -591,9 +623,9 @@ const composeAction = (element, action) => {
  *
  * The event is appended to the click history — never written over it — and the
  * three latest-action columns are refreshed from it. A signup or login press is
- * counted separately, because the two must not be read as each other, and neither
- * is treated as a completed signup: that happens in the MSG91 widget, off this
- * site, where this code cannot see it.
+ * counted separately, because the two must not be read as each other. A
+ * completed account from the signup page is `signup_completed`, and only the
+ * registration response this page can see produces it.
  */
 const applyClick = (profile, event) => {
     const { pageUrl, variant, utmData, nowIso, sessionId, referrer, interaction } = event;
@@ -633,6 +665,15 @@ const applyClick = (profile, event) => {
             firstAt: profile.signupClicks?.firstAt || nowIso,
             lastAt: nowIso,
             last: record,
+        };
+    }
+
+    if (action === 'signup_completed') {
+        next.signupCompletions = {
+            count: toInt(profile.signupCompletions?.count) + 1,
+            firstAt: profile.signupCompletions?.firstAt || nowIso,
+            lastAt: nowIso,
+            lastVariant: variant,
         };
     }
 
@@ -697,20 +738,17 @@ const buildJourney = (profile) => {
 /**
  * What the `signup` column should hold.
  *
- * Signup itself is completed by the MSG91 widget, off this site, so what can be
- * observed here is the intent: reaching /signup, how often, which button sent
- * them, and what they did on the way. Left null until that happens so the column
- * reads as "has not started".
+ * Intent (a signup press, or reaching /signup) and a completed registration
+ * this page actually saw are both kept. Left null until either happens.
  */
 const buildSignup = (profile) => {
     const clicks = toInt(profile.signupClicks?.count);
     const pageViews = toInt(profile.signupViews);
+    const completed = toInt(profile.signupCompletions?.count);
 
-    if (!clicks && !pageViews) return null;
+    if (!clicks && !pageViews && !completed) return null;
 
     return JSON.stringify({
-        // Intent, not completion: pressing signup and reaching /signup are both
-        // observable here, finishing the signup is not.
         signup_clicks: {
             count: clicks,
             first_at: profile.signupClicks?.firstAt || '',
@@ -722,6 +760,12 @@ const buildSignup = (profile) => {
             // When /signup was last reached — not when the visitor was last seen
             // anywhere, which is a different question with a different answer.
             last_at: pageViews ? profile.signupViewAt || '' : '',
+        },
+        completed_signups: {
+            count: completed,
+            first_at: profile.signupCompletions?.firstAt || '',
+            last_at: profile.signupCompletions?.lastAt || '',
+            last_variant: profile.signupCompletions?.lastVariant || '',
         },
         login_clicks: {
             count: toInt(profile.loginClicks?.count),

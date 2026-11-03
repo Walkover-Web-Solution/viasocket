@@ -8,8 +8,13 @@ const SITE_URL = 'https://viasocket.com';
 // Dynamic pages (integrations, departments, mcp, automations, find-apps,
 // features) are covered by the backend's own sitemap instead — see
 // build-utilities/generate-robots-txt.js and src/app/robots.txt/route.js.
-// /embed and bare /mcp are left out too — both 301 elsewhere (next.config.js
-// redirects), so they're not real destinations for crawlers to index.
+// Bare /embed and bare /mcp are left out. Middleware redirects them before a
+// page renders (live admin list: /embed → / with 301, /mcp → mushrooms with
+// 308; src/data/redirects.json still sends /embed to /developers with 308 if
+// the admin cannot be reached). They are not indexable destinations.
+// /setup-prompt is left out on purpose. It is noindex and linked only from
+// SDK emails (src/app/setup-prompt/page.js). Do not add it here, and do not
+// Disallow it in robots.txt: crawlers must fetch the page to see the noindex.
 const STATIC_ROUTES = [
     '/',
     '/agency-partner',

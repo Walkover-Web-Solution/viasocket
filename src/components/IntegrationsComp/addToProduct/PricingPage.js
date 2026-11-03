@@ -4,7 +4,8 @@ import { PRICING_COPY as C } from './copy';
 import { Faq, Head, PageFrame } from './PricingParts';
 import PricingPlans, { PlanFinder } from './PricingPlans';
 
-// /pricing in the homepage design: the plans, a plan finder and the pricing FAQs.
+// /pricing in the homepage design: the Free, Pro, Business and Enterprise plans, what every plan gets, the plan
+// finder, links to /features and /use-cases, and the pricing FAQs.
 
 function Calculator() {
     return (
@@ -12,7 +13,6 @@ function Calculator() {
             <div className={s.wrap}>
                 <Head title={C.calcTitle} lead={C.calcLead} id="h-calc" />
                 <PlanFinder />
-                <p className={p.fine}>{C.calcNote}</p>
             </div>
         </section>
     );
@@ -39,12 +39,31 @@ export default function PricingPage() {
                                 )
                             )}
                         </p>
-                        <p>{C.taskNote}</p>
                     </div>
                 </div>
             </section>
 
             <Calculator />
+
+            <section className={s.sec} aria-labelledby="h-explore">
+                <div className={s.wrap}>
+                    <Head title={C.exploreTitle} id="h-explore" />
+                    <ul className={p.explore}>
+                        {C.explore.map(([title, text, href, cta]) => (
+                            <li key={href}>
+                                <a href={href}>
+                                    <h3>{title}</h3>
+                                    <p>{text}</p>
+                                    <span className={p['explore-go']}>
+                                        {cta} <span aria-hidden="true">→</span>
+                                    </span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </section>
+
             <Faq eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
         </PageFrame>
     );

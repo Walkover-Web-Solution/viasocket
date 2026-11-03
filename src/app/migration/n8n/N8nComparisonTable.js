@@ -1,58 +1,44 @@
+// "2,300+" also appears in N8nHero and N8nDifference.
 const comparisonRows = [
     {
-        feature: 'Entry cost',
-        n8n: 'Self-hosted: free software, your server, your hours. Cloud: €24/mo for 2,500 executions',
-        viasocket: 'Free plan: 10,000 tasks + 500 AI credits/month',
+        feature: 'Self-hosted deployment',
+        n8n: 'Core feature',
+        viasocket: 'Not applicable',
     },
     {
-        feature: 'Maintenance',
-        n8n: 'Updates, credentials, monitoring: yours',
-        viasocket: 'Zero. Managed, 99.99% uptime SLA',
+        feature: 'Internal workflow automation',
+        n8n: 'Strong',
+        viasocket: 'Available via Automations',
     },
     {
-        feature: 'Integrations',
-        n8n: '1,990 integrations, plus community nodes',
-        viasocket: '2,200+ apps, maintained for you',
+        feature: 'Managed OAuth per customer',
+        n8n: 'Not available',
+        viasocket: 'Core product',
     },
     {
-        feature: 'Code nodes and expressions',
-        n8n: 'Yes',
-        viasocket: 'Custom JavaScript transforms inside any workflow',
+        feature: 'Embedded workflow UI for your users',
+        n8n: 'Not designed for this',
+        viasocket: 'Embed / App Integration',
     },
     {
-        feature: 'Webhook triggers',
-        n8n: 'Yes',
-        viasocket: 'Webhooks, native',
+        feature: 'AI agent tool-calling on 2,300+ apps',
+        n8n: 'Not available',
+        viasocket: 'Actions for AI',
     },
     {
-        feature: 'Conditional branches and switches',
-        n8n: 'Yes',
-        viasocket: 'Conditional logic built in',
+        feature: 'Pre-built integrations (no build required)',
+        n8n: 'Partial (community nodes)',
+        viasocket: '2,300+ maintained',
     },
     {
-        feature: 'Wait / approval patterns',
-        n8n: 'Buildable',
-        viasocket: 'Human Intervention steps: pause for email approval, resume, full audit trail',
+        feature: 'Multi-tenant credential isolation',
+        n8n: 'Not designed for this',
+        viasocket: 'Built in',
     },
     {
-        feature: 'AI in workflows',
-        n8n: 'Yes',
-        viasocket: 'AI agents that analyze, decide and act. 500 AI credits free monthly',
-    },
-    {
-        feature: 'Data storage',
-        n8n: 'Workarounds needed',
-        viasocket: 'Tables built into your workflows',
-    },
-    {
-        feature: 'Support',
-        n8n: 'Community forum; support on paid Cloud',
-        viasocket: 'Real humans on every plan',
-    },
-    {
-        feature: 'Security',
-        n8n: 'Depends on your setup',
-        viasocket: 'SOC 2 Type II, ISO, GDPR & CCPA',
+        feature: 'White-label experience',
+        n8n: 'No',
+        viasocket: 'Yes',
     },
 ];
 
@@ -60,10 +46,9 @@ export default function N8nComparisonTable() {
     return (
         <div className="bg-[#F9F6F1]">
             <div className="container py-12 lg:py-16">
-                <h2 className="h2 mb-2 text-center lg:text-left">Everything you had on n8n, and then some.</h2>
-                <p className="text-base md:text-lg text-gray-500 mb-6 lg:mb-8 text-center lg:text-left">
-                    Every pattern you rely on has a native equivalent, so nothing has to be rebuilt from scratch.
-                </p>
+                <h2 className="h2 mb-6 lg:mb-8 text-center lg:text-left">
+                    Capability Comparison: viaSocket vs n8n for SaaS Integration Delivery
+                </h2>
 
                 <div className="border border-black rounded-2xl overflow-hidden hidden lg:block">
                     <div className="grid grid-cols-[0.8fr_1fr_1.5fr] bg-black text-white text-xs font-semibold uppercase tracking-wider">

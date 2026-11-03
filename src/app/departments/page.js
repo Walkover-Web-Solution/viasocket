@@ -33,6 +33,7 @@ import {
 import IntelligentAutomationsSectionOptimized from '../components/home/IntelligentAutomationsSectionOptimized';
 import Image from 'next/image';
 import AutomationIdeasSection from '../components/home/AutomationIdeasSection';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -67,13 +68,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'Departments - viaSocket',
             description: metaData?.description || 'Automation for every team - viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/departments', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/departments', metaData?.image),
         },
     };
 }

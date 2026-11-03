@@ -13,6 +13,7 @@ import ZapierUseCases from './ZapierUseCases';
 import ZapierCTABanner from './ZapierCTABanner';
 import ReviewIframeOptimized from '@/app/components/home/ReviewIframeOptimized';
 import SecuritySection from '@/app/components/SecuritySection';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -30,20 +31,13 @@ export async function generateMetadata() {
                 "Zapier's free plan gives 100 tasks. viaSocket's gives 10,000, plus 500 AI credits. Export your Zaps as JSON, paste into our AI, and switch with free expert help.",
             url: 'https://viasocket.com/migration/zapier',
             type: 'website',
-            images: [
-                {
-                    url: 'https://files.msg91.com/342616/wnitwkyk',
-                    width: 1200,
-                    height: 630,
-                    alt: 'viaSocket',
-                },
-            ],
+            images: ogImages('/migration/zapier'),
         },
         twitter: {
             card: 'summary_large_image',
             title: 'Zapier Alternative: 100x the Free Tasks + Free Migration | viaSocket',
             description: "Zapier's free plan gives 100 tasks. viaSocket's gives 10,000, plus 500 AI credits.",
-            images: ['https://files.msg91.com/342616/wnitwkyk'],
+            images: twitterImages('/migration/zapier'),
         },
     };
 }

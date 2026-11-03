@@ -12,9 +12,8 @@
 /* Newest post, full width */
 .featured { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); border: 1px solid var(--line); background: var(--s1); text-decoration: none; color: inherit; transition: background-color .15s; }
 .featured:hover { background: var(--s2); }
-// Title on the left, image on the right (the image comes first in the markup, so it stays on top on phones)
-.featured > img { order: 2; display: block; width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-left: 1px solid var(--line); background: var(--s2); }
-.featured.no-img { grid-template-columns: minmax(0, 1fr); }
+// Title on the left, cover on the right (the cover comes first in the markup, so it stays on top on phones)
+.f-cover { order: 2; display: block; width: 100%; height: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-left: 1px solid var(--line); background: var(--s2); }
 .featured-body { display: flex; flex-direction: column; gap: 14px; padding: clamp(24px, 3vw, 40px); min-width: 0; }
 .featured h2 { font-size: clamp(26px, 2.6vw, 36px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.12; max-width: 24ch; }
 .featured p { font-size: 16px; color: var(--ink-2); max-width: 56ch; }
@@ -25,8 +24,20 @@
 .author img { flex: none; width: 24px; height: 24px; border-radius: 50%; object-fit: cover; background: var(--s2); }
 @media (max-width: 900px) {
   .featured { grid-template-columns: minmax(0, 1fr); }
-  .featured > img { order: 0; height: auto; border-left: 0; border-bottom: 1px solid var(--line); }
+  .f-cover { order: 0; height: auto; border-left: 0; border-bottom: 1px solid var(--line); }
 }
+
+// The drawn cover for a post without an image (BlogsPage.js PostCover): the image's 16:9 slot with the
+// viaSocket mark at the top, a dot grid fading in from the right, and the post's topic at the bottom.
+// It sits on the card's own background with no line under it, so cover and text read as one card.
+// (.ph.ph: to win over the slot's own display, background and border, from the other module)
+.ph.ph { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 12px; position: relative; overflow: hidden; padding: clamp(16px, 2vw, 24px) clamp(20px, 2vw, 24px) 0;
+  background: transparent; border: 0; }
+.ph::before { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(color-mix(in srgb, var(--ink) 22%, transparent) 1px, transparent 1.4px); background-size: 14px 14px;
+  -webkit-mask-image: linear-gradient(105deg, transparent 25%, #000 85%); mask-image: linear-gradient(105deg, transparent 25%, #000 85%); }
+.ph-mark { position: relative; width: 26px; height: 26px; }
+.ph-tag { position: relative; max-width: 20ch; font-size: clamp(18px, 1.6vw, 23px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; color: var(--ink);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 
 /* No posts yet */
 .empty { border: 1px dashed var(--line-2); padding: clamp(32px, 5vw, 64px); display: grid; gap: 12px; justify-items: start; }

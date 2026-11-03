@@ -1,4 +1,5 @@
 import { getAutomationSlugPageData } from '../../lib/automation-data';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export async function generateMetadata({ params }) {
     const paramsData = await params;
@@ -11,14 +12,14 @@ export async function generateMetadata({ params }) {
         openGraph: {
             title: metaData?.title || 'viaSocket Template',
             description: metaData?.description || 'Discover powerful automation templates on viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages(`/automations/${(paramsData.slug || []).join('/')}`, metaData?.image),
             url: metaData?.url,
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages(`/automations/${(paramsData.slug || []).join('/')}`, metaData?.image),
         },
     };
 }

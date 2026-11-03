@@ -5,6 +5,7 @@ import b from './blogs.module.scss';
 import { BASE_PROMPT, BLOGS_COPY as C } from './copy';
 import { CopyPromptProvider } from './CopyPrompt';
 import { SiteFooter, SiteHeader } from './SiteChrome';
+import BlogPromo from './BlogPromo';
 import { formatBlogDate } from '@/app/lib/blogs';
 
 // /blogs and /blogs/{slug} in the homepage design: the homepage header and footer, its tokens and square cards.
@@ -39,11 +40,26 @@ function Byline({ post }) {
     );
 }
 
-/** A post in the grid. */
+/**
+ * The post's cover: its image, or when it has none a drawn one (the viaSocket mark, a dot grid and the
+ * post's topic) of the same size, so a row of cards lines up however many of them have an image.
+ */
+function PostCover({ post, className, lazy = true }) {
+    if (post.image) return <img className={className} src={post.image} alt="" {...(lazy && { loading: 'lazy' })} />;
+    const topic = post.category?.split(' — ').pop() || 'viaSocket Blog';
+    return (
+        <span className={`${className} ${b.ph}`} aria-hidden="true">
+            <img className={b['ph-mark']} src="/new-home/assets/favicon.svg" alt="" width={26} height={26} />
+            <span className={b['ph-tag']}>{topic}</span>
+        </span>
+    );
+}
+
+/** A post in a grid: on /blogs, and in "Learn more" on other pages. */
 export function PostCard({ post }) {
     return (
         <a className={s.post} href={`/blogs/${post.slug}`}>
-            {post.image && <img className={s['post-img']} src={post.image} alt="" loading="lazy" />}
+            <PostCover post={post} className={s['post-img']} />
             <span className={s['post-body']}>
                 <Meta post={post} />
                 <h3>{post.title}</h3>
@@ -58,8 +74,8 @@ export function PostCard({ post }) {
 /** The newest post, across the full width: text beside its cover. */
 function Featured({ post }) {
     return (
-        <a className={`${b.featured} ${post.image ? '' : b['no-img']}`} href={`/blogs/${post.slug}`}>
-            {post.image && <img src={post.image} alt="" />}
+        <a className={b.featured} href={`/blogs/${post.slug}`}>
+            <PostCover post={post} className={b['f-cover']} lazy={false} />
             <span className={b['featured-body']}>
                 <span className={s.eyebrow}>Latest</span>
                 <h2>{post.title}</h2>
@@ -103,6 +119,7 @@ export default function BlogsPage({ posts }) {
                     )}
                 </div>
             </section>
+            <BlogPromo />
         </BlogFrame>
     );
 }

@@ -1,5 +1,6 @@
 import { getWorkflowAutomationIdeasPageData } from '../lib/data';
 import AutomationSuggestionsClient from '../components/workflow-automation-ideas/AutomationSuggestionsClient';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -13,13 +14,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/workflow-automation-ideas', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/workflow-automation-ideas', metaData?.image),
         },
     };
 }

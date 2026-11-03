@@ -16,6 +16,7 @@ import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
 import HowWebhookBecomes from './HowWebhookBecomes';
 import FaqSection from '@/components/faqSection/faqSection';
 import { getFaqData } from '@/utils/getFaqData';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -33,7 +34,7 @@ export async function generateMetadata() {
             description:
                 metaData?.description ||
                 ' Webhook-triggered workflow automation for SaaS products. POST an event, viaSocket fans it out across 2,500+ apps your users have connected. Per-user isolation, automatic retries, works with any backend.',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/embed/actions-via-webhook', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
@@ -41,7 +42,7 @@ export async function generateMetadata() {
             description:
                 metaData?.description ||
                 ' Webhook-triggered workflow automation for SaaS products. POST an event, viaSocket fans it out across 2,500+ apps your users have connected. Per-user isolation, automatic retries, works with any backend.',
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/embed/actions-via-webhook', metaData?.image),
         },
     };
 }

@@ -1,14 +1,14 @@
 ---
-covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/app/components/customLogin/**", "src/components/phoneInput/phoneInput.js", "src/app/providers.js", "public/new-home/assets/support.js", "public/new-home/index.html", "public/new-home/main.js", "src/app/layout.js", "src/components/headComp/headComp.js", "src/app/components/RedditPixel/**", "src/utils/axiosCalls.js", "src/utils/mwExperiment.js"]
+verified_at: 8772409a
+verified_on: 2026-11-02
 ---
 # Third-party services
 
 Every service outside the table API, plug service, flow webhooks and Cloudflare that the site loads or calls: the MSG91 signup widget, country lookup, chatbot, tags, and the external pages it fetches or links to.
 
 > [!WARNING]
-> **Signup happens inside MSG91, off this site.** The site's only handle on a signup is the `state` string it passes to the widget (`setUtmSource()`, built from the `utmData` cookie). Attribution that is not in `utmData` before the widget initialises is lost. Rules for that cookie: [CONTRACTS.md](../CONTRACTS.md#cookies).
+> **Signup happens inside MSG91, off this site.** The site's only handle on a signup is the `state` string it passes to the widget (`buildSignupState()`, built from the `utmData` cookie plus `visitor_id` and `cta`). Attribution that is not in `utmData` before the widget initialises is lost, apart from those two cookies. Rules for that cookie: [CONTRACTS.md](../CONTRACTS.md#cookies).
 
 ## Role
 Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), support chat (gtwy), marketing and conversion tags, client-story content (docstar), the Action Layer blog cards (viaSocket blog RSS), and outbound booking and payment links (cal.id, Stripe). None of them is called with a secret; none has a server-side fallback.
@@ -22,7 +22,7 @@ Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), 
 ## Entities / Tables / Endpoints
 | Name | Purpose |
 |---|---|
-| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: setUtmSource(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. Used by `src/app/signup/page.js`, `src/app/components/home/CTAButtons.js`, `src/app/migration/relay/RelaySignupCTA.js`. |
+| MSG91 proxy auth `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js` | Signup/login widget. `src/app/components/customLogin/CustomLoginOptimized.js` loads it once and calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: buildSignupState(), theme: 'light', success, failure, addInfo?: { redirect_path } })`; it renders into `<div id={NEXT_PUBLIC_REFERENCE_ID}>`. `success` only clears the loading skeleton. A new account this page can see is a 2xx POST to a URL containing `/c/register` whose body is not `hasError`; the component reports that once as `signup_completed`. Used by `src/app/signup/page.js`. `CTAButtons.js` and `RelaySignupCTA.js` only mention it in comments. |
 | `https://files.msg91.com/342616/wnitwkyk` | Default OG/Twitter image in page metadata (`src/app/layout.js`, `public/new-home/index.html` and others) |
 | ipapi.co `https://ipapi.co/json/` | `src/components/phoneInput/phoneInput.js` reads `country_code` to preselect the dial code; best effort, ignored if unknown |
 | gtwy chatbot `https://chatbot.gtwy.ai/chatbot.js` | Support chat. `src/app/providers.js` (React pages) and `public/new-home/assets/support.js` (`/`) inject it with a hardcoded `embedToken`, `bridgeName: 'viasocket_chat'` and a `threadId` kept in `localStorage.viasocket_chat_thread` for 1 h; the icon is hidden and `[data-chat]` links call `window.Chatbot.open()` on `/` |
@@ -38,6 +38,8 @@ Authentication UI (MSG91), visitor-country default for phone inputs (ipapi.co), 
 | cal.id `https://cal.id/team/viasocket/<event>`, `https://cal.id/forms/<id>` | "Book a demo" / "Talk to sales" links across nav, footer, campaign and developer pages (outbound only) |
 | Stripe Payment Links `https://buy.stripe.com/<id>` | Purchase buttons in `src/app/lifetime-deal/Pricing.js` and `src/components/agencyPartner/AgencyPricing.js` (outbound only; no Stripe SDK or webhook in this repo) |
 | thingsofbrand.com | App icon image CDN in static copy (`https://thingsofbrand.com/api/icon/<domain>`) |
+| Experiment events `POST https://cursor-slack-bot.embarko.app/repos/viasocket/events` | Append-only exposure and conversion events from `src/utils/mwExperiment.js`. The publishable key is in that file. No page calls it yet. Body and rules: [CONTRACTS](../CONTRACTS.md#middleware-experiments). |
+| YouTube thumbnail and nocookie embed | Homepage `#in-action` only. The poster image is `https://img.youtube.com/vi/GRzkVjW839A/maxresdefault.jpg` (fallback `hqdefault.jpg`). The click inserts `https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0`. No YouTube player script is loaded. |
 
 Tag ids, events and the environments each tag runs in: [CONTRACTS.md](../CONTRACTS.md#third-party-tags) (analytics home).
 
@@ -60,4 +62,4 @@ GET api.docstar.io/p/getSideBarData        -> { pages: {...} }
 | ipapi `fetch` | `country_code` | `PhoneInput` |
 
 ## Degradation
-MSG91 down: the signup box shows its skeleton and nothing else; there is no fallback link. ipapi down: the default country stays. gtwy down: `[data-chat]` links do nothing. Feed down: `sendErrorMessage`, no Action Layer cards. Tags failing to load have no visible effect. reCAPTCHA is not used anywhere (no form token, no server verification).
+MSG91 down: the signup box shows its skeleton and nothing else; there is no fallback link. ipapi down: the default country stays. gtwy down: `[data-chat]` links do nothing. Feed down: `sendErrorMessage`, no Action Layer cards. Tags failing to load have no visible effect. The experiment endpoint is fire-and-forget: a failed send sets a latch and later sends on that page are skipped, and the page never waits. YouTube thumbnail error: the poster swaps to `hqdefault.jpg`, and the play control still works on the dark frame if that fails too. The embed is not requested until the click. reCAPTCHA is not used anywhere (no form token, no server verification).
