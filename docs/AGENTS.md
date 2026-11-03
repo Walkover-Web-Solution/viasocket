@@ -1,7 +1,7 @@
 ---
 covers: ["src/utils/**", "src/const/**", "src/app/**/page.js", "src/app/lib/**", "src/middleware.js"]
-verified_at: PENDING
-verified_on: 2026-11-02
+verified_at: 9ec4868d
+verified_on: 2026-11-03
 ---
 # AI Agent Guidelines (viaSocket marketing site)
 
