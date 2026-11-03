@@ -24,6 +24,8 @@ Building OAuth yourself requires:
 
 viaSocket's managed OAuth layer moves all of this out of your codebase. You identify each user with a `unique_identifier` — a stable string from your own system — and viaSocket scopes all credential storage and retrieval to that identifier automatically.
 
+The license and engineering cost of [managed OAuth for SaaS integrations](/blogs/build-vs-buy-software) over three and five years, compared with buying a tool or building the flows yourself, is worked through in the cost model.
+
 ## Architecture Overview
 
 The integration layer has three components on your side:

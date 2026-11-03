@@ -119,6 +119,8 @@ Composio is optimized for AI/LLM developers; its SDK and documentation are orien
 
 ## Which Platform Fits Which Team
 
+If you are still choosing between integrating, buying, and building, [compare embedded iPaaS vendors](/blogs/build-vs-buy-software) against those other paths with a 3- and 5-year cost model.
+
 **Choose viaSocket if**: you want a single Integration Layer for both embedded iPaaS and AI agent tool-calling, need a public pricing starting point without a sales call, and want white-label MCP server support alongside traditional workflow embedding.
 
 If the choice is which MCP server to ship, read [how viaSocket compares to other embedded integration tools](/blogs/viasocket-mcp-vs-zapier-mcp) in the viaSocket MCP vs Zapier MCP comparison.

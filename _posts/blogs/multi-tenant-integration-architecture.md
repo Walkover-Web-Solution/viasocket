@@ -22,6 +22,8 @@ A single-tenant integration is straightforward: one set of credentials, one OAut
 
 Building all of this from scratch — per integration, per provider — is the main reason integration development is consistently underestimated.
 
+A 3- and 5-year cost model for owning this [multi-tenant integration architecture](/blogs/build-vs-buy-software), set next to buying or integrating, is in the build-versus-buy guide.
+
 ## The Core Pattern: Identifier-Scoped Credential Storage
 
 The foundation of any multi-tenant integration architecture is a stable, unique identifier per tenant that scopes all credential storage and retrieval.
