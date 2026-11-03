@@ -341,7 +341,7 @@ export const LETTER_COPY = {
 const SALES_URL = 'https://cal.id/team/viasocket/embed-viasocket';
 export const PRICING_COPY = {
     metaTitle: 'Pricing · viaSocket',
-    metaDesc: 'Start free with 100K tasks and 1,000 AI credits every month. For more, contact us for pricing tailored to your product and usage.',
+    metaDesc: 'Start free with 100K tasks and 1,000 AI credits a month. Pro is $19/mo and Business $99/mo at launch prices; Enterprise is custom.',
 
     // For now /pricing shows only the Free plan and a "Contact us" card (PricingPage.js), without the paid
     // plans, the billing switch or the plan finder. The rest of the plan copy is kept for when they come back.
@@ -376,7 +376,7 @@ export const PRICING_COPY = {
 
     h1: 'Cheaper than building and maintaining it yourself.',
     // Shown with the plans
-    sub: '100K tasks and 1,000 AI credits free every month, on every plan. Higher plans take more off your usage.',
+    sub: 'Start free with 100K tasks and 1,000 AI credits a month. Higher plans include more and make extra usage cheaper.',
     yearlyNote: '2 months free',
 
     launchLabel: 'Launch price',
@@ -402,7 +402,7 @@ export const PRICING_COPY = {
             m: '$19',
             y: '$190',
             per: ['/mo', '/yr'],
-            perks: ['250K tasks a month', '10,000 AI credits a month', 'Pay as you go'],
+            perks: ['250K tasks a month', '10,000 AI credits a month', 'Extra tasks: $0.25 per 1K', 'Extra AI credits: $1 per 600'],
             limits: { tasks: 250e3, credits: 10e3, price: 19 },
             cta: 'Start with Pro',
             href: START_URL,
@@ -415,7 +415,7 @@ export const PRICING_COPY = {
             m: '$99',
             y: '$990',
             per: ['/mo', '/yr'],
-            perks: ['1M tasks a month', '50,000 AI credits a month', 'Pay as you go, 40% cheaper'],
+            perks: ['1M tasks a month', '50,000 AI credits a month', 'Extra tasks: $0.15 per 1K, 40% cheaper', 'Extra AI credits: 40% cheaper'],
             limits: { tasks: 1e6, credits: 50e3, price: 99 },
             cta: 'Start with Business',
             href: START_URL,
@@ -427,14 +427,18 @@ export const PRICING_COPY = {
             m: 'Custom',
             y: 'Custom',
             note: 'Billed annually',
-            perks: ['Custom tasks and AI credits', 'Pay as you go, up to 60% cheaper', 'Custom terms and support'],
+            perks: ['Custom tasks and AI credits', 'Extra tasks: up to 60% cheaper', 'Extra AI credits: up to 60% cheaper', 'Custom terms and support'],
             cta: 'Talk to us',
             href: SALES_URL,
         },
     ],
     // Under the plans. The first line's [text, href] parts are links.
     everyPlan: ['Every plan: ', ['2,300+ integrations', '/integrations'], ', unlimited connected accounts, users, workflows and projects.'],
-    taskNote: 'A task is one call or one delivered trigger event; a poll that finds nothing is free. AI credits pay for AI, built-in tools and data.',
+    // Shown on hover or focus over "tasks" and "AI credits" in the plan cards
+    tips: {
+        tasks: 'A task is one call (an action run or an automation step) or one delivered trigger event.',
+        'AI credits': 'AI credits pay for AI, built-in tools and third-party data. A step that uses AI or a tool costs 1 task plus its credits.',
+    },
 
     // The plan finder: the cheapest plan whose included tasks and AI credits cover the usage on the
     // sliders (limits on each plan above); past Business, Enterprise. Sliders step through these amounts.
@@ -447,7 +451,6 @@ export const PRICING_COPY = {
     calcTasksIncl: 'Tasks included',
     calcCreditsIncl: 'AI credits included',
     calcCustom: 'Custom',
-    calcNote: 'At launch prices, billed monthly. A task is one call or one delivered trigger event. Above Business, Enterprise sets custom tasks and AI credits.',
     calcSteps: {
         tasks: [0, 25e3, 50e3, 100e3, 150e3, 200e3, 250e3, 400e3, 500e3, 750e3, 1e6, 1.5e6, 2e6, 3e6],
         credits: [0, 500, 1e3, 2.5e3, 5e3, 10e3, 20e3, 30e3, 50e3, 75e3, 100e3],
@@ -462,9 +465,11 @@ export const PRICING_COPY = {
     // [question, answer, optional [link text, href] at the end of the answer]
     faqs: [
         ['Is there a free plan?', 'Yes. The Free plan is $0 and includes 100K tasks and 1,000 AI credits every month. It stops when you reach either limit.'],
-        ['What counts as a task?', 'A task is one call or one delivered trigger event; a poll that finds nothing is free. Connected accounts, users and seats are never billed.'],
-        ['What are AI credits?', 'AI credits pay for AI, built-in tools and data. Free includes 1,000 a month, Pro 10,000 and Business 50,000; Enterprise sets a custom amount.'],
-        ['What happens when I reach my limit?', 'On Free, usage stops at the limit until the next month. On Pro and Business you keep going and pay as you go for the extra, 40% cheaper on Business. Enterprise pays as it goes at up to 60% cheaper.'],
+        ['What counts as a task?', 'A task is one call (an action run or an automation step) or one delivered trigger event. A trigger event costs the same as a call. Connected accounts, users and seats are never billed.'],
+        ['What are AI credits?', 'AI credits pay for AI, built-in tools and third-party data. A step that uses AI or a tool costs 1 task plus its credits. Free includes 1,000 a month, Pro 10,000 and Business 50,000; Enterprise sets a custom amount.'],
+        ['What happens when I reach my limit?', 'On Free, usage stops at the limit until the next month. On Pro, extra tasks are $0.25 per 1K and extra AI credits $1 per 600. On Business, extra tasks are $0.15 per 1K and extra AI credits are 40% cheaper. Enterprise pays up to 60% less for extra usage.'],
+        ['Do unused tasks and AI credits roll over?', 'No. Allowances reset monthly on your billing date. Tasks and AI credits are separate, so one never pays for the other.'],
+        ['How does a plan work across projects?', 'There is one plan per workspace, shared by all its projects.'],
         ['Do I pay per integration, user or connected account?', 'No. Every plan includes 2,300+ integrations and unlimited connected accounts, users, workflows and projects. You pay for tasks and AI credits.'],
         ['Which plan is right for me?', 'Free is for building and testing, Pro for going live, Business for high volume, and Enterprise for custom needs. Move the sliders to your usage to see which plan covers it.', ['Find the right plan', '#plan-finder']],
         ['What does launch pricing mean?', 'Pro at $19/mo and Business at $99/mo are launch prices, available for a limited time. Launch pricing may end any time.'],
