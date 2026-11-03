@@ -43,6 +43,8 @@ Every OAuth token viaSocket stores is keyed to this identifier. When your backen
 
 **Choosing your identifier**: Use your internal tenant or user ID — a stable, immutable string that maps one-to-one to your tenants. Do not use email addresses (they can change), session tokens (they expire), or composite keys that might be reused.
 
+How those [multi-tenant SaaS deployment patterns](/blogs/viasocket-mcp-vs-zapier-mcp) affect who should own the MCP server is covered in the viaSocket MCP versus Zapier MCP comparison.
+
 ## Four Isolation Dimensions
 
 ### 1. Credential Isolation

@@ -121,6 +121,8 @@ Composio is optimized for AI/LLM developers; its SDK and documentation are orien
 
 **Choose viaSocket if**: you want a single Integration Layer for both embedded iPaaS and AI agent tool-calling, need a public pricing starting point without a sales call, and want white-label MCP server support alongside traditional workflow embedding.
 
+When the decision is which MCP server to ship, [how viaSocket compares to other embedded integration tools](/blogs/viasocket-mcp-vs-zapier-mcp) is set out against Zapier MCP.
+
 **Choose Paragon if**: you are an enterprise SaaS company with a dedicated integrations team and need a mature embedded integration marketplace with strong enterprise sales support.
 
 **Choose Prismatic if**: you are a B2B SaaS company with complex, customer-specific integration requirements and the engineering capacity to build and maintain custom connectors.

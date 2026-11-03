@@ -131,6 +131,8 @@ This means:
 
 Your responsibility is to ensure the `unique_identifier` you embed in the JWT is stable and maps one-to-one to your own user records. A good choice is your internal user ID or a hashed version of it. Do not use email addresses if they can change.
 
+That per-user credential model, including [how managed OAuth works at the per-user level](/blogs/viasocket-mcp-vs-zapier-mcp), is one reason viaSocket MCP and Zapier MCP fit different AI stacks.
+
 ## Security Checklist
 
 Before going to production:
