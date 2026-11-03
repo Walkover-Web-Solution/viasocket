@@ -3,29 +3,37 @@ import s from './addToProduct.module.scss';
 import { FOOTER_GROUPS, NAV, START_URL } from './copy';
 import { Logo, SOCIAL } from './icons';
 import { CopyPromptButton } from './CopyPrompt';
+import AnnouncementBar from '@/app/components/navbar/AnnouncementBar';
+import { getAnnouncements } from '@/app/lib/admin-announcements';
 
 // The homepage's header and footer, shared by the integration pages that use its design
 // (/integrations, /integrations/category/*, /integrations/{app}). Render inside CopyPromptProvider.
 
-export function SiteHeader() {
+export async function SiteHeader() {
+    // The announcement bar managed in the admin panel (Pages → Announcements); nothing when none
+    // fits the page or the admin can't be reached.
+    const announcements = await getAnnouncements();
     return (
-        <header className={s.top}>
-            <div className={s.wrap}>
-                <Link className={s.logo} href="/" aria-label="viaSocket home">
-                    <Logo height={22} />
-                </Link>
-                <nav className={s['top-nav']} aria-label="Main">
-                    {NAV.map(([label, href]) => (
-                        <a key={label} href={href} {...(href.startsWith('https://cal.id') && { target: '_blank', rel: 'noopener' })}>
-                            {label}
-                        </a>
-                    ))}
-                </nav>
-                <a className={s.start} href={START_URL}>
-                    Start free <span aria-hidden="true">→</span>
-                </a>
-            </div>
-        </header>
+        <>
+            {announcements && <AnnouncementBar announcements={announcements} className={s.ann} />}
+            <header className={s.top}>
+                <div className={s.wrap}>
+                    <Link className={s.logo} href="/" aria-label="viaSocket home">
+                        <Logo height={22} />
+                    </Link>
+                    <nav className={s['top-nav']} aria-label="Main">
+                        {NAV.map(([label, href]) => (
+                            <a key={label} href={href} {...(href.startsWith('https://cal.id') && { target: '_blank', rel: 'noopener' })}>
+                                {label}
+                            </a>
+                        ))}
+                    </nav>
+                    <a className={s.start} href={START_URL}>
+                        Start free <span aria-hidden="true">→</span>
+                    </a>
+                </div>
+            </header>
+        </>
     );
 }
 
@@ -47,9 +55,9 @@ export function SiteFooter() {
                             <div key={heading}>
                                 <p className={s['ft-gh']}>{heading}</p>
                                 <ul>
-                                    {links.map(([label, href]) => (
+                                    {links.map(([label, href, target]) => (
                                         <li key={label}>
-                                            <a href={href}>{label}</a>
+                                            <a href={href} {...(target ? { target, rel: 'noopener' } : {})}>{label}</a>
                                         </li>
                                     ))}
                                 </ul>
@@ -95,8 +103,11 @@ export function SiteFooter() {
     );
 }
 
-/** The Action Layer blog posts, as on the app pages. Renders nothing when there are none. */
-export function BlogPosts({ title, lead, posts, viewAllUrl }) {
+/**
+ * "Learn more": a row of blog posts. By default the Action Layer posts, as on the app pages; pass `Card`
+ * (BlogsPage.js PostCard) to show /blogs posts as they look on /blogs. Renders nothing when there are none.
+ */
+export function BlogPosts({ title, lead, posts, viewAllUrl, Card }) {
     if (!posts?.length) return null;
     const fmtDate = (d) => {
         const t = Date.parse(d);
@@ -115,7 +126,8 @@ export function BlogPosts({ title, lead, posts, viewAllUrl }) {
                     </a>
                 </div>
                 <div className={s.posts}>
-                    {posts.map((b) => (
+                    {Card && posts.map((p) => <Card key={p.slug} post={p} />)}
+                    {!Card && posts.map((b) => (
                         <a key={b.link} className={s.post} href={b.link}>
                             {b.image && <img className={s['post-img']} src={b.image} alt="" loading="lazy" />}
                             <span className={s['post-body']}>

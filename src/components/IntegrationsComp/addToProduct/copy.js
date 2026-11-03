@@ -46,7 +46,7 @@ export const COPY = {
 
     learnTitle: 'Learn more about adding {appName} Integrations',
     learnSub: 'Explore guides and resources to help you implement and use {appName} integrations.',
-    blogCategoryUrl: 'https://viasocket.com/blog/category/Action%20Layer%20for%20AI%20Products',
+    blogsUrl: '/blogs',
 
     aboutViasocket:
         'Connect 2,300+ apps to your product & agents with one prompt. Auth, events and actions handled. Free to start.',
@@ -67,16 +67,31 @@ export const COPY = {
     endTitle: 'Bring {appName} Into Your Product & Agents',
 };
 
-// The homepage's setup prompt (public/new-home/index.html #promptText).
-export const BASE_PROMPT = `Integrate apps into this product with viaSocket.
-Download https://flow.viasocket.com/documentation/skill.md to .claude/skills/viasocket-integrations/SKILL.md and follow it.
-Keep it there for next time; download it again if a call in it fails.
-My org ID, project ID and secret are at https://flow.viasocket.com/integrations. Ask me for them; they go in .env only.
-Build it complete for my use case: decide who supplies each value (my code, my user in a picker, or my assistant per run) and who picks the action, then report each line of the skill's "Finished when" list.`;
+// The homepage's setup prompt (public/new-home/index.html #promptText). Keep the two copies identical.
+// Org and project stay placeholders: this site does not know a visitor's ids. /setup-prompt does, from the query.
+const ASK_LINE = 'Ask me what I want to build first.\n';
 
-/** The setup prompt for this app: the base prompt, naming the app in its first line. */
+export const BASE_PROMPT = `Install the viaSocket skill. Download this file exactly and save it as viasocket-integrations/SKILL.md wherever this project keeps skills or rules:
+https://beta-flow.viasocket.com/documentation/skill-install.md
+
+It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
+My viaSocket org_id is <your org_id> and project_id is <your project_id>: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
+If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://beta-flow.viasocket.com/documentation/skill.md?format=http instead.
+Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
+
+Ask me what I want to build first.
+When it works, show me what changed and what I can add next.`;
+
+/** Setup prompt for a card that already names the build: drop the ask line, then append that use case. */
+export function promptWithUseCase(useCase) {
+    const body = BASE_PROMPT.includes(ASK_LINE) ? BASE_PROMPT.replace(ASK_LINE, '') : BASE_PROMPT;
+    return `${body.replace(/\s+$/, '')}\nWhat I want to build: ${useCase}`;
+}
+
+/** The setup prompt for this app: the base prompt, naming the app in its first sentence. */
 export function promptFor({ name }) {
-    return BASE_PROMPT.replace('Integrate apps into', `Integrate ${name} into`);
+    return BASE_PROMPT.replace('Install the viaSocket skill.', `Install the viaSocket skill. Integrate ${name} into this product.`);
 }
 
 // The homepage header (public/new-home/index.html).
@@ -93,7 +108,7 @@ export const FOOTER_GROUPS = [
     ['Build', [['List your app', 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'], ['Build your own plug', '/help/plugin-builder'], ['Billing partners', '/help/viasocket-embed/billing-partner']]],
     ['Partners', [['Become a partner', '/help/partners'], ['Partner program', '/experts'], ['Agency partners', '/agency-partner']]],
     ['Support', [['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'], ['Contact support', '/support'], ['Request a feature', 'https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas'], ['Request an integration', '/integrations']]],
-    ['Company', [['About', '/help/about-us'], ['We’re hiring', 'https://walkover.in/careers'], ['Culture we foster', 'https://walkover.in/about/culture-we-foster'], ['Roadmap', 'https://roadmap.viasocket.com/roadmap'], ['AI transparency', '/help/security-and-compliance/ai-transparency']]],
+    ['Company', [['About', '/help/about-us'], ['We’re hiring', 'https://walkover.in/careers'], ['Culture we foster', 'https://walkover.in/about/culture-we-foster'], ['Roadmap', 'https://roadmap.viasocket.com/roadmap'], ['AI transparency', '/help/security-and-compliance/ai-transparency'], ['Explore more', 'https://walkover-products.embarko.app/?from=viasocket', '_blank']]],
 ];
 
 // /integrations and /integrations/category/{name}
@@ -136,37 +151,36 @@ export const FEATURES_COPY = {
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
     expert: 'Talk to an expert',
     expertUrl: 'https://viasocket.com/experts-are-live',
-    // Every feature, in one grid: [title, description, icon, { href, cta, ex, hint }]. Most cards are
-    // plain on purpose; a few carry a small example at the bottom (`ex`: app logos, a line of code, a
-    // field mapping, a chat, run-status squares) and a few only a hint (`hint`: 'check' on the icon,
-    // 'live' dot by the title). `ai` gives the three AI tiles a slowly moving colour wash.
-    // Illustrative only, no figures.
+    // Every feature, in one grid: [title, description, icon, { slug, href, cta, ai, ex, hint }]. A tile shows
+    // only its icon and title; `ai` colours the three AI tiles. `slug` is the feature's page, /features/{slug},
+    // and the tile links there once featurePages.js has it; `href` (with `cta` as its tooltip) links elsewhere.
+    // The description, `ex` (a small example) and `hint` are kept here but not shown.
     features: [
         ['Managed Authentication', 'Handle authentication flows, access tokens, and token refresh without building and maintaining them for every integration.', 'key',
-            { hint: 'check' }],
+            { slug: 'managed-authentication', hint: 'check' }],
         ['2,300+ App Integrations', 'Connect your product to thousands of apps with ready-to-use actions to read, create, update, and manage data.', 'apps',
             { href: '/integrations', cta: 'Browse all integrations', ex: { kind: 'apps', apps: ['gmail', 'slack', 'hubspot', 'salesforce', 'sheets', 'notion', 'shopify', 'airtable'], more: '+2.3K' } }],
         ['Custom Integrations & API Requests', "Connect services beyond our existing catalog or access additional API endpoints when pre-built actions aren't enough.", 'code',
-            { ex: { kind: 'code', method: 'GET', text: '/v2/invoices?status=open' } }],
+            { slug: 'custom-integrations', ex: { kind: 'code', method: 'GET', text: '/v2/invoices?status=open' } }],
         ['Triggers & Webhooks', 'Respond to events from connected applications and external systems to keep your product up to date.', 'bolt',
-            { hint: 'live' }],
-        ['Multi-tenant Support', 'Manage separate connected accounts and integration configurations for each customer.', 'users'],
-        ['Custom Branding & UX', "Deliver integration and connection experiences that match your product's branding and interface.", 'brand'],
+            { slug: 'webhook', hint: 'live' }],
+        ['Multi-tenant Support', 'Manage separate connected accounts and integration configurations for each customer.', 'users', { slug: 'multi-tenant' }],
+        ['Custom Branding & UX', "Deliver integration and connection experiences that match your product's branding and interface.", 'brand', { slug: 'custom-branding' }],
         ['AI Agents', 'Build powerful AI agents with 50+ AI models, memory, connected apps and tools, and multi-step workflows that enable agents to reason, make decisions, and execute tasks autonomously.', 'agent',
-            { ai: true }],
+            { slug: 'ai-agent', ai: true }],
         ['In-app AI Chatbots', 'Add chat interfaces that let users retrieve information and perform actions using your product and its connected apps.', 'chat',
-            { ai: true, ex: { kind: 'chat', me: 'Which deals close this week?', bot: 'Three, all in HubSpot. Want a summary?' } }],
+            { slug: 'ai-chatbots', ai: true, ex: { kind: 'chat', me: 'Which deals close this week?', bot: 'Three, all in HubSpot. Want a summary?' } }],
         ['Browser Actions', 'Give AI agents the ability to browse websites, navigate pages, interact with web elements, and complete tasks in a browser when needed.', 'browser',
-            { ai: true }],
-        ['Real-time Action Execution', 'Execute actions on demand with low latency so your product can interact with connected applications when needed.', 'fast'],
-        ['Background Execution & Retries', 'Run longer tasks asynchronously and automatically retry eligible failed executions to recover from temporary errors.', 'retry'],
-        ['Scheduled Execution', 'Run actions and tasks at defined intervals without requiring users to trigger them manually.', 'clock'],
+            { slug: 'browser-actions', ai: true }],
+        ['Real-time Action Execution', 'Execute actions on demand with low latency so your product can interact with connected applications when needed.', 'fast', { slug: 'real-time-execution' }],
+        ['Background Execution & Retries', 'Run longer tasks asynchronously and automatically retry eligible failed executions to recover from temporary errors.', 'retry', { slug: 'background-execution' }],
+        ['Scheduled Execution', 'Run actions and tasks at defined intervals without requiring users to trigger them manually.', 'clock', { slug: 'scheduled-execution' }],
         ['Managed Data Mapping', 'Map and transform data between your product and connected applications without building custom mappings for every integration.', 'map',
-            { ex: { kind: 'map', from: 'first_name', to: 'FirstName' } }],
-        ['Execution Replay', 'Replay failed executions when appropriate, helping recover from errors without rebuilding the entire workflow.', 'replay'],
+            { slug: 'data-mapping', ex: { kind: 'map', from: 'first_name', to: 'FirstName' } }],
+        ['Execution Replay', 'Replay failed executions when appropriate, helping recover from errors without rebuilding the entire workflow.', 'replay', { slug: 'execution-replay' }],
         ['Execution Monitoring & Debugging', 'Track execution status, inspect logs, identify errors, and troubleshoot issues from one place.', 'pulse',
-            { ex: { kind: 'status', runs: 'oooooooxoo' } }],
-        ['Regional Deployment', 'Choose the server region where your viaSocket infrastructure runs to meet your deployment and data residency requirements.', 'globe'],
+            { slug: 'execution-monitoring', ex: { kind: 'status', runs: 'oooooooxoo' } }],
+        ['Regional Deployment', 'Choose the server region where your viaSocket infrastructure runs to meet your deployment and data residency requirements.', 'globe', { slug: 'regional-deployment' }],
     ],
     blogTitle: 'Learn more about building connected products',
     faqEyebrow: 'Frequently Asked Questions',
@@ -342,10 +356,42 @@ export const LETTER_COPY = {
 const SALES_URL = 'https://cal.id/team/viasocket/embed-viasocket';
 export const PRICING_COPY = {
     metaTitle: 'Pricing · viaSocket',
-    metaDesc: '100K tasks and 1,000 AI credits free every month, on every plan. Higher plans take more off your usage.',
+    metaDesc: 'Start free with 100K tasks and 1,000 AI credits a month. Pro is $19/mo and Business $99/mo at launch prices; Enterprise is custom.',
+
+    // /pricing shows Free, Pro, Business and Enterprise (PricingPage.js), with the billing switch and the
+    // plan finder. contactSub, contactPlan and contactFaqs are the previous Free + "Contact us" layout, kept unrendered.
+    contactSub: 'Start free with 100K tasks and 1,000 AI credits every month. For more, contact us for pricing tailored to your product and usage.',
+    contactPlan: {
+        name: 'Scale',
+        tagline: 'For going live and scaling',
+        m: 'Custom',
+        perks: ['Tasks and AI credits sized to your usage', 'Pricing tailored to your product', 'Custom terms and support'],
+        cta: 'Contact us',
+        href: SALES_URL,
+        popular: true,
+    },
+    // Links to the rest of the site, after the plans: [title, text, href, link text]
+    exploreTitle: 'See what you can build',
+    explore: [
+        ['Features', 'Managed authentication, triggers, data mapping, AI agents, monitoring and more: everything the integration layer handles for you.', '/features', 'Explore features'],
+        ['Use cases', 'What teams build with viaSocket, from in-app integrations to AI agents that act across connected apps, each with a prompt to start from.', '/use-cases', 'Explore use cases'],
+    ],
+    // The FAQs while only the Free plan is listed: the Free plan, then viaSocket in general.
+    // [question, answer, optional [link text, href] at the end of the answer]
+    contactFaqs: [
+        ['Is there a free plan?', 'Yes. The Free plan is $0 and includes 100K tasks and 1,000 AI credits every month.'],
+        ['What do I get on the Free plan?', 'Every plan includes 2,300+ integrations and unlimited connected accounts, users, workflows and projects. The Free plan comes with 100K tasks and 1,000 AI credits a month to build and test with.'],
+        ['What counts as a task?', 'A task is one call or one delivered trigger event; a poll that finds nothing is free. Connected accounts, users and seats are never billed.'],
+        ['What happens when I reach the Free plan limit?', 'Usage stops at the limit until the next month. If you need more, contact us for a plan that fits your usage.'],
+        ['How do I get pricing beyond the Free plan?', "Tell us what you are building and how much you expect to use, and we'll put together a plan that fits.", ['Contact us', SALES_URL]],
+        ['What is viaSocket?', 'viaSocket is an integration layer for SaaS products and AI agents, with 2,300+ apps behind it. Your code makes one kind of call, and viaSocket deals with each app’s API, sign-in and events.'],
+        ['How do I get started?', 'Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your project. Your coding agent sets up viaSocket and builds the connect flow and actions your use case needs.'],
+        ['Can my AI agent use viaSocket integrations?', 'Yes. Every action comes with an input schema, so your agent can call it as a tool. You decide which actions it can use, or let each user choose.'],
+    ],
 
     h1: 'Cheaper than building and maintaining it yourself.',
-    sub: '100K tasks and 1,000 AI credits free every month, on every plan. Higher plans take more off your usage.',
+    // Shown with the plans
+    sub: 'Start free with 100K tasks and 1,000 AI credits a month. Higher plans include more and make extra usage cheaper.',
     yearlyNote: '2 months free',
 
     launchLabel: 'Launch price',
@@ -371,7 +417,7 @@ export const PRICING_COPY = {
             m: '$19',
             y: '$190',
             per: ['/mo', '/yr'],
-            perks: ['250K tasks a month', '10,000 AI credits a month', 'Pay as you go'],
+            perks: ['250K tasks a month', '10,000 AI credits a month', 'Extra tasks: $0.25 per 1K', 'Extra AI credits: $1 per 600'],
             limits: { tasks: 250e3, credits: 10e3, price: 19 },
             cta: 'Start with Pro',
             href: START_URL,
@@ -384,7 +430,7 @@ export const PRICING_COPY = {
             m: '$99',
             y: '$990',
             per: ['/mo', '/yr'],
-            perks: ['1M tasks a month', '50,000 AI credits a month', 'Pay as you go, 40% cheaper'],
+            perks: ['1M tasks a month', '50,000 AI credits a month', 'Extra tasks: $0.15 per 1K, 40% cheaper', 'Extra AI credits: 40% cheaper'],
             limits: { tasks: 1e6, credits: 50e3, price: 99 },
             cta: 'Start with Business',
             href: START_URL,
@@ -396,14 +442,18 @@ export const PRICING_COPY = {
             m: 'Custom',
             y: 'Custom',
             note: 'Billed annually',
-            perks: ['Custom tasks and AI credits', 'Pay as you go, up to 60% cheaper', 'Custom terms and support'],
+            perks: ['Custom tasks and AI credits', 'Extra tasks: up to 60% cheaper', 'Extra AI credits: up to 60% cheaper', 'Custom terms and support'],
             cta: 'Talk to us',
             href: SALES_URL,
         },
     ],
     // Under the plans. The first line's [text, href] parts are links.
     everyPlan: ['Every plan: ', ['2,300+ integrations', '/integrations'], ', unlimited connected accounts, users, workflows and projects.'],
-    taskNote: 'A task is one call or one delivered trigger event; a poll that finds nothing is free. AI credits pay for AI, built-in tools and data.',
+    // Shown on hover or focus over "tasks" and "AI credits" in the plan cards
+    tips: {
+        tasks: 'A task is one call (an action run or an automation step) or one delivered trigger event.',
+        'AI credits': 'AI credits pay for AI, built-in tools and third-party data. A step that uses AI or a tool costs 1 task plus its credits.',
+    },
 
     // The plan finder: the cheapest plan whose included tasks and AI credits cover the usage on the
     // sliders (limits on each plan above); past Business, Enterprise. Sliders step through these amounts.
@@ -416,7 +466,6 @@ export const PRICING_COPY = {
     calcTasksIncl: 'Tasks included',
     calcCreditsIncl: 'AI credits included',
     calcCustom: 'Custom',
-    calcNote: 'At launch prices, billed monthly. A task is one call or one delivered trigger event. Above Business, Enterprise sets custom tasks and AI credits.',
     calcSteps: {
         tasks: [0, 25e3, 50e3, 100e3, 150e3, 200e3, 250e3, 400e3, 500e3, 750e3, 1e6, 1.5e6, 2e6, 3e6],
         credits: [0, 500, 1e3, 2.5e3, 5e3, 10e3, 20e3, 30e3, 50e3, 75e3, 100e3],
@@ -431,9 +480,11 @@ export const PRICING_COPY = {
     // [question, answer, optional [link text, href] at the end of the answer]
     faqs: [
         ['Is there a free plan?', 'Yes. The Free plan is $0 and includes 100K tasks and 1,000 AI credits every month. It stops when you reach either limit.'],
-        ['What counts as a task?', 'A task is one call or one delivered trigger event; a poll that finds nothing is free. Connected accounts, users and seats are never billed.'],
-        ['What are AI credits?', 'AI credits pay for AI, built-in tools and data. Free includes 1,000 a month, Pro 10,000 and Business 50,000; Enterprise sets a custom amount.'],
-        ['What happens when I reach my limit?', 'On Free, usage stops at the limit until the next month. On Pro and Business you keep going and pay as you go for the extra, 40% cheaper on Business. Enterprise pays as it goes at up to 60% cheaper.'],
+        ['What counts as a task?', 'A task is one call (an action run or an automation step) or one delivered trigger event. A trigger event costs the same as a call. Connected accounts, users and seats are never billed.'],
+        ['What are AI credits?', 'AI credits pay for AI, built-in tools and third-party data. A step that uses AI or a tool costs 1 task plus its credits. Free includes 1,000 a month, Pro 10,000 and Business 50,000; Enterprise sets a custom amount.'],
+        ['What happens when I reach my limit?', 'On Free, usage stops at the limit until the next month. On Pro, extra tasks are $0.25 per 1K and extra AI credits $1 per 600. On Business, extra tasks are $0.15 per 1K and extra AI credits are 40% cheaper. Enterprise pays up to 60% less for extra usage.'],
+        ['Do unused tasks and AI credits roll over?', 'No. Allowances reset monthly on your billing date. Tasks and AI credits are separate, so one never pays for the other.'],
+        ['How does a plan work across projects?', 'There is one plan per workspace, shared by all its projects.'],
         ['Do I pay per integration, user or connected account?', 'No. Every plan includes 2,300+ integrations and unlimited connected accounts, users, workflows and projects. You pay for tasks and AI credits.'],
         ['Which plan is right for me?', 'Free is for building and testing, Pro for going live, Business for high volume, and Enterprise for custom needs. Move the sliders to your usage to see which plan covers it.', ['Find the right plan', '#plan-finder']],
         ['What does launch pricing mean?', 'Pro at $19/mo and Business at $99/mo are launch prices, available for a limited time. Launch pricing may end any time.'],
@@ -478,32 +529,44 @@ export const PASS_COPY = {
     ],
     ratesNote: "A call is an action run or an automation step. A trigger event is billed only when it's delivered; a poll that finds nothing is free. Free stops when its free amounts and the $2 on us are used. Enterprise rates are custom.",
 
-    toolsTitle: 'Pass: built-in tools and other platforms',
-    toolsLead: 'Paid per use from your Pass, on every plan. Pro pays less and Business pays least.',
-    toolsCols: ['Tool', 'Charged per', 'Free', 'Pro', 'Business'],
-    // [group, [[tool, charged per, free, pro, business]]]
+    toolsTitle: 'Pass: built-in tools',
+    toolsLead: 'Paid per use from your Pass in AI credits, on every plan, with no keys or accounts of your own.',
+    toolsCols: ['Tool', 'Charged per', 'Price'],
+    // [group, [[tool, charged per, price]]]. The built-in tools and their prices in AI credits, from the
+    // internal paid plugs list (internal.viasocket.com/paid-plugs); 'To be set' where it has no price yet.
     toolsGroups: [
         [
-            'Built-in tools',
+            'Messaging',
             [
-                ['Web search', 'Search', 'To be set', 'To be set', 'To be set'],
-                ['Page reading', 'Page', 'To be set', 'To be set', 'To be set'],
-                ['SMS', 'Message, by country', 'To be set', 'To be set', 'To be set'],
-                ['WhatsApp message', 'Message', 'To be set', 'To be set', 'To be set'],
+                ['SMS', 'Message part, per recipient', 'By country'],
+                ['WhatsApp message', 'Message, per recipient', 'By country and template type'],
             ],
         ],
         [
-            'Other platforms',
+            'AI and media',
             [
-                ['Contact and company data', 'Lookup', 'To be set', 'To be set', 'To be set'],
-                ['Web scraping', 'Page', 'To be set', 'To be set', 'To be set'],
-                ['Voice generation', 'Minute', 'To be set', 'To be set', 'To be set'],
-                ['Transcription', 'Minute', 'To be set', 'To be set', 'To be set'],
-                ['Image generation', 'Image', 'To be set', 'To be set', 'To be set'],
+                ['AI agent, instant or in the background', 'Run', 'To be set'],
+                ['Transcribe audio', 'Recording', 'To be set'],
+                ['Summarize text', 'Request', 'To be set'],
+                ['Translate text', 'Request', 'To be set'],
+                ['Convert to JSON', 'Request', 'To be set'],
+                ['Create image from text', 'Image', 'To be set'],
+            ],
+        ],
+        [
+            'Data and utilities',
+            [
+                ['Web data extractor', 'Page', 'To be set'],
+                ['GST details', 'Lookup', '25 credits'],
+                ['HTML to PDF', 'Document', '5 credits'],
+                ['Currency converter', 'Conversion', '2 credits'],
             ],
         ],
     ],
     toolsNote: 'Every other tool is charged at its own listed price per use, shown before you use it and in your logs.',
+    // How SMS and WhatsApp are charged, under the tools table
+    toolsMsgNote:
+        "SMS: a message over 160 characters (70 with emoji or non-Latin text) is sent in parts of 153 (or 67) characters, and each part is charged at the destination country's rate, per recipient. WhatsApp: each recipient is charged at their country's rate for the template's category: marketing, authentication or utility.",
 
     vsTitle: 'One Pass instead of a pile of subscriptions',
     vsLead: 'Your product only needs a few calls from each tool. Pay for those calls, not for the plans.',
@@ -543,6 +606,7 @@ export const PASS_COPY = {
         ['Which plans can use it?', 'All of them. Free pays per use; Pro pays less; Business pays least.'],
         ['How do I build with it?', 'Your coding agent calls Pass tools the same way as any integration. No keys to add.'],
         ['How do I see what I spent?', 'Billing shows your balance and spend by tool. Logs show the cost of every run.'],
+        ['How are SMS and WhatsApp messages charged?', "Per recipient, at the destination country's rate. A long SMS is sent and charged in parts; a WhatsApp message is charged by its template's category: marketing, authentication or utility."],
     ],
 };
 
@@ -560,8 +624,8 @@ export const BLOGS_COPY = {
     backLink: 'All posts',
     shareLabel: 'Share this article',
     tocTitle: 'Jump to section',
-    // The card that slides in on a post once the reader scrolls down
-    promoTitle: '100K tasks and 1,000 AI credits free every month.',
+    // The card that slides in on /blogs and on a post once the reader scrolls down
+    promoTitle: 'Add managed auth, multi-tenant, ai agents with browser access in your products',
     promoCta: 'Start free',
     moreTitle: 'Keep reading',
 };

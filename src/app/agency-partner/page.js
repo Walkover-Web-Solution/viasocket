@@ -13,6 +13,7 @@ import ShowBadges from '../components/home/ShowBadges';
 import SecuritySection from '../components/SecuritySection';
 import BlogGrid from '../components/blog/BlogGrid';
 import AgencyPricing from '@/components/agencyPartner/AgencyPricing';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -30,13 +31,13 @@ export async function generateMetadata() {
             description:
                 metaData?.description ||
                 'Join the viaSocket Agency Partner Program and grow your automation business with exclusive benefits.',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/agency-partner', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/agency-partner', metaData?.image),
         },
     };
 }

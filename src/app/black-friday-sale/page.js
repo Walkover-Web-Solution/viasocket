@@ -6,6 +6,7 @@ import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar'
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import { getBlackFridaySalePageData } from '../lib/black-friday-sale-data';
 import BlackFridaySaleClient from '../components/black-friday-sale/BlackFridaySaleClient';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -19,13 +20,13 @@ export async function generateMetadata() {
     openGraph: {
       title: metaData?.title || 'Black Friday Sale - viaSocket',
       description: metaData?.description || 'Black Friday deals and offers',
-      images: metaData?.image ? [{ url: metaData.image }] : undefined,
+      images: ogImages('/black-friday-sale', metaData?.image),
     },
     twitter: {
       card: 'summary_large_image',
       title: metaData?.title || 'Black Friday Sale - viaSocket',
       description: metaData?.description || 'Black Friday deals and offers',
-      images: metaData?.image ? [metaData.image] : undefined,
+      images: twitterImages('/black-friday-sale', metaData?.image),
     },
   };
 }

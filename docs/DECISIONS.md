@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 493f7310
+verified_on: 2026-11-03
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -29,6 +29,8 @@ Status values: **Accepted** (current, keep it), **Superseded** (code may remain,
 | 2026-10-21 | [ADR-014: Evidence-based dead-code cleanup](#adr-014-evidence-based-dead-code-cleanup) | Accepted | Maintenance | Unreachable code misled agents and shipped unused bytes |
 | 2026-10-22 | [ADR-015: The integration layer is the canonical positioning](#adr-015-the-integration-layer-is-the-canonical-positioning) | Accepted | Product / copy | One story across the site; automation copy is out of date |
 | 2026-10-22 | [ADR-016: The static homepage's design system is the site-wide target](#adr-016-the-static-homepages-design-system-is-the-site-wide-target) | Accepted | Design | One visual system instead of five |
+| 2026-10-31 | [ADR-017: Homepage version B is a client-side 50/50 split](#adr-017-homepage-version-b-is-a-client-side-5050-split) | Accepted | Homepage / growth | `/` stays cached as A; B is `/home-b` |
+| 2026-11-02 | [ADR-018: Admin visitor events do not use a Cloudflare setting](#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting) | Accepted | Analytics | The ingest URL and key are built into the route |
 
 ---
 
@@ -203,7 +205,7 @@ Accepted (in production since `12b97eb9`, which merged PR #1831).
 - Homepage edits are made in the `viasocket-site` source and exported into `public/new-home/*`, not in React components. A hand edit to `public/new-home/*` is overwritten by the next export unless it is also made in `viasocket-site`. Maintainer guidance from 2026-09 says the redesign lives in `/index` and the old Home is untouched; both pages that guidance names have since been replaced by this site.
 - This runs opposite to `d0dff32c` (2026-09-28), which *rebuilt* `/developers` from static `public/developers/*.html` into a native App Router route "so it matches this codebase's own conventions". <!-- verify:ignore -->
 
-- The static homepage is the long-term shape, and its design system is the site-wide target ([ADR-016](#adr-016-the-static-homepages-design-system-is-the-site-wide-target)). Server-side A/B testing of `/` stays off; GTM carries analytics (T-01, recommended).
+- The static homepage is the long-term shape, and its design system is the site-wide target ([ADR-016](#adr-016-the-static-homepages-design-system-is-the-site-wide-target)). Server-side assignment of `/` stays off because the CDN caches one document. The live split is client-side ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)).
 
 ---
 
@@ -221,11 +223,8 @@ Accepted.
 - `0b12d4b2` (2026-08-18) "Only production hits" made the route reject non-production events and used an exact `hostname === 'viasocket.com'` fallback. `8ca11b93` reverted it the same day.
 
 ### Consequences & Trade-offs
-> [!WARNING]
-> The revert also undid the exact-hostname check. When the env flag is missing, `getEnvironment` labels **any** `*.viasocket.com` host (including `test.viasocket.com`) as `production`. Maintainer guidance says production must be matched as exactly `viasocket.com`.
-
-> [!WARNING]
-> `src/utils/axiosCalls.js:getAbTestVisitorRows` filters by visitor id only, not by environment. Since `77b3dec5` (2026-10-10, "stop get call") it also starts with `return null;`, so `POST /api/track-variant` drops every event with `reason: 'lookup failed'`. **A/B and visit tracking writes are currently off.** The commit gives no reason; see [OPEN_QUESTIONS](OPEN_QUESTIONS.md).
+> [!NOTE]
+> The exact-hostname check is back. When the env flag is missing, production is exactly `viasocket.com`. `test.viasocket.com` is `test`. The lookup filters on `environment`. Homepage views, homepage signup/login clicks, and a completed `/signup` registration are written; every other event is dropped before the lookup ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)).
 
 ---
 
@@ -254,6 +253,8 @@ Accepted.
 
 ### Decision & Implementation
 - In `next.config.js` `redirects()`: `/embed` → `/developers` and `/mcp` → `https://mushrooms.viasocket.com/` are permanent. `/login` → `https://flow.viasocket.com/` is not permanent. Only the bare paths redirect; sub-pages such as `/embed/app-integration` and `/mcp/aiagent` are still served here.
+- Since `40bbd9bd` those rules are applied by `src/middleware.js` from the admin redirect list, with `src/data/redirects.json` as the fallback. `next.config.js` no longer defines `redirects()`.
+- **Production check, 2026-10-29.** The live admin list does not match this decision for `/embed`. On the production host and on the test host, `GET /embed` returns **301** to `/` with an empty body (not 302, not 308, not an alias). The same list 301s bare `/developers` to `/`. The fallback file still has `/embed` → `/developers` with 308, so an admin outage would serve the decision again. Whether to restore the admin rules or accept the homepage as the target is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md). Until that is decided, this ADR stays Accepted as the recorded intent, and [05-navigation](05-navigation.md) records what the hosts actually return.
 - `src/app/sitemap.js` leaves out the bare `/embed` and `/mcp`, so that the sitemap points at final destinations only.
 - `/help` and every `/help/*` path except `FOOTER_HELP_PAGES` (and pages under them) → `/new-direction`, permanent (301), because "The help centre is retired" (`next.config.js` comment, `b3a7ab32`, 2026-10-20). On production only requests that reach this project are redirected ([OPEN_QUESTIONS P-05](OPEN_QUESTIONS.md#p-05-paths-served-by-other-deployments)).
 
@@ -270,7 +271,7 @@ Accepted (maintainer guidance, 2026; the code paths are verified below).
 
 ### Decision & Implementation
 - **`utm_source` is the page path** (for example `/integrations` or `/embed`). `src/utils/handleUtmSource.js:isInternalUtmSource` treats empty values, values starting with `/` and the `INTERNAL_UTM_SOURCES` list (`home-A`, `home-B`, `relay-switch-google-ads`) as the site's own. `savePageUtmSource` only overwrites those, so an ad or referral source in the cookie survives. Section-level detail belongs in the CTA tracking event, not in `utm_source`.
-- **Attribution travels in the `utmData` cookie** (one day, set by `setCookie`). `setUtmSource` captures `utm_*`, `affiliate_*` and `ref` from the URL into it. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics.
+- **Attribution travels in the `utmData` cookie** (30 days when `src/utils/handleUtmSource.js` writes it; one day until `8772409a`). `getUtmSource` and `setUtmSource` capture `utm_*`, `affiliate_*`, `ref` and the ad click ids `gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid` and `rdt_cid`, and only when the cookie is absent. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics. The signup widget sends `buildSignupState()`: that cookie, plus `visitor_id` and `cta`. Some other writers still pass 1 day ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)).
 - **Campaign pages keep their own tag**, for example `relay-switch-google-ads` on `/migration/relay`. `utm_source` must appear once in the signup URL. `src/utils/handleRedirection.js:handleRedirect` with a `customSource` emits it twice (`state={…}&utm_source=…`), so such CTAs should stamp `utmData` and navigate to `/signup?utm_source=<tag>` directly. Keep `handleRedirect` for external apps such as `flow.viasocket.com`.
 - **No `www`:** match `viasocket.com` exactly, with no `www.` branch anywhere.
 
@@ -321,13 +322,14 @@ After the October relaunch the site told two stories: the homepage, `/developers
 
 ### Decision & Implementation
 - The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
-- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. Pending: `src/app/layout.js` root `metadata`, `public/llms.txt` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. `public/llms.txt` was replaced on 2026-10-30 with the supplied integration-layer text; the previous 1,141-line directory is parked at `parked/llms.txt` and is not served. Pending: `src/app/layout.js` root `metadata` must be updated to match. `/pricing` may still redirect to `/developers/pricing` (P-03, proposed).
 
 ### Supporting Evidence & Past Incidents
 - The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).
 
 ### Consequences & Trade-offs
-- Copy that still says "workflow automation" is a bug to fix when touched, not an alternative positioning to preserve. Agents should flag it rather than extend it.
+- Copy that still says "workflow automation" is a bug to fix when touched, not an alternative positioning to preserve. Agents should flag it rather than extend it, except the `/pricing` plans below.
+- **Exception (2026-11-03, PR #1912).** The requester confirmed that `/pricing` should show Free, Pro, Business and Enterprise, with tasks, AI credits, the monthly/annual switch and the plan finder. Do not revert that page as out-of-date workflow copy. The integration layer remains canonical on every other surface. Root metadata is still pending. Which pricing URL is canonical (P-03) is still open.
 - ICP and success metrics are proposed, not approved ([VISION](VISION.md#target-audience--ideal-customer-profile-icp)).
 
 ---
@@ -347,6 +349,53 @@ The site had five visual systems ([DESIGN](DESIGN.md)): legacy daisyUI + SCSS, t
 ### Consequences & Trade-offs
 - New or reworked pages should converge on these tokens (expressed as Tailwind tokens per [DESIGN](DESIGN.md)), not on legacy daisyUI styling.
 - This settles the tension noted in ADR-008 between the static homepage and the native `/developers` rebuild: the direction is the homepage look, built natively.
+
+---
+
+
+## ADR-017: Homepage version B is a client-side 50/50 split
+
+### Status
+Accepted.
+
+### Context & Problem Statement
+The homepage needs a second version, shown to half of visitors, sticky, with bots and search engines kept on the current page. Production `/` is one cached document. A server-side coin flip would be replayed to everyone, which is the incident in lesson 1. The middleware experiment client is a different system, and no experiment is defined for this test, so its events would be refused.
+
+### Decision & Implementation
+- Version A stays `public/new-home/` at `/`. Version B is `public/home-b/index.html`, served at `/home-b`, `noindex`, with a canonical of the site root. The mockup file is not shipped.
+- `public/home-ab.js` assigns `variant` `A` or `B` (equal probability) before paint, the same cookie `TrackingCookies` already uses (30 days, domain `.viasocket.com` on viasocket hosts). `localStorage` `vs_variant` restores it after the cookie expires, on the homepage and on every other page. A visitor assigned B is sent to `/home-b` with `location.replace`. A crawler user agent stays on A, and middleware 302s a crawler that requests `/home-b` back to `/`.
+- The route stores a view of `/`, `/home` or `/home-b`, a homepage click whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup` when this site sees the registration response. Every other caller gets `not a homepage event` and no table read. Both homepages add `hp_variant` to every `flow.viasocket.com` link. Accounts created on flow.viasocket.com, and Google or Apple signups that leave `/signup` first, are still stored by the signup app, which this repo does not own.
+- B's sidebar is not applied to any other route.
+
+### Consequences & Trade-offs
+- The one script tag in `public/new-home/index.html` is overwritten by the next `viasocket-site` export unless that export keeps it. `public/home-b/` and `public/home-ab.js` are outside the export folder.
+- A visitor with JavaScript disabled, and every crawler, sees A. That is the control, and it is what search engines index.
+- About half of first-time visitors load A and then navigate to B. The script runs in the head, before the body, and hides the document only for that navigation.
+- Date-range counts come from `page_data` and `click_data` (the newest 100 events), not from the `varient` column, which is first-touch. How to read them is in [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
+
+---
+
+## ADR-018: Admin visitor events do not use a Cloudflare setting
+
+### Status
+Accepted. Confirmed 2026-11-02: do not put `ADMIN_TRACKING_URL` or `ADMIN_TRACKING_SECRET` on Cloudflare Pages.
+
+### Context & Problem Statement
+PR #1905 forwarded each accepted visitor event to the admin only when both env vars were set. Neither variable is in `.env`, and adding them on the Cloudflare Pages projects was declined, so test and production would have forwarded nothing.
+
+### Decision & Implementation
+- `src/app/api/track-variant/route.js` builds in the admin ingest URL (`https://viasocket-admin.embarko.app/api/public/events`) and the tracking key. `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override them when set, for a local admin or a rotation.
+- Test and production forward with the built-in values. A local dev server forwards only when `ADMIN_TRACKING_URL` is set, so trying the site locally does not write to the live admin.
+- The key is not a secret. `/api/track-variant` is public and forwards the events it accepts, so a private key between this site and the admin would not stop a forged event that comes through the site. Do not prefix an override with `NEXT_PUBLIC_`.
+- Other endpoints, database ids and keys still come from env vars. Do not copy this default into another caller.
+
+### Supporting Evidence & Past Incidents
+- Merged in PR #1907 (`a9853794`, merge `76ae448c`) on 2026-11-02.
+- A POST to the ingest with no key returns 401. The same POST with the built-in key and an empty `events` array returns 200 and inserts nothing.
+
+### Consequences & Trade-offs
+- Rotating the key means changing the constant and the admin together. An override env var still works before that constant changes.
+- Anyone who can read the repository can POST to the admin ingest with the built-in key and skip this site's cookie and bot checks. That follows from treating the key as not a secret.
 
 ---
 
@@ -373,6 +422,6 @@ The site had five visual systems ([DESIGN](DESIGN.md)): legacy daisyUI + SCSS, t
 7. **Invented UTM tags poisoned attribution.**
    - **Root cause:** non-path tags such as `index-hero` fail `isInternalUtmSource`. The first click of the day wins and later internal CTAs are refused.
    - **Prevention:** use path-shaped sources only (ADR-012).
-8. **Tracking is switched off without a recorded reason.**
-   - **Root cause:** `77b3dec5` short-circuits `getAbTestVisitorRows` (ADR-009).
-   - **Prevention:** do not assume `/api/track-variant` is recording anything until a live write and read proves it.
+8. **Tracking was switched off without a recorded reason, then turned back on for one test.**
+   - **Root cause:** `77b3dec5` short-circuited `getAbTestVisitorRows` (ADR-009). Re-enabling every page would have resumed writes the kill switch was stopping.
+   - **Prevention:** the route stores homepage exposures, homepage signup/login clicks, and a completed `/signup` registration this site sees. A live write and read still needs the A/B key in the environment. Do not widen the gate without a new test.

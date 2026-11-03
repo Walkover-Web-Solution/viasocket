@@ -1,14 +1,15 @@
 ---
-covers: ["src/app/features/**", "src/app/use-cases/**", "src/app/new-direction/**", "src/app/lib/feature-data.js", "src/app/components/features/**", "src/components/IntegrationsComp/addToProduct/FeaturesPage.js", "src/components/IntegrationsComp/addToProduct/UseCasesPage.js", "src/components/IntegrationsComp/addToProduct/LetterPage.js", "src/components/IntegrationsComp/addToProduct/UseCaseGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureVisuals.js", "src/components/IntegrationsComp/addToProduct/SiteChrome.js", "src/components/IntegrationsComp/addToProduct/CopyPrompt.js", "src/components/IntegrationsComp/addToProduct/copy.js", "src/components/IntegrationsComp/addToProduct/addToProduct.module.scss"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/app/features/**", "src/app/use-cases/**", "src/app/new-direction/**", "src/app/lib/feature-data.js", "src/app/components/features/**", "src/components/IntegrationsComp/addToProduct/FeaturesPage.js", "src/components/IntegrationsComp/addToProduct/FeatureGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js", "src/components/IntegrationsComp/addToProduct/featurePages.js", "src/components/IntegrationsComp/addToProduct/UseCasesPage.js", "src/components/IntegrationsComp/addToProduct/LetterPage.js", "src/components/IntegrationsComp/addToProduct/UseCaseGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureVisuals.js", "src/components/IntegrationsComp/addToProduct/SiteChrome.js", "src/components/IntegrationsComp/addToProduct/CopyPrompt.js", "src/components/IntegrationsComp/addToProduct/copy.js", "src/components/IntegrationsComp/addToProduct/addToProduct.module.scss"]
+verified_at: 0d14d549
+verified_on: 2026-10-30
 ---
 # Module: Features, Use Cases and the Founders' Letter
 
-The pages that explain the integration-layer product in the homepage design: `/features`, `/use-cases` and `/new-direction`. The older table-driven `/features/[...feature]` pages also live here. The integrations pages built on the same `addToProduct` components are module [02](./02-integrations-directory.md).
+The pages that explain the integration-layer product in the homepage design: `/features`, one page per feature at `/features/<slug>`, `/use-cases` and `/new-direction`. The older table-driven feature pages, still served for slugs without a new page, also live here. The integrations pages built on the same `addToProduct` components are module [02](./02-integrations-directory.md).
 
 ## Purpose
-- `/features` answers "what does the integration layer give my product or agent?" in four groups: `connect`, `customers`, `ai` and `reliability` (`src/components/IntegrationsComp/addToProduct/copy.js:FEATURES_COPY`).
+- `/features` answers "what does the integration layer give my product or agent?" with one tile per feature (`src/components/IntegrationsComp/addToProduct/copy.js:FEATURES_COPY.features`).
+- `/features/<slug>` explains one feature: what it gives you, how it works, what teams build with it, related features and FAQs.
 - `/use-cases` answers "what can I build?" with cards. Each card copies a ready prompt.
 - `/new-direction` is the founders' letter on why viaSocket moved from the workflow editor to an integration and action layer. Since `b3a7ab32` (2026-10-20) it is also where `/help` and most `/help/*` paths 301 to (see [DECISIONS ADR-011](../DECISIONS.md)).
 
@@ -16,7 +17,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 
 ## Business Value
 - The letter is the repo's main **approved-direction** source for the integration-layer positioning (see [VISION](../VISION.md)). Changing its copy changes the stated product direction, so treat edits as product decisions.
-- Every screen leads with "Copy setup prompt", which sends the visitor's coding agent to flow.viasocket.com/documentation/skill.md (`src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT`). That is the funnel these pages serve. *Inferred* from the CTA order, since no metric is recorded ([OPEN_QUESTIONS P-02](../OPEN_QUESTIONS.md#active-questions-table)).
+- Every screen leads with "Copy setup prompt", which sends the visitor's coding agent to install the viaSocket skill from beta-flow.viasocket.com (`src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT`, the same text as the homepage `#promptText`). Org and project ids are placeholders. That is the funnel these pages serve. *Inferred* from the CTA order, since no metric is recorded ([OPEN_QUESTIONS P-02](../OPEN_QUESTIONS.md#active-questions-table)).
 
 ---
 
@@ -30,13 +31,19 @@ The pages that explain the integration-layer product in the homepage design: `/f
 ## Screens
 ### 1. Features (`src/app/features/page.js` → `src/components/IntegrationsComp/addToProduct/FeaturesPage.js:FeaturesPage`)
 - Static `metadata` from `FEATURES_COPY` (`metaTitle`, `metaDesc`), with `alternates.canonical` set to https://viasocket.com/features.
-- Sections: `FaqJsonLd` (FAQPage JSON-LD), `SiteHeader`, hero (`h1`, `sub`, `CopyPromptButton`, expert link), one `FeatureGroup` per `FEATURES_COPY.groups` entry, `BlogPosts`, `FaqSection`, `SiteFooter`.
-- In a group, a `big` card holds an illustration chosen by key from `src/components/IntegrationsComp/addToProduct/FeatureVisuals.js:VISUALS` (`auth`, `tenant`, `agent`, `chatbot`, `browser`). The `featured` group gives every card a visual.
-- Data: only the blog cards are fetched, through `src/utils/axiosCalls.js:getActionLayerBlogs` (Action Layer RSS feed, 1-hour cache). Everything else is `copy.js`.
+- Sections: `FaqJsonLd` (FAQPage JSON-LD), `SiteHeader`, hero (`h1`, `sub`, `CopyPromptButton`, expert link), `FeatureGrid`, `BlogPosts`, `FaqSection`, `SiteFooter`.
+- `src/components/IntegrationsComp/addToProduct/FeatureGrid.js:FeatureGrid` shows every `FEATURES_COPY.features` entry (`[title, description, icon, { slug, href, cta, ai, ex, hint }]`) as a same-size tile with only its icon and title. The description, `ex` and `hint` are kept in `copy.js` but not shown. `ai` gives the three AI tiles a pink-to-periwinkle gradient on the title and icon. A tile links to `/features/<slug>` once `featurePages.js` has that slug, or to its `href`; its "→" shows on hover (always on touch screens).
+- Data: the blog cards are the three newest `/blogs` posts (`src/app/lib/blogs.js:getLatestBlogs`), shown with the `/blogs` card (`BlogsPage.js:PostCard`); "View all articles" goes to `/blogs`. Everything else is `copy.js`.
+
+### 1a. Feature pages (`src/app/features/[...feature]/page.js` → `src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js:FeatureDetailPage`)
+- One page per entry in `src/components/IntegrationsComp/addToProduct/featurePages.js:FEATURE_PAGES` (15 today, keyed by the slug in `FEATURES_COPY.features`). The title and icon come from the feature's tile; everything else from its entry: `metaTitle`, `metaDesc`, `h1`, `sub`, `caps`, `steps`, `uses`, `related`, `faqs`, `endTitle`.
+- Sections: hero with breadcrumbs, what you get (`feats`), how it works (`fd-steps`), what teams build (`bento`), related features (`FeatureGrid`), `BlogPosts` (Action Layer feed), `FaqSection`, the closing call to action. JSON-LD: `BreadcrumbList` and `FAQPage`.
+- Metadata (`newFeatureMetadata`): title, description, canonical, OpenGraph and Twitter, with the hero share image ([05-navigation](../05-navigation.md) `/og/[...path]`).
+- The copy is a draft awaiting approval (`featurePages.js` header).
 
 ### 2. Use cases (`src/app/use-cases/page.js` → `src/components/IntegrationsComp/addToProduct/UseCasesPage.js:UseCasesPage`)
 - Sections: `FaqJsonLd`, `SiteHeader`, hero, `UseCaseGrid`, `FaqSection`, `SiteFooter`. There is no data fetch.
-- `src/components/IntegrationsComp/addToProduct/UseCaseGrid.js:UseCaseCard` copies `` `${c.prompt}\n\n${BASE_PROMPT}` `` when clicked. Cards come from `USECASES_COPY.cases` (14 entries); their app icons are URLs in the `ICONS` map in `copy.js`.
+- `src/components/IntegrationsComp/addToProduct/UseCaseGrid.js:UseCaseCard` copies `promptWithUseCase(c.prompt)` when clicked: the setup prompt without "Ask me what I want to build first.", then `What I want to build: ` plus the card's prompt. Cards come from `USECASES_COPY.cases` (14 entries); their app icons are URLs in the `APP_ICONS` map in `copy.js`.
 
 ### 3. Founders' letter (`src/app/new-direction/page.js` → `src/components/IntegrationsComp/addToProduct/LetterPage.js:LetterPage`)
 - Metadata sets `authors` and an `article` OpenGraph type whose image is the first author's photo (`LETTER_COPY.authors[0].photo`, under `public/new-home/assets/`).
@@ -44,7 +51,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 - There is no data fetch.
 
 ### 4. Legacy feature pages (`src/app/features/[...feature]/page.js` → `src/app/components/features/FeaturesClient.js:FeaturesClient`)
-- `/features/<slug>` (for example `/features/variables`, the target of the `/variables` redirect in `next.config.js`) loads `src/app/lib/feature-data.js:getFeaturesPageData`. That loader reads the features table by `slug`, plus navbar, footer, meta and blog rows tagged `feature`.
+- A slug with no entry in `FEATURE_PAGES` (for example `/features/variables`, the target of the `/variables` redirect in `next.config.js`) still loads `src/app/lib/feature-data.js:getFeaturesPageData`. That loader reads the features table by `slug`, plus navbar, footer, meta and blog rows tagged `feature`.
 - Renders the older daisyUI components: `FeatureBannerComp`, `FeatureGridComp`, `AutomationIdeasSection`, `FeatureContentComp` (FAQs), `BlogGrid`, `FeaturesFooterComp`.
 - The `!featureSlug` branch (`getAllFeatures`) appears unreachable now. `/features` itself is served by `src/app/features/page.js`, and a non-optional catch-all always has at least one segment (*inferred* from the routing).
 
@@ -56,7 +63,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 - All styling is the CSS module `addToProduct.module.scss` with the Geist fonts from the `geist` package. These pages use no Tailwind. Whether this pattern is accepted is [OPEN_QUESTIONS U-07](../OPEN_QUESTIONS.md#active-questions-table).
 
 > [!WARNING]
-> `SiteChrome.js` and `copy.js` (`NAV`, `FOOTER_GROUPS`, `BASE_PROMPT`) are **hand copies** of `public/new-home/index.html` (header, footer, `#promptText`). A change to the homepage nav, footer or setup prompt must be made in both places. Nothing keeps them in sync.
+> `SiteChrome.js` and `copy.js` (`NAV`, `FOOTER_GROUPS`, `BASE_PROMPT`) are **hand copies** of `public/new-home/index.html` (header, footer, `#promptText`). A change to the homepage nav, footer or setup prompt must be made in both places. Nothing keeps them in sync. `SiteFooter`'s Company column ends with "Explore more" (`https://walkover-products.embarko.app/?from=viasocket`, `target="_blank"`, `rel="noopener"`). The static homepage copy does not have that link yet: add it in `viasocket-site` and export. A hand edit of `public/new-home/index.html` is overwritten by the next export.
 
 > [!WARNING]
 > `FEATURES_COPY` is commented "Kept word for word with the approved copy" (`copy.js`). Do not reword it without a product request.
@@ -64,7 +71,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 ---
 
 ## Data Dependencies
-1. **Action Layer blog feed:** `src/utils/axiosCalls.js:getActionLayerBlogs` reads the production feed from every environment ([OPEN_QUESTIONS S-05](../OPEN_QUESTIONS.md#active-questions-table)). Only `/features` uses it. See [table-api / feeds](../current-infrastructure/table-api.md).
+1. **Blog posts:** `/features` shows the newest `/blogs` posts (`src/app/lib/blogs.js:getLatestBlogs`, bundled `src/data/blogs.json`). The feature pages still read the Action Layer feed, `src/utils/axiosCalls.js:getActionLayerBlogs`, which reads the production feed from every environment ([OPEN_QUESTIONS S-05](../OPEN_QUESTIONS.md#active-questions-table)). See [table-api / feeds](../current-infrastructure/table-api.md).
 2. **table-api (legacy `/features/<slug>` only):** `src/utils/getData.js:getFeatureData` (the `ALLFEATURES` table), `getNavbarData`, `getFooterData`, `src/utils/getMetaData.js:getMetaData`, `src/utils/getBlogData.js:getBlogData`. Table columns are in [database/entities](../database/entities.md).
 3. **Constants:** everything else is `src/components/IntegrationsComp/addToProduct/copy.js` (`FEATURES_COPY`, `USECASES_COPY`, `LETTER_COPY`, `BASE_PROMPT`, `NAV`, `START_URL`, `FOOTER_GROUPS`).
 
@@ -91,4 +98,6 @@ The pages that explain the integration-layer product in the homepage design: `/f
 ## Development Tasks (Next Phases)
 - [ ] Decide whether `/use-cases` and `/new-direction` join `src/app/sitemap.js:STATIC_ROUTES` ([OPEN_QUESTIONS U-08](../OPEN_QUESTIONS.md#active-questions-table)).
 - [ ] Decide whether the "Start free" CTA should tag `utm_source` with the page path ([OPEN_QUESTIONS T-04](../OPEN_QUESTIONS.md#active-questions-table)).
+- [ ] Redirect the old `/features/<slug>` URLs that have no new page (32 rows in the features table, all live) to their closest new page, `/integrations` or `/features`, and then retire `FeaturesClient` and `feature-data.js`.
+- [ ] Get the feature-page copy (`featurePages.js`) approved.
 - [ ] Confirm the `addToProduct` SCSS-module plus shared `copy.js` pattern ([OPEN_QUESTIONS U-07](../OPEN_QUESTIONS.md#active-questions-table)) and whether the legacy `/features/<slug>` pages stay (new question in M2 notes).

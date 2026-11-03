@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { MoveRight } from 'lucide-react';
 import RelaySignupCTA from './RelaySignupCTA';
 
+const CTA = 'Get started free — 100,000 tasks/month, no credit card required';
+
 export default function RelayCTABanner() {
     return (
         <div className="bg-accent relative overflow-hidden">
@@ -21,27 +23,18 @@ export default function RelayCTABanner() {
             </svg>
 
             <div className="container py-20 flex flex-col items-center text-center gap-6 relative z-10">
-                <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl">
-                    Sept 14 is the deadline Relay gave you. Beat it by a mile.
-                </h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-white max-w-2xl">{CTA}</h2>
                 <p className="text-white/80 text-sm max-w-xl">
-                    Export today, import in minutes, and let your first year ride on us.
-                    <br />
-                    The only thing you lose is the deadline.
+                    Or{' '}
+                    <Link href="/use-cases" className="underline underline-offset-4 text-white">
+                        see integration use cases
+                    </Link>{' '}
+                    before you create an account.
                 </p>
 
-                <div className="flex flex-wrap items-center justify-center gap-3 mt-2">
-                    <RelaySignupCTA className="btn btn-outline">
-                        Import my Relay workflows <MoveRight className="w-4 h-4" />
-                    </RelaySignupCTA>
-                    <Link
-                        href="https://cal.id/team/viasocket/workflow-setup-discussion"
-                        target="_blank"
-                        className="inline-flex items-center gap-2 border border-white text-white hover:bg-white/10 text-sm font-semibold px-6 py-3 rounded-full transition-colors"
-                    >
-                        Book a free migration call
-                    </Link>
-                </div>
+                <RelaySignupCTA className="btn btn-outline">
+                    {CTA} <MoveRight className="w-4 h-4" />
+                </RelaySignupCTA>
             </div>
         </div>
     );

@@ -8,6 +8,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
 import { getMCPSaasPageData } from '../../lib/mcp-data';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -21,13 +22,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'MCP for SaaS - viaSocket',
             description: metaData?.description || 'Embed MCP server in your SaaS product - viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/mcp/saas', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/mcp/saas', metaData?.image),
         },
     };
 }

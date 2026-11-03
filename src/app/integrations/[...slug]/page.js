@@ -3,6 +3,7 @@ import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../../lib/getAuth';
 import { COPY as ADD_TO_PRODUCT_COPY, fill } from '@/components/IntegrationsComp/addToProduct/copy';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -33,8 +34,8 @@ export async function generateMetadata({ params, searchParams }) {
                 description,
                 ...(admin?.keywords?.length ? { keywords: admin.keywords } : {}),
                 alternates: { canonical: url },
-                openGraph: { title, description, url, siteName: 'viaSocket', type: 'website' },
-                twitter: { card: 'summary_large_image', title, description },
+                openGraph: { title, description, url, siteName: 'viaSocket', type: 'website', images: ogImages(`/integrations/${data.appOneDetails.appslugname}`) },
+                twitter: { card: 'summary_large_image', title, description, images: twitterImages(`/integrations/${data.appOneDetails.appslugname}`) },
             };
         }
 
@@ -59,13 +60,13 @@ export async function generateMetadata({ params, searchParams }) {
             openGraph: {
                 title,
                 description,
-                images: metadata?.image ? [{ url: metadata.image }] : undefined,
+                images: ogImages(`/integrations/${slug.join('/')}`, metadata?.image),
             },
             twitter: {
                 card: 'summary_large_image',
                 title,
                 description,
-                images: metadata?.image ? [metadata.image] : undefined,
+                images: twitterImages(`/integrations/${slug.join('/')}`, metadata?.image),
             },
         };
     } catch (error) {

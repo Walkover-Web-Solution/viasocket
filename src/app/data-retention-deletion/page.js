@@ -4,6 +4,7 @@ import ConditionalNavbar from '@/components/ConditionalLayout/ConditionalNavbar'
 import ConditionalFooter from '@/components/ConditionalLayout/ConditionalFooter';
 import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getDataRetentionDeletionPageData } from '../lib/data';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -17,13 +18,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'Data Retention and Deletion Policy - viaSocket',
             description: metaData?.description || 'Data Retention and Deletion Policy - viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/data-retention-deletion', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/data-retention-deletion', metaData?.image),
         },
     };
 }

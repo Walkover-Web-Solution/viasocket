@@ -2,6 +2,13 @@
 
 This repo is the public website at **viasocket.com**: the static homepage, SEO landing pages, an integrations directory, automation templates, campaign and migration pages, lead forms, and the `/developers` (Embed) funnel. It hands visitors to signup or to the product at flow.viasocket.com, carrying attribution with them. It is not the product. Its canonical positioning is "Integration Layer for your products & agents" ([DECISIONS ADR-015](docs/DECISIONS.md#adr-015-the-integration-layer-is-the-canonical-positioning)). It is Next.js 15 (App Router) in plain JavaScript, deployed to Cloudflare Pages with `@cloudflare/next-on-pages`. Most page content and metadata come from table-api at request time.
 
+<!-- middleware:guidance:start -->
+## Guidance for this kind of repository
+
+Kept by the middleware (version 2769b521da8c). Read these before changing anything here:
+- [docs/guidance/website.md](docs/guidance/website.md)
+<!-- middleware:guidance:end -->
+
 ## Commands
 
 | Task | Command |
@@ -12,7 +19,7 @@ This repo is the public website at **viasocket.com**: the static homepage, SEO l
 | Cloudflare build / local preview | `npm run pages:build` / `npm run preview` |
 | Type check, lint, tests | **None exist.** Use the checklist in [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md#how-an-agent-checks-its-work-verification-checklist). |
 
-Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 53 routes and prints only Sass `@import` deprecation warnings.
+Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 56 routes and prints only Sass `@import` deprecation warnings.
 
 ## Reading Order Before You Change Code
 
@@ -39,13 +46,15 @@ Always read 1–3 first, then only the docs your task needs. [docs/README.md](do
 1. **Keep every change as small as the request allows.** Touch only the lines it needs, and add no unrequested styling, helpers or refactors. Never run Prettier or any formatter over files you did not change: it would rewrite about half of `src/`. The maintainer reviews diffs closely and reverts scope creep ([DECISIONS ADR-013](docs/DECISIONS.md#adr-013-working-conventions-maintainer-guidance)).
 2. **Work on the branch that is checked out, and never commit on `main`.** Commit or push only when asked. If asked to commit while on `main`, create a branch from `origin/test` (named `<name>-test`), commit there and open a PR into `test` (maintainer instruction, 2026-10-22).
 3. **The homepage `/` is the static site in `public/new-home/`.** `next.config.js` rewrites `/` to it (`beforeFiles`), so `src/app/page.js`, `src/app/home/page.js` and `src/app/front-page/**` never render. Don't edit them for homepage work; they are kept only as the rollback path ([DECISIONS ADR-008](docs/DECISIONS.md#adr-008-serve--from-the-static-site-in-publicnew-home)). `public/new-home/` itself is **exported from the `viasocket-site` repo**, so a hand edit here is overwritten by the next export unless the change is also made there. After changing its CSS or JS, bump the `?v=` query in `public/new-home/index.html`, and after it deploys, purge `https://viasocket.com/` in Cloudflare ([modules/01-homepage](docs/modules/01-homepage.md)).
+
+Version B of the homepage lives in `public/home-b/` and is not part of the `viasocket-site` export. The exported `public/new-home/index.html` must keep `<script src="/home-ab.js?v=1"></script>` as its first script, or the split stops.
 4. **Every dynamic `page.js` and `route.js` must `export const runtime = 'edge'`.** `next build` passes without it, but the Cloudflare build fails. No Node APIs (`fs`) are available at runtime ([ARCHITECTURE](docs/ARCHITECTURE.md#request-path-cloudflare-pages)).
 5. **table-api access follows one path.** Put the table id in `src/const/tables.js` and its columns in `src/const/fields.js`. For a read from the content database, add a getter to `src/utils/getData.js` that calls `src/utils/axiosCalls.js:getDataFromTable`. A new database or a write gets its own function in `src/utils/axiosCalls.js` (axios, `auth-key` header from env, failures reported through `sendErrorMessage`). Pages call these through a `src/app/lib/*-data.js` loader. Never call raw `fetch` from a page or component, and never import `axiosCalls.js` into a `'use client'` file: it carries the keys ([docs/AGENTS.md §1](docs/AGENTS.md#1-architecture--integration-phase), [database/entities](docs/database/entities.md)).
-6. **Never hardcode endpoints, database ids or keys.** Base URLs, database ids and keys come from env vars (a new database uses the `NEXT_PUBLIC_DB_ID_<NAME>` / `NEXT_PUBLIC_DB_KEY_<NAME>` pair; no live example exists yet, since today's ids are hardcoded). Table ids stay in `src/const/tables.js`. This matters because each environment points at different tables. Existing hardcoded ones are tracked as debt (S-02), not as a pattern to copy. Everything `NEXT_PUBLIC_*` ships in client JS.
-7. **`utm_source` is the page's own path** (`/integrations`, `/embed/app-integration`). Per-button detail goes in `trackCtaClick` (`src/utils/trackVisitor.js`) `element`/`label`, never in `utm_source`. A tag that is not path-shaped is mistaken for external attribution and locks the cookie for a day ([docs/AGENTS.md §4](docs/AGENTS.md#4-id-handling--cross-system-references), [FLOWS](docs/FLOWS.md#detailed-journey-landing-utm-capture-and-signup)).
+6. **Never hardcode endpoints, database ids or keys.** Base URLs, database ids and keys come from env vars (a new database uses the `NEXT_PUBLIC_DB_ID_<NAME>` / `NEXT_PUBLIC_DB_KEY_<NAME>` pair; no live example exists yet, since today's ids are hardcoded). Table ids stay in `src/const/tables.js`. This matters because each environment points at different tables. Existing hardcoded ones are tracked as debt (S-02), not as a pattern to copy. The one named exception is the admin visitor-event forward ([DECISIONS ADR-018](docs/DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)): its URL and key are built into `src/app/api/track-variant/route.js` so Cloudflare Pages needs no setting. Do not copy that onto another endpoint. Everything `NEXT_PUBLIC_*` ships in client JS.
+7. **`utm_source` is the page's own path** (`/integrations`, `/embed/app-integration`). Per-button detail goes in `trackCtaClick` (`src/utils/trackVisitor.js`) `element`/`label`, never in `utm_source`. A tag that is not path-shaped is mistaken for external attribution and locks the cookie for 30 days ([docs/AGENTS.md §4](docs/AGENTS.md#4-id-handling--cross-system-references), [FLOWS](docs/FLOWS.md#detailed-journey-landing-utm-capture-and-signup)).
 8. **Campaign pages keep their own tag** (e.g. `relay-switch-google-ads`). `utm_source` must appear exactly once in the signup URL, and the tag is stamped into `utmData` just before navigating.
 9. **A prompt typed on a marketing page travels in the `utmData` cookie** (`setCookie` / `getCookie` from `src/utils/handleUtmSource.js`), never as a query parameter.
-10. **Tracking runs in local, test and production.** Rows carry an `environment` column, and any read-back must filter on it, because test and prod share the `visitor_id` cookie. Visitor tracking is currently switched off ([OPEN_QUESTIONS T-01](docs/OPEN_QUESTIONS.md#t-01-visitor-and-ab-tracking-writes-are-switched-off)); don't re-enable it casually.
+10. **Tracking runs in local, test and production.** Rows carry an `environment` column, and any read-back must filter on it, because test and prod share the `visitor_id` cookie. Homepage exposures, homepage signup/login clicks, and a completed registration observed on `/signup` (`signup_completed`) are stored. Every other event is still dropped (`not a homepage event`). Don't widen that without a new test ([modules/01-homepage](docs/modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version)).
 11. **The domain is bare `viasocket.com`. Never add `www` handling.** Host checks that single out production compare the full hostname exactly (`test.viasocket.com` is also a `.viasocket.com` host).
 12. **Prove which layer fails before editing tracking or analytics code.** Instrument the chain (cookie → request → payload → response → cache-busted read). Analytics work counts as verified only after a real write and read against the live table. The table has no DELETE, so tag test rows by `environment`.
 13. **Verify per-visitor behaviour on production as well as test.** viasocket.com sits behind a Cloudflare cache rule that local and test lack. Compare `cache-control`, `cf-cache-status` and `set-cookie` with `curl -D -` on both hosts.
@@ -60,7 +69,7 @@ Full annotated tree and "where does a new X go" rules: [docs/08-folder-structure
 - `src/app/`: App Router routes. Each section (`integrations/`, `automations/`, `pricing/`, `developers/`, `embed/`, `migration/` …) owns its `page.js`. `src/app/developers/` is a self-contained sub-app with its own layout. <!-- verify:ignore -->
 - `src/app/components/`: section-specific components. `src/components/`: older shared components (navbar pieces, footer, FAQ, meta head, integrations).
 - `src/components/IntegrationsComp/addToProduct/`: the homepage design rebuilt in Next (own header/footer, `copy.js`, SCSS module) for `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction`.
-- `src/app/lib/*-data.js`: per-page data aggregators. `src/utils/`: table-api client (`axiosCalls.js`, `getData.js`), UTM and redirect helpers, tracking. `src/const/`: table ids, field lists, A/B config.
+- `src/app/lib/*-data.js`: per-page data aggregators. `src/utils/`: table-api client (`axiosCalls.js`, `getData.js`), UTM and redirect helpers, tracking, and `mwExperiment.js` (middleware experiment client; not the visitor table). `src/const/`: table ids, field lists, A/B config.
 - `src/middleware.js`: `/home` redirect, the `/` cache headers, Reddit click-id cookie and page-visit call.
 - `src/app/api/track-variant/route.js`: the only internal API route.
 - `next.config.js`: the `/` rewrite and permanent redirects. `tailwind.config.js` holds theme tokens; `src/scss/` holds legacy global styles.

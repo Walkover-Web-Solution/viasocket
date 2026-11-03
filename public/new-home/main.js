@@ -37,6 +37,12 @@
     });
   }
   var PROMPT = $('#promptText').textContent.trim();
+  // A card that already names the build drops this line and appends that use case.
+  var ASK_LINE = 'Ask me what I want to build first.\n';
+  function withUseCase(useCase) {
+    var body = PROMPT.indexOf(ASK_LINE) === -1 ? PROMPT : PROMPT.replace(ASK_LINE, '');
+    return body.replace(/\s+$/, '') + '\nWhat I want to build: ' + useCase;
+  }
   /* Clipboard refused: show the prompt, selected, so it can be copied by hand. */
   function manual(text) {
     var box = $('#copy-fb');
@@ -475,7 +481,10 @@
     });
   }
   // the five agents first, then the apps and internal tools; six show first, the rest wait for "View all"
-  function galPrompt(a) { return 'Add viaSocket to my project and build this: ' + a.name.toLowerCase() + ' — ' + a.line.replace(/\.$/, '') + '. Use ' + a.apps.map(function (k) { return IC[k][0]; }).join(', ') + ' through viaSocket.\n\n' + PROMPT; }
+  function galPrompt(a) {
+    var useCase = 'Add viaSocket to my project and build this: ' + a.name.toLowerCase() + ' — ' + a.line.replace(/\.$/, '') + '. Use ' + a.apps.map(function (k) { return IC[k][0]; }).join(', ') + ' through viaSocket.';
+    return withUseCase(useCase);
+  }
   function tag(a) { return '<span class="gtag' + (a.live ? ' is-live' : '') + '"><i class="dot' + (a.live ? '' : ' ex') + '" aria-hidden="true"></i>' + (a.live ? 'Live' : 'Example') + '</span>'; }
 
   /* ---------- the index: a numbered list on the left (agents first, then apps, then internal tools), one preview pane on the right ---------- */
@@ -604,11 +613,41 @@
   }).join('');
   prList.addEventListener('click', function (e) {
     var b = e.target.closest('[data-pr]'); if (!b) return;
-    var text = PR[Number(b.getAttribute('data-pr'))][0] + '\n\n' + PROMPT;
+    var text = withUseCase(PR[Number(b.getAttribute('data-pr'))][0]);
     copyText(text).then(function () { toast('Copied. Paste it into your AI.'); }, function () { manual(text); });
   });
 
   ixShow(IX_ORDER[0]);
   if (!reduced && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { if (en[0].isIntersecting) scenePlay(pane); }, { threshold: 0.35 }).observe($('.ix'));
+
+  /* ---------- product video: thumbnail until the click, then the embed. No YouTube frame or script before that. ---------- */
+  var pv = $('#pv');
+  if (pv) {
+    var poster = $('.pv-img', pv);
+    if (poster) poster.addEventListener('error', function () {
+      if (poster.getAttribute('data-fb')) return;
+      poster.setAttribute('data-fb', '1');
+      poster.src = 'https://img.youtube.com/vi/GRzkVjW839A/hqdefault.jpg';
+    });
+    pv.addEventListener('click', function () {
+      var frame = doc.createElement('iframe');
+      frame.className = 'pv-frame';
+      frame.title = 'See viaSocket in action';
+      frame.src = 'https://www.youtube-nocookie.com/embed/GRzkVjW839A?autoplay=1&rel=0';
+      frame.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+      frame.setAttribute('allowfullscreen', '');
+      pv.replaceWith(frame);
+    });
+  }
+  // fade and rise once, the first time it scrolls into view. Reduced motion, or no observer, leaves it as painted.
+  var watch = $('#in-action');
+  if (watch && !reduced && 'IntersectionObserver' in window) {
+    watch.classList.add('arm');
+    new IntersectionObserver(function (en, obs) {
+      if (!en[0].isIntersecting) return;
+      watch.classList.add('show');
+      obs.disconnect();
+    }, { threshold: 0.2 }).observe(watch);
+  }
 
 })();

@@ -1,7 +1,7 @@
 ---
-covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "public/new-home/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**", "public/home-b/**", "public/home-ab.js"]
+verified_at: a9853794
+verified_on: 2026-11-02
 ---
 # User Flows & Critical Journeys
 
@@ -11,7 +11,7 @@ viaSocket's site is a marketing site: there is no logged-in area here. Every jou
 
 These apply to every journey below. Agents get them wrong most often.
 
-- **`/` is not a Next page.** `next.config.js` has a `beforeFiles` rewrite from `/` to `public/new-home/index.html`, which is plain HTML plus `public/new-home/main.js`. The root layout, `src/app/providers.js:AppProvider`, `TrackingCookies`, `VariantTracker` and `RedditPixel` therefore **do not run on the homepage**. Only `src/middleware.js` runs there. `src/app/page.js:HomePage`, with its A/B variants, is built but unreachable at `/`.
+- **`/` is not a Next page.** `next.config.js` has a `beforeFiles` rewrite from `/` to `public/new-home/index.html` (version A), which is plain HTML plus `public/new-home/main.js`. Version B is the static file `public/home-b/index.html`, rewritten from `/home-b`. The root layout, `src/app/providers.js:AppProvider`, `TrackingCookies`, `VariantTracker` and `RedditPixel` therefore **do not run on either homepage**. `public/home-ab.js` assigns the version and posts the homepage events. Middleware runs on both, and sends a crawler that asks for `/home-b` back to `/`. `src/app/page.js:HomePage`, with its old A/B variants, is built but unreachable at `/`.
 - **Internal links are full page loads.** `AppProvider` installs a document click listener. Any same-origin `<a>` click (not `#` links and not `target="_blank"`) has its default prevented, a skeleton is shown, and the code sets `window.location.href`. Client-side `next/link` navigation never happens. Several CTAs depend on this ("/signup reads the query string fresh", see `src/app/migration/relay/RelaySignupCTA.js`).
 - **"Signed in" means the `prod` cookie exists.** `src/app/lib/getAuth.js:getHasToken` and `src/app/components/navbar/NavbarServer.js:NavbarServer` read it on the server. When it is present, CTAs say "Dashboard" and go to flow.viasocket.com instead of `/signup`. This repo never sets the cookie.
 - **Redirects decide which code runs.** `/home`, `/embed`, `/mcp`, `/login` and `/help/*` all redirect before any page renders, so their `page.js` files (where they exist) never run. The full redirect, rewrite and route table lives in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware); paths served by other deployments are in [05-navigation](05-navigation.md#paths-served-by-other-deployments).
@@ -39,7 +39,7 @@ sequenceDiagram
     autonumber
     actor V as Visitor
     participant P as Content page (AppProvider)
-    participant C as utmData cookie (.viasocket.com, 1 day)
+    participant C as utmData cookie (.viasocket.com, 30 days)
     participant CTA as CTA handler
     participant S as /signup (CustomLoginOptimized)
     participant M as MSG91 proxy-auth
@@ -48,23 +48,23 @@ sequenceDiagram
     V->>CTA: Clicks signup (optionally after typing a prompt)
     CTA->>C: carryPromptToSignup / savePageUtmSource (only some CTAs)
     CTA->>S: Navigates to /signup?utm_source=... (or ?state=...&utm_source=...)
-    S->>C: setUtmSource(): reads cookie first, else utm_* from the signup URL
+    S->>C: buildSignupState(): reads cookie first, else utm_* and click ids from the signup URL
     S->>M: initVerification({ referenceId, state, addInfo.redirect_path })
     M-->>V: Google / password / Apple / OTP signup, then the product
 ```
 
 ### 2. Step-by-step path and code connections
 
-1. **Capture.** `AppProvider` calls `src/utils/handleUtmSource.js:getUtmSource` once on mount. It copies `utm_*`, `affiliate_*` and `ref` query params into the `utmData` cookie, but **only when no `utmData` cookie exists**. The first attribution of the day wins. `src/utils/handleUtmSource.js:setCookie` scopes the cookie to `.viasocket.com` on viasocket hosts, so test.viasocket.com and viasocket.com **share** it. On localhost and IP addresses it is host-only.
+1. **Capture.** `AppProvider` calls `src/utils/handleUtmSource.js:getUtmSource` once on mount. It copies `utm_*`, `affiliate_*`, `ref` and the ad click ids (`gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid`, `rdt_cid`) into the `utmData` cookie, but **only when no `utmData` cookie exists**. The first attribution wins for the life of that cookie (30 days from this writer). `src/utils/handleUtmSource.js:setCookie` scopes the cookie to `.viasocket.com` on viasocket hosts, so test.viasocket.com and viasocket.com **share** it. On localhost and IP addresses it is host-only.
 2. **Prompt (optional).** A typed prompt travels in the cookie, not in the URL. `src/app/front-page/signup.js:carryPromptToSignup` replaces `;` with `,`, caps the text at `PROMPT_MAX_LENGTH` (1500), and writes `utmData.prompt`. It also copies the prompt to `localStorage.prompt` on a best-effort basis. It must run **before** `savePageUtmSource`.
 3. **Stamp the page's own source.** `src/utils/handleUtmSource.js:savePageUtmSource` overwrites `utmData.utm_source` only when the existing value passes `isInternalUtmSource`: empty, starts with `/`, or listed in `INTERNAL_UTM_SOURCES` (`home-A`, `home-B`, `relay-switch-google-ads`). External attribution is never overwritten. It keeps any other keys, such as `prompt` or `intent`.
 4. **Navigate.** Pages navigate in one of three ways (see the table below).
-5. **Signup page.** `src/app/signup/page.js:SignupPage` runs on the edge. It passes `?redirect_to` through to `CustomLoginOptimized`, which loads `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js`. It then calls `window.initVerification` once per page (guarded by `window.__init_verification_ran__`) with `state: setUtmSource()`. With no arguments the fallback source is `'index'`.
-6. **What `state` contains.** `src/utils/handleUtmSource.js:setUtmSource` returns `<cookie JSON>&<k=v&k=v...>`. It is built from the cookie when one exists. Otherwise it is built from `utm_*`/`affiliate_*`/`ref` on the current URL, writing the cookie as a side effect. With neither, it falls back to `{"utm_source": source}`. The `state=` query param that `handleRedirect` puts on `/signup` URLs is **never read** by the signup page.
+5. **Signup page.** `src/app/signup/page.js:SignupPage` runs on the edge. It passes `?redirect_to` through to `CustomLoginOptimized`, which loads `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js`. It then calls `window.initVerification` once per page (guarded by `window.__init_verification_ran__`) with `state: buildSignupState()`. With no cookie and no attribution params the fallback source is `'index'`.
+6. **What `state` contains.** `src/utils/handleUtmSource.js:buildSignupState` returns `<cookie JSON>&<k=v&k=v...>`. It calls `setUtmSource()` first so a missing cookie is filled from `utm_*` / `affiliate_*` / `ref` / click ids on the current URL. It then reads the cookie back, adds `visitor_id` (from the `visitor_id` cookie) and `cta` (from `signup_cta`, the last signup button), and URL-encodes the `k=v` half. With neither a cookie nor params, it falls back to `{"utm_source":"index"}`. The `state=` query param that `handleRedirect` puts on `/signup` URLs is **never read** by the signup page. `handleRedirect` still calls `setUtmSource`, whose `k=v` half is not encoded.
 
 ```json
 // utmData cookie value (JSON, not URL-encoded). All keys optional.
-{ "utm_source": "/integrations", "utm_campaign": "x", "ref": "abc", "prompt": "When a lead…", "intent": "hireanexpert" }
+{ "utm_source": "/integrations", "utm_campaign": "x", "gclid": "abc", "ref": "abc", "prompt": "When a lead…", "intent": "hireanexpert" }
 ```
 
 ### 3. How each entry point reaches signup
@@ -84,8 +84,8 @@ sequenceDiagram
 
 - **Signed in (`prod` cookie):** CTAs go to flow.viasocket.com through `handleRedirect` (new tab) instead of `/signup`.
 - **MCP pages (`/mcp/*`):** the navbar sends visitors to app.mushroom.viasocket.com/login with the app slug (or `'viasocket'`) as the source. Note that `/mcp` itself returns 308 to mushrooms.viasocket.com.
-- **Homepage-design Next pages** (`addToProduct`): the primary action is "Copy setup prompt" (`CopyPromptProvider`, clipboard with a select-by-hand fallback). On `/integrations/{app}` the prompt names the app (`src/components/IntegrationsComp/addToProduct/copy.js:promptFor`); on `/use-cases` a card copies its own prompt plus the setup prompt. These pages run inside the root layout, so `getUtmSource` capture and tracking still run, but no CTA on them writes `utmData` or tags `utm_source` (see [OPEN_QUESTIONS](OPEN_QUESTIONS.md) T-04).
-- **Static homepage `/`:** it has **no** signup CTA, no UTM capture and no cookie code. Its links are absolute https://viasocket.com/... URLs, plus flow.viasocket.com/integrations. The primary action is "Copy setup prompt", which uses the clipboard.
+- **Homepage-design Next pages** (`addToProduct`): the primary action is "Copy setup prompt" (`CopyPromptProvider`, clipboard with a select-by-hand fallback). On `/integrations/{app}` the prompt names the app in its first sentence (`src/components/IntegrationsComp/addToProduct/copy.js:promptFor`); on `/use-cases` a card copies the setup prompt without the ask line, then `What I want to build: ` plus the card's prompt (`promptWithUseCase`). These pages run inside the root layout, so `getUtmSource` capture and tracking still run, but no CTA on them writes `utmData` or tags `utm_source` (see [OPEN_QUESTIONS](OPEN_QUESTIONS.md) T-04).
+- **Static homepage `/` (and `/home-b`):** the primary action is "Copy setup prompt", which uses the clipboard. Start free and Log in are links to flow.viasocket.com/integrations. `public/home-ab.js` sets the `variant` and `visitor_id` cookies and adds `hp_variant` to those links. There is still no `utmData` capture on the homepage, so a `utm_source` that lands on `/` is still lost.
 
 ### 5. Failure modes and footguns
 
@@ -105,7 +105,7 @@ sequenceDiagram
 > **`handleRedirect` puts the whole cookie in the URL, prompt included.** `setUtmSource` serialises every cookie key, unencoded, into `?state=`. After a prompt has been written, any `handleRedirect` CTA (the navbar, or the integrations use-case cards themselves) shows the typed prompt in the address bar and the referrer. Only the direct `/signup?utm_source=` CTAs keep it out. The stated rule ("prompt travels in the cookie, never the URL") holds only for those.
 
 > [!WARNING]
-> **Non-path custom tags lock the cookie for a day.** `'hire-an-expert'`, MCP app slugs, `'viasocket'` and `DashboardButton` values that do not start with `/` are not in `INTERNAL_UTM_SOURCES`. Once one of them reaches the cookie (via the signup URL, when no cookie existed), every later `savePageUtmSource` on any page refuses to overwrite it. Page tags must be path-shaped (`/integrations`) or registered in `INTERNAL_UTM_SOURCES`. Per-button detail belongs in the tracking event's `element`, never in `utm_source`.
+> **Non-path custom tags lock the cookie for its lifetime.** `'hire-an-expert'`, MCP app slugs, `'viasocket'` and `DashboardButton` values that do not start with `/` are not in `INTERNAL_UTM_SOURCES`. Once one of them reaches the cookie (via the signup URL, when no cookie existed), every later `savePageUtmSource` on any page refuses to overwrite it. `handleUtmSource.js` keeps that cookie for 30 days. Page tags must be path-shaped (`/integrations`) or registered in `INTERNAL_UTM_SOURCES`. Per-button detail belongs in the tracking event's `element`, never in `utm_source`.
 
 > [!WARNING]
 > The `/embed/app-integration` CTAs `DarkCta` and the `LimitedTimeOffer` in `HeroAurora` (in `src/app/embed/app-integration/`) are tagged `utm_source=/embed/actions-for-ai`, which is another page's tag. The `LimitedTimeOffer` in `src/app/embed/actions-via-webhook/WebhookHero.js` has the same problem. These absolute links also send test-environment visitors to production signup.
@@ -181,17 +181,22 @@ sequenceDiagram
     TC->>B: set variant (A/B, 30d) and visitor_id (uuid, 1y; from vs_visitor mirror if lost)
     VT->>API: trackView() under Web Lock: {event:'view', userInfo, pageUrl, utmData(URL), referrer, sessionId}
     API->>API: needs valid visitor_id + variant cookies, drops bots
-    API->>T: getAbTestVisitorRows(visitorId)  [currently returns null]
-    API-->>VT: 200 {success:false, reason:'lookup failed'}
-    Note over API,T: when enabled: PATCH the oldest live row (merge duplicates) or POST a new row with environment
+    API->>API: forward a copy to the admin (built-in URL and key; local only if ADMIN_TRACKING_URL is set)
+    alt homepage view or signup/login click, or signup_completed on /signup
+        API->>T: getAbTestVisitorRows(visitorId, pageUrl, environment)
+        API->>T: PATCH the oldest live row, or POST a new row
+    else
+        API-->>VT: 200 {success:false, reason:'not a homepage event'}
+    end
 ```
 
 ### 2. Pieces
 
+- **Homepage assignment:** `public/home-ab.js` runs on `/` and `/home-b` before paint. It sets the same cookies, keeps a crawler on A, and sends variant B to `/home-b`. Both pages then post one view and listen for Start free and Log in clicks. See [01-homepage](modules/01-homepage.md#homepage-ab-test-version-b).
 - **Assignment:** `src/app/components/VariantTracker/TrackingCookies.js:TrackingCookies` runs in the root layout `<head>` on every Next page. It sets `variant` when the cookie is missing or invalid, choosing at random from `VARIANTS` (`['A','B']` in `src/const/abTest.js`). When given `renderedVariant` it records that instead. Only `src/app/page.js` passes one, and that page is unreachable at `/`. `src/utils/getVariant.js:getVariant` is the server-side reader (cookie value or a coin flip, cached per request).
 - **Cookies are set by the browser, not middleware.** Commits `588cad8f` / `e820c6fd` (both "cookie handling fixed", 2026-09-25) moved this because Cloudflare strips `Set-Cookie` from cached HTML. The comment in `src/app/components/VariantTracker/VariantTracker.js`, which still says the cookies "are set by middleware", is stale.
 - **Events:** `src/utils/trackVisitor.js:trackView` is called on every pathname change, serialised by `navigator.locks` (`viasocket-visitor-tracking`) and an in-tab queue. `trackInteraction` handles any click inside `[data-track]`, read via `data-track-label`/`-section`/`-action`/`-destination`, and is sent with `sendBeacon`. `trackCtaClick(source, interaction)` covers hero CTAs and also bumps `cta.bySource[source]`. Sessions live in `localStorage.vs_session` with a 30-minute idle window.
-- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
+- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. After the bot check it forwards one event to the admin ingest built into the route (3s timeout, failure ignored, awaited). `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override that URL and key. A local dev server does not forward unless `ADMIN_TRACKING_URL` is set. The table write is unchanged: only a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
 
 ### 3. Which tracking runs where
 
@@ -204,16 +209,17 @@ sequenceDiagram
 | `trackRedditEvent` | no | no | yes | prod gate, and it **has no callers** |
 | `sendErrorMessage` webhook | console only | console only | yes | prod gate in `src/utils/SendErrorMessage.js` |
 | Zaraz (`/cdn-cgi/zaraz/i.js`) | 404 | yes | yes | served only by Cloudflare |
-| None of the above (only GTM in its own HTML) | static `/` | static `/` | static `/` | the rewrite bypasses the layout |
+| Homepage A/B (`public/home-ab.js` → `/api/track-variant`) | yes, stored | yes, stored | yes, stored | `/`, `/home` and `/home-b` views, signup/login clicks on those paths, and `signup_completed` on `/signup` |
 
 > [!WARNING]
-> **Visitor tracking is switched off at HEAD.** `src/utils/axiosCalls.js:getAbTestVisitorRows` begins with `return null;`, added in commit 77b3dec5 ("stop get call", 2026-10-10, no rationale given). The route treats `null` as "lookup failed" and drops **every** event before any write, so no views, clicks or CTA counters are being recorded in any environment. Whether this is intentional is open. Do not "fix" tracking elsewhere until this is decided, and prove the failing layer first.
-
-> [!WARNING]
-> The disabled lookup filters only on `name LIKE '%<visitorId>%'`, not on `environment`. Test and production share the `visitor_id` cookie (domain `.viasocket.com`), so if the lookup is re-enabled as written, a test visit will update a production row. Add an environment filter when it is restored.
+> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The admin forward runs before that filter, so those other events are still copied on test and production. A local dev server copies them only when `ADMIN_TRACKING_URL` is set. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
 
 > [!WARNING]
 > Middleware's Reddit `fetch` is fire-and-forget (not awaited, no waitUntil). On the edge runtime it may be cancelled once the response returns. Also, production HTML served from the Cloudflare cache never reaches middleware. Verify on viasocket.com itself, not on test.
+
+### 4. Middleware experiments (separate from the table above)
+
+`src/utils/mwExperiment.js` does not take part in this journey. It does not set the `variant` cookie, does not post to `/api/track-variant`, and no page calls it. The homepage test uses the `variant` cookie, not this client. A later experiment imports `mwVariant` / `mwSend` and sends exposure and conversion to the middleware events URL. The page does not wait for that call. Contract and the server-render constraint: [CONTRACTS](CONTRACTS.md#middleware-experiments).
 
 ---
 
@@ -241,10 +247,11 @@ None of these forms uses reCAPTCHA (the unimported provider and its dependency w
 
 ## Detailed Journey: Developers (Embed) funnel
 
-- **Routes:** `/developers` (`src/app/developers/page.js`), `/developers/auth`, `/developers/pricing`, `/developers/docs`. They share `src/app/developers/layout.js` with their own font and token scope, and their own `Header`/`Footer`, not the site navbar. `/embed` returns 308 here. The `/embed/*` subpages still exist and carry their own `/signup?utm_source=/embed/...` links.
+- **Routes:** `/developers` (`src/app/developers/page.js`), `/developers/auth`, `/developers/pricing`, `/developers/docs`. They share `src/app/developers/layout.js` with their own font and token scope, and their own `Header`/`Footer`, not the site navbar. On production and test the live admin list 301s bare `/embed` and bare `/developers` to `/`, and `/developers/pricing` to `/pricing`, so those three URLs do not render this funnel. `/developers/auth`, `/developers/docs` and the `/embed/*` subpages still return 200. The subpages carry their own `/signup?utm_source=/embed/...` links.
 - **Primary action:** `src/app/developers/CopyPromptButton.js:CopyPromptButton` copies the `SKILL` text from `src/app/developers/skill.js`. That text is an instruction for the visitor's coding agent to read flow.viasocket.com/documentation/skill.md.
 - **Signup:** the header "Signup" is a plain link to flow.viasocket.com/integrations, with **no utm or state** and no `data-track`. Pricing plan CTAs (`src/app/developers/pricing/PricingTop.js`) for Free, Growth and Scale go to `/developers#start`. Enterprise and "Talk to sales" go to cal.id. There is no checkout in this repo.
 - These pages run under the root layout, so UTM capture and the (currently disabled) view tracking apply. `/docs` is static content with example code only.
+- **`/setup-prompt`** is a separate static page (`src/app/setup-prompt/page.js`) linked from SDK emails, not from this funnel's header. `for=keys` (default) asks the agent to add keys and run the setup check; `for=run` asks it to find why the first run never reached viaSocket. The copy button writes the full prompt to the clipboard. The query is read only in the browser. `VariantTracker` does not report a view, and `src/middleware.js` sends the Reddit page-visit URL without the query. There is no signup CTA and no `utm_source`.
 
 > [!WARNING]
 > `CopyPromptButton` switches to "Paste in your agent" even when `navigator.clipboard.writeText` throws. The inline comment claims the label "stays accurate", but it does not. Embed signups from the header carry no attribution.
