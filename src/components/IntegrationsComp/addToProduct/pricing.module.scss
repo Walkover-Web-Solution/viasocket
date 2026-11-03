@@ -46,6 +46,11 @@
 .perks li::before { content: ""; width: 9px; height: 5px; flex: none; border-left: 1.6px solid var(--ink-3); border-bottom: 1.6px solid var(--ink-3); transform: rotate(-45deg) translateY(-2px); }
 // A limit ("Stops at the limit"): an empty box instead of a check
 .perks li.limit::before { width: 9px; height: 9px; border: 1.5px solid var(--ink-3); transform: none; align-self: center; }
+// "tasks" and "AI credits" in a perk: dotted underline, with the definition in a tooltip on hover or focus
+.term { position: relative; text-decoration: underline dotted color-mix(in srgb, var(--ink) 45%, var(--bg)); text-underline-offset: 3px; cursor: help; outline: none; }
+.term:focus-visible { outline: 1px solid var(--ink-3); outline-offset: 2px; }
+.tip { position: absolute; left: 0; bottom: calc(100% + 8px); z-index: 5; width: max-content; max-width: 240px; padding: 8px 10px; font-size: 13px; line-height: 1.4; color: var(--ink); background: var(--bg); border: 1px solid var(--line); box-shadow: 0 6px 20px rgb(0 0 0 / 0.25); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .15s; }
+.term:hover .tip, .term:focus .tip { opacity: 1; visibility: visible; }
 .plans > li > a:last-child { margin-top: 10px; width: 100%; text-decoration: none; }
 .btn-o { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 48px; font-size: 15px; color: var(--ink); }
 // For now: two cards (Free and "Contact us"), centred at the width of two of the four
