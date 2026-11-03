@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/mcp/**", "src/components/mcpComps/**", "src/app/lib/mcp-data.js", "src/app/components/mcp/**", "src/utils/getMcpInfo.js"]
-verified_at: 8772409a
+verified_at: ae5f6d66
 verified_on: 2026-11-03
 ---
 # Module: MCP
