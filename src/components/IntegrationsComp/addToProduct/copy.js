@@ -358,8 +358,8 @@ export const PRICING_COPY = {
     metaTitle: 'Pricing · viaSocket',
     metaDesc: 'Start free with 100K tasks and 1,000 AI credits a month. Pro is $19/mo and Business $99/mo at launch prices; Enterprise is custom.',
 
-    // For now /pricing shows only the Free plan and a "Contact us" card (PricingPage.js), without the paid
-    // plans, the billing switch or the plan finder. The rest of the plan copy is kept for when they come back.
+    // /pricing shows Free, Pro, Business and Enterprise (PricingPage.js), with the billing switch and the
+    // plan finder. contactSub, contactPlan and contactFaqs are the previous Free + "Contact us" layout, kept unrendered.
     contactSub: 'Start free with 100K tasks and 1,000 AI credits every month. For more, contact us for pricing tailored to your product and usage.',
     contactPlan: {
         name: 'Scale',
