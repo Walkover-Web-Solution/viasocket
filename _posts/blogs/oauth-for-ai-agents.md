@@ -124,7 +124,7 @@ In an agentic product with multiple agent types (a scheduling agent, a communica
 
 viaSocket's [Actions for AI](/embed/actions-for-ai) product is built specifically for the agent use case. It exposes 2,300+ app actions as a tool-calling endpoint. Rather than calling individual app APIs, your agent calls a single endpoint and specifies which app and action it needs. The managed auth layer resolves the user's credentials.
 
-For builders wiring that auth into an MCP server, [how managed OAuth works for AI agent builders](/blogs/viasocket-mcp-vs-zapier-mcp) is one of the differences between viaSocket MCP and Zapier MCP.
+Builders comparing MCP servers for this setup can read [how managed OAuth works for AI agent builders](/blogs/viasocket-mcp-vs-zapier-mcp) in the viaSocket MCP vs Zapier MCP comparison.
 
 This is distinct from viaSocket's [white-label MCP server](/mcp/saas), which is for giving users a branded MCP endpoint they configure in their AI client (Claude, Cursor). Actions for AI is for your agent making server-side calls. Both can be used in the same product.
 

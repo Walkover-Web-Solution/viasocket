@@ -26,7 +26,7 @@ The specification covers tool discovery, invocation, streaming, error handling, 
 
 The tool-calling infrastructure agents need on top of this protocol, including per-user OAuth and connection state, is covered in [What is Model Context Protocol (MCP)?](/blogs/tool-calling-infrastructure-for-ai-agents).
 
-How [what MCP is and how servers work](/blogs/viasocket-mcp-vs-zapier-mcp) changes the choice between viaSocket MCP and Zapier MCP is covered in that comparison.
+For a concrete example of these servers in practice, see [what MCP is and how servers work](/blogs/viasocket-mcp-vs-zapier-mcp) in the viaSocket MCP vs Zapier MCP comparison.
 
 ## How MCP Works: The Request Cycle
 
