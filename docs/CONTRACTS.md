@@ -1,6 +1,6 @@
 ---
 covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: 7f90e49c
+verified_at: PENDING
 verified_on: 2026-11-02
 ---
 # Contracts & Data Schemas
@@ -46,7 +46,7 @@ The site serves one API route, `POST /api/track-variant` (edge; visitor-tracking
 ## Authentication & Authorization Assumptions
 
 - **No user session in this site.** Login and signup belong to the viaSocket app. The only signal is whether a `prod` cookie exists: `src/app/lib/getAuth.js:getHasToken` and `src/app/components/navbar/NavbarServer.js` turn it into `hasToken`, which swaps "Sign up" for "Dashboard". The site never reads its value, and nothing in this repo sets it.
-- **Signup widget (MSG91 proxy auth).** `CustomLoginOptimized` calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: setUtmSource(), theme, addInfo: { redirect_path } })`. The `state` string carries every key in the `utmData` cookie (UTM params, `prompt`, `intent`) to signup. `/login` is a redirect to `https://flow.viasocket.com/` in `next.config.js`. Loading and failure behaviour: [third-party-services.md](current-infrastructure/third-party-services.md).
+- **Signup widget (MSG91 proxy auth).** `CustomLoginOptimized` calls `window.initVerification({ referenceId: NEXT_PUBLIC_REFERENCE_ID, state: buildSignupState(), theme, addInfo: { redirect_path } })`. The `state` string is `<json>&<k=v...>`. The JSON is the `utmData` cookie (UTM params, ad click ids, `prompt`, `intent`) plus `visitor_id` and `cta` when those cookies exist. The `k=v` half URL-encodes each value; `setUtmSource` (still used by `handleRedirect`) does not. `/login` is a redirect to `https://flow.viasocket.com/` in `next.config.js`. Loading and failure behaviour: [third-party-services.md](current-infrastructure/third-party-services.md).
 - **Service auth** is a static `auth-key` header on table-api calls. No token refresh, no tenant header, no retry. The plug service and flow webhooks are called with no auth.
 
 ## Standard Error Envelope
@@ -59,7 +59,8 @@ There is none, on either side. Helpers catch everything and return fallbacks (`[
 
 | Store Name | Storage Key | Format | Owner / Invalidator |
 |---|---|---|---|
-| cookie | `utmData` | JSON (unencoded): `utm_*`, `affiliate_*`, `ref`, plus `utm_source`, `prompt`, `intent`. 1 day, `path=/`, `domain=.viasocket.com` on viasocket hosts. | Written by `src/utils/handleUtmSource.js` (`getUtmSource` on first load, `setUtmSource`, `savePageUtmSource`), `src/utils/userIntentTracker.js:setIntent`, `carryPromptToSignup` in `src/app/front-page/signup.js`, `src/components/IntegrationsComp/integrationsAppOneComp/popularUseCases.js`. Read by `setUtmSource` (signup `state`) and `savePageUtmSource`. |
+| cookie | `utmData` | JSON (unencoded): `utm_*`, ad click ids (`gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid`, `rdt_cid`), `affiliate_*`, `ref`, plus `utm_source`, `prompt`, `intent`. 30 days from `handleUtmSource.js`, `path=/`, `domain=.viasocket.com` on viasocket hosts. | Written by `src/utils/handleUtmSource.js` (`getUtmSource` on first load, `setUtmSource`, `savePageUtmSource`). `setIntent`, `carryPromptToSignup`, the migration signup CTAs and `popularUseCases.js` still pass 1 day and shorten a cookie they rewrite ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)). Read by `setUtmSource`, `buildSignupState` and `savePageUtmSource`. |
+| cookie | `signup_cta` (`SIGNUP_CTA_COOKIE`) | element id of the last `signup_click`, URL-encoded; 30 days; same domain rules as `utmData` | Written by `src/utils/trackVisitor.js` (`trackInteraction`, `trackCtaClick`). Read by `buildSignupState` and sent as `cta` in the MSG91 `state`. |
 | cookie | `variant` (`VARIANT_COOKIE`) | `A` or `B`; 30 days; `samesite=lax` | Written by `src/app/components/VariantTracker/TrackingCookies.js` (inline script before paint), and on `/` by the inline gate at the top of `public/new-home/index.html` (a 50/50 coin flip when missing). Read by `src/utils/getVariant.js:getVariant`, `POST /api/track-variant`. |
 | cookie | `visitor_id` (`VISITOR_ID_COOKIE`) | UUID; 1 year; `.viasocket.com`, so shared by test and production | Written by `TrackingCookies` (new UUID, or restored from `vs_visitor`); repaired by `src/utils/trackVisitor.js`. Read by `POST /api/track-variant`. |
 | cookie | `rdt_cid` | Reddit click id; 30 days; `secure`, `sameSite=lax` | `src/middleware.js` sets it from a valid `?rdt_cid=` and deletes it when an invalid one arrives; read for the Reddit CAPI call. |
@@ -93,9 +94,13 @@ No `sessionStorage` keys. Every `trackVisitor` and `mwExperiment` storage access
 sequenceDiagram
     participant B as Browser
     participant R as /api/track-variant (edge)
+    participant A as Admin POST /api/public/events
     participant T as table-api A/B table
     B->>B: TrackingCookies sets variant + visitor_id
     B->>R: POST {event:view|click|cta,...} (cookies attached)
+    alt cookies and bot check pass, and this is not a local dev server (or ADMIN_TRACKING_URL is set)
+        R->>A: POST {events:[one event]} (built-in x-tracking-secret, 3s, errors ignored)
+    end
     alt homepage view, homepage signup/login click, or signup_completed on /signup
         R->>T: GET rows by visitor_id AND environment
         R->>T: POST a new row, or PATCH the oldest live row

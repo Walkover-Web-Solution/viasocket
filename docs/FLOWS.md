@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "src/app/providers.js", "src/app/layout.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/app/signup/**", "src/app/components/customLogin/**", "src/app/front-page/signup.js", "src/app/migration/**/*SignupCTA.js", "src/app/integrations/**", "src/app/lib/integration-data.js", "src/utils/getInterationsInfo.js", "src/app/automations/**", "src/app/lib/automation-data.js", "src/app/lib/automationSlugResolver.js", "src/app/api/track-variant/**", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/getVariant.js", "src/utils/mwExperiment.js", "src/const/abTest.js", "src/components/IntegrationsComp/IntegrationsBetaComp/**", "src/components/IntegrationsComp/addToProduct/**", "src/components/requestMeetingComp/**", "src/app/components/support/**", "src/app/components/feedback/**", "src/app/hire-an-expert/HireExpertClient.js", "src/app/developers/**", "src/app/setup-prompt/**", "public/new-home/**", "public/home-b/**", "public/home-ab.js"]
-verified_at: 3bb8471f
+verified_at: PENDING
 verified_on: 2026-11-02
 ---
 # User Flows & Critical Journeys
@@ -39,7 +39,7 @@ sequenceDiagram
     autonumber
     actor V as Visitor
     participant P as Content page (AppProvider)
-    participant C as utmData cookie (.viasocket.com, 1 day)
+    participant C as utmData cookie (.viasocket.com, 30 days)
     participant CTA as CTA handler
     participant S as /signup (CustomLoginOptimized)
     participant M as MSG91 proxy-auth
@@ -48,23 +48,23 @@ sequenceDiagram
     V->>CTA: Clicks signup (optionally after typing a prompt)
     CTA->>C: carryPromptToSignup / savePageUtmSource (only some CTAs)
     CTA->>S: Navigates to /signup?utm_source=... (or ?state=...&utm_source=...)
-    S->>C: setUtmSource(): reads cookie first, else utm_* from the signup URL
+    S->>C: buildSignupState(): reads cookie first, else utm_* and click ids from the signup URL
     S->>M: initVerification({ referenceId, state, addInfo.redirect_path })
     M-->>V: Google / password / Apple / OTP signup, then the product
 ```
 
 ### 2. Step-by-step path and code connections
 
-1. **Capture.** `AppProvider` calls `src/utils/handleUtmSource.js:getUtmSource` once on mount. It copies `utm_*`, `affiliate_*` and `ref` query params into the `utmData` cookie, but **only when no `utmData` cookie exists**. The first attribution of the day wins. `src/utils/handleUtmSource.js:setCookie` scopes the cookie to `.viasocket.com` on viasocket hosts, so test.viasocket.com and viasocket.com **share** it. On localhost and IP addresses it is host-only.
+1. **Capture.** `AppProvider` calls `src/utils/handleUtmSource.js:getUtmSource` once on mount. It copies `utm_*`, `affiliate_*`, `ref` and the ad click ids (`gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid`, `rdt_cid`) into the `utmData` cookie, but **only when no `utmData` cookie exists**. The first attribution wins for the life of that cookie (30 days from this writer). `src/utils/handleUtmSource.js:setCookie` scopes the cookie to `.viasocket.com` on viasocket hosts, so test.viasocket.com and viasocket.com **share** it. On localhost and IP addresses it is host-only.
 2. **Prompt (optional).** A typed prompt travels in the cookie, not in the URL. `src/app/front-page/signup.js:carryPromptToSignup` replaces `;` with `,`, caps the text at `PROMPT_MAX_LENGTH` (1500), and writes `utmData.prompt`. It also copies the prompt to `localStorage.prompt` on a best-effort basis. It must run **before** `savePageUtmSource`.
 3. **Stamp the page's own source.** `src/utils/handleUtmSource.js:savePageUtmSource` overwrites `utmData.utm_source` only when the existing value passes `isInternalUtmSource`: empty, starts with `/`, or listed in `INTERNAL_UTM_SOURCES` (`home-A`, `home-B`, `a`, `b`, `relay-switch-google-ads`). External attribution is never overwritten. It keeps any other keys, such as `prompt` or `intent`. `a` and `b` are the homepage version tags.
 4. **Navigate.** Pages navigate in one of three ways (see the table below).
-5. **Signup page.** `src/app/signup/page.js:SignupPage` runs on the edge. It passes `?redirect_to` through to `CustomLoginOptimized`, which loads `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js`. It then calls `window.initVerification` once per page (guarded by `window.__init_verification_ran__`) with `state: setUtmSource()`. With no arguments the fallback source is `'index'`.
-6. **What `state` contains.** `src/utils/handleUtmSource.js:setUtmSource` returns `<cookie JSON>&<k=v&k=v...>`. It is built from the cookie when one exists. Otherwise it is built from `utm_*`/`affiliate_*`/`ref` on the current URL, writing the cookie as a side effect. With neither, it falls back to `{"utm_source": source}`. The `state=` query param that `handleRedirect` puts on `/signup` URLs is **never read** by the signup page.
+5. **Signup page.** `src/app/signup/page.js:SignupPage` runs on the edge. It passes `?redirect_to` through to `CustomLoginOptimized`, which loads `https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js`. It then calls `window.initVerification` once per page (guarded by `window.__init_verification_ran__`) with `state: buildSignupState()`. With no cookie and no attribution params the fallback source is `'index'`.
+6. **What `state` contains.** `src/utils/handleUtmSource.js:buildSignupState` returns `<cookie JSON>&<k=v&k=v...>`. It calls `setUtmSource()` first so a missing cookie is filled from `utm_*` / `affiliate_*` / `ref` / click ids on the current URL. It then reads the cookie back, adds `visitor_id` (from the `visitor_id` cookie) and `cta` (from `signup_cta`, the last signup button), and URL-encodes the `k=v` half. With neither a cookie nor params, it falls back to `{"utm_source":"index"}`. The `state=` query param that `handleRedirect` puts on `/signup` URLs is **never read** by the signup page. `handleRedirect` still calls `setUtmSource`, whose `k=v` half is not encoded.
 
 ```json
 // utmData cookie value (JSON, not URL-encoded). All keys optional.
-{ "utm_source": "/integrations", "utm_campaign": "x", "ref": "abc", "prompt": "When a lead…", "intent": "hireanexpert" }
+{ "utm_source": "/integrations", "utm_campaign": "x", "gclid": "abc", "ref": "abc", "prompt": "When a lead…", "intent": "hireanexpert" }
 ```
 
 ### 3. How each entry point reaches signup
@@ -105,7 +105,7 @@ sequenceDiagram
 > **`handleRedirect` puts the whole cookie in the URL, prompt included.** `setUtmSource` serialises every cookie key, unencoded, into `?state=`. After a prompt has been written, any `handleRedirect` CTA (the navbar, or the integrations use-case cards themselves) shows the typed prompt in the address bar and the referrer. Only the direct `/signup?utm_source=` CTAs keep it out. The stated rule ("prompt travels in the cookie, never the URL") holds only for those.
 
 > [!WARNING]
-> **Non-path custom tags lock the cookie for a day.** `'hire-an-expert'`, MCP app slugs, `'viasocket'` and `DashboardButton` values that do not start with `/` are not in `INTERNAL_UTM_SOURCES`. Once one of them reaches the cookie (via the signup URL, when no cookie existed), every later `savePageUtmSource` on any page refuses to overwrite it. Page tags must be path-shaped (`/integrations`) or registered in `INTERNAL_UTM_SOURCES`. Per-button detail belongs in the tracking event's `element`, never in `utm_source`.
+> **Non-path custom tags lock the cookie for its lifetime.** `'hire-an-expert'`, MCP app slugs, `'viasocket'` and `DashboardButton` values that do not start with `/` are not in `INTERNAL_UTM_SOURCES`. Once one of them reaches the cookie (via the signup URL, when no cookie existed), every later `savePageUtmSource` on any page refuses to overwrite it. `handleUtmSource.js` keeps that cookie for 30 days. Page tags must be path-shaped (`/integrations`) or registered in `INTERNAL_UTM_SOURCES`. Per-button detail belongs in the tracking event's `element`, never in `utm_source`.
 
 > [!WARNING]
 > The `/embed/app-integration` CTAs `DarkCta` and the `LimitedTimeOffer` in `HeroAurora` (in `src/app/embed/app-integration/`) are tagged `utm_source=/embed/actions-for-ai`, which is another page's tag. The `LimitedTimeOffer` in `src/app/embed/actions-via-webhook/WebhookHero.js` has the same problem. These absolute links also send test-environment visitors to production signup.
@@ -181,6 +181,7 @@ sequenceDiagram
     TC->>B: set variant (A/B, 30d) and visitor_id (uuid, 1y; from vs_visitor mirror if lost)
     VT->>API: trackView() under Web Lock: {event:'view', userInfo, pageUrl, utmData(URL), referrer, sessionId}
     API->>API: needs valid visitor_id + variant cookies, drops bots
+    API->>API: forward a copy to the admin (built-in URL and key; local only if ADMIN_TRACKING_URL is set)
     alt homepage view or signup/login click, or signup_completed on /signup
         API->>T: getAbTestVisitorRows(visitorId, pageUrl, environment)
         API->>T: PATCH the oldest live row, or POST a new row
@@ -195,7 +196,7 @@ sequenceDiagram
 - **Assignment:** `src/app/components/VariantTracker/TrackingCookies.js:TrackingCookies` runs in the root layout `<head>` on every Next page. It sets `variant` when the cookie is missing or invalid, choosing at random from `VARIANTS` (`['A','B']` in `src/const/abTest.js`). When given `renderedVariant` it records that instead. Only `src/app/page.js` passes one, and that page is unreachable at `/`. `src/utils/getVariant.js:getVariant` is the server-side reader (cookie value or a coin flip, cached per request).
 - **Cookies are set by the browser, not middleware.** Commits `588cad8f` / `e820c6fd` (both "cookie handling fixed", 2026-09-25) moved this because Cloudflare strips `Set-Cookie` from cached HTML. The comment in `src/app/components/VariantTracker/VariantTracker.js`, which still says the cookies "are set by middleware", is stale.
 - **Events:** `src/utils/trackVisitor.js:trackView` is called on every pathname change, serialised by `navigator.locks` (`viasocket-visitor-tracking`) and an in-tab queue. `trackInteraction` handles any click inside `[data-track]`, read via `data-track-label`/`-section`/`-action`/`-destination`, and is sent with `sendBeacon`. `trackCtaClick(source, interaction)` covers hero CTAs and also bumps `cta.bySource[source]`. Sessions live in `localStorage.vs_session` with a 30-minute idle window.
-- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
+- **Server:** `src/app/api/track-variant/route.js:POST` validates `element` against `/^[a-z0-9_]{1,64}$/`, dedupes clicks within 400 ms and views within 10 s (`src/utils/abTestVisitor.js`), and resolves `environment` from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`, falling back to the hostname. After the bot check it forwards one event to the admin ingest built into the route (3s timeout, failure ignored, awaited). `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override that URL and key. A local dev server does not forward unless `ADMIN_TRACKING_URL` is set. The table write is unchanged: only a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`. It always answers 200. For column names (`varient`, `name` JSON, `click_data`…) see [CONTRACTS.md](CONTRACTS.md).
 
 ### 3. Which tracking runs where
 
@@ -211,7 +212,7 @@ sequenceDiagram
 | Homepage A/B (`public/home-ab.js` → `/api/track-variant`) | yes, stored | yes, stored | yes, stored | `/`, `/home` and `/home-b` views, signup/login clicks on those paths, and `signup_completed` on `/signup` |
 
 > [!WARNING]
-> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
+> **Homepage events, plus a completed `/signup` registration, are stored.** `POST /api/track-variant` writes a view of `/`, `/home` or `/home-b`, a click on those paths whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup`. Every other event returns `not a homepage event` and does not read the table. The admin forward runs before that filter, so those other events are still copied on test and production. A local dev server copies them only when `ADMIN_TRACKING_URL` is set. The lookup filters on `environment` as well as the visitor id. A failed lookup is still dropped, not inserted as a second row. Read the homepage test from [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
 
 > [!WARNING]
 > Middleware's Reddit `fetch` is fire-and-forget (not awaited, no waitUntil). On the edge runtime it may be cancelled once the response returns. Also, production HTML served from the Cloudflare cache never reaches middleware. Verify on viasocket.com itself, not on test.

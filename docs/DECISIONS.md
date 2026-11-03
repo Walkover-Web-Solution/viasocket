@@ -1,6 +1,6 @@
 ---
 covers: ["*"]
-verified_at: 3bb8471f
+verified_at: PENDING
 verified_on: 2026-11-02
 ---
 # Architectural & Design Decisions (ADRs)
@@ -30,6 +30,7 @@ Status values: **Accepted** (current, keep it), **Superseded** (code may remain,
 | 2026-10-22 | [ADR-015: The integration layer is the canonical positioning](#adr-015-the-integration-layer-is-the-canonical-positioning) | Accepted | Product / copy | One story across the site; automation copy is out of date |
 | 2026-10-22 | [ADR-016: The static homepage's design system is the site-wide target](#adr-016-the-static-homepages-design-system-is-the-site-wide-target) | Accepted | Design | One visual system instead of five |
 | 2026-10-31 | [ADR-017: Homepage version B is a client-side 50/50 split](#adr-017-homepage-version-b-is-a-client-side-5050-split) | Accepted | Homepage / growth | `/` is always A's HTML; an inline gate writes B in the browser; `/home-b` redirects there |
+| 2026-11-02 | [ADR-018: Admin visitor events do not use a Cloudflare setting](#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting) | Accepted | Analytics | The ingest URL and key are built into the route |
 
 ---
 
@@ -271,7 +272,7 @@ Accepted (maintainer guidance, 2026; the code paths are verified below).
 
 ### Decision & Implementation
 - **`utm_source` is the page path** (for example `/integrations` or `/embed`). `src/utils/handleUtmSource.js:isInternalUtmSource` treats empty values, values starting with `/` and the `INTERNAL_UTM_SOURCES` list (`home-A`, `home-B`, `a`, `b`, `relay-switch-google-ads`) as the site's own. `savePageUtmSource` only overwrites those, so an ad or referral source in the cookie survives. Section-level detail belongs in the CTA tracking event, not in `utm_source`. Homepage versions are the exception: their calls to action use `utm_source=a` or `utm_source=b` ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)). Those two tags are registered so a click to another page on this site does not lock the cookie.
-- **Attribution travels in the `utmData` cookie** (one day, set by `setCookie`). `setUtmSource` captures `utm_*`, `affiliate_*` and `ref` from the URL into it. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics.
+- **Attribution travels in the `utmData` cookie** (30 days when `src/utils/handleUtmSource.js` writes it; one day until `8772409a`). `getUtmSource` and `setUtmSource` capture `utm_*`, `affiliate_*`, `ref` and the ad click ids `gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid` and `rdt_cid`, and only when the cookie is absent. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics. The signup widget sends `buildSignupState()`: that cookie, plus `visitor_id` and `cta`. Some other writers still pass 1 day ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)).
 - **Campaign pages keep their own tag**, for example `relay-switch-google-ads` on `/migration/relay`. `utm_source` must appear once in the signup URL. `src/utils/handleRedirection.js:handleRedirect` with a `customSource` emits it twice (`state={…}&utm_source=…`), so such CTAs should stamp `utmData` and navigate to `/signup?utm_source=<tag>` directly. Keep `handleRedirect` for external apps such as `flow.viasocket.com`.
 - **No `www`:** match `viasocket.com` exactly, with no `www.` branch anywhere.
 
@@ -372,6 +373,30 @@ The homepage needs a second version, shown to half of visitors, sticky, with bot
 - A visitor with JavaScript disabled, and every crawler, sees A. That is the control, and it is what search engines index.
 - A B visitor downloads A's HTML and then B's, and sees a blank page until B is written (on the preview, a median of about 0.4 s with no throttling and 2.0 s from navigation start on slow 4G; the fallback fires 2 s after the gate starts). A's content is never painted for them. A first visit cannot use the middleware: it would need per-visitor HTML at `/`, which the production cache replays.
 - Date-range counts come from `page_data` and `click_data` (the newest 100 events), not from the `varient` column, which is first-touch. How to read them is in [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
+
+---
+
+## ADR-018: Admin visitor events do not use a Cloudflare setting
+
+### Status
+Accepted. Confirmed 2026-11-02: do not put `ADMIN_TRACKING_URL` or `ADMIN_TRACKING_SECRET` on Cloudflare Pages.
+
+### Context & Problem Statement
+PR #1905 forwarded each accepted visitor event to the admin only when both env vars were set. Neither variable is in `.env`, and adding them on the Cloudflare Pages projects was declined, so test and production would have forwarded nothing.
+
+### Decision & Implementation
+- `src/app/api/track-variant/route.js` builds in the admin ingest URL (`https://viasocket-admin.embarko.app/api/public/events`) and the tracking key. `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override them when set, for a local admin or a rotation.
+- Test and production forward with the built-in values. A local dev server forwards only when `ADMIN_TRACKING_URL` is set, so trying the site locally does not write to the live admin.
+- The key is not a secret. `/api/track-variant` is public and forwards the events it accepts, so a private key between this site and the admin would not stop a forged event that comes through the site. Do not prefix an override with `NEXT_PUBLIC_`.
+- Other endpoints, database ids and keys still come from env vars. Do not copy this default into another caller.
+
+### Supporting Evidence & Past Incidents
+- Merged in PR #1907 (`a9853794`, merge `76ae448c`) on 2026-11-02.
+- A POST to the ingest with no key returns 401. The same POST with the built-in key and an empty `events` array returns 200 and inserts nothing.
+
+### Consequences & Trade-offs
+- Rotating the key means changing the constant and the admin together. An override env var still works before that constant changes.
+- Anyone who can read the repository can POST to the admin ingest with the built-in key and skip this site's cookie and bot checks. That follows from treating the key as not a secret.
 
 ---
 

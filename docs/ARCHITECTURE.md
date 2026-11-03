@@ -1,6 +1,6 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 3bb8471f
+verified_at: PENDING
 verified_on: 2026-11-02
 ---
 # Architecture & Mental Model
@@ -175,7 +175,7 @@ Where a new file of each kind goes is in [08-folder-structure](08-folder-structu
 
 - **Rule:** a page fetches its data through one loader in `src/app/lib/` and passes it down as props. For an example, see `src/app/lib/pricing-data.js:getPricingPageData`. No `page.js` is a client component.
 - **Rule:** a new table-api read works like this. Add the table id to `src/const/tables.js` and the column list to `src/const/fields.js`. Add a getter to `src/utils/getData.js` that calls `src/utils/axiosCalls.js:getDataFromTable`. Then call the getter from the page's loader. Errors go to `sendErrorMessage` and the getter returns `undefined`, so loaders fall back to `|| []` or `|| {}`.
-- **Rule:** endpoints belong in env vars (see [DEVELOPMENT](DEVELOPMENT.md)). Some calls in existing code break this rule: `getBlogs` and `getLiveSupportData` use hardcoded hosts, `sendErrorMessage` posts to a hardcoded flow.sokt.io URL, and several client components (for example `src/app/components/support/SupportClient.js`) post to flow.sokt.io webhooks. Do not copy that pattern.
+- **Rule:** endpoints belong in env vars (see [DEVELOPMENT](DEVELOPMENT.md)). Some calls in existing code break this rule: `getBlogs` and `getLiveSupportData` use hardcoded hosts, `sendErrorMessage` posts to a hardcoded flow.sokt.io URL, and several client components (for example `src/app/components/support/SupportClient.js`) post to flow.sokt.io webhooks. Do not copy that pattern. The admin visitor-event forward is a separate, named exception ([ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)): its URL and key are built into `src/app/api/track-variant/route.js` so Cloudflare Pages needs no setting. Do not copy that exception either.
 - **Exception:** three client components import `src/utils/axiosCalls.js` directly:
   - `src/components/indexComps/CategoryAppsDisplay.js` (`getApps`)
   - `src/app/components/home/SearchInputHomeOptimized.js` (`getIndustries`, `getDepartments`)
@@ -204,7 +204,7 @@ Four layers apply: the Cloudflare zone cache (production only), the in-memory `a
 | Remote content | `src/app/lib/*-data.js`, fetched on each request, with `axios` memory cache | Up to 20 min / 1 h per isolate | TTL only. Nothing invalidates it on demand. |
 | Global client state | none (no Redux, Zustand or global Context) | One page, because of the full-page navigation | Lost on every navigation |
 | Scoped Context | `src/app/developers/docs/LangContext.js` (code-sample language), `src/hooks/useTemplateIds.js` | Component tree | Unmount |
-| Attribution | `utmData` cookie (`src/utils/handleUtmSource.js`) on `.viasocket.com`, 1 day | Survives navigation and reaches the signup app | Written only when absent, except internal sources (see [FLOWS](FLOWS.md)) |
+| Attribution | `utmData` cookie (`src/utils/handleUtmSource.js`) on `.viasocket.com`, 30 days | Survives navigation and reaches the signup app | Written only when absent, except internal sources (see [FLOWS](FLOWS.md)). Ad click ids are stored with the UTMs. |
 | Auth hint | `prod` cookie (set by the product app) read by `getHasToken` / `NavbarServer` | Product session | Read-only here |
 | Tracking identity | `variant` cookie (30 d) mirrored to `localStorage` `vs_variant`, `visitor_id` cookie (1 y) mirrored to `localStorage` `vs_visitor`, `vs_session` (30 min idle), `rdt_cid` cookie (30 d) | See left | `TrackingCookies` and `public/home-ab.js` restore a lost cookie from the mirror |
 | Middleware experiment id | `localStorage` `mw_visitor` (`src/utils/mwExperiment.js`) | This browser, until storage is cleared | Not the `visitor_id` cookie. No server copy. Module state is per browser page, never a shared server isolate. |
@@ -218,7 +218,7 @@ The pieces, in order:
 2. `TrackingCookies` runs from the root layout, as an inline script, on every React page. It sets a missing `variant` cookie with a coin flip and a missing `visitor_id` cookie, on domain `.viasocket.com`. Cookies are written in the browser because Cloudflare strips `Set-Cookie` from HTML responses it handles (see the comment in that file).
 3. `getVariant` reads the cookie on the server. Only `src/app/page.js` uses it, and that page is unreachable. The live homepage split is `public/home-ab.js`, which uses the same cookie ([ADR-017](DECISIONS.md#adr-017-homepage-version-b-is-a-client-side-5050-split)).
 4. `VariantTracker` calls `src/utils/trackVisitor.js:trackView` on each pathname, and `trackInteraction` for any click on a `[data-track]` element. Both send a POST to `/api/track-variant`, using `sendBeacon` when the page is unloading. The route stores a homepage view, a homepage signup/login click, and `signup_completed` from `/signup`.
-5. `src/app/api/track-variant/route.js:POST` checks the cookies and filters bots with `src/utils/isBot.js`. It then looks up the visitor's row, filtered by `environment`, and merges the event in using the pure functions in `src/utils/abTestVisitor.js`, which keeps one row per visitor (`PROFILE_VERSION` 2). Finally it writes to table `ABTESTCOUNT`.
+5. `src/app/api/track-variant/route.js:POST` checks the cookies and filters bots with `src/utils/isBot.js`. It then forwards a copy of that event to the admin (the URL and key built into the route, best effort, 3s; `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` only override them, and a local server forwards only when the URL override is set) and, only for a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`, looks up the visitor's row, filtered by `environment`, and merges the event in using the pure functions in `src/utils/abTestVisitor.js`, which keeps one row per visitor (`PROFILE_VERSION` 2). Finally it writes to table `ABTESTCOUNT`. A referrer on `viasocket.com`, `*.viasocket.com` or `localhost` is not stored as where the visitor came from.
 
 > [!WARNING]
 > Comments in `VariantTracker.js` that say the cookies are "set by middleware" are out of date. The cookies are written in the browser. A failed lookup is still dropped (`lookup failed`), not inserted as a second row.
