@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: PENDING
-verified_on: 2026-11-03
+verified_at: ad35b313
+verified_on: 2026-11-04
 ---
 # Architectural & Design Decisions (ADRs)
 
