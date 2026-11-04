@@ -73,7 +73,8 @@ function managedRedirect(request, list) {
 export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
-    const redirect = managedRedirect(request, await managedRedirects());
+    const redirect =
+        pathname === '/home' ? null : managedRedirect(request, await managedRedirects());
     if (redirect) return redirect;
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;

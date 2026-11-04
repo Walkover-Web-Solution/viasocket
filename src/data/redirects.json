@@ -52,11 +52,6 @@
             "statusCode": 0
         },
         {
-            "source": "/home",
-            "destination": "/",
-            "statusCode": 307
-        },
-        {
             "source": "/login",
             "destination": "https://flow.viasocket.com/",
             "statusCode": 307

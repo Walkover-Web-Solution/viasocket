@@ -1,58 +1,13 @@
-import Script from 'next/script';
-import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
-import NavbarServer from '../components/navbar/NavbarServer';
-import { getHomePageData } from '../lib/data';
-import HeroContainerNew from '../components/new-home/HeroContainerNew';
-import { CoreCapabilities } from '../components/new-home/FeaturesBanner';
-import VisualShowcase from '../components/new-home/VisualShowcase';
-import ReviewsGrid from '../components/new-home/ReviewsGrid';
-import FAQs from '../components/new-home/FAQs';
-import SecuritySectionNew from '../components/new-home/SecuritySectionNew';
-import FooterNew from '../components/new-home/FooterNew';
-
 export const runtime = 'edge';
 
-export async function generateMetadata() {
-  const { metaData } = await getHomePageData();
-  
-  return {
-    title: metaData?.title || 'viaSocket - Automate Anything',
-    description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
-    keywords: metaData?.keywords || '',
-    openGraph: {
-      title: metaData?.title || 'viaSocket - Automate Anything',
-      description: metaData?.description || 'Connect your apps and automate workflows with viaSocket',
-      images: ['https://files.msg91.com/342616/wnitwkyk'],
-    },
-  };
-}
+export const metadata = {
+    title: 'Home',
+};
 
-export default async function HomePage() {
-  const {
-    metaData,
-    faqData,
-    footerData,
-    securityGridData,
-    indexTemplateData,
-    reviewData,
-    navbarData,
-    templateData,
-    appCount,
-  } = await getHomePageData();
-
-  return (
-    <div>
-      <Script src="https://main.d2f49esifpcbwh.amplifyapp.com/tracker.js" />
-      <MetaHeadComp metaData={metaData} page={'/'} />
-      <NavbarServer navbarData={navbarData} utm={'/index'} />
-
-      <HeroContainerNew/>
-      <CoreCapabilities appCount={appCount} />
-      <VisualShowcase categoryData={indexTemplateData} templateData={templateData} />
-      <ReviewsGrid reviewData={reviewData}/>
-      {faqData?.length > 0 && <FAQs faqData={faqData} isHomepage={true} />}
-      <SecuritySectionNew securityGridData={securityGridData} />
-      <FooterNew footerData={footerData} />
-    </div>
-  );
+export default function HomePage() {
+    return (
+        <main>
+            <h1>Home</h1>
+        </main>
+    );
 }

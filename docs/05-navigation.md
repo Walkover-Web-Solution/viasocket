@@ -39,7 +39,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/find-apps/[...slug]` | `src/app/components/find-apps/FindAppsClient.js`; `src/app/lib/data.js:getFindAppsPageData` | A–Z app list for one letter. Any other segment count renders an inline "Page Not Found" with HTTP 200 |
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
 | `/hire-an-expert` | `src/app/hire-an-expert/HireExpertClient.js` | Hire-an-expert CTA to signup or cal.id |
-| `/home` | `src/app/home/page.js`. **Never renders**: middleware 307s to `/` | (retired) |
+| `/home` | `src/app/home/page.js` | Minimal placeholder page (heading "Home") |
 | `/home-b` | `public/home-b/index.html` (static file, not a Next route). `noindex`, canonical `/`. Middleware 302s a crawler to `/` | Homepage version B. Humans assigned A are sent back to `/` by `public/home-ab.js` |
 | `/integrations` | `src/app/components/integrations/IntegrationsMain.js` → `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js`; `src/app/lib/integration-data.js:getIntegrationsPageData` | Integrations directory |
 | `/integrations-script` | `src/app/components/integrations-script/SetupBuilder.js` and sections | Embed-script setup builder (`?templateId=`, `?app=`) |
@@ -70,7 +70,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 
 ### Redirects, rewrites and middleware
 
-Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `beforeFiles` rewrite, then the filesystem, then the `afterFiles` rewrites. `next.config.js` has no `redirects()`; its comment points at the middleware. The middleware loads `https://viasocket-admin.embarko.app/api/public/redirects` (cached for a minute) and, if that fetch fails, uses `src/data/redirects.json`. It answers with that rule's `statusCode` (301, 302, 307 or 308) and an empty body. A 301 or 308 is the canonical signal; the redirect response has no `rel=canonical` because it has no document.
+Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `beforeFiles` rewrite, then the filesystem, then the `afterFiles` rewrites. `next.config.js` has no `redirects()`; its comment points at the middleware. The middleware loads `https://viasocket-admin.embarko.app/api/public/redirects` (cached for a minute) and, if that fetch fails, uses `src/data/redirects.json`. It answers with that rule's `statusCode` (301, 302, 307 or 308) and an empty body. A 301 or 308 is the canonical signal; the redirect response has no `rel=canonical` because it has no document. Managed redirects do not apply to `/home`; remove any legacy `/home` → `/` rule in the admin panel so the two stay aligned.
 
 | Source | Destination | Status | Defined in |
 |---|---|---|---|
@@ -85,7 +85,6 @@ Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `be
 | `/mcp/invgate-service-desk` | `/mcp/invgateservicemanagement` | 308 | `next.config.js` |
 | `/mcp` | https://mushrooms.viasocket.com/ | 308 | `next.config.js` ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
 | `/embed` | `/` (live admin list, production and test, 2026-10-29). Fallback file still says `/developers` | 301 live; 308 in `src/data/redirects.json` | `src/middleware.js` |
-| `/home` | `/` | 307 | `src/middleware.js:middleware` |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/home-b` | `/home-b/index.html` | rewrite (`beforeFiles`) | `next.config.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
