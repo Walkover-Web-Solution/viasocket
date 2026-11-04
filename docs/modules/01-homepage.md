@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: 9ec4868d
-verified_on: 2026-11-03
+verified_at: cbb6d228
+verified_on: 2026-11-04
 ---
 # Module: Homepage (`/`)
 
@@ -13,7 +13,7 @@ verified_on: 2026-11-03
 > `/` is **not** a Next.js page. `next.config.js` `rewrites().beforeFiles` maps `/` to `/new-home/index.html` (version A) for every request, so the root layout, `AppProvider`, tracking and UTM capture never run here ([FLOWS](../FLOWS.md#cross-cutting-navigation-facts)). Version B is written into that same document in the browser by the inline gate at the top of A's `<head>` ([below](#homepage-ab-test-version-b)). The browser URL stays `/`. Never edit `src/app/page.js` for homepage work: that file is the old Next homepage, not version B. Opening `/home-b` redirects to `/`.
 
 > [!WARNING]
-> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. The export must keep three things from this repo's copy of `public/new-home/index.html`: `data-hp="A"` on `<html>`, the inline gate `<script>` as the first script in `<head>` (copied verbatim), and `<script src="/home-ab.js?v=6"></script>` straight after it. Without the gate every visitor gets A. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
+> **The source of truth for `public/new-home/` is the `viasocket-site` repo** (`variants/simple-bento`), not this one. Changes are made there, exported with `deploy/export-to-viasocket-repo.py --prod`, and the export is pushed to `test` (D-03, C-01, team answers to OPEN_QUESTIONS, 2026-10-22). A hand edit to `public/new-home/*` here is overwritten by the next export unless the same change is made in `viasocket-site`. The export must keep three things from this repo's copy of `public/new-home/index.html`: `data-hp="A"` on `<html>`, the inline gate `<script data-cfasync="false">` as the first script in `<head>` (copied verbatim, including that attribute), and `<script src="/home-ab.js?v=6"></script>` straight after it. Without the gate every visitor gets A. `home-ab.js` supplies A's `utm_source=a` at runtime, so the export does not need per-link query edits. If a request needs a homepage change, say so and ask whether to change the source repo or patch the export. <!-- verify:ignore -->
 
 ---
 
@@ -99,8 +99,8 @@ Both versions are shown at `/`, and the address bar never changes. The server ha
 2. On `test.viasocket.com`, this Pages project's `*.viasocket-website.pages.dev` previews, `localhost` and `127.0.0.1`, `?variant=a` or `?variant=b` forces that version and sets the cookie. `viasocket.com` ignores the parameter.
 3. Otherwise a `variant` cookie of `A` or `B` keeps the visitor's version. A visitor with no cookie gets a fair coin flip (`Math.random() < 0.5`). The gate writes the cookie with `document.cookie` (30 days, the value in `src/const/abTest.js`, domain `.viasocket.com` on viasocket hosts, `secure` on https).
 4. **A:** the gate returns and the page loads as before.
-5. **B:** the gate hides `<html>`, starts `fetch('/home-b/index.html')` with the header `X-Homepage-Fetch: B`, and writes `<plaintext id="hp-rest" style="display:none">`. That tag turns the rest of A's file into inert text, so no later script, stylesheet or tag of A runs or paints. A's Tag Manager snippet and `home-ab.js` never run for a B visitor. When B arrives, the gate replaces the document with `document.open()`, `document.write(B)` and `document.close()`. The URL and history are unchanged. B's own `home-ab.js` and Tag Manager run once.
-6. **Fallback:** if B fails, is redirected, does not carry `data-hp="B"`, or has not arrived 2 seconds after the gate started, the gate waits until A has finished downloading into `#hp-rest` and writes A back: the tags parsed before the gate plus that text. `window.__hpGate` is `fallback`. A's Tag Manager runs once, with `homepage_variant: 'excluded'`. `home-ab.js` tags A's links with `utm_source=a` and posts nothing, so no exposure is counted for either version. The cookie stays `B`, so the next visit tries B again.
+5. **B:** the gate hides `<html>`, starts `fetch('/home-b/index.html')` with the header `X-Homepage-Fetch: B`, and writes `<plaintext id="hp-rest" style="display:none">`. That tag turns the rest of A's file into inert text, so no later script, stylesheet or tag of A runs or paints. A's Tag Manager snippet and `home-ab.js` never run for a B visitor. When B arrives, the gate waits until A has finished parsing, keeps a copy of that HTML, and replaces the document with `document.open()`, `document.write(B)` and `document.close()`. Both copies are normalised first ([Rocket Loader](#rocket-loader)). The URL and history are unchanged. B's own `home-ab.js` and Tag Manager run once. B's script sets `window.__hpReady` on its first line.
+6. **Fallback:** if B fails, is redirected, does not carry `data-hp="B"`, or has not arrived 2 seconds after the gate started, the gate waits until A has finished downloading into `#hp-rest` and writes A back: the tags parsed before the gate plus that text. The same rebuild runs about 1.5 seconds after B was written if `window.__hpReady` is still unset, which is what happens when B's scripts never start. `window.__hpGate` is `fallback`. A's Tag Manager runs once, with `homepage_variant: 'excluded'`. `home-ab.js` tags A's links with `utm_source=a` and posts nothing, so no exposure is counted for either version. The cookie stays `B`, so the next visit tries B again. The stored A text is normalised the same way as B, so a rewritten copy of A still runs.
 7. `src/middleware.js` 302s `/home-b` and `/home-b/index.html` to `/` for every caller, crawlers included. The only exception is a request for `/home-b/index.html` carrying `X-Homepage-Fetch: B`, which is the gate's fetch.
 
 `public/home-ab.js` then runs in whichever document is on screen. Before that page's Tag Manager snippet, it pushes `{ homepage_variant: 'A' | 'B' }` (the `data-hp` of the page on screen) to `dataLayer`, or `'excluded'` after a fallback or when the cookie does not match the page, so those pageviews can be left out of both versions. It writes the cookie only if it is missing, and it posts a view only when the cookie matches the version on screen, because `/api/track-variant` reads the version from that cookie. `localStorage` `vs_variant` mirrors it. The `visitor_id` cookie is still written only from the browser, the same way as `TrackingCookies`.
@@ -109,12 +109,23 @@ Measured on the PR 1904 Pages preview (Chrome 122, fresh profile per session, ti
 
 #### Editing version A's `<head>`
 
-- Keep the gate the **first script** and keep it **inline**. Only `<meta charset>` and `<meta name="viewport">` may come before it. Anything placed above it runs for B visitors too, and anything rebuilt after a fallback is serialized from the DOM.
+- Keep the gate the **first script** and keep it **inline**, with `data-cfasync="false"` on its tag. Only `<meta charset>` and `<meta name="viewport">` may come before it. Anything placed above it runs for B visitors too, and anything rebuilt after a fallback is serialized from the DOM. Without `data-cfasync="false"`, Rocket Loader postpones the gate and no visitor is sorted.
 - Anything after the gate (Tag Manager, `home-ab.js`, styles, JSON-LD, the body) is skipped for B visitors. Tracking that must also run on B has to be added to `public/home-b/index.html` as well.
 - Keep `home-ab.js` before the Tag Manager snippet in both files, so the pageview carries `homepage_variant`.
 - `public/home-b/index.html` must keep `data-hp="B"` within its first 200 characters. The gate checks it before writing B.
 - A script written into the document by `document.write` must be same-origin or `async`. Chrome may block cross-origin parser-blocking scripts written that way on slow connections.
 - After editing the gate or `home-ab.js`, bump `home-ab.js?v=` in both HTML files.
+- Every script in `public/home-b/index.html` keeps `data-cfasync="false"`. B's main script sets `window.__hpReady` and adds `hp-on` to `<html>` before it does anything else. The `.rv` hide rule applies only under `html.hp-on`.
+
+### Rocket Loader
+
+viasocket.com runs Cloudflare Rocket Loader. `test.viasocket.com` and the `*.pages.dev` previews do not, so a check on those hosts never shows this failure.
+
+Rocket Loader rewrites every script in an HTML response to `type="<hex>-text/javascript"` (for example `type="4b560cea63a5d8dad7eaf3b4-text/javascript"`), adds a `data-cf-settings` attribute, and injects its own `rocket-loader.min.js`. That file is what switches the scripts back on after a normal page load. The gate inserts B with `document.write`, and a fallback inserts A the same way, so the loader never runs and every rewritten script stays inert. The theme switch, the use-case cards, the FAQ and the demo are all built by those scripts. B's sections below the hero (`.rv`) used to start at `opacity: 0` and only became visible from the same script, so a visitor whose script never ran saw a blank page under the hero.
+
+`normalise()` in the gate runs on B and on the stored copy of A before `document.write`. It turns `type="<hex>-text/javascript"` back into a normal script, drops `data-cf-settings`, and removes the `rocket-loader.min.js` tag. `data-cfasync="false"` on the gate and on every script in `public/home-b/index.html` asks Rocket Loader not to rewrite those tags in the first place. The normalisation stays either way: a response that is already rewritten, including the A text sitting in `#hp-rest`, is still repaired.
+
+B's main script sets `window.__hpReady` and `html.hp-on` on its first line. `.rv` sections are hidden only while `hp-on` is set, and revealed when they scroll into view. If that script never starts, the sections stay visible, and about 1.5 seconds after the write the gate rebuilds the normalised A with `__hpGate` of `fallback`, so the visit is not counted as a B exposure.
 
 ### Where B's links go
 

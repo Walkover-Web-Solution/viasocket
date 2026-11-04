@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="/home-ab.js?v=6"></script>
+<script src="/home-ab.js?v=6" data-cfasync="false"></script>
 <title>Integration Layer for Your Product &amp; AI Agents | viaSocket</title>
 <link rel="canonical" href="https://viasocket.com/"> <!-- // pragma: allowlist secret -->
 <meta name="description" content="Connect 2,300+ apps to your product or AI agent with one prompt. Auth, events and actions handled. Free to start.">
@@ -13,7 +13,7 @@
 <link rel="icon" href="/new-home/assets/favicon.svg?v=2" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-THTCRSLN');</script>
+<script data-cfasync="false">(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-THTCRSLN');</script>
 <style>
 /* tokens copied from viasocket.com */
 :root{
@@ -366,11 +366,12 @@ footer{border-top:1px solid var(--line);padding:56px 0 28px}
 .f-legal nav{display:flex;gap:18px}
 .f-legal a:hover{color:var(--ink)}
 
-.rv{opacity:0;transform:translateY(14px);transition:opacity .5s,transform .5s}
-.rv.in{opacity:1;transform:none}
+.rv{transition:opacity .5s,transform .5s}
+html.hp-on .rv{opacity:0;transform:translateY(14px)}
+html.hp-on .rv.in{opacity:1;transform:none}
 @media (scripting: none) { .rv { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
-  .rv { opacity: 1; transform: none; transition: none; }
+  .rv, html.hp-on .rv { opacity: 1; transform: none; transition: none; }
   .wire::before { animation: none; }
   .rot em { transition: none; }
 }
@@ -838,8 +839,10 @@ Build it complete for my use case. Before any code, show me your plan and wait f
 Ask me what I want to build first.
 When it works, show me what changed and what I can add next.</p>
 <a class="chat-fab" href="/support" data-chat aria-label="Chat with viaSocket support"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span>Chat</span></a>
-<script src="/new-home/assets/support.js?v=1" defer></script>
-<script>
+<script src="/new-home/assets/support.js?v=1" defer data-cfasync="false"></script>
+<script data-cfasync="false">
+window.__hpReady = true;
+document.documentElement.classList.add('hp-on');
 const fav=d=>`https://www.google.com/s2/favicons?domain=${d}&sz=64`;
 const LOGO={gmail:'https://stuff.thingsofbrand.com/gmail.com/images/imge_idrA5FDGTH_1763454052978.svg',whatsapp:'https://stuff.thingsofbrand.com/viasocket.com/images/imge_whatsapp.svg',salesforce:'https://stuff.thingsofbrand.com/salesforce.com/images/img1_salesforce.png',freshdesk:'https://stuff.thingsofbrand.com/freshdesk.com/images/imgf_freshdesk.png',gcal:'https://stuff.thingsofbrand.com/google.com/images/img7_Google-Calendar.png',gsheets:'https://upload.wikimedia.org/wikipedia/commons/3/30/Google_Sheets_logo_%282014-2020%29.svg'};
 const lg=k=>LOGO[k]||fav(k);
