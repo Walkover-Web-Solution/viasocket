@@ -16,16 +16,11 @@ const nextConfig = {
         return {
             // The homepage is the static site in public/new-home. beforeFiles runs ahead of the
             // app routes, so "/" is served from it and src/app/page.js (with its A/B variants) is not used.
+            // Version B is written into this document in the browser (see public/new-home/index.html).
             beforeFiles: [
                 {
                     source: '/',
                     destination: '/new-home/index.html',
-                },
-                {
-                    // Version B is a static file. public/home-b/index.html is only
-                    // served at /home-b/index.html unless this rewrite exists.
-                    source: '/home-b',
-                    destination: '/home-b/index.html',
                 },
             ],
             afterFiles: [

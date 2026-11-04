@@ -1,7 +1,7 @@
 ---
 covers: ["src/const/tables.js", "src/const/fields.js", "src/utils/getData.js", "src/utils/axiosCalls.js", "src/utils/abTestVisitor.js", "src/app/lib/**"]
-verified_at: 8772409a
-verified_on: 2026-11-02
+verified_at: 9ec4868d
+verified_on: 2026-11-03
 ---
 # Database — table-api entities
 
@@ -115,7 +115,7 @@ Rows written by older tracker versions (no `profileVersion`) are converted by `r
 ---
 
 ## Cross-System References
-- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it. The lookup also filters `environment`, which is what keeps a test visit off a production row. Homepage version B is a `page_data` event with `path` `/home-b`.
+- **`visitor_id` cookie ↔ row.** `user_id` and `name.visitorId` hold the cookie's UUID; there is no key constraint, only the `LIKE` lookup. The cookie is on `.viasocket.com`, so test and production visitors share it. The lookup also filters `environment`, which is what keeps a test visit off a production row. Homepage version B is a `page_data` event with `path` `/` and `variant` `B`. Rows from before both versions were served at `/` used `path` `/home-b`.
 - **`mergedInto` → `rowid`.** A merged row points at the surviving row inside its `name` JSON; not a foreign key.
 - **`visitor_id` ↔ MSG91 `state`.** `buildSignupState()` puts the `visitor_id` cookie and the last signup button (`cta`) into the `state` string along with the `utmData` cookie, so a signed-up user can be joined to this row. `utmdata` / `firstUtm` still record the UTMs on the tracking event itself ([third-party-services.md](../current-infrastructure/third-party-services.md)).
 - **`appslugname` ↔ plug service.** `DOFOLLOWLINK.appslugname`, `USECASES.slugname`, `SINGLEAPPINTEGRATIONDATA.app_slug`, `MCP.slug_names` and video/blog `tags` hold plug service app slugs; `CATEGORY.slug` matches plug service categories ([plug-service.md](../current-infrastructure/plug-service.md)). A renamed slug in the plug service silently orphans these rows.

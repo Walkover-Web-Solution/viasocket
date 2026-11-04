@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
-verified_at: 493f7310
-verified_on: 2026-11-03
+verified_at: cbb6d228
+verified_on: 2026-11-04
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -29,7 +29,7 @@ Status values: **Accepted** (current, keep it), **Superseded** (code may remain,
 | 2026-10-21 | [ADR-014: Evidence-based dead-code cleanup](#adr-014-evidence-based-dead-code-cleanup) | Accepted | Maintenance | Unreachable code misled agents and shipped unused bytes |
 | 2026-10-22 | [ADR-015: The integration layer is the canonical positioning](#adr-015-the-integration-layer-is-the-canonical-positioning) | Accepted | Product / copy | One story across the site; automation copy is out of date |
 | 2026-10-22 | [ADR-016: The static homepage's design system is the site-wide target](#adr-016-the-static-homepages-design-system-is-the-site-wide-target) | Accepted | Design | One visual system instead of five |
-| 2026-10-31 | [ADR-017: Homepage version B is a client-side 50/50 split](#adr-017-homepage-version-b-is-a-client-side-5050-split) | Accepted | Homepage / growth | `/` stays cached as A; B is `/home-b` |
+| 2026-10-31 | [ADR-017: Homepage version B is a client-side 50/50 split](#adr-017-homepage-version-b-is-a-client-side-5050-split) | Accepted | Homepage / growth | `/` is always A's HTML; an inline gate writes B in the browser; `/home-b` redirects there |
 | 2026-11-02 | [ADR-018: Admin visitor events do not use a Cloudflare setting](#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting) | Accepted | Analytics | The ingest URL and key are built into the route |
 
 ---
@@ -162,14 +162,15 @@ Superseded by ADR-008 at `/`. The code is still present but is not reached at `/
 ## ADR-007: Tracking cookies are written by the browser, and `/` is sent no-store
 
 ### Status
-Accepted for the cookies. The `/` cache headers are **ineffective today**: since ADR-008, `/` is the static homepage, and on 2026-10-21 production served it `max-age=10800` from the Cloudflare zone rule regardless of the middleware headers (OPEN_QUESTIONS C-05).
+Accepted for the cookies. The `/` cache headers were **removed on 2026-11-02**: `/` is the same static HTML for every visitor and the homepage split runs in the browser ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)), so a cached `/` is correct (OPEN_QUESTIONS C-05).
 
 ### Context & Problem Statement
 In production, `viasocket.com/` came back with `cache-control: max-age=10800` and `cf-cache-status: HIT`. Test returned `DYNAMIC` with no `cache-control`. The cached copies had their `Set-Cookie` stripped, so visitors never received `variant` or `visitor_id`, and one visitor's variant was replayed to everyone. The value `10800` appears nowhere in the repo; it is a Cloudflare zone rule (maintainer guidance, 2026). <!-- verify:ignore -->
 
 ### Decision & Implementation
-- `src/middleware.js:middleware` sets `Cache-Control: private, no-store, must-revalidate` and `CDN-Cache-Control: no-store` on `/`. Cloudflare honours the second header for its own edge cache.
-- Middleware no longer mints the variant or visitor cookies. `src/app/components/VariantTracker/TrackingCookies.js:TrackingCookies` is an inline ES5 script that runs before React and writes both cookies through `document.cookie`, scoped to `.viasocket.com`. It restores a lost `visitor_id` from the `vs_visitor` localStorage mirror. The homepage passes `renderedVariant` so the recorded cookie matches what the visitor saw.
+- `src/middleware.js:middleware` sets `Cache-Control: private, no-store, must-revalidate` and `CDN-Cache-Control: no-store` on `/setup-prompt`. It no longer sets them on `/` (2026-11-02).
+- Middleware no longer mints the visitor cookie. `src/app/components/VariantTracker/TrackingCookies.js:TrackingCookies` is an inline ES5 script that runs before React and writes both cookies through `document.cookie`, scoped to `.viasocket.com`. It restores a lost `visitor_id` from the `vs_visitor` localStorage mirror. The homepage passes `renderedVariant` so the recorded cookie matches what the visitor saw.
+- On `/` the variant cookie is written by the inline gate at the top of version A's `<head>`, through `document.cookie`, before anything else on the page runs ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)). No `Set-Cookie` is involved, so a cache that strips it does not matter.
 
 ### Supporting Evidence & Past Incidents
 - `8caac1f0` (2026-08-24) "bug solve" added the `/` cache headers.
@@ -270,7 +271,7 @@ Accepted.
 Accepted (maintainer guidance, 2026; the code paths are verified below).
 
 ### Decision & Implementation
-- **`utm_source` is the page path** (for example `/integrations` or `/embed`). `src/utils/handleUtmSource.js:isInternalUtmSource` treats empty values, values starting with `/` and the `INTERNAL_UTM_SOURCES` list (`home-A`, `home-B`, `relay-switch-google-ads`) as the site's own. `savePageUtmSource` only overwrites those, so an ad or referral source in the cookie survives. Section-level detail belongs in the CTA tracking event, not in `utm_source`.
+- **`utm_source` is the page path** (for example `/integrations` or `/embed`). `src/utils/handleUtmSource.js:isInternalUtmSource` treats empty values, values starting with `/` and the `INTERNAL_UTM_SOURCES` list (`home-A`, `home-B`, `a`, `b`, `relay-switch-google-ads`) as the site's own. `savePageUtmSource` only overwrites those, so an ad or referral source in the cookie survives. Section-level detail belongs in the CTA tracking event, not in `utm_source`. Homepage versions are the exception: their calls to action use `utm_source=a` or `utm_source=b` ([ADR-017](#adr-017-homepage-version-b-is-a-client-side-5050-split)). Those two tags are registered so a click to another page on this site does not lock the cookie.
 - **Attribution travels in the `utmData` cookie** (30 days when `src/utils/handleUtmSource.js` writes it; one day until `8772409a`). `getUtmSource` and `setUtmSource` capture `utm_*`, `affiliate_*`, `ref` and the ad click ids `gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid` and `rdt_cid`, and only when the cookie is absent. A prompt typed on a marketing page goes in `utmData.prompt`, never in `?prompt=`, because the query string leaks it into referrers and analytics. The signup widget sends `buildSignupState()`: that cookie, plus `visitor_id` and `cta`. Some other writers still pass 1 day ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)).
 - **Campaign pages keep their own tag**, for example `relay-switch-google-ads` on `/migration/relay`. `utm_source` must appear once in the signup URL. `src/utils/handleRedirection.js:handleRedirect` with a `customSource` emits it twice (`state={…}&utm_source=…`), so such CTAs should stamp `utmData` and navigate to `/signup?utm_source=<tag>` directly. Keep `handleRedirect` for external apps such as `flow.viasocket.com`.
 - **No `www`:** match `viasocket.com` exactly, with no `www.` branch anywhere.
@@ -356,21 +357,22 @@ The site had five visual systems ([DESIGN](DESIGN.md)): legacy daisyUI + SCSS, t
 ## ADR-017: Homepage version B is a client-side 50/50 split
 
 ### Status
-Accepted.
+Accepted. Revised 2026-10-31: both versions are served at `/`. The address bar does not change. Revised 2026-11-02: the version is chosen in the browser, not by middleware. Revised 2026-11-04: the gate undoes Rocket Loader's script rewrite before `document.write`, and rebuilds A if B's script has not started.
 
 ### Context & Problem Statement
-The homepage needs a second version, shown to half of visitors, sticky, with bots and search engines kept on the current page. Production `/` is one cached document. A server-side coin flip would be replayed to everyone, which is the incident in lesson 1. The middleware experiment client is a different system, and no experiment is defined for this test, so its events would be refused.
+The homepage needs a second version, shown to half of visitors, sticky, with bots and search engines kept on the current page. Production `/` is one cached document. A server-side coin flip is replayed to everyone if that cache stores the response, which is the incident in lesson 1. Sending version B to `/home-b` kept the cached `/` as A, and it also changed the address bar. The middleware experiment client is a different system, and no experiment is defined for this test, so its events would be refused.
 
 ### Decision & Implementation
-- Version A stays `public/new-home/` at `/`. Version B is `public/home-b/index.html`, served at `/home-b`, `noindex`, with a canonical of the site root. The mockup file is not shipped.
-- `public/home-ab.js` assigns `variant` `A` or `B` (equal probability) before paint, the same cookie `TrackingCookies` already uses (30 days, domain `.viasocket.com` on viasocket hosts). `localStorage` `vs_variant` restores it after the cookie expires, on the homepage and on every other page. A visitor assigned B is sent to `/home-b` with `location.replace`. A crawler user agent stays on A, and middleware 302s a crawler that requests `/home-b` back to `/`.
-- The route stores a view of `/`, `/home` or `/home-b`, a homepage click whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup` when this site sees the registration response. Every other caller gets `not a homepage event` and no table read. Both homepages add `hp_variant` to every `flow.viasocket.com` link. Accounts created on flow.viasocket.com, and Google or Apple signups that leave `/signup` first, are still stored by the signup app, which this repo does not own.
+- Version A is `public/new-home/index.html`. Version B is `public/home-b/index.html`. `/` is always A's static HTML, with no per-visitor logic on the server, so any cache may store it. The first script in A's `<head>` is an inline gate. For a B visitor it hides the page, turns the rest of A into inert text (`<plaintext>`), fetches B and writes it into the document with `document.open`/`write`/`close`. A's Tag Manager and `home-ab.js` never run for that visitor. The browser URL stays `/`. If B fails, takes more than 2 seconds, or its own script has not started within about 1.5 seconds of being written, the gate rebuilds A and no exposure is counted. Before either write, the gate strips Cloudflare Rocket Loader's script rewrite. viasocket.com runs that loader and the preview hosts do not; `document.write` never lets the loader turn those scripts back on, so a rewritten B or a rewritten fallback A would otherwise sit inert. The detail is in [01-homepage](modules/01-homepage.md#rocket-loader). `src/app/page.js` is the old Next homepage, not version B, so it is not how this split is rendered. `/home-b` and `/home-b/index.html` 302 to `/` for every caller except the gate's fetch (`X-Homepage-Fetch: B`).
+- A crawler gets A. On `test.viasocket.com`, this Pages project's `*.viasocket-website.pages.dev` previews and a local dev host, `?variant=a` or `?variant=b` forces that version and sets the cookie. `viasocket.com` ignores it. Anyone else with a `variant` cookie of `A` or `B` keeps it. A person with no cookie gets a 50/50 coin flip in the browser. The gate writes the cookie (30 days, domain `.viasocket.com` on viasocket hosts) with `document.cookie`. A visitor without JavaScript gets A.
+- `public/home-ab.js` runs once in the document on screen. It pushes `homepage_variant` (`A`, `B`, or `excluded` after a fallback) to `dataLayer` before that page's Tag Manager snippet, writes the cookie only if it is missing, and posts a view only when the cookie matches the page on screen. `localStorage` `vs_variant` mirrors it.
+- The route stores a view of `/`, `/home` or `/home-b`, a homepage click whose action is `signup_click` or `login_click`, and `signup_completed` on `/signup` when this site sees the registration response. Every other caller gets `not a homepage event` and no table read. Both homepages add `hp_variant` to every `flow.viasocket.com` link. Each call to action that opens another page also gets `utm_source=a` (version A) or `utm_source=b` (version B); anchors and copy buttons do not. A signup or login click stores `variant` on the event, and its `destination_url` includes that `utm_source`. The event's `utmData` stays the `utm_*` query on the page the visitor opened. Accounts created on flow.viasocket.com, and Google or Apple signups that leave `/signup` first, are still stored by the signup app, which this repo does not own. The signup app can read `utm_source` or `hp_variant` from the arrival URL.
 - B's sidebar is not applied to any other route.
 
 ### Consequences & Trade-offs
-- The one script tag in `public/new-home/index.html` is overwritten by the next `viasocket-site` export unless that export keeps it. `public/home-b/` and `public/home-ab.js` are outside the export folder.
+- The inline gate and the `home-ab.js` script tag in `public/new-home/index.html` are overwritten by the next `viasocket-site` export unless that export keeps them. `public/home-b/` and `public/home-ab.js` are outside the export folder. Anything added to A's `<head>` after the gate is skipped for B visitors.
 - A visitor with JavaScript disabled, and every crawler, sees A. That is the control, and it is what search engines index.
-- About half of first-time visitors load A and then navigate to B. The script runs in the head, before the body, and hides the document only for that navigation.
+- A B visitor downloads A's HTML and then B's, and sees a blank page until B is written (on the preview, a median of about 0.4 s with no throttling and 2.0 s from navigation start on slow 4G; the fallback fires 2 s after the gate starts). A's content is never painted for them. A first visit cannot use the middleware: it would need per-visitor HTML at `/`, which the production cache replays.
 - Date-range counts come from `page_data` and `click_data` (the newest 100 events), not from the `varient` column, which is first-touch. How to read them is in [01-homepage](modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version).
 
 ---

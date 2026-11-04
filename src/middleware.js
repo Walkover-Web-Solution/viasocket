@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
-import { isBotRequest } from './utils/isBot';
-
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -78,41 +76,29 @@ export async function middleware(request) {
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
 
-    // Version B of the homepage is a separate document so the cached "/" stays
-    // version A. Crawlers are sent back to "/" and the page is not indexed.
-    if (barePath === '/home-b' && isBotRequest({ userAgent: request.headers.get('user-agent') })) {
+    // /home-b is not a public URL: opening it, as a person or a crawler, goes to
+    // "/". The gate in version A's <head> fetches the file with this header and
+    // writes it into "/" for version B visitors, so that request is let through.
+    const gateFetch = pathname === '/home-b/index.html' && request.headers.get('x-homepage-fetch') === 'B';
+    if ((barePath === '/home-b' || pathname === '/home-b/index.html') && !gateFetch) {
         const url = request.nextUrl.clone();
         url.pathname = '/';
-        const botRedirect = NextResponse.redirect(url, 302);
-        botRedirect.headers.set('Cache-Control', 'private, no-store');
-        botRedirect.headers.set('CDN-Cache-Control', 'no-store');
-        return botRedirect;
+        const homeRedirect = NextResponse.redirect(url, 302);
+        homeRedirect.headers.set('Cache-Control', 'private, no-store');
+        homeRedirect.headers.set('CDN-Cache-Control', 'no-store');
+        return homeRedirect;
     }
 
     const response = NextResponse.next();
 
-    // The variant and visitor id cookies are written by the browser (see
-    // TrackingCookies), not here: Cloudflare strips Set-Cookie from the HTML
-    // responses it handles, so cookies minted at the edge never arrived.
-    //
-    // / is always version A's HTML. Version B is the separate document /home-b,
-    // chosen in the browser, so a shared cache must not store /home-b either.
-    // /setup-prompt is the same kind of problem for a different reason: Next's
-    // flight data echoes the request URL, and that URL carries org and project
-    // ids. Cloudflare's zone cache rule is the authority in production, but the
-    // origin has to declare this too or any cache in front of it repeats the
-    // mistake.
-    if (pathname === '/' || pathname === '/setup-prompt' || barePath === '/home-b') {
+    // /setup-prompt echoes org and project ids in its flight data. A shared cache
+    // must not store that. Cloudflare's zone cache rule is the authority in
+    // production, but the origin has to declare this too.
+    if (pathname === '/setup-prompt') {
         response.headers.set('Cache-Control', 'private, no-store, must-revalidate');
-        // Cloudflare reads this in preference to Cache-Control for its own edge
-        // cache, so it is what keeps the page out of the CDN while leaving the
-        // directive above to speak for the browser.
         response.headers.set('CDN-Cache-Control', 'no-store');
-    }
-
-    // Same instruction as the page's robots meta. robots.txt does not Disallow
-    // this path: a crawler has to fetch the page to see the noindex.
-    if (pathname === '/setup-prompt' || barePath === '/home-b') {
+        // Same instruction as the page's robots meta. robots.txt does not Disallow
+        // this path: a crawler has to fetch the page to see the noindex.
         response.headers.set('X-Robots-Tag', 'noindex, nofollow');
     }
 
@@ -172,6 +158,8 @@ export async function middleware(request) {
 }
 
 // Not for share images (/og/...): they need no redirects or cookies, and are not page visits.
+// /home-b/index.html has a dot, so the general matcher skips it; it is listed on
+// its own so opening it directly is redirected to "/".
 export const config = {
-    matcher: ['/((?!_next/|api/|og/|.*\\..*).*)'],
+    matcher: ['/((?!_next/|api/|og/|.*\\..*).*)', '/home-b/index.html'],
 };
