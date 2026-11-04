@@ -1,7 +1,7 @@
 ---
 covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: a9853794
-verified_on: 2026-11-02
+verified_at: 9ec4868d
+verified_on: 2026-11-03
 ---
 # Contracts & Data Schemas
 
@@ -61,12 +61,12 @@ There is none, on either side. Helpers catch everything and return fallbacks (`[
 |---|---|---|---|
 | cookie | `utmData` | JSON (unencoded): `utm_*`, ad click ids (`gclid`, `gbraid`, `wbraid`, `fbclid`, `msclkid`, `li_fat_id`, `ttclid`, `rdt_cid`), `affiliate_*`, `ref`, plus `utm_source`, `prompt`, `intent`. 30 days from `handleUtmSource.js`, `path=/`, `domain=.viasocket.com` on viasocket hosts. | Written by `src/utils/handleUtmSource.js` (`getUtmSource` on first load, `setUtmSource`, `savePageUtmSource`). `setIntent`, `carryPromptToSignup`, the migration signup CTAs and `popularUseCases.js` still pass 1 day and shorten a cookie they rewrite ([OPEN_QUESTIONS T-13](OPEN_QUESTIONS.md)). Read by `setUtmSource`, `buildSignupState` and `savePageUtmSource`. |
 | cookie | `signup_cta` (`SIGNUP_CTA_COOKIE`) | element id of the last `signup_click`, URL-encoded; 30 days; same domain rules as `utmData` | Written by `src/utils/trackVisitor.js` (`trackInteraction`, `trackCtaClick`). Read by `buildSignupState` and sent as `cta` in the MSG91 `state`. |
-| cookie | `variant` (`VARIANT_COOKIE`) | `A` or `B`; 30 days; `samesite=lax` | Written by `src/app/components/VariantTracker/TrackingCookies.js` (inline script before paint). Read by `src/utils/getVariant.js:getVariant`, `POST /api/track-variant`. |
+| cookie | `variant` (`VARIANT_COOKIE`) | `A` or `B`; 30 days; `samesite=lax` | Written by `src/app/components/VariantTracker/TrackingCookies.js` (inline script before paint), and on `/` by the inline gate at the top of `public/new-home/index.html` (a 50/50 coin flip when missing). Read by `src/utils/getVariant.js:getVariant`, `POST /api/track-variant`. |
 | cookie | `visitor_id` (`VISITOR_ID_COOKIE`) | UUID; 1 year; `.viasocket.com`, so shared by test and production | Written by `TrackingCookies` (new UUID, or restored from `vs_visitor`); repaired by `src/utils/trackVisitor.js`. Read by `POST /api/track-variant`. |
 | cookie | `rdt_cid` | Reddit click id; 30 days; `secure`, `sameSite=lax` | `src/middleware.js` sets it from a valid `?rdt_cid=` and deletes it when an invalid one arrives; read for the Reddit CAPI call. |
 | cookie | `prod` | presence only | Set outside this repo; read by `getHasToken`, `NavbarServer`. |
 
-Rules for `utmData`: `utm_source` is the page path (`/integrations`) or a registered tag in `INTERNAL_UTM_SOURCES` (`home-A`, `home-B`, `relay-switch-google-ads`). `savePageUtmSource` overwrites only a source that `isInternalUtmSource` accepts, so external attribution survives. A prompt goes in `utmData.prompt` before calling `savePageUtmSource`, never in the URL. Cookies are written from the browser because Cloudflare strips `Set-Cookie` from cached HTML ([cloudflare.md](current-infrastructure/cloudflare.md)).
+Rules for `utmData`: `utm_source` is the page path (`/integrations`) or a registered tag in `INTERNAL_UTM_SOURCES` (`home-A`, `home-B`, `a`, `b`, `relay-switch-google-ads`). `a` and `b` are the homepage versions. `savePageUtmSource` overwrites only a source that `isInternalUtmSource` accepts, so external attribution survives. A prompt goes in `utmData.prompt` before calling `savePageUtmSource`, never in the URL. Cookies are written from the browser because Cloudflare strips `Set-Cookie` from cached HTML ([cloudflare.md](current-infrastructure/cloudflare.md)).
 
 ### localStorage
 
@@ -112,7 +112,7 @@ sequenceDiagram
 
 | Event Name | Trigger Location | Required Payload Properties |
 |---|---|---|
-| `view` | homepage: `public/home-ab.js` when `/` or `/home-b` is shown. Other pages: `VariantTracker` still posts, and the route drops them | common fields + `userInfo`, `sessionId`, `isNewSession` |
+| `view` | homepage: `public/home-ab.js` when `/` is shown (version A or B). Other pages: `VariantTracker` still posts, and the route drops them | common fields + `userInfo`, `sessionId`, `isNewSession` |
 | `click` | any click inside an element with `data-track` (one capture listener) → `src/utils/trackVisitor.js:trackInteraction` | common fields + `element` = `data-track`, `label` = `data-track-label` or text, `section` = `data-track-section` or `other`, `action` = `data-track-action` or `click`, `destinationUrl` = `data-track-destination` or nearest `href` |
 | `cta` | hero CTAs: `src/app/components/home/CTAButtons.js`, `trackSignupClick` in `src/app/front-page/signup.js` → `src/utils/trackVisitor.js:trackCtaClick` | common fields + `ctaSource` (the utm tag), `section: 'hero'`, `element`, `label`, `action` (`signup_click` / `dashboard_click`), `destinationUrl` |
 
@@ -120,7 +120,7 @@ Common fields: `pageUrl`, `utmData` (the `utm_*` params on the current URL, not 
 
 `setIntent(value)` in `src/utils/userIntentTracker.js` is not an event: it stores `intent` in `utmData` (only caller: `src/app/hire-an-expert/HireExpertClient.js`, value `hireanexpert`) so signup receives it in `state`.
 
-The static homepage (`public/new-home/`) is outside the Next.js layout, so it gets no `TrackingCookies`, `VariantTracker`, Zaraz or Reddit pixel. Only GTM is in its HTML.
+The static homepage (`public/new-home/`) is outside the Next.js layout, so it gets no `TrackingCookies`, `VariantTracker`, Zaraz or Reddit pixel. Only GTM is in its HTML. Version B carries its own copy of the same snippet; a B visitor runs only B's. On both versions `public/home-ab.js` pushes `{ homepage_variant: 'A' | 'B' }` to `dataLayer` before the snippet, so the container's pageview can read the version on screen. After a fallback to A, or when the cookie does not match the page on screen, it is `excluded`.
 
 ### Middleware experiments
 
@@ -167,7 +167,8 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 | Destination | Built by | Parameters |
 |---|---|---|
 | `${NEXT_PUBLIC_FLOW_URL}/makeflow/trigger/<triggerId>/action?events=<ids>...` and `/connect/<rowid>` | integrations components (`src/components/IntegrationsComp/**`) | plug service row ids |
-| `https://flow.viasocket.com/...` from `/` and `/home-b` | `public/home-ab.js` stamps every such link before the visitor can use it | `hp_variant=A` or `hp_variant=B` (the homepage version). Not a `utm_source` |
+| `https://flow.viasocket.com/...` from `/` (version A or B) | `public/home-ab.js` stamps every such link before the visitor can use it | `hp_variant=A` or `hp_variant=B`. A homepage call to action also gets `utm_source=a` (version A) or `utm_source=b` (version B). Other query parameters stay |
+| Homepage calls to action on `/` (version A or B) that leave the page | `public/home-ab.js` | `utm_source=a` or `utm_source=b`. The tagged links are Start free, Log in, Talk to an expert, Book a demo, a setup-prompt link that opens a page, Chat with us, a nav or footer link to flow.viasocket.com or `/signup`, List your app, Partner program, Contact support, and Contact. Other query parameters stay. The menu, the rest of the footer, Pricing, Docs, Integrations, social links, badges, anchors and copy buttons are left alone. The full list is in [01-homepage](modules/01-homepage.md#carrying-the-version-to-signup). The tracking event's `utmData` stays the landing URL's `utm_*` |
 | an app's own website | `src/utils/ExternalLink.jsx:appWebsiteUrl` (single-app page "Learn more"); `src/components/IntegrationsComp/integrationsAppTwoComp/AboutApps.js` (app pairs) appends the same tag inline | forced to `https://`, `utm_source=viasocket` appended (outbound referral tag, not a signup source); magicalapi.com gets `/integrations/viasocket/`. `rel` from `relForApp`: dofollow only for apps in the `DOFOLLOWLINK` table |
 | `/signup` | `src/app/components/home/CTAButtons.js`, `src/app/front-page/signup.js` | `utm_source=<tag>` exactly once; no `prompt` |
 | any URL via `src/utils/handleRedirection.js:handleRedirect` | CTAs to `flow.viasocket.com` and others | `state=<utmData JSON>&<utm pairs>`; with `customSource`, `state={"utm_source":...}&utm_source=...` (emitted twice, so pages with their own tag link straight to `/signup?utm_source=`) |
@@ -185,4 +186,4 @@ mwSend({ event: 'conversion', experiment: 'hero-cta', variant, goal: 'signup' })
 No proposed endpoints. Known gaps a change may run into:
 - **Delete on the table API** does not exist. Anything that writes test rows must tag them (`environment`) and live with them.
 - **Server-side reCAPTCHA verification** does not exist; no form uses reCAPTCHA. The unimported provider and `react-google-recaptcha-v3` were removed on 2026-10-21, and the site-key env var in `.env` is now unread ([DEVELOPMENT.md](DEVELOPMENT.md)). If a form needs bot protection, design a server route using a key without the `NEXT_PUBLIC_*` prefix; do not ship a client-only check.
-- **Storing the homepage version on accounts this site cannot see.** `/signup` records a completed registration it observes (a 2xx POST to a URL containing `/c/register` whose body is not `hasError`) as `signup_completed`, with the `variant` cookie, so those signups per version are readable from the A/B table. Homepage Start free and Log in go to flow.viasocket.com and never hit `/signup`. Google, Apple, and any path that leaves `/signup` before that response also finish elsewhere. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link, and the `variant` cookie (same values, not HttpOnly, domain `.viasocket.com`) is readable there. The signup app must read `hp_variant` from the arrival URL, or the `variant` cookie when the query param is absent, and store that value on the new account. Until it does, signups that never produce a `/c/register` response on `/signup` cannot be counted from this repo. The paired backend is [socket-flow-backend](https://github.com/Walkover-Web-Solution/socket-flow-backend).
+- **Storing the homepage version on accounts this site cannot see.** `/signup` records a completed registration it observes (a 2xx POST to a URL containing `/c/register` whose body is not `hasError`) as `signup_completed`, with the `variant` cookie, so those signups per version are readable from the A/B table. Homepage Start free and Log in go to flow.viasocket.com and never hit `/signup`. Google, Apple, and any path that leaves `/signup` before that response also finish elsewhere. Both homepages add `hp_variant=A` or `hp_variant=B` to every `flow.viasocket.com` link, and `utm_source=a` or `utm_source=b` to every homepage call to action. The `variant` cookie (same `A`/`B` values, not HttpOnly, domain `.viasocket.com`) is readable there. The signup app must read `utm_source` or `hp_variant` from the arrival URL, or the `variant` cookie when the query param is absent, and store that value on the new account. Until it does, signups that never produce a `/c/register` response on `/signup` cannot be counted from this repo. The paired backend is [socket-flow-backend](https://github.com/Walkover-Web-Solution/socket-flow-backend).

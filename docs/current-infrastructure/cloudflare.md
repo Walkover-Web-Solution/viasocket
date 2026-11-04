@@ -1,7 +1,7 @@
 ---
 covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 3bb8471f
+verified_on: 2026-11-02
 ---
 # Cloudflare (Pages hosting + viasocket.com zone)
 
@@ -32,8 +32,10 @@ Hosting and edge runtime for every Next.js route; CDN cache for production; path
 ## Schema / Shape
 ```text
 Request -> zone (cache rule, path routing to other apps)
-        -> Pages worker: public/_redirects -> next.config.js redirects -> src/middleware.js -> beforeFiles rewrite (/ -> /new-home/index.html) -> filesystem/App Router
-Response headers that identify this project: x-matched-path (/ shows /new-home/index.html)
+        -> Pages worker: public/_redirects -> src/middleware.js
+        -> beforeFiles rewrite (/ -> /new-home/index.html) -> filesystem/App Router
+        -> browser: the gate in A's <head> fetches /home-b/index.html for version B
+Response headers that identify this project: `x-matched-path` (`/new-home/index.html` for `/`).
 ```
 Full routing order: [ARCHITECTURE.md](../ARCHITECTURE.md) "Request Path". Route and redirect table: [../05-navigation.md](../05-navigation.md).
 
@@ -45,7 +47,7 @@ Search-engine posture per environment:
 ## Functions We Call
 | Function | Returns | Used by |
 |---|---|---|
-| `middleware(request)` | `/home` 307 to `/`; sets `Cache-Control: private, no-store, must-revalidate` and `CDN-Cache-Control: no-store` on `/` (**ineffective in production**, [OPEN_QUESTIONS C-05](../OPEN_QUESTIONS.md)); `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths) |
+| `middleware(request)` | `/home` 307 to `/`; redirects `/home-b` to `/` (except the gate's fetch with `X-Homepage-Fetch: B`); `rdt_cid` cookie | every page request (matcher skips paths under _next/ and api/, and dotted paths except the explicitly matched `/home-b/index.html`) |
 | `loadZarazManually()` | injects `/cdn-cgi/zaraz/i.js` once | `src/app/providers.js:AppProvider` |
 | `GET /robots.txt` | text, see above | crawlers |
 
