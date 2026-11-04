@@ -10,6 +10,7 @@ import { getWorkflowAutomationsPageData } from '../lib/data';
 import DashboardButton from '@/components/dashboardButton/dashboardButton';
 import ShowDepartmentOptimized from '@/app/components/home/ShowDepartmentOptimized';
 import { getHasToken } from '../lib/getAuth';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -89,13 +90,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/workflow-automations', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/workflow-automations', metaData?.image),
         },
     };
 }

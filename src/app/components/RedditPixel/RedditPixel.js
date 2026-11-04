@@ -1,6 +1,11 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
+
 export default function RedditPixel() {
+    const pathname = usePathname();
+    // /setup-prompt's query holds org and project ids. Do not send a PageVisit.
+    if (pathname === '/setup-prompt') return null;
     if (process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod') return null;
 
     return (

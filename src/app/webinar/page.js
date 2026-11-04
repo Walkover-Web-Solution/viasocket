@@ -9,6 +9,7 @@ import SecuritySection from '../components/SecuritySection';
 import FAQSection from '@/components/agencyPartner/FAQSection';
 import ReviewIframeOptimized from '../components/home/ReviewIframeOptimized';
 import ShowBadges from '../components/home/ShowBadges';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -25,13 +26,13 @@ export async function generateMetadata() {
             title: metaData?.title || 'Webinars - viaSocket',
             description:
                 metaData?.description || 'Join live viaSocket webinars and learn to automate your work with your apps',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/webinar', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/webinar', metaData?.image),
         },
     };
 }

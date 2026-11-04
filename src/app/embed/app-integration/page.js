@@ -17,6 +17,7 @@ import DarkCta from '@/app/embed/app-integration/DarkCta';
 import HowAppIntegrationBecomes from './HowAppIntegrationBecomes';
 import FaqSection from '@/components/faqSection/faqSection';
 import { getFaqData } from '@/utils/getFaqData';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -34,13 +35,13 @@ export async function generateMetadata() {
             description:
                 metaData?.description ||
                 ' Embed a visual workflow builder inside your SaaS. Let your users connect your app with 2,500+ others — HubSpot, Salesforce, Slack, Gmail, Notion. SOC 2 Type II certified, $99/month.',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/embed/app-integration', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/embed/app-integration', metaData?.image),
         },
     };
 }

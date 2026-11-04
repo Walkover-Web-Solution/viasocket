@@ -41,7 +41,7 @@ const DropdownItem = ({ app, isChecked, handleSelect }) => (
 
 async function fetchApps(category) {
     const response = await fetch(
-        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}`
+        `${process.env.NEXT_PUBLIC_INTEGRATION_URL}api/v1/plugins/all?limit=50${category && category !== 'All' ? `&category=${category}` : ''}&includeInactive=true`
     );
     const rawData = await response.json();
     return rawData?.data;

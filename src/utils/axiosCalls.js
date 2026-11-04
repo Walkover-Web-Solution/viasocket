@@ -218,6 +218,7 @@ export async function getApps(query, pageUrl) {
     const params = {
         category: (category !== 'All' && category) || '',
         limit: query?.limit || APPERPAGE,
+        includeInactive: true,
         // Callers that page by route pass `page` and step by APPERPAGE; callers
         // that load in their own batch size pass `offset` directly.
         offset: query?.offset ?? (query?.page ? query?.page * APPERPAGE : 0),
@@ -290,7 +291,7 @@ export async function getCombos(pageInfo, pageUrl) {
 
 export async function fetchPluginData(slug, pageUrl) {
     let data = null;
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}&includeInactive=true`;
     try {
         const response = await axiosWithCache.get(url, {
             cache: {
@@ -417,14 +418,21 @@ export async function trackRedditEvent(eventName, { event_source_url, click_id }
  * cache-control: max-age=172800, so a repeated lookup would be served a
  * two-day-old row. The timestamp defeats the CDN copy as well.
  */
-export async function getAbTestVisitorRows(visitorId, pageUrl) {
+const ABTEST_ENVIRONMENTS = new Set(['production', 'test', 'local']);
+
+export async function getAbTestVisitorRows(visitorId, pageUrl, environment) {
     // The visitor id lives inside the JSON kept in `name`, so it is matched with
     // LIKE; ordering by autonumber makes "the oldest row" the same answer for
     // every concurrent request, which is what keeps them from disagreeing about
     // which row survives.
-    return null;
+    //
+    // environment is part of the filter. The visitor_id cookie is shared by
+    // test and production (domain .viasocket.com); without this, a test visit
+    // updates a production row. An unknown environment is a failed lookup, not
+    // a reason to insert a second row.
+    if (!ABTEST_ENVIRONMENTS.has(environment)) return null;
     const params = new URLSearchParams({
-        filter: `name LIKE '%${visitorId}%'`,
+        filter: `name LIKE '%${visitorId}%' AND environment = '${environment}'`,
         fields: ABTEST_ROW_FIELDS,
         sort: 'autonumber',
         limit: String(ABTEST_LOOKUP_LIMIT),

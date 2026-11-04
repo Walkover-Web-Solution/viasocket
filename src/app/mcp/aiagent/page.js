@@ -8,6 +8,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import BlogGrid from '../../components/blog/BlogGrid';
 import Link from 'next/link';
 import { getMCPAiAgentPageData } from '../../lib/mcp-data';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -21,13 +22,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'MCP for AI Agents - viaSocket',
             description: metaData?.description || 'Connect your AI agents to 1000+ apps with MCP - viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/mcp/aiagent', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/mcp/aiagent', metaData?.image),
         },
     };
 }

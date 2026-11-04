@@ -10,6 +10,7 @@ import UseCases from './UseCases';
 import Start from './Start';
 import Faq from './Faq';
 import Footer from './Footer';
+import { ogImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -18,6 +19,7 @@ export async function generateMetadata() {
         title: 'viaSocket — The action layer for AI products',
         description: 'Connect your AI to the apps your users already use and let it take real actions across 2,300+ apps.',
         openGraph: {
+            images: ogImages('/developers'),
             siteName: 'viaSocket',
             title: 'viaSocket — The action layer for AI products',
             description: 'Connect your AI to the apps your users already use and let it take real actions across 2,300+ apps.',

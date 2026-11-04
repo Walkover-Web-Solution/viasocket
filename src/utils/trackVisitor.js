@@ -1,5 +1,5 @@
 import { collectUserInfo, getUtmData } from './collectUserInfo';
-import { getCookie, setCookie } from './handleUtmSource';
+import { SIGNUP_CTA_COOKIE, getCookie, setCookie } from './handleUtmSource';
 import { VISITOR_ID_COOKIE } from '@/const/abTest';
 
 /**
@@ -29,6 +29,15 @@ const SESSION_KEY = 'vs_session';
 // as the same person when the cookie itself is gone. A year, to match the cookie.
 const VISITOR_KEY = 'vs_visitor';
 const VISITOR_ID_DAYS = 365;
+
+// Long enough to outlast a signup that is finished a few days after the press.
+const SIGNUP_CTA_DAYS = 30;
+
+/** Remembers which button started a signup, for the state sent to MSG91. */
+const rememberSignupCta = (element, action) => {
+    if (action !== 'signup_click' || !element) return;
+    setCookie(SIGNUP_CTA_COOKIE, encodeURIComponent(element), SIGNUP_CTA_DAYS);
+};
 
 const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
@@ -228,6 +237,7 @@ export const trackInteraction = ({ element, label, section, action, destinationU
     if (typeof window === 'undefined' || !element) return;
 
     ensureVisitorId();
+    rememberSignupCta(element, action);
 
     sendNow({
         event: 'click',
@@ -255,6 +265,7 @@ export const trackCtaClick = (source, interaction = {}) => {
     if (typeof window === 'undefined') return;
 
     ensureVisitorId();
+    rememberSignupCta(interaction.element || source, interaction.action);
 
     sendNow({
         event: 'cta',

@@ -1,17 +1,20 @@
 ---
-covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**", "src/components/IntegrationsComp/addToProduct/PricingPage.js", "src/components/IntegrationsComp/addToProduct/PricingPlans.js", "src/components/IntegrationsComp/addToProduct/pricing.module.scss"]
+verified_at: 493f7310
+verified_on: 2026-11-03
 ---
 # Module: Pricing (`/pricing`)
 
-The workflow-automation pricing page: the Free, Team and Premium plans, priced in tasks and AI credits. The Embed / integration-layer pricing page with the overage slider and ticker is `/developers/pricing`, owned by [module 04](./04-developers-embed.md).
+The pricing page: Free, Pro, Business and Enterprise, priced in tasks and AI credits. `/developers/pricing` redirects to `/pricing` (fallback in `src/data/redirects.json`). The older Embed pricing write-up is in [module 04](./04-developers-embed.md).
+
+> [!IMPORTANT]
+> **What `/pricing` renders today (2026-11-03).** `src/app/pricing/page.js` renders `src/components/IntegrationsComp/addToProduct/PricingPage.js` in the homepage design, with copy from `copy.js:PRICING_COPY`. It shows the Free, Pro ($19/mo launch price), Business ($99/mo launch price) and Enterprise (custom) plans with a monthly/annual switch (`PricingPlans`, `PRICING_COPY.plans`), each card listing its tasks, AI credits and extra-usage rates. "tasks" and "AI credits" in the cards show their definitions in a tooltip (`PRICING_COPY.tips`). Below come the "every plan" line, the plan finder (`PlanFinder`), links to `/features` and `/use-cases` (`PRICING_COPY.explore`) and the pricing FAQs (`PRICING_COPY.faqs`). The Free + "Contact us" layout (`FreeAndContact`, `contactPlan`, `contactFaqs`) is kept, unrendered. The rest of this page describes the earlier table-driven page (`src/components/pricing/*`, `src/app/lib/pricing-data.js`), which `/pricing` no longer uses.
 
 ## Purpose
 - Answers "what does viaSocket automation cost, and what do I get free?" with plan cards (monthly or annual), perks, a comparison, reviews and FAQs.
 
 > [!WARNING]
-> **Two pricing pages with different plans.** `/pricing` sells Free / Team ($27 a month, $18 billed annually) / Premium ($99 / $67) in tasks and AI credits (`src/components/pricing/PricingPlans.js` `plans`). `/developers/pricing` sells Free / Growth / Scale. The homepage nav and the `addToProduct` header link **only** `/developers/pricing` (`src/components/IntegrationsComp/addToProduct/copy.js:NAV`). The legacy navbar (`src/app/components/navbar/NavbarOptimized.js`), `NewHeader` and `NewFooter` link `/pricing`. Which is canonical is open ([OPEN_QUESTIONS P-03](../OPEN_QUESTIONS.md#active-questions-table), positioning [P-01](../OPEN_QUESTIONS.md#active-questions-table)). Do not change prices in one page and assume the other follows.
+> **Two pricing surfaces, one rendered page.** `/pricing` shows Free, Pro ($19/mo, $190/yr launch), Business ($99/mo, $990/yr launch) and Enterprise (custom). Those four plans are intentional (2026-11-03, PR #1912; [VISION](../VISION.md)). `/developers/pricing` redirects to `/pricing`. The homepage-style header links `/pricing` (`copy.js:NAV`). Which URL is canonical long-term is still open ([OPEN_QUESTIONS P-03](../OPEN_QUESTIONS.md#active-questions-table)). Do not change prices here and assume another page follows. The unused `src/components/pricing/PricingPlans.js` still lists older Team and Premium figures; `/pricing` does not render them.
 
 ---
 
@@ -27,7 +30,7 @@ The workflow-automation pricing page: the Free, Team and Premium plans, priced i
 3. They leave to `/signup` (hero `pricing_hero_signup`, plans `pricing_plan_*`, `pricing_final_cta`) or to cal.id. The signup journey itself is [FLOWS journey 1](../FLOWS.md#detailed-journey-landing-utm-capture-and-signup).
 
 > [!WARNING]
-> Pricing CTAs link to a bare `/signup` and never call `savePageUtmSource`. A visitor with no `utmData` cookie therefore reaches MSG91 with `setUtmSource`'s fallback source `'index'`, not `/pricing` (`src/utils/handleUtmSource.js:setUtmSource`). This conflicts with the "utm_source is the page path" rule ([DECISIONS ADR-012](../DECISIONS.md#adr-012-utm-attribution-conventions)).
+> Pricing CTAs link to a bare `/signup` and never call `savePageUtmSource`. A visitor with no `utmData` cookie therefore reaches MSG91 with `buildSignupState`'s fallback source `'index'`, not `/pricing` (`src/utils/handleUtmSource.js:buildSignupState`). This conflicts with the "utm_source is the page path" rule ([DECISIONS ADR-012](../DECISIONS.md#adr-012-utm-attribution-conventions)).
 
 ---
 

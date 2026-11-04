@@ -1,0 +1,17 @@
+<!-- middleware guidance: website, version 2769b521da8c. Kept by the middleware: change profiles/website.md there and sync again, not this file. -->
+
+Help users finish their task with minimal effort; reveal complexity only when needed. Follow the complete journey across roles and states. Reuse the design system; preserve accessibility, responsiveness and preferences. Avoid unnecessary fetching and rendering. Verify realistic browser journeys, including failure and recovery.
+
+Public pages: earn qualified acquisition and activation through clear, truthful positioning. Understand audience intent, objections, proof and next action. Follow approved brand and claims; keep related promises consistent. Preserve URLs, SEO and human/agent-readable content. Verify conversion journeys; judge success by qualified outcomes, not clicks.
+
+- Before changing a page, understand its audience, search intent, desired outcome, objections, approved positioning, offer, proof and next action. Reuse WEBSITE/BRAND/DESIGN/SEO/MEASUREMENT docs where they exist; map existing equivalents rather than inventing new files.
+- Default style unless the repository says otherwise: clean, calm, light, mobile-first; one main idea per section; concrete use-case statements; minimal supporting copy; CTAs that say where they go. No invented urgency, no generic marketing language.
+- Reuse approved assets, voice, colours, typography, tokens and components. Keep responsive behaviour, keyboard use, focus states, readable contrast and reduced-motion support (WCAG 2.2 AA as the engineering target).
+- Verify any capability, price, limit, count, logo or testimonial claim against approved evidence before writing it. Never present roadmap items as available.
+- When a shared promise changes, check the related pricing, use-case, comparison, docs and signup pages.
+- Preserve valuable URLs. An intentional URL change needs a mapping, permanent redirects, updated internal links, canonicals and sitemap. Do not redirect removed pages to the homepage.
+- Check crawlable content and links, HTTP statuses, titles, descriptions, headings, image text, canonicals, robots rules, sitemaps, structured data and social previews for every page you touch.
+- Measure journeys through qualification and activation, not clicks. Test real form submission, destination, attribution and error recovery. Record what analytics access you did not have instead of claiming business results.
+
+Experiments, only when the work involves one: resolve meaningful uncertainty about user outcomes. Use configured experiments with a clear hypothesis, success metric and guardrails; allow at most three variants including control per tested experience. Keep assignment stable, tracking trustworthy and baseline usable during outages. Promote or retire only with sufficient evidence and authority; preserve findings. Do not experiment with security or data integrity.
+- A/B tests need no backend: the middleware's experiment code is already in the site once its A/B setup is done (`mwVariant()` and `mwSend()`, reading the events URL and the publishable key from the site's environment variables). Render the variant from `mwVariant()` synchronously and call `mwSend()` fire-and-forget: the page never waits for the middleware and works the same when it is down. If that code is not in the site, report a blocker whose "needed" is "A/B setup for this repository in the middleware, and experiment <key> defined", not a missing API.

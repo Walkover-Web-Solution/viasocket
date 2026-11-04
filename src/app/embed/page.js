@@ -3,6 +3,7 @@ import MetaHeadComp from '@/components/metaHeadComp/metaHeadComp';
 import { getEmbedPageData } from '../lib/data';
 import EmbedContent from '../components/embed/EmbedContent';
 import RedditPixel from '@/app/components/RedditPixel/RedditPixel';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -16,13 +17,13 @@ export async function generateMetadata() {
         openGraph: {
             title: metaData?.title || 'Embed - viaSocket',
             description: metaData?.description || 'Embed third party apps with your SaaS/AI product - viaSocket',
-            images: metaData?.image ? [{ url: metaData.image }] : undefined,
+            images: ogImages('/embed', metaData?.image),
         },
         twitter: {
             card: 'summary_large_image',
             title: metaData?.title,
             description: metaData?.description,
-            images: metaData?.image ? [metaData.image] : undefined,
+            images: twitterImages('/embed', metaData?.image),
         },
     };
 }

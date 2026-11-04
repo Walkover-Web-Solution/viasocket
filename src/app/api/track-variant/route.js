@@ -9,6 +9,8 @@ import {
     applyEvent,
     getPageKey,
     getPagePath,
+    isHomePath,
+    isSignupPath,
     mergedRowFields,
     newProfile,
     readProfile,
@@ -86,11 +88,83 @@ const getEnvironment = (request) => {
     if (flag === 'test' || flag === 'stage' || flag === 'staging') return 'test';
     if (flag === 'local' || flag === 'development' || flag === 'dev') return 'local';
 
+    // Exact host only. test.viasocket.com is a .viasocket.com host and must not
+    // be labelled production (a suffix match used to do that).
     const hostname = new URL(request.url).hostname;
-    if (hostname === 'viasocket.com' || hostname.endsWith('.viasocket.com')) return 'production';
-    if (hostname === 'localhost' || /^[\d.]+$/.test(hostname)) return 'local';
+    if (hostname === 'viasocket.com') return 'production';
+    if (hostname === 'localhost' || hostname === '127.0.0.1' || /^[\d.]+$/.test(hostname)) return 'local';
     return 'test';
 };
+
+// The admin panel keeps every event as its own row, which is what lets it answer
+// journey and attribution questions this one-row-per-visitor table cannot. It is
+// a copy sent alongside the write below, so a slow or missing admin never costs
+// this table an event.
+const ADMIN_FORWARD_TIMEOUT_MS = 3000;
+
+// Built in, so no deployment needs settings of its own for this; the env vars
+// only override them (a local admin, a rotated key). The key is not a secret:
+// anyone can already post events to this route, which forwards them, so a
+// private key between here and the admin would protect nothing more.
+const ADMIN_TRACKING_URL = 'https://viasocket-admin.embarko.app/api/public/events';
+const ADMIN_TRACKING_KEY = 'viasocket-website-tracking-v1';
+
+const forwardToAdmin = async (event) => {
+    // A local dev server only reaches the live admin when told to, so trying
+    // the site out never fills it with test visits.
+    const url = process.env.ADMIN_TRACKING_URL || (event.environment === 'local' ? '' : ADMIN_TRACKING_URL);
+    const secret = process.env.ADMIN_TRACKING_SECRET || ADMIN_TRACKING_KEY;
+    if (!url) return;
+
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), ADMIN_FORWARD_TIMEOUT_MS);
+
+    try {
+        await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'x-tracking-secret': secret },
+            body: JSON.stringify({ events: [event] }),
+            signal: controller.signal,
+        });
+    } catch {
+        // Best-effort: the admin copy is never allowed to fail the request.
+    } finally {
+        clearTimeout(timer);
+    }
+};
+
+const newEventId = () => {
+    try {
+        return crypto.randomUUID();
+    } catch {
+        return `e-${Date.now().toString(36)}${Math.random().toString(36).slice(2)}`;
+    }
+};
+
+/** The event in the shape the admin's /api/public/events accepts. */
+const toAdminEvent = ({ event, environment, country }) => ({
+    id: newEventId(),
+    ts: event.nowIso,
+    type: event.type,
+    visitor_id: event.visitorId,
+    session_id: event.sessionId,
+    variant: event.variant || '',
+    environment,
+    url: event.pageUrl,
+    path: event.path,
+    referrer: event.referrer,
+    element: event.interaction?.element || '',
+    label: event.interaction?.label || '',
+    section: event.interaction?.section || '',
+    action: event.interaction?.action || (event.type === 'view' ? 'view' : ''),
+    destination: event.interaction?.destinationUrl || '',
+    device: {
+        type: event.userInfo?.device?.type || '',
+        os: event.userInfo?.device?.os || '',
+        browser: event.userInfo?.device?.browser || '',
+    },
+    country,
+});
 
 // Rows for a visitor that are already collapsed into another row are pointers, not
 // history, so they are ignored when picking the row to write to.
@@ -147,18 +221,7 @@ export async function POST(request) {
         const now = new Date();
         const nowIso = now.toISOString();
         const environment = getEnvironment(request);
-
-        const rows = await getAbTestVisitorRows(visitorId, pageUrl);
-
-        // A failed lookup is not an empty history. Inserting here is exactly how a
-        // visitor ends up with two rows, so the event is dropped instead — the next
-        // one will carry the same counters forward.
-        if (rows === null) {
-            return NextResponse.json({ success: false, reason: 'lookup failed' });
-        }
-
-        const liveRows = rows.filter(isLiveRow);
-        const [canonical, ...duplicates] = liveRows;
+        const path = getPagePath(pageUrl || '');
 
         const event = {
             type,
@@ -177,6 +240,40 @@ export async function POST(request) {
             isNewSession: Boolean(isNewSession),
             referrer: typeof referrer === 'string' ? referrer.slice(0, 500) : '',
         };
+
+        // The admin keeps every event, not just the homepage ones this table
+        // holds, so the copy is sent before the filter below. It is awaited on
+        // every path: an edge request that has answered may drop work in flight.
+        const forwarded = forwardToAdmin(
+            toAdminEvent({ event, environment, country: request.headers.get('cf-ipcountry') || '' })
+        );
+
+        // Homepage exposures, the signup / login clicks on that page, and a
+        // completed registration this site saw on /signup. Every other event is
+        // acknowledged and nothing is written.
+        const homepageClick =
+            isHomePath(path) &&
+            type === 'click' &&
+            interaction &&
+            (interaction.action === 'signup_click' || interaction.action === 'login_click');
+        const completedSignup =
+            isSignupPath(path) && type === 'click' && interaction && interaction.action === 'signup_completed';
+        if (!(isHomePath(path) && type === 'view') && !homepageClick && !completedSignup) {
+            await forwarded;
+            return NextResponse.json({ success: false, reason: 'not a homepage event' });
+        }
+
+        const [rows] = await Promise.all([getAbTestVisitorRows(visitorId, pageUrl, environment), forwarded]);
+
+        // A failed lookup is not an empty history. Inserting here is exactly how a
+        // visitor ends up with two rows, so the event is dropped instead — the next
+        // one will carry the same counters forward.
+        if (rows === null) {
+            return NextResponse.json({ success: false, reason: 'lookup failed' });
+        }
+
+        const liveRows = rows.filter(isLiveRow);
+        const [canonical, ...duplicates] = liveRows;
 
         if (canonical) {
             let profile = readProfile(canonical);
@@ -248,7 +345,7 @@ export async function POST(request) {
         // Two first-ever events can be in flight at once — a second tab, a retry —
         // and both would insert. Re-reading settles it: every racer sees the same
         // oldest row and folds the rest into it, so the visitor is left with one.
-        if (saved) await collapseDuplicates(visitorId, pageUrl);
+        if (saved) await collapseDuplicates(visitorId, pageUrl, environment);
 
         return NextResponse.json({
             success: Boolean(saved),
@@ -269,8 +366,8 @@ export async function POST(request) {
  * ordered by autonumber — so they agree on which row survives and the result is
  * the same however many times it runs.
  */
-async function collapseDuplicates(visitorId, pageUrl) {
-    const rows = await getAbTestVisitorRows(visitorId, pageUrl);
+async function collapseDuplicates(visitorId, pageUrl, environment) {
+    const rows = await getAbTestVisitorRows(visitorId, pageUrl, environment);
     if (!rows) return;
 
     const liveRows = rows.filter(isLiveRow);

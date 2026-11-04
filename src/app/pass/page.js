@@ -1,5 +1,6 @@
 import PassPage from '@/components/IntegrationsComp/addToProduct/PassPage';
 import { PASS_COPY } from '@/components/IntegrationsComp/addToProduct/copy';
+import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
@@ -10,6 +11,7 @@ export const metadata = {
     description: PASS_COPY.metaDesc,
     alternates: { canonical: URL },
     openGraph: {
+        images: ogImages('/pass'),
         title: PASS_COPY.metaTitle,
         description: PASS_COPY.metaDesc,
         url: URL,
@@ -18,6 +20,7 @@ export const metadata = {
     },
     twitter: {
         card: 'summary_large_image',
+        images: twitterImages('/pass'),
         title: PASS_COPY.metaTitle,
         description: PASS_COPY.metaDesc,
     },
