@@ -3,9 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<script>
+<script data-cfasync="false">
 /* Homepage A/B gate. It must stay inline and be the first script in <head>:
    for a version B visitor it stops this document before anything below runs.
+   data-cfasync="false" keeps Cloudflare Rocket Loader from postponing this
+   script. normalise() undoes the loader's rewrite before document.write,
+   because rocket-loader.min.js never runs inside a written document.
    See docs/modules/01-homepage.md before editing. */
 (function (w, d) {
     if (w.__hpGate) return;
@@ -34,21 +37,39 @@
         start += n.nodeType === 1 ? n.outerHTML : n.nodeType === 3 ? n.data : '';
     }
 
+    // Rocket Loader rewrites script tags to type="<hex>-text/javascript" and
+    // injects rocket-loader.min.js. document.write never lets that loader run.
+    function normalise(html) {
+        html = html.replace(/<script\b[^>]*rocket-loader\.min\.js[^>]*>[\s\S]*?<\/script>/gi, '');
+        return html.replace(/<script\b[^>]*>/gi, function (open) {
+            return open
+                .replace(/\s+type\s*=\s*(["'])[0-9a-f]+-text\/javascript\1/gi, '')
+                .replace(/\s+data-cf-settings\s*=\s*(["'])[^"']*\1/gi, '');
+        });
+    }
+
     var decided = false;
+    var savedA = '';
     function render(html, gate) {
         w.__hpGate = gate;
         d.open();
-        d.write(html);
+        d.write(normalise(html));
         d.close();
+    }
+    // Snapshot A only after it has finished parsing into #hp-rest. document.open
+    // destroys that node, so the copy has to exist before B is written.
+    function whenReady(fn) {
+        (function wait() {
+            var rest = d.getElementById('hp-rest');
+            if (d.readyState === 'loading' || !rest) return void d.addEventListener('DOMContentLoaded', wait);
+            if (!savedA) savedA = start + rest.textContent;
+            fn();
+        })();
     }
     function showA() {
         if (decided) return;
         decided = true;
-        (function rebuild() {
-            var rest = d.getElementById('hp-rest');
-            if (d.readyState === 'loading' || !rest) return void d.addEventListener('DOMContentLoaded', rebuild);
-            render(start + rest.textContent, 'fallback');
-        })();
+        whenReady(function () { render(savedA, 'fallback'); });
     }
     w.__hpGate = 'B';
     root.style.visibility = 'hidden';
@@ -59,10 +80,21 @@
             return res.text();
         })
         .then(function (html) {
+            html = normalise(html);
             if (decided || html.slice(0, 200).indexOf('data-hp="B"') === -1) throw new Error('home-b');
-            decided = true;
-            clearTimeout(timer);
-            render(html, 'B');
+            whenReady(function () {
+                if (decided) return;
+                decided = true;
+                clearTimeout(timer);
+                // B's own script sets this on its first line. If it never runs,
+                // put A back and leave __hpGate as fallback so the view is not counted.
+                w.__hpReady = false;
+                render(html, 'B');
+                setTimeout(function () {
+                    if (w.__hpReady) return;
+                    render(savedA, 'fallback');
+                }, 1500);
+            });
         })
         .catch(showA);
     // The rest of this file becomes inert text: no script, style or tag below runs.
