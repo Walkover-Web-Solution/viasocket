@@ -1,6 +1,6 @@
 ---
 covers: ["*"]
-verified_at: 9ec4868d
+verified_at: PENDING
 verified_on: 2026-11-03
 ---
 # Architectural & Design Decisions (ADRs)
@@ -323,13 +323,14 @@ After the October relaunch the site told two stories: the homepage, `/developers
 
 ### Decision & Implementation
 - The integration layer is canonical everywhere. Positioning line: "Integration Layer for your products & agents." Boundary line: "You build the app or agent. viaSocket handles the connections and actions."
-- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. `public/llms.txt` was replaced on 2026-10-30 with the supplied integration-layer text; the previous 1,141-line directory is parked at `parked/llms.txt` and is not served. Pending: `src/app/layout.js` root `metadata` and `/pricing` must be updated to match (and `/pricing` may redirect to `/developers/pricing`, P-03, proposed).
+- Shipped on `/`, `/features`, `/integrations` and `/use-cases`. `public/llms.txt` was replaced on 2026-10-30 with the supplied integration-layer text; the previous 1,141-line directory is parked at `parked/llms.txt` and is not served. Pending: `src/app/layout.js` root `metadata` must be updated to match. `/pricing` may still redirect to `/developers/pricing` (P-03, proposed).
 
 ### Supporting Evidence & Past Incidents
 - The founders' letter at `/new-direction` (`b3a7ab32`) and the homepage and redesign commits (`1f911f58`, `18420492`, `0705e2f0`).
 
 ### Consequences & Trade-offs
-- Copy that still says "workflow automation" is a bug to fix when touched, not an alternative positioning to preserve. Agents should flag it rather than extend it.
+- Copy that still says "workflow automation" is a bug to fix when touched, not an alternative positioning to preserve. Agents should flag it rather than extend it, except the `/pricing` plans below.
+- **Exception (2026-11-03, PR #1912).** The requester confirmed that `/pricing` should show Free, Pro, Business and Enterprise, with tasks, AI credits, the monthly/annual switch and the plan finder. Do not revert that page as out-of-date workflow copy. The integration layer remains canonical on every other surface. Root metadata is still pending. Which pricing URL is canonical (P-03) is still open.
 - ICP and success metrics are proposed, not approved ([VISION](VISION.md#target-audience--ideal-customer-profile-icp)).
 
 ---

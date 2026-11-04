@@ -218,6 +218,7 @@ export async function getApps(query, pageUrl) {
     const params = {
         category: (category !== 'All' && category) || '',
         limit: query?.limit || APPERPAGE,
+        includeInactive: true,
         // Callers that page by route pass `page` and step by APPERPAGE; callers
         // that load in their own batch size pass `offset` directly.
         offset: query?.offset ?? (query?.page ? query?.page * APPERPAGE : 0),
@@ -290,7 +291,7 @@ export async function getCombos(pageInfo, pageUrl) {
 
 export async function fetchPluginData(slug, pageUrl) {
     let data = null;
-    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}`;
+    const url = `${process.env.NEXT_PUBLIC_INTEGRATION_URL}plugins/search?prefix=${slug[0]}&includeInactive=true`;
     try {
         const response = await axiosWithCache.get(url, {
             cache: {
