@@ -44,7 +44,8 @@ verified_on: 2026-11-04
 | `#in-action` | Heading "See viaSocket in action." and a 16:9 product video (`#pv`) | Poster is the YouTube thumbnail (blurred) with a play button. The click swaps in a `youtube-nocookie.com` iframe (`autoplay=1&rel=0`). Nothing from YouTube's player loads before that click. The section fades in once on scroll unless motion is reduced or JS never runs |
 | `#use-cases` | Tabs (All / Agents / Apps / Internal tools), example list `#ix-list`, preview `#pane` | `filter`, `ixShow`; the pane's "Copy prompt" copies the setup prompt without the ask line, then `What I want to build: ` plus that example's existing build sentence (`galPrompt`) |
 | `#prompts` | Six sample-prompt buttons (`[data-pr]`) | copies the setup prompt without "Ask me what I want to build first.", then `What I want to build: ` plus the card's own sentence |
-| `#features` | "What viaSocket handles": a nine-row yes/no table, Book a demo | static |
+| `#features` | "What viaSocket handles": a nine-row yes/no table, Book a demo. The "Security details" link at the close still goes to `/help/security-and-compliance` | static |
+| `#compliance` | "Your data, under the same controls you would ask for." Three square cards (SOC 2 Type II, ISO 27001:2022, GDPR and CCPA) and two round text seals | static. Official badge images are not in this repo, so the seals are text |
 | `#faq` | Nine `<details>` items | static; the same Q&A is duplicated in the `FAQPage` JSON-LD in `<head>` |
 | `footer.ft` | Link groups, socials, G2/Capterra badges. The Company column here does not yet include the "Explore more" link that `SiteFooter` has; add that link in `viasocket-site` and export, because this file is overwritten by the next export | static |
 | `.chat-fab` | Support chat button (`[data-chat]`, `href` /support) | `public/new-home/assets/support.js` opens the gtwy chat when it loaded, otherwise the link navigates |
@@ -54,6 +55,8 @@ All content is hardcoded in the HTML and in `main.js` constants (`IC` app icons,
 
 > [!WARNING]
 > `#in-action` was added in this repo. The next export from `viasocket-site` (`variants/simple-bento`, `deploy/export-to-viasocket-repo.py --prod`) overwrites `public/new-home/` and will remove the section unless the same markup, CSS and script are added there first.
+
+> `#compliance` was added in this repo too. The same export removes it unless `variants/simple-bento` gets the same piece first: the `#compliance` section placed after the features section and before the FAQ in the file that exports to `public/new-home/index.html`, and the `.comp` / `.comp-c` / `.comp-seals` / `#compliance .seal` rules at the end of the file that exports to `public/new-home/styles.css` (cache query `styles.css?v=172`). The seal radius is `50% !important` because that stylesheet flattens every other radius. The internal filenames inside `viasocket-site` could not be confirmed from this repo. `public/home-b/` is not part of that export. The seals are text because this repo has no SOC 2 or ISO badge artwork.
 
 ### 2. Dormant Next homepage (`src/app/page.js`, `src/app/home/page.js`, `src/app/front-page/**`)
 
@@ -88,6 +91,8 @@ Version A and version B both call `POST /api/track-variant` from `public/home-ab
 ## Homepage A/B test (version B)
 
 Version A is the current page in `public/new-home/`. Version B is `public/home-b/index.html`, built from the mockup at `design/homepage-b/index.html` on branch `design/homepage-b-mockup` (commit `c0064420`). That file is not a public URL. B is homepage-only: every other route keeps its own header.
+
+B's `#security` chapter (story index "07 Security") is "Your data, under the same controls you would ask for.": three rounded cards (SOC 2 Type II, ISO 27001:2022, GDPR and CCPA), two round text seals, then the same Security details link version A uses (`/help/security-and-compliance`). The G2 and Capterra badges that already sat in that chapter stay under the link. The Agent view repeats the three claims in the page markdown. The chapter is the same for every visitor of B and does not change the split, the index entry, or the version tags.
 
 B's product video is the section `#video`, "See viaSocket in action.", between "Connect once" and "What teams build". It is the same video as version A (YouTube `GRzkVjW839A`). The page shows that video's thumbnail and a play button, and it requests nothing from the YouTube player until the click. The click replaces the thumbnail with the `youtube-nocookie.com` embed (`autoplay=1`, `rel=0`). The sidebar lists it as "04 In action" and numbers the later chapters 05 to 09. Scroll tracking follows those nine links. The Agent view lists the video under a Video heading.
 
