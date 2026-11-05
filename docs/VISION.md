@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: ad35b313
-verified_on: 2026-11-04
+verified_at: 52c28147
+verified_on: 2026-11-05
 ---
 # Product Vision & Strategic Direction
 
@@ -44,6 +44,7 @@ Sources mined: the team answers to OPEN_QUESTIONS, 2026-10-22 (pasted into the s
   - **`/pricing` shows four workflow plans on purpose** (2026-11-03, PR #1912, confirmed by the requester). Free, Pro ($19/mo or $190/yr at the launch price), Business ($99/mo or $990/yr at the launch price) and Enterprise (custom, billed annually), with tasks, AI credits, the monthly/annual switch, the plan finder and the pricing FAQs. This does not make workflow automation a second positioning for the rest of the site, and it does not decide which pricing URL is canonical (P-03, still proposed). Do not revert these plans as out-of-date copy.
   - **The static homepage's design system is the target for the whole site** (U-01, decided): Geist and Geist Mono, its colour tokens, square corners, and light/dark following the OS. The full rules are in the external "viaSocket Brand Guidelines" doc ([DESIGN.md](DESIGN.md)).
   - **The homepage source of truth is outside this repo** (C-01 and D-03, decided): `public/new-home/` is exported from the `viasocket-site` repo (`variants/simple-bento`) by `deploy/export-to-viasocket-repo.py --prod` and pushed to `test`. The old Next homepage tree is kept as the rollback path (reverting merge `cfdae23e` on `main` restores the A/B homepage) until the new homepage has run stably for a few weeks.
+  - **The homepage states the compliance claims** (2026-11-05): both versions of `/` say viaSocket holds SOC 2 Type II, ISO 27001:2022, and GDPR and CCPA compliance. The section is the same for every visitor of that version. It does not change the integration-layer positioning, the A/B split, or attribution.
 - **Current Implementation** (shipped at `17b99cd8`; the code does this, but no direction confirms it should stay):
   - Most other routes still use the earlier positioning (out of date per P-01 above), including app-pair pages (`/integrations/<app>/<app2>`) and `/features/{slug}`. The root `metadata` in `src/app/layout.js` says "Connect your apps and automate workflows". The `/home` and `src/app/page.js` fallbacks say "Automate Anything". `/developers/pricing` sells task-metered "Action Layer" plans. `/pricing`'s four workflow plans are the approved exception above. `public/llms.txt` now describes the integration layer.
   - `src/app/page.js` and its A/B Index* components in `src/app/front-page/` are no longer what visitors see at `/`. See [DECISIONS.md](DECISIONS.md) and [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md). Do not delete them.
