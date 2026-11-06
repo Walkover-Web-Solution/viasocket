@@ -223,6 +223,10 @@ export async function getApps(query, pageUrl) {
         // that load in their own batch size pass `offset` directly.
         offset: query?.offset ?? (query?.page ? query?.page * APPERPAGE : 0),
     };
+    // Optional filter by auth type (e.g., 'Auth2.0' for OAuth 2.0 only)
+    if (query?.authType) {
+        params.preferred_auth_type = query.authType;
+    }
 
     try {
         const response = await axiosWithCache.get(fetchUrl, {
