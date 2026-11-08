@@ -19,6 +19,8 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |
 | `/black-friday-sale` | `src/app/components/black-friday-sale/BlackFridaySaleClient.js` | Seasonal partner-offer campaign |
+| `/blogs` | `src/components/IntegrationsComp/addToProduct/BlogsPage.js` (`BLOGS_COPY`); posts from `src/data/blogs.json` | Blog index, homepage design ([modules/10-blogs](modules/10-blogs.md)). Not `/blog`, which another deployment serves |
+| `/blogs/[slug]` | `src/components/IntegrationsComp/addToProduct/BlogPostPage.js`; `src/app/lib/blogs.js:getBlog` | One post; `notFound()` (404) for an unknown slug |
 | `/data-deletion-policy` | `src/app/data-deletion-policy/page.js` (copy in the file) | Legal |
 | `/data-retention-deletion` | `src/app/data-retention-deletion/page.js` (copy in the file) | Legal; target of `/data-retention-deletion-policy` |
 | `/departments` | `src/app/departments/page.js`; `src/app/lib/department-data.js:getDepartmentsPageData` | Automation ideas by department |
@@ -26,7 +28,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/developers` | `src/app/developers/page.js` (own `Header`/`Footer`, layout `src/app/developers/layout.js`). **Does not render on production or test:** the live admin list 301s the bare path to `/`. `/developers/auth` and `/developers/docs` still return 200 | Embed / developers funnel landing, currently redirected |
 | `/developers/auth` | `src/app/developers/auth/page.js` | Embed auth feature page |
 | `/developers/docs` | `src/app/developers/docs/page.js` (+ `src/app/developers/docs/layout.js`) | Developer docs (published contract) |
-| `/developers/pricing` | `src/app/developers/pricing/page.js` | Embed pricing |
+| `/developers/pricing` | No page (deleted in `304bf6d9`). The redirect list sends it to `/pricing` | (redirect only) |
 | `/embed` | `src/app/embed/page.js`. **Never renders.** Production and test return 301 to `/` with an empty body (live admin list, checked 2026-10-29). Not an alias of `/developers` | (retired) |
 | `/embed/actions-for-ai` | `src/app/embed/actions-for-ai/page.js`; `src/app/lib/data.js:getEmbedPageData` | Embed use case: actions for AI |
 | `/embed/actions-via-webhook` | `src/app/embed/actions-via-webhook/page.js` | Embed use case: webhook actions |
@@ -35,7 +37,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/experts-are-live` | `src/app/experts-are-live/page.js` | Contact-an-expert page |
 | `/features` | `src/components/IntegrationsComp/addToProduct/FeaturesPage.js` (copy `FEATURES_COPY`) | Key features, homepage design |
 | `/features/[...feature]` | One feature. A slug in `src/components/IntegrationsComp/addToProduct/featurePages.js:FEATURE_PAGES` renders `FeatureDetailPage.js` (homepage design); any other slug still renders the old `src/app/components/features/FeaturesClient.js` from `src/app/lib/feature-data.js:getFeaturesPageData` until it is redirected | One feature |
-| `/feedback` | `src/app/components/feedback/FeedbackSatisfiedClient.js` or `FeedbackUnsatisfiedClient.js` by `?variant=` | Post-support feedback; any other variant gets `notFound()` |
+| `/feedback` | `src/app/components/feedback/FeedbackSatisfiedClient.js` or `FeedbackUnsatisfiedClient.js` by `?variant=` | Post-support feedback; any other variant gets `notFound()`. A direct `/feedback?...` request is 301'd to `/support` by the live redirect list (2026-11-08); only the `/feedback-satisfied` and `/feedback-unsatisfied` rewrites still reach this page ([OPEN_QUESTIONS P-08](OPEN_QUESTIONS.md#active-questions-table)) |
 | `/find-apps/[...slug]` | `src/app/components/find-apps/FindAppsClient.js`; `src/app/lib/data.js:getFindAppsPageData` | A–Z app list for one letter. Any other segment count renders an inline "Page Not Found" with HTTP 200 |
 | `/free-access-programs` | `src/app/free-access-programs/page.js` | Free-access program listing |
 | `/hire-an-expert` | `src/app/hire-an-expert/HireExpertClient.js` | Hire-an-expert CTA to signup or cal.id |
@@ -55,7 +57,8 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/migration/zapier` | `src/app/migration/zapier/page.js` | Switch-from-Zapier campaign |
 | `/new-direction` | `src/components/IntegrationsComp/addToProduct/LetterPage.js` (`LETTER_COPY`) | Founders' letter; target of `/help` |
 | `/og/[...path]` | `src/app/og/[...path]/route.js:GET` | Share image (og:image, twitter:image) of the page at `/<path>`: its hero drawn at 1200x630. Used by pages with no image of their own, through `src/app/lib/share-image.js` |
-| `/pricing` | `src/components/IntegrationsComp/addToProduct/PricingPage.js` (`PRICING_COPY`) | For now the Free plan and a "Contact us" card; the paid plans and plan finder are kept in the code, unrendered |
+| `/pass` | `src/components/IntegrationsComp/addToProduct/PassPage.js` (`PASS_COPY`) | The viaSocket Pass (the usage balance), homepage design; in the sitemap |
+| `/pricing` | `src/components/IntegrationsComp/addToProduct/PricingPage.js` (`PRICING_COPY`) | Free, Pro, Business and Enterprise plans with the plan finder ([modules/07-pricing](modules/07-pricing.md)) |
 | `/privacy` | `src/app/privacy/page.js` (copy in the file) | Legal |
 | `/robots.txt` | `src/app/robots.txt/route.js:GET` | Robots, decided by env and host ([CONTRACTS](CONTRACTS.md#internal-api-routes)) |
 | `/signup` | `src/app/components/customLogin/CustomLoginOptimized.js`; `src/app/lib/data.js:getSignupPageData` | MSG91 signup widget (`?redirect_to=`, `utm_*`) |
@@ -75,22 +78,23 @@ Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `be
 | Source | Destination | Status | Defined in |
 |---|---|---|---|
 | `/faq/a-step-by-step-guide` | `/faq/step-by-step-guide` | 302 (Cloudflare Pages default; no code given) | `public/_redirects` (but `/faq` is answered elsewhere) | <!-- verify:ignore -->
-| `/help` | `/new-direction` | 301 | `next.config.js` |
-| `/help/<anything>`, except paths under `FOOTER_HELP_PAGES` (`about-us`, `partners`, `plugin-builder`, `security-and-compliance`, `viasocket-embed/billing-partner`) | `/new-direction` | 301 | `next.config.js` (regex built from `FOOTER_HELP_PAGES`) | <!-- verify:ignore -->
-| `/department/:path*` | `/departments/:path*` | 308 | `next.config.js` |
-| `/data-retention-deletion-policy` | `/data-retention-deletion` | 308 | `next.config.js` |
-| `/about` | `/help/about-us` (served by the help deployment) | 308 | `next.config.js` |
-| `/variables` | `/features/variables` | 308 | `next.config.js` |
-| `/login` | https://flow.viasocket.com/ | 307 | `next.config.js` |
-| `/mcp/invgate-service-desk` | `/mcp/invgateservicemanagement` | 308 | `next.config.js` |
-| `/mcp` | https://mushrooms.viasocket.com/ | 308 | `next.config.js` ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
+| `/help` and `/help/*` | `/new-direction` | 301 | redirect list (`src/middleware.js`), rule `/help/*` |
+| `/help/about-us/*`, `/help/partners/*`, `/help/plugin-builder/*`, `/help/security-and-compliance/*`, `/help/viasocket-embed/billing-partner/*` | none (`statusCode` 0 exceptions, so the help deployment answers) | — | redirect list (`src/middleware.js`) |
+| `/department/*` | `/departments/*` | 308 | redirect list (`src/middleware.js`) |
+| `/data-retention-deletion-policy` | `/data-retention-deletion` | 308 | redirect list (`src/middleware.js`) |
+| `/about` | `/help/about-us` (served by the help deployment) | 308 | redirect list (`src/middleware.js`) |
+| `/variables` | `/features/variables` | 308 | redirect list (`src/middleware.js`) |
+| `/login` | https://flow.viasocket.com/ | 307 | redirect list (`src/middleware.js`) |
+| `/mcp/invgate-service-desk` | `/mcp/invgateservicemanagement` | 308 | redirect list (`src/middleware.js`) |
+| `/mcp` | https://mushrooms.viasocket.com/ | 308 | redirect list (`src/middleware.js`) ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
+| `/developers/pricing` | `/pricing` | 308 in the fallback file | redirect list (`src/middleware.js`) |
 | `/embed` | `/` (live admin list, production and test, 2026-10-29). Fallback file still says `/developers` | 301 live; 308 in `src/data/redirects.json` | `src/middleware.js` |
-| `/home` | `/` | 307 | `src/middleware.js:middleware` |
+| `/home` | `/` | 307 | redirect list (`src/middleware.js`) |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`; version B is written in the browser) | `next.config.js` |
 | `/home-b`, `/home-b/index.html` | `/` | 302 (not for a `/home-b/index.html` request with `X-Homepage-Fetch: B`) | `src/middleware.js` |
 | `/feedback-satisfied`, `/feedback-unsatisfied` | `/feedback?variant=satisfied` / `unsatisfied` | rewrite (`afterFiles`) | `next.config.js` |
 
-Rows above whose "Defined in" column still says `next.config.js` moved to this same middleware list in `40bbd9bd`. Their destinations in `src/data/redirects.json` still match the table, except `/embed`. The live admin list, which is what production applies, also 301s `/developers` to `/`, `/automations` to `/use-cases` and `/blog` to `/blogs` (none of those three are in the fallback file) and `/developers/pricing` to `/pricing` (the fallback file has that destination with 308). Whether `/embed` and `/developers` should keep pointing at `/` is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).
+"Redirect list" rows come from the admin list, with `src/data/redirects.json` as the fallback ([admin-panel](current-infrastructure/admin-panel.md#redirect-rules)); they moved out of `next.config.js` in `40bbd9bd`. The statuses above are the fallback file's, and its destinations match the table except `/embed`. The live admin list, which is what production applies, also 301s `/developers` to `/`, `/automations` to `/use-cases`, `/blog` to `/blogs` and `/feedback` to `/support` (none of those four are in the fallback file; rechecked against the live list on 2026-11-08) and `/developers/pricing` to `/pricing` (the fallback file has that destination with 308). Whether `/embed` and `/developers` should keep pointing at `/` is [OPEN_QUESTIONS P-06](OPEN_QUESTIONS.md).
 
 `/embed/` is a separate 308 to `/embed` (trailing-slash normalisation) and then follows the 301. `/embed/actions-for-ai`, `/embed/actions-via-webhook` and `/embed/app-integration` are not covered by the `/embed` rule (it is an exact match) and still return 200. Bare `/embed` is not in `src/app/sitemap.js`. Following the 301 lands on the homepage, whose HTML has a canonical link and `og:url` for the site root. There is no second copy of that document at `/embed`.
 
@@ -107,8 +111,8 @@ These answer on viasocket.com but have no route here. Cloudflare routes them to 
 
 | Path | Evidence | Linked from |
 |---|---|---|
-| `/help/*` (the `FOOTER_HELP_PAGES` and their subpages) | On 2026-10-21 production `/help/trigger` returned the help deployment's 404, and only bare `/help` 301'd | `public/new-home/index.html` footer, `src/components/IntegrationsComp/addToProduct/SiteChrome.js` footer, `/about` redirect |
-| `/blog` | Answers without this project's `x-matched-path` header (2026-10-21) | footers, blog cards (`getActionLayerBlogs` reads its RSS feed) |
+| `/help/*` (the footer help pages and their subpages, kept by the `statusCode` 0 exceptions) | On 2026-10-21 production `/help/trigger` returned the help deployment's 404, and only bare `/help` 301'd | `public/new-home/index.html` footer, `src/components/IntegrationsComp/addToProduct/SiteChrome.js` footer, `/about` redirect |
+| `/blog/`, `/blog/<post>`, `/blog/feed.xml` | Answer 200 from another deployment (2026-10-21; rechecked 2026-11-08). Bare `/blog` (no slash) now reaches this project and 301s to `/blogs` through the redirect list | footers, blog cards (`getActionLayerBlogs` reads its RSS feed) |
 | `/discovery` | Same | `public/new-home/index.html`, `src/components/IntegrationsComp/IntegrationsIndexComp/topCategoryBlogs.js` |
 | `/community` | Same | `src/app/components/support/SupportClient.js` |
 | `/faq` | Redirects to `/help` on production | — |

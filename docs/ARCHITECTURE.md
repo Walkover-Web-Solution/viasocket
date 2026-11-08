@@ -7,7 +7,7 @@ verified_on: 2026-11-03
 
 ## Overview
 
-The viaSocket marketing site is a read-mostly content site over two read APIs. A Next.js 15 App Router app in plain JavaScript renders every page at the edge, on each request, from table-api.viasocket.com (CMS-like content tables) and the plug service (apps, templates, combos). The homepage `/` is a separate hand-written static site in `public/new-home/` (version A). Version B is `public/home-b/`. The app is built with `@cloudflare/next-on-pages` and served from Cloudflare Pages: test.viasocket.com from the `test` branch, viasocket.com from `main`. Its writes are form webhooks and, for the homepage A/B test only, the visitor-tracking table.
+The viaSocket marketing site is a read-mostly content site over two read APIs. A Next.js 15 App Router app in plain JavaScript renders every page at the edge, on each request, from table-api.viasocket.com (CMS-like content tables) and the plug service (apps, templates, combos). The admin panel supplies the redirect list, the `/integrations/{app}` copy and the announcement bar, and `/blogs` is bundled Markdown. The homepage `/` is a separate hand-written static site in `public/new-home/` (version A). Version B is `public/home-b/`. The app is built with `@cloudflare/next-on-pages` and served from Cloudflare Pages: test.viasocket.com from the `test` branch, viasocket.com from `main`. Its writes are form webhooks and, for the homepage A/B test only, the visitor-tracking table.
 
 This repo owns only some of the paths on viasocket.com. [05-navigation](05-navigation.md) has the route map, every redirect and rewrite, and the paths that other deployments serve.
 
@@ -16,8 +16,8 @@ This repo owns only some of the paths on viasocket.com. [05-navigation](05-navig
 ```mermaid
 graph TD
     B["Browser"] --> CF["Cloudflare zone: cache rule, other apps (/blog, /help)"]
-    CF --> NC["next.config.js redirects"]
-    NC --> MW["src/middleware.js"]
+    CF --> MW["src/middleware.js: admin redirect list"]
+    MW --> AD["admin panel (redirects, copy, announcements)"]
     MW --> RW["beforeFiles rewrite: / to public/new-home"]
     RW --> P["src/app/**/page.js (edge, server components)"]
     P --> L["src/app/lib/*-data.js"]
@@ -31,7 +31,7 @@ graph TD
 
 ### Layers
 
-- **Edge entry:** the Cloudflare zone, `public/_redirects`, `next.config.js` redirects, `src/middleware.js` and the rewrites, in that order ([Request Path](#request-path-cloudflare-pages)).
+- **Edge entry:** the Cloudflare zone, `public/_redirects`, `src/middleware.js` (which applies the admin-managed redirects) and the `next.config.js` rewrites, in that order ([Request Path](#request-path-cloudflare-pages)).
 - **Client:** either the static homepage or a React page that is server-rendered and then hydrated ([Client Layer](#client-layer)).
 - **Aggregation:** there is no separate BFF. Each page's server component awaits one `src/app/lib/*-data.js` loader. The loader calls getters in `src/utils/getData.js`, and they call the HTTP layer `src/utils/axiosCalls.js`. The only internal API route is `POST /api/track-variant` ([api/track-variant](api/track-variant.md)).
 - **Backends:** see [Core Systems](#core-systems).
@@ -84,6 +84,9 @@ There is no gateway or BFF. Loaders run inside each page's server component, on 
 5. **Third-party services** (`src/app/layout.js`, `src/app/providers.js`, `src/components/headComp/headComp.js`, `src/app/components/customLogin/CustomLoginOptimized.js`)
    - **Role:** GTM `GTM-THTCRSLN`, Zaraz, the Reddit Pixel, cr-relay signals, Google Ads on campaign pages, the gtwy.ai chatbot and the MSG91 signup widget, plus link-outs to cal.id, Stripe and tally.so. Detail: [current-infrastructure/third-party-services](current-infrastructure/third-party-services.md).
    - **Auth:** public script and container ids only.
+6. **Admin panel** (`viasocket-admin.embarko.app`, `src/const/admin.js:ADMIN_URL`; `src/middleware.js`, `src/app/lib/admin-*.js`, `/api/track-variant`)
+   - **Role:** the managed redirect list, the copy for `/integrations/{app}`, the announcement bar, and the ingest for visitor events. Every read falls back to the code's own copy. Detail: [current-infrastructure/admin-panel](current-infrastructure/admin-panel.md).
+   - **Auth:** none on reads; a built-in tracking key on the event ingest ([ADR-018](DECISIONS.md#adr-018-admin-visitor-events-do-not-use-a-cloudflare-setting)).
 
 flow.viasocket.com, the product, is a link destination only. Signup and login hand off to it, and it sets the `prod` cookie ([FLOWS](FLOWS.md)).
 
@@ -235,9 +238,10 @@ The pieces, in order:
 
 ## Blog Content
 
-- **What renders.** Blog cards on most pages come from table-api through `src/utils/getBlogData.js:getBlogData` and `src/utils/axiosCalls.js:getBlogs`. `/integrations`, `/integrations/{app}` and `/features` instead show the latest "Action Layer for AI Products" posts from the blog's RSS feed through `src/utils/axiosCalls.js:getActionLayerBlogs` ([CONTRACTS](CONTRACTS.md)). The `/blog` path itself belongs to another app.
+- **`/blogs` (this site's own blog).** Markdown in `_posts/blogs/`, compiled by `build-utilities/generate-blogs.js` (`predev`, `prebuild`) into the committed `src/data/blogs.json`, which `src/app/lib/blogs.js` imports; the edge runtime cannot read files at request time. `/features` shows the newest three. Detail: [modules/10-blogs](modules/10-blogs.md).
+- **What renders.** Blog cards on most other pages come from table-api through `src/utils/getBlogData.js:getBlogData` and `src/utils/axiosCalls.js:getBlogs`. `/integrations`, `/integrations/{app}` and `/features` instead show the latest "Action Layer for AI Products" posts from the blog's RSS feed through `src/utils/axiosCalls.js:getActionLayerBlogs` ([CONTRACTS](CONTRACTS.md)). The `/blog` path itself belongs to another app.
 - **`_posts/blog/*.mdx` and the CMS.** There are 37 MDX posts. `public/admin/` holds a Netlify/Decap CMS config (`git-gateway`, branch `prod`, collection folder `_posts/blog`).
-- **No loader left.** The `fs`-based loaders that read these posts (`src/components/lib/*`, `src/components/blogs/*`, root `config.js`) had no importer and could not run on the edge runtime; they were removed on 2026-10-21. Nothing in the app reads `_posts/` now. Whether `_posts/` and `public/admin/` are retired is in [OPEN_QUESTIONS](OPEN_QUESTIONS.md). <!-- verify:ignore -->
+- **No loader left.** The `fs`-based loaders that read these posts (`src/components/lib/*`, `src/components/blogs/*`, root `config.js`) had no importer and could not run on the edge runtime; they were removed on 2026-10-21. Nothing in the app reads `_posts/blog/` now (only the generator reads `_posts/blogs/`). Whether `_posts/` and `public/admin/` are retired is in [OPEN_QUESTIONS](OPEN_QUESTIONS.md). <!-- verify:ignore -->
 
 ## SEO Files: Sitemap & Robots
 

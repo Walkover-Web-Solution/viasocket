@@ -35,7 +35,8 @@ How to install, run, build and verify this repo, which environment variables it 
 | Script | Command | Notes |
 |---|---|---|
 | `dev` | `next dev -p 1111` | Local dev on port **1111**, not 3000. Verified. |
-| `prebuild` | `node build-utilities/generate-robots-txt.js` | Runs automatically before `build`. **Writes an untracked `public/robots.txt`.** Delete it after a local build so it is not committed. See [robots footgun](#footguns). <!-- verify:ignore --> |
+| `predev` | `node build-utilities/generate-blogs.js` | Runs automatically before `dev`. Rebuilds the committed `src/data/blogs.json` from `_posts/blogs/*.md`; a post with a bad `title`, `date` or file name stops the dev server from starting ([modules/10-blogs](modules/10-blogs.md)). Rerun it by hand after editing a post while the server is up. |
+| `prebuild` | `node build-utilities/generate-robots-txt.js && node build-utilities/generate-blogs.js` | Runs automatically before `build`. **Writes an untracked `public/robots.txt`.** Delete it after a local build so it is not committed. See [robots footgun](#footguns). It also regenerates `src/data/blogs.json`; if `git status` then shows that file changed, a post was edited without regenerating it. <!-- verify:ignore --> |
 | `build` | `next build` | Verified at baseline: exit 0, "Compiled with warnings". The warnings are Sass `@import` deprecations from `src/scss/_import.scss` and `src/scss/global.scss`, and they are expected. |
 | `start` | `next start -p 1111` | Serves a local `next build`. Not verified in this pass. |
 | `pages:build` | `npx @cloudflare/next-on-pages` | The Cloudflare adapter. It runs `vercel build` internally, which runs `npm run build` and therefore `prebuild`, and writes `.vercel/output/`. Not run in this pass. |
@@ -47,7 +48,7 @@ How to install, run, build and verify this repo, which environment variables it 
 
 ## Environment Variables Reference
 
-These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.config.js` at 17b99cd8. `next.config.js` and `src/middleware.js` read nothing beyond what is listed. Values are deliberately omitted.
+These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.config.js` (rechecked at `96b44de6`; the `VIASOCKET_*` and `VS_*` names inside `src/data/blogs.json` are example code in blog posts, not reads). `next.config.js` and `src/middleware.js` read nothing beyond what is listed. Values are deliberately omitted.
 
 **Client-exposed** means the name starts with `NEXT_PUBLIC_`. Next inlines it as a literal into any client bundle that references it. `src/utils/axiosCalls.js` is imported by `'use client'` files (`src/app/components/home/SearchInputHomeOptimized.js`, `src/app/components/integrations-script/TemplatePreview.js`, `src/components/indexComps/CategoryAppsDisplay.js`). Treat every `NEXT_PUBLIC_*` value, including the table-api `auth-key`s, as public. <!-- verify:ignore -->
 
@@ -65,6 +66,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 | `NEXT_PUBLIC_FLOW_URL` | Yes | Yes | none | Flow app base URL with **no trailing slash** (`${URL}/makeflow/...`). Used for "use this flow" links in `src/components/IntegrationsComp/**` and `AutomationSuggestionsClient.js`. |
 | `NEXT_PUBLIC_REFERENCE_ID` | Yes for login widget | Yes | none | Login-widget reference id and DOM id in `src/app/components/customLogin/CustomLoginOptimized.js`. |
 | `NEXT_PUBLIC_REDDIT_PIXEL_ID` | Prod only | Yes | none | Reddit pixel init. The pixel renders only when the environment is `prod` (`RedditPixel.js`). |
+| `NEXT_PUBLIC_ADMIN_URL` | No | Yes | `https://viasocket-admin.embarko.app` | Admin panel base URL (`src/const/admin.js:ADMIN_URL`) for the redirect list, app-page copy and announcements. Set it only to point at a local admin ([admin-panel](current-infrastructure/admin-panel.md)). Not used by the event forward, which has its own `ADMIN_TRACKING_URL`. |
 | `HOSTNAME` | No | No (build-time) | `''` | Read only by `build-utilities/generate-robots-txt.js`. A host containing `integrate` or `integration` forces the disallow-all robots file. |
 | `VERCEL_URL` | No | No (build-time) | `''` | Fallback for `HOSTNAME` in the same script. Set by `vercel build` (run by `pages:build`), so it is not a leftover. |
 
@@ -73,7 +75,7 @@ These are all the `process.env.*` reads in `src/`, `build-utilities/` and `next.
 **Mismatches between `.env` and code** (names only):
 
 - **In `.env` but never read by code:** `NEXT_PUBLIC_PROD_ENVIRONMENT` (the code reads only `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT`), `NEXT_PUBLIC_BLOG_DB_URL` (last referenced in 2025-02; the blog URL is now hard-coded), `NEXT_PUBLIC_DB_ID` (removed in 6d3df50b "Correct id"; DB ids are hard-coded), `NEXT_PUBLIC_DB_ID_AZ`, `NEXT_PUBLIC_DB_KEY_AZ`, `PAUTH_KEY`, `NEXT_PUBLIC_RECAPTCHA_KEY` (its only reader, an unimported reCAPTCHA provider, was removed 2026-10-21), `SERVER_RECAPTCHA_KEY` (last referenced 2026-01, before f5d90daa "page to app"), `USECASE_CREATE`, `USECASE_UPDATE`. Also, `NEXT_PUBLIC_BLOG_DB_KEY` is defined **twice** in the local `.env`, and the later definition wins. <!-- verify:ignore -->
-- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`, `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET`. `HOSTNAME` and `VERCEL_URL` are build-time and platform-provided. The admin pair are optional overrides, read at request time in `src/app/api/track-variant/route.js`. Test and production forward with the URL and key built into that file when both are unset. A local dev server forwards only when `ADMIN_TRACKING_URL` is set. Do not add either variable on Cloudflare Pages.
+- **Read by code but not in `.env`:** `HOSTNAME`, `VERCEL_URL`, `ADMIN_TRACKING_URL`, `ADMIN_TRACKING_SECRET`. (`NEXT_PUBLIC_ADMIN_URL` was added after that `.env` check; whether `.env` sets it is unverified, and the built-in default makes it optional.) `HOSTNAME` and `VERCEL_URL` are build-time and platform-provided. The admin pair are optional overrides, read at request time in `src/app/api/track-variant/route.js`. Test and production forward with the URL and key built into that file when both are unset. A local dev server forwards only when `ADMIN_TRACKING_URL` is set. Do not add either variable on Cloudflare Pages.
 
 > [!TODO]
 > The Cloudflare Pages dashboard holds the real per-environment values for test and production, and they are not in the repo. Confirm that each `NEXT_PUBLIC_*` above is set for both the `test` and `main` deployments. Next inlines `NEXT_PUBLIC_*` at **build** time, so changing one requires a rebuild or redeploy.
@@ -104,7 +106,7 @@ npm run start          # optional: serve the build on :1111
 npm run preview        # optional, slow: real Cloudflare Pages build in workerd
 ```
 
-A passing `next build` lists **53 routes: 50 dynamic (`ƒ`)**, including `/use-cases` and `/new-direction` added in `b3a7ab32`, **plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found`. The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
+A passing `next build` lists **57 routes: 54 dynamic (`ƒ`) plus 3 static (`○`)**: `/agency-partner/success`, `/lifetime-deal/success` and `/_not-found` (checked at `96b44de6`, 2026-11-08). The full route table is in [05-navigation](05-navigation.md). Shared First Load JS was 102 kB at baseline. The Sass deprecation warnings are pre-existing; any **new** warning or error is yours. <!-- verify:ignore -->
 
 ## Running Automated Checks & Tests
 

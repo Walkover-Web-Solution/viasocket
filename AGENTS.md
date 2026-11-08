@@ -14,12 +14,12 @@ Kept by the middleware (version 2769b521da8c). Read these before changing anythi
 | Task | Command |
 |---|---|
 | Install dependencies | `npm install` (`.npmrc` sets `legacy-peer-deps=true`) |
-| Run dev server | `npm run dev` (http://localhost:1111) |
-| Build for production | `npm run build` (prebuild writes an untracked `public/robots.txt`; delete it afterwards) | <!-- verify:ignore -->
+| Run dev server | `npm run dev` (port 1111; `predev` regenerates `src/data/blogs.json`) |
+| Build for production | `npm run build` (prebuild writes an untracked `public/robots.txt`, delete it afterwards, and regenerates `src/data/blogs.json`) | <!-- verify:ignore -->
 | Cloudflare build / local preview | `npm run pages:build` / `npm run preview` |
 | Type check, lint, tests | **None exist.** Use the checklist in [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md#how-an-agent-checks-its-work-verification-checklist). |
 
-Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 56 routes and prints only Sass `@import` deprecation warnings.
+Node v22.15.0 and npm 10.9.2 are known to work. A clean build has 57 routes and prints only Sass `@import` deprecation warnings.
 
 ## Reading Order Before You Change Code
 
@@ -28,7 +28,7 @@ Always read 1–3 first, then only the docs your task needs. [docs/README.md](do
 1. [docs/VISION.md](docs/VISION.md): what the site is for, and how to evaluate a request (§ "How Future Agents Must Evaluate Requests").
 2. [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md): request path on Cloudflare, layers, core systems, A/B machinery.
 3. [docs/AGENTS.md](docs/AGENTS.md): the detailed rulebook (boundaries, one library per concern, IDs, fail-soft) behind the rules below.
-4. **Your feature area:** [docs/modules/](docs/modules/) (nine areas, listed in [docs/README.md](docs/README.md#project-overview)), its journey in [docs/FLOWS.md](docs/FLOWS.md), and its routes in [docs/05-navigation.md](docs/05-navigation.md).
+4. **Your feature area:** [docs/modules/](docs/modules/) (ten areas, listed in [docs/README.md](docs/README.md#project-overview)), its journey in [docs/FLOWS.md](docs/FLOWS.md), and its routes in [docs/05-navigation.md](docs/05-navigation.md).
 5. **Data and tracking:** [docs/CONTRACTS.md](docs/CONTRACTS.md) (cookies, storage, analytics events, and where every schema lives), then the system's page under [docs/current-infrastructure/](docs/current-infrastructure/) and [docs/database/entities.md](docs/database/entities.md).
 6. **Writing the change:** [docs/08-folder-structure.md](docs/08-folder-structure.md) (where it goes, plus a step-by-step "add a new page" recipe), [docs/09-coding-guidelines.md](docs/09-coding-guidelines.md), [docs/DESIGN.md](docs/DESIGN.md) for UI and SEO.
 7. **Before reversing a choice:** [docs/DECISIONS.md](docs/DECISIONS.md) and [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md).
@@ -59,7 +59,7 @@ Version B of the homepage lives in `public/home-b/` and is not part of the `vias
 12. **Prove which layer fails before editing tracking or analytics code.** Instrument the chain (cookie → request → payload → response → cache-busted read). Analytics work counts as verified only after a real write and read against the live table. The table has no DELETE, so tag test rows by `environment`.
 13. **Verify per-visitor behaviour on production as well as test.** viasocket.com sits behind a Cloudflare cache rule that local and test lack. Compare `cache-control`, `cf-cache-status` and `set-cookie` with `curl -D -` on both hosts.
 14. **Style with Tailwind utilities.** Use CSS only when Tailwind cannot do it (e.g. `@font-face`), and put tokens and keyframes in `tailwind.config.js`. Legacy global SCSS overrides some utilities with `!important` ([DESIGN](docs/DESIGN.md#design-tokens--styling-primitives)). Keep a component's copy as constants at the top of its own file, not in a shared content module. The `src/components/IntegrationsComp/addToProduct/` pages are an existing exception to both (a 649-line SCSS module and a shared `copy.js`); don't copy that pattern elsewhere until [OPEN_QUESTIONS U-07](docs/OPEN_QUESTIONS.md) is settled.
-15. **Preserve routes, redirects and SEO.** Keep `next.config.js` redirects, `src/app/sitemap.js`, the robots logic and `generateMetadata` intact. `next.config.js` 301s `/help` and `/help/*` to `/new-direction`, except the `FOOTER_HELP_PAGES` list and pages under them. The help pages themselves, `/blog`, `/discovery` and `/community` are served by other deployments, so never add routes that shadow them ([05-navigation](docs/05-navigation.md#paths-served-by-other-deployments)). When porting from another repo, bring over the design, content and behaviour only, rebuilt in this repo's conventions.
+15. **Preserve routes, redirects and SEO.** Keep the managed redirects, `src/app/sitemap.js`, the robots logic and `generateMetadata` intact. Redirects are managed in the admin panel (Pages → Redirects) and applied by `src/middleware.js`, with `src/data/redirects.json` as the fallback copy; `next.config.js` has no `redirects()` ([current-infrastructure/admin-panel](docs/current-infrastructure/admin-panel.md)). That list 301s `/help` and `/help/*` to `/new-direction`, except the footer help pages, which keep `statusCode` 0 exceptions. The help pages themselves, `/blog`, `/discovery` and `/community` are served by other deployments, so never add routes that shadow them ([05-navigation](docs/05-navigation.md#paths-served-by-other-deployments)). When porting from another repo, bring over the design, content and behaviour only, rebuilt in this repo's conventions.
 
 ## Where Things Are
 
@@ -70,10 +70,12 @@ Full annotated tree and "where does a new X go" rules: [docs/08-folder-structure
 - `src/app/components/`: section-specific components. `src/components/`: older shared components (navbar pieces, footer, FAQ, meta head, integrations).
 - `src/components/IntegrationsComp/addToProduct/`: the homepage design rebuilt in Next (own header/footer, `copy.js`, SCSS module) for `/integrations`, `/integrations/{app}`, `/features`, `/use-cases` and `/new-direction`.
 - `src/app/lib/*-data.js`: per-page data aggregators. `src/utils/`: table-api client (`axiosCalls.js`, `getData.js`), UTM and redirect helpers, tracking, and `mwExperiment.js` (middleware experiment client; not the visitor table). `src/const/`: table ids, field lists, A/B config.
-- `src/middleware.js`: `/home` and `/home-b` redirects, Reddit click-id cookie and page-visit call.
+- `src/middleware.js`: the admin-managed redirects (fallback `src/data/redirects.json`), the `/home-b` redirect, the Reddit click-id cookie and page-visit call.
+- `src/app/lib/admin-*.js`, `src/const/admin.js`: reads from the admin panel (app-page copy, announcement bar); each falls back to the code's own copy ([admin-panel](docs/current-infrastructure/admin-panel.md)).
 - `src/app/api/track-variant/route.js`: the only internal API route.
-- `next.config.js`: the `/` rewrite and permanent redirects. `tailwind.config.js` holds theme tokens; `src/scss/` holds legacy global styles.
-- `_posts/`, `public/admin/`: legacy Decap CMS blog, unused by any route (C-02).
+- `next.config.js`: the `/` rewrite and the feedback rewrites (no redirects). `tailwind.config.js` holds theme tokens; `src/scss/` holds legacy global styles.
+- `_posts/blogs/*.md`: the `/blogs` posts, compiled into the committed `src/data/blogs.json` by `build-utilities/generate-blogs.js`; edit the Markdown, never the JSON ([modules/10-blogs](docs/modules/10-blogs.md)).
+- `_posts/blog/`, `public/admin/`: legacy Decap CMS blog, unused by any route (C-02).
 
 ## PR & Deployment Flow
 
@@ -86,4 +88,5 @@ Full annotated tree and "where does a new X go" rules: [docs/08-folder-structure
 - Record the build and route results before editing, so pre-existing warnings are not mistaken for regressions.
 - Preserve routes, redirects, page titles, canonicals, UTM and tracking behaviour, cookie names and visual appearance unless the request is to change them.
 - Remove code only with evidence from all seven checks: string registries, dynamic imports, routing, flags, CSS references, build or static references, external consumers. Note that `public/` assets may be referenced from table-api content that grep cannot see. When in doubt, add a row to [docs/OPEN_QUESTIONS.md](docs/OPEN_QUESTIONS.md) instead.
+- **Docs maintenance record:** [docs/MAINTENANCE.md](docs/MAINTENANCE.md) holds the last reviewed revision, the coverage map (topic → doc → verified/partial/missing) and the unfinished work. The weekly docs refresh starts there and updates it.
 - When behaviour, routes, contracts or tokens change, update the owning doc (`docs/*.md`, `docs/modules/`, `docs/current-infrastructure/`, `docs/database/`, `docs/api/`; owners in [docs/AGENTS.md §6](docs/AGENTS.md#6-modifying-documentation)) in the same change and bump its `verified_at` / `verified_on`. Docs carry `covers:` globs, so `/ai-docs check` (the create-ai-docs skill) can flag stale docs and broken references. <!-- verify:ignore -->

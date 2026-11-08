@@ -1,7 +1,7 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/utils/searchApps.js", "src/utils/getAppDetail.js", "src/middleware.js", "src/app/components/workflow-automation-ideas/AutomationSuggestionsClient.js", "src/app/robots.txt/route.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 96b44de6
+verified_on: 2026-11-08
 ---
 # Plug service (`NEXT_PUBLIC_INTEGRATION_URL`)
 
@@ -36,17 +36,19 @@ Hardcoded host `https://plugservice-api.viasocket.com` is also used by `getLiveS
 
 ## Schema / Shape
 ```text
-GET  api/v1/plugins/all?category=<name|''>&limit=<APPERPAGE|n>&offset=<n>     -> { data: [app] }
+GET  api/v1/plugins/all?category=<name|''>&limit=<APPERPAGE|n>&includeInactive=true&offset=<n>  -> { data: [app] }
 GET  api/v1/plugins/recommend/integrations?service=<a>[&service=<b>]         -> { plugins: { <slug>: app }, ... }   // read whole
 GET  api/v1/plugins/recommend/services?service=..&industry=..&domain=..&usecase=..  -> whole body
-GET  plugins/search?prefix=<slug[0]>                                         -> whole body
-GET  plugins/search?key=<query>&integrationOnly=true                          -> { data: [app] }
+GET  plugins/search?prefix=<slug[0]>&includeInactive=true                    -> whole body
+GET  plugins/search?key=<query>&integrationOnly=true&includeInactive=true     -> { data: [app] }
 GET  templates/all                                                            -> { data: { templates: [template] } }
 GET  get-apps-count                                                           -> { count: number }
 POST api/reddit/page-visit   { event_source_url, click_id? }                  -> not read
 POST api/reddit/<eventName>  { event_source_url, click_id }                   -> data
 GET  plugservice-api.viasocket.com/get-support-data                           -> { count: { rows: [...] } }
 ```
+Every `plugins/all` and `plugins/search` caller (`getApps`, `fetchPluginData`, `searchApps`, `AutomationSuggestionsClient.js:fetchApps`) sends `includeInactive=true`, so inactive apps stay in the lists and search results as they were before the service started hiding them (`55e0a4ea`, `f349c77b`). Keep it on any new caller of those two endpoints unless the change is meant to hide inactive apps.
+
 App and template object fields are whatever the service returns; the site reads them ad hoc (for example `appslugname`, `flowJson.order.root`, `verified` in `src/app/lib/data.js:getHomePageData`). There is no schema in the repo.
 
 ## Functions We Call

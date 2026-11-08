@@ -12,11 +12,13 @@ viasocket/
 ├── AGENTS.md, CLAUDE.md, GEMINI.md, .cursorrules   # agent entry point + thin tool adapters
 ├── .github/copilot-instructions.md                 # Copilot adapter (no CI workflows)
 ├── docs/                                           # this doc set; README.md is the map
-├── next.config.js            # / rewrite, afterFiles rewrites, every redirect, images.unoptimized, fs:false
+├── next.config.js            # / rewrite, afterFiles rewrites, images.unoptimized, fs:false (no redirects)
 ├── tailwind.config.js        # theme tokens, dev-*/docs-* families, daisyUI plugin
 ├── wrangler.toml             # Cloudflare Pages (nodejs_compat)
 ├── build-utilities/
-│   └── generate-robots-txt.js   # prebuild: writes untracked public/robots.txt
+│   ├── generate-robots-txt.js   # prebuild: writes untracked public/robots.txt
+│   └── generate-blogs.js        # predev + prebuild: _posts/blogs/*.md → src/data/blogs.json
+├── _posts/blogs/*.md         # THE /blogs POSTS (module 10); _template.md is the starter
 ├── _posts/blog/*.mdx         # legacy Decap CMS posts; nothing reads them (C-02)
 ├── parked/
 │   └── llms.txt              # previous /llms.txt link directory; kept in git, not served
@@ -29,7 +31,7 @@ viasocket/
 │   ├── _redirects            # one /faq rule
 │   └── llms.txt, site.webmanifest, browserconfig.xml
 └── src/
-    ├── middleware.js         # /home → /, /home-b → /, rdt_cid, Reddit CAPI
+    ├── middleware.js         # admin-managed redirects, /home-b → /, rdt_cid, Reddit CAPI
     ├── enums.js              # BlockTypes for the flow renderer
     ├── app/                  # App Router: one folder per route
     │   ├── layout.js         # RootLayout: global.scss, noindex off-prod, TrackingCookies, AppProvider
@@ -55,7 +57,8 @@ viasocket/
     │                         #   redirect, tracking, mwExperiment.js, and slug-parsing helpers
     ├── const/                # tables.js (table ids), fields.js (column lists), abTest.js, integrations.js
     ├── hooks/                # useTemplateIds.js, useTemplateFilters.js
-    ├── data/categories.json  # static category list for the legacy integrations search
+    ├── data/                 # categories.json (legacy integrations search), redirects.json (fallback
+    │                         #   redirect list), blogs.json (generated from _posts/blogs; do not edit)
     └── scss/                 # legacy global styles (global.scss imports the partials)
 ```
 
@@ -78,7 +81,8 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | Homepage (`/`) change or asset | `public/new-home/index.html`, `styles.css`, `main.js`, `public/new-home/assets/` | Never `src/app/page.js` (AGENTS rule 3). Reference assets as `/new-home/assets/…`, and bump the `?v=` query on `styles.css`/`main.js` after editing them ([14-performance](14-performance.md#rendering)). The `viasocket-site` export must keep the inline A/B gate as the first script, including `data-cfasync="false"`, and the `/home-ab.js` script tag after it ([01-homepage](modules/01-homepage.md#editing-version-as-head)). |
 | Homepage version B | `public/home-b/index.html`, `public/home-ab.js` | Homepage only. The inline gate in version A's `<head>` fetches the file for variant B and writes it into `/`; middleware redirects `/home-b` to `/`. Do not apply this layout to other routes ([01-homepage](modules/01-homepage.md)). |
 | Image for a React page | `public/assets/<kind>/` | `next/image` does not optimize, so compress the file first ([14-performance](14-performance.md#rendering)). |
-| Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds `/home` and the redirect from `/home-b` to `/`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Redirect | the admin panel (Pages → Redirects), then the same rule in `src/data/redirects.json` | `src/middleware.js` applies the admin list and falls back to that file ([admin-panel](current-infrastructure/admin-panel.md#redirect-rules)); `next.config.js` has no `redirects()`. Middleware also holds the redirect from `/home-b` to `/`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Blog post | `_posts/blogs/<slug>.md` (copy `_template.md`), images in `public/blogs/<slug>/` | Run `node build-utilities/generate-blogs.js` and commit the regenerated `src/data/blogs.json` with it ([modules/10-blogs](modules/10-blogs.md#writing-and-publishing-a-post)). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
 | Middleware experiment client | `src/utils/mwExperiment.js` | One module. A page imports `mwVariant` and `mwSend`. Do not copy the snippet into a layout or into `public/new-home/`, and do not send an event until a page runs an experiment. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments). |
