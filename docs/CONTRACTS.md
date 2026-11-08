@@ -32,6 +32,7 @@ The map of where this site's contracts are defined. The site is plain JavaScript
 | table-api.viasocket.com (content, blog, A/B DBs) | `NEXT_PUBLIC_DB_BASE_URL` | `auth-key` header | [current-infrastructure/table-api.md](current-infrastructure/table-api.md) |
 | Plug service (apps, combos, templates, Reddit relay) | `NEXT_PUBLIC_INTEGRATION_URL` (trailing `/`) | none | [current-infrastructure/plug-service.md](current-infrastructure/plug-service.md) |
 | flow.sokt.io webhooks (forms, errors, AI answer) | hardcoded script ids | none | [current-infrastructure/flow-webhooks.md](current-infrastructure/flow-webhooks.md) |
+| Admin panel (redirects, `/integrations/{app}` copy, announcements, visitor-event ingest) | `NEXT_PUBLIC_ADMIN_URL` (optional; built-in default) | none on reads; built-in `x-tracking-secret` on events | [current-infrastructure/admin-panel.md](current-infrastructure/admin-panel.md) |
 | Cloudflare Pages + zone | dashboard | n/a | [current-infrastructure/cloudflare.md](current-infrastructure/cloudflare.md) |
 | MSG91, ipapi.co, gtwy, tags, blog RSS, docstar, cal.id, Stripe links | mostly hardcoded | none | [current-infrastructure/third-party-services.md](current-infrastructure/third-party-services.md) |
 
