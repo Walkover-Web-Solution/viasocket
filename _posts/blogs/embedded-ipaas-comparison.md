@@ -139,8 +139,8 @@ viaSocket's Integration Layer covers the full stack: [embedded iPaaS](/embed/app
 
 For a closer look at how viaSocket compares to specific alternatives:
 
-- [Composio Alternative](/alternatives/composio)
-- [Paragon Alternative](/alternatives/paragon)
+- [Composio Alternative](/blogs/composio-alternative)
+- [Paragon Alternative](/blogs/paragon-alternative)
 
 How to add managed OAuth once you pick a platform is in [Embedded iPaaS Comparison](/blogs/how-to-add-managed-oauth-for-third-party-apps).
 
