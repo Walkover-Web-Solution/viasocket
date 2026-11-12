@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
 
     const url = `${BLOGS_URL}/${post.slug}`;
     const title = `${post.title} · viaSocket`;
-    const image = post.image ? new URL(post.image, 'https://viasocket.com').href : null;
+    const ogPath = `/blogs/${post.slug}`;
     return {
         title,
         description: post.description,
@@ -25,9 +25,9 @@ export async function generateMetadata({ params }) {
             type: 'article',
             publishedTime: post.date,
             authors: post.author ? [post.author] : undefined,
-            images: ogImages(`/blogs/${post.slug}`, image),
+            images: ogImages(ogPath, null),
         },
-        twitter: { card: 'summary_large_image', title, description: post.description, images: twitterImages(`/blogs/${post.slug}`, image) },
+        twitter: { card: 'summary_large_image', title, description: post.description, images: twitterImages(ogPath, null) },
     };
 }
 

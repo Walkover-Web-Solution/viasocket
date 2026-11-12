@@ -22,7 +22,6 @@ function PostJsonLd({ post }) {
             ? { '@type': 'Person', name: post.author, image: post.authorImage ? new URL(post.authorImage, 'https://viasocket.com').href : undefined }
             : { '@type': 'Organization', name: 'viaSocket' },
         publisher: { '@type': 'Organization', name: 'viaSocket', logo: { '@type': 'ImageObject', url: 'https://viasocket.com/assets/brand/logo.svg' } },
-        image: post.image ? new URL(post.image, 'https://viasocket.com').href : undefined,
         mainEntityOfPage: url,
         url,
     };
@@ -92,12 +91,6 @@ export default function BlogPostPage({ post, related }) {
                             <ShareButtons url={url} title={post.title} />
                         </div>
                     </header>
-
-                    {post.image && (
-                        <div className={b.cover}>
-                            <img src={post.image} alt="" />
-                        </div>
-                    )}
 
                     {hasToc && <PostToc toc={post.toc} title={C.tocTitle} variant="inline" />}
                     {/* Rendered from the post's Markdown by build-utilities/generate-blogs.js; raw HTML in a post is escaped there. */}

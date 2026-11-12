@@ -59,8 +59,6 @@
 .art-meta > span:first-child { color: var(--ink); }
 .art-meta { align-items: center; }
 .art-meta .author img { width: 28px; height: 28px; }
-.cover { margin-bottom: 48px; }
-.cover img { display: block; width: 100%; height: auto; border: 1px solid var(--line); background: var(--s2); }
 // After the article: share again, and the way back
 .art-end { margin: 56px 0 var(--sec-pad); padding-top: 24px; border-top: 1px solid var(--line); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; }
 
