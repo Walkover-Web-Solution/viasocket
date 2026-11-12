@@ -213,6 +213,8 @@
 .ops b { font-weight: 600; font-size: 15px; line-height: 1.35; overflow-wrap: anywhere; }
 .ops span { font-size: 14px; color: var(--ink-2); line-height: 1.45; overflow-wrap: anywhere; }
 .ops-foot { display: flex; justify-content: flex-start; }
+.req-event { background: none; border: 0; padding: 0; font-size: 15px; font-weight: 500; color: var(--ink-2); cursor: pointer; text-align: left; text-decoration: underline; text-decoration-color: var(--line-2); text-underline-offset: 5px; transition: color .15s, text-decoration-color .15s; }
+.req-event:hover { color: var(--ink); text-decoration-color: var(--ink); }
 @media (max-width: 900px) {
   .ops { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ops li:nth-child(-n + 3), .ops li:nth-child(3n + 1) { border-top: 0; border-left: 0; }
@@ -628,11 +630,17 @@
   .root :global(.request-form) { color-scheme: dark; }
   .root :global(.request-form-scrim) { background: rgba(0, 0, 0, 0.62); }
   .root :global(.request-form) :global(.modal-box) {
-    background: var(--s1);
+    background: var(--s1) !important;
     color: var(--ink);
     border: 1px solid var(--line-2);
     box-shadow: var(--sh-dlg);
   }
+  .root :global(.request-form) :global(.h3),
+  .root :global(.request-form) :global(p),
+  .root :global(.request-form) :global(.text-sm),
+  .root :global(.request-form) :global(.text-base) { color: var(--ink); }
+  .root :global(.request-form) :global(a.underline) { color: var(--ink-2); }
+  .root :global(.request-form) :global(a.underline):hover { color: var(--ink); }
   .root :global(.request-form) :global(.label-text) { color: var(--ink); }
   .root :global(.request-form) :global(.input),
   .root :global(.request-form) :global(.textarea),

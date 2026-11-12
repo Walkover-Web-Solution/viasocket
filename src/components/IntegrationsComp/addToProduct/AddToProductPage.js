@@ -240,14 +240,18 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                             <h3>{f(COPY.actTitle)}</h3>
                                             <p>{f(COPY.actSub)}</p>
                                         </div>
-                                        <EventsList kind="action" items={app.actions} appName={app.name} iconUrl={app.iconUrl} />
+                                        <Suspense>
+                                            <EventsList kind="action" items={app.actions} appName={app.name} iconUrl={app.iconUrl} appInfo={appOneDetails} />
+                                        </Suspense>
                                     </div>
                                     <div className={s['at-group']}>
                                         <div>
                                             <h3>{f(COPY.trgTitle)}</h3>
                                             <p>{f(COPY.trgSub)}</p>
                                         </div>
-                                        <EventsList kind="trigger" items={app.triggers} appName={app.name} iconUrl={app.iconUrl} />
+                                        <Suspense>
+                                            <EventsList kind="trigger" items={app.triggers} appName={app.name} iconUrl={app.iconUrl} appInfo={appOneDetails} />
+                                        </Suspense>
                                     </div>
                                 </div>
                             </div>

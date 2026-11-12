@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
-verified_at: 0244e05f
-verified_on: 2026-10-30
+verified_at: 7428f283
+verified_on: 2026-11-12
 ---
 # Module: Integrations directory
 
@@ -42,7 +42,7 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 ### 2. Single app (`/integrations/{app}`)
 `IntegrationsMain` → `src/components/IntegrationsComp/addToProduct/AddToProductPage.js` (chosen when the loader returns `actionLayerBlogs`).
 - Breadcrumb, H1 (`RotatingWord`), "Copy setup prompt" with `promptFor({ name })`, and `OAuthDemo`.
-- "#get-started" feature grid (`COPY.feats`), "#actions-triggers" (`EventsList` over `app.actions` / `app.triggers`), blog cards, "#about" (app links via `relForApp` / `appWebsiteUrl`), FAQ and the end CTA.
+- "#get-started" feature grid (`COPY.feats`), "#actions-triggers" (`EventsList` over `app.actions` / `app.triggers`, each with `EventRequestLink` for a new action or trigger), blog cards, "#about" (app links via `relForApp` / `appWebsiteUrl`), FAQ and the end CTA.
 - **Beta app** (no actions and no triggers): the hero shows the beta copy and `BetaNotice.js` "Request" (`requestType=app`).
 - Data: `appOneDetails` from `getCombos` → `src/utils/getAppDetail.js:getAppDetails`. All copy comes from `COPY` in the same `copy.js`, via `fill`.
 
@@ -65,7 +65,7 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 
 Shared pieces (`SiteHeader`, `SiteFooter`, `BlogPosts`, `FaqSection`, `CopyPromptProvider`, `AppDirectory`, `RequestIntegrationPopupOpener`, `FAQSection`, `MetaHeadComp`) are in the [component catalog](../DESIGN.md#reusable-component-catalog). The `addToProduct` styling (`addToProduct.module.scss`, Geist via `next/font`) is in [DESIGN](../DESIGN.md#homepage-system-in-next-addtoproductmodulescss).
 
-Module-specific: `src/components/IntegrationsComp/addToProduct/OAuthDemo.js`, `EventsList.js`, `BetaNotice.js`, `RotatingWord.js`, and the request form `src/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp.js:RequestPlugin`. On the homepage-design pages the form sits inside `.root`. Dark mode restyles that copy from `addToProduct.module.scss` (`.request-form`); the daisyUI light modal is what legacy pages still show. See [DESIGN](../DESIGN.md#homepage-system-in-next-addtoproductmodulescss).
+Module-specific: `src/components/IntegrationsComp/addToProduct/OAuthDemo.js`, `EventsList.js`, `EventRequestLink.js`, `BetaNotice.js`, `RotatingWord.js`, and the request form `src/components/IntegrationsComp/IntegrationsBetaComp/integrationsRequestComp.js:RequestPlugin`. On the homepage-design pages the form sits inside `.root`. Dark mode restyles that copy from `addToProduct.module.scss` (`.request-form`); the daisyUI light modal is what legacy pages still show. See [DESIGN](../DESIGN.md#homepage-system-in-next-addtoproductmodulescss).
 
 ---
 
