@@ -142,6 +142,41 @@
         return data;
     }
 
+    // Same keys src/utils/handleUtmSource.js treats as attribution.
+    var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'li_fat_id', 'ttclid', 'rdt_cid'];
+    var UTM_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
+
+    function isAttributionParam(key) {
+        return key.indexOf('utm_') === 0 || key.indexOf('affiliate_') === 0 || key === 'ref' || CLICK_IDS.indexOf(key) !== -1;
+    }
+
+    // The utmData cookie the rest of the site reads at signup (the same JSON the
+    // Next pages write). The homepage adds the version on screen, and the landing
+    // URL's attribution when the cookie has none yet, so a source already stored
+    // is never replaced.
+    function saveUtmCookie(variant) {
+        var data = {};
+        try {
+            data = JSON.parse(readCookie('utmData') || '{}') || {};
+        } catch (e) {
+            data = {};
+        }
+        var hasSource = false;
+        for (var key in data) {
+            if (Object.prototype.hasOwnProperty.call(data, key) && isAttributionParam(key)) hasSource = true;
+        }
+        if (!hasSource) {
+            try {
+                new URLSearchParams(location.search).forEach(function (value, name) {
+                    if (isAttributionParam(name)) data[name] = value;
+                });
+            } catch (e2) {}
+        }
+        data.variant = variant;
+        var secure = location.protocol === 'https:' ? ';secure' : '';
+        document.cookie = 'utmData=' + JSON.stringify(data) + ';path=/;max-age=' + UTM_COOKIE_MAX_AGE + cookieDomain() + secure;
+    }
+
     function touchSession(refreshOnly) {
         var now = Date.now();
         var stored = storeGet(SESSION_KEY);
@@ -273,7 +308,7 @@
             changed = true;
         }
         if (isVersionCta(link, url)) {
-            url.searchParams.set('utm_source', variant === 'B' ? 'b' : 'a');
+            url.searchParams.set('utm_source', utmData().utm_source || '/');
             changed = true;
         }
         if (changed) link.href = url.toString();
@@ -321,6 +356,12 @@
     }
 
     function report(variant) {
+        // A fallback view showed A to a visitor assigned B; it is not counted, so it is not stored either.
+        if (!hpOff) {
+            try {
+                saveUtmCookie(variant);
+            } catch (e) {}
+        }
         stamp(variant);
         var session = touchSession(false);
         send(
