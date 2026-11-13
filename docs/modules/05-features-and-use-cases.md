@@ -51,7 +51,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 - There is no data fetch.
 
 ### 4. Legacy feature pages (`src/app/features/[...feature]/page.js` → `src/app/components/features/FeaturesClient.js:FeaturesClient`)
-- A slug with no entry in `FEATURE_PAGES` (for example `/features/variables`, the target of the `/variables` redirect in `next.config.js`) still loads `src/app/lib/feature-data.js:getFeaturesPageData`. That loader reads the features table by `slug`, plus navbar, footer, meta and blog rows tagged `feature`.
+- A slug with no entry in `FEATURE_PAGES` (for example `/features/variables`, the target of the `/variables` redirect in the redirect list) still loads `src/app/lib/feature-data.js:getFeaturesPageData`. That loader reads the features table by `slug`, plus navbar, footer, meta and blog rows tagged `feature`.
 - Renders the older daisyUI components: `FeatureBannerComp`, `FeatureGridComp`, `AutomationIdeasSection`, `FeatureContentComp` (FAQs), `BlogGrid`, `FeaturesFooterComp`.
 - The `!featureSlug` branch (`getAllFeatures`) appears unreachable now. `/features` itself is served by `src/app/features/page.js`, and a non-optional catch-all always has at least one segment (*inferred* from the routing).
 

@@ -16,10 +16,10 @@ This repository is the **marketing website for viaSocket**, served at the bare d
 | Landing pages, positioning copy, pricing pages, campaign pages | Yes | `src/app/**`, `public/new-home/` |
 | Programmatic SEO pages (apps, app pairs, MCP apps, templates, departments, features) | Yes, the rendering. The content is not | Content comes from table-api and the plug service (see [CONTRACTS.md](CONTRACTS.md)) |
 | Page `<title>`/description for most routes | Fallback strings only | A table-api metadata table read by `src/utils/getMetaData.js:getMetaData`. Editing the fallback in code usually changes nothing in production |
-| Signup and login | Only the handoff | `/signup` renders `CustomLoginOptimized`; `/login` redirects to the flow app (`next.config.js`) |
+| Signup and login | Only the handoff | `/signup` renders `CustomLoginOptimized`; `/login` redirects to the flow app (the redirect list in `src/middleware.js`) |
 | The product: building workflows, connections, the Embed/"Apps API" dashboard | No | flow.viasocket.com (`/integrations`, `/template/...`, `/documentation/skill.md`) <!-- verify:ignore --> |
 | MCP product ("Mushrooms by viaSocket") | Only a few landing pages (`/mcp/aiagent`, `/mcp/saas`, `/mcp/[...slug]`) | mushrooms.viasocket.com. Bare `/mcp` redirects there permanently |
-| Help centre (`/help/*`), blog, community, discovery | No | `/help` and most `/help/*` paths are retired: `next.config.js` 301s them to `/new-direction`, except the footer help pages (`FOOTER_HELP_PAGES`). Those pages, the blog, community and discovery are served by other deployments. See Unknowns |
+| Help centre (`/help/*`), blog, community, discovery | No | `/help` and most `/help/*` paths are retired: the redirect list (`src/middleware.js`) 301s them to `/new-direction`, except the footer help pages. Those pages, the blog, community and discovery are served by other deployments. See Unknowns |
 
 The site's jobs, in the order the code puts effort into them:
 1. **Rank in search.** Indexable, data-driven catch-all page families (`/integrations/...`, `/mcp/...`, `/automations/...`, `/departments/...`, `/features/...`), a native sitemap (`src/app/sitemap.js`) plus a backend sitemap, `public/llms.txt` for LLM crawlers, and JSON-LD on the homepage and root layout.

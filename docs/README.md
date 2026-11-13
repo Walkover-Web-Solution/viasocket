@@ -21,6 +21,7 @@ Written for AI coding agents and new engineers. Every claim was checked against 
   7. **Pricing:** `/pricing` ([modules/07-pricing](modules/07-pricing.md)).
   8. **Campaign and program pages:** migrations, offers, webinars, departments, legal ([modules/08-campaign-and-program-pages](modules/08-campaign-and-program-pages.md)).
   9. **Lead and support forms:** experts, hire an expert, agency partner, support, feedback, signup ([modules/09-lead-and-support-forms](modules/09-lead-and-support-forms.md)).
+  10. **Blog:** `/blogs` and `/blogs/{slug}`, Markdown posts in `_posts/blogs/` bundled at build time ([modules/10-blogs](modules/10-blogs.md)).
 
 ## Where to read
 
@@ -36,7 +37,7 @@ Written for AI coding agents and new engineers. Every claim was checked against 
 | [FLOWS.md](FLOWS.md) | Changing a user journey: UTM and signup, integrations, templates, A/B, forms, developers |
 | [DESIGN.md](DESIGN.md) | Styling, components, tokens, responsive, a11y, copy, SEO metadata |
 | [CONTRACTS.md](CONTRACTS.md) | Any data or tracking change: where types live, cookies, storage, analytics events |
-| [current-infrastructure/](current-infrastructure/) | Calling an external system: [table-api](current-infrastructure/table-api.md), [plug-service](current-infrastructure/plug-service.md), [flow-webhooks](current-infrastructure/flow-webhooks.md), [cloudflare](current-infrastructure/cloudflare.md), [third-party-services](current-infrastructure/third-party-services.md) |
+| [current-infrastructure/](current-infrastructure/) | Calling an external system: [table-api](current-infrastructure/table-api.md), [plug-service](current-infrastructure/plug-service.md), [admin-panel](current-infrastructure/admin-panel.md) (redirects, app-page copy, announcement bar, event ingest), [flow-webhooks](current-infrastructure/flow-webhooks.md), [cloudflare](current-infrastructure/cloudflare.md), [third-party-services](current-infrastructure/third-party-services.md) |
 | [database/entities.md](database/entities.md) | Reading or adding a table-api table |
 | [api/track-variant.md](api/track-variant.md), [12-api-guidelines.md](12-api-guidelines.md) | Touching this site's own route handlers |
 | [13-security.md](13-security.md) | Anything involving keys, env vars, PII or form input |
@@ -48,6 +49,7 @@ Written for AI coding agents and new engineers. Every claim was checked against 
 | [DECISIONS.md](DECISIONS.md) | Before reversing an existing choice: rationale, rejected alternatives, incidents |
 | [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) | Before "fixing" something odd: it may be a known, undecided question |
 | [plans/](plans/), [brainstorms/](brainstorms/) | Writing a dated plan or requirements doc: clone the `_TEMPLATE.md` |
+| [MAINTENANCE.md](MAINTENANCE.md) | Refreshing the docs: last reviewed revision, coverage map, unfinished work |
 
 ## Needs a human
 

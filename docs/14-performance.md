@@ -25,8 +25,9 @@ Until targets exist, treat a change that raises a route's First Load JS in the `
 |---|---|---|
 | Cloudflare zone cache | Cloudflare dashboard (not in the repo) | Observed `max-age=10800` (3 h) on `/`, `/sitemap.xml` and `/llms.txt` on production on 2026-10-21. Local and test have no such rule, so check changes on production ([current-infrastructure/cloudflare](current-infrastructure/cloudflare.md)). |
 | `axios-cache-interceptor` | `src/utils/axiosCalls.js` (`setupCache(axios)` at module scope, as `axiosWithCache`) | In memory, per worker isolate, so each isolate keeps its own copy and a cold isolate always fetches. Every call sets `interpretHeader: false`, which means upstream `cache-control` headers are ignored. Nothing invalidates entries early: a table edit shows up after the TTL or a redeploy. |
-| `fetch` cache / ISR | none | There are no `revalidate` exports, `next: {}` fetch options or `unstable_cache` calls. <!-- verify:ignore --> Don't assume Next.js data caching. |
-| React `cache()` | `src/utils/getVariant.js:getVariant` | Lasts one request, so `generateMetadata` and the page agree on the variant. |
+| `fetch` cache / ISR | `src/app/lib/admin-content.js` (`next.revalidate` 300 s), `src/app/lib/admin-announcements.js` (60 s) | The only `next: {}` fetch options; there are no `revalidate` exports or `unstable_cache` calls. Whether `@cloudflare/next-on-pages` honours them is unverified, so don't assume Next.js data caching. |
+| Middleware memory | `src/middleware.js:managedRedirects` | The admin redirect list, kept 60 s per isolate; one refresh at a time; a failed refresh keeps the last list. |
+| React `cache()` | `src/utils/getVariant.js:getVariant`, `src/app/lib/admin-content.js:getAdminContent` | Lasts one request, so `generateMetadata` and the page agree (on the variant, and on the admin copy without a second fetch). |
 
 TTLs in `src/utils/axiosCalls.js`:
 
@@ -36,6 +37,9 @@ TTLs in `src/utils/axiosCalls.js`:
 | 1 h | `getBlogs`, `getVideos`, `getActionLayerBlogs` (both the RSS feed and each post page) |
 | library default (no `ttl` passed) | `getLiveSupportData` |
 | **not cached** (plain `axios`) | `getTemplates`, and the A/B calls `getAbTestVisitorRows`, `saveAbTestVisit` and `updateAbTestVisit`. The A/B calls skip the cache on purpose, because they read and write per-visitor rows. |
+
+> [!NOTE]
+> **Admin panel calls sit on the critical path.** Every middleware run may wait up to 1.5 s for the redirect list when its 60 s copy is stale; every page with `NavbarServer` or `SiteHeader` waits up to 1.5 s for announcements; `/integrations/{app}` waits up to 2 s for its copy. A slow admin therefore adds latency to most pages before the fallback applies ([admin-panel](current-infrastructure/admin-panel.md)).
 
 > [!WARNING]
 > `getTemplates` fetches the whole `templates/all` list from the plug service on **every** request, with no cache. The `/automations` and `/automations/[...slug]` loaders call it (`src/app/lib/automation-data.js`), and so do `/departments/[slug]` (`src/app/lib/department-data.js`), the app and app-pair branches of `src/app/lib/integration-data.js`, and `src/app/lib/data.js:getHomePageData`. `src/app/lib/automationSlugResolver.js:resolveAutomationSlug` then filters the list in memory. If you add a caller, expect one full template download per page view. Adding a cache would change how fast template edits appear, so that is a behaviour change, not a cleanup.
