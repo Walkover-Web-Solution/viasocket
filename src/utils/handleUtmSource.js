@@ -1,4 +1,4 @@
-import { VISITOR_ID_COOKIE } from '@/const/abTest';
+import { VARIANT_COOKIE, VARIANTS, VISITOR_ID_COOKIE } from '@/const/abTest';
 
 // Returns the first match: a stale host-only copy alongside the .viasocket.com
 // one would otherwise make the cookie read as missing.
@@ -35,8 +35,21 @@ const isAttributionParam = (key) =>
 // An ad click often converts days later, so a day was losing most of them.
 const UTM_COOKIE_DAYS = 30;
 
+const readUtmCookie = () => {
+    try {
+        return JSON.parse(getCookie('utmData') || '{}') || {};
+    } catch {
+        return {};
+    }
+};
+
+// The homepage stores its A/B version in utmData before any source is known, so
+// a cookie that holds no attribution yet still takes the first one that arrives.
+const hasAttribution = (data) => Object.keys(data).some(isAttributionParam);
+
 export const getUtmSource = () => {
-    if (!getCookie('utmData')) {
+    const existing = readUtmCookie();
+    if (!hasAttribution(existing)) {
         const queryParams = new URLSearchParams(window.location.search);
         const queryObject = {};
 
@@ -47,7 +60,7 @@ export const getUtmSource = () => {
         });
 
         if (Object.keys(queryObject).length > 0) {
-            setCookie('utmData', JSON.stringify(queryObject), UTM_COOKIE_DAYS);
+            setCookie('utmData', JSON.stringify({ ...existing, ...queryObject }), UTM_COOKIE_DAYS);
         }
     }
 };
@@ -88,30 +101,10 @@ export const savePageUtmSource = (source) => {
 };
 
 export const setUtmSource = ({ source = 'index' } = {}) => {
-    let utmData = getCookie('utmData');
-    let queryObject = {};
-
-    if (!utmData) {
-        const queryParams = new URLSearchParams(window.location.search);
-
-        queryParams.forEach((value, key) => {
-            if (isAttributionParam(key)) {
-                queryObject[key] = value;
-            }
-        });
-
-        if (Object.keys(queryObject).length > 0) {
-            utmData = JSON.stringify(queryObject);
-            setCookie('utmData', utmData, UTM_COOKIE_DAYS);
-        }
-    }
-
-    if (!utmData) {
-        queryObject = { utm_source: source };
-        utmData = JSON.stringify(queryObject);
-    } else {
-        queryObject = JSON.parse(utmData);
-    }
+    getUtmSource();
+    let queryObject = readUtmCookie();
+    if (!hasAttribution(queryObject)) queryObject = { ...queryObject, utm_source: source };
+    const utmData = JSON.stringify(queryObject);
 
     const queryString = Object.entries(queryObject)
         .map(([key, val]) => `${key}=${val}`)
@@ -139,18 +132,16 @@ export const buildSignupState = () => {
     // may itself contain '&'.
     setUtmSource();
 
-    let data = {};
-    try {
-        data = JSON.parse(getCookie('utmData') || '{}');
-    } catch {
-        data = {};
-    }
-    if (!Object.keys(data).length) data = { utm_source: 'index' };
+    let data = readUtmCookie();
+    if (!hasAttribution(data)) data = { ...data, utm_source: 'index' };
 
     const visitorId = getCookie(VISITOR_ID_COOKIE);
     const cta = getCookie(SIGNUP_CTA_COOKIE);
+    const variant = getCookie(VARIANT_COOKIE);
     if (visitorId) data.visitor_id = visitorId;
     if (cta) data.cta = decodeURIComponent(cta);
+    // The homepage version the visitor was assigned, for the signup table's variant column.
+    if (VARIANTS.includes(variant)) data.variant = variant;
 
     const queryString = Object.entries(data)
         .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
