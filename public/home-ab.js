@@ -174,7 +174,9 @@
         }
         data.variant = variant;
         var secure = location.protocol === 'https:' ? ';secure' : '';
-        document.cookie = 'utmData=' + JSON.stringify(data) + ';path=/;max-age=' + UTM_COOKIE_MAX_AGE + cookieDomain() + secure;
+        // Match handleUtmSource setCookie: ";" in JSON would truncate the cookie (S-11).
+        var payload = JSON.stringify(data).replace(/;/g, '%3B');
+        document.cookie = 'utmData=' + payload + ';path=/;max-age=' + UTM_COOKIE_MAX_AGE + cookieDomain() + secure;
     }
 
     function touchSession(refreshOnly) {

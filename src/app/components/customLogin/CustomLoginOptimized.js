@@ -112,6 +112,17 @@ const watchRegisterResponses = () => {
     }
 };
 
+const FALLBACK_SIGNUP_STATE = '{"utm_source":"index"}&utm_source=index';
+
+const safeSignupState = () => {
+    try {
+        return buildSignupState();
+    } catch (error) {
+        console.error('buildSignupState failed', error);
+        return FALLBACK_SIGNUP_STATE;
+    }
+};
+
 const CustomLoginOptimized = ({ redirect_to }) => {
     const [isLoading, setIsLoading] = useState(true);
 
@@ -121,8 +132,9 @@ const CustomLoginOptimized = ({ redirect_to }) => {
             success: () => setIsLoading(false),
             failure: (error) => {
                 console.error('failure reason', error);
+                setIsLoading(false);
             },
-            state: buildSignupState(),
+            state: safeSignupState(),
             theme: 'light',
         };
 
@@ -148,6 +160,10 @@ const CustomLoginOptimized = ({ redirect_to }) => {
         const script = document.createElement('script');
         script.src = 'https://proxy.msg91.com/assets/proxy-auth/proxy-auth.js';
         script.onload = () => runVerification(isMounted);
+        script.onerror = () => {
+            console.error('MSG91 proxy-auth script failed to load');
+            if (isMounted) setIsLoading(false);
+        };
         document.body.appendChild(script);
         window.__custom_login_script_loaded__ = true;
     };

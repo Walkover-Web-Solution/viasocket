@@ -1,6 +1,6 @@
 ---
 covers: ["src/utils/axiosCalls.js", "src/utils/mwExperiment.js", "src/app/providers.js", "src/middleware.js", "src/app/setup-prompt/**"]
-verified_at: 3662e484
+verified_at: 178df9d5
 verified_on: 2026-10-31
 ---
 # 13 Security
@@ -62,7 +62,7 @@ This file covers the site's security posture: who can do what, which values are 
 - **UTM state goes into URLs and cookies unencoded:**
   - `src/utils/handleUtmSource.js:setUtmSource` returns the raw `utmData` JSON plus `key=value` pairs, and `src/utils/handleRedirection.js:handleRedirect` appends it as `?state=` without `encodeURIComponent` ([OPEN_QUESTIONS T-06](OPEN_QUESTIONS.md)).
   - `getUtmSource` writes decoded query values into `document.cookie` with no encoding (`setCookie`).
-  - Inferred, not tested: a crafted link with `%3B` in a `utm_*` value would cut the cookie short, and `JSON.parse` in `setUtmSource` (no `try/catch`) would then throw on every CTA that calls it.
+  - **Mitigated (2026-11-13, S-11):** `setCookie` escapes `;` in values as `%3B`; `readUtmCookie` decodes before parse and returns `{}` on failure so `/signup` still calls `initVerification`.
 - **Markdown is rendered without raw HTML.** `react-markdown` renders template descriptions (`src/app/components/automations/AutomationSlugClient.js`) and the AI answer from a flow webhook (`src/app/components/home/ResultSectionOptimized.js`). No `rehype-raw` is installed, so HTML in that content is escaped. Do not add `rehype-raw` for remote content.
 - **`dangerouslySetInnerHTML` is used only for scripts and JSON-LD:**
   - Inline tag loaders in `src/components/headComp/headComp.js`, `src/app/components/RedditPixel/RedditPixel.js` and `src/app/lifetime-deal/success/page.js`, plus the cr-relay loader in `src/app/layout.js`.
