@@ -115,7 +115,14 @@
 .loginBtn_google {
     button {
         margin: 0px !important;
-        width: 70% !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    @media screen and (min-width: 640px) {
+        button {
+            width: 70% !important;
+        }
     }
 }
 

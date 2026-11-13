@@ -1,6 +1,6 @@
 ---
 covers: ["*"]
-verified_at: ad35b313
+verified_at: 178df9d5
 verified_on: 2026-11-04
 ---
 # Open Questions & Known Ambiguities
@@ -39,7 +39,7 @@ IDs are grouped by area: **P** product, **T** tracking & attribution, **S** secu
 | S-08 | The public flow.sokt.io form webhooks have no evidenced spam or abuse protection (no reCAPTCHA, no rate limit). | [current-infrastructure/flow-webhooks](current-infrastructure/flow-webhooks.md) | Forms post straight from the browser. | **Fix (recommended):** Cloudflare Turnstile and a honeypot field on public forms, plus a WAF rate limit. |
 | S-09 | JSON-LD built with `JSON.stringify` does not escape `<`, so remote content containing `</script>` could break out of the tag. | `src/components/IntegrationsComp/addToProduct/AddToProductPage.js`, `src/components/IntegrationsComp/integrationsAppOneComp/integrationsAppOneComp.js`, `src/app/layout.js` | Inferred from code; not exploited. | **Fix (recommended):** escape `<` as `\u003c` when serialising JSON-LD. |
 | S-10 | The A/B visitor table stores IPs and device details, and the key that reads it is client-exposed (S-01). | `src/utils/abTestVisitor.js`, `src/utils/axiosCalls.js` | See [database/entities](database/entities.md). | **Recommended:** store a truncated IP, drop unused device details, read the table server-side only. |
-| S-11 | `utmData` is written unencoded and `setUtmSource` parses it without `try/catch`, so a crafted link could break CTAs. | `src/utils/handleUtmSource.js:setUtmSource` | Inferred, not tested. | **Fix (recommended):** encode `utmData` when writing it and wrap the parse in `try/catch`. |
+| ~~S-11~~ | ~~`utmData` is written unencoded and `setUtmSource` parses it without `try/catch`, so a crafted link could break CTAs.~~ | `src/utils/handleUtmSource.js` | **Decided 2026-11-13:** `setCookie` escapes `;` as `%3B`; readers decode before `JSON.parse`; `buildSignupState` and `readUtmCookie` tolerate bad JSON; `public/home-ab.js` uses the same escape. Regression script: `scripts/verify-signup-utm-cookie.mjs`. | Done. |
 | D-01 | Which `robots.txt` should stay? | `build-utilities/generate-robots-txt.js`, `src/app/robots.txt/route.js` | Both produce the same content. Production's `text/plain` with no charset matches the edge route, which suggests the prebuild file is unused. | **Recommended:** keep the edge route (it knows the environment) and remove the prebuild generator. | <!-- verify:ignore -->
 | D-02 | Is `npm run deploy` ever used, and what are the Cloudflare Pages project settings? | `package.json` scripts, `wrangler.toml` | `wrangler.toml` has no project name or output dir. The expected settings are `npx @cloudflare/next-on-pages` and `.vercel/output/static`. | **Recommended:** releases go only through the Cloudflare Pages git integration; remove `npm run deploy`. Build settings remain dashboard-only. |
 | D-04 | `@cloudflare/next-on-pages@1.13.16` peer-requires `next <=15.5.2`, but `15.5.9` is installed. | `package.json`, `.npmrc` | `.npmrc` `legacy-peer-deps=true` hides the mismatch. next-on-pages is deprecated upstream in favour of OpenNext. | **Recommended:** stay on Next 15.5.x; plan OpenNext as its own project. |

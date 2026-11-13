@@ -2,6 +2,9 @@ import { VARIANT_COOKIE, VARIANTS, VISITOR_ID_COOKIE } from '@/const/abTest';
 
 // Returns the first match: a stale host-only copy alongside the .viasocket.com
 // one would otherwise make the cookie read as missing.
+// Semicolons in a cookie value end the attribute early (S-11); writers escape them as %3B.
+const decodeCookieValue = (raw) => (raw ? String(raw).replace(/%3B/gi, ';') : raw);
+
 export const getCookie = (name) => {
     const entry = document.cookie.split('; ').find((part) => part.startsWith(`${name}=`));
     return entry ? entry.slice(name.length + 1) : undefined;
@@ -22,7 +25,8 @@ export const setCookie = (name, value, days) => {
     const domain = getCookieDomain();
     const domainAttr = domain ? `;domain=${domain}` : '';
     const secureAttr = window.location.protocol === 'https:' ? ';secure' : '';
-    document.cookie = `${name}=${value};${expires};path=/${domainAttr}${secureAttr}`;
+    const safeValue = String(value).replace(/;/g, '%3B');
+    document.cookie = `${name}=${safeValue};${expires};path=/${domainAttr}${secureAttr}`;
 };
 
 // Ad platforms auto-tag their clicks with these instead of utm_*, so a Google
@@ -37,7 +41,8 @@ const UTM_COOKIE_DAYS = 30;
 
 const readUtmCookie = () => {
     try {
-        return JSON.parse(getCookie('utmData') || '{}') || {};
+        const raw = decodeCookieValue(getCookie('utmData') || '{}');
+        return JSON.parse(raw) || {};
     } catch {
         return {};
     }
@@ -87,12 +92,7 @@ export const isInternalUtmSource = (source) =>
 export const savePageUtmSource = (source) => {
     if (typeof document === 'undefined' || !source) return;
 
-    let utmData = {};
-    try {
-        utmData = JSON.parse(getCookie('utmData') || '{}');
-    } catch {
-        utmData = {};
-    }
+    let utmData = readUtmCookie();
 
     if (!isInternalUtmSource(utmData.utm_source)) return;
 
@@ -130,7 +130,11 @@ export const buildSignupState = () => {
     // Captures this page's query into the cookie if it is not set yet; the
     // string it returns cannot be split back apart safely, as a carried prompt
     // may itself contain '&'.
-    setUtmSource();
+    try {
+        setUtmSource();
+    } catch {
+        // A corrupted utmData cookie must not stop the signup widget (S-11).
+    }
 
     let data = readUtmCookie();
     if (!hasAttribution(data)) data = { ...data, utm_source: 'index' };
