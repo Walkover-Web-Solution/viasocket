@@ -18,7 +18,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## SDK and API
 
-- **Node.js backend**: Make every viaSocket call through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package. Its types are its documentation.
+- **Node.js backend**: Make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
 - **Any other backend**: Follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
 - **Full skill**: [https://flow.viasocket.com/documentation/skill.md](https://flow.viasocket.com/documentation/skill.md) — the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - **Developer documentation**: [https://flow.viasocket.com/documentation](https://flow.viasocket.com/documentation)
