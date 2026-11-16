@@ -18,7 +18,9 @@
 
 ## Set up with a coding agent
 
-Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from viasocket.com, or you can follow these steps:
+- [Coding agent instructions (AGENTS.md)](/AGENTS.md): instructions for AI coding agents integrating viaSocket into a project.
+
+Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct instructions. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
 
 1. Install the skill. Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
 2. Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
@@ -61,7 +63,9 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Coding agent instructions](/AGENTS.md): setup and guidelines for AI coding agents.
 - [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
+- [Agent skills index](/.well-known/agent-skills/index.json) (Agent Skills Discovery v0.2.0): installable skills for AI coding agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
@@ -186,6 +190,7 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Developers: /developers
 - Pricing: /pricing
 - LLM site overview: /llms.txt
+- Coding agent instructions: /AGENTS.md
 
 ## Pricing (/pricing.md)
 
@@ -227,6 +232,31 @@ Machine-readable summary of workflow plans at [/pricing](/pricing). Amounts are 
 
 - Free, Pro and Business: use the plan CTAs on the [HTML pricing page](/pricing).
 - Enterprise: https://cal.id/team/viasocket/embed-viasocket
+
+## Coding agent instructions (/AGENTS.md)
+
+> viaSocket is the integration layer for AI agents and the products they build: 2,300+ apps with OAuth and webhooks handled, every AI model, memory for that AI, and a place where products and agents call each other.
+
+Instructions for AI coding agents (Cursor, Claude Code, Codex) integrating viaSocket into a project.
+
+### Set up with a coding agent
+
+Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
+
+1. **Install the skill**: Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
+2. **Configure environment**: Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
+3. **Authenticate**: If `VIASOCKET_EMBED_SECRET` is not in `.env`, run the setup command from the [setup page](https://flow.viasocket.com/documentation/skill/setup.md). The user clicks Allow in the browser.
+4. **Plan before coding**: Ask the user what they want to build. Before any code, show a plan and wait for a yes: which actions, who picks each one, and who supplies every value (your code, the user in a picker, or the product's AI per run).
+5. **Verify on real connections**: Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
+
+Keep keys and secrets out of browser code, logs and committed files.
+
+### SDK and API
+
+- **Node.js backend**: Make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- **Any other backend**: Follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- **Full skill**: [https://flow.viasocket.com/documentation/skill.md](https://flow.viasocket.com/documentation/skill.md) — the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
+- **Developer documentation**: [https://flow.viasocket.com/documentation](https://flow.viasocket.com/documentation)
 
 ## Not found response (/not-found.md)
 

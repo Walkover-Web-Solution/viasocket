@@ -1,7 +1,7 @@
 ---
-covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/_headers", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
-verified_at: 9ec4868d
-verified_on: 2026-11-03
+covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/_headers", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "public/AGENTS.md", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
+verified_at: 20f537f7
+verified_on: 2026-11-16
 ---
 # Architecture & Mental Model
 
@@ -244,7 +244,7 @@ The pieces, in order:
 ## SEO Files: Sitemap & Robots
 
 - `src/app/sitemap.js:STATIC_ROUTES` produces `/sitemap.xml` with the routes that have no params, except `/use-cases` and `/new-direction`, which it does not list yet ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) U-08). Dynamic pages are listed in the plug-service sitemap, which robots.txt references. The list still includes `/home`, which 307-redirects to `/`.
-- **robots.txt is defined twice with the same content.** `build-utilities/generate-robots-txt.js:generateRobots` runs as `prebuild` and writes `public/robots.txt`. `src/app/robots.txt/route.js:GET` decides at request time, from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` and the hostname. **Production appears to serve the route.** On 2026-10-21, `/robots.txt` returned `content-type: text/plain` with no charset, which matches the route's explicit header. Static files such as `/llms.txt` return `text/plain; charset=utf-8`. `/llms.txt` is the committed file `public/llms.txt`: nothing generates it, and the `viasocket-site` export only replaces `public/new-home/`. The previous 1,141-line directory is kept at `parked/llms.txt` and is not a route. To change robots, edit both files, or settle which one stays ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). <!-- verify:ignore -->
+- **robots.txt is defined twice with the same content.** `build-utilities/generate-robots-txt.js:generateRobots` runs as `prebuild` and writes `public/robots.txt`. `src/app/robots.txt/route.js:GET` decides at request time, from `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` and the hostname. **Production appears to serve the route.** On 2026-10-21, `/robots.txt` returned `content-type: text/plain` with no charset, which matches the route's explicit header. Static files such as `/llms.txt` and `/pricing.md` return `text/plain; charset=utf-8`, while `/AGENTS.md` returns `text/markdown; charset=utf-8`. `/llms.txt` is the committed file `public/llms.txt`: nothing generates it, and the `viasocket-site` export only replaces `public/new-home/`. The previous 1,141-line directory is kept at `parked/llms.txt` and is not a route. To change robots, edit both files, or settle which one stays ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)). <!-- verify:ignore -->
 - Non-prod environments are kept out of search in three ways: `Disallow: /` in both robots generators, `noindex` in the root `metadata`, and the `Disallow` that applies to integration subdomains.
 
 ## /developers Sub-App
