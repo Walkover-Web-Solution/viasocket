@@ -77,25 +77,31 @@ When a client requests `/` with an `Accept` header that prefers `text/markdown` 
 
 ### Link header (agent discovery without an HTML parse)
 
-The homepage HTML carries a `Link` response header so an agent finds the machine-readable resources from the response alone (RFC 8288; the `find.link-headers` check of Axien / AgentReady):
+The homepage carries a `Link` response header so an agent finds the machine-readable resources from the response alone (RFC 8288; the `find.link-headers` check of Axien / AgentReady), on **both** representations of `/`:
 
 ```text
 Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"
 ```
 
-It is declared in `public/_headers`, which Cloudflare Pages copies into the build output and applies to static-asset responses:
+It comes from two places, because `/` has two representations:
+
+| Representation | Who sends it | Where it is declared |
+|---|---|---|
+| HTML (`Accept: text/html`) | Cloudflare Pages, from the static asset response | `public/_headers`, rule `/new-home/` |
+| Markdown (`Accept: text/markdown`, or `*/*`) | The worker | `src/middleware.js`, `AGENT_LINK_HEADER`, on the response the markdown branch builds |
 
 ```text
 /new-home/
   link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"
 ```
 
-Two details decide whether the rule works:
+Three details decide whether it reaches the client:
 
-- **The pattern is the served asset path, not the public URL.** `/` is rewritten to `/new-home/index.html`, and Pages matches header rules against the file it serves, so `/new-home/` is the rule that reaches `/` (and the homepage document directly). A rule written as `/` does not match: header rules are only evaluated for static assets, and `/` is a rewrite.
-- **`_headers` does not cover Function responses.** The markdown representation above and every `src/app/**/page.js` route are generated inside the worker, so Pages never merges this file into them. Their headers belong in `src/middleware.js` or the route handler. Keep this in mind before adding a page-level header here.
+- **The `_headers` pattern is the served asset path, not the public URL.** `/` is rewritten to `/new-home/index.html`, and Pages matches header rules against the file it serves, so `/new-home/` is the rule that reaches `/` (and the homepage document directly). A rule written as `/` does not match: header rules are only evaluated for static assets, and `/` is a rewrite.
+- **`_headers` covers neither Function responses nor the markdown representation.** Every `src/app/**/page.js` route and the markdown branch of `src/middleware.js` build their own `Response`, so Pages never merges the file into them. That is why the markdown branch sets the header itself; an agent asking for markdown never fetches the HTML response the `_headers` rule covers. A scanner that sends `Accept: */*` gets the markdown representation, so covering only the HTML left the header invisible to it.
+- **Middleware headers set on a rewritten HTML request are dropped.** `NextResponse.next()` sets `Vary: Accept` for `/`, but on `/` the request is rewritten to a static asset and that header never reaches the client; the markdown branch builds a fresh response, so its `Vary` does survive. Do not move the HTML link header into middleware expecting it to appear.
 
-`/.well-known/api-catalog` (RFC 9727) and `/llms.txt` are both served from this repo, so the header advertises nothing that does not exist. This file is not part of the `viasocket-site` export; it is maintained here.
+`/.well-known/api-catalog` (RFC 9727) and `/llms.txt` are both served from this repo, so the header advertises nothing that does not exist. `public/_headers` is not part of the `viasocket-site` export; it is maintained here.
 
 ## Data Dependencies
 1. **None at request time.** The HTML is a static file. For a version B visitor the gate also fetches `/home-b/index.html`. App icons are hotlinked from `stuff.thingsofbrand.com` and `upload.wikimedia.org`. `main.js` drops an icon whose image fails to load.
