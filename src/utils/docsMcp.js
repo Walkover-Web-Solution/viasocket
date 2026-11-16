@@ -1,7 +1,7 @@
 const MAX_DOC_CHARS = 120_000;
 const MAX_SEARCH_HITS = 20;
 
-export const DOCS_MCP_PROTOCOL = '2024-11-05';
+export const DOCS_MCP_PROTOCOL = '2025-06-18';
 
 export const DOCS_MCP_INSTRUCTIONS =
     'viaSocket documentation MCP server. Call list_doc_pages to view the index of all available documentation pages, search_docs with a short keyword to find relevant documentation lines, and get_doc_page with a relative markdown path (e.g. skill.md or skill/setup.md) to retrieve the full page content.';
@@ -218,14 +218,34 @@ export const callDocsMcpTool = async (docsOrigin, name, args) => {
     throw new Error(`Unknown tool: ${name}`);
 };
 
+const parseProtocolVersion = (raw) => {
+    if (typeof raw !== 'string') return null;
+    const [year, month, day] = raw.split('-').map(Number);
+    if (!year || !month || !day || year < 2000 || month < 1 || month > 12 || day < 1 || day > 31) return null;
+    return { raw, value: year * 10000 + month * 100 + day };
+};
+
+export const negotiateDocsMcpProtocolVersion = (requestedVersion) => {
+    const requested = parseProtocolVersion(requestedVersion);
+    const baseline = parseProtocolVersion(DOCS_MCP_PROTOCOL);
+    // If the client asks for 2025-06-18 or later, use 2025-06-18.
+    // Otherwise return the latest version this server actually supports.
+    // Never echo an arbitrary unsupported version.
+    if (requested && baseline && requested.value >= baseline.value) {
+        return DOCS_MCP_PROTOCOL;
+    }
+    return DOCS_MCP_PROTOCOL;
+};
+
 export const handleDocsMcpJsonRpc = async (body, context) => {
     const docsOrigin = context?.docsOrigin;
     const docsRoot = context?.docsRoot;
     const { method, params } = body ?? {};
     switch (method) {
-        case 'initialize':
+        case 'initialize': {
+            const requestedVersion = params?.protocolVersion;
             return {
-                protocolVersion: DOCS_MCP_PROTOCOL,
+                protocolVersion: negotiateDocsMcpProtocolVersion(requestedVersion),
                 capabilities: { tools: { listChanged: false } },
                 serverInfo: {
                     name: 'viasocket-docs',
@@ -235,6 +255,7 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
                 },
                 instructions: DOCS_MCP_INSTRUCTIONS,
             };
+        }
         case 'notifications/initialized':
         case 'ping':
             return {};

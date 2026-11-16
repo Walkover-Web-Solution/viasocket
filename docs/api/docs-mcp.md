@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: 94a67398
+verified_at: 1437f23e
 verified_on: 2026-11-16
 ---
 # API — docs-mcp (public documentation MCP)
@@ -17,11 +17,14 @@ Read-only Streamable HTTP MCP over the public `/docs` tree on the marketing host
 
 ## POST /docs/mcp
 
-JSON-RPC 2.0. `Accept` must include both `application/json` and `text/event-stream` (same rule as the product MCP).
+JSON-RPC 2.0 over Streamable HTTP. `Accept` must include both `application/json` and `text/event-stream`.
+Requests and responses carry the negotiated `Mcp-Protocol-Version` header.
+
+Supported protocol version: `2025-06-18`. Batching is not supported.
 
 Supported methods:
 
-- `initialize` — returns `serverInfo.name: viasocket-docs` and usage `instructions` (50+ chars explaining tool selection)
+- `initialize` — negotiates to `2025-06-18`; returns `serverInfo.name: viasocket-docs` and usage `instructions` (50+ chars explaining tool selection)
 - `tools/list` — `get_doc_page`, `search_docs`, `list_doc_pages` with read-only annotations and typed `outputSchema`
 - `tools/call` — fetches live content from `/docs/{path}` on the same host as this route, returning both `content` text blocks and typed `structuredContent`
 
