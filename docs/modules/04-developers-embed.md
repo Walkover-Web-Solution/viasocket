@@ -1,13 +1,14 @@
 ---
-covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**"]
-verified_at: 1ae1f9ab
-verified_on: 2026-10-29
+covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**", "public/auth.md"]
+verified_at: f90ae9bd
+verified_on: 2026-11-16
 ---
 # Module: Developers (Embed)
 
 ## Purpose
 
 - **`/developers`, `/developers/auth`, `/developers/pricing`, `/developers/docs`** are a self-contained sub-app that sells viaSocket as "the action layer for AI products" to developers. Its primary action copies a setup prompt for the visitor's coding agent.
+- **`/auth.md`** is a machine-readable authentication guide (`public/auth.md`) for AI coding agents and agent-readiness scanners (Axien `act.auth-md`), describing credential retrieval, JWT embed tokens, scopes, and a first authenticated call.
 - **`/setup-prompt`** is the page viaSocket SDK emails link to. It is not part of the developers sub-app chrome. It copies a keys prompt (`for=keys`) or a first-run prompt (`for=run`) and makes no API call.
 - **`/embed/actions-for-ai`, `/embed/actions-via-webhook`, `/embed/app-integration`** are older legacy-design Embed landing pages. They are still routable and listed in `src/app/sitemap.js`.
 - **Bare `/embed`** is a 301 to `/` on production and test (admin redirect list, checked 2026-10-29), with an empty body. It is not an alias of `/developers`, and the response has no document to carry `rel=canonical`. The homepage it lands on canonicalises to the site root. `src/data/redirects.json` still says 308 to `/developers` for when the admin cannot be reached. Either way `src/app/embed/page.js` (`EmbedContent`) does not render. Bare `/developers` is also a 301 to `/` in the live list, so the two URLs are not two copies of one page. `/developers/auth` and `/developers/docs` still return 200.
