@@ -61,6 +61,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [AI catalog](/.well-known/ai-catalog.json): entry points for AI agents (MCP servers, docs, skills, llms.txt).
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.

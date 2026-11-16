@@ -16,6 +16,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/agency-partner` | `src/app/agency-partner/page.js` with sections from `src/components/agencyPartner/`; `getAgencyPartnerPageData` | Agency partner program (Stripe buy link, cal.id) |
 | `/agency-partner/success` | `src/app/agency-partner/success/page.js` (static `○`) | Thank-you page after payment |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
+| `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog standard index of agent-facing resources ([api/ai-catalog](api/ai-catalog.md)) |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
