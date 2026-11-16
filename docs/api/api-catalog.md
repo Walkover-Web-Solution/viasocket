@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/api-catalog/route.js"]
-verified_at: dc2fd06e
+verified_at: a9a14929
 verified_on: 2026-11-16
 ---
 # API — RFC 9727 api-catalog
