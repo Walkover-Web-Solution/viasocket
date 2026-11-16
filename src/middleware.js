@@ -4,8 +4,9 @@ import { ADMIN_URL } from './const/admin';
 import { buildJsonNotFoundResponse } from './utils/buildJsonNotFoundResponse';
 import { prefersApplicationJson } from './utils/prefersApplicationJson';
 import { prefersTextMarkdown } from './utils/prefersTextMarkdown';
+import { serveNotFoundMarkdown } from './utils/serveNotFoundMarkdown';
 
-const JSON_404_PROBE_HEADER = 'x-json-404-probe';
+const NOT_FOUND_PROBE_HEADER = 'x-viasocket-404-probe';
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -76,7 +77,7 @@ function managedRedirect(request, list) {
 export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
-    if (request.headers.get(JSON_404_PROBE_HEADER) === '1') {
+    if (request.headers.get(NOT_FOUND_PROBE_HEADER) === '1') {
         return NextResponse.next();
     }
 
@@ -84,10 +85,11 @@ export async function middleware(request) {
     if (redirect) return redirect;
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+    const accept = request.headers.get('accept');
 
-    if (prefersApplicationJson(request.headers.get('accept'))) {
+    if (prefersApplicationJson(accept)) {
         const probeHeaders = new Headers(request.headers);
-        probeHeaders.set(JSON_404_PROBE_HEADER, '1');
+        probeHeaders.set(NOT_FOUND_PROBE_HEADER, '1');
         probeHeaders.set('accept', 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8');
         try {
             const probe = await fetch(request.url, {
@@ -101,9 +103,24 @@ export async function middleware(request) {
         } catch (err) {
             console.error('[json-404] probe failed:', err.message);
         }
+    } else if (prefersTextMarkdown(accept)) {
+        try {
+            const probe = await fetch(request.url, {
+                method: 'HEAD',
+                headers: {
+                    accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+                    [NOT_FOUND_PROBE_HEADER]: '1',
+                },
+            });
+            if (probe.status === 404) {
+                return serveNotFoundMarkdown(request);
+            }
+        } catch (err) {
+            console.error('[404 markdown] probe failed:', err.message);
+        }
     }
 
-    if (barePath === '/' && prefersTextMarkdown(request.headers.get('accept'))) {
+    if (barePath === '/' && prefersTextMarkdown(accept)) {
         const mdUrl = new URL('/homepage.md', request.url);
         const mdRes = await fetch(mdUrl);
         if (mdRes.ok) {
