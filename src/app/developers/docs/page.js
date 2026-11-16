@@ -39,7 +39,7 @@ export default function DocsPage() {
                         From an empty project to a working integration. Let your users connect Slack, Gmail, HubSpot, Google Sheets and 2,300+ other apps — without building OAuth, storing third-party tokens, or writing one API client per app.
                     </p>
                     <div className="flex flex-wrap gap-2.5 mt-1">
-                        {['10 steps', 'Node 20+ or any HTTP client', 'Slack as the example', 'Same for every app'].map((t) => (
+                        {['10 steps', 'Node 20+ or any HTTP client', 'Slack as the example', 'Same for every app', 'Self-serve keys & sandbox'].map((t) => (
                             <span key={t} className="font-docs-mono text-[12px] px-2.5 py-[3px] rounded bg-docs-surface border border-docs-rule text-docs-muted">{t}</span>
                         ))}
                     </div>
@@ -120,13 +120,13 @@ export default function DocsPage() {
                     </section>
 
                     <section id="s1" className={section}>
-                        <StepH2 n={1}>Create an embed and get your three values</StepH2>
-                        <p className={p}>Everything else on this page needs three values from your viaSocket project: an <strong>org id</strong>, a <strong>project id</strong> and a <strong>signing secret</strong>. You create them once.</p>
+                        <StepH2 n={1}>Create an API key and embed credentials yourself from the dashboard</StepH2>
+                        <p className={p}>Everything else on this page needs three values from your viaSocket project: an <strong>org id</strong>, a <strong>project id</strong> and an <strong>API key / signing secret</strong>. You create these credentials yourself directly from the dashboard — self-serve, with no sales call or human approval needed.</p>
                         <ClickSteps
                             items={[
-                                ['Sign in at viasocket.com', 'Create an account if you do not have one. Free to start.'],
-                                ['Go to flow.viasocket.com/integrations', 'Pick your project, then open Configuration.'],
-                                ['Click Create new embed', 'This generates the signing secret for this project.'],
+                                ['Sign in at viasocket.com', 'Create an account if you do not have one. Self-serve signup is instant and free to start.'],
+                                ['Go to flow.viasocket.com/integrations', 'Pick your project (or create a dedicated Sandbox project for testing), then open Configuration.'],
+                                ['Click Create new embed', 'This generates your API key and signing secret for this project.'],
                                 ['Copy the org id, project id and secret', 'All three are shown on that screen. The secret is shown masked — reveal it to copy.'],
                             ]}
                         />
@@ -138,6 +138,13 @@ export default function DocsPage() {
                         <Callout title="Read them from the environment, every time">
                             <p>The project id in particular changes — you may move projects, or run one project for the Apps API and another for an embed. Hardcoding it means editing source to change environment.</p>
                         </Callout>
+                        <h3 className={h3}>Test environment and sandbox mode</h3>
+                        <p className={p}>viaSocket provides a safe <strong>Sandbox test environment</strong> (permanently free on the Embed Sandbox tier, with up to 25 active users and 25,000 tasks/month) so you and your AI agents can build and test without touching production customer data:</p>
+                        <ul className={ul}>
+                            <li><strong>Sandbox project:</strong> Create a dedicated test project in the dashboard at <Code>flow.viasocket.com/integrations</Code> to isolate development keys and test configurations from production.</li>
+                            <li><strong>Test identifiers:</strong> Sign your test embed tokens with a dedicated test user identifier (e.g. <Code>unique_identifier: &quot;test_user_01&quot;</Code> or <Code>&quot;sandbox_dev&quot;</Code>). Every connection is scoped strictly to that identifier, ensuring test data never touches production accounts.</li>
+                            <li><strong>Test connections:</strong> Connect test or sandbox accounts (such as a developer Slack workspace, staging CRM, or sandbox inbox) to run real action tests safely before pointing to live customer data.</li>
+                        </ul>
                     </section>
 
                     <section id="s2" className={section}>

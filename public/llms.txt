@@ -27,6 +27,25 @@ Works with Cursor, Claude Code and Codex. The user can paste the setup prompt fr
 5. Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
 
 Keep keys and secrets out of browser code, logs and committed files.
+
+## Self-serve API keys and credentials
+
+You can create an API key and embed credentials yourself directly from the dashboard without contacting sales or waiting for approval:
+
+1. Sign in or register at viasocket.com or https://flow.viasocket.com (instant self-serve signup, free to start).
+2. Go to the dashboard at https://flow.viasocket.com/integrations and select your project.
+3. Open **Configuration** and click **Create new embed** to generate your API key / signing secret (`VIASOCKET_EMBED_SECRET`), along with your `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
+4. Copy them into your `.env` file. You can also obtain your key programmatically using the viaSocket MCP server (`get_viasocket_embed_secret`) or via the setup command on https://flow.viasocket.com/documentation/skill/setup.md.
+
+## Safe test environment and sandbox
+
+viaSocket provides a sandbox and test mode so agents and developers can build and run tests without touching production data:
+
+- **Embed Sandbox:** A permanently free sandbox tier ($0/month, up to 25 active users and 25,000 tasks/month, no credit card required).
+- **Test environment isolation:** Create a dedicated test project in the dashboard at https://flow.viasocket.com/integrations to isolate test credentials and configurations from production.
+- **Test keys and identifiers:** Test calls use a test `unique_identifier` in your embed token JWT (e.g. `unique_identifier: "test_user_01"` or `"sandbox_dev"`). All connections, grants and data remain strictly isolated per identifier, so test runs never touch production customer accounts.
+- **Safe test connections:** Connect developer test accounts (e.g. a sandbox Slack workspace, test CRM, or staging spreadsheet) to verify actions and webhooks safely.
+- **Read-only catalog APIs:** App search (`https://flow.sokt.io/func/scri12BSufQM?key=<term>`) and action/trigger schema documentation (`https://beta-flow.viasocket.com/documentation/<service_id>?format=http`) are public and read-only for safe inspection.
 ## SDK and API
 
 - Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package. Its types are its documentation.
