@@ -38,7 +38,7 @@ const buildCatalog = (origin) => {
                 identifier: `urn:air:${host}:mcp:docs`,
                 displayName: 'viaSocket docs MCP server card',
                 type: 'application/mcp-server-card+json',
-                url: `${origin}/docs/mcp/server-card`,
+                url: `${origin}/.well-known/mcp/server-card.json`,
                 endpointUrl: `${origin}/docs/mcp`,
                 description: 'SEP-2127 Server Card for public read-only Model Context Protocol server over viaSocket documentation.',
                 tags: ['mcp', 'documentation', 'docs'],

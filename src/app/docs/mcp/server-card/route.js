@@ -1,22 +1,17 @@
-import { buildDocsMcpServerCard } from '@/utils/docsMcp';
+import { DOCS_MCP_SERVER_CARD_CORS_HEADERS, docsMcpServerCardResponse } from '@/utils/docsMcp';
 
 export const runtime = 'edge';
 
-const CARD_HEADERS = {
-    'content-type': 'application/mcp-server-card+json; charset=utf-8',
-    'cache-control': 'public, max-age=3600',
-    'access-control-allow-origin': '*',
-    'access-control-allow-methods': 'GET, OPTIONS',
-    'access-control-allow-headers': 'content-type, accept, if-none-match',
-    'access-control-expose-headers': 'etag',
-};
+const CONTENT_TYPE = 'application/mcp-server-card+json; charset=utf-8';
 
 export async function OPTIONS() {
-    return new Response(null, { status: 204, headers: CARD_HEADERS });
+    return new Response(null, {
+        status: 204,
+        headers: { ...DOCS_MCP_SERVER_CARD_CORS_HEADERS, 'content-type': CONTENT_TYPE },
+    });
 }
 
 export async function GET(request) {
     const origin = new URL(request.url).origin;
-    const body = JSON.stringify(buildDocsMcpServerCard(origin));
-    return new Response(body, { headers: CARD_HEADERS });
+    return docsMcpServerCardResponse(origin, CONTENT_TYPE);
 }
