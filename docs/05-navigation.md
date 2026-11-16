@@ -1,11 +1,11 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
-verified_at: 2f624203
+verified_at: e886c4a1
 verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **61 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **66 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -15,6 +15,8 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/_not-found` | `src/app/not-found.js` | Global 404 | <!-- verify:ignore -->
 | `/agency-partner` | `src/app/agency-partner/page.js` with sections from `src/components/agencyPartner/`; `getAgencyPartnerPageData` | Agency partner program (Stripe buy link, cal.id) |
 | `/agency-partner/success` | `src/app/agency-partner/success/page.js` (static `○`) | Thank-you page after payment |
+| `/api` | `src/app/api/route.js` | API root RFC 9457 JSON 404 handler ([api/json-errors](api/json-errors.md)) |
+| `/api/[...catchall]` | `src/app/api/[...catchall]/route.js` | API catchall RFC 9457 JSON 404 handler ([api/json-errors](api/json-errors.md)) |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
 | `/.well-known/agent-skills/index.json` | `src/app/.well-known/agent-skills/index.json/route.js` | Agent Skills Discovery v0.2.0 index ([api/agent-skills](api/agent-skills.md)) |
 | `/.well-known/agent-skills/viasocket-integrations/SKILL.md` | `src/app/.well-known/agent-skills/viasocket-integrations/SKILL.md/route.js` | viaSocket integrations skill pointer for coding agents |

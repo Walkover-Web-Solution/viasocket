@@ -1,6 +1,7 @@
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { VARIANTS, VARIANT_COOKIE, VISITOR_ID_COOKIE } from '@/const/abTest';
+import { methodNotAllowedProblem } from '@/utils/jsonErrors';
 import { getAbTestVisitorRows, saveAbTestVisit, updateAbTestVisit } from '@/utils/axiosCalls';
 import {
     CLICK_DEDUPE_WINDOW_MS,
@@ -397,4 +398,36 @@ async function collapseDuplicates(visitorId, pageUrl, environment) {
     await Promise.all(
         toMerge.map((row) => updateAbTestVisit(row.rowid, mergedRowFields(visitorId, canonical.rowid), pageUrl))
     );
+}
+
+const methodNotAllowed = () => methodNotAllowedProblem('POST');
+
+export async function GET() {
+    return methodNotAllowed();
+}
+
+export async function PUT() {
+    return methodNotAllowed();
+}
+
+export async function DELETE() {
+    return methodNotAllowed();
+}
+
+export async function PATCH() {
+    return methodNotAllowed();
+}
+
+export async function HEAD() {
+    return methodNotAllowed();
+}
+
+export async function OPTIONS() {
+    return new NextResponse(null, {
+        status: 204,
+        headers: {
+            Allow: 'POST',
+            'Access-Control-Allow-Methods': 'POST',
+        },
+    });
 }

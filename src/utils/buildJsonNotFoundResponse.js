@@ -19,6 +19,9 @@ export function buildJsonNotFoundResponse(requestOrPath) {
         status: 404,
         detail: 'The requested resource could not be found.',
         instance: path,
+        code: 'not_found',
+        error: 'Not Found',
+        message: 'The requested resource could not be found.',
     };
 
     return NextResponse.json(body, {
