@@ -5,7 +5,7 @@ verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **63 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **66 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -23,6 +23,9 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/.well-known/agent-card.json` | `src/app/.well-known/agent-card.json/route.js` | A2A agent card for the public docs MCP ([api/agent-card](api/agent-card.md)) |
 | `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog listing the docs MCP Server Card ([api/mcp-server-card](api/mcp-server-card.md)) |
+| `/.well-known/poppy.json` | `src/app/.well-known/poppy.json/route.js` | Personal Agent Protocol (Poppy 1.0) discovery document ([api/poppy](api/poppy.md)) |
+| `/.well-known/products.json` | `src/app/.well-known/products.json/route.js` | Machine-readable products and SDK/CLI package discovery |
+| `/products.json` | `src/app/products.json/route.js` | Products manifest (re-exports `/.well-known/products.json`) |
 | `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/ask` | `src/app/ask/route.js` | NLWeb natural-language query endpoint ([api/nlweb-ask](api/nlweb-ask.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
