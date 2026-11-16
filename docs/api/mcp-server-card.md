@@ -12,7 +12,7 @@ verified_on: 2026-11-16
 | `/docs/mcp/server-card` | GET, OPTIONS | Canonical SEP-2127 location; `application/mcp-server-card+json` |
 | `/.well-known/ai-catalog.json` | GET | AI Catalog entry `url` points at the well-known card |
 
-No authentication. Both card URLs share `buildDocsMcpServerCard()` from `src/utils/docsMcp.js` and CORS `*`. The card describes the Streamable HTTP endpoint at `/docs/mcp` (`com.viasocket/docs`, protocol `2024-11-05`). This repo does **not** serve `/.well-known/mcp.json` (registry manifest; different schema).
+No authentication. Both card URLs share `buildDocsMcpServerCard()` from `src/utils/docsMcp.js` and CORS `*`. The card describes the Streamable HTTP endpoint at `/docs/mcp` (`com.viasocket/docs`, protocol `2025-06-18`). This repo does **not** serve `/.well-known/mcp.json` (registry manifest; different schema).
 
 Product actions and OAuth-gated MCP remain on `https://connect.viasocket.com/mcp`; that host is not served by this repository.
 

@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { acceptsMcpRequest, docsMcpContextFromRequest, handleDocsMcpJsonRpc } from '@/utils/docsMcp';
+import {
+    acceptsMcpRequest,
+    docsMcpContextFromRequest,
+    DOCS_MCP_PROTOCOL,
+    handleDocsMcpJsonRpc,
+} from '@/utils/docsMcp';
 import { methodNotAllowedProblem } from '@/utils/jsonErrors';
 
 export const runtime = 'edge';
@@ -9,8 +14,9 @@ const PRODUCT_MCP = process.env.NEXT_PUBLIC_VIASOCKET_MCP_URL || 'https://connec
 const MCP_HEADERS = {
     'cache-control': 'no-store',
     'access-control-allow-origin': '*',
-    'access-control-allow-headers': 'content-type, accept, mcp-session-id',
+    'access-control-allow-headers': 'content-type, accept, mcp-session-id, mcp-protocol-version',
     'access-control-allow-methods': 'GET, POST, OPTIONS',
+    'mcp-protocol-version': DOCS_MCP_PROTOCOL,
 };
 
 const jsonRpc = (result, id) => NextResponse.json({ jsonrpc: '2.0', result, id: id ?? null }, { headers: MCP_HEADERS });
