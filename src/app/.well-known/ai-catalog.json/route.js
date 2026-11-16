@@ -1,7 +1,7 @@
 export const runtime = 'edge';
 
 const FLOW_ORIGIN = 'https://flow.viasocket.com';
-const MCP_ORIGIN = 'https://mcp.viasocket.com';
+const PRODUCT_MCP_URL = 'https://connect.viasocket.com/mcp';
 
 const buildCatalog = (origin) => {
     const url = new URL(origin);
@@ -25,34 +25,10 @@ const buildCatalog = (origin) => {
             {
                 identifier: 'urn:air:viasocket.com:mcp:viasocket',
                 displayName: 'viaSocket MCP server',
-                type: 'application/mcp-server-card+json',
-                url: `${MCP_ORIGIN}/mcp/server-card`,
-                endpointUrl: `${MCP_ORIGIN}/mcp`,
+                type: 'application/mcp+json',
+                url: PRODUCT_MCP_URL,
                 description: 'Model Context Protocol server for viaSocket integrations and automations across 2,300+ apps.',
                 tags: ['mcp', 'integrations', 'tools'],
-                capabilities: [
-                    'search_viasocket_docs',
-                    'get_viasocket_api_docs',
-                    'call_any_api_of_viasocket',
-                    'list_plugins',
-                    'list_auth_versions',
-                    'list_actions_and_triggers',
-                    'list_action_versions',
-                    'get_plugin_analytics',
-                    'get_org_details_by_token',
-                    'list_embed_projects',
-                    'call_any_read_api_of_viasocket',
-                    'report_feedback',
-                    'report_published',
-                    'get_viasocket_embed_secret',
-                    'list_connections',
-                    'create_connection_link',
-                    'run_app_action',
-                    'search_apps',
-                    'list_app_actions',
-                    'get_request_status',
-                    'quickstart-viasocket-developer-hub',
-                ],
                 auth: {
                     status: 'oauth2',
                     docsUrl: `${FLOW_ORIGIN}/documentation/skill/login-and-orgs.md`,
@@ -106,7 +82,7 @@ const buildCatalog = (origin) => {
             {
                 identifier: 'urn:air:viasocket.com:skill:integrations',
                 displayName: 'viaSocket integrations skill (installer)',
-                type: 'application/agent-skills+md',
+                type: 'text/markdown',
                 url: `${FLOW_ORIGIN}/documentation/skill-install.md`,
                 description: 'Installable skill pointer for coding agents (Cursor, Claude Code, Codex) to integrate 2,300+ apps.',
                 tags: ['skill', 'integrations', 'agent-skills'],
@@ -114,7 +90,7 @@ const buildCatalog = (origin) => {
             {
                 identifier: 'urn:air:viasocket.com:skill:full-manual',
                 displayName: 'viaSocket integrations skill (full manual)',
-                type: 'application/agent-skills+md',
+                type: 'text/markdown',
                 url: `${FLOW_ORIGIN}/documentation/skill.md`,
                 description: 'Complete reference manual and integration rules for coding agents.',
                 tags: ['skill', 'docs', 'agent-skills'],
