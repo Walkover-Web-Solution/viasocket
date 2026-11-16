@@ -9,7 +9,7 @@ verified_on: 2026-11-16
 
 | Route | Methods | Description |
 |---|---|---|
-| `/.well-known/poppy.json` | GET, OPTIONS | Personal Agent Protocol (Draft 1.0) discovery document identifying viaSocket, its domain, and its public MCP API endpoint |
+| `/.well-known/poppy.json` | GET, HEAD, OPTIONS | Personal Agent Protocol (Draft 1.0) discovery document identifying viaSocket, its domain, and its public MCP API endpoint |
 
 Served dynamically by `src/app/.well-known/poppy.json/route.js` (edge runtime). No authentication. Cached for one hour (`public, max-age=3600`).
 

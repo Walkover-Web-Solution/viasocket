@@ -35,6 +35,17 @@ export async function GET(request) {
     });
 }
 
+export async function HEAD() {
+    return new Response(null, {
+        status: 200,
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'public, max-age=3600',
+            'Access-Control-Allow-Origin': '*',
+        },
+    });
+}
+
 export async function OPTIONS() {
     return new Response(null, {
         status: 204,
