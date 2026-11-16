@@ -1,5 +1,5 @@
 ---
-covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
+covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/_headers", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
 verified_at: 9ec4868d
 verified_on: 2026-11-03
 ---
@@ -100,6 +100,8 @@ Next.js applies its routing phases in this order. `@cloudflare/next-on-pages` co
    - When `NEXT_PUBLIC_PRODUCTION_ENVIRONMENT` is `prod`, it sends a Reddit CAPI page-visit to the plug service on every page request without awaiting the response.
 5. **`beforeFiles` rewrite.** `/` maps to `/new-home/index.html` (version A) for every request. Version B is chosen and written into that document in the browser ([01-homepage](modules/01-homepage.md#homepage-ab-test-version-b)). Middleware redirects `/home-b` to `/`, except the gate's fetch of `/home-b/index.html` with `X-Homepage-Fetch: B`. The browser URL stays `/`.
 6. **Filesystem.** This covers `public/**` and the App Router routes. The `afterFiles` rewrites map `/feedback-satisfied` and `/feedback-unsatisfied` to `/feedback?variant=…`.
+
+**Response headers come from two places.** `public/_headers` holds static-asset header rules, which Cloudflare Pages applies to the file it serves and never to Function responses. That is why the homepage's agent-facing `Link` header is declared against `/new-home/` (the asset `/` is rewritten to) and middleware or route handlers must set any header a `src/app/**/page.js` route needs ([modules/01-homepage](modules/01-homepage.md#link-header-agent-discovery-without-an-html-parse)).
 
 > [!WARNING]
 > `/` carries no per-visitor logic on the server: it is the same static HTML for everyone, served with Pages' default `public, max-age=0, must-revalidate`. Production's zone rule caches it for 3 hours (D-10), which no longer affects the split because the version is chosen in the browser. Purge `/` after a homepage deploy so the new HTML reaches visitors.
