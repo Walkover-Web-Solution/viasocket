@@ -109,10 +109,11 @@ export default function ScriptPicker({
                     )}
                     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                         <div>
-                            <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
+                            <label htmlFor="script-ref-code" className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
                                 Referral code <span className="normal-case font-normal">(optional)</span>
                             </label>
                             <input
+                                id="script-ref-code"
                                 type="text"
                                 value={refCode}
                                 onChange={(e) => setRefCode(e.target.value)}
@@ -121,10 +122,11 @@ export default function ScriptPicker({
                             />
                         </div>
                         <div>
-                            <label className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
+                            <label htmlFor="script-domain" className="mb-1 block text-[12px] font-semibold text-[#8a8a8a]">
                                 Your domain <span className="normal-case font-normal">(optional)</span>
                             </label>
                             <input
+                                id="script-domain"
                                 type="text"
                                 value={domain}
                                 onChange={(e) => setDomain(e.target.value)}

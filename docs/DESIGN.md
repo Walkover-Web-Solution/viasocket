@@ -1,7 +1,7 @@
 ---
 covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt", "parked/llms.txt"]
-verified_at: 0244e05f
-verified_on: 2026-10-30
+verified_at: f90ae9bd
+verified_on: 2026-11-16
 ---
 # Design System & UI Standards
 
@@ -204,7 +204,7 @@ What the code actually does. Match the stronger patterns in new work:
 - **Static homepage is the reference.** It has a skip link (`.skip` to `#main`), `<main id="main">`, labelled `<nav aria-label="Main">` / `"Footer"`, `:focus-visible { outline: 2px solid var(--ink) }`, a `.sr-only` utility, `aria-hidden` on decorative SVGs, a live-region toast, reduced-motion handling, and exactly one `<h1>`.
 - **Next app:** `aria-label` appears in about 67 files and `aria-hidden` in about 58. Only 3 files use `aria-expanded` (`src/app/front-page/IndexFaq.js`, and `src/app/lifetime-deal/Faq.js` and `PricingCard.js`). `focus-visible:` rings appear in 5 files (three dormant front-page sections, `src/app/developers/docs/CodeBlock.js` and `src/components/IntegrationsComp/integrationsAppTwoComp/AboutApps.js`). `sr-only` appears once (`src/app/front-page/IndexChatStage.js`). `aria-current="page"` is used in `src/app/developers/Header.js`.
 - **Known gaps:** `Menubar` declares `role="dialog" aria-modal="true"` but has no `Escape` handler or focus trap. `<dialog open>` modals are not modal (see above). `FAQSection` uses daisyUI's checkbox `collapse` (keyboard-reachable through the hidden input, but it has no `aria-expanded`).
-- `<html lang="en">` is set in both `src/app/layout.js` and `public/new-home/index.html`.
+- `<html lang="en">` is set on all HTML documents (`src/app/layout.js`, `public/new-home/index.html`, `public/home-b/index.html`, and `public/admin/index.html`). Form fields provide `<label htmlFor="...">` associations or `aria-label`, icon buttons carry `aria-label`, and pages provide `<main>` landmarks so browser agents can navigate the accessibility tree.
 
 ## Website Messaging & Copy Guidelines
 

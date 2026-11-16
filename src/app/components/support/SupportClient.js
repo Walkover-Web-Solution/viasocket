@@ -69,7 +69,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
     };
 
     return (
-        <div className="container mt-12 global-top-space pt-12">
+        <main className="container mt-12 global-top-space pt-12">
             <div className="support-page-heading">
                 <h1 className="h1">
                     We're here to help, <span className="text-accent">now!</span>
@@ -346,6 +346,7 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                             required
                                             type="email"
                                             name="email"
+                                            id="email"
                                             placeholder="Please enter your email address"
                                             value={formData.email}
                                             onChange={handleChange}
@@ -354,13 +355,14 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                                     </div>
 
                                     <div className="flex flex-col gap-2">
-                                        <p htmlFor="message" className="mb-0">
+                                        <label htmlFor="issue" className="mb-0">
                                             Issue description or details
-                                        </p>
+                                        </label>
                                         <textarea
                                             // style={{ resize: 'none' }}
                                             required
                                             name="issue"
+                                            id="issue"
                                             placeholder="Issue description or details"
                                             value={formData.issue}
                                             onChange={handleChange}
@@ -402,6 +404,6 @@ export default function SupportClient({ testimonials, isLiveSupportAvailable }) 
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     );
 }
