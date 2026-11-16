@@ -18,7 +18,9 @@
 
 ## Set up with a coding agent
 
-Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from https://viasocket.com, or you can follow these steps:
+- [Coding agent instructions (AGENTS.md)](/AGENTS.md): instructions for AI coding agents integrating viaSocket into a project.
+
+Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct instructions. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
 
 1. Install the skill. Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
 2. Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
@@ -64,11 +66,13 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Coding agent instructions](/AGENTS.md): setup and guidelines for AI coding agents.
 - [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
 - [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
+- [NLWeb /ask endpoint](/ask): conversational natural-language query endpoint returning schema.org results over site content.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
 - [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.

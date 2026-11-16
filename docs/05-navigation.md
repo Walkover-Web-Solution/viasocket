@@ -5,7 +5,7 @@ verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **58 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **61 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -22,6 +22,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/.well-known/products.json` | `src/app/.well-known/products.json/route.js` | Machine-readable products and SDK/CLI package discovery |
 | `/products.json` | `src/app/products.json/route.js` | Products manifest (re-exports `/.well-known/products.json`) |
 | `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
+| `/ask` | `src/app/ask/route.js` | NLWeb natural-language query endpoint ([api/nlweb-ask](api/nlweb-ask.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |

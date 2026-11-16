@@ -41,7 +41,7 @@ Rules for every new call: table-api calls go through `src/utils/axiosCalls.js` w
 Table ids, purposes, fields, getters and the A/B row columns: [database/entities.md](database/entities.md).
 
 ### Internal API routes
-The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), the RFC 9727 catalog at `/.well-known/api-catalog`, the A2A agent card at `/.well-known/agent-card.json`, the AI Catalog at `/.well-known/ai-catalog.json`, the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth), and its SEP-2127 Server Card at `/docs/mcp/server-card`. Contracts: [api/track-variant.md](api/track-variant.md), [api/api-catalog.md](api/api-catalog.md), [api/agent-card.md](api/agent-card.md), [api/docs-mcp.md](api/docs-mcp.md), [api/mcp-server-card.md](api/mcp-server-card.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
+The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), the RFC 9727 catalog at `/.well-known/api-catalog`, the A2A agent card at `/.well-known/agent-card.json`, the AI Catalog at `/.well-known/ai-catalog.json`, the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth), its SEP-2127 Server Card at `/docs/mcp/server-card`, and the NLWeb query endpoint at `/ask` (schema.org-typed conversational results). Contracts: [api/track-variant.md](api/track-variant.md), [api/api-catalog.md](api/api-catalog.md), [api/agent-card.md](api/agent-card.md), [api/docs-mcp.md](api/docs-mcp.md), [api/mcp-server-card.md](api/mcp-server-card.md), [api/nlweb-ask.md](api/nlweb-ask.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
 
 ## Authentication & Authorization Assumptions
 

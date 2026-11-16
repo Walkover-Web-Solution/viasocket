@@ -95,3 +95,4 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Python SDK (PyPI): https://pypi.org/project/viasocket/
 - Products and packages manifest: /products.json
 - LLM site overview: /llms.txt
+- Coding agent instructions: /AGENTS.md

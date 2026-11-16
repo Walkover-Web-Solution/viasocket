@@ -18,7 +18,9 @@
 
 ## Set up with a coding agent
 
-Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from viasocket.com, or you can follow these steps:
+- [Coding agent instructions (AGENTS.md)](/AGENTS.md): instructions for AI coding agents integrating viaSocket into a project.
+
+Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct instructions. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
 
 1. Install the skill. Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
 2. Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
@@ -64,11 +66,13 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Coding agent instructions](/AGENTS.md): setup and guidelines for AI coding agents.
 - [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
 - [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
+- [NLWeb /ask endpoint](/ask): conversational natural-language query endpoint returning schema.org results over site content.
 - [Sitemap](/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
 - [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.
@@ -190,6 +194,7 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Python SDK (PyPI): https://pypi.org/project/viasocket/
 - Products and packages manifest: /products.json
 - LLM site overview: /llms.txt
+- Coding agent instructions: /AGENTS.md
 
 ## Pricing (/pricing.md)
 
@@ -203,16 +208,16 @@ Machine-readable summary of workflow plans at [/pricing](/pricing). Amounts are 
 
 ### Pro (launch price)
 
-- **Price:** $19 per month, or $190 per year (2 months free on annual billing)
-- **Limits:** 250,000 tasks per month; 10,000 AI credits per month included
-- **Extra usage:** $0.25 per 1,000 tasks; $1 per 600 AI credits
+- **Price:** $19 per month ($25 regular), or $16 per month billed yearly at $192 ($21 regular monthly)
+- **Limits:** 200,000 tasks per month; 10,000 AI credits per month included
+- **Extra usage:** $0.00025 per task; $0.0015 per credit
 - **Includes:** 2,300+ integrations
 
 ### Business (launch price)
 
-- **Price:** $99 per month, or $990 per year (2 months free on annual billing)
+- **Price:** $99 per month ($199 regular), or $83 per month billed yearly at $996 ($166 regular monthly)
 - **Limits:** 1,000,000 tasks per month; 50,000 AI credits per month included
-- **Extra usage:** $0.15 per 1,000 tasks (40% cheaper than Pro); extra AI credits at 40% lower rates than Pro
+- **Extra usage:** $0.00015 per task (40% cheaper); $0.0009 per credit (40% cheaper)
 - **Includes:** 2,300+ integrations
 
 ### Enterprise
@@ -231,6 +236,33 @@ Machine-readable summary of workflow plans at [/pricing](/pricing). Amounts are 
 
 - Free, Pro and Business: use the plan CTAs on the [HTML pricing page](/pricing).
 - Enterprise: https://cal.id/team/viasocket/embed-viasocket
+
+## Coding agent instructions (/AGENTS.md)
+
+> viaSocket is the integration layer for AI agents and the products they build: 2,300+ apps with OAuth and webhooks handled, every AI model, memory for that AI, and a place where products and agents call each other.
+
+Instructions for AI coding agents (Cursor, Claude Code, Codex) integrating viaSocket into a project.
+
+### Set up with a coding agent
+
+Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
+
+1. **Install the skill**: Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
+2. **Configure environment**: Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
+3. **Authenticate**: If `VIASOCKET_EMBED_SECRET` is not in `.env`, run the setup command from the [setup page](https://flow.viasocket.com/documentation/skill/setup.md). The user clicks Allow in the browser.
+4. **Plan before coding**: Ask the user what they want to build. Before any code, show a plan and wait for a yes: which actions, who picks each one, and who supplies every value (your code, the user in a picker, or the product's AI per run).
+5. **Verify on real connections**: Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
+
+Keep keys and secrets out of browser code, logs and committed files.
+
+### SDK, CLI and API
+
+- **Node.js SDK and CLI**: Make viaSocket calls through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package ([GitHub](https://github.com/Walkover-Web-Solution/viasocket-apps), `npm install viasocket-apps`). CLI: `npx viasocket-apps` or `npm install -g viasocket-apps`.
+- **Python SDK**: Make viaSocket calls through the [`viasocket`](https://pypi.org/project/viasocket/) PyPI package (`pip install viasocket`).
+- **Any other backend**: Follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- **Products and packages manifest**: [/products.json](/products.json) — machine-readable SDK and CLI package listings.
+- **Full skill**: [https://flow.viasocket.com/documentation/skill.md](https://flow.viasocket.com/documentation/skill.md) — the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
+- **Developer documentation**: [https://flow.viasocket.com/documentation](https://flow.viasocket.com/documentation)
 
 ## Not found response (/not-found.md)
 
