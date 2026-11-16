@@ -1,6 +1,6 @@
 ---
-covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: 03cb6e59
+covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js", "src/app/.well-known/mcp.json/route.js"]
+verified_at: ecaba9a3
 verified_on: 2026-11-16
 ---
 # API — docs-mcp (public documentation MCP)
@@ -12,10 +12,11 @@ Read-only Streamable HTTP MCP over the public `/docs` tree on the marketing host
 | Route | Methods | Description |
 |---|---|---|
 | `/docs/mcp` | GET, POST, OPTIONS | Public docs MCP (`src/app/docs/mcp/route.js`) |
+| `/.well-known/mcp.json` | GET | Discovery manifest pointing to `/docs/mcp` (`src/app/.well-known/mcp.json/route.js`) |
 
 ## POST /docs/mcp
 
-JSON-RPC 2.0. `Accept` must include both `application/json` and `text/event-stream` (same rule as the product MCP).
+JSON-RPC 2.0. `Accept` may include `application/json` or `text/event-stream`.
 
 Supported methods:
 
@@ -27,7 +28,11 @@ Errors use JSON-RPC `error` objects with HTTP 200.
 
 ## GET /docs/mcp
 
-Small JSON discovery payload (`name`, `mcp`, `docs`, `product_mcp`).
+Small JSON discovery payload (`name`, `description`, `mcp`, `docs`).
+
+## GET /.well-known/mcp.json
+
+Standard MCP discovery descriptor advertising the `/docs/mcp` endpoint and its capabilities.
 
 ## Production routing note
 

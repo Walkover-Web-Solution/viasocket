@@ -30,7 +30,6 @@ export async function GET(request) {
             description: 'Public read-only MCP over viaSocket documentation. POST JSON-RPC (initialize, tools/list, tools/call).',
             mcp: mcpUrl,
             docs: docsRoot,
-            product_mcp: PRODUCT_MCP,
         },
         { headers: MCP_HEADERS },
     );
@@ -40,7 +39,7 @@ export async function POST(request) {
     if (!acceptsMcpRequest(request)) {
         return jsonRpcError(
             -32600,
-            'Accept header must include both application/json and text/event-stream for POST requests',
+            'Accept header must include application/json or text/event-stream for POST requests',
             null,
         );
     }

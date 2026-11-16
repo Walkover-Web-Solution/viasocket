@@ -9,6 +9,7 @@ export const DOCS_MCP_TOOLS = [
         description:
             'Fetch one viaSocket documentation page by path (for example skill.md or skill/setup.md). Returns markdown/plain text from the site public /docs tree.',
         inputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 path: {
@@ -20,6 +21,7 @@ export const DOCS_MCP_TOOLS = [
             additionalProperties: false,
         },
         outputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 path: {
@@ -49,6 +51,7 @@ export const DOCS_MCP_TOOLS = [
         description:
             'Search the viaSocket docs index (index.md) for lines mentioning a short phrase. Use this before calling get_doc_page when the right path is unknown.',
         inputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 query: {
@@ -60,6 +63,7 @@ export const DOCS_MCP_TOOLS = [
             additionalProperties: false,
         },
         outputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 query: {
@@ -84,8 +88,14 @@ export const DOCS_MCP_TOOLS = [
     {
         name: 'list_doc_pages',
         description: 'Return the viaSocket documentation index (index.md): every linked page in one line each.',
-        inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+        inputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
+            type: 'object',
+            properties: {},
+            additionalProperties: false,
+        },
         outputSchema: {
+            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 pages: {
@@ -268,7 +278,8 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
 
 export const acceptsMcpRequest = (request) => {
     const accept = request.headers.get('accept') || '';
-    return accept.includes('application/json') && accept.includes('text/event-stream');
+    if (!accept || accept === '*/*') return true;
+    return accept.includes('application/json') || accept.includes('text/event-stream');
 };
 
 export const docsMcpContextFromRequest = (request) => {

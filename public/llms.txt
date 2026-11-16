@@ -41,6 +41,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## MCP
 
+- [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Annotated, typed MCP tools with outputSchema, structuredContent results, and initialize instructions.
 - [viaSocket MCP server](https://connect.viasocket.com/mcp): add it to an MCP client and the developer signs in with their viaSocket account. Its tools build and run the developer's own automations and plugs. See [signing in as the developer](https://flow.viasocket.com/documentation/skill/agent-access.md).
 - [The product's own MCP server](https://flow.viasocket.com/documentation/skill/mcp.md): turn a product's API into an MCP URL that users add to Claude, ChatGPT, Cursor or another agent and sign in to with the product's login. viaSocket hosts it; the product hosts only its API.
 
@@ -61,6 +62,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [MCP discovery](/.well-known/mcp.json): discovery descriptor for the docs MCP server on this host.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.

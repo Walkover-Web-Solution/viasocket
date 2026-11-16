@@ -41,7 +41,7 @@ Rules for every new call: table-api calls go through `src/utils/axiosCalls.js` w
 Table ids, purposes, fields, getters and the A/B row columns: [database/entities.md](database/entities.md).
 
 ### Internal API routes
-The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), the RFC 9727 catalog at `/.well-known/api-catalog`, and the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth). Contracts: [api/track-variant.md](api/track-variant.md), [api/api-catalog.md](api/api-catalog.md), [api/docs-mcp.md](api/docs-mcp.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
+The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), the RFC 9727 catalog at `/.well-known/api-catalog`, MCP discovery at `/.well-known/mcp.json`, and the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth). Contracts: [api/track-variant.md](api/track-variant.md), [api/api-catalog.md](api/api-catalog.md), [api/docs-mcp.md](api/docs-mcp.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
 
 ## Authentication & Authorization Assumptions
 
