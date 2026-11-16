@@ -19,7 +19,7 @@ Lists viaSocket's invocable and discoverable agent resources conforming to the A
 
 - **viaSocket website**: canonical homepage
 - **Product MCP server**: OAuth product MCP at `https://connect.viasocket.com/mcp` (integrations across 2,300+ apps)
-- **Docs MCP server**: `/docs/mcp` and SEP-2127 server card at `/docs/mcp/server-card`
+- **Docs MCP server**: `/docs/mcp` and SEP-2127 server card at `/.well-known/mcp/server-card.json` (also `/docs/mcp/server-card`)
 - **A2A agent card**: `/.well-known/agent-card.json` (agent-to-agent discovery)
 - **llms.txt**: `/llms.txt`, `/llms-full.txt`, and flow's `https://flow.viasocket.com/llms.txt`
 - **Skills**: installable coding agent skill at `https://flow.viasocket.com/documentation/skill-install.md` and full reference manual at `https://flow.viasocket.com/documentation/skill.md`
