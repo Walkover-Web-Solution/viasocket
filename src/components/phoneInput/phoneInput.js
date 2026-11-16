@@ -101,6 +101,7 @@ export default function PhoneInput({
                 required={required}
                 type="tel"
                 name={name}
+                aria-label={placeholder || 'Phone Number'}
                 placeholder={placeholder}
                 className={`input input-bordered w-full focus:outline-none ${className}`}
                 value={value}

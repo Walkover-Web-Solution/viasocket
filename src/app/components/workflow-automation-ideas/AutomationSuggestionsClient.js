@@ -222,6 +222,7 @@ export default function AutomationSuggestionsClient() {
                                         <div className="relative overflow-visible" ref={dropdownRef}>
                                             <input
                                                 type="text"
+                                                aria-label="Search or select app"
                                                 className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
                                                 placeholder="App"
                                                 value={searchTerm}
@@ -260,6 +261,7 @@ export default function AutomationSuggestionsClient() {
                                         </div>
                                     ) : (
                                         <button
+                                            aria-label="Add app"
                                             className="flex h2 items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ml-4"
                                             onClick={() => setShowAppDropdown(true)}
                                         >
@@ -272,6 +274,7 @@ export default function AutomationSuggestionsClient() {
                                     <h3 className="h2 text-nowrap ">We're in the </h3>
                                     <input
                                         type="text"
+                                        aria-label="Industry type"
                                         className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full "
                                         placeholder="Industry type"
                                         value={selectedDomain}
@@ -295,6 +298,7 @@ export default function AutomationSuggestionsClient() {
                                     <h3 className="h2 text-nowrap">I run </h3>
                                     <input
                                         type="text"
+                                        aria-label="Domain name"
                                         className="h2 ml-2 text-gray-400 border-none bg-transparent focus:outline-none w-full"
                                         placeholder="domain.com"
                                         value={selectedIndustry}
@@ -314,6 +318,7 @@ export default function AutomationSuggestionsClient() {
                                     />
                                 </div>
                                 <textarea
+                                    aria-label="Describe your workflow idea"
                                     className="mt-6 p-4 w-full h-[150px] input input-bordered"
                                     placeholder="eg: I run an eCommerce website and manage sales on Shopify and use Notion for database."
                                     value={useCase}

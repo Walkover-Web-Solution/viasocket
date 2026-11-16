@@ -74,10 +74,11 @@ export default function GetStarted() {
                         <input
                             type="text"
                             placeholder="Type your message..."
+                            aria-label="Type your message"
                             className="flex-1 bg-transparent text-sm text-gray-700 placeholder:text-gray-400 outline-none"
                             readOnly
                         />
-                        <button className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center">
+                        <button className="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center" aria-label="Send message">
                             <Send size={14} />
                         </button>
                     </div>

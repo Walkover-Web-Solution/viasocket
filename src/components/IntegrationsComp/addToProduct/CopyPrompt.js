@@ -47,7 +47,7 @@ export function CopyPromptProvider({ prompt, children }) {
             {manual && (
                 <div className={s['copy-fb']} role="dialog" aria-label="Copy the prompt">
                     <p>Your browser blocked copying. The prompt is selected: press Ctrl+C or ⌘C.</p>
-                    <textarea ref={textRef} readOnly rows={7} value={manual} />
+                    <textarea ref={textRef} readOnly rows={7} value={manual} aria-label="Setup prompt" />
                     <button type="button" className={`${s.btn} ${s.sm}`} onClick={() => setManual('')}>
                         Done
                     </button>
