@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
+import { prefersTextMarkdown } from './utils/prefersTextMarkdown';
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -76,6 +77,21 @@ export async function middleware(request) {
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
 
+    if (barePath === '/' && prefersTextMarkdown(request.headers.get('accept'))) {
+        const mdUrl = new URL('/homepage.md', request.url);
+        const mdRes = await fetch(mdUrl);
+        if (mdRes.ok) {
+            const body = await mdRes.text();
+            return new NextResponse(body, {
+                status: 200,
+                headers: {
+                    'Content-Type': 'text/markdown; charset=utf-8',
+                    Vary: 'Accept',
+                },
+            });
+        }
+    }
+
     // /home-b is not a public URL: opening it, as a person or a crawler, goes to
     // "/". The gate in version A's <head> fetches the file with this header and
     // writes it into "/" for version B visitors, so that request is let through.
@@ -90,6 +106,10 @@ export async function middleware(request) {
     }
 
     const response = NextResponse.next();
+
+    if (barePath === '/') {
+        response.headers.set('Vary', 'Accept');
+    }
 
     // /setup-prompt echoes org and project ids in its flight data. A shared cache
     // must not store that. Cloudflare's zone cache rule is the authority in

@@ -1,7 +1,7 @@
 ---
-covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: 52c28147
-verified_on: 2026-11-05
+covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/homepage.md", "src/middleware.js", "src/utils/prefersTextMarkdown.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
+verified_at: axien-md
+verified_on: 2026-11-16
 ---
 # Module: Homepage (`/`)
 
@@ -70,6 +70,10 @@ All content is hardcoded in the HTML and in `main.js` constants (`IC` app icons,
 The homepage uses no React components. Its tokens (`:root` in `public/new-home/styles.css`, with dark mode via `prefers-color-scheme`) are documented in [DESIGN: Static homepage](../DESIGN.md#static-homepage-publicnew-homestylescss). The Next copies of its header, footer and prompt (`SiteChrome.js`, `src/components/IntegrationsComp/addToProduct/copy.js:BASE_PROMPT`) are listed in the [component catalog](../DESIGN.md#reusable-component-catalog). They are **separate copies**, so a change on `/` does not reach them.
 
 ---
+
+## Agent-readable homepage (`Accept: text/markdown`)
+
+When a client requests `/` with an `Accept` header that prefers `text/markdown` over `text/html`, `src/middleware.js` serves `public/homepage.md` with `Content-Type: text/markdown; charset=utf-8`. Browser-default requests still get version A's HTML through the `beforeFiles` rewrite. Both responses carry `Vary: Accept` so a shared cache does not serve markdown to HTML clients. The markdown is a sibling summary of the homepage (setup prompt, features, compliance, FAQ and links), aligned with version B's Agent view and `public/llms.txt`. Edit `public/homepage.md` when homepage copy changes until the same text is exported from `viasocket-site`.
 
 ## Data Dependencies
 1. **None at request time.** The HTML is a static file. For a version B visitor the gate also fetches `/home-b/index.html`. App icons are hotlinked from `stuff.thingsofbrand.com` and `upload.wikimedia.org`. `main.js` drops an icon whose image fails to load.
