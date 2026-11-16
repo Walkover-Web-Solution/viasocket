@@ -11,7 +11,3 @@
 /AGENTS.md
   content-type: text/markdown; charset=utf-8
   access-control-allow-origin: *
-
-/agents.md
-  content-type: text/markdown; charset=utf-8
-  access-control-allow-origin: *
