@@ -146,11 +146,11 @@ export default function DocsPage() {
                         <LangBlock
                             panes={{
                                 curl: '# No install needed. Every step below has a plain HTTP form.\n# You will need a JWT tool for step 3 — see that step.',
-                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.',
-                                python: '# There is no Python SDK. Use the HTTP endpoints directly.\npip install requests pyjwt',
+                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.\n# CLI: npx viasocket-apps',
+                                python: 'pip install viasocket\n# PyPI package for Python agents and integrations. Zero dependencies. Python 3.10+.\n# Or plain HTTP: pip install requests pyjwt',
                             }}
                         />
-                        <p className={p}>The SDK is a convenience for Node, not a requirement. There is no Python SDK — the Python tab calls the HTTP endpoints directly, and every step below shows that raw call, so any language works.</p>
+                        <p className={p}>Official SDKs are published on npm (<Code>viasocket-apps</Code>, including CLI) and PyPI (<Code>viasocket</Code>). Every step below also shows the plain HTTP call, so any language works.</p>
                         <h4 className={h4}>Base URLs</h4>
                         <ul className={ul}>
                             <li>API calls go to <Code>https://flow-api.viasocket.com</Code></li>

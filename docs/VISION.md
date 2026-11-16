@@ -26,7 +26,7 @@ The site's jobs, in the order the code puts effort into them:
 2. **Convert.** CTAs send visitors either to `/signup` or straight to flow.viasocket.com. The source is recorded in the `utmData` cookie and in the `utm_source` parameter.
 3. **Run campaigns and programs.** Lifetime deal, Black Friday, Zapier/n8n/Relay migration, agency partners, experts, free-access programs and webinars.
 4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill. SDK emails also link to `/setup-prompt`, a noindex page that copies a keys or first-run prompt into that agent.
-5. **Agent-readable surfaces.** `public/llms.txt`, `public/pricing.md` at `/pricing.md`, and on the homepage, content negotiation for `Accept: text/markdown` (`public/homepage.md`) give coding agents and crawlers plain text without changing HTML for browsers.
+5. **Agent-readable surfaces.** `public/llms.txt` (linking npm and PyPI SDKs and CLI), `public/pricing.md` at `/pricing.md`, and on the homepage, content negotiation for `Accept: text/markdown` (`public/homepage.md`) give coding agents and crawlers plain text without changing HTML for browsers.
 
 ## Authoritative Sources & Status
 
