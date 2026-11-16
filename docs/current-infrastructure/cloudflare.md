@@ -1,5 +1,5 @@
 ---
-covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
+covers: ["wrangler.toml", "next.config.js", "src/middleware.js", "public/_redirects", "public/_headers", "src/app/robots.txt/route.js", "build-utilities/generate-robots-txt.js", "src/app/providers.js"]
 verified_at: 3bb8471f
 verified_on: 2026-11-02
 ---
@@ -27,6 +27,7 @@ Hosting and edge runtime for every Next.js route; CDN cache for production; path
 | Zone cache rule | Caches production HTML (`max-age=10800` observed on `/`, `/pricing`, `/sitemap.xml`, `/llms.txt`); not present on test. The team observed (D-10, team answers to OPEN_QUESTIONS, 2026-10-22) that it keeps `/` at the edge for **more than a day** (copies with `age` over 80,000 s) and rewrites `cache-control` to `private, max-age=10800`, ignoring the middleware's `no-store`. **After every homepage deploy someone must purge `https://viasocket.com/`.** Recommended: make the rule respect origin headers for `/`, or give it an edge TTL of about 5 minutes. The exact rule is dashboard-only. |
 | Other zone deployments | `/help/*`, `/blog`, `/discovery`, `/community` (and `/faq`) answer from other apps; on 2026-10-22 they returned `private, no-store` / `no-cache, no-store`, `DYNAMIC`, and no `x-matched-path` header ([OPEN_QUESTIONS P-05](../OPEN_QUESTIONS.md)) |
 | `public/_redirects` | One Pages redirect rule (`/faq/a-step-by-step-guide`), possibly unreachable ([OPEN_QUESTIONS C-07](../OPEN_QUESTIONS.md)) |
+| `public/_headers` | One Pages header rule: the `Link` header on the homepage document (`/new-home/`), pointing at `/.well-known/api-catalog` and `/llms.txt` ([modules/01-homepage](../modules/01-homepage.md#link-header-agent-discovery-without-an-html-parse)). Pages applies this file to static-asset responses only, so the pattern is the served asset path and Function-rendered routes are not covered. |
 | Zaraz | Loaded by `src/app/providers.js:loadZarazManually`; configured in the dashboard ([third-party-services.md](third-party-services.md)) |
 
 ## Schema / Shape
