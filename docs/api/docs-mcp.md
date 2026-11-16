@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: 37841d9c
+verified_at: 0b5da499
 verified_on: 2026-11-16
 ---
 # API — docs-mcp (public documentation MCP)
@@ -19,9 +19,9 @@ JSON-RPC 2.0. `Accept` must include both `application/json` and `text/event-stre
 
 Supported methods:
 
-- `initialize` — returns `serverInfo.name: viasocket-docs`
-- `tools/list` — `get_doc_page`, `search_docs`, `list_doc_pages` (read-only annotations)
-- `tools/call` — fetches live content from `/docs/{path}` on the same host as this route
+- `initialize` — returns `serverInfo.name: viasocket-docs` and usage `instructions` (50+ chars explaining tool selection)
+- `tools/list` — `get_doc_page`, `search_docs`, `list_doc_pages` with read-only annotations and typed `outputSchema`
+- `tools/call` — fetches live content from `/docs/{path}` on the same host as this route, returning both `content` text blocks and typed `structuredContent`
 
 Errors use JSON-RPC `error` objects with HTTP 200.
 

@@ -19,6 +19,29 @@ export const DOCS_MCP_TOOLS = [
             required: ['path'],
             additionalProperties: false,
         },
+        outputSchema: {
+            type: 'object',
+            properties: {
+                path: {
+                    type: 'string',
+                    description: 'The requested documentation path.',
+                },
+                content: {
+                    type: 'string',
+                    description: 'Markdown or plain text content of the documentation page.',
+                },
+                found: {
+                    type: 'boolean',
+                    description: 'True if the document was found and retrieved successfully.',
+                },
+                status: {
+                    type: 'integer',
+                    description: 'HTTP response status code (e.g. 200 or 404).',
+                },
+            },
+            required: ['path', 'content', 'found'],
+            additionalProperties: false,
+        },
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     {
@@ -36,12 +59,52 @@ export const DOCS_MCP_TOOLS = [
             required: ['query'],
             additionalProperties: false,
         },
+        outputSchema: {
+            type: 'object',
+            properties: {
+                query: {
+                    type: 'string',
+                    description: 'The search query executed against the index.',
+                },
+                matches: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'Index entries matching all query terms.',
+                },
+                count: {
+                    type: 'integer',
+                    description: 'Number of matching index lines returned.',
+                },
+            },
+            required: ['query', 'matches', 'count'],
+            additionalProperties: false,
+        },
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     {
         name: 'list_doc_pages',
         description: 'Return the viaSocket documentation index (index.md): every linked page in one line each.',
         inputSchema: { type: 'object', properties: {}, additionalProperties: false },
+        outputSchema: {
+            type: 'object',
+            properties: {
+                pages: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'List of documentation page entries from index.md.',
+                },
+                content: {
+                    type: 'string',
+                    description: 'Full markdown text of the documentation index.',
+                },
+                count: {
+                    type: 'integer',
+                    description: 'Total number of indexed pages.',
+                },
+            },
+            required: ['pages', 'content', 'count'],
+            additionalProperties: false,
+        },
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
 ];
@@ -63,31 +126,91 @@ const fetchDoc = async (docsOrigin, path) => {
         return { ok: false, status: res.status, text: `Could not load ${path} (HTTP ${res.status}).` };
     }
     const text = (await res.text()).slice(0, MAX_DOC_CHARS);
-    return { ok: true, text };
+    return { ok: true, status: res.status, text };
 };
 
 export const callDocsMcpTool = async (docsOrigin, name, args) => {
     if (name === 'list_doc_pages') {
         const doc = await fetchDoc(docsOrigin, 'index.md');
-        return doc.ok ? doc.text : doc.text;
+        const text = doc.text;
+        const pages = doc.ok
+            ? text
+                  .split('\n')
+                  .map((l) => l.trim())
+                  .filter((l) => l.length > 0 && !l.startsWith('#'))
+            : [];
+        return {
+            text,
+            structuredContent: {
+                pages,
+                content: text,
+                count: pages.length,
+            },
+        };
     }
     if (name === 'get_doc_page') {
         const path = normalizeDocPath(args?.path);
-        if (!path) return 'Invalid path. Use a docs filename like skill.md or skill/setup.md (letters, numbers, slashes, dots).';
+        if (!path) {
+            const text = 'Invalid path. Use a docs filename like skill.md or skill/setup.md (letters, numbers, slashes, dots).';
+            return {
+                text,
+                structuredContent: {
+                    path: args?.path || '',
+                    content: text,
+                    found: false,
+                    status: 400,
+                },
+            };
+        }
         const doc = await fetchDoc(docsOrigin, path);
-        return doc.text;
+        return {
+            text: doc.text,
+            structuredContent: {
+                path,
+                content: doc.text,
+                found: doc.ok,
+                status: doc.ok ? 200 : doc.status || 404,
+            },
+        };
     }
     if (name === 'search_docs') {
         const query = typeof args?.query === 'string' ? args.query.trim().toLowerCase() : '';
-        if (!query) return 'Provide a non-empty query.';
+        if (!query) {
+            const text = 'Provide a non-empty query.';
+            return {
+                text,
+                structuredContent: {
+                    query: '',
+                    matches: [],
+                    count: 0,
+                },
+            };
+        }
         const doc = await fetchDoc(docsOrigin, 'index.md');
-        if (!doc.ok) return doc.text;
+        if (!doc.ok) {
+            return {
+                text: doc.text,
+                structuredContent: {
+                    query,
+                    matches: [],
+                    count: 0,
+                },
+            };
+        }
         const terms = query.split(/\s+/).filter(Boolean);
         const hits = doc.text
             .split('\n')
             .filter((line) => terms.every((t) => line.toLowerCase().includes(t)))
             .slice(0, MAX_SEARCH_HITS);
-        return hits.length ? hits.join('\n') : `No index lines matched "${query}". Try list_doc_pages or get_doc_page with skill.md.`;
+        const text = hits.length ? hits.join('\n') : `No index lines matched "${query}". Try list_doc_pages or get_doc_page with skill.md.`;
+        return {
+            text,
+            structuredContent: {
+                query,
+                matches: hits,
+                count: hits.length,
+            },
+        };
     }
     throw new Error(`Unknown tool: ${name}`);
 };
@@ -107,6 +230,8 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
                     version: '1.0.0',
                     website: docsRoot,
                 },
+                instructions:
+                    'viaSocket documentation MCP server. Call list_doc_pages to view the index of all available documentation pages, search_docs with a short keyword to find relevant documentation lines, and get_doc_page with a relative markdown path (e.g. skill.md or skill/setup.md) to retrieve the full page content.',
             };
         case 'notifications/initialized':
         case 'ping':
@@ -117,11 +242,18 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
             const toolName = params?.name;
             const toolArgs = params?.arguments ?? {};
             try {
-                const text = await callDocsMcpTool(docsOrigin, toolName, toolArgs);
-                return {
+                const result = await callDocsMcpTool(docsOrigin, toolName, toolArgs);
+                const text = typeof result === 'string' ? result : result?.text || '';
+                const structuredContent =
+                    typeof result === 'object' && result?.structuredContent ? result.structuredContent : undefined;
+                const response = {
                     content: [{ type: 'text', text }],
                     isError: false,
                 };
+                if (structuredContent !== undefined) {
+                    response.structuredContent = structuredContent;
+                }
+                return response;
             } catch (err) {
                 return {
                     content: [{ type: 'text', text: err?.message || 'Tool call failed.' }],
