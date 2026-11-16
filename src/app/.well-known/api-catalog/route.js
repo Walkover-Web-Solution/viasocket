@@ -6,6 +6,7 @@ const marketingLinkset = (origin) => ({
     anchor: `${origin}/`,
     'service-doc': [
         { href: `${origin}/llms.txt` },
+        { href: `${origin}/AGENTS.md` },
         { href: `${origin}/developers/docs` },
         { href: `${origin}/docs/mcp` },
         { href: `${origin}/ask` },
