@@ -1,6 +1,6 @@
 ---
-covers: ["public/new-home/**", "public/llms.txt", "public/pricing.md", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "src/app/.well-known/ai-catalog.json/route.js", "next.config.js"]
-verified_at: 9515fabe
+covers: ["public/new-home/**", "public/llms.txt", "public/llms-full.txt", "public/pricing.md", "public/_headers", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "src/app/.well-known/**", "next.config.js"]
+verified_at: a1c4e902
 verified_on: 2026-11-16
 ---
 # Product Vision & Strategic Direction
@@ -26,7 +26,7 @@ The site's jobs, in the order the code puts effort into them:
 2. **Convert.** CTAs send visitors either to `/signup` or straight to flow.viasocket.com. The source is recorded in the `utmData` cookie and in the `utm_source` parameter.
 3. **Run campaigns and programs.** Lifetime deal, Black Friday, Zapier/n8n/Relay migration, agency partners, experts, free-access programs and webinars.
 4. **Run the developer/Embed funnel.** `/developers` (with `/developers/auth`, `/developers/docs`, `/developers/pricing`) and `/embed/*`. The funnel ends with a setup prompt that tells a coding agent to fetch the viaSocket skill. SDK emails also link to `/setup-prompt`, a noindex page that copies a keys or first-run prompt into that agent.
-5. **Agent-readable surfaces.** `public/llms.txt`, `public/pricing.md` at `/pricing.md`, AI Catalog at `/.well-known/ai-catalog.json`, and on the homepage, content negotiation for `Accept: text/markdown` (`public/homepage.md`) give coding agents and crawlers structured discovery and plain text without changing HTML for browsers.
+5. **Agent-readable surfaces.** `public/llms.txt`, `public/llms-full.txt` at `/llms-full.txt`, `public/pricing.md` at `/pricing.md`, `/.well-known/api-catalog`, `/.well-known/ai-catalog.json`, `/.well-known/agent-card.json` (A2A discovery for the public docs MCP), the SEP-2127 Server Card at `/docs/mcp/server-card`, plus, on the homepage, content negotiation for `Accept: text/markdown` (`public/homepage.md`) and a `Link` response header (`public/_headers`) pointing at the catalog and `llms.txt`, give coding agents and crawlers machine-readable pointers without changing HTML for browsers. Unmatched URLs that return HTTP 404 negotiate on `Accept`: markdown clients get `public/not-found.md`; JSON clients get `application/problem+json` from middleware ([18-error-handling](18-error-handling.md)).
 
 ## Authoritative Sources & Status
 

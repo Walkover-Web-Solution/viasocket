@@ -1,0 +1,9 @@
+# Response headers for static assets. Pages applies a rule to the file it serves, so the
+# rule below is what puts the agent-facing Link header on the homepage: "/" is rewritten
+# to /new-home/index.html by next.config.js. Function-rendered routes (every
+# src/app/**/page.js) and middleware responses are not covered by this file.
+
+# The homepage: where an agent finds the API catalog and the site's description for it
+# without parsing the HTML (RFC 8288, RFC 9727 §3).
+/new-home/
+  link: </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json", </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"

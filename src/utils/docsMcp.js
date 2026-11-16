@@ -146,3 +146,24 @@ export const docsMcpContextFromRequest = (request) => {
     const docsOrigin = configuredBase ? `${configuredBase}/docs` : docsRoot.replace(/\/$/, '');
     return { docsOrigin, docsRoot };
 };
+
+/** SEP-2127 Server Card for the public docs MCP at `/docs/mcp`. */
+export const buildDocsMcpServerCard = (origin) => {
+    const base = origin.replace(/\/$/, '');
+    const mcpUrl = `${base}/docs/mcp`;
+    return {
+        $schema: 'https://static.modelcontextprotocol.io/schemas/v1/server-card.schema.json',
+        name: 'com.viasocket/docs',
+        version: '1.0.0',
+        title: 'viaSocket Docs',
+        description: 'Read-only MCP over public viaSocket docs. No sign-in.',
+        websiteUrl: `${base}/llms.txt`,
+        remotes: [
+            {
+                type: 'streamable-http',
+                url: mcpUrl,
+                supportedProtocolVersions: [DOCS_MCP_PROTOCOL],
+            },
+        ],
+    };
+};

@@ -1,11 +1,24 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
+import { buildJsonNotFoundResponse } from './utils/buildJsonNotFoundResponse';
+import { prefersApplicationJson } from './utils/prefersApplicationJson';
 import { prefersTextMarkdown } from './utils/prefersTextMarkdown';
+import { serveNotFoundMarkdown } from './utils/serveNotFoundMarkdown';
+
+const NOT_FOUND_PROBE_HEADER = 'x-viasocket-404-probe';
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
 const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
+
+// Where an agent finds the API catalog and the site's description for it without parsing the
+// HTML. The markdown representation of "/" is built here, so it has to carry this itself:
+// Cloudflare Pages applies public/_headers to static assets only, and an agent asking for
+// markdown never reaches the HTML response that file covers. Keep it equal to the
+// "/new-home/" rule in public/_headers.
+const AGENT_LINK_HEADER =
+    '</.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"';
 
 const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
 
@@ -72,12 +85,50 @@ function managedRedirect(request, list) {
 export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
+    if (request.headers.get(NOT_FOUND_PROBE_HEADER) === '1') {
+        return NextResponse.next();
+    }
+
     const redirect = managedRedirect(request, await managedRedirects());
     if (redirect) return redirect;
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+    const accept = request.headers.get('accept');
 
-    if (barePath === '/' && prefersTextMarkdown(request.headers.get('accept'))) {
+    if (prefersApplicationJson(accept)) {
+        const probeHeaders = new Headers(request.headers);
+        probeHeaders.set(NOT_FOUND_PROBE_HEADER, '1');
+        probeHeaders.set('accept', 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8');
+        try {
+            const probe = await fetch(request.url, {
+                method: 'GET',
+                headers: probeHeaders,
+                redirect: 'manual',
+            });
+            if (probe.status === 404) {
+                return buildJsonNotFoundResponse(request);
+            }
+        } catch (err) {
+            console.error('[json-404] probe failed:', err.message);
+        }
+    } else if (prefersTextMarkdown(accept)) {
+        try {
+            const probe = await fetch(request.url, {
+                method: 'HEAD',
+                headers: {
+                    accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+                    [NOT_FOUND_PROBE_HEADER]: '1',
+                },
+            });
+            if (probe.status === 404) {
+                return serveNotFoundMarkdown(request);
+            }
+        } catch (err) {
+            console.error('[404 markdown] probe failed:', err.message);
+        }
+    }
+
+    if (barePath === '/' && prefersTextMarkdown(accept)) {
         const mdUrl = new URL('/homepage.md', request.url);
         const mdRes = await fetch(mdUrl);
         if (mdRes.ok) {
@@ -87,6 +138,7 @@ export async function middleware(request) {
                 headers: {
                     'Content-Type': 'text/markdown; charset=utf-8',
                     Vary: 'Accept',
+                    Link: AGENT_LINK_HEADER,
                 },
             });
         }

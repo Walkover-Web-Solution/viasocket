@@ -12,6 +12,7 @@ Read-only Streamable HTTP MCP over the public `/docs` tree on the marketing host
 | Route | Methods | Description |
 |---|---|---|
 | `/docs/mcp` | GET, POST, OPTIONS | Public docs MCP (`src/app/docs/mcp/route.js`) |
+| `/docs/mcp/server-card` | GET, OPTIONS | SEP-2127 Server Card ([mcp-server-card.md](mcp-server-card.md)) |
 
 ## POST /docs/mcp
 

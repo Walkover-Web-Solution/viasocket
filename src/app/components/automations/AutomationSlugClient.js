@@ -112,6 +112,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                                 <button
                                     className="border p-1 w-8 h-8 bg-white flex items-center justify-center hover:!bg-black hover:text-white transition-colors"
                                     onClick={handleShareTemplate}
+                                    aria-label="Share Template"
                                 >
                                     <Share2 className="w-4 h-4" />
                                 </button>
@@ -210,6 +211,7 @@ export default function AutomationSlugClient({ pageData, hasToken }) {
                             <h3 className="h3">Instructions</h3>
                             <textarea
                                 readOnly
+                                aria-label="Instructions"
                                 className="w-full h-full focus:outline-none resize-none"
                                 value={template?.instructions}
                             />

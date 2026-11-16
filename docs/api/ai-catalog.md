@@ -19,8 +19,9 @@ Lists viaSocket's invocable and discoverable agent resources conforming to the A
 
 - **viaSocket website**: canonical homepage <!-- // pragma: allowlist secret -->
 - **Product MCP server**: `https://mcp.viasocket.com/mcp` and server card at `https://mcp.viasocket.com/mcp/server-card` (21 tools across 2,300+ apps)
-- **Docs MCP server**: `/docs/mcp` (public read-only documentation MCP)
-- **llms.txt**: `/llms.txt` and flow's `https://flow.viasocket.com/llms.txt`
+- **Docs MCP server**: `/docs/mcp` and SEP-2127 server card at `/docs/mcp/server-card`
+- **A2A agent card**: `/.well-known/agent-card.json` (agent-to-agent discovery)
+- **llms.txt**: `/llms.txt`, `/llms-full.txt`, and flow's `https://flow.viasocket.com/llms.txt`
 - **Skills**: installable coding agent skill at `https://flow.viasocket.com/documentation/skill-install.md` and full reference manual at `https://flow.viasocket.com/documentation/skill.md`
 - **Documentation**: API credentials setup (`/documentation/skill/setup.md`), Apps API quickstart (`/developers/docs`), auth docs (`/documentation/skill/login-and-orgs.md`), app integrations (`/documentation/skill/app-integrations.md`), and markdown pricing (`/pricing.md`)
 - **API catalog**: RFC 9727 linkset at `/.well-known/api-catalog`
@@ -29,4 +30,4 @@ OpenAPI specs are omitted: flow's product API specs are not published at stable 
 
 ## Discovery
 
-Linked via `<link rel="ai-catalog" href="/.well-known/ai-catalog.json" type="application/ai-catalog+json">` from homepage HTML variants (`public/new-home/index.html`, `public/home-b/index.html`) and Next.js `src/app/layout.js`.
+Linked via `<link rel="ai-catalog" href="/.well-known/ai-catalog.json" type="application/ai-catalog+json">` from homepage HTML variants (`public/new-home/index.html`, `public/home-b/index.html`) and Next.js `src/app/layout.js`, and advertised via HTTP `Link` response header in `public/_headers`.

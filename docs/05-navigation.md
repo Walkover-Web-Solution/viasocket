@@ -1,11 +1,11 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
-verified_at: 3bb8471f
-verified_on: 2026-11-02
+verified_at: a1c4e902
+verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
 
-This file is the single home of the route map. A clean `npm run build` lists **57 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
+This file is the single home of the route map. A clean `npm run build` lists **58 routes**. Each is listed below with the file that renders it. How each route resolves at runtime is in [ARCHITECTURE](ARCHITECTURE.md#request-path-cloudflare-pages), and the journeys through these routes are in [FLOWS](FLOWS.md).
 
 ## Top-level Routes
 
@@ -18,6 +18,8 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
 | `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog standard index of agent-facing resources ([api/ai-catalog](api/ai-catalog.md)) |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
+| `/.well-known/agent-card.json` | `src/app/.well-known/agent-card.json/route.js` | A2A agent card for the public docs MCP ([api/agent-card](api/agent-card.md)) |
+| `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |
