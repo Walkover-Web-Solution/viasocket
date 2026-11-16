@@ -52,6 +52,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en" data-theme="light">
             <head>
+                <link rel="ai-catalog" href="/.well-known/ai-catalog.json" type="application/ai-catalog+json" />
                 <TrackingCookies />
                 <script
                     type="application/ld+json"

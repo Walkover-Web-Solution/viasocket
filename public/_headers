@@ -6,7 +6,7 @@
 # The homepage: where an agent finds the API catalog and the site's description for it
 # without parsing the HTML (RFC 8288, RFC 9727 §3).
 /new-home/
-  link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain", </AGENTS.md>; rel="describedby"; type="text/markdown", </homepage.md>; rel="alternate"; type="text/markdown"
+  link: </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json", </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain", </AGENTS.md>; rel="describedby"; type="text/markdown", </homepage.md>; rel="alternate"; type="text/markdown"
 
 /AGENTS.md
   content-type: text/markdown; charset=utf-8

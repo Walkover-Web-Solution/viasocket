@@ -18,11 +18,11 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/api` | `src/app/api/route.js` | API root RFC 9457 JSON 404 handler ([api/json-errors](api/json-errors.md)) |
 | `/api/[...catchall]` | `src/app/api/[...catchall]/route.js` | API catchall RFC 9457 JSON 404 handler ([api/json-errors](api/json-errors.md)) |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
+| `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog standard index of agent-facing resources ([api/ai-catalog](api/ai-catalog.md)) |
 | `/.well-known/agent-skills/index.json` | `src/app/.well-known/agent-skills/index.json/route.js` | Agent Skills Discovery v0.2.0 index ([api/agent-skills](api/agent-skills.md)) |
 | `/.well-known/agent-skills/viasocket-integrations/SKILL.md` | `src/app/.well-known/agent-skills/viasocket-integrations/SKILL.md/route.js` | viaSocket integrations skill pointer for coding agents |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/.well-known/agent-card.json` | `src/app/.well-known/agent-card.json/route.js` | A2A agent card for the public docs MCP ([api/agent-card](api/agent-card.md)) |
-| `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog listing the docs MCP Server Card ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/.well-known/poppy.json` | `src/app/.well-known/poppy.json/route.js` | Personal Agent Protocol (Poppy 1.0) discovery document ([api/poppy](api/poppy.md)) |
 | `/.well-known/products.json` | `src/app/.well-known/products.json/route.js` | Machine-readable products and SDK/CLI package discovery |
 | `/products.json` | `src/app/products.json/route.js` | Products manifest (re-exports `/.well-known/products.json`) |
