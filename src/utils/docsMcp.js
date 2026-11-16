@@ -3,13 +3,78 @@ const MAX_SEARCH_HITS = 20;
 
 export const DOCS_MCP_PROTOCOL = '2024-11-05';
 
+const GET_DOC_PAGE_OUTPUT_SCHEMA = {
+    type: 'object',
+    properties: {
+        path: {
+            type: 'string',
+            description: 'The requested documentation path.',
+        },
+        content: {
+            type: 'string',
+            description: 'Markdown or plain text content of the documentation page.',
+        },
+        found: {
+            type: 'boolean',
+            description: 'True if the document was found and retrieved successfully.',
+        },
+        status: {
+            type: 'integer',
+            description: 'HTTP response status code (e.g. 200 or 404).',
+        },
+    },
+    required: ['path', 'content', 'found'],
+    additionalProperties: false,
+};
+
+const SEARCH_DOCS_OUTPUT_SCHEMA = {
+    type: 'object',
+    properties: {
+        query: {
+            type: 'string',
+            description: 'The search query executed against the index.',
+        },
+        matches: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Index entries matching all query terms.',
+        },
+        count: {
+            type: 'integer',
+            description: 'Number of matching index lines returned.',
+        },
+    },
+    required: ['query', 'matches', 'count'],
+    additionalProperties: false,
+};
+
+const LIST_DOC_PAGES_OUTPUT_SCHEMA = {
+    type: 'object',
+    properties: {
+        pages: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'List of documentation page entries from index.md.',
+        },
+        content: {
+            type: 'string',
+            description: 'Full markdown text of the documentation index.',
+        },
+        count: {
+            type: 'integer',
+            description: 'Total number of indexed pages.',
+        },
+    },
+    required: ['pages', 'content', 'count'],
+    additionalProperties: false,
+};
+
 export const DOCS_MCP_TOOLS = [
     {
         name: 'get_doc_page',
         description:
             'Fetch one viaSocket documentation page by path (for example skill.md or skill/setup.md). Returns markdown/plain text from the site public /docs tree.',
         inputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 path: {
@@ -20,30 +85,8 @@ export const DOCS_MCP_TOOLS = [
             required: ['path'],
             additionalProperties: false,
         },
-        outputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
-            type: 'object',
-            properties: {
-                path: {
-                    type: 'string',
-                    description: 'The requested documentation path.',
-                },
-                content: {
-                    type: 'string',
-                    description: 'Markdown or plain text content of the documentation page.',
-                },
-                found: {
-                    type: 'boolean',
-                    description: 'True if the document was found and retrieved successfully.',
-                },
-                status: {
-                    type: 'integer',
-                    description: 'HTTP response status code (e.g. 200 or 404).',
-                },
-            },
-            required: ['path', 'content', 'found'],
-            additionalProperties: false,
-        },
+        outputSchema: GET_DOC_PAGE_OUTPUT_SCHEMA,
+        output_schema: GET_DOC_PAGE_OUTPUT_SCHEMA,
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     {
@@ -51,7 +94,6 @@ export const DOCS_MCP_TOOLS = [
         description:
             'Search the viaSocket docs index (index.md) for lines mentioning a short phrase. Use this before calling get_doc_page when the right path is unknown.',
         inputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {
                 query: {
@@ -62,59 +104,20 @@ export const DOCS_MCP_TOOLS = [
             required: ['query'],
             additionalProperties: false,
         },
-        outputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
-            type: 'object',
-            properties: {
-                query: {
-                    type: 'string',
-                    description: 'The search query executed against the index.',
-                },
-                matches: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'Index entries matching all query terms.',
-                },
-                count: {
-                    type: 'integer',
-                    description: 'Number of matching index lines returned.',
-                },
-            },
-            required: ['query', 'matches', 'count'],
-            additionalProperties: false,
-        },
+        outputSchema: SEARCH_DOCS_OUTPUT_SCHEMA,
+        output_schema: SEARCH_DOCS_OUTPUT_SCHEMA,
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
     {
         name: 'list_doc_pages',
         description: 'Return the viaSocket documentation index (index.md): every linked page in one line each.',
         inputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
             type: 'object',
             properties: {},
             additionalProperties: false,
         },
-        outputSchema: {
-            $schema: 'https://json-schema.org/draft/2020-12/schema',
-            type: 'object',
-            properties: {
-                pages: {
-                    type: 'array',
-                    items: { type: 'string' },
-                    description: 'List of documentation page entries from index.md.',
-                },
-                content: {
-                    type: 'string',
-                    description: 'Full markdown text of the documentation index.',
-                },
-                count: {
-                    type: 'integer',
-                    description: 'Total number of indexed pages.',
-                },
-            },
-            required: ['pages', 'content', 'count'],
-            additionalProperties: false,
-        },
+        outputSchema: LIST_DOC_PAGES_OUTPUT_SCHEMA,
+        output_schema: LIST_DOC_PAGES_OUTPUT_SCHEMA,
         annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
     },
 ];
@@ -128,15 +131,35 @@ export const normalizeDocPath = (raw) => {
 };
 
 const fetchDoc = async (docsOrigin, path) => {
-    const res = await fetch(`${docsOrigin}/${path}`, {
-        headers: { accept: 'text/plain, text/markdown, */*' },
-        cf: { cacheTtl: 300 },
-    });
-    if (!res.ok) {
-        return { ok: false, status: res.status, text: `Could not load ${path} (HTTP ${res.status}).` };
+    try {
+        const res = await fetch(`${docsOrigin}/${path}`, {
+            headers: { accept: 'text/plain, text/markdown, */*' },
+            cf: { cacheTtl: 300 },
+        });
+        if (res.ok) {
+            const text = (await res.text()).slice(0, MAX_DOC_CHARS);
+            return { ok: true, status: res.status, text };
+        }
+    } catch {
+        // network or fetch failure, fall through to fallback
     }
-    const text = (await res.text()).slice(0, MAX_DOC_CHARS);
-    return { ok: true, status: res.status, text };
+
+    const prodOrigin = process.env.NEXT_PUBLIC_PROD_ENVIRONMENT;
+    if (prodOrigin && !docsOrigin.startsWith(prodOrigin)) {
+        try {
+            const fallbackRes = await fetch(`${prodOrigin.replace(/\/$/, '')}/docs/${path}`, {
+                headers: { accept: 'text/plain, text/markdown, */*' },
+            });
+            if (fallbackRes.ok) {
+                const text = (await fallbackRes.text()).slice(0, MAX_DOC_CHARS);
+                return { ok: true, status: fallbackRes.status, text };
+            }
+        } catch {
+            // fallback fetch failed
+        }
+    }
+
+    return { ok: false, status: 404, text: `Could not load ${path} (HTTP 404).` };
 };
 
 export const callDocsMcpTool = async (docsOrigin, name, args) => {
@@ -262,6 +285,7 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
                 };
                 if (structuredContent !== undefined) {
                     response.structuredContent = structuredContent;
+                    response.structured_content = structuredContent;
                 }
                 return response;
             } catch (err) {

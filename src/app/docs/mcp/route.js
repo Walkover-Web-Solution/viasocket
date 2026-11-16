@@ -3,8 +3,6 @@ import { acceptsMcpRequest, docsMcpContextFromRequest, handleDocsMcpJsonRpc } fr
 
 export const runtime = 'edge';
 
-const PRODUCT_MCP = process.env.NEXT_PUBLIC_VIASOCKET_MCP_URL || 'https://connect.viasocket.com/mcp';
-
 const MCP_HEADERS = {
     'cache-control': 'no-store',
     'access-control-allow-origin': '*',
