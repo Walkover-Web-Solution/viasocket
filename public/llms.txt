@@ -29,7 +29,7 @@ Works with Cursor, Claude Code and Codex. The user can paste the setup prompt fr
 Keep keys and secrets out of browser code, logs and committed files.
 ## SDK and API
 
-- Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package. Its types are its documentation.
+- Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
 - Any other backend: follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
 - [Full skill](https://flow.viasocket.com/documentation/skill.md): the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - [App integrations](https://flow.viasocket.com/documentation/skill/app-integrations.md): users connect their own apps; the product runs their actions and reacts to their events.
@@ -41,7 +41,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## MCP
 
-- [viaSocket MCP server](https://connect.viasocket.com/mcp): add it to an MCP client and the developer signs in with their viaSocket account. Its tools build and run the developer's own automations and plugs. See [signing in as the developer](https://flow.viasocket.com/documentation/skill/agent-access.md).
+- viaSocket MCP server at `https://connect.viasocket.com/mcp`: add it to an MCP client and the developer signs in with their viaSocket account. Its tools build and run the developer's own automations and plugs. See [signing in as the developer](https://flow.viasocket.com/documentation/skill/agent-access.md).
 - [The product's own MCP server](https://flow.viasocket.com/documentation/skill/mcp.md): turn a product's API into an MCP URL that users add to Claude, ChatGPT, Cursor or another agent and sign in to with the product's login. viaSocket hosts it; the product hosts only its API.
 
 ## Products and getting started
@@ -53,7 +53,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [Use cases and templates](https://viasocket.com/use-cases): pre-built automations for common jobs.
 - [Quickstart](/developers/docs): install the SDK, sign a JWT for your user, and run your first Apps API call (cURL or Node.js).
 - [Help center](https://viasocket.com/help/flow): workflows, built-in tools, webhooks, cron and error handling.
-- [Talk to an expert](https://cal.id/team/viasocket-integration-layer): book a call.
+- [Talk to an expert](/experts-are-live): book a call.
 
 ## Compare
 
@@ -61,6 +61,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).

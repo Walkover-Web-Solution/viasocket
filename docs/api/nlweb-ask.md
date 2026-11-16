@@ -25,4 +25,4 @@ No authentication. Runs on Edge runtime (`export const runtime = 'edge'`). Cache
 
 Conforms to the NLWeb specification v0.55 envelope with `response_type: "answer"` and `response_format: "conversational_search"`. Results contain Schema.org objects (`SoftwareApplication`, `TechArticle`, `DataCatalog`, `WebPage`, `WebAPI`, etc.) with `schema_object` and `grounding`.
 
-Listed in `/.well-known/api-catalog` (`service-doc`) and `public/llms.txt`.
+Listed in `/.well-known/api-catalog` (`service-doc`), `/.well-known/ai-catalog.json`, and `public/llms.txt`.
