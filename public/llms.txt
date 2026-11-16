@@ -18,7 +18,7 @@
 
 ## Set up with a coding agent
 
-Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from https://viasocket.com, or you can follow these steps:
+Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct instructions. The user can paste the setup prompt from the viaSocket homepage, or you can follow these steps:
 
 1. Install the skill. Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
 2. Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
@@ -61,6 +61,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Coding agent instructions](/AGENTS.md): setup and guidelines for AI coding agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
