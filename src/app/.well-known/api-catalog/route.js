@@ -8,7 +8,6 @@ const marketingLinkset = (origin) => ({
         { href: `${origin}/llms.txt` },
         { href: `${origin}/developers/docs` },
         { href: `${origin}/docs/mcp` },
-        { href: `${origin}/.well-known/poppy.json` },
     ],
 });
 

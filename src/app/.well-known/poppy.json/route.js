@@ -1,12 +1,7 @@
 export const runtime = 'edge';
 
 function getDomain(request) {
-    const rawHost =
-        request.headers.get('x-forwarded-host')?.split(',')[0].trim() ||
-        request.headers.get('host') ||
-        new URL(request.url).host ||
-        'viasocket.com';
-    return rawHost.replace(/:(443|80)$/, '');
+    return new URL(request.url).host.replace(/:(443|80)$/, '');
 }
 
 export async function GET(request) {
@@ -17,13 +12,7 @@ export async function GET(request) {
             name: 'viaSocket',
             domain,
         },
-        apis: [
-            {
-                type: 'mcp',
-                url: `https://${domain}/docs/mcp`,
-                description: 'viaSocket documentation and integration MCP server',
-            },
-        ],
+        web: {},
     };
 
     return new Response(JSON.stringify(body, null, 2), {
