@@ -11,7 +11,7 @@ const GROUPS = [
         title: 'Build it',
         links: [
             ['#ways', 'Two ways to set up'],
-            ['#s1', '1. Create API key & embed'],
+            ['#s1', '1. Create API key from dashboard'],
             ['#s2', '2. Install the SDK'],
             ['#s3', '3. Sign an embed token'],
             ['#s4', '4. Find the app'],

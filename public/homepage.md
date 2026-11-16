@@ -64,9 +64,9 @@ Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your
 
 No. viaSocket stores each user's grant and refreshes it, so you don't register OAuth apps, hold client secrets or write refresh logic. Your database keeps only a connection id.
 
-### How do I get an API key and test without touching production?
+### How do I create an API key from the dashboard and test without touching production?
 
-You can create an API key and embed signing credentials yourself directly from the dashboard at https://flow.viasocket.com/integrations under Configuration > Create new embed — self-serve, with no sales call required. For development, viaSocket includes a permanently free Embed Sandbox environment ($0/month, 25 users, 25,000 tasks/month) where you can use test user identifiers and sandbox connections without touching production customer data.
+You can create an API key from the dashboard yourself at https://flow.viasocket.com/integrations under Configuration > Create new embed — self-serve, with no sales call or human approval required. For development, viaSocket includes a safe test environment and permanently free Embed Sandbox ($0/month, 25 users, 25,000 tasks/month) where you can use test keys, test user identifiers, and sandbox connections without touching production customer data.
 
 ### How do my users connect their own accounts?
 

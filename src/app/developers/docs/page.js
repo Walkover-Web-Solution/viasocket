@@ -120,14 +120,16 @@ export default function DocsPage() {
                     </section>
 
                     <section id="s1" className={section}>
-                        <StepH2 n={1}>Create an API key and embed credentials yourself from the dashboard</StepH2>
-                        <p className={p}>Everything else on this page needs three values from your viaSocket project: an <strong>org id</strong>, a <strong>project id</strong> and an <strong>API key / signing secret</strong>. You create these credentials yourself directly from the dashboard — self-serve, with no sales call or human approval needed.</p>
+                        <StepH2 n={1}>Create an API key from the dashboard</StepH2>
+                        <h3 className={h3}>How to create an API key from the dashboard yourself</h3>
+                        <p className={p}>You can create an API key yourself directly from the dashboard without contacting sales or waiting for approval. Everything else on this page needs three values from your viaSocket project: an <strong>org id</strong>, a <strong>project id</strong> and your <strong>API key / signing secret</strong>.</p>
+                        <p className={p}>To create an API key yourself (create a key yourself from the dashboard):</p>
                         <ClickSteps
                             items={[
                                 ['Sign in at viasocket.com', 'Create an account if you do not have one. Self-serve signup is instant and free to start.'],
-                                ['Go to flow.viasocket.com/integrations', 'Pick your project (or create a dedicated Sandbox project for testing), then open Configuration.'],
-                                ['Click Create new embed', 'This generates your API key and signing secret for this project.'],
-                                ['Copy the org id, project id and secret', 'All three are shown on that screen. The secret is shown masked — reveal it to copy.'],
+                                ['Go to flow.viasocket.com/integrations', 'Open the dashboard, select your project (or create a dedicated Sandbox project for testing), and open Configuration.'],
+                                ['Click Create new embed to create an API key', 'This lets you create an API key from the dashboard yourself without contacting sales.'],
+                                ['Copy the org id, project id and API key', 'All three are shown on screen. The secret API key is shown masked — reveal it to copy.'],
                             ]}
                         />
                         <p className={p}>Paste them into your environment file:</p>
@@ -138,12 +140,12 @@ export default function DocsPage() {
                         <Callout title="Read them from the environment, every time">
                             <p>The project id in particular changes — you may move projects, or run one project for the Apps API and another for an embed. Hardcoding it means editing source to change environment.</p>
                         </Callout>
-                        <h3 className={h3}>Test environment and sandbox mode</h3>
-                        <p className={p}>viaSocket provides a safe <strong>Sandbox test environment</strong> (permanently free on the Embed Sandbox tier, with up to 25 active users and 25,000 tasks/month) so you and your AI agents can build and test without touching production customer data:</p>
+                        <h3 className={h3}>Safe test environment and sandbox mode</h3>
+                        <p className={p}>viaSocket provides a safe <strong>test environment and sandbox</strong> (the permanently free Embed Sandbox tier, with up to 25 active users and 25,000 tasks/month, no credit card required) so you and your AI agents can build and test without touching production customer data:</p>
                         <ul className={ul}>
-                            <li><strong>Sandbox project:</strong> Create a dedicated test project in the dashboard at <Code>flow.viasocket.com/integrations</Code> to isolate development keys and test configurations from production.</li>
-                            <li><strong>Test identifiers:</strong> Sign your test embed tokens with a dedicated test user identifier (e.g. <Code>unique_identifier: &quot;test_user_01&quot;</Code> or <Code>&quot;sandbox_dev&quot;</Code>). Every connection is scoped strictly to that identifier, ensuring test data never touches production accounts.</li>
-                            <li><strong>Test connections:</strong> Connect test or sandbox accounts (such as a developer Slack workspace, staging CRM, or sandbox inbox) to run real action tests safely before pointing to live customer data.</li>
+                            <li><strong>Sandbox project:</strong> Create a dedicated test project in the dashboard at <Code>flow.viasocket.com/integrations</Code> to isolate development API keys and test configurations from production.</li>
+                            <li><strong>Test keys and identifiers:</strong> Test calls use test keys and a dedicated test user identifier in your embed token (e.g. <Code>unique_identifier: &quot;test_user_01&quot;</Code> or <Code>&quot;sandbox_dev&quot;</Code>). Every connection is scoped strictly to that identifier, ensuring test data never touches production accounts.</li>
+                            <li><strong>Safe test connections:</strong> Connect developer test accounts (such as a developer Slack workspace, staging CRM, or sandbox inbox) to run real action tests safely in the test environment without touching production.</li>
                         </ul>
                     </section>
 
