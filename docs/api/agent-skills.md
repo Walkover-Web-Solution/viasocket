@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/agent-skills/**", "public/.well-known/agent-skills/**"]
-verified_at: 00d6bea8
+verified_at: c22d7d60
 verified_on: 2026-11-16
 ---
 # API — Agent Skills Discovery (RFC v0.2.0)
