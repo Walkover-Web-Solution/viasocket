@@ -27,19 +27,6 @@ export default function PricingPage() {
                     <h1>{C.h1}</h1>
                     <p className={s['hero-sub']}>{C.sub}</p>
                     <PricingPlans />
-                    <div className={p.every}>
-                        <p>
-                            {C.everyPlan.map((x) =>
-                                Array.isArray(x) ? (
-                                    <a key={x[0]} href={x[1]}>
-                                        {x[0]}
-                                    </a>
-                                ) : (
-                                    x
-                                )
-                            )}
-                        </p>
-                    </div>
                 </div>
             </section>
 
