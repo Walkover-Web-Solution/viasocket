@@ -10,6 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const matter = require('gray-matter');
 const yaml = require('js-yaml');
+const { generateLlmsFull } = require('./generate-llms-full');
 
 const POSTS_DIR = path.resolve('_posts/blogs');
 const OUT_FILE = path.resolve('src/data/blogs.json');
@@ -142,6 +143,7 @@ async function generateBlogs() {
     fs.mkdirSync(path.dirname(OUT_FILE), { recursive: true });
     fs.writeFileSync(OUT_FILE, `${JSON.stringify({ _comment: 'Generated from _posts/blogs by build-utilities/generate-blogs.js. Edit the Markdown, not this file.', posts }, null, 2)}\n`);
     console.log(`[blogs] ${posts.length} post${posts.length === 1 ? '' : 's'} written to src/data/blogs.json`);
+    generateLlmsFull();
 }
 
 generateBlogs().catch((err) => {

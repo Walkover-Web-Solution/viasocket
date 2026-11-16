@@ -27,7 +27,8 @@ viasocket/
 │   ├── uploads/              # images referenced by _posts/ MDX
 │   ├── review-image/         # review screenshots
 │   ├── _redirects            # one /faq rule
-│   └── llms.txt, site.webmanifest, browserconfig.xml
+│   ├── _headers              # Pages header rule: Link on the homepage document
+│   └── llms.txt, llms-full.txt, site.webmanifest, browserconfig.xml
 └── src/
     ├── middleware.js         # /home → /, /home-b → /, rdt_cid, Reddit CAPI
     ├── enums.js              # BlockTypes for the flow renderer
@@ -79,6 +80,7 @@ Where each kind of change goes. The rules come from existing patterns and from t
 | Homepage version B | `public/home-b/index.html`, `public/home-ab.js` | Homepage only. The inline gate in version A's `<head>` fetches the file for variant B and writes it into `/`; middleware redirects `/home-b` to `/`. Do not apply this layout to other routes ([01-homepage](modules/01-homepage.md)). |
 | Image for a React page | `public/assets/<kind>/` | `next/image` does not optimize, so compress the file first ([14-performance](14-performance.md#rendering)). |
 | Redirect | `next.config.js` `redirects()` | Every current redirect lives there. Middleware holds `/home` and the redirect from `/home-b` to `/`, and `public/_redirects` holds one legacy rule. Record the redirect in [05-navigation](05-navigation.md#redirects-rewrites-and-middleware), and never shadow a path that another deployment serves (AGENTS rule 15). |
+| Response header on a static file or the homepage | `public/_headers` | Cloudflare Pages applies these rules to the static asset it serves, so write the **asset** path (`/new-home/` for `/`) and do not use this file for a header a `src/app/**/page.js` route needs: Function responses are not covered. The homepage `Link` header is documented in [01-homepage](modules/01-homepage.md#link-header-agent-discovery-without-an-html-parse). |
 | Internal API route | `src/app/api/<name>/route.js` with `runtime = 'edge'` | See [12-api-guidelines](12-api-guidelines.md) and [api/](api/track-variant.md). |
 | Tracking or analytics event | `src/utils/trackVisitor.js` (`trackCtaClick`, `trackInteraction`) and `[data-track]` attributes | AGENTS rules 7, 10 and 12. The event contracts are in [CONTRACTS](CONTRACTS.md#analytics--telemetry-event-contracts). |
 | Middleware experiment client | `src/utils/mwExperiment.js` | One module. A page imports `mwVariant` and `mwSend`. Do not copy the snippet into a layout or into `public/new-home/`, and do not send an event until a page runs an experiment. Contract: [CONTRACTS](CONTRACTS.md#middleware-experiments). |
