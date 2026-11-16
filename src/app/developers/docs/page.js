@@ -112,6 +112,9 @@ export default function DocsPage() {
                             ]}
                         />
                         <p className={p}>Both call exactly the same endpoints. This page is the manual path.</p>
+                        <Callout title="Create an API key yourself from the dashboard">
+                            <p>You can create an API key yourself directly from the dashboard at <Code>flow.viasocket.com/integrations</Code> under Configuration &gt; Create new embed. No sales call, credit card, or human approval is needed to create an API key from the dashboard yourself or use the safe Embed Sandbox test environment.</p>
+                        </Callout>
                         <Callout title="Slack is the example, and the code says so">
                             <p>Every sample below uses <strong>Slack</strong>, posting a message to a channel. Slack is not special and nothing in these steps is Slack-specific — swap three ids and the same ten steps append a row to Google Sheets or create a deal in HubSpot.</p>
                             <p>Each code block says this in a comment on its own first line, so a snippet you copy — into your editor, or into an AI assistant — carries that context with it.</p>
