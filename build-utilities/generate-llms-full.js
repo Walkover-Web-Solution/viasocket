@@ -9,6 +9,7 @@ const ROOT_DIR = path.resolve(__dirname, '..');
 const LLMS_FILE = path.join(ROOT_DIR, 'public/llms.txt');
 const HOMEPAGE_FILE = path.join(ROOT_DIR, 'public/homepage.md');
 const PRICING_FILE = path.join(ROOT_DIR, 'public/pricing.md');
+const AGENTS_FILE = path.join(ROOT_DIR, 'public/AGENTS.md');
 const NOT_FOUND_FILE = path.join(ROOT_DIR, 'public/not-found.md');
 const OUT_FILE = path.join(ROOT_DIR, 'public/llms-full.txt');
 
@@ -86,6 +87,19 @@ function generateLlmsFull() {
             '## Pricing (/pricing.md)',
             '',
             pricingContent
+        );
+    }
+
+    // Coding agent instructions
+    if (fs.existsSync(AGENTS_FILE)) {
+        let agentsContent = fs.readFileSync(AGENTS_FILE, 'utf8').trim();
+        agentsContent = agentsContent.replace(/^# viaSocket\s*\n+/, '');
+        agentsContent = demoteHeadings(agentsContent, 1);
+        sections.push(
+            '',
+            '## Coding agent instructions (/AGENTS.md)',
+            '',
+            agentsContent
         );
     }
 
