@@ -22,6 +22,8 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/.well-known/agent-card.json` | `src/app/.well-known/agent-card.json/route.js` | A2A agent card for the public docs MCP ([api/agent-card](api/agent-card.md)) |
 | `/.well-known/poppy.json` | `src/app/.well-known/poppy.json/route.js` | Personal Agent Protocol (Poppy 1.0) discovery document ([api/poppy](api/poppy.md)) |
+| `/.well-known/products.json` | `src/app/.well-known/products.json/route.js` | Machine-readable products and SDK/CLI package discovery |
+| `/products.json` | `src/app/products.json/route.js` | Products manifest (re-exports `/.well-known/products.json`) |
 | `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/ask` | `src/app/ask/route.js` | NLWeb natural-language query endpoint ([api/nlweb-ask](api/nlweb-ask.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |

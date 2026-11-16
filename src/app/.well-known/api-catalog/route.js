@@ -10,6 +10,7 @@ const marketingLinkset = (origin) => ({
         { href: `${origin}/developers/docs` },
         { href: `${origin}/docs/mcp` },
         { href: `${origin}/ask` },
+        { href: `${origin}/products.json` },
         { href: `${origin}/.well-known/ai-catalog.json` },
     ],
 });

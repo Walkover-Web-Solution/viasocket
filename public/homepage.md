@@ -14,7 +14,7 @@ https://flow.viasocket.com/documentation/skill-install.md
 It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
 My viaSocket org_id is <your org_id> and project_id is <your project_id>: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
 If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
-If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://flow.viasocket.com/documentation/skill.md?format=http instead.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package (`npm install viasocket-apps`); its types are its documentation. If it is Python, use the viasocket PyPI package (`pip install viasocket`). If it is not, follow https://flow.viasocket.com/documentation/skill.md?format=http instead.
 Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
 
 Ask me what I want to build first.
@@ -91,6 +91,9 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Use cases: /use-cases
 - Developers: /developers
 - Pricing: /pricing
+- Node.js SDK & CLI (npm): https://www.npmjs.com/package/viasocket-apps
+- Python SDK (PyPI): https://pypi.org/project/viasocket/
+- Products and packages manifest: /products.json
 - LLM site overview: /llms.txt
 - Coding agent instructions: /AGENTS.md
 - AI catalog: /.well-known/ai-catalog.json

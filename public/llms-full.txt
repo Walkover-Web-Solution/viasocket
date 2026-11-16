@@ -29,10 +29,13 @@ Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct
 5. Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
 
 Keep keys and secrets out of browser code, logs and committed files.
-## SDK and API
+## SDK, CLI and API
 
-- Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- Node.js SDK: make viaSocket calls through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package ([GitHub](https://github.com/Walkover-Web-Solution/viasocket-apps), `npm install viasocket-apps`). First call: `import { ViaSocket } from 'viasocket-apps'; const vs = new ViaSocket({ orgId, projectId, secret });`
+- CLI: [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) (`npm install -g viasocket-apps` or `npx viasocket-apps`). First call: `npx viasocket-apps --help` or `npx viasocket-apps setup`.
+- Python SDK: make viaSocket calls through the [`viasocket`](https://pypi.org/project/viasocket/) PyPI package (`pip install viasocket`). First call: `from viasocket import ViaSocket; vs = ViaSocket(org_id, project_id, secret)`
 - Any other backend: follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- [Products and packages manifest](/products.json): machine-readable SDK and CLI package listings.
 - [Full skill](https://flow.viasocket.com/documentation/skill.md): the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - [App integrations](https://flow.viasocket.com/documentation/skill/app-integrations.md): users connect their own apps; the product runs their actions and reacts to their events.
 - [Automations](https://flow.viasocket.com/documentation/automations.md): workflows on an event, a schedule or a webhook, created from code per user.
@@ -67,6 +70,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [Agent skills index](/.well-known/agent-skills/index.json) (Agent Skills Discovery v0.2.0): installable skills for AI coding agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
+- [Markdown mirror (root)](/homepage.md): machine-readable homepage summary.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): entry points for AI agents (MCP servers, docs, skills, llms.txt).
 - [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
@@ -112,7 +116,7 @@ https://flow.viasocket.com/documentation/skill-install.md
 It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
 My viaSocket org_id is <your org_id> and project_id is <your project_id>: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
 If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
-If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://flow.viasocket.com/documentation/skill.md?format=http instead.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package (`npm install viasocket-apps`); its types are its documentation. If it is Python, use the viasocket PyPI package (`pip install viasocket`). If it is not, follow https://flow.viasocket.com/documentation/skill.md?format=http instead.
 Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
 
 Ask me what I want to build first.
@@ -189,6 +193,9 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Use cases: /use-cases
 - Developers: /developers
 - Pricing: /pricing
+- Node.js SDK & CLI (npm): https://www.npmjs.com/package/viasocket-apps
+- Python SDK (PyPI): https://pypi.org/project/viasocket/
+- Products and packages manifest: /products.json
 - LLM site overview: /llms.txt
 - Coding agent instructions: /AGENTS.md
 - AI catalog: /.well-known/ai-catalog.json
@@ -253,10 +260,12 @@ Works with Cursor, Claude Code and Codex. The user can paste the setup prompt fr
 
 Keep keys and secrets out of browser code, logs and committed files.
 
-### SDK and API
+### SDK, CLI and API
 
-- **Node.js backend**: Make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- **Node.js SDK and CLI**: Make viaSocket calls through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package ([GitHub](https://github.com/Walkover-Web-Solution/viasocket-apps), `npm install viasocket-apps`). CLI: `npx viasocket-apps` or `npm install -g viasocket-apps`.
+- **Python SDK**: Make viaSocket calls through the [`viasocket`](https://pypi.org/project/viasocket/) PyPI package (`pip install viasocket`).
 - **Any other backend**: Follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- **Products and packages manifest**: [/products.json](/products.json) — machine-readable SDK and CLI package listings.
 - **Full skill**: [https://flow.viasocket.com/documentation/skill.md](https://flow.viasocket.com/documentation/skill.md) — the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - **Developer documentation**: [https://flow.viasocket.com/documentation](https://flow.viasocket.com/documentation)
 
