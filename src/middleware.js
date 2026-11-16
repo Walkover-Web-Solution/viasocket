@@ -1,7 +1,11 @@
 import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
+import { buildJsonNotFoundResponse } from './utils/buildJsonNotFoundResponse';
+import { prefersApplicationJson } from './utils/prefersApplicationJson';
 import { prefersTextMarkdown } from './utils/prefersTextMarkdown';
+
+const JSON_404_PROBE_HEADER = 'x-json-404-probe';
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -72,10 +76,32 @@ function managedRedirect(request, list) {
 export async function middleware(request) {
     const { pathname, searchParams } = request.nextUrl;
 
+    if (request.headers.get(JSON_404_PROBE_HEADER) === '1') {
+        return NextResponse.next();
+    }
+
     const redirect = managedRedirect(request, await managedRedirects());
     if (redirect) return redirect;
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+
+    if (prefersApplicationJson(request.headers.get('accept'))) {
+        const probeHeaders = new Headers(request.headers);
+        probeHeaders.set(JSON_404_PROBE_HEADER, '1');
+        probeHeaders.set('accept', 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8');
+        try {
+            const probe = await fetch(request.url, {
+                method: 'GET',
+                headers: probeHeaders,
+                redirect: 'manual',
+            });
+            if (probe.status === 404) {
+                return buildJsonNotFoundResponse(request);
+            }
+        } catch (err) {
+            console.error('[json-404] probe failed:', err.message);
+        }
+    }
 
     if (barePath === '/' && prefersTextMarkdown(request.headers.get('accept'))) {
         const mdUrl = new URL('/homepage.md', request.url);

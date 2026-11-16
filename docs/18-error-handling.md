@@ -1,7 +1,7 @@
 ---
-covers: ["src/utils/SendErrorMessage.js", "src/app/not-found.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/utils/SendErrorMessage.js", "src/app/not-found.js", "src/utils/prefersApplicationJson.js", "src/utils/buildJsonNotFoundResponse.js", "src/middleware.js"]
+verified_at: a1c4e902
+verified_on: 2026-11-16
 ---
 # 18 Error Handling
 
@@ -82,4 +82,8 @@ There is no error boundary: no `error.js`, `global-error.js` or `loading.js` exi
 | Loading | **Navigation:** `src/app/providers.js:AppProvider` intercepts same-origin `<a>` clicks, shows its `Skeleton` (a navbar-shaped placeholder) and does a full page load through `window.location.href`. There is no route-level loading file. **In-page:** components keep their own flags (`onLoadingChange` in `src/app/components/home/SearchInputHomeOptimized.js`), and the MSG91 box shows a skeleton until its script loads. `<Suspense>` with no fallback wraps `AppDirectory` in `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js` and `BetaRequestButton` in `src/components/IntegrationsComp/addToProduct/AddToProductPage.js`. Inferred: this is there for their `useSearchParams` use, not as a loading state. |
 | Empty | The section returns `null` (`BlogPosts`, `FAQs`, `StoriesSection`). An empty navbar or footer renders without links. A missing app count can print `NaN+` (`src/app/signup/page.js`, `+appCount + 300`). |
 | Partial (one backend down) | The failed helper's section disappears and the rest renders. Exception: a throw inside a loader (C-12) blanks the whole page, and a failed `getCombos` or `getTemplates` turns into a redirect to the index. |
-| Not found | `src/app/not-found.js` → `ErrorComp`, HTTP 404, via `notFound()` or an unmatched route. Avoid the soft-404 patterns listed above in new routes. |
+| Not found | `src/app/not-found.js` → `ErrorComp`, HTTP 404, via `notFound()` or an unmatched route. Avoid the soft-404 patterns listed above in new routes. When `Accept` prefers JSON (`src/utils/prefersApplicationJson.js`), middleware probes the HTML render and, on HTTP 404, returns `application/problem+json` from `src/utils/buildJsonNotFoundResponse.js` instead of the HTML error page. HTML clients are unchanged. |
+
+## JSON clients (Axien `read.json-404`)
+
+For requests whose `Accept` header prefers JSON over HTML, `src/middleware.js` runs a same-URL probe with `x-json-404-probe: 1` (so the probe skips negotiation). If the probe returns HTTP 404, the middleware answers with RFC 7807-style JSON and does not render `not-found.js`. Existing routes that return 200 (including soft 404s) are not affected.
