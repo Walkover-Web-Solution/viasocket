@@ -12,13 +12,13 @@ const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
 const RDT_CID_REGEX = /^[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$/;
 
-// Where an agent finds the API catalog and the site's description for it without parsing the
+// Where an agent finds the AI catalog, API catalog and the site's description for it without parsing the
 // HTML. The markdown representation of "/" is built here, so it has to carry this itself:
 // Cloudflare Pages applies public/_headers to static assets only, and an agent asking for
 // markdown never reaches the HTML response that file covers. Keep it equal to the
 // "/new-home/" rule in public/_headers.
 const AGENT_LINK_HEADER =
-    '</.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"';
+    '</.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json", </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"';
 
 const isValidRdtCid = (value) => typeof value === 'string' && value.length >= 40 && RDT_CID_REGEX.test(value);
 
@@ -161,6 +161,7 @@ export async function middleware(request) {
 
     if (barePath === '/') {
         response.headers.set('Vary', 'Accept');
+        response.headers.set('Link', AGENT_LINK_HEADER);
     }
 
     // /setup-prompt echoes org and project ids in its flight data. A shared cache
