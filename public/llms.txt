@@ -51,7 +51,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [Pricing](https://viasocket.com/pricing): plans. You can start free.
 - [Apps and integrations](https://viasocket.com/integrations): all 2,300+ apps, each with its triggers and actions. [Full list by category](https://viasocket.com/integrations/category/all).
 - [Use cases and templates](https://viasocket.com/use-cases): pre-built automations for common jobs.
-- [Quickstart](https://viasocket.com/help/quickstart): build a first workflow in the visual builder.
+- [Quickstart](/developers/docs): install the SDK, sign a JWT for your user, and run your first Apps API call (cURL or Node.js).
 - [Help center](https://viasocket.com/help/flow): workflows, built-in tools, webhooks, cron and error handling.
 - [Talk to an expert](https://cal.id/team/viasocket-integration-layer): book a call.
 
