@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: 8ec6e8ca
+verified_at: 37841d9c
 verified_on: 2026-11-16
 ---
 # API — docs-mcp (public documentation MCP)
