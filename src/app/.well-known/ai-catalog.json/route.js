@@ -11,6 +11,12 @@ const buildAiCatalog = (origin) => {
                 type: 'application/mcp-server-card+json',
                 url: `${base}/docs/mcp/server-card`,
             },
+            {
+                identifier: `urn:air:${url.hostname}:nlweb:ask`,
+                displayName: 'viaSocket NLWeb Ask Endpoint',
+                type: 'application/json',
+                url: `${base}/ask`,
+            },
         ],
     };
 };
