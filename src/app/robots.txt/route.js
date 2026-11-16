@@ -10,6 +10,7 @@ export async function GET(request) {
 
     const robotsContent = isProd
         ? `User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=no
 Disallow: /admin/
 Sitemap: https://viasocket.com/sitemap.xml
 Sitemap: https://plugservice-api.viasocket.com/sitemap/index-page`
