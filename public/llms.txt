@@ -66,6 +66,8 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
 - [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
+- [Agent authentication](/auth.md): credentials, scopes, and first authenticated call for agents.
+- [Pricing](/pricing.md): machine-readable summary of plans and task limits.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
 - [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.

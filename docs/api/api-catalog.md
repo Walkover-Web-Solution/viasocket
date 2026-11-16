@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/api-catalog/route.js"]
-verified_at: dc2fd06e
+verified_at: 2f624203
 verified_on: 2026-11-16
 ---
 # API — RFC 9727 api-catalog
@@ -18,6 +18,6 @@ Static JSON in `src/app/.well-known/api-catalog/route.js`. No authentication. Ca
 | Anchor | Points to |
 |---|---|
 | `https://flow.viasocket.com/` | Product documentation and `llms.txt` |
-| Request origin (production bare domain) | Marketing `llms.txt`, `/developers/docs` (Apps API quickstart), and `/docs/mcp` |
+| Request origin (production bare domain) | Marketing `llms.txt`, `/developers/docs` (Apps API quickstart), `/docs/mcp`, and `/auth.md` |
 
 OpenAPI specs are not listed: flow's product API specs are not published at stable public URLs from this repo.
