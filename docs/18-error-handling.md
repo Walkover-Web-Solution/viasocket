@@ -1,7 +1,7 @@
 ---
-covers: ["src/utils/SendErrorMessage.js", "src/app/not-found.js"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+covers: ["src/utils/SendErrorMessage.js", "src/utils/serveNotFoundMarkdown.js", "public/not-found.md", "src/app/not-found.js", "src/middleware.js"]
+verified_at: 342e79bc
+verified_on: 2026-11-16
 ---
 # 18 Error Handling
 
@@ -42,6 +42,7 @@ There is no error boundary: no `error.js`, `global-error.js` or `loading.js` exi
 
 ## UI Layer
 - **An empty section renders nothing.** Components return `null` on empty data, for example `BlogPosts` in `src/components/IntegrationsComp/addToProduct/SiteChrome.js`, `src/app/components/new-home/FAQs.js` and `src/app/components/home/StoriesSection.js`, or wrap themselves in `data?.length > 0 &&`. Follow this pattern rather than rendering an empty frame.
+- **Agent-readable 404** (`read.helpful-404`): when a client sends `Accept` preferring `text/markdown`, `src/middleware.js` issues a `HEAD` probe (header `x-viasocket-404-probe: 1`) and, on HTTP 404, serves `public/not-found.md` through `src/utils/serveNotFoundMarkdown.js` with `Content-Type: text/markdown; charset=utf-8` and `Vary: Accept`. HTML clients still get `src/app/not-found.js` → `ErrorComp`.
 - **`notFound()` gives a real 404** with `src/app/not-found.js`, which renders `src/components/404/404Comp.js` ("404: Return to homepage.") with the title "404 - Page not found". It is used by:
   - `src/app/feedback/page.js`, for any `variant` other than `satisfied` or `unsatisfied`
   - `src/app/departments/[slug]/page.js`, for an unknown department or a loader throw

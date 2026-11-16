@@ -2,6 +2,9 @@ import { NextResponse } from 'next/server';
 import fallbackRedirects from './data/redirects.json';
 import { ADMIN_URL } from './const/admin';
 import { prefersTextMarkdown } from './utils/prefersTextMarkdown';
+import { serveNotFoundMarkdown } from './utils/serveNotFoundMarkdown';
+
+const NOT_FOUND_PROBE_HEADER = 'x-viasocket-404-probe';
 const RDT_CID_COOKIE = 'rdt_cid';
 const RDT_CID_MAX_AGE = 60 * 60 * 24 * 30;
 
@@ -76,6 +79,26 @@ export async function middleware(request) {
     if (redirect) return redirect;
 
     const barePath = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
+
+    if (
+        request.headers.get(NOT_FOUND_PROBE_HEADER) !== '1' &&
+        prefersTextMarkdown(request.headers.get('accept'))
+    ) {
+        try {
+            const probe = await fetch(request.url, {
+                method: 'HEAD',
+                headers: {
+                    accept: 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+                    [NOT_FOUND_PROBE_HEADER]: '1',
+                },
+            });
+            if (probe.status === 404) {
+                return serveNotFoundMarkdown(request);
+            }
+        } catch (err) {
+            console.error('[404 markdown] probe failed:', err.message);
+        }
+    }
 
     if (barePath === '/' && prefersTextMarkdown(request.headers.get('accept'))) {
         const mdUrl = new URL('/homepage.md', request.url);
