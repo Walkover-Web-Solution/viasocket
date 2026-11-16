@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/developers/**", "src/app/embed/**", "src/app/components/embed/**", "src/app/setup-prompt/**", "src/app/auth.md/**", "public/auth.md"]
-verified_at: 4d1d3384
+verified_at: 2f624203
 verified_on: 2026-11-16
 ---
 # Module: Developers (Embed)
