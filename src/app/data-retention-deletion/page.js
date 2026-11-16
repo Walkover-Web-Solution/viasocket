@@ -50,38 +50,41 @@ export default async function DataRetentionDeletionPolicyPage() {
                         clarity in our practices.
                     </span>
                     <div>
-                        <strong>1. Scope of Policy</strong>
+                        <h2 className="text-base font-bold">1. Scope of Policy</h2>
                         <p data-custom-class="body_text">
                             This policy applies to all data processed by viaSocket related to workflows and integrations
                             created by our users
                         </p>
                     </div>
                     <div className="flex flex-col gap-3">
-                        <strong>2. Data Retention Practices</strong>
-                        <p data-custom-class="body_text">
-                            <strong>Workflow Content</strong>
-                            <br />
-                            Workflow Content refers to the data transferred through workflows during execution. We do
-                            not store or retain this data. It is temporarily processed only to integrate apps and
-                            facilitate workflow execution.
-                        </p>
-                        <p data-custom-class="body_text">
-                            <strong>Workflow Logs</strong>
-                            <br />
-                            Workflow Logs include metadata like workflow names, execution dates, times, and statuses.
-                            These logs are retained for a period of 15 days for troubleshooting purposes and are
-                            archived after this period.
-                        </p>
-                        <p data-custom-class="body_text">
-                            <strong>Workflow Metrics</strong>
-                            <br />
-                            Workflow Metrics include aggregated statistics about workflows, such as the number of
-                            invocations. Only statistical data is retained, and no detailed workflow content or data is
-                            stored.
-                        </p>
+                        <h2 className="text-base font-bold">2. Data Retention Practices</h2>
+                        <div>
+                            <h3 className="text-base font-bold">Workflow Content</h3>
+                            <p data-custom-class="body_text">
+                                Workflow Content refers to the data transferred through workflows during execution. We do
+                                not store or retain this data. It is temporarily processed only to integrate apps and
+                                facilitate workflow execution.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-base font-bold">Workflow Logs</h3>
+                            <p data-custom-class="body_text">
+                                Workflow Logs include metadata like workflow names, execution dates, times, and statuses.
+                                These logs are retained for a period of 15 days for troubleshooting purposes and are
+                                archived after this period.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 className="text-base font-bold">Workflow Metrics</h3>
+                            <p data-custom-class="body_text">
+                                Workflow Metrics include aggregated statistics about workflows, such as the number of
+                                invocations. Only statistical data is retained, and no detailed workflow content or data is
+                                stored.
+                            </p>
+                        </div>
                     </div>
                     <div>
-                        <strong>3. Data Deletion Process</strong>
+                        <h2 className="text-base font-bold">3. Data Deletion Process</h2>
                         <p data-custom-class="body_text">
                             To request the deletion of your data, you can follow these steps:
                         </p>
@@ -104,7 +107,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </ul>
                     </div>
                     <div>
-                        <strong>4. Verification Process</strong>
+                        <h2 className="text-base font-bold">4. Verification Process</h2>
                         <p data-custom-class="body_text">
                             For security and to prevent unauthorized data deletion requests, we may ask for:
                         </p>
@@ -114,7 +117,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </ul>
                     </div>
                     <div>
-                        <strong>5. Data Deletion Timeline</strong>
+                        <h2 className="text-base font-bold">5. Data Deletion Timeline</h2>
                         <p data-custom-class="body_text">Once your request is verified:</p>
                         <ul className="list-disc pl-4">
                             <li>We will immediately delete the specified data.</li>
@@ -122,7 +125,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </ul>
                     </div>
                     <div>
-                        <strong>6. Retention Periods</strong>
+                        <h2 className="text-base font-bold">6. Retention Periods</h2>
                         <p data-custom-class="body_text">
                             Workflow Data: Retained for 7 days and then archived for an additional 7 days. Archived data
                             is not actively used in the system.
@@ -133,7 +136,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </p>
                     </div>
                     <div>
-                        <strong>7. Data Deletion Limitations</strong>
+                        <h2 className="text-base font-bold">7. Data Deletion Limitations</h2>
                         <p data-custom-class="body_text">
                             Certain data may not be eligible for deletion in cases where:
                         </p>
@@ -144,7 +147,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </ul>
                     </div>
                     <div>
-                        <strong>8. Impact of Data Deletion</strong>
+                        <h2 className="text-base font-bold">8. Impact of Data Deletion</h2>
                         <p data-custom-class="body_text">After data deletion:</p>
                         <ul className="list-disc pl-4">
                             <li>The data cannot be recovered.</li>
@@ -153,7 +156,7 @@ export default async function DataRetentionDeletionPolicyPage() {
                         </ul>
                     </div>
                     <div>
-                        <strong>9. Contact Information</strong>
+                        <h2 className="text-base font-bold">9. Contact Information</h2>
                         <p data-custom-class="body_text">
                             For any questions or concerns about this policy, please contact us at{' '}
                             <a className="text-link" href="mailto:support@viasocket.com">

@@ -1,6 +1,6 @@
 ---
 covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt", "public/llms-full.txt", "public/AGENTS.md", "parked/llms.txt"]
-verified_at: 20f537f7
+verified_at: 862280cc
 verified_on: 2026-11-16
 ---
 # Design System & UI Standards
@@ -272,7 +272,7 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
   - `SoftwareApplication` + `FAQPage` in `src/components/IntegrationsComp/addToProduct/AddToProductPage.js` (single-app pages); `FAQPage` in `FeaturesPage.js`, `UseCasesPage.js` and `IntegrationsIndexPage.js` (index only, not categories), all built from `copy.js`. The older `integrationsAppOneComp.js` has the same pair but no longer renders ([OPEN_QUESTIONS](OPEN_QUESTIONS.md) C-08).
   - `Organization`, `WebSite`, `SoftwareApplication`, `WebPage` and `FAQPage` in `public/new-home/index.html`. If you edit the homepage FAQ, update both the visible FAQ and the JSON-LD: they are separate copies.
   - The dormant front-page builds its graph from visible copy (`src/app/front-page/seo.js:schemaGraph`).
-- **Headings:** one `<h1>` per page, styled with `.h1`, and section titles as `<h2 className="h2">`. Footers use `<h2>` for column titles (`src/components/footer/footer.js`).
+- **Headings:** one `<h1>` per page, styled with `.h1`, section titles as `<h2 className="h2">`, and cards or subsections as `<h3>`. Footers use `<h2>` for column titles (`src/components/footer/footer.js`). Meets the AgentReady/Axien page structure criteria (H1 present, at least 3 headings per page, text-to-markup density).
 - **Sitemap, robots, llms.txt, AGENTS.md:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown file for LLM crawlers, served as a static file (`text/plain; charset=utf-8`), linking to `public/AGENTS.md` (`/AGENTS.md`) for coding agent instructions. It is not generated and it is not part of the `public/new-home/` export. The previous 1,141-line automation directory is kept at `parked/llms.txt` and is not served. `/llms-full.txt` is built at build time by `build-utilities/generate-llms-full.js` from the site's current markdown files (`public/llms.txt`, `public/homepage.md`, `public/pricing.md`, `public/not-found.md`) and served statically as `text/plain; charset=utf-8`. When you add or rename a public section, update `public/llms.txt` by hand.
 
 > [!TODO]

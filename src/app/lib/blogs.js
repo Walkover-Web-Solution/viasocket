@@ -16,12 +16,14 @@ export function getBlog(slug) {
 export function getRelatedBlogs(post, limit = 3) {
     const others = data.posts.filter((p) => p.slug !== post.slug);
     const same = others.filter((p) => post.category && p.category === post.category);
-    return [...same, ...others.filter((p) => !same.includes(p))].slice(0, limit);
+    return [...same, ...others.filter((p) => !same.includes(p))]
+        .slice(0, limit)
+        .map(({ html, toc, faqs, ...rest }) => rest);
 }
 
 /** The newest `limit` posts, for the "Learn more" section on other pages. */
 export function getLatestBlogs(limit = 3) {
-    return data.posts.slice(0, limit);
+    return data.posts.slice(0, limit).map(({ html, toc, faqs, ...rest }) => rest);
 }
 
 export function formatBlogDate(date) {
