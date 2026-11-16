@@ -1,5 +1,5 @@
 ---
-covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/homepage.md", "src/middleware.js", "src/utils/prefersTextMarkdown.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
+covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/homepage.md", "public/_headers", "src/middleware.js", "src/utils/prefersTextMarkdown.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
 verified_at: 8bbcaadf
 verified_on: 2026-11-16
 ---
@@ -74,6 +74,28 @@ The homepage uses no React components. Its tokens (`:root` in `public/new-home/s
 ## Agent-readable homepage (`Accept: text/markdown`)
 
 When a client requests `/` with an `Accept` header that prefers `text/markdown` over `text/html`, `src/middleware.js` serves `public/homepage.md` with `Content-Type: text/markdown; charset=utf-8`. Browser-default requests still get version A's HTML through the `beforeFiles` rewrite. Both responses carry `Vary: Accept` so a shared cache does not serve markdown to HTML clients. The markdown is a sibling summary of the homepage (setup prompt, features, compliance, FAQ and links), aligned with version B's Agent view and `public/llms.txt`. Edit `public/homepage.md` when homepage copy changes until the same text is exported from `viasocket-site`.
+
+### Link header (agent discovery without an HTML parse)
+
+The homepage HTML carries a `Link` response header so an agent finds the machine-readable resources from the response alone (RFC 8288; the `find.link-headers` check of Axien / AgentReady):
+
+```text
+Link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"
+```
+
+It is declared in `public/_headers`, which Cloudflare Pages copies into the build output and applies to static-asset responses:
+
+```text
+/new-home/
+  link: </.well-known/api-catalog>; rel="api-catalog", </llms.txt>; rel="describedby"; type="text/plain"
+```
+
+Two details decide whether the rule works:
+
+- **The pattern is the served asset path, not the public URL.** `/` is rewritten to `/new-home/index.html`, and Pages matches header rules against the file it serves, so `/new-home/` is the rule that reaches `/` (and the homepage document directly). A rule written as `/` does not match: header rules are only evaluated for static assets, and `/` is a rewrite.
+- **`_headers` does not cover Function responses.** The markdown representation above and every `src/app/**/page.js` route are generated inside the worker, so Pages never merges this file into them. Their headers belong in `src/middleware.js` or the route handler. Keep this in mind before adding a page-level header here.
+
+`/.well-known/api-catalog` (RFC 9727) and `/llms.txt` are both served from this repo, so the header advertises nothing that does not exist. This file is not part of the `viasocket-site` export; it is maintained here.
 
 ## Data Dependencies
 1. **None at request time.** The HTML is a static file. For a version B visitor the gate also fetches `/home-b/index.html`. App icons are hotlinked from `stuff.thingsofbrand.com` and `upload.wikimedia.org`. `main.js` drops an icon whose image fails to load.
