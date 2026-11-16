@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
-verified_at: 3bb8471f
-verified_on: 2026-11-02
+verified_at: 0b5da499
+verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
 
@@ -16,6 +16,8 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/agency-partner` | `src/app/agency-partner/page.js` with sections from `src/components/agencyPartner/`; `getAgencyPartnerPageData` | Agency partner program (Stripe buy link, cal.id) |
 | `/agency-partner/success` | `src/app/agency-partner/success/page.js` (static `○`) | Thank-you page after payment |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
+| `/.well-known/agent-skills/index.json` | `public/.well-known/agent-skills/index.json` (static `○`) | Agent Skills Discovery v0.2.0 index ([api/agent-skills](api/agent-skills.md)) |
+| `/.well-known/agent-skills/viasocket-integrations/SKILL.md` | `public/.well-known/agent-skills/viasocket-integrations/SKILL.md` (static `○`) | viaSocket integrations skill pointer for coding agents |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
