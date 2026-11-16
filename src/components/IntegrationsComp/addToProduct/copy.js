@@ -105,7 +105,7 @@ export const START_URL = 'https://flow.viasocket.com/integrations';
 
 export const FOOTER_GROUPS = [
     ['Product', [['Features', '/features'], ['Use cases', '/use-cases'], ['Integrations', '/integrations'], ['Discover top apps', '/discovery'], ['Security', '/help/security-and-compliance']]],
-    ['Build', [['List your app', 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'], ['Build your own plug', '/help/plugin-builder'], ['Billing partners', '/help/viasocket-embed/billing-partner']]],
+    ['Build', [['List your app', 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket'], ['Build your own plug', '/help/plugin-builder'], ['Billing partners', '/help/viasocket-embed/billing-partner'], ['Node.js SDK & CLI (npm)', 'https://www.npmjs.com/package/viasocket-apps', '_blank'], ['Python SDK (PyPI)', 'https://pypi.org/project/viasocket/', '_blank']]],
     ['Partners', [['Become a partner', '/help/partners'], ['Partner program', '/experts'], ['Agency partners', '/agency-partner']]],
     ['Support', [['Book a demo', 'https://cal.id/team/viasocket/workflow-setup-discussion'], ['Contact support', '/support'], ['Request a feature', 'https://roadmap.viasocket.com/b/n0elp3vg/feature-ideas'], ['Request an integration', '/integrations']]],
     ['Company', [['About', '/help/about-us'], ['We’re hiring', 'https://walkover.in/careers'], ['Culture we foster', 'https://walkover.in/about/culture-we-foster'], ['Roadmap', 'https://roadmap.viasocket.com/roadmap'], ['AI transparency', '/help/security-and-compliance/ai-transparency'], ['Explore more', 'https://walkover-products.embarko.app/?from=viasocket', '_blank']]],

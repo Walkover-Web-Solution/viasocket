@@ -1,0 +1,23 @@
+{
+  "name": "viaSocket",
+  "description": "Integration Layer for your products & agents",
+  "packages": [
+    {
+      "registry": "npm",
+      "name": "viasocket-apps",
+      "cli": true,
+      "binary": "viasocket-apps",
+      "url": "https://www.npmjs.com/package/viasocket-apps",
+      "install": "npm install viasocket-apps"
+    },
+    {
+      "registry": "pypi",
+      "name": "viasocket",
+      "url": "https://pypi.org/project/viasocket/",
+      "install": "pip install viasocket"
+    }
+  ],
+  "npm": "viasocket-apps",
+  "pypi": "viasocket",
+  "cli": "viasocket-apps"
+}
