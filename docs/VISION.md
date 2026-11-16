@@ -1,6 +1,6 @@
 ---
-covers: ["public/new-home/**", "public/llms.txt", "public/pricing.md", "public/auth.md", "public/_headers", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "src/app/.well-known/**", "next.config.js"]
-verified_at: f90ae9bd
+covers: ["public/new-home/**", "public/llms.txt", "public/pricing.md", "public/auth.md", "public/_headers", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "src/app/.well-known/**", "src/app/auth.md/**", "next.config.js"]
+verified_at: 4d1d3384
 verified_on: 2026-11-16
 ---
 # Product Vision & Strategic Direction

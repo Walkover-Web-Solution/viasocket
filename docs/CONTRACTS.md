@@ -1,6 +1,6 @@
 ---
-covers: ["src/const/**", "src/app/api/**", "public/auth.md", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: f90ae9bd
+covers: ["src/const/**", "src/app/api/**", "src/app/auth.md/**", "public/auth.md", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
+verified_at: 4d1d3384
 verified_on: 2026-11-16
 ---
 # Contracts & Data Schemas
