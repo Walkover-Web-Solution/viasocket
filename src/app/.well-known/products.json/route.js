@@ -8,21 +8,37 @@ const buildProductsJson = (origin) => ({
         {
             registry: 'npm',
             name: 'viasocket-apps',
+            type: 'sdk',
+            url: 'https://www.npmjs.com/package/viasocket-apps',
+            install: 'npm install viasocket-apps',
+            firstCall: "import { ViaSocket } from 'viasocket-apps'",
+        },
+        {
+            registry: 'npm',
+            name: 'viasocket-apps',
+            type: 'cli',
             cli: true,
             binary: 'viasocket-apps',
             url: 'https://www.npmjs.com/package/viasocket-apps',
-            install: 'npm install viasocket-apps',
+            install: 'npm install -g viasocket-apps',
+            firstCall: 'npx viasocket-apps --help',
         },
         {
             registry: 'pypi',
             name: 'viasocket',
+            type: 'sdk',
             url: 'https://pypi.org/project/viasocket/',
             install: 'pip install viasocket',
+            firstCall: 'from viasocket import ViaSocket',
         },
     ],
     npm: 'viasocket-apps',
     pypi: 'viasocket',
     cli: 'viasocket-apps',
+    sdks: {
+        npm: 'viasocket-apps',
+        pypi: 'viasocket',
+    },
 });
 
 export async function GET(request) {

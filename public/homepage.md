@@ -91,4 +91,7 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Use cases: /use-cases
 - Developers: /developers
 - Pricing: /pricing
+- Node.js SDK & CLI (npm): https://www.npmjs.com/package/viasocket-apps
+- Python SDK (PyPI): https://pypi.org/project/viasocket/
+- Products and packages manifest: /products.json
 - LLM site overview: /llms.txt

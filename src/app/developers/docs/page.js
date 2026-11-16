@@ -146,12 +146,12 @@ export default function DocsPage() {
                         <LangBlock
                             panes={{
                                 curl: '# No install needed. Every step below has a plain HTTP form.\n# You will need a JWT tool for step 3 — see that step.',
-                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.\n# CLI: npx viasocket-apps',
-                                python: 'pip install viasocket\n# PyPI package for Python agents and integrations. Zero dependencies. Python 3.10+.\n# Or plain HTTP: pip install requests pyjwt',
+                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.\n# CLI install: npm install -g viasocket-apps (or run via npx)\n# First CLI call: npx viasocket-apps --help',
+                                python: 'pip install viasocket\n# PyPI package for Python agents and integrations. Zero dependencies. Python 3.10+.\n# First call: from viasocket import ViaSocket\n# Or plain HTTP: pip install requests pyjwt',
                             }}
                         />
                         <p className={p}>
-                            Official SDKs are published on npm (<a href="https://www.npmjs.com/package/viasocket-apps" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket-apps</a>, including CLI) and PyPI (<a href="https://pypi.org/project/viasocket/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket</a>). Every step below also shows the plain HTTP call, so any language works.
+                            Official SDKs are published on npm (<a href="https://www.npmjs.com/package/viasocket-apps" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket-apps</a>, with CLI binary <Code>viasocket-apps</Code>) and PyPI (<a href="https://pypi.org/project/viasocket/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket</a>). Run <Code>npx viasocket-apps --help</Code> to inspect CLI commands. Every step below also shows the plain HTTP call, so any language works.
                         </p>
                         <h4 className={h4}>Base URLs</h4>
                         <ul className={ul}>
