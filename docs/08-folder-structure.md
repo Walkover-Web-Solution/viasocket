@@ -28,7 +28,7 @@ viasocket/
 │   ├── review-image/         # review screenshots
 │   ├── _redirects            # one /faq rule
 │   ├── _headers              # Pages header rule: Link on the homepage document
-│   └── llms.txt, site.webmanifest, browserconfig.xml
+│   └── llms.txt, llms-full.txt, site.webmanifest, browserconfig.xml
 └── src/
     ├── middleware.js         # /home → /, /home-b → /, rdt_cid, Reddit CAPI
     ├── enums.js              # BlockTypes for the flow renderer
