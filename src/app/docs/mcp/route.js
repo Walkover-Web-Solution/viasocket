@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { acceptsMcpRequest, docsMcpContextFromRequest, handleDocsMcpJsonRpc } from '@/utils/docsMcp';
+import { methodNotAllowedProblem } from '@/utils/jsonErrors';
 
 export const runtime = 'edge';
 
@@ -63,4 +64,18 @@ export async function POST(request) {
         const message = err?.message || 'Internal error';
         return jsonRpcError(code, message, id);
     }
+}
+
+const methodNotAllowed = () => methodNotAllowedProblem('GET, POST, OPTIONS');
+
+export async function PUT() {
+    return methodNotAllowed();
+}
+
+export async function DELETE() {
+    return methodNotAllowed();
+}
+
+export async function PATCH() {
+    return methodNotAllowed();
 }

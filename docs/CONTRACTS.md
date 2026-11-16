@@ -1,6 +1,6 @@
 ---
-covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js"]
-verified_at: 2f624203
+covers: ["src/const/**", "src/app/api/**", "src/utils/trackVisitor.js", "src/utils/abTestVisitor.js", "src/utils/mwExperiment.js", "src/utils/collectUserInfo.js", "src/utils/handleUtmSource.js", "src/utils/handleRedirection.js", "src/utils/userIntentTracker.js", "src/utils/ExternalLink.jsx", "src/utils/templateIdManager.js", "src/app/lib/getAuth.js", "src/app/components/VariantTracker/**", "src/app/components/RedditPixel/**", "src/app/components/customLogin/**", "src/app/layout.js", "src/app/providers.js", "src/app/developers/docs/page.js", "src/utils/jsonErrors.js"]
+verified_at: e886c4a1
 verified_on: 2026-11-16
 ---
 # Contracts & Data Schemas
@@ -41,7 +41,7 @@ Rules for every new call: table-api calls go through `src/utils/axiosCalls.js` w
 Table ids, purposes, fields, getters and the A/B row columns: [database/entities.md](database/entities.md).
 
 ### Internal API routes
-The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), the RFC 9727 catalog at `/.well-known/api-catalog`, the A2A agent card at `/.well-known/agent-card.json`, the AI Catalog at `/.well-known/ai-catalog.json`, the Agent Skills Discovery index and skills at `/.well-known/agent-skills/*`, the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth), its SEP-2127 Server Card at `/docs/mcp/server-card`, and the NLWeb query endpoint at `/ask` (schema.org-typed conversational results). Contracts: [api/track-variant.md](api/track-variant.md), [api/api-catalog.md](api/api-catalog.md), [api/agent-card.md](api/agent-card.md), [api/agent-skills.md](api/agent-skills.md), [api/docs-mcp.md](api/docs-mcp.md), [api/mcp-server-card.md](api/mcp-server-card.md), [api/nlweb-ask.md](api/nlweb-ask.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
+The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200, non-POST methods return 405 RFC 9457 problem+json), `/api` and `/api/*` (RFC 9457 404 problem+json errors), the RFC 9727 catalog at `/.well-known/api-catalog`, the A2A agent card at `/.well-known/agent-card.json`, the AI Catalog at `/.well-known/ai-catalog.json`, the Agent Skills Discovery index and skills at `/.well-known/agent-skills/*`, the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth), its SEP-2127 Server Card at `/docs/mcp/server-card`, and the NLWeb query endpoint at `/ask` (schema.org-typed conversational results). Contracts: [api/track-variant.md](api/track-variant.md), [api/json-errors.md](api/json-errors.md), [api/api-catalog.md](api/api-catalog.md), [api/agent-card.md](api/agent-card.md), [api/agent-skills.md](api/agent-skills.md), [api/docs-mcp.md](api/docs-mcp.md), [api/mcp-server-card.md](api/mcp-server-card.md), [api/nlweb-ask.md](api/nlweb-ask.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
 
 ## Authentication & Authorization Assumptions
 
@@ -51,7 +51,9 @@ The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200), t
 
 ## Standard Error Envelope
 
-There is none, on either side. Helpers catch everything and return fallbacks (`[]`, `{}`, `null`, `undefined`); `POST /api/track-variant` always answers 200 with `success: false` and an optional `reason`. Failures are reported by `src/utils/SendErrorMessage.js:sendErrorMessage` (`error`, `url`, `source`, `statusCode`; production only, [flow-webhooks.md](current-infrastructure/flow-webhooks.md)). The table API's own error body is not visible in the repo. Policy: [18-error-handling.md](18-error-handling.md).
+For page loaders and helpers, there is none: helpers catch everything and return fallbacks (`[]`, `{}`, `null`, `undefined`); `POST /api/track-variant` always answers 200 with `success: false` and an optional `reason`. Failures are reported by `src/utils/SendErrorMessage.js:sendErrorMessage` (`error`, `url`, `source`, `statusCode`; production only, [flow-webhooks.md](current-infrastructure/flow-webhooks.md)). The table API's own error body is not visible in the repo. Policy: [18-error-handling.md](18-error-handling.md).
+
+For API routes (`/api`, `/api/*`, and invalid methods on `/api/track-variant`), errors are returned as machine-readable RFC 9457 problem details (`application/problem+json; charset=utf-8`) with `type`, `title`, `status`, `detail`, `code`, `error`, and `message` properties so autonomous agents and scanners (Axien `act.json-errors`) can diagnose and recover from failed API calls ([api/json-errors.md](api/json-errors.md)).
 
 ## Persistence & Client Cache Contracts
 

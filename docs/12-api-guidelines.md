@@ -1,11 +1,11 @@
 ---
 covers: ["src/app/api/**"]
-verified_at: 17b99cd8
-verified_on: 2026-10-22
+verified_at: 3a898531
+verified_on: 2026-11-16
 ---
 # 12 API Guidelines
 
-Rules for the site's own route handlers. There is one today, `POST /api/track-variant`. The external systems the site calls are listed in [CONTRACTS](CONTRACTS.md#external-systems).
+Rules for the site's own route handlers. There is one functional endpoint today (`POST /api/track-variant`), while `/api` and `/api/*` catch-all return RFC 9457 JSON problem errors. The external systems the site calls are listed in [CONTRACTS](CONTRACTS.md#external-systems).
 
 ## Layer Rules
 - **Route handlers live in `src/app/api/<name>/route.js`** and run on the edge (`export const runtime = 'edge'`). Without that line `next build` still passes, but the Cloudflare build fails ([docs/AGENTS.md §2](AGENTS.md#2-server-vs-client-boundaries)).
@@ -53,6 +53,7 @@ The site has no envelope: no `data:` wrapper and no error object. A route answer
 - **Fail closed for writes.** When a lookup returns `null` (failure), drop the event. Never treat the failure as "no history" and insert, or duplicate rows pile up, and the table has no DELETE ([table-api.md](current-infrastructure/table-api.md)).
 - **Helpers report and return a fallback.** `axiosCalls.js` functions call `sendErrorMessage` and return `null`. The route checks for `null` and does not use `try/catch` for this.
 - **Tracking runs in all three environments.** Do not gate a route on production ([DECISIONS](DECISIONS.md) ADR-009).
+- **Return errors as RFC 9457 JSON problem details (`application/problem+json`).** API route errors (including 404 for unknown endpoints and 405 for unsupported HTTP methods) return standard problem details with `type`, `title`, `status`, `detail`, `code`, `error`, and `message` fields via `src/utils/jsonErrors.js:problemResponse`.
 - The site-wide fail-soft policy, including what `sendErrorMessage` sends and when: [18-error-handling](18-error-handling.md).
 
 ## Documenting a Route

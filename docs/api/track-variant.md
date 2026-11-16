@@ -1,11 +1,11 @@
 ---
 covers: ["src/app/api/**", "src/app/robots.txt/**", "src/app/sitemap.js", "src/utils/trackVisitor.js", "src/utils/isBot.js", "src/const/abTest.js"]
-verified_at: 9ec4868d
-verified_on: 2026-11-03
+verified_at: 3a898531
+verified_on: 2026-11-16
 ---
 # API — track-variant (the site's own HTTP routes)
 
-> The site has one API route. Route-handler rules (edge runtime, always-200 tracking, where helpers live): [../12-api-guidelines.md](../12-api-guidelines.md).
+> The site has one API route. Route-handler rules (edge runtime, always-200 tracking, where helpers live): [../12-api-guidelines.md](../12-api-guidelines.md). Error shapes for `/api` and non-POST methods: [json-errors.md](json-errors.md).
 
 ## Purpose
 `POST /api/track-variant` records first-party visitor events against one row per anonymous visitor in the A/B table, and copies every event that passes the cookie and bot checks to the admin ingest. It powers no screen; the browser never reads the response. **Homepage exposures, homepage signup/login clicks, and a completed registration observed on `/signup` are stored in the table.** Any other event is acknowledged and dropped from the table (`not a homepage event`). The admin copy is sent before that filter. How to read the homepage test: [../modules/01-homepage.md](../modules/01-homepage.md#reading-visitors-signup-clicks-and-signups-per-version). Event contract: [CONTRACTS.md](../CONTRACTS.md#first-party-visitor-tracking).
@@ -16,7 +16,9 @@ verified_on: 2026-11-03
 
 | Route | Method | Description |
 |---|---|---|
-| `/api/track-variant` | POST | Visitor-tracking upsert, `src/app/api/track-variant/route.js:POST` (below) |
+| `/api/track-variant` | POST | Visitor-tracking upsert, `src/app/api/track-variant/route.js:POST` (below; non-POST methods return 405 RFC 9457 problem+json) |
+| `/api` | ANY | API root 404 RFC 9457 handler ([json-errors.md](json-errors.md)) |
+| `/api/[...catchall]` | ANY | API catchall 404 RFC 9457 handler ([json-errors.md](json-errors.md)) |
 | `/robots.txt` | GET | `src/app/robots.txt/route.js:GET`, edge; prod-vs-non-prod content ([../current-infrastructure/cloudflare.md](../current-infrastructure/cloudflare.md), [../ARCHITECTURE.md](../ARCHITECTURE.md)) |
 | `/sitemap.xml` | GET | `src/app/sitemap.js` (`STATIC_ROUTES`), edge; route list in [../05-navigation.md](../05-navigation.md) |
 
