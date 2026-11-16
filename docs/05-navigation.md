@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
-verified_at: a1c4e902
+verified_at: 2f624203
 verified_on: 2026-11-16
 ---
 # 05 Navigation Structure
@@ -17,6 +17,8 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/agency-partner/success` | `src/app/agency-partner/success/page.js` (static `○`) | Thank-you page after payment |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
 | `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog standard index of agent-facing resources ([api/ai-catalog](api/ai-catalog.md)) |
+| `/.well-known/agent-skills/index.json` | `src/app/.well-known/agent-skills/index.json/route.js` | Agent Skills Discovery v0.2.0 index ([api/agent-skills](api/agent-skills.md)) |
+| `/.well-known/agent-skills/viasocket-integrations/SKILL.md` | `src/app/.well-known/agent-skills/viasocket-integrations/SKILL.md/route.js` | viaSocket integrations skill pointer for coding agents |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
 | `/.well-known/agent-card.json` | `src/app/.well-known/agent-card.json/route.js` | A2A agent card for the public docs MCP ([api/agent-card](api/agent-card.md)) |
 | `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |

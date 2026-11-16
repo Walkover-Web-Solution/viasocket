@@ -92,5 +92,6 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Developers: /developers
 - Pricing: /pricing
 - LLM site overview: /llms.txt
+- Coding agent instructions: /AGENTS.md
 - AI catalog: /.well-known/ai-catalog.json
 - API catalog: /.well-known/api-catalog
