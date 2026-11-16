@@ -2,8 +2,6 @@ import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
 import p from './pricing.module.scss';
-import { BASE_PROMPT } from './copy';
-import { CopyPromptProvider } from './CopyPrompt';
 import { SiteFooter, SiteHeader } from './SiteChrome';
 
 // Shared by /pricing and /pass: the homepage frame, section headings and the homepage-style FAQ.
@@ -12,11 +10,9 @@ import { SiteFooter, SiteHeader } from './SiteChrome';
 export function PageFrame({ children }) {
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
-            <CopyPromptProvider prompt={BASE_PROMPT}>
-                <SiteHeader />
-                <main>{children}</main>
-                <SiteFooter />
-            </CopyPromptProvider>
+            <SiteHeader />
+            <main>{children}</main>
+            <SiteFooter />
         </div>
     );
 }

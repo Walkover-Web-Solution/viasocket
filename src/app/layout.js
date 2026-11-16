@@ -101,25 +101,7 @@ export default function RootLayout({ children }) {
                 <VariantTracker />
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: `(function() {
-              if (typeof window === 'undefined') return;
-              if (location.pathname === '/setup-prompt') return;
-              if (typeof window.signals !== 'undefined') return;
-              var script = document.createElement('script');
-              script.src = 'https://cdn.cr-relay.com/v1/site/8159c31a-0d49-4a8b-9319-f945bbb5c4cf/signals.js';
-              script.async = true;
-              window.signals = Object.assign(
-                [],
-                ['page', 'identify', 'form'].reduce(function (acc, method){
-                  acc[method] = function () {
-                    signals.push([method, arguments]);
-                    return signals;
-                  };
-                  return acc;
-                }, {})
-              );
-              document.head.appendChild(script);
-            })();`,
+                        __html: `(function(){if(typeof window==='undefined'||location.pathname==='/setup-prompt'||typeof window.signals!=='undefined')return;var s=document.createElement('script');s.src='https://cdn.cr-relay.com/v1/site/8159c31a-0d49-4a8b-9319-f945bbb5c4cf/signals.js';s.async=true;window.signals=Object.assign([],['page','identify','form'].reduce(function(a,m){a[m]=function(){signals.push([m,arguments]);return signals};return a},{}));document.head.appendChild(s);})();`,
                     }}
                 />
             </body>

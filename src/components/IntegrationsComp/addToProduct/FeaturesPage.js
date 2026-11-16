@@ -19,43 +19,49 @@ function FaqJsonLd({ faqs }) {
 }
 
 export default function FeaturesPage({ blogs = [] }) {
+    const leanFeatures = C.features.map(([title, , icon, opts]) => [
+        title,
+        '',
+        icon,
+        { slug: opts?.slug, href: opts?.href, cta: opts?.cta, ai: opts?.ai },
+    ]);
+
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
             <FaqJsonLd faqs={C.faqs} />
-            <CopyPromptProvider prompt={BASE_PROMPT}>
-                <SiteHeader />
+            <SiteHeader />
 
-                <main>
-                    <section className={`${s.hero} ${s['fx-hero']} ${s['fx-hero-full']}`}>
-                        <div className={s['hero-grid']} aria-hidden="true" />
-                        <div className={`${s.wrap} ${s['fx-hero-in']}`}>
-                            <h1>{C.h1}</h1>
-                            <p className={s['hero-sub']}>{C.sub}</p>
-                            <div className={s['hero-cta']}>
+            <main>
+                <section className={`${s.hero} ${s['fx-hero']} ${s['fx-hero-full']}`}>
+                    <div className={s['hero-grid']} aria-hidden="true" />
+                    <div className={`${s.wrap} ${s['fx-hero-in']}`}>
+                        <h1>{C.h1}</h1>
+                        <p className={s['hero-sub']}>{C.sub}</p>
+                        <div className={s['hero-cta']}>
+                            <CopyPromptProvider prompt={BASE_PROMPT}>
                                 <CopyPromptButton />
-                                <a className={s['hero-ex']} href={C.expertUrl}>
-                                    <span className={s['hero-live']} aria-hidden="true" />
-                                    {C.expert} <span aria-hidden="true">→</span>
-                                </a>
-                                <span className={`${s.hint} ${s['fx-hint']}`}>{C.copyHint}</span>
-                            </div>
+                            </CopyPromptProvider>
+                            <a className={s['hero-ex']} href={C.expertUrl}>
+                                <span className={s['hero-live']} aria-hidden="true" />
+                                {C.expert} <span aria-hidden="true">→</span>
+                            </a>
+                            <span className={`${s.hint} ${s['fx-hint']}`}>{C.copyHint}</span>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                    <section className={s['fx-sec']} aria-label="Features">
-                        <div className={s.wrap}>
-                            <FeatureGrid features={C.features} />
-                        </div>
-                    </section>
+                <section className={s['fx-sec']} aria-label="Features">
+                    <div className={s.wrap}>
+                        <FeatureGrid features={leanFeatures} />
+                    </div>
+                </section>
 
-                    <BlogPosts title={C.blogTitle} posts={blogs} viewAllUrl="/blogs" Card={PostCard} />
+                <BlogPosts title={C.blogTitle} posts={blogs} viewAllUrl="/blogs" Card={PostCard} />
 
-                    <FaqSection eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
+                <FaqSection eyebrow={C.faqEyebrow} title={C.faqTitle} faqs={C.faqs} />
+            </main>
 
-                </main>
-
-                <SiteFooter />
-            </CopyPromptProvider>
+            <SiteFooter />
         </div>
     );
 }
