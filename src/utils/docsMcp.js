@@ -301,3 +301,19 @@ export const buildDocsMcpServerCard = (origin) => {
         ],
     };
 };
+
+export const DOCS_MCP_SERVER_CARD_CORS_HEADERS = {
+    'cache-control': 'public, max-age=3600',
+    'access-control-allow-origin': '*',
+    'access-control-allow-methods': 'GET, OPTIONS',
+    'access-control-allow-headers': 'content-type, accept, if-none-match',
+    'access-control-expose-headers': 'etag',
+};
+
+export const docsMcpServerCardResponse = (origin, contentType) =>
+    new Response(JSON.stringify(buildDocsMcpServerCard(origin)), {
+        headers: {
+            ...DOCS_MCP_SERVER_CARD_CORS_HEADERS,
+            'content-type': contentType,
+        },
+    });

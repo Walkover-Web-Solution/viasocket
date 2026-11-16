@@ -26,7 +26,8 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/.well-known/poppy.json` | `src/app/.well-known/poppy.json/route.js` | Personal Agent Protocol (Poppy 1.0) discovery document ([api/poppy](api/poppy.md)) |
 | `/.well-known/products.json` | `src/app/.well-known/products.json/route.js` | Machine-readable products and SDK/CLI package discovery |
 | `/products.json` | `src/app/products.json/route.js` | Products manifest (re-exports `/.well-known/products.json`) |
-| `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
+| `/.well-known/mcp/server-card.json` | `src/app/.well-known/mcp/server-card.json/route.js` | Docs MCP Server Card for legacy scanners ([api/mcp-server-card](api/mcp-server-card.md)) |
+| `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | Canonical SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/ask` | `src/app/ask/route.js` | NLWeb natural-language query endpoint ([api/nlweb-ask](api/nlweb-ask.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
