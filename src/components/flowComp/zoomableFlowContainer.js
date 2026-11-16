@@ -36,13 +36,13 @@ const ZoomableFlowContainer = ({ setScale, contentRef, flowContainerRef, flowRen
 
     return (
         <div className={`absolute ${positionX} ${positionY} flex z-10`}>
-            <button onClick={zoomIn} className="px-2 py-1 text-xl">
+            <button onClick={zoomIn} className="px-2 py-1 text-xl" aria-label="Zoom in">
                 <Plus className="w-5 h-5" />
             </button>
-            <button onClick={zoomOut} className="px-2 py-1 text-xl">
+            <button onClick={zoomOut} className="px-2 py-1 text-xl" aria-label="Zoom out">
                 <Minus className="w-5 h-5" />
             </button>
-            <button onClick={resetZoom} className="px-2 py-1 text-xl">
+            <button onClick={resetZoom} className="px-2 py-1 text-xl" aria-label="Reset zoom">
                 <Focus className="w-5 h-5" />
             </button>
         </div>

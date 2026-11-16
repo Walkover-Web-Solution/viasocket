@@ -68,7 +68,7 @@ export async function GET(request, { params }) {
     return new ImageResponse(
         (
             <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: '64px 72px', background: BG, fontFamily: 'Geist' }}>
-                <img src={logoSrc} width={170} height={50} style={{ objectFit: 'contain', objectPosition: 'left' }} />
+                <img src={logoSrc} alt="viaSocket" width={170} height={50} style={{ objectFit: 'contain', objectPosition: 'left' }} />
                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                     {hero.crumbs.length > 0 && (
                         <div style={{ display: 'flex', fontSize: 26, color: INK_3, marginBottom: 22 }}>
