@@ -35,9 +35,12 @@
 .tagline { margin-top: -6px; font-size: 15px; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
 // The price block: "Launch price" above Pro and Business prices, "Billed annually" under Enterprise's
 .price-box { margin-top: 8px; display: grid; gap: 4px; }
-.launchTag { justify-self: start; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; color: var(--green); background: var(--green-soft); }
+.tags { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.launchTag { justify-self: start; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; color: var(--green); background: var(--green-soft); border: 1px solid transparent; white-space: nowrap; }
+.offTag { justify-self: start; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 6px; color: var(--green); border: 1px solid var(--green); background: transparent; white-space: nowrap; }
 .price { display: flex; align-items: baseline; gap: 6px; }
 .price b { font-size: clamp(36px, 3.4vw, 46px); font-weight: 600; letter-spacing: -0.04em; line-height: 1; font-variant-numeric: tabular-nums; }
+.original { font-size: clamp(16px, 1.6vw, 20px); font-weight: 400; color: var(--ink-3); text-decoration: line-through; }
 .price small { font-size: 14px; color: var(--ink-2); }
 // The small line under a price ("Billed annually")
 .desc { font-size: 14px; color: var(--ink-2); }
@@ -73,8 +76,12 @@
 @media (prefers-reduced-motion: reduce) { .explore-go span { transition: none; transform: none; } }
 @media (max-width: 700px) { .explore { grid-template-columns: minmax(0, 1fr); } }
 
-/* Under the plans: what every plan gets, and what a task is */
-.every { width: 100%; margin-top: 20px; display: grid; gap: 6px; text-align: left; font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
+/* Under the plans: what every plan gets on the left, launch price note on the right */
+.every { width: 100%; margin-top: 20px; display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; text-align: left; font-size: 14.5px; line-height: 1.55; color: color-mix(in srgb, var(--ink) 85%, var(--bg)); }
+.every p { margin: 0; }
+.everyLeft { flex: 1 1 480px; }
+.launchNote { font-size: 12px; color: var(--ink-3); text-align: right; white-space: nowrap; }
+@media (max-width: 900px) { .launchNote { text-align: left; white-space: normal; } }
 .every a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line-3); text-underline-offset: 4px; }
 .every a:hover { text-decoration-color: var(--ink); }
 

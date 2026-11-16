@@ -143,6 +143,12 @@ const buildCatalog = (origin) => {
                 description: 'RFC 9727 API catalog linkset listing viaSocket APIs and documentation entry points.',
                 tags: ['api-catalog', 'linkset'],
             },
+            {
+                identifier: `urn:air:${host}:nlweb:ask`,
+                displayName: 'viaSocket NLWeb Ask Endpoint',
+                type: 'application/json',
+                url: `${origin}/ask`,
+            },
         ],
     };
 };
