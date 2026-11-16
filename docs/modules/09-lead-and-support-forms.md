@@ -57,6 +57,9 @@ The pages where a visitor hands over contact details or starts an account: the e
 - The form validates name and email, then POSTs JSON. Other channels: `window.Chatbot?.open()`, community, help, `/experts`, a playbook on Canva, phone, WhatsApp, email and cal.id.
 
 ### 5. Feedback (`src/app/feedback/page.js`)
+> [!WARNING]
+> Since the live redirect list gained `/feedback` → `/support` (301, observed 2026-11-08), a link to `/feedback?variant=...` lands on `/support` with the query string. `/feedback-satisfied` and `/feedback-unsatisfied` still render this page, because their rewrite runs after middleware. Which URL the feedback emails use is not in this repo ([OPEN_QUESTIONS P-08](../OPEN_QUESTIONS.md#active-questions-table)).
+
 - `variant=satisfied` renders `FeedbackSatisfiedClient`, `variant=unsatisfied` renders `FeedbackUnsatisfiedClient`, and anything else calls `notFound()`. Metadata sets `robots: { index: false, follow: false }`.
 - On mount, both send the URL params (`plugin`, `client_email`, `request_id`, …) through `sendBeacon`, falling back to `fetch`. The unsatisfied page also builds a tally.so link that carries those same params as a query string (`tallyHref`).
 

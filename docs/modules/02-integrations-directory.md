@@ -44,7 +44,7 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 - Breadcrumb, H1 (`RotatingWord`), "Copy setup prompt" with `promptFor({ name })`, and `OAuthDemo`.
 - "#get-started" feature grid (`COPY.feats`), "#actions-triggers" (`EventsList` over `app.actions` / `app.triggers`, each with `EventRequestLink` for a new action or trigger), blog cards, "#about" (app links via `relForApp` / `appWebsiteUrl`), FAQ and the end CTA.
 - **Beta app** (no actions and no triggers): the hero shows the beta copy and `BetaNotice.js` "Request" (`requestType=app`).
-- Data: `appOneDetails` from `getCombos` → `src/utils/getAppDetail.js:getAppDetails`. All copy comes from `COPY` in the same `copy.js`, via `fill`.
+- Data: `appOneDetails` from `getCombos` → `src/utils/getAppDetail.js:getAppDetails`. The fixed copy is `COPY` in the same `copy.js`, via `fill`. When the admin panel has copy for the app (`src/app/lib/admin-content.js:getAdminContent`, admin "Programmatic pages"), it replaces the `<title>`, meta description, keywords, H1 (instead of `RotatingWord`), hero subline and FAQs, and adds a "Use cases" section (not for beta apps). Each part falls back to `COPY` on its own ([admin-panel](../current-infrastructure/admin-panel.md#app-page-copy)).
 
 ### 3. App pair (`/integrations/{app}/{app2}`)
 `IntegrationsMain` → `src/components/IntegrationsComp/integrationsAppTwoComp/integrationsAppTwoComp.js` (legacy design, `NavbarServer` + `Footer`). Sections in `integrationsAppTwoClientComp.js`: `HeroSection`, `TriggersAndActions`, `PopularFlows`, `TemplateContainer`, `HowItWorks`, `AIFeatureSection`, `AboutApps`, `BlogGrid`, `VideoGrid`, `FAQSection`, `FinalCTA`. Data: table-api meta for `/integrations/AppOne/AppTwo` with `[AppOne]`/`[AppTwo]` substituted, FAQ `[singleApp]`, combos, blogs, videos, verified templates, and `getSimilarApps` for each app.
@@ -73,8 +73,9 @@ Module-specific: `src/components/IntegrationsComp/addToProduct/OAuthDemo.js`, `E
 1. **Loader:** `src/app/lib/integration-data.js:getIntegrationsPageData(slug, searchParams)`. It always fetches footer, app count, dofollow list and navbar, then branches as described in FLOWS.
 2. **Table-api** ([table-api](../current-infrastructure/table-api.md), tables in [entities](../database/entities.md)): `src/utils/getData.js:getFooterData`, `getNavbarData`, `getCategoryData`, `getDoFollowStatus`, `getUsecasesData`, `getSingleAppIntegrationData`; `src/utils/getMetaData.js:getMetaData`; `src/utils/getFaqData.js:getFaqData`; `src/utils/getBlogData.js:getBlogData`; `src/utils/getVideoData.js:getVideoData`.
 3. **Plug service** ([plug-service](../current-infrastructure/plug-service.md)): `src/utils/axiosCalls.js:getCombos`, `getApps`, `getAppCount`, `getTemplates`, `fetchPluginData`; `src/utils/searchApps.js:searchApps` (`plugins/search`, called from the client).
-4. **Blog RSS:** `src/utils/axiosCalls.js:getActionLayerBlogs` (production feed from every environment, [OPEN_QUESTIONS S-05](../OPEN_QUESTIONS.md)).
-5. **Static copy:** `src/components/IntegrationsComp/addToProduct/copy.js` (`COPY`, `INDEX_COPY`, `NAV`, `FOOTER_GROUPS`, `START_URL`), `src/const/integrations.js:CATEGORY_PINNED_APPS`.
+4. **Admin panel:** `src/app/lib/admin-content.js:getAdminContent(appone)` for the single-app page, `null` when nothing is written or the admin fails ([admin-panel](../current-infrastructure/admin-panel.md)).
+5. **Blog RSS:** `src/utils/axiosCalls.js:getActionLayerBlogs` (production feed from every environment, [OPEN_QUESTIONS S-05](../OPEN_QUESTIONS.md)).
+6. **Static copy:** `src/components/IntegrationsComp/addToProduct/copy.js` (`COPY`, `INDEX_COPY`, `NAV`, `FOOTER_GROUPS`, `START_URL`), `src/const/integrations.js:CATEGORY_PINNED_APPS`.
 
 ---
 

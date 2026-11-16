@@ -11,7 +11,7 @@ The `/mcp/*` pages sell viaSocket's MCP endpoint (a URL that lets an AI assistan
 - `/mcp/<app>` answers "can my AI assistant use `<app>` through viaSocket MCP, and which actions does it get?"
 - `/mcp/category/<c>` and `/mcp/page/<n>` list apps for MCP.
 - `/mcp/aiagent` ("Ditch MCP, Embed Actions") and `/mcp/saas` (MCP for SaaS vendors) are static pitch pages.
-- Bare `/mcp` is **not served here**: `next.config.js` `redirects()` sends it permanently to https://mushrooms.viasocket.com/ ([DECISIONS ADR-011](../DECISIONS.md)). `src/app/mcp/page.js` still exists but never renders, because redirects run before the filesystem routes.
+- Bare `/mcp` is **not served here**: the redirect list applied by `src/middleware.js` sends it permanently (308) to https://mushrooms.viasocket.com/ ([DECISIONS ADR-011](../DECISIONS.md)). `src/app/mcp/page.js` still exists but never renders, because middleware redirects run before the filesystem routes.
 
 ---
 
@@ -47,7 +47,7 @@ The `/mcp/*` pages sell viaSocket's MCP endpoint (a URL that lets an AI assistan
 - CTAs go to cal.id (`/team/viasocket/embed`, `/team/viasocket/mcp`) and to `/help/viaSocket-MCP` and `/help/developer-hub`.
 
 > [!WARNING]
-> `/help/viaSocket-MCP`, `/help/developer-hub` and `/help/viaSocket-MCP/Fair-Usage-Policy` (linked from both MCP client components) are not in `FOOTER_HELP_PAGES`. On this deployment they therefore 301 to `/new-direction`. On production, which app answers `/help/*` depends on Cloudflare routing ([OPEN_QUESTIONS P-05](../OPEN_QUESTIONS.md#p-05-paths-served-by-other-deployments)).
+> `/help/viaSocket-MCP`, `/help/developer-hub` and `/help/viaSocket-MCP/Fair-Usage-Policy` (linked from both MCP client components) are not under any of the footer help-page exceptions in the redirect list. On this deployment they therefore 301 to `/new-direction`. On production, which app answers `/help/*` depends on Cloudflare routing ([OPEN_QUESTIONS P-05](../OPEN_QUESTIONS.md#p-05-paths-served-by-other-deployments)).
 
 ---
 
