@@ -1,6 +1,6 @@
 ---
 covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/homepage.md", "src/middleware.js", "src/utils/prefersTextMarkdown.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
-verified_at: axien-md
+verified_at: 8bbcaadf
 verified_on: 2026-11-16
 ---
 # Module: Homepage (`/`)

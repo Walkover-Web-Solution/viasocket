@@ -1,6 +1,6 @@
 ---
 covers: ["public/new-home/**", "public/llms.txt", "parked/llms.txt", "src/app/**/page.js", "src/app/layout.js", "src/app/sitemap.js", "next.config.js"]
-verified_at: axien-md
+verified_at: 8bbcaadf
 verified_on: 2026-11-16
 ---
 # Product Vision & Strategic Direction
