@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/ai-catalog.json/route.js"]
-verified_at: pending
+verified_at: 9515fabe
 verified_on: 2026-11-16
 ---
 # API — AI Catalog (/.well-known/ai-catalog.json)
