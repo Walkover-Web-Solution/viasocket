@@ -64,7 +64,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
-- [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
+- [AI Catalog](/.well-known/ai-catalog.json): entry points for AI agents (MCP servers, docs, skills, llms.txt).
 - [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
 - [Sitemap](/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
@@ -184,6 +184,8 @@ Yes. Mount the prebuilt screens with one component and show the whole catalog, a
 - Developers: /developers
 - Pricing: /pricing
 - LLM site overview: /llms.txt
+- AI catalog: /.well-known/ai-catalog.json
+- API catalog: /.well-known/api-catalog
 
 ## Pricing (/pricing.md)
 
