@@ -1,0 +1,235 @@
+# viaSocket
+
+> viaSocket is the integration layer for AI agents and the products they build. You build the app or agent; viaSocket handles the connections and actions: 2,300+ apps with their OAuth and webhooks already handled, every AI model, memory for that AI, login and organisations, and a place where products and agents call each other.
+
+## When to use viaSocket
+
+- Your agent or product needs to read, write and react to events in apps such as Slack, Gmail or Google Sheets, or any of 2,300+ others, for its users.
+- Your users must connect their own apps. viaSocket handles the connection and consent once, then runs actions on that connection.
+- You want an AI assistant or AI feature on any model, with your own endpoints and any MCP server as its tools. It can search the web and drive its own headless browser (open, click, type, scroll, submit forms).
+- You want AI memory per user, login and organisations with roles, or automations created per user, without building them.
+- You want your product to be a tool inside Claude, ChatGPT, Cursor or another agent, through an MCP server viaSocket hosts for you.
+
+## When not to use viaSocket
+
+- You only need to read this website or its documentation. Use the links below; no account is needed.
+- The task needs no external apps or account connections.
+- You cannot get the account owner's consent. A viaSocket login or key does not bypass the permissions an app asks for.
+
+## Set up with a coding agent
+
+Works with Cursor, Claude Code and Codex. The user can paste the setup prompt from viasocket.com, or you can follow these steps:
+
+1. Install the skill. Download https://flow.viasocket.com/documentation/skill-install.md exactly and save it as `viasocket-integrations/SKILL.md` wherever the project keeps skills or rules. It is a short pointer that fetches the full, current skill each time it is used. Never work from a saved copy of the full skill.
+2. Put the user's org id and project id in `.env` as `VIASOCKET_ORG_ID` and `VIASOCKET_PROJECT_ID`.
+3. If `VIASOCKET_EMBED_SECRET` is not in `.env`, run the setup command from the [setup page](https://flow.viasocket.com/documentation/skill/setup.md). The user clicks Allow in the browser.
+4. Ask the user what they want to build. Before any code, show a plan and wait for a yes: which actions, who picks each one, and who supplies every value (your code, the user in a picker, or the product's AI per run).
+5. Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
+
+Keep keys and secrets out of browser code, logs and committed files.
+## SDK and API
+
+- Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- Any other backend: follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- [Full skill](https://flow.viasocket.com/documentation/skill.md): the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
+- [App integrations](https://flow.viasocket.com/documentation/skill/app-integrations.md): users connect their own apps; the product runs their actions and reacts to their events.
+- [Automations](https://flow.viasocket.com/documentation/automations.md): workflows on an event, a schedule or a webhook, created from code per user.
+- [AI](https://flow.viasocket.com/documentation/ai.md): a chat assistant or AI feature on any model, with web and browser built in.
+- [AI memory](https://memory-api.viasocket.com/guide.md): per-user, team and account memory that users can see and delete.
+- [Login and organisations](https://flow.viasocket.com/documentation/skill/login-and-orgs.md): ready screens for sign-up, login, teams and roles; free up to 1,000 users.
+- [Developer documentation](https://flow.viasocket.com/documentation): all guides, including plugs, triggers and actions.
+
+## MCP
+
+- viaSocket MCP server at `https://connect.viasocket.com/mcp`: add it to an MCP client and the developer signs in with their viaSocket account. Its tools build and run the developer's own automations and plugs. See [signing in as the developer](https://flow.viasocket.com/documentation/skill/agent-access.md).
+- [The product's own MCP server](https://flow.viasocket.com/documentation/skill/mcp.md): turn a product's API into an MCP URL that users add to Claude, ChatGPT, Cursor or another agent and sign in to with the product's login. viaSocket hosts it; the product hosts only its API.
+
+## Products and getting started
+
+- [Home](/): what viaSocket is and the copy-paste setup prompt.
+- [Features](/features): agents, conditional logic, webhooks, storage and more.
+- [Pricing](/pricing): plans. You can start free.
+- [Apps and integrations](/integrations): all 2,300+ apps, each with its triggers and actions. [Full list by category](/integrations/category/all).
+- [Use cases and templates](/use-cases): pre-built automations for common jobs.
+- [Quickstart](/developers/docs): install the SDK, sign a JWT for your user, and run your first Apps API call (cURL or Node.js).
+- [Help center](/help/flow): workflows, built-in tools, webhooks, cron and error handling.
+- [Talk to an expert](/experts-are-live): book a call.
+
+## Compare
+
+- [viaSocket vs Zapier, Make and n8n](/help/viasocket-vs-zapier-make-and-n8n-choosing-the-right-automation-tool): integrations, AI, looping and developer experience.
+
+## Machine-readable files
+
+- [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
+- [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
+- [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
+- [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
+- [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
+- [Sitemap](/sitemap.xml): canonical public pages.
+- [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
+- [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.
+
+This file does not give access to connected accounts or run any action.
+
+## Trust, security and legal
+
+- [Security and compliance](/help/security-and-compliance): controls, testing, encryption and certificates.
+- [Privacy policy](/privacy)
+- [Terms of service](/terms)
+- [End user license agreement](/help/others/end-user-license-agreement)
+- [Support](/help/others/support): technical help and contact.
+
+## Developer documentation
+
+Developer documentation, SDK references, action schemas, and trigger guides are hosted on the flow app.
+- [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
+- [Full skill](https://flow.viasocket.com/documentation/skill.md): the map of every feature, with current URLs, keys and rules.
+- [Skill install](https://flow.viasocket.com/documentation/skill-install.md): pointer that fetches the current skill for coding agents.
+- [Developer portal](https://flow.viasocket.com/documentation): all guides, including plugs, triggers and actions.
+- [Quickstart](/developers/docs): install the SDK, sign a JWT for your user, and run your first Apps API call.
+- [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host.
+
+## Homepage (/homepage.md)
+
+> Integration layer for your AI agent, CRM, support desk or recruiting app. You build the app or agent. viaSocket handles the connections and actions.
+
+- Apps: 2,300+
+- Setup: paste one prompt into Cursor, Claude Code or Codex
+- Start free: https://flow.viasocket.com/integrations
+
+### Setup prompt
+
+Install the viaSocket skill. Download this file exactly and save it as viasocket-integrations/SKILL.md wherever this project keeps skills or rules:
+https://flow.viasocket.com/documentation/skill-install.md
+
+It is short on purpose: it fetches the full, current skill each time it is used. Do what it says.
+My viaSocket org_id is <your org_id> and project_id is <your project_id>: put them in .env as VIASOCKET_ORG_ID and VIASOCKET_PROJECT_ID.
+If VIASOCKET_EMBED_SECRET is not in .env, run the setup command from the skill's setup page; I will click Allow in the browser.
+If my backend is Node.js, make every viaSocket call through the viasocket-apps npm package; its types are its documentation. If it is not, follow https://flow.viasocket.com/documentation/skill.md?format=http instead.
+Build it complete for my use case. Before any code, show me your plan and wait for my yes: which actions, who picks each one, and for every value who supplies it (my code, my user in a picker once after connecting or per run, or my product's AI per run). Test every call on a real connection before you build on it, then report each line of the skill's "Finished when" list.
+
+Ask me what I want to build first.
+When it works, show me what changed and what I can add next.
+
+### What viaSocket handles
+
+- **Managed auth**: One OAuth popup on the app's own consent screen. Tokens encrypted and refreshed.
+- **Managed mapping**: Different APIs and data formats, handled.
+- **Multi-tenant**: Multiple users, each with their own connections.
+- **Customizable UI & branding**: Use the prebuilt connect flow or build your own, with your logo, colours and domain.
+- **Monitoring**: Debug and manage every action.
+- **Triggers & webhooks**: Subscribe to webhooks and events. Polling and retries are handled.
+- **Server localization**: Support customers across regions.
+- **Real-time latency**: Actions run in real time, when your app or agent needs them.
+- **Slack support**: Direct help on Slack when you need it.
+
+### Security and compliance
+
+Your data, under the same controls you would ask for.
+
+- **SOC 2 Type II** (Audit): Audited by an independent firm on how your data is handled, stored and reached.
+- **ISO 27001:2022** (Certification): Certified against the international standard for managing information security.
+- **GDPR and CCPA** (Privacy): Your data stays yours, exportable and deletable on request.
+
+Security details: /help/security-and-compliance
+
+### Video
+
+https://www.youtube.com/watch?v=GRzkVjW839A
+
+### FAQ
+
+#### What is an integration layer?
+
+An integration layer is the part of your product that talks to other apps for you. Your code makes one kind of call, and the layer deals with each app's API, sign-in and events. viaSocket is an integration layer for SaaS products and AI agents, with 2,300+ apps behind it.
+
+#### How is viaSocket different from a unified API or an embedded iPaaS?
+
+A unified API maps one category of apps, like all CRMs, onto a shared data model. viaSocket keeps every app's full set of actions and handles the mapping between their different APIs and data formats. That's how it reaches 2,300+ apps, with one way to call them, connect users and get their events. Its prebuilt screens cover what an embedded iPaaS does.
+
+#### How do I add integrations to my app with viaSocket?
+
+Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your project. Your coding agent downloads the viaSocket skill, asks for your org ID, project ID and secret (they go in .env only), then builds the connect flow and the actions your use case needs. It finishes with a real test call.
+
+#### Do I need OAuth apps, client IDs or a token database?
+
+No. viaSocket stores each user's grant and refreshes it, so you don't register OAuth apps, hold client secrets or write refresh logic. Your database keeps only a connection id.
+
+#### How do my users connect their own accounts?
+
+They click Connect and the app's own consent screen opens in a popup, Google's or Slack's for example. They approve it there, so your code never sees a password. You get back a connection id to store against that user.
+
+#### Can my AI agent use these integrations as tools?
+
+Yes. Every action comes with an input schema, so your agent can call it as a tool and fill in the fields on each run. You decide which actions it can use, or let each user choose. If you want a chat assistant in your own UI, viaSocket has one built in.
+
+#### How do I react to events in my users' apps?
+
+Subscribe to the event, a new Stripe payment or a new Gmail message for example, and attach a short JavaScript handler. The handler runs in its own sandbox and can call your API, so you don't need a public webhook endpoint. Polling and retries are handled for you.
+
+#### What if the app I need isn't in the catalog?
+
+Build it once as a custom connector in viaSocket's Plug Builder. From then on it works like any other app. You can also request an integration from the viaSocket team.
+
+#### Can I embed viaSocket's integration screens in my product?
+
+Yes. Mount the prebuilt screens with one component and show the whole catalog, a single app, one action's form or a saved flow. Set the labels and theme so it looks like your product.
+
+### Links
+
+- Integrations: /integrations
+- Features: /features
+- Use cases: /use-cases
+- Developers: /developers
+- Pricing: /pricing
+- LLM site overview: /llms.txt
+
+## Pricing (/pricing.md)
+
+Machine-readable summary of workflow plans at [/pricing](/pricing). Amounts are in USD. Tasks and AI credits reset monthly; connected accounts, users, workflows and projects are unlimited on every plan.
+
+### Free
+
+- **Price:** $0 per month (annual billing: $0 per year)
+- **Limits:** 100,000 tasks per month; 1,000 AI credits per month. Usage stops at either limit until the next month.
+- **Includes:** 2,300+ integrations
+
+### Pro (launch price)
+
+- **Price:** $19 per month, or $190 per year (2 months free on annual billing)
+- **Limits:** 250,000 tasks per month; 10,000 AI credits per month included
+- **Extra usage:** $0.25 per 1,000 tasks; $1 per 600 AI credits
+- **Includes:** 2,300+ integrations
+
+### Business (launch price)
+
+- **Price:** $99 per month, or $990 per year (2 months free on annual billing)
+- **Limits:** 1,000,000 tasks per month; 50,000 AI credits per month included
+- **Extra usage:** $0.15 per 1,000 tasks (40% cheaper than Pro); extra AI credits at 40% lower rates than Pro
+- **Includes:** 2,300+ integrations
+
+### Enterprise
+
+- **Price:** Custom (billed annually)
+- **Limits:** Custom tasks and AI credits per month
+- **Extra usage:** Up to 60% cheaper than lower tiers for extra tasks and AI credits
+- **Includes:** 2,300+ integrations; custom terms and support
+
+### Units
+
+- **Task:** One API call, action run, automation step, or one delivered trigger event (polls with no event are not billed).
+- **AI credit:** Pays for AI, built-in tools and third-party data on steps that use them (1 task plus credits per such step).
+
+### Signup
+
+- Free, Pro and Business: use the plan CTAs on the [HTML pricing page](/pricing).
+- Enterprise: https://cal.id/team/viasocket/embed-viasocket
+
+## Not found response (/not-found.md)
+
+This page does not exist on viasocket.com.
+
+- [Site index for agents](/llms.txt)
+- [Developer documentation](/developers/docs)
+- [Home](/)
