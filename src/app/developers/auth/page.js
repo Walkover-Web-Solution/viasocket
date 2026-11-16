@@ -78,6 +78,7 @@ const AUTH_FAQS = [
     ['What happens when an integration changes its OAuth requirements?', "viaSocket maintains the authentication layer for supported integrations, so you don't have to independently maintain authentication logic for every integration."],
     ['Can I revoke a connection?', 'Yes. Connections can be managed and revoked through the available connection APIs.'],
     ['Can I see what happened when authentication fails?', 'Yes. Connection and execution information helps you identify authentication and execution failures.'],
+    ['How do I create an API key from the dashboard and test safely?', 'You can create an API key yourself directly from the dashboard at flow.viasocket.com/integrations under Configuration > Create new embed without needing a sales call. For safe testing, use the permanently free Embed Sandbox tier ($0/month) with test user identifiers and sandbox connections to test without touching production data.'],
     ['What happens if I stop using viaSocket?', 'You should be able to manage and remove connections according to your account and integration setup. Your contract and data-retention requirements determine the exact deletion process.'],
 ];
 

@@ -14,6 +14,7 @@ const DEFAULT_FAQS = [
     ['What happens when an action fails?', "Execution doesn't stop at simply calling an API. viaSocket provides monitoring and the infrastructure needed to track execution, debug failures, and manage what happened."],
     ['How many apps can my AI work with?', 'viaSocket currently supports actions across 2,300+ apps. You can give your AI access to the apps your customers already use without building each integration from scratch.'],
     ['Is this only for AI agents?', 'The action layer is designed for AI products and agents that need to take real actions in external software. It can also support products where actions, triggers, and workflows need to interact with those applications.'],
+    ['How do I create an API key from the dashboard and test without touching production?', 'You can create an API key yourself directly from the dashboard at flow.viasocket.com/integrations under Configuration > Create new embed without contacting sales or waiting for approval. For safe testing, viaSocket includes a safe test environment and permanently free Embed Sandbox ($0/month, 25 users, 25,000 tasks/month) where you can use test keys, test user identifiers, and sandbox connections without touching production customer data.'],
     ['How long does it take to add the action layer?', "You can get started in under 15 minutes. The implementation can be added to your product using the provided setup prompt and then customized to your product's needs."],
 ];
 
