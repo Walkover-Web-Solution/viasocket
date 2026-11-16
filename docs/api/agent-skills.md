@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/agent-skills/**", "src/utils/agentSkills.js"]
-verified_at: e4ad7a4a
+verified_at: eedf6e12
 verified_on: 2026-11-16
 ---
 # API — Agent Skills Discovery (RFC v0.2.0)
