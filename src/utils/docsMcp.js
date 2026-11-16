@@ -3,6 +3,9 @@ const MAX_SEARCH_HITS = 20;
 
 export const DOCS_MCP_PROTOCOL = '2024-11-05';
 
+export const DOCS_MCP_INSTRUCTIONS =
+    'viaSocket documentation MCP server. Call list_doc_pages to view the index of all available documentation pages, search_docs with a short keyword to find relevant documentation lines, and get_doc_page with a relative markdown path (e.g. skill.md or skill/setup.md) to retrieve the full page content.';
+
 const GET_DOC_PAGE_OUTPUT_SCHEMA = {
     type: 'object',
     properties: {
@@ -253,24 +256,50 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
     const docsRoot = context?.docsRoot;
     const { method, params } = body ?? {};
     switch (method) {
+        case 'server/discover':
+            return {
+                resultType: 'complete',
+                supportedVersions: ['2026-07-28', '2025-11-25', DOCS_MCP_PROTOCOL],
+                capabilities: { tools: { listChanged: false } },
+                _meta: {
+                    'io.modelcontextprotocol/serverInfo': {
+                        name: 'viasocket-docs',
+                        version: '1.0.0',
+                    },
+                },
+                serverInfo: {
+                    name: 'viasocket-docs',
+                    title: 'viaSocket documentation (read-only)',
+                    version: '1.0.0',
+                    website: docsRoot,
+                    instructions: DOCS_MCP_INSTRUCTIONS,
+                },
+                instructions: DOCS_MCP_INSTRUCTIONS,
+                ttlMs: 300000,
+                cacheScope: 'public',
+            };
         case 'initialize':
             return {
-                protocolVersion: DOCS_MCP_PROTOCOL,
+                resultType: 'complete',
+                protocolVersion: params?.protocolVersion || DOCS_MCP_PROTOCOL,
                 capabilities: { tools: { listChanged: false } },
                 serverInfo: {
                     name: 'viasocket-docs',
                     title: 'viaSocket documentation (read-only)',
                     version: '1.0.0',
                     website: docsRoot,
+                    instructions: DOCS_MCP_INSTRUCTIONS,
                 },
-                instructions:
-                    'viaSocket documentation MCP server. Call list_doc_pages to view the index of all available documentation pages, search_docs with a short keyword to find relevant documentation lines, and get_doc_page with a relative markdown path (e.g. skill.md or skill/setup.md) to retrieve the full page content.',
+                instructions: DOCS_MCP_INSTRUCTIONS,
             };
         case 'notifications/initialized':
         case 'ping':
             return {};
         case 'tools/list':
-            return { tools: DOCS_MCP_TOOLS };
+            return {
+                resultType: 'complete',
+                tools: DOCS_MCP_TOOLS,
+            };
         case 'tools/call': {
             const toolName = params?.name;
             const toolArgs = params?.arguments ?? {};
@@ -279,8 +308,10 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
                 const text = typeof result === 'string' ? result : result?.text || '';
                 const structuredContent =
                     typeof result === 'object' && result?.structuredContent ? result.structuredContent : undefined;
+                const jsonText = structuredContent !== undefined ? JSON.stringify(structuredContent) : text;
                 const response = {
-                    content: [{ type: 'text', text }],
+                    resultType: 'complete',
+                    content: [{ type: 'text', text: jsonText }],
                     isError: false,
                 };
                 if (structuredContent !== undefined) {
@@ -290,6 +321,7 @@ export const handleDocsMcpJsonRpc = async (body, context) => {
                 return response;
             } catch (err) {
                 return {
+                    resultType: 'complete',
                     content: [{ type: 'text', text: err?.message || 'Tool call failed.' }],
                     isError: true,
                 };
@@ -325,11 +357,12 @@ export const buildDocsMcpServerCard = (origin) => {
         title: 'viaSocket Docs',
         description: 'Read-only MCP over public viaSocket docs. No sign-in.',
         websiteUrl: `${base}/llms.txt`,
+        instructions: DOCS_MCP_INSTRUCTIONS,
         remotes: [
             {
                 type: 'streamable-http',
                 url: mcpUrl,
-                supportedProtocolVersions: [DOCS_MCP_PROTOCOL],
+                supportedProtocolVersions: [DOCS_MCP_PROTOCOL, '2025-11-25', '2026-07-28'],
             },
         ],
     };

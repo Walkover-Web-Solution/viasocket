@@ -3,7 +3,7 @@ export const runtime = 'edge';
 const buildAgentCard = (origin) => ({
     name: 'viaSocket Docs',
     description:
-        'Public read-only agent on the viaSocket marketing site. It answers questions about viaSocket integration-layer docs via MCP JSON-RPC at the endpoint below (no account). Product actions and user app connections use https://connect.viasocket.com/mcp after sign-in.',
+        'Public read-only agent on the viaSocket marketing site. It answers questions about viaSocket integration-layer docs via MCP JSON-RPC at the endpoint below (no account). Product actions and user app connections require developer sign-in on the flow product app.',
     version: '1.0.0',
     documentationUrl: `${origin}/llms.txt`,
     provider: {

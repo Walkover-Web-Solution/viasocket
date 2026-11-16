@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { acceptsMcpRequest, docsMcpContextFromRequest, handleDocsMcpJsonRpc } from '@/utils/docsMcp';
+import {
+    DOCS_MCP_INSTRUCTIONS,
+    acceptsMcpRequest,
+    docsMcpContextFromRequest,
+    handleDocsMcpJsonRpc,
+} from '@/utils/docsMcp';
 
 export const runtime = 'edge';
 
@@ -28,6 +33,7 @@ export async function GET(request) {
             description: 'Public read-only MCP over viaSocket documentation. POST JSON-RPC (initialize, tools/list, tools/call).',
             mcp: mcpUrl,
             docs: docsRoot,
+            instructions: DOCS_MCP_INSTRUCTIONS,
         },
         { headers: MCP_HEADERS },
     );
@@ -49,8 +55,35 @@ export async function POST(request) {
         return jsonRpcError(-32700, 'Parse error', null);
     }
 
-    const id = body?.id ?? null;
     const context = docsMcpContextFromRequest(request);
+
+    if (Array.isArray(body)) {
+        const results = await Promise.all(
+            body.map(async (item) => {
+                const id = item?.id ?? null;
+                try {
+                    const result = await handleDocsMcpJsonRpc(item, context);
+                    return { jsonrpc: '2.0', result, id };
+                } catch (err) {
+                    const code = typeof err?.code === 'number' ? err.code : -32603;
+                    const message = err?.message || 'Internal error';
+                    return { jsonrpc: '2.0', error: { code, message }, id };
+                }
+            }),
+        );
+        return NextResponse.json(results, { headers: MCP_HEADERS });
+    }
+
+    if (!body?.id && typeof body?.method === 'string' && body.method.startsWith('notifications/')) {
+        try {
+            await handleDocsMcpJsonRpc(body, context);
+        } catch {
+            // notifications ignore errors
+        }
+        return new NextResponse(null, { status: 202, headers: MCP_HEADERS });
+    }
+
+    const id = body?.id ?? null;
 
     try {
         const result = await handleDocsMcpJsonRpc(body, context);
