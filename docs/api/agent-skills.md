@@ -1,6 +1,6 @@
 ---
-covers: ["src/app/.well-known/agent-skills/**", "public/.well-known/agent-skills/**"]
-verified_at: c22d7d60
+covers: ["src/app/.well-known/agent-skills/**", "src/utils/agentSkills.js"]
+verified_at: e4ad7a4a
 verified_on: 2026-11-16
 ---
 # API — Agent Skills Discovery (RFC v0.2.0)
@@ -9,11 +9,10 @@ verified_on: 2026-11-16
 
 | Route | Methods | Description |
 |---|---|---|
-| `/.well-known/agent-skills` | GET | Discovery index enumerating published agent skills per RFC v0.2.0 |
 | `/.well-known/agent-skills/index.json` | GET | Discovery index enumerating published agent skills per RFC v0.2.0 |
 | `/.well-known/agent-skills/viasocket-integrations/SKILL.md` | GET | The `viasocket-integrations` skill artifact (`type: "skill-md"`) |
 
-Served as Edge Function routes in `src/app/.well-known/agent-skills/` and mirrored as static files in `public/.well-known/agent-skills/`. No authentication.
+Static JSON and markdown served by Edge Function route handlers in `src/app/.well-known/agent-skills/` (backed by `src/utils/agentSkills.js`). No authentication.
 
 ## Manifest format
 
