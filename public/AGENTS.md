@@ -16,9 +16,11 @@ Works with Cursor, Claude Code and Codex. The user can paste the setup prompt fr
 
 Keep keys and secrets out of browser code, logs and committed files.
 
-## SDK and API
+## SDK, CLI and API
 
-- **Node.js backend**: Make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- **Node.js SDK and CLI**: Make viaSocket calls through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package ([GitHub](https://github.com/Walkover-Web-Solution/viasocket-apps), `npm install viasocket-apps`). CLI: `npx viasocket-apps` or `npm install -g viasocket-apps`.
+- **Python SDK**: Make viaSocket calls through the [`viasocket`](https://pypi.org/project/viasocket/) PyPI package (`pip install viasocket`).
 - **Any other backend**: Follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- **Products and packages manifest**: [/products.json](/products.json) — machine-readable SDK and CLI package listings.
 - **Full skill**: [https://flow.viasocket.com/documentation/skill.md](https://flow.viasocket.com/documentation/skill.md) — the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - **Developer documentation**: [https://flow.viasocket.com/documentation](https://flow.viasocket.com/documentation)

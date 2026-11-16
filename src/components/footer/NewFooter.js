@@ -195,6 +195,8 @@ const GROUPS = [
             { label: 'List your app', href: 'https://cal.id/team/viasocket/bring-saas-app-on-viasocket' },
             { label: 'Build your own plug', href: '/help/plugin-builder' },
             { label: 'Embed', href: '/embed' },
+            { label: 'Node.js SDK & CLI (npm)', href: 'https://www.npmjs.com/package/viasocket-apps' },
+            { label: 'Python SDK (PyPI)', href: 'https://pypi.org/project/viasocket/' },
             { label: 'Whitelabel MCP server', href: '/mcp/saas' },
             { label: 'Become a billing partner', href: '/help/viasocket-embed/billing-partner' },
             { label: 'Showcase popular workflows', href: '/integrations-script' },

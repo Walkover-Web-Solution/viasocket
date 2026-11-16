@@ -29,10 +29,13 @@ Works with Cursor, Claude Code and Codex. See [AGENTS.md](/AGENTS.md) for direct
 5. Test every call on a real connection before building on it, then report each line of the skill's "Finished when" list.
 
 Keep keys and secrets out of browser code, logs and committed files.
-## SDK and API
+## SDK, CLI and API
 
-- Node.js backend: make every viaSocket call through the [`viasocket-apps`](https://github.com/Walkover-Web-Solution/viasocket-apps) npm package. Its types are its documentation.
+- Node.js SDK: make viaSocket calls through the [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) npm package ([GitHub](https://github.com/Walkover-Web-Solution/viasocket-apps), `npm install viasocket-apps`). First call: `import { ViaSocket } from 'viasocket-apps'; const vs = new ViaSocket({ orgId, projectId, secret });`
+- CLI: [`viasocket-apps`](https://www.npmjs.com/package/viasocket-apps) (`npm install -g viasocket-apps` or `npx viasocket-apps`). First call: `npx viasocket-apps --help` or `npx viasocket-apps setup`.
+- Python SDK: make viaSocket calls through the [`viasocket`](https://pypi.org/project/viasocket/) PyPI package (`pip install viasocket`). First call: `from viasocket import ViaSocket; vs = ViaSocket(org_id, project_id, secret)`
 - Any other backend: follow the [HTTP version of the skill](https://flow.viasocket.com/documentation/skill.md?format=http).
+- [Products and packages manifest](/products.json): machine-readable SDK and CLI package listings.
 - [Full skill](https://flow.viasocket.com/documentation/skill.md): the map of every feature, with current URLs, keys and rules. Read it whole; its last line is `END OF PAGE`.
 - [App integrations](https://flow.viasocket.com/documentation/skill/app-integrations.md): users connect their own apps; the product runs their actions and reacts to their events.
 - [Automations](https://flow.viasocket.com/documentation/automations.md): workflows on an event, a schedule or a webhook, created from code per user.

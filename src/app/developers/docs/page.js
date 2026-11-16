@@ -146,11 +146,13 @@ export default function DocsPage() {
                         <LangBlock
                             panes={{
                                 curl: '# No install needed. Every step below has a plain HTTP form.\n# You will need a JWT tool for step 3 — see that step.',
-                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.',
-                                python: '# There is no Python SDK. Use the HTTP endpoints directly.\npip install requests pyjwt',
+                                node: 'npm install viasocket-apps\n# Node 20+, Bun, Deno, edge runtimes. Zero dependencies. MIT.\n# CLI install: npm install -g viasocket-apps (or run via npx)\n# First CLI call: npx viasocket-apps --help',
+                                python: 'pip install viasocket\n# PyPI package for Python agents and integrations. Zero dependencies. Python 3.10+.\n# First call: from viasocket import ViaSocket\n# Or plain HTTP: pip install requests pyjwt',
                             }}
                         />
-                        <p className={p}>The SDK is a convenience for Node, not a requirement. There is no Python SDK — the Python tab calls the HTTP endpoints directly, and every step below shows that raw call, so any language works.</p>
+                        <p className={p}>
+                            Official SDKs are published on npm (<a href="https://www.npmjs.com/package/viasocket-apps" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket-apps</a>, with CLI binary <Code>viasocket-apps</Code>) and PyPI (<a href="https://pypi.org/project/viasocket/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-2 text-docs-ink hover:text-docs-accent">viasocket</a>). Run <Code>npx viasocket-apps --help</Code> to inspect CLI commands. Every step below also shows the plain HTTP call, so any language works.
+                        </p>
                         <h4 className={h4}>Base URLs</h4>
                         <ul className={ul}>
                             <li>API calls go to <Code>https://flow-api.viasocket.com</Code></li>
@@ -170,7 +172,7 @@ export default function DocsPage() {
                             panes={{
                                 curl: '# Signing is not a cURL job — it happens in your backend code.\n# Any HS256 JWT library works. With the jwt-cli tool:\n\njwt encode \\\n  --secret "$VIASOCKET_EMBED_SECRET" \\\n  --alg HS256 \\\n  \'{"org_id":"\'"$VIASOCKET_ORG_ID"\'","project_id":"\'"$VIASOCKET_PROJECT_ID"\'","unique_identifier":"user_1042"}\'\n\n# Use the result as the authorization header in later steps.',
                                 node: "import { ViaSocket } from 'viasocket-apps'\n\nexport const viasocket = new ViaSocket({\n  orgId: process.env.VIASOCKET_ORG_ID,\n  projectId: process.env.VIASOCKET_PROJECT_ID,\n  secret: process.env.VIASOCKET_EMBED_SECRET // server-side only\n})\n\n// Everything is done for one of your end users, identified by an id you choose.\nconst user = viasocket.user('user_1042')\n\n// Your frontend needs this to open the connect popup.\n// Sign per request; never cache it in the browser.\nconst embedToken = await user.token()",
-                                python: 'import os, jwt   # pip install pyjwt\n\ndef embed_token(unique_identifier):\n    return jwt.encode(\n        {\n            "org_id": os.environ["VIASOCKET_ORG_ID"],\n            "project_id": os.environ["VIASOCKET_PROJECT_ID"],\n            "unique_identifier": unique_identifier,   # your own user id\n        },\n        os.environ["VIASOCKET_EMBED_SECRET"],         # server-side only\n        algorithm="HS256",\n    )\n\ntoken = embed_token("user_1042")',
+                                python: '# With viasocket Python SDK (pip install viasocket):\nimport os\nfrom viasocket import ViaSocket\n\nvs = ViaSocket(\n    org_id=os.environ["VIASOCKET_ORG_ID"],\n    project_id=os.environ["VIASOCKET_PROJECT_ID"],\n    secret=os.environ["VIASOCKET_EMBED_SECRET"],\n)\ntoken = vs.token_for("user_1042")\n\n# Or sign directly with any HS256 JWT tool (pip install pyjwt):\nimport jwt\n\ndef embed_token(unique_identifier):\n    return jwt.encode(\n        {\n            "org_id": os.environ["VIASOCKET_ORG_ID"],\n            "project_id": os.environ["VIASOCKET_PROJECT_ID"],\n            "unique_identifier": unique_identifier,\n        },\n        os.environ["VIASOCKET_EMBED_SECRET"],\n        algorithm="HS256",\n    )',
                             }}
                         />
                         <p className={p}>There is nothing viaSocket-specific about the signing itself. It is a standard HS256 JWT — any library in any language produces the same token.</p>
