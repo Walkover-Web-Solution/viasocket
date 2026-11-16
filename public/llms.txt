@@ -61,6 +61,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 ## Machine-readable files
 
+- [Full documentation](/llms-full.txt): single-file markdown with full context and docs across the site for AI agents.
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
 - [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
 - [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
