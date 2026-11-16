@@ -41,7 +41,7 @@ Rules for every new call: table-api calls go through `src/utils/axiosCalls.js` w
 Table ids, purposes, fields, getters and the A/B row columns: [database/entities.md](database/entities.md).
 
 ### Internal API routes
-The site serves one API route, `POST /api/track-variant` (edge; visitor-tracking upsert keyed by the `visitor_id` and `variant` cookies, always HTTP 200, currently answers `{ success: false, reason: 'lookup failed' }`). Full contract and the `/robots.txt` and `/sitemap.xml` handlers: [api/track-variant.md](api/track-variant.md).
+The site serves `POST /api/track-variant` (visitor tracking; always HTTP 200) and the public docs MCP at `/docs/mcp` (JSON-RPC; read-only doc tools; no auth). Contracts: [api/track-variant.md](api/track-variant.md), [api/docs-mcp.md](api/docs-mcp.md). `/robots.txt` and `/sitemap.xml` are documented in [api/track-variant.md](api/track-variant.md).
 
 ## Authentication & Authorization Assumptions
 

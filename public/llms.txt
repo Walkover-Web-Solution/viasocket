@@ -63,6 +63,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
+- [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.
 
 This file does not give access to connected accounts or run any action.
 
