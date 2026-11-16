@@ -17,6 +17,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/agency-partner/success` | `src/app/agency-partner/success/page.js` (static `○`) | Thank-you page after payment |
 | `/api/track-variant` | `src/app/api/track-variant/route.js:POST` | Visitor/variant tracking endpoint ([api/track-variant](api/track-variant.md)) |
 | `/.well-known/api-catalog` | `src/app/.well-known/api-catalog/route.js` | RFC 9727 linkset for agent API discovery ([api/api-catalog](api/api-catalog.md)) |
+| `/.well-known/poppy.json` | `src/app/.well-known/poppy.json/route.js` | Personal Agent Protocol (Poppy 1.0) discovery document ([api/poppy](api/poppy.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |
