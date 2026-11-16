@@ -21,7 +21,7 @@ This file is the single home of the route map. A clean `npm run build` lists **5
 | `/.well-known/ai-catalog.json` | `src/app/.well-known/ai-catalog.json/route.js` | AI Catalog listing the docs MCP Server Card ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/docs/mcp/server-card` | `src/app/docs/mcp/server-card/route.js` | SEP-2127 Server Card for `/docs/mcp` ([api/mcp-server-card](api/mcp-server-card.md)) |
 | `/docs/mcp` | `src/app/docs/mcp/route.js` | Public read-only MCP over viaSocket docs ([api/docs-mcp](api/docs-mcp.md)) |
-| `/auth.md` | `src/app/auth.md/route.js`, `public/auth.md` | Agent authentication guide ([modules/04-developers-embed](modules/04-developers-embed.md)) |
+| `/auth.md` | `public/auth.md` (static asset) | Agent authentication guide ([modules/04-developers-embed](modules/04-developers-embed.md)) |
 | `/automations` | `src/app/components/automations/AutomationsClient.js`; `src/app/lib/automation-data.js:getAutomationsPageData` | Template directory with search and AI suggestions |
 | `/automations/[...slug]` | `src/app/components/automations/AutomationSlugClient.js`; `getAutomationSlugPageData` | One template category or one template ([Deep links](#deep-link-conventions)) |
 | `/black-friday-sale` | `src/app/components/black-friday-sale/BlackFridaySaleClient.js` | Seasonal partner-offer campaign |
