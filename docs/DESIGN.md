@@ -1,7 +1,7 @@
 ---
-covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt", "parked/llms.txt"]
-verified_at: 0244e05f
-verified_on: 2026-10-30
+covers: ["tailwind.config.js", "postcss.config.js", "src/scss/**", "src/components/**", "src/app/components/**", "src/app/layout.js", "src/app/lib/share-image.js", "src/app/og/**", "src/app/providers.js", "src/app/sitemap.js", "src/app/front-page/index-theme.scss", "src/app/developers/**/*.scss", "src/app/developers/*.js", "public/new-home/**", "public/llms.txt", "public/llms-full.txt", "parked/llms.txt"]
+verified_at: f90ae9bd
+verified_on: 2026-11-16
 ---
 # Design System & UI Standards
 
@@ -204,7 +204,7 @@ What the code actually does. Match the stronger patterns in new work:
 - **Static homepage is the reference.** It has a skip link (`.skip` to `#main`), `<main id="main">`, labelled `<nav aria-label="Main">` / `"Footer"`, `:focus-visible { outline: 2px solid var(--ink) }`, a `.sr-only` utility, `aria-hidden` on decorative SVGs, a live-region toast, reduced-motion handling, and exactly one `<h1>`.
 - **Next app:** `aria-label` appears in about 67 files and `aria-hidden` in about 58. Only 3 files use `aria-expanded` (`src/app/front-page/IndexFaq.js`, and `src/app/lifetime-deal/Faq.js` and `PricingCard.js`). `focus-visible:` rings appear in 5 files (three dormant front-page sections, `src/app/developers/docs/CodeBlock.js` and `src/components/IntegrationsComp/integrationsAppTwoComp/AboutApps.js`). `sr-only` appears once (`src/app/front-page/IndexChatStage.js`). `aria-current="page"` is used in `src/app/developers/Header.js`.
 - **Known gaps:** `Menubar` declares `role="dialog" aria-modal="true"` but has no `Escape` handler or focus trap. `<dialog open>` modals are not modal (see above). `FAQSection` uses daisyUI's checkbox `collapse` (keyboard-reachable through the hidden input, but it has no `aria-expanded`).
-- `<html lang="en">` is set in both `src/app/layout.js` and `public/new-home/index.html`.
+- `<html lang="en">` is set on all HTML documents (`src/app/layout.js`, `public/new-home/index.html`, `public/home-b/index.html`, and `public/admin/index.html`). Form fields provide `<label htmlFor="...">` associations or `aria-label`, icon buttons carry `aria-label`, and pages provide `<main>` landmarks so browser agents can navigate the accessibility tree.
 
 ## Website Messaging & Copy Guidelines
 
@@ -273,7 +273,7 @@ Legacy site: SCSS heading classes, `text-accent` brand red, and the shared signu
   - `Organization`, `WebSite`, `SoftwareApplication`, `WebPage` and `FAQPage` in `public/new-home/index.html`. If you edit the homepage FAQ, update both the visible FAQ and the JSON-LD: they are separate copies.
   - The dormant front-page builds its graph from visible copy (`src/app/front-page/seo.js:schemaGraph`).
 - **Headings:** one `<h1>` per page, styled with `.h1`, and section titles as `<h2 className="h2">`. Footers use `<h2>` for column titles (`src/components/footer/footer.js`).
-- **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown file for LLM crawlers, served as a static file (`text/plain; charset=utf-8`). It is not generated and it is not part of the `public/new-home/` export. The previous 1,141-line automation directory is kept at `parked/llms.txt` and is not served; do not publish it at `/llms-full.txt` or link it from `public/llms.txt`. When you add or rename a public section, update `public/llms.txt` by hand.
+- **Sitemap, robots, llms.txt:** `src/app/sitemap.js:STATIC_ROUTES` lists static routes only. When you add a static page, add it there (`/use-cases` and `/new-direction` are missing, U-08). Robots precedence is documented in [ARCHITECTURE](ARCHITECTURE.md#seo-files-sitemap--robots). `public/llms.txt` is a hand-maintained Markdown file for LLM crawlers, served as a static file (`text/plain; charset=utf-8`). It is not generated and it is not part of the `public/new-home/` export. The previous 1,141-line automation directory is kept at `parked/llms.txt` and is not served. `/llms-full.txt` is built at build time by `build-utilities/generate-llms-full.js` from the site's current markdown files (`public/llms.txt`, `public/homepage.md`, `public/pricing.md`, `public/not-found.md`) and served statically as `text/plain; charset=utf-8`. When you add or rename a public section, update `public/llms.txt` by hand.
 
 > [!TODO]
 > Answered 2026-10-22 but not yet confirmed or implemented ([OPEN_QUESTIONS](OPEN_QUESTIONS.md)): move canonicals into server metadata and drop the client-side rewrite in `HeadComp` (U-03, recommended fix); daisyUI `primary: '#0000'` rendering black is intended (U-02, recommended); page titles use "X | viaSocket" through a `title.template` of `%s | viaSocket` (U-05, proposed); the `addToProduct` `copy.js` and SCSS module are accepted for now and revisited when the design system becomes Tailwind tokens (U-07, proposed, maintainer to confirm).

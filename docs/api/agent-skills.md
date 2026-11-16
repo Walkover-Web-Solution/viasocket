@@ -1,6 +1,6 @@
 ---
 covers: ["public/.well-known/agent-skills/**"]
-verified_at: 0b5da499
+verified_at: 2f624203
 verified_on: 2026-11-16
 ---
 # API — Agent Skills Discovery (RFC v0.2.0)
