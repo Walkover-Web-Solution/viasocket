@@ -7,6 +7,11 @@ import TrackingCookies from './components/VariantTracker/TrackingCookies';
 export const metadata = {
     title: 'viaSocket',
     description: 'Connect your apps and automate workflows with viaSocket',
+    alternates: {
+        types: {
+            'text/plain': '/llms.txt',
+        },
+    },
     robots: process.env.NEXT_PUBLIC_PRODUCTION_ENVIRONMENT !== 'prod' ? 'noindex, nofollow' : undefined,
     icons: {
         icon: [

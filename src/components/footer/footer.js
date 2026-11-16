@@ -70,6 +70,15 @@ export default function Footer({ footerData, borderClass, isBlack = false }) {
                         {renderedGroups?.slice(0, Math.ceil(renderedGroups?.length / 3))}
                         <div className="flex flex-col gap-2 mt-auto">
                             <ExploreWithAIButton />
+                            <Link
+                                href="/llms.txt"
+                                data-track="footer_nav_link"
+                                data-track-label="Resources → llms.txt"
+                                data-track-section="footer"
+                                className="text-sm hover:text-blue-500 transition-colors duration-300"
+                            >
+                                llms.txt
+                            </Link>
                         </div>
                     </div>
 
