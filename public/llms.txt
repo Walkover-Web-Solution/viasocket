@@ -51,7 +51,7 @@ Keep keys and secrets out of browser code, logs and committed files.
 - [Pricing](https://viasocket.com/pricing): plans. You can start free.
 - [Apps and integrations](https://viasocket.com/integrations): all 2,300+ apps, each with its triggers and actions. [Full list by category](https://viasocket.com/integrations/category/all).
 - [Use cases and templates](https://viasocket.com/use-cases): pre-built automations for common jobs.
-- [Quickstart](https://viasocket.com/help/quickstart): build a first workflow in the visual builder.
+- [Quickstart](/developers/docs): install the SDK, sign a JWT for your user, and run your first Apps API call (cURL or Node.js).
 - [Help center](https://viasocket.com/help/flow): workflows, built-in tools, webhooks, cron and error handling.
 - [Talk to an expert](https://cal.id/team/viasocket-integration-layer): book a call.
 
@@ -62,6 +62,9 @@ Keep keys and secrets out of browser code, logs and committed files.
 ## Machine-readable files
 
 - [API catalog](/.well-known/api-catalog) (RFC 9727 `application/linkset+json`): product and docs entry points for agents.
+- [A2A agent card](/.well-known/agent-card.json): machine-readable discovery for the public docs MCP on this host.
+- [AI Catalog](/.well-known/ai-catalog.json): domain-level index of MCP Server Cards on this host (SEP-2127).
+- [Docs MCP server card](/docs/mcp/server-card): pre-connection metadata for the public docs MCP at `/docs/mcp`.
 - [Sitemap](https://viasocket.com/sitemap.xml): canonical public pages.
 - [Documentation index](https://flow.viasocket.com/llms.txt): entry point for plugs and the SDK.
 - [Docs MCP server](/docs/mcp): public, read-only Model Context Protocol over `/docs` on this host (no viaSocket sign-in). Use this to look up documentation; product actions stay on the OAuth-gated MCP at https://connect.viasocket.com/mcp.
