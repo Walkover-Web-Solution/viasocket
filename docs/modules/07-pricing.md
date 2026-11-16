@@ -1,14 +1,14 @@
 ---
-covers: ["src/app/pricing/**", "src/app/lib/pricing-data.js", "src/components/pricing/**", "src/components/IntegrationsComp/addToProduct/PricingPage.js", "src/components/IntegrationsComp/addToProduct/PricingPlans.js", "src/components/IntegrationsComp/addToProduct/pricing.module.scss"]
-verified_at: 493f7310
-verified_on: 2026-11-03
+covers: ["src/app/pricing/**", "public/pricing.md", "src/app/lib/pricing-data.js", "src/components/pricing/**", "src/components/IntegrationsComp/addToProduct/PricingPage.js", "src/components/IntegrationsComp/addToProduct/PricingPlans.js", "src/components/IntegrationsComp/addToProduct/pricing.module.scss"]
+verified_at: c8d4fa00
+verified_on: 2026-11-16
 ---
 # Module: Pricing (`/pricing`)
 
 The pricing page: Free, Pro, Business and Enterprise, priced in tasks and AI credits. `/developers/pricing` redirects to `/pricing` (fallback in `src/data/redirects.json`). The older Embed pricing write-up is in [module 04](./04-developers-embed.md).
 
 > [!IMPORTANT]
-> **What `/pricing` renders today (2026-11-03).** `src/app/pricing/page.js` renders `src/components/IntegrationsComp/addToProduct/PricingPage.js` in the homepage design, with copy from `copy.js:PRICING_COPY`. It shows the Free, Pro ($19/mo launch price), Business ($99/mo launch price) and Enterprise (custom) plans with a monthly/annual switch (`PricingPlans`, `PRICING_COPY.plans`), each card listing its tasks, AI credits and extra-usage rates. "tasks" and "AI credits" in the cards show their definitions in a tooltip (`PRICING_COPY.tips`). Below come the "every plan" line, the plan finder (`PlanFinder`), links to `/features` and `/use-cases` (`PRICING_COPY.explore`) and the pricing FAQs (`PRICING_COPY.faqs`). The Free + "Contact us" layout (`FreeAndContact`, `contactPlan`, `contactFaqs`) is kept, unrendered. The rest of this page describes the earlier table-driven page (`src/components/pricing/*`, `src/app/lib/pricing-data.js`), which `/pricing` no longer uses.
+> **What `/pricing` renders today (2026-11-03).** `src/app/pricing/page.js` renders `src/components/IntegrationsComp/addToProduct/PricingPage.js` in the homepage design, with copy from `copy.js:PRICING_COPY`. It shows the Free, Pro ($19/mo launch price), Business ($99/mo launch price) and Enterprise (custom) plans with a monthly/annual switch (`PricingPlans`, `PRICING_COPY.plans`), each card listing its tasks, AI credits and extra-usage rates. "tasks" and "AI credits" in the cards show their definitions in a tooltip (`PRICING_COPY.tips`). Below come the "every plan" line, the plan finder (`PlanFinder`), links to `/features` and `/use-cases` (`PRICING_COPY.explore`) and the pricing FAQs (`PRICING_COPY.faqs`). The Free + "Contact us" layout (`FreeAndContact`, `contactPlan`, `contactFaqs`) is kept, unrendered. **`public/pricing.md`** is served at `/pricing.md` for agents and crawlers; keep it aligned with `PRICING_COPY.plans` when prices change. The rest of this page describes the earlier table-driven page (`src/components/pricing/*`, `src/app/lib/pricing-data.js`), which `/pricing` no longer uses.
 
 ## Purpose
 - Answers "what does viaSocket automation cost, and what do I get free?" with plan cards (monthly or annual), perks, a comparison, reviews and FAQs.
