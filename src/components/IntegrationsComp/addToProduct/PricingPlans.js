@@ -42,7 +42,10 @@ function Perk({ text }) {
 }
 
 function Plan({ plan, yearly }) {
-    const i = yearly ? 1 : 0;
+    const price = yearly ? (plan.priceY ?? plan.y) : (plan.priceM ?? plan.m);
+    const regular = yearly ? plan.regularY : plan.regularM;
+    const subLine = yearly ? plan.subLineY : (plan.subLineM ?? plan.note);
+    const unit = Array.isArray(plan.per) ? (yearly ? plan.per[1] : plan.per[0]) : plan.per;
     return (
         <li className={plan.popular ? p.pop : undefined}>
             <div className={p['plan-h']}>
@@ -51,12 +54,18 @@ function Plan({ plan, yearly }) {
             </div>
             <p className={p.tagline}>{plan.tagline}</p>
             <div className={p['price-box']}>
-                {plan.launch && <span className={p.launchTag}>{C.launchLabel}</span>}
+                {plan.launch && (
+                    <div className={p.tags}>
+                        <span className={p.launchTag}>{C.launchLabel}</span>
+                        {plan.discount && <span className={p.offTag}>{plan.discount}</span>}
+                    </div>
+                )}
                 <p className={p.price}>
-                    <b>{yearly ? plan.y : plan.m}</b>
-                    {plan.per && <small>{plan.per[i]}</small>}
+                    <b>{price}</b>
+                    {regular && <s className={p.original}>{regular}</s>}
+                    {unit && <small>{unit}</small>}
                 </p>
-                {plan.note && <p className={p.desc}>{plan.note}</p>}
+                {subLine && <p className={p.desc}>{subLine}</p>}
             </div>
             <ul className={p.perks}>
                 {plan.perks.map((x) =>
@@ -90,6 +99,22 @@ export default function PricingPlans() {
                     <Plan key={plan.name} plan={plan} yearly={yearly} />
                 ))}
             </ul>
+            <div className={p.every}>
+                <p className={p.everyLeft}>
+                    {C.everyPlan.map((x) =>
+                        Array.isArray(x) ? (
+                            <a key={x[0]} href={x[1]}>
+                                {x[0]}
+                            </a>
+                        ) : (
+                            x
+                        )
+                    )}
+                </p>
+                <p className={p.launchNote}>
+                    {yearly ? C.launchNoteAnnual : C.launchNoteMonthly}
+                </p>
+            </div>
         </>
     );
 }
