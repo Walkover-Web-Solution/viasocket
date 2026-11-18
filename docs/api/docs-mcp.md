@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: pending
+verified_at: 19023a82
 verified_on: 2026-11-18
 ---
 # API — docs-mcp (public documentation MCP)
