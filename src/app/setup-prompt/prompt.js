@@ -55,9 +55,9 @@ function keysLines(org, project) {
     return [
         'Finish the viaSocket setup in this project: add the keys to .env and run the setup check.',
         `1. Put these in .env: ${idsPhrase(org, project)}.`,
-        `2. Check whether you have the viaSocket MCP tools. If you do, get VIASOCKET_EMBED_SECRET with get_viasocket_embed_secret and add it to .env. If you don't, stop and tell me to connect the viaSocket MCP server at ${MCP_URL} in my agent's MCP settings, then continue once it is connected.`,
+        `2. If VIASOCKET_EMBED_SECRET is not in .env yet, follow ${SETUP_URL} in full. Prefer \`npx -y viasocket-apps setup --no-open\` when you can run a command in this folder. If you use the viaSocket MCP at ${MCP_URL}, use it only for org and project ids as that page says; the signing secret is never read through the connector (do not use get_viasocket_embed_secret or docstar-cli).`,
         '3. Keep the secret on the server only, never in client code, a committed file or a log.',
-        `4. Follow ${SETUP_URL} and run its check. Tell me the result.`,
+        `4. Run the check from ${SETUP_URL}. Tell me the result.`,
     ];
 }
 
