@@ -4,13 +4,13 @@ const MAX_SEARCH_HITS = 20;
 export const DOCS_MCP_PROTOCOL = '2025-06-18';
 
 export const DOCS_MCP_INSTRUCTIONS =
-    'viaSocket documentation MCP server. Call list_doc_pages to view the index of all available documentation pages, search_docs with a short keyword to find relevant documentation lines, and get_doc_page with a relative markdown path (e.g. skill.md or skill/setup.md) to retrieve the full page content.';
+    'viaSocket documentation MCP (read-only). Which feature fits is defined only in skill.md: call get_doc_page with path skill.md first and read "What they asked for" before any feature page. Use search_docs or list_doc_pages when you need a path skill.md does not name.';
 
 export const DOCS_MCP_TOOLS = [
     {
         name: 'get_doc_page',
         description:
-            'Fetch one viaSocket documentation page by path (for example skill.md or skill/setup.md). Returns markdown/plain text from the site public /docs tree.',
+            'Fetch one viaSocket documentation page by path (for example skill.md or skill/setup.md). Start with skill.md for routing; other paths are feature detail. Returns markdown/plain text from the public /docs tree.',
         inputSchema: {
             type: 'object',
             properties: {
