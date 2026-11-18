@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/docs/mcp/route.js", "src/utils/docsMcp.js"]
-verified_at: 1437f23e
-verified_on: 2026-11-16
+verified_at: 19023a82
+verified_on: 2026-11-18
 ---
 # API — docs-mcp (public documentation MCP)
 
@@ -24,7 +24,7 @@ Supported protocol version: `2025-06-18`. Batching is not supported.
 
 Supported methods:
 
-- `initialize` — negotiates to `2025-06-18`; returns `serverInfo.name: viasocket-docs` and usage `instructions` (50+ chars explaining tool selection)
+- `initialize` — negotiates to `2025-06-18`; returns `serverInfo.name: viasocket-docs` and usage `instructions` (points agents to `skill.md` as the sole feature map; 50+ chars)
 - `tools/list` — `get_doc_page`, `search_docs`, `list_doc_pages` with read-only annotations and typed `outputSchema`
 - `tools/call` — fetches live content from `/docs/{path}` on the same host as this route, returning both `content` text blocks and typed `structuredContent`
 
