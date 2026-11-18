@@ -1,6 +1,6 @@
 ---
 covers: ["src/app/.well-known/agent-skills/**", "src/utils/agentSkills.js", "src/utils/buildViasocketIntegrationsSkillInstall.js", "src/const/viasocketIntegrationsSkillVersion.js", "build-utilities/generate-agent-skills.js"]
-verified_at: c1ad9005
+verified_at: 19023a82
 verified_on: 2026-11-18
 ---
 # API — Agent Skills Discovery (RFC v0.2.0)

@@ -14,7 +14,7 @@ const md = buildViasocketIntegrationsSkillInstallMd();
 const digest = `sha256:${createHash('sha256').update(md).digest('hex')}`;
 
 let agentSkillsSource = readFileSync(agentSkillsPath, 'utf8');
-const digestPattern = /export const VIASOCKET_INTEGRATIONS_DIGEST =\s*\n?\s*'sha256:[a-f0-9]+';/;
+const digestPattern = /export const VIASOCKET_INTEGRATIONS_DIGEST =\s*\n?\s*'sha256:[a-f0-9A-FPLACEHOLDER]+';/;
 if (!digestPattern.test(agentSkillsSource)) {
     console.error('generate-agent-skills: could not find VIASOCKET_INTEGRATIONS_DIGEST in agentSkills.js');
     process.exit(1);
