@@ -1,5 +1,5 @@
 ---
-covers: ["src/app/.well-known/agent-skills/**", "src/utils/agentSkills.js", "src/utils/buildViasocketIntegrationsSkillInstall.js", "src/const/viasocketIntegrationsSkillVersion.js", "build-utilities/generate-agent-skills.js"]
+covers: ["src/app/.well-known/agent-skills/**", "src/utils/agentSkills.js", "src/utils/buildViasocketIntegrationsSkillInstall.js", "src/const/viasocketIntegrationsSkillVersion.js", "build-utilities/generate-agent-skills.js", "build-utilities/prebuild-agent-skills.js"]
 verified_at: c1ad9005
 verified_on: 2026-11-18
 ---
@@ -14,7 +14,7 @@ verified_on: 2026-11-18
 
 Static JSON and markdown served by Edge Function route handlers in `src/app/.well-known/agent-skills/` (backed by `src/utils/agentSkills.js`). No authentication.
 
-The install pointer's `metadata.version` and its reinstall line are built from `src/const/viasocketIntegrationsSkillVersion.js` via `buildViasocketIntegrationsSkillInstall.js`; `npm run prebuild` runs `build-utilities/generate-agent-skills.js` to refresh the RFC digest. Live `/docs/skill.md` and `/docs/skill-install.md` are generated at request time in socket-flow-UI from `public/skills/viasocket-integrations/SKILL.md` ([docs-mcp.md](docs-mcp.md#production-routing-note)).
+The install pointer's `metadata.version` and its reinstall line are built from `src/const/viasocketIntegrationsSkillVersion.js` via `buildViasocketIntegrationsSkillInstall.js`; `npm run prebuild` runs `build-utilities/prebuild-agent-skills.js` (which calls `generate-agent-skills.js` when the `/.well-known/agent-skills/` routes exist) to refresh the RFC digest. Live `/docs/skill.md` and `/docs/skill-install.md` are generated at request time in socket-flow-UI from `public/skills/viasocket-integrations/SKILL.md` ([docs-mcp.md](docs-mcp.md#production-routing-note)).
 
 ## Manifest format
 
