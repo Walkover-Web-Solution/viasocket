@@ -1,6 +1,7 @@
 // What each built-in tool's page (/tools/{page}) says about the task it does, keyed by the page name set in
-// the admin (Pages → Built-in tools). Written for the searches people make for that task ("html to pdf api",
-// "gstin lookup api"), not about built-in tools in general. Copy written for the tool's plug in the admin
+// the admin (Pages → Built-in tools). Written for the searches people make for that task ("html to pdf",
+// "gstin lookup"), not about built-in tools in general. Titles and H1s read "{task} tool for your product &
+// AI agents"; they never call it an API, because it is used as a viaSocket action, not called as one. Copy written for the tool's plug in the admin
 // (Programmatic pages) still wins, part by part (title, description, keywords, h1, sub, use cases, FAQs).
 // A tool with no entry here gets GENERIC, filled from its name and its plug's action.
 //
@@ -19,10 +20,10 @@
 
 export const TOOL_CONTENT = {
     'html-to-pdf': {
-        metaTitle: 'HTML to PDF API: Convert HTML to PDF in Your App | viaSocket',
+        metaTitle: 'HTML to PDF Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Convert HTML to PDF from your product or AI agent with one API call. Set page size, margins and file name. No API key or account to set up; pay per document.',
-        h1: 'HTML to PDF API',
+            'Convert HTML to PDF from your product or AI agent in one step. Set page size, margins and file name. No API key or account to set up; pay per document.',
+        h1: 'HTML to PDF tool for your product & AI agents',
         sub: 'Turn any HTML into a PDF file from your product or AI agent: invoices, receipts, reports and certificates. Set the page size, margins and file name in the same call.',
         demo: {
             in: { kind: 'code', label: 'invoice.html', value: '<h1>Invoice #1042</h1>\n<p>Acme Corp · Due 30 Nov</p>\n<table>\n  <tr><td>Pro plan</td><td>$49</td></tr>\n</table>' },
@@ -40,7 +41,7 @@ export const TOOL_CONTENT = {
             ['Certificates and contracts', 'Fill an HTML template with a user’s details and send them a ready-to-sign PDF.'],
         ],
         faqs: [
-            ['How do I convert HTML to PDF with an API?', 'Call the Convert HTML to PDF action with your HTML and, if you like, the page size, margins and file name. viaSocket returns the PDF file.'],
+            ['How do I convert HTML to PDF in my product?', 'Call the Convert HTML to PDF action with your HTML and, if you like, the page size, margins and file name. viaSocket returns the PDF file.'],
             ['Can I set the page size and margins?', 'Yes. Choose the page size and margins in the same call, along with the output file name.'],
             ['Do I need an API key for HTML to PDF?', 'No. HTML to PDF runs on viaSocket, so there is no account or API key to set up. Each document is paid from your Pass in AI credits.'],
             ['Can my AI agent create PDFs?', 'Yes. The action comes with an input schema, so your agent can call it as a tool, for example to turn a summary into a PDF report.'],
@@ -48,10 +49,10 @@ export const TOOL_CONTENT = {
     },
 
     'web-scraper': {
-        metaTitle: 'Web Scraper API: Extract Data from Any Website | viaSocket',
+        metaTitle: 'Web Scraper Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Extract data from any website with one API call and get it back in the format you need. A web scraping API for your product and AI agents, with no API key to manage.',
-        h1: 'Web scraper API',
+            'Extract data from any website in one step and get it back in the format you need. A web scraping tool for your product and AI agents, with no API key to manage.',
+        h1: 'Web scraper tool for your product & AI agents',
         sub: 'Extract data from any web page and get it back in the format you need, ready for your product or AI agent. Prices, product details, articles, contacts: give it a URL and say what to pull.',
         demo: {
             in: { kind: 'url', value: 'https://example.com/pricing' },
@@ -69,7 +70,7 @@ export const TOOL_CONTENT = {
             ['Research agents', 'Let an AI agent read web pages and answer questions from what it finds.'],
         ],
         faqs: [
-            ['How do I extract data from a website with an API?', 'Call the Extract Website Data action with the page URL and the format you want. viaSocket fetches the page and returns its data.'],
+            ['How do I extract data from a website in my product?', 'Call the Extract Website Data action with the page URL and the format you want. viaSocket fetches the page and returns its data.'],
             ['What formats can I get the data in?', 'You choose the output format in the call, so the data comes back ready for the next step in your product or agent.'],
             ['Do I need proxies or an API key?', 'No. The web scraper runs on viaSocket, so there is nothing to host or sign up for. Each page is paid from your Pass in AI credits.'],
             ['Can an AI agent use the web scraper?', 'Yes. The action has an input schema, so your agent can call it as a tool whenever it needs content from a web page.'],
@@ -77,10 +78,10 @@ export const TOOL_CONTENT = {
     },
 
     'transcribe-audio': {
-        metaTitle: 'Audio Transcription API: Speech to Text with Summary | viaSocket',
+        metaTitle: 'Audio Transcription Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Transcribe audio to text with one API call, and get the tone, a short summary and key points with it. Speech to text for your product and AI agents, no API key needed.',
-        h1: 'Audio transcription API',
+            'Transcribe audio to text in one step, and get the tone, a short summary and key points with it. Speech to text for your product and AI agents, no API key needed.',
+        h1: 'Audio transcription tool for your product & AI agents',
         sub: 'Turn an audio file into a transcript, with the tone, a short summary and the key points in the same response. Calls, meetings, voice notes and interviews, ready to search or act on.',
         demo: {
             in: { kind: 'audio', label: 'sales-call.mp3', value: '12:48' },
@@ -107,7 +108,7 @@ export const TOOL_CONTENT = {
             ['Voice notes in your app', 'Let users speak instead of type, and store what they said as text.'],
         ],
         faqs: [
-            ['How do I transcribe audio with an API?', 'Call the Transcribe Audio action with your audio file. viaSocket returns the transcript with the tone, a short summary and the key points.'],
+            ['How do I transcribe audio in my product?', 'Call the Transcribe Audio action with your audio file. viaSocket returns the transcript with the tone, a short summary and the key points.'],
             ['Does it summarise the recording too?', 'Yes. Each transcription comes with a short summary and key points, as well as the tone of the conversation.'],
             ['Do I need a speech-to-text API key?', 'No. Transcription runs on viaSocket, so there is no account or key to set up. Each recording is paid from your Pass in AI credits.'],
             ['Can my AI agent transcribe audio?', 'Yes. Your agent can call the action as a tool and then act on the transcript, for example by updating a CRM.'],
@@ -115,10 +116,10 @@ export const TOOL_CONTENT = {
     },
 
     'summarize-text': {
-        metaTitle: 'Text Summarization API: Summarize Text with AI | viaSocket',
+        metaTitle: 'Text Summarization Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Summarize long text with one API call. A text summarization API for your product and AI agents: articles, emails, tickets and documents in a few lines. No API key needed.',
-        h1: 'Text summarization API',
+            'Summarize long text in one step. A text summarization tool for your product and AI agents: articles, emails, tickets and documents in a few lines. No API key needed.',
+        h1: 'Text summarization tool for your product & AI agents',
         sub: 'Turn long text into a short, clear summary with one call. Articles, email threads, support tickets and documents, condensed so your users read what matters.',
         demo: {
             in: { kind: 'text', label: 'Quarterly review · 1,840 words', value: 'Revenue grew 18% this quarter, driven mostly by enterprise renewals. Self-serve churn rose, and the team traced most of it to onboarding…' },
@@ -136,7 +137,7 @@ export const TOOL_CONTENT = {
             ['Document previews', 'Show a short summary next to every document uploaded to your product.'],
         ],
         faqs: [
-            ['How do I summarize text with an API?', 'Call the Summarize Text action with the text. viaSocket returns a concise summary of it.'],
+            ['How do I summarize text in my product?', 'Call the Summarize Text action with the text. viaSocket returns a concise summary of it.'],
             ['What kind of text can I summarize?', 'Any text: articles, email threads, support tickets, meeting transcripts and documents.'],
             ['Do I need an AI model key to summarize text?', 'No. Summarize Text runs on viaSocket, so there is no model or key to set up. Each request is paid from your Pass in AI credits.'],
             ['Can my AI agent summarize text?', 'Yes. Your agent can call the action as a tool whenever it needs a shorter version of something.'],
@@ -144,10 +145,10 @@ export const TOOL_CONTENT = {
     },
 
     'translate-text': {
-        metaTitle: 'Translation API: Translate Text into Any Language | viaSocket',
+        metaTitle: 'Translation Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Translate text into the language you choose with one API call. A text translation API for your product and AI agents, with no API key to manage.',
-        h1: 'Text translation API',
+            'Translate text into the language you choose in one step. A translation tool for your product and AI agents, with no API key to manage.',
+        h1: 'Translation tool for your product & AI agents',
         sub: 'Translate text into the language you choose with one call. Product copy, messages, support replies and user content, in your users’ own language.',
         demo: {
             in: { kind: 'text', label: 'English', value: 'Your order has shipped and will arrive on Friday.' },
@@ -173,7 +174,7 @@ export const TOOL_CONTENT = {
             ['User content', 'Translate reviews, posts or listings so every user can read them.'],
         ],
         faqs: [
-            ['How do I translate text with an API?', 'Call the Translate Text action with the text and the target language. viaSocket returns the translation.'],
+            ['How do I translate text in my product?', 'Call the Translate Text action with the text and the target language. viaSocket returns the translation.'],
             ['Which languages can I translate into?', 'You choose the target language in each call.'],
             ['Do I need a translation API key?', 'No. Translate Text runs on viaSocket, so there is no account or key to set up. Each request is paid from your Pass in AI credits.'],
             ['Can my AI agent translate text?', 'Yes. Your agent can call the action as a tool, for example to reply in the customer’s language.'],
@@ -181,10 +182,10 @@ export const TOOL_CONTENT = {
     },
 
     'convert-to-json': {
-        metaTitle: 'Text to JSON API: Convert Text to Structured JSON | viaSocket',
+        metaTitle: 'Text to JSON Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Convert unstructured text into clean, structured JSON with one API call. Parse emails, notes and form text into fields your product and AI agents can use.',
-        h1: 'Text to JSON API',
+            'Convert unstructured text into clean, structured JSON in one step. Parse emails, notes and form text into fields your product and AI agents can use.',
+        h1: 'Text to JSON tool for your product & AI agents',
         sub: 'Turn messy text into structured JSON your code can use. Emails, notes, form replies and chat messages, parsed into the fields you need.',
         demo: {
             in: { kind: 'text', label: 'Email', value: 'Hi, I’m Priya Shah from Northwind. Call me on +91 98200 11223 or write to priya@northwind.io' },
@@ -202,7 +203,7 @@ export const TOOL_CONTENT = {
             ['Form replies', 'Convert free-text answers into fields you can store and filter.'],
         ],
         faqs: [
-            ['How do I convert text to JSON with an API?', 'Call the Convert to JSON action with the text or key-value input. viaSocket returns it as structured JSON.'],
+            ['How do I convert text to JSON in my product?', 'Call the Convert to JSON action with the text or key-value input. viaSocket returns it as structured JSON.'],
             ['What can I convert?', 'Free text, like emails, notes and messages, or key-value inputs that need to become a structured object.'],
             ['Do I need an API key?', 'No. Convert to JSON runs on viaSocket, so there is no account or key to set up. Each request is paid from your Pass in AI credits.'],
             ['Can my AI agent use Convert to JSON?', 'Yes. Your agent can call it as a tool to turn what it reads into fields it can act on.'],
@@ -210,10 +211,10 @@ export const TOOL_CONTENT = {
     },
 
     'ai-image-generator': {
-        metaTitle: 'AI Image Generator API: Create Images from Text | viaSocket',
+        metaTitle: 'AI Image Generator Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Create and edit images from a text prompt with one API call. An AI image generation API for your product and AI agents, with no model or API key to manage.',
-        h1: 'AI image generator API',
+            'Create and edit images from a text prompt in one step. An AI image generator for your product and AI agents, with no model or API key to manage.',
+        h1: 'AI image generator tool for your product & AI agents',
         sub: 'Create images from a text prompt, or edit an existing one, with one call. Product visuals, social posts, illustrations and thumbnails, made inside your product.',
         demo: {
             in: { kind: 'text', label: 'Prompt', value: 'A flat illustration of a rocket launching over a city at sunset' },
@@ -231,7 +232,7 @@ export const TOOL_CONTENT = {
             ['Blog thumbnails', 'Make a cover image from each article’s title.'],
         ],
         faqs: [
-            ['How do I generate images with an API?', 'Call the AI Image Generator action with a text prompt. viaSocket returns the generated image.'],
+            ['How do I generate images in my product?', 'Call the AI Image Generator action with a text prompt. viaSocket returns the generated image.'],
             ['Can it edit existing images?', 'Yes. You can create a new image or edit an existing one with a written instruction.'],
             ['Do I need an image model API key?', 'No. The image generator runs on viaSocket, so there is no model or key to set up. Each image is paid from your Pass in AI credits.'],
             ['Can my AI agent create images?', 'Yes. Your agent can call the action as a tool whenever it needs an image.'],
@@ -239,10 +240,10 @@ export const TOOL_CONTENT = {
     },
 
     'gst-lookup': {
-        metaTitle: 'GST Lookup API: Verify GSTIN and Get GST Details | viaSocket',
+        metaTitle: 'GST Lookup Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Verify a GSTIN and get the GST details on record with one API call. A GST verification API for your product and AI agents, with GSTIN validation built in.',
-        h1: 'GST lookup API',
+            'Verify a GSTIN and get the GST details on record in one step. A GST verification tool for your product and AI agents, with GSTIN validation built in.',
+        h1: 'GST lookup tool for your product & AI agents',
         sub: 'Check a GSTIN and get the business’s GST details with one call. Validate customers and vendors at signup or checkout, without leaving your product.',
         demo: {
             in: { kind: 'rows', label: 'Lookup', rows: [['GSTIN', '27AAPFU0939F1ZV']] },
@@ -269,18 +270,18 @@ export const TOOL_CONTENT = {
             ['Invoicing', 'Confirm the buyer’s GSTIN before generating a GST invoice.'],
         ],
         faqs: [
-            ['How do I verify a GSTIN with an API?', 'Call the Get GST Details action with the GSTIN. viaSocket validates it and returns the GST details on record.'],
+            ['How do I verify a GSTIN in my product?', 'Call the Get GST Details action with the GSTIN. viaSocket validates it and returns the GST details on record.'],
             ['What happens with an invalid GSTIN?', 'The GSTIN is validated first, and an invalid or unknown number comes back with a clear error.'],
-            ['Do I need a GST API account?', 'No. GST lookup runs on viaSocket, so there is no account or key to set up. Each lookup is paid from your Pass in AI credits.'],
+            ['Do I need a GST data account?', 'No. GST lookup runs on viaSocket, so there is no account or key to set up. Each lookup is paid from your Pass in AI credits.'],
             ['Can my AI agent look up GST details?', 'Yes. Your agent can call the action as a tool, for example while onboarding a business customer.'],
         ],
     },
 
     'currency-converter': {
-        metaTitle: 'Currency Converter API: Convert Currencies at Current Rates | viaSocket',
+        metaTitle: 'Currency Converter Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Convert any amount between currencies at the current exchange rate with one API call. A currency conversion API for your product and AI agents, no API key needed.',
-        h1: 'Currency converter API',
+            'Convert any amount between currencies at the current exchange rate in one step. A currency conversion tool for your product and AI agents, no API key needed.',
+        h1: 'Currency converter tool for your product & AI agents',
         sub: 'Convert an amount from one currency to another at the current exchange rate, with one call. Show local prices, total up multi-currency orders and report in one currency.',
         demo: {
             in: { kind: 'rows', label: 'Convert', rows: [['Amount', '100.00'], ['From', 'USD'], ['To', 'EUR']] },
@@ -298,7 +299,7 @@ export const TOOL_CONTENT = {
             ['Expense reports', 'Convert receipts in foreign currencies before they are approved.'],
         ],
         faqs: [
-            ['How do I convert currencies with an API?', 'Call the Convert Currency action with the amount and the two currencies. viaSocket returns the converted amount at the current rate.'],
+            ['How do I convert currencies in my product?', 'Call the Convert Currency action with the amount and the two currencies. viaSocket returns the converted amount at the current rate.'],
             ['Which exchange rate is used?', 'The current exchange rate at the time of the call.'],
             ['Do I need an exchange rate API key?', 'No. The currency converter runs on viaSocket, so there is no account or key to set up. Each conversion is paid from your Pass in AI credits.'],
             ['Can my AI agent convert currencies?', 'Yes. Your agent can call the action as a tool to answer questions about prices and totals.'],
@@ -306,10 +307,10 @@ export const TOOL_CONTENT = {
     },
 
     'send-whatsapp-message': {
-        metaTitle: 'WhatsApp Message API: Send WhatsApp Messages from Your App | viaSocket',
+        metaTitle: 'WhatsApp Messaging Tool for Your Product & AI Agents | viaSocket',
         metaDesc:
-            'Send WhatsApp text, media, template and bulk messages from your product or AI agent with one API call. No WhatsApp API setup to manage; pay per message.',
-        h1: 'WhatsApp message API',
+            'Send WhatsApp text, media, template and bulk messages from your product or AI agent in one step. No WhatsApp Business setup to manage; pay per message.',
+        h1: 'WhatsApp messaging tool for your product & AI agents',
         sub: 'Send WhatsApp messages from your product or AI agent: text, media, templates and bulk sends, to a contact or a group. Order updates, reminders and alerts where your customers already are.',
         demo: {
             in: { kind: 'rows', label: 'Send', rows: [['To', 'Priya · +91 98200 xxxxx'], ['Template', 'order_shipped'], ['Order', '#1042']] },
@@ -327,7 +328,7 @@ export const TOOL_CONTENT = {
             ['Agent replies', 'Let your AI agent answer or follow up with a customer on WhatsApp.'],
         ],
         faqs: [
-            ['How do I send a WhatsApp message with an API?', 'Call the Send WhatsApp Message action with the contact or group and the message, template or media. viaSocket sends it.'],
+            ['How do I send a WhatsApp message in my product?', 'Call the Send WhatsApp Message action with the contact or group and the message, template or media. viaSocket sends it.'],
             ['Can I send template and bulk messages?', 'Yes. Send text, media or template messages, to one contact, a group, or many contacts at once.'],
             ['How are WhatsApp messages charged?', 'Each message is paid from your Pass, priced by the recipient’s country and the template’s type.'],
             ['Can my AI agent send WhatsApp messages?', 'Yes. Your agent can call the action as a tool to message customers.'],
@@ -341,9 +342,9 @@ export function toolContent(tool, actions = []) {
     const name = tool.name;
     const action = actions[0];
     return {
-        metaTitle: `${name} API for Your Product & AI Agents | viaSocket`,
-        metaDesc: `Use ${name} in your product and AI agents with one API call. ${action?.description || ''} No API key to set up; pay per use.`.replace(/\s+/g, ' ').trim(),
-        h1: `${name} API`,
+        metaTitle: `${name} Tool for Your Product & AI Agents | viaSocket`,
+        metaDesc: `Use ${name} in your product and AI agents in one step. ${action?.description || ''} No API key to set up; pay per use.`.replace(/\s+/g, ' ').trim(),
+        h1: `${name} tool for your product & AI agents`,
         sub: action?.description ? `${action.description} From your product or AI agent, with one call.` : `Use ${name} from your product or AI agent with one call.`,
         demo: {
             in: { kind: 'text', label: 'Input', value: action?.name || name },
@@ -352,7 +353,7 @@ export function toolContent(tool, actions = []) {
         does: actions.map((a) => [a.name, a.description]).filter(([, d]) => d),
         useCases: [],
         faqs: [
-            [`How do I use ${name} with an API?`, `Call the ${action?.name || name} action from your product or agent. viaSocket runs it and returns the result.`],
+            [`How do I use ${name} in my product?`, `Call the ${action?.name || name} action from your product or agent. viaSocket runs it and returns the result.`],
             [`Do I need an API key for ${name}?`, `No. ${name} runs on viaSocket, so there is no account or key to set up. Each use is paid from your Pass in AI credits.`],
         ],
     };

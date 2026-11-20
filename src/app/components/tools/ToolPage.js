@@ -48,7 +48,7 @@ export const TOOL_COPY = {
     moreAll: ['See all tools', '/tools'],
 
     faqEyebrow: 'Frequently Asked Questions',
-    faqTitle: '{name} API: questions, answered',
+    faqTitle: '{name}: questions, answered',
 
     endTitle: 'Add {name} to your product',
     endSub: 'Copy the setup prompt into your coding agent. No authentication, nothing to connect.',
