@@ -67,6 +67,60 @@ export const COPY = {
     endTitle: 'Bring {appName} Into Your Product & Agents',
 };
 
+// /integrations/{app} for viaSocket's own tools: plugs whose category says "(Built-In Plug)". They run
+// on viaSocket with no account to connect, so this replaces the parts of COPY about customers' accounts.
+// Copy written in the admin panel (Programmatic pages) still wins over these, part by part.
+export const isBuiltinPlug = (categories = []) => categories.some((c) => /\(built-in plug\)/i.test(String(c)));
+export const BUILTIN_COPY = {
+    metaTitle: '[appName] API for Your Product & AI Agents | viaSocket',
+    metaDesc:
+        'Use [appName] in your product & AI agents as a built-in viaSocket tool: no account or API key to connect, paid per use from your viaSocket Pass.',
+    sub: 'Use {appName} in your product & agents as a built-in viaSocket tool. It runs on viaSocket, so there is no account or API key to connect, and each use is paid from your Pass.',
+    demoTag: 'Built into viaSocket',
+    demoNote: 'No account or API key to connect',
+
+    featEyebrow: 'Built-in tool',
+    featTitle: 'Everything You Need to Run {appName}',
+    featLead: 'viaSocket runs {appName} for you. Your AI coding assistant does the setup; you call it like any other action.',
+    feats: [
+        ['No Account or API Key', 'Call {appName} straight away. viaSocket runs it, so there is nothing to sign up for, connect or keep signed in.', 'key'],
+        ['Paid Per Use', 'Each use is paid from your viaSocket Pass in AI credits. No separate subscription.', 'bolt'],
+        ['Works With 2,300+ Apps', 'Use {appName} in the same run as the apps your customers connect, and pass data between them.', 'users'],
+        ['Managed Data Mapping', 'Map data between your product & agents and the inputs {appName} expects.', 'map'],
+        ['Monitoring and Debugging', 'See every run, its cost and its errors in your logs.', 'pulse'],
+        ['Ready for AI Agents', 'Every action has an input schema, so your agent can call {appName} as a tool.', 'brand'],
+    ],
+    featsShort: [
+        ['No account needed', 'key'],
+        ['Paid per use', 'bolt'],
+        ['2,300+ apps', 'users'],
+        ['Data mapping', 'map'],
+        ['Monitoring & logs', 'pulse'],
+        ['Agent-ready', 'brand'],
+    ],
+
+    atTitle: 'Available Actions for {appName}',
+    actSub: 'Call these actions from your product & agents. viaSocket runs them for you.',
+
+    aboutTitle: 'About {appName} on viaSocket',
+    about: '{appName} is a built-in viaSocket tool. It runs on viaSocket, with no account or API key of your own, and each use is paid from your Pass. Use it on its own or together with the 2,300+ apps viaSocket connects.',
+    aboutTag: ['All built-in tools', '/tools'],
+    aboutPass: ['How the Pass works', '/pass'],
+
+    faqTitle: 'FAQs about using {appName} in your product & agents',
+    faqSub: 'Answers to common questions about using the built-in {appName} tool in your product & agents.',
+    faqs: [
+        ['What is the {appName} tool?', '{appName} is a built-in viaSocket tool. Your product & agents call it like any other action, and viaSocket runs it.'],
+        ['Do I need an account or API key for {appName}?', 'No. viaSocket runs {appName} for you, so there is no account to create and no API key to manage.'],
+        ['How is {appName} charged?', 'Each use is paid from your viaSocket Pass in AI credits, on every plan. You see the cost of every run in your logs.'],
+        ['Can my AI agent use {appName}?', 'Yes. Every action comes with an input schema, so your agent can call {appName} as a tool.'],
+        ['Can I use {appName} with other apps?', 'Yes. Use it in the same run as any of the 2,300+ apps viaSocket connects, and pass data between them.'],
+        ['How do I get started?', 'Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your project. Your coding agent sets up viaSocket and calls {appName} where your use case needs it.'],
+    ],
+
+    endTitle: 'Use {appName} in Your Product & Agents',
+};
+
 // The homepage's setup prompt (public/new-home/index.html #promptText). Keep the two copies identical.
 // Org and project stay placeholders: this site does not know a visitor's ids. /setup-prompt does, from the query.
 const ASK_LINE = 'Ask me what I want to build first.\n';
@@ -160,6 +214,8 @@ export const FEATURES_COPY = {
             { slug: 'managed-authentication', hint: 'check' }],
         ['2,300+ App Integrations', 'Connect your product to thousands of apps with ready-to-use actions to read, create, update, and manage data.', 'apps',
             { href: '/integrations', cta: 'Browse all integrations', ex: { kind: 'apps', apps: ['gmail', 'slack', 'hubspot', 'salesforce', 'sheets', 'notion', 'shopify', 'airtable'], more: '+2.3K' } }],
+        ['Built-in Tools', 'Use ready-made tools viaSocket runs for you, like HTML to PDF, web scraping and transcription, with no authentication and paid per use in AI credits.', 'cube',
+            { href: '/tools', cta: 'Browse built-in tools' }],
         ['Custom Integrations & API Requests', "Connect services beyond our existing catalog or access additional API endpoints when pre-built actions aren't enough.", 'code',
             { slug: 'custom-integrations', ex: { kind: 'code', method: 'GET', text: '/v2/invoices?status=open' } }],
         ['Triggers & Webhooks', 'Respond to events from connected applications and external systems to keep your product up to date.', 'bolt',
@@ -188,6 +244,7 @@ export const FEATURES_COPY = {
     faqs: [
         ['What is an integration layer?', 'An integration layer provides the infrastructure needed to connect a product to third-party applications. It handles capabilities such as authentication, data mapping, action execution, triggers, and monitoring, allowing developers to build integrations without managing every underlying component themselves.'],
         ['How many apps does viaSocket support?', 'viaSocket supports integrations with more than 2,300 apps, allowing developers to connect their products to a wide range of third-party services.'],
+        ['What are viaSocket built-in tools?', 'Ready-made tools that viaSocket runs for you, such as HTML to PDF, web scraping, transcription and translation. They need no authentication or API key, and each use is paid in AI credits from your Pass.'],
         ['Can I build custom integrations with viaSocket?', "Yes. You can connect services beyond the existing integration catalog and make additional API requests when pre-built actions don't meet your requirements."],
         ['How does viaSocket handle authentication?', 'viaSocket provides managed authentication capabilities, including authentication flows and token management, reducing the need to build and maintain these mechanisms separately for every integration.'],
         ['Does viaSocket support multi-tenant applications?', 'Yes. viaSocket supports managing separate connected accounts and integration configurations for different customers, making it suitable for SaaS products serving multiple tenants.'],

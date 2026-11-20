@@ -80,6 +80,56 @@
             "source": "/developers/pricing",
             "destination": "/pricing",
             "statusCode": 308
+        },
+        {
+            "source": "/integrations/Send_WhatsApp_Message",
+            "destination": "/tools/send-whatsapp-message",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/speech-to-text",
+            "destination": "/tools/transcribe-audio",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/text_summarizer",
+            "destination": "/tools/summarize-text",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/text_translater",
+            "destination": "/tools/translate-text",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/json_converter",
+            "destination": "/tools/convert-to-json",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/image-generator",
+            "destination": "/tools/ai-image-generator",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/WebScrapingOrCrawling",
+            "destination": "/tools/web-scraper",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/giddh_gst",
+            "destination": "/tools/gst-lookup",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/pdf_generator",
+            "destination": "/tools/html-to-pdf",
+            "statusCode": 301
+        },
+        {
+            "source": "/integrations/converter",
+            "destination": "/tools/currency-converter",
+            "statusCode": 301
         }
     ]
 }

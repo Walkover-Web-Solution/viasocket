@@ -3,7 +3,7 @@ import { Suspense } from 'react';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
 import s from './addToProduct.module.scss';
-import { COPY, fill, promptFor } from './copy';
+import { BUILTIN_COPY, COPY, fill, isBuiltinPlug, promptFor } from './copy';
 import { Chevron, FeatureIcon } from './icons';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import { CopyPromptButton, CopyPromptProvider } from './CopyPrompt';
@@ -16,7 +16,7 @@ import { appWebsiteUrl, relForApp } from '@/utils/ExternalLink';
 
 // /integrations/{app}: "Add {app} to Your Product". Server-rendered, so every word of copy is in
 // the HTML; only the rotating word, the sign-in animation, "Show all" and the copy buttons run
-// in the browser.
+// in the browser. viaSocket's own tools (isBuiltinPlug) get BUILTIN_COPY and no sign-in parts.
 
 const cx = (...names) => names.filter(Boolean).map((n) => s[n]).join(' ');
 
@@ -78,8 +78,51 @@ function AuthPanel({ app }) {
     );
 }
 
+/** The hero visual for a built-in tool: it sits ready in your product, with no account to connect, and a run. */
+function BuiltinDemo({ app }) {
+    const action = app.actions[0]?.name || 'Run action';
+    const fn = action.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
+    return (
+        <div className={s.stage} role="img" aria-label={`${app.name} ready in your product as a built-in viaSocket tool, with a run in the log.`}>
+            <div className={s.win}>
+                <div className={s['win-bar']}>
+                    <span className={s['win-dot']} />
+                    <span className={s['win-dot']} />
+                    <span className={s['win-dot']} />
+                    <span className={s['win-url']}>app.yourproduct.com/settings/integrations</span>
+                </div>
+                <div className={s['win-body']}>
+                    <div className={s['win-h']}>
+                        <strong>Integrations</strong>
+                        <span>Acme Corp workspace</span>
+                    </div>
+                    <div className={cx('conn', 'is-focus')}>
+                        <AppIcon src={app.iconUrl} size={36} />
+                        <div className={s['conn-text']}>
+                            <b>{app.name}</b>
+                            <small>{BUILTIN_COPY.demoNote}</small>
+                        </div>
+                        <span className={s.gtag}>
+                            <span className={s.dot} />
+                            {BUILTIN_COPY.demoTag}
+                        </span>
+                    </div>
+                    <div className={s.log}>
+                        <div>
+                            <span className={s.ok}>200</span> {app.slug}.{fn} · 312ms
+                        </div>
+                        <div>
+                            <span className={s.ok}>pass</span> paid per use · no API key
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+
 /** The structured data the old page carried, with this page's FAQs. */
-function JsonLd({ app, faqs, description }) {
+function JsonLd({ app, faqs, description, feats = COPY.feats }) {
     const software = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
@@ -91,7 +134,7 @@ function JsonLd({ app, faqs, description }) {
         featureList: [
             ...(app.triggers.length ? [`${app.triggers.length} triggers`] : []),
             ...(app.actions.length ? [`${app.actions.length} actions`] : []),
-            ...COPY.feats.map(([h]) => h),
+            ...feats.map(([h]) => h),
         ],
         isRelatedTo: { '@type': 'SoftwareApplication', name: app.name },
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', availability: 'https://schema.org/InStock', url: 'https://viasocket.com/pricing' },
@@ -140,14 +183,17 @@ function UseCases({ app, items }) {
 export default function AddToProductPage({ appOneDetails, blogs = [], doFollowApps = [], content = null }) {
     const app = toPageApp(appOneDetails);
     const f = (str) => fill(str, app.name);
+    // A built-in viaSocket tool: BUILTIN_COPY over COPY, and no customer sign-in or vendor parts.
+    const builtin = isBuiltinPlug(app.categories);
+    const C = builtin ? { ...COPY, ...BUILTIN_COPY } : COPY;
     // No published actions or triggers: the hero leads with the beta message and the request button.
     const isBeta = !app.actions.length && !app.triggers.length;
-    const faqs = content?.faqs?.length ? content.faqs : COPY.faqs.map(([q, a]) => [f(q), f(a)]);
+    const faqs = content?.faqs?.length ? content.faqs : C.faqs.map(([q, a]) => [f(q), f(a)]);
     const useCases = !isBeta && content?.useCases?.length ? content.useCases : [];
 
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
-            <JsonLd app={app} faqs={faqs} description={content?.metaDescription || f(COPY.metaDesc)} />
+            <JsonLd app={app} faqs={faqs} description={content?.metaDescription || f(C.metaDesc)} feats={C.feats} />
             <CopyPromptProvider prompt={promptFor(app)}>
                 <SiteHeader />
 
@@ -189,7 +235,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                                 <span className={s['h1-line']}>{f(COPY.h1Lead)}</span> <RotatingWord words={COPY.h1Words} />
                                             </h1>
                                         )}
-                                        <p className={s['hero-sub']}>{content?.sub || f(COPY.sub)}</p>
+                                        <p className={s['hero-sub']}>{content?.sub || f(C.sub)}</p>
                                         <div className={s['hero-cta']}>
                                             <CopyPromptButton />
                                             <span className={s.hint}>{COPY.copyHint}</span>
@@ -197,7 +243,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                     </>
                                 )}
                             </div>
-                            <OAuthDemo app={app} />
+                            {builtin ? <BuiltinDemo app={app} /> : <OAuthDemo app={app} />}
                         </div>
                     </section>
 
@@ -208,20 +254,20 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                         <div className={cx('wrap', 'cta-in')}>
                             <div className={s['cta-head']}>
                                 <div className={s['cta-copy']}>
-                                    <span className={s.eyebrow}>{COPY.featEyebrow}</span>
-                                    <h2 className={s.h2}>{f(COPY.featTitle)}</h2>
-                                    <p className={s.lead}>{f(COPY.featLead)}</p>
+                                    <span className={s.eyebrow}>{C.featEyebrow}</span>
+                                    <h2 className={s.h2}>{f(C.featTitle)}</h2>
+                                    <p className={s.lead}>{f(C.featLead)}</p>
                                 </div>
                             </div>
                             <div className={s.bento}>
-                                {COPY.feats.map(([h, p, k], i) => (
+                                {C.feats.map(([h, p, k], i) => (
                                     <div key={h} className={cx('bcard', i === 0 && 'big')}>
                                         <span className={s['feat-ico']}>
                                             <FeatureIcon name={k} />
                                         </span>
                                         <h3>{h}</h3>
                                         <p>{f(p)}</p>
-                                        {i === 0 && <AuthPanel app={app} />}
+                                        {i === 0 && !builtin && <AuthPanel app={app} />}
                                     </div>
                                 ))}
                             </div>
@@ -232,16 +278,17 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                         <section className={s.sec} id="actions-triggers">
                             <div className={s.wrap}>
                                 <div className={s.sh}>
-                                    <h2 className={s.h2}>{f(COPY.atTitle)}</h2>
+                                    <h2 className={s.h2}>{f(C.atTitle)}</h2>
                                 </div>
                                 <div className={s.at}>
                                     <div className={s['at-group']}>
                                         <div>
-                                            <h3>{f(COPY.actTitle)}</h3>
-                                            <p>{f(COPY.actSub)}</p>
+                                            <h3>{f(C.actTitle)}</h3>
+                                            <p>{f(C.actSub)}</p>
                                         </div>
                                         <EventsList kind="action" items={app.actions} appName={app.name} iconUrl={app.iconUrl} />
                                     </div>
+                                    {!(builtin && !app.triggers.length) && (
                                     <div className={s['at-group']}>
                                         <div>
                                             <h3>{f(COPY.trgTitle)}</h3>
@@ -249,6 +296,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                         </div>
                                         <EventsList kind="trigger" items={app.triggers} appName={app.name} iconUrl={app.iconUrl} />
                                     </div>
+                                    )}
                                 </div>
                             </div>
                         </section>
@@ -259,6 +307,21 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                     <section className={s.sec} id="about">
                         <div className={s.wrap}>
                             <div className={s.about}>
+                                {builtin ? (
+                                    <div className={s['about-card']}>
+                                        <AppIcon src={app.iconUrl} size={40} />
+                                        <h3>{f(C.aboutTitle)}</h3>
+                                        <p>{f(C.about)}</p>
+                                        <div className={s.tags}>
+                                            <Link className={s.tag} href={C.aboutTag[1]}>
+                                                {C.aboutTag[0]}
+                                            </Link>
+                                        </div>
+                                        <Link className={s.ulink} href={C.aboutPass[1]}>
+                                            {C.aboutPass[0]}
+                                        </Link>
+                                    </div>
+                                ) : (
                                 <div className={s['about-card']}>
                                     <AppIcon src={app.iconUrl} size={40} />
                                     <h3>About {app.name}</h3>
@@ -283,6 +346,7 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                                         </a>
                                     )}
                                 </div>
+                                )}
                                 <div className={s['about-card']}>
                                     <img className={s['about-logo']} src="/new-home/assets/favicon.svg" alt="viaSocket" width={40} height={40} />
                                     <h3>About viaSocket</h3>
@@ -305,8 +369,8 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
 
                     <FaqSection
                         eyebrow={COPY.faqEyebrow}
-                        title={f(COPY.faqTitle)}
-                        lead={f(COPY.faqSub)}
+                        title={f(C.faqTitle)}
+                        lead={f(C.faqSub)}
                         faqs={faqs}
                     />
 
@@ -314,14 +378,14 @@ export default function AddToProductPage({ appOneDetails, blogs = [], doFollowAp
                         <div className={s.wrap}>
                             <div className={s['end-box']}>
                                 <div className={s['end-copy']}>
-                                    <h2>{f(COPY.endTitle)}</h2>
+                                    <h2>{f(C.endTitle)}</h2>
                                     <div className={s['hero-cta']}>
                                         <CopyPromptButton />
                                         <span className={s.hint}>{COPY.copyHint}</span>
                                     </div>
                                 </div>
                                 <ul className={s['end-chips']} aria-label="What viaSocket handles">
-                                    {COPY.featsShort.map(([label, k]) => (
+                                    {C.featsShort.map(([label, k]) => (
                                         <li key={label}>
                                             <FeatureIcon name={k} />
                                             <span>{label}</span>
