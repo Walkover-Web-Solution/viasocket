@@ -119,6 +119,8 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
     const faqs = content?.faqs?.length ? content.faqs : c.faqs;
     const useCases = content?.useCases?.length ? content.useCases : c.useCases;
     const facts = [...T.facts, tool.credits || T.creditsDefault];
+    // Sections draw a line above themselves (.sec); the one right under the hero does not.
+    const noLine = '!border-t-0';
     const prompt = BASE_PROMPT.replace('Install the viaSocket skill.', `Install the viaSocket skill. Use viaSocket's built-in ${tool.name} tool in this product.`);
 
     return (
@@ -161,7 +163,7 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
 
                     {/* What it does */}
                     {c.does.length > 0 && (
-                        <section className={s.sec} id="features">
+                        <section className={`${s.sec} ${noLine}`} id="features">
                             <div className={s.wrap}>
                                 <Head eyebrow={T.doesEyebrow} title={f(T.doesTitle)} />
                                 <ul className="mt-[var(--content-gap)] grid list-none border-l border-t border-[color:var(--line)] p-0 sm:grid-cols-2">
@@ -178,7 +180,7 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
 
                     {/* Use cases */}
                     {useCases.length > 0 && (
-                        <section className={`${s.sec} bg-[var(--s2)]`} id="use-cases">
+                        <section className={`${s.sec} bg-[var(--s2)] ${c.does.length ? '' : noLine}`} id="use-cases">
                             <div className={s.wrap}>
                                 <Head eyebrow={T.useCasesEyebrow} title={f(T.useCasesTitle)} />
                                 <div className="mt-[var(--content-gap)] grid gap-4 md:grid-cols-3">
