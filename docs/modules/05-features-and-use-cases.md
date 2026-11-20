@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/features/**", "src/app/use-cases/**", "src/app/new-direction/**", "src/app/lib/feature-data.js", "src/app/components/features/**", "src/components/IntegrationsComp/addToProduct/FeaturesPage.js", "src/components/IntegrationsComp/addToProduct/FeatureGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js", "src/components/IntegrationsComp/addToProduct/featurePages.js", "src/components/IntegrationsComp/addToProduct/UseCasesPage.js", "src/components/IntegrationsComp/addToProduct/LetterPage.js", "src/components/IntegrationsComp/addToProduct/UseCaseGrid.js", "src/components/IntegrationsComp/addToProduct/FeatureVisuals.js", "src/components/IntegrationsComp/addToProduct/SiteChrome.js", "src/components/IntegrationsComp/addToProduct/CopyPrompt.js", "src/components/IntegrationsComp/addToProduct/copy.js", "src/components/IntegrationsComp/addToProduct/addToProduct.module.scss"]
 verified_at: 0d14d549
-verified_on: 2026-10-30
+verified_on: 2026-11-20
 ---
 # Module: Features, Use Cases and the Founders' Letter
 
@@ -32,7 +32,7 @@ The pages that explain the integration-layer product in the homepage design: `/f
 ### 1. Features (`src/app/features/page.js` → `src/components/IntegrationsComp/addToProduct/FeaturesPage.js:FeaturesPage`)
 - Static `metadata` from `FEATURES_COPY` (`metaTitle`, `metaDesc`), with `alternates.canonical` set to https://viasocket.com/features.
 - Sections: `FaqJsonLd` (FAQPage JSON-LD), `SiteHeader`, hero (`h1`, `sub`, `CopyPromptButton`, expert link), `FeatureGrid`, `BlogPosts`, `FaqSection`, `SiteFooter`.
-- `src/components/IntegrationsComp/addToProduct/FeatureGrid.js:FeatureGrid` shows every `FEATURES_COPY.features` entry (`[title, description, icon, { slug, href, cta, ai, ex, hint }]`) as a same-size tile with only its icon and title. The description, `ex` and `hint` are kept in `copy.js` but not shown. `ai` gives the three AI tiles a pink-to-periwinkle gradient on the title and icon. A tile links to `/features/<slug>` once `featurePages.js` has that slug, or to its `href`; its "→" shows on hover (always on touch screens).
+- `src/components/IntegrationsComp/addToProduct/FeatureGrid.js:FeatureGrid` shows every `FEATURES_COPY.features` entry (`[title, description, icon, { slug, href, cta, ai, ex, hint }]`) as a same-size tile with only its icon and title. The description, `ex` and `hint` are kept in `copy.js` but not shown. `ai` gives the three AI tiles a pink-to-periwinkle gradient on the title and icon. A tile links to `/features/<slug>` once `featurePages.js` has that slug, or to its `href`; its "→" shows on hover (always on touch screens). Two tiles use `href`: "2,300+ App Integrations" (`/integrations`) and "Built-in Tools" (`/tools`, the built-in tools index; see [02-integrations-directory](02-integrations-directory.md)).
 - Data: the blog cards are the three newest `/blogs` posts (`src/app/lib/blogs.js:getLatestBlogs`), shown with the `/blogs` card (`BlogsPage.js:PostCard`); "View all articles" goes to `/blogs`. Everything else is `copy.js`.
 
 ### 1a. Feature pages (`src/app/features/[...feature]/page.js` → `src/components/IntegrationsComp/addToProduct/FeatureDetailPage.js:FeatureDetailPage`)

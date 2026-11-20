@@ -215,6 +215,8 @@ export const FEATURES_COPY = {
             { slug: 'managed-authentication', hint: 'check' }],
         ['2,300+ App Integrations', 'Connect your product to thousands of apps with ready-to-use actions to read, create, update, and manage data.', 'apps',
             { href: '/integrations', cta: 'Browse all integrations', ex: { kind: 'apps', apps: ['gmail', 'slack', 'hubspot', 'salesforce', 'sheets', 'notion', 'shopify', 'airtable'], more: '+2.3K' } }],
+        ['Built-in Tools', 'Use ready-made tools viaSocket runs for you, like HTML to PDF, web scraping and transcription, with no authentication and paid per use in AI credits.', 'cube',
+            { href: '/tools', cta: 'Browse built-in tools' }],
         ['Custom Integrations & API Requests', "Connect services beyond our existing catalog or access additional API endpoints when pre-built actions aren't enough.", 'code',
             { slug: 'custom-integrations', ex: { kind: 'code', method: 'GET', text: '/v2/invoices?status=open' } }],
         ['Triggers & Webhooks', 'Respond to events from connected applications and external systems to keep your product up to date.', 'bolt',
@@ -243,6 +245,7 @@ export const FEATURES_COPY = {
     faqs: [
         ['What is an integration layer?', 'An integration layer provides the infrastructure needed to connect a product to third-party applications. It handles capabilities such as authentication, data mapping, action execution, triggers, and monitoring, allowing developers to build integrations without managing every underlying component themselves.'],
         ['How many apps does viaSocket support?', 'viaSocket supports integrations with more than 2,300 apps, allowing developers to connect their products to a wide range of third-party services.'],
+        ['What are viaSocket built-in tools?', 'Ready-made tools that viaSocket runs for you, such as HTML to PDF, web scraping, transcription and translation. They need no authentication or API key, and each use is paid in AI credits from your Pass.'],
         ['Can I build custom integrations with viaSocket?', "Yes. You can connect services beyond the existing integration catalog and make additional API requests when pre-built actions don't meet your requirements."],
         ['How does viaSocket handle authentication?', 'viaSocket provides managed authentication capabilities, including authentication flows and token management, reducing the need to build and maintain these mechanisms separately for every integration.'],
         ['Does viaSocket support multi-tenant applications?', 'Yes. viaSocket supports managing separate connected accounts and integration configurations for different customers, making it suitable for SaaS products serving multiple tenants.'],
