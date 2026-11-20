@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
-import ToolPage, { TOOL_COPY } from '@/app/components/tools/ToolPage';
+import ToolPage from '@/app/components/tools/ToolPage';
+import { actionsOf, toolContent } from '@/app/components/tools/toolContent';
 import { getToolPageData } from '@/app/lib/tools-data';
 import { ogImages, twitterImages } from '@/app/lib/share-image';
 
@@ -12,10 +13,10 @@ export async function generateMetadata({ params }) {
     const { name } = await params;
     const data = await getToolPageData(name);
     if (!data) return { title: '404 - Page not found', description: 'The page you are looking for does not exist.' };
-    const tool = data.tool.name;
     const admin = data.adminContent;
-    const title = admin?.pageTitle || TOOL_COPY.metaTitle.replace('{name}', tool);
-    const description = admin?.metaDescription || TOOL_COPY.metaDesc.replace('{name}', tool);
+    const c = toolContent(data.tool, actionsOf(data.appOneDetails));
+    const title = admin?.pageTitle || c.metaTitle;
+    const description = admin?.metaDescription || c.metaDesc;
     const path = `/tools/${name}`;
     const url = `https://viasocket.com${path}`;
     return {

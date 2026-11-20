@@ -5,84 +5,54 @@ import s from '@/components/IntegrationsComp/addToProduct/addToProduct.module.sc
 import { BASE_PROMPT } from '@/components/IntegrationsComp/addToProduct/copy';
 import { CopyPromptButton, CopyPromptProvider } from '@/components/IntegrationsComp/addToProduct/CopyPrompt';
 import { FaqSection, SiteFooter, SiteHeader } from '@/components/IntegrationsComp/addToProduct/SiteChrome';
+import ToolVisual from './ToolVisual';
+import { actionsOf, toolContent } from './toolContent';
 
-// /tools/{page}: one built-in viaSocket tool. Its own layout, unlike the /integrations app pages, and it leads
-// with what sets a built-in tool apart: no authentication, built into viaSocket, runs on AI credits.
-// The site's homepage look (s.root tokens, header, footer, FAQ) with Tailwind for the layout. `content` is
-// the copy written for the plug in the admin panel (Programmatic pages); each part replaces TOOL_COPY's.
+// /tools/{page}: one built-in viaSocket tool. Leads with what the tool does, for the searches people make
+// for that task (toolContent.js), with the tool's own example in the hero (ToolVisual.js). That it needs no
+// authentication, runs on viaSocket and is paid in credits comes second: one line in the hero and one
+// section further down. The site's homepage look (s.root tokens, header, footer, FAQ) with Tailwind for the
+// layout. `content` is the copy written for the plug in the admin panel (Programmatic pages); each part
+// replaces toolContent's.
 
 export const TOOL_COPY = {
-    metaTitle: '{name} API for Your Product & AI Agents | viaSocket',
-    metaDesc:
-        '{name} as a built-in viaSocket tool: no authentication, no API key, nothing to connect. Runs on viaSocket and is paid per use in AI credits.',
     crumb: 'Tools',
-    badge: 'viaSocket built-in tool',
-    h1: '{name} API, built into viaSocket',
-    sub: 'Call {name} from your product & AI agents with no authentication and no API key. viaSocket runs it for you and charges each use in AI credits from your Pass.',
     copyHint: 'Paste it into Cursor, Claude Code or Codex.',
-    checks: ['No authentication', 'Built into viaSocket', 'Runs on AI credits'],
+    facts: ['No authentication', 'Runs on viaSocket'],
+    creditsDefault: 'Pay per use in AI credits',
 
-    card: {
-        tag: 'Built-in',
-        rows: [
-            ['Authentication', 'None needed'],
-            ['Runs on', 'viaSocket'],
-            ['Billing', '{credits}'],
-            ['Setup', 'Nothing to connect'],
-        ],
-        creditsDefault: 'AI credits, per use',
-        result: 'paid from your Pass',
-    },
-
-    keyEyebrow: 'Why a built-in tool',
-    keyTitle: 'Nothing to connect. Pay only when it runs.',
-    // [title, text, icon]
-    keys: [
-        ['No authentication', 'No OAuth flow, no API key and no account to create. Your users never sign in anywhere: {name} works as soon as viaSocket is set up.', 'lock'],
-        ['Built into viaSocket', 'viaSocket runs and maintains {name} on its own infrastructure, so there is no vendor to sign up with and nothing to keep up to date.', 'cube'],
-        ['Runs on AI credits', '{price}Each use is paid from your viaSocket Pass. No subscription, and every run shows its cost in your logs.', 'coin'],
-    ],
-
-    vsTitle: 'An app integration vs a built-in tool',
-    vsApp: ['App integration', ['Each customer connects their own account', 'OAuth or API keys to set up and refresh', "A subscription with the app's vendor", 'Breaks when a token expires']],
-    vsTool: ['{name} on viaSocket', ['Nothing for anyone to connect', 'No keys, no tokens', 'Pay per use in AI credits', 'Ready as soon as viaSocket is set up']],
-
-    actionsEyebrow: 'What it does',
-    actionsTitle: 'What you can do with {name}',
-
-    stepsEyebrow: 'How it works',
-    stepsTitle: 'Live in three steps',
-    steps: [
-        ['Copy the setup prompt', 'Paste it into Cursor, Claude Code or Codex inside your project.'],
-        ['Your agent adds {name}', 'It sets up viaSocket and calls {name} where your product or agent needs it. No keys to add.'],
-        ['Pay per run', 'Each run is paid from your Pass in AI credits. See every run and its cost in your logs.'],
-    ],
+    doesEyebrow: 'What it does',
+    doesTitle: 'What you can do with {name}',
 
     useCasesEyebrow: 'Use cases',
     useCasesTitle: 'What teams build with {name}',
 
-    moreTitle: 'More built-in tools',
-    moreAll: ['See all built-in tools', '/tools'],
-
-    faqEyebrow: 'Frequently Asked Questions',
-    faqTitle: 'FAQs about the {name} tool',
-    faqs: [
-        ['Do I need to authenticate to use {name}?', 'No. {name} is built into viaSocket, so there is no OAuth flow, no API key and no account to connect, for you or your users.'],
-        ['What is a viaSocket built-in tool?', 'A tool viaSocket runs on its own infrastructure. Your product & agents call it like any other action, and viaSocket keeps it running and up to date.'],
-        ['How is {name} charged?', '{price}Each use is paid from your viaSocket Pass in AI credits, on every plan. There is no subscription, and your logs show the cost of every run.'],
-        ['Can my AI agent use {name}?', 'Yes. Every action comes with an input schema, so your agent can call {name} as a tool.'],
-        ['Can I use {name} with other apps?', 'Yes. Use it in the same run as any of the 2,300+ apps viaSocket connects, and pass data between them.'],
+    stepsEyebrow: 'How it works',
+    stepsTitle: 'Add {name} in three steps',
+    steps: [
+        ['Copy the setup prompt', 'Paste it into Cursor, Claude Code or Codex inside your project.'],
+        ['Your agent adds {name}', 'It sets up viaSocket and calls {name} where your product or agent needs it.'],
+        ['Pay per run', 'Each run is paid from your Pass in AI credits, and every run shows in your logs.'],
     ],
 
-    endTitle: 'Start using {name} today',
-    endSub: 'No authentication, nothing to connect. Pay per use in AI credits.',
-};
+    whyEyebrow: 'Why viaSocket',
+    whyTitle: 'Nothing to connect. Pay only when it runs.',
+    // [title, text, icon]
+    why: [
+        ['No authentication', 'No OAuth flow, API key or account to create, for you or your users. {name} works as soon as viaSocket is set up.', 'lock'],
+        ['Runs on viaSocket', 'viaSocket hosts {name} and keeps it up to date. There is no vendor to sign up with and nothing to maintain.', 'cube'],
+        ['Pay per use', '{price}Each run is paid in AI credits from your Pass. No subscription.', 'coin'],
+    ],
 
-// The plug's slug and actions (from the apps API record the loader passes).
-const toPageApp = (d) => ({
-    slug: d?.appslugname || '',
-    actions: (d?.events || []).filter((e) => e?.type === 'action' && e?.name).map((e) => ({ name: e.name, description: e.description || '' })),
-});
+    moreTitle: 'More built-in tools',
+    moreAll: ['See all tools', '/tools'],
+
+    faqEyebrow: 'Frequently Asked Questions',
+    faqTitle: '{name} API: questions, answered',
+
+    endTitle: 'Add {name} to your product',
+    endSub: 'Copy the setup prompt into your coding agent. No authentication, nothing to connect.',
+};
 
 const fill = (str, vars) => str.replace(/\{(\w+)\}/g, (m, k) => (k in vars ? vars[k] : m));
 
@@ -91,7 +61,6 @@ const ICONS = {
     cube: 'M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5',
     coin: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM9 9.5c0-1 1.3-1.8 3-1.8s3 .8 3 1.8-1.3 1.6-3 1.9-3 .9-3 2 1.3 1.8 3 1.8 3-.8 3-1.8M12 6v1.7M12 16.3V18',
     check: 'M5 12.5l4.5 4.5L19 7.5',
-    cross: 'M6 6l12 12M18 6L6 18',
 };
 
 export function Icon({ name, className = 'h-5 w-5' }) {
@@ -106,66 +75,25 @@ export function ToolIcon({ src, size }) {
     return <img src={src} alt="" width={size} height={size} style={{ width: size, height: size }} className="shrink-0 object-contain" />;
 }
 
-function Head({ eyebrow, title, center = false }) {
+function Head({ eyebrow, title }) {
     return (
-        <div className={`${s.sh} ${center ? 'mx-auto text-center' : ''}`}>
+        <div className={s.sh}>
             {eyebrow && <span className={s.eyebrow}>{eyebrow}</span>}
             <h2 className={s.h2}>{title}</h2>
         </div>
     );
 }
 
-/** The hero's tool card: what the tool needs (nothing) and what a run costs. */
-function ToolCard({ app, tool, f }) {
-    const action = app.actions[0]?.name || 'Run';
-    const fn = action.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_|_$/g, '');
-    const C = TOOL_COPY.card;
-    return (
-        <div
-            className="w-full border border-[color:var(--line-2)] bg-[var(--s1)] shadow-[var(--sh-win)]"
-            role="img"
-            aria-label={`${tool.name}: no authentication, runs on viaSocket, billed in AI credits.`}
-        >
-            <div className="flex items-center gap-3 border-b border-[color:var(--line)] p-5">
-                <ToolIcon src={tool.icon} size={44} />
-                <b className="min-w-0 flex-1 text-[17px] font-semibold">{tool.name}</b>
-                <span className="border border-[color:var(--line-2)] px-2 py-1 font-[family-name:var(--mono)] text-[11px] uppercase tracking-[0.08em] text-[color:var(--ink-3)]">
-                    {C.tag}
-                </span>
-            </div>
-            <dl className="m-0 divide-y divide-[color:var(--line)]">
-                {C.rows.map(([k, v], i) => (
-                    <div key={k} className="flex items-center justify-between gap-4 px-5 py-3 text-[14px]">
-                        <dt className="text-[color:var(--ink-3)]">{k}</dt>
-                        <dd className="m-0 text-right font-medium">
-                            {i === 0 && <Icon name="check" className="mr-1.5 inline h-4 w-4 align-[-3px]" />}
-                            {f(v, { credits: tool.credits || C.creditsDefault })}
-                        </dd>
-                    </div>
-                ))}
-            </dl>
-            <div className="border-t border-[color:var(--line)] bg-[var(--s2)] px-5 py-4 font-[family-name:var(--mono)] text-[12.5px] leading-6 text-[color:var(--ink-2)]">
-                <div className="truncate">
-                    viasocket.{app.slug}.{fn}(…)
-                </div>
-                <div>
-                    <span className="text-[color:var(--ink)]">200</span> · no auth · {C.result}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-function JsonLd({ tool, page, description, faqs }) {
+function JsonLd({ tool, page, name, description, faqs }) {
     const software = {
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        name: `${tool.name} by viaSocket`,
-        applicationCategory: 'BusinessApplication',
+        name,
+        applicationCategory: 'DeveloperApplication',
         operatingSystem: 'Web',
         url: `https://viasocket.com/tools/${page}`,
         description,
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Paid per use in AI credits', url: 'https://viasocket.com/pass' },
+        offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: tool.credits || 'Paid per use in AI credits', url: 'https://viasocket.com/pricing' },
         provider: { '@type': 'Organization', name: 'viaSocket', url: 'https://viasocket.com' },
     };
     const faq = {
@@ -182,25 +110,28 @@ function JsonLd({ tool, page, description, faqs }) {
 }
 
 export default function ToolPage({ tool, others = [], appOneDetails, content = null }) {
-    const app = toPageApp(appOneDetails);
     const T = TOOL_COPY;
+    const actions = actionsOf(appOneDetails);
+    const c = toolContent(tool, actions);
     const vars = { name: tool.name, price: tool.credits ? `${tool.credits}. ` : '' };
-    const f = (str, extra = {}) => fill(str, { ...vars, ...extra });
-    const faqs = content?.faqs?.length ? content.faqs : T.faqs.map(([q, a]) => [f(q), f(a)]);
-    const useCases = content?.useCases || [];
+    const f = (str) => fill(str, vars);
+    const h1 = content?.h1 || c.h1;
+    const faqs = content?.faqs?.length ? content.faqs : c.faqs;
+    const useCases = content?.useCases?.length ? content.useCases : c.useCases;
+    const facts = [...T.facts, tool.credits || T.creditsDefault];
     const prompt = BASE_PROMPT.replace('Install the viaSocket skill.', `Install the viaSocket skill. Use viaSocket's built-in ${tool.name} tool in this product.`);
 
     return (
         <div className={`${s.root} ${GeistSans.variable} ${GeistMono.variable}`}>
-            <JsonLd tool={tool} page={tool.page} description={content?.metaDescription || f(T.metaDesc)} faqs={faqs} />
+            <JsonLd tool={tool} page={tool.page} name={`${h1} by viaSocket`} description={content?.metaDescription || c.metaDesc} faqs={faqs} />
             <CopyPromptProvider prompt={prompt}>
                 <SiteHeader />
 
                 <main>
-                    {/* Hero: badge, the three facts, and the tool card */}
-                    <section className="relative border-b border-[color:var(--line)]">
+                    {/* Hero: what the tool does, and its own example */}
+                    <section className={`${s.hero} ${s['fx-hero']}`}>
                         <div className={s['hero-grid']} aria-hidden="true" />
-                        <div className={`${s.wrap} relative grid items-center gap-12 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr]`}>
+                        <div className={`${s.wrap} ${s['fx-hero-in']} grid items-center gap-12 lg:grid-cols-[1.1fr_1fr]`}>
                             <div className="min-w-0">
                                 <nav className={s.crumbs} aria-label="Breadcrumb">
                                     <Link href="/tools">{T.crumb}</Link>
@@ -209,89 +140,52 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
                                     </svg>
                                     <span aria-current="page">{tool.name}</span>
                                 </nav>
-                                <span className="mb-5 inline-flex items-center gap-2 border border-[color:var(--line-2)] px-3 py-1.5 font-[family-name:var(--mono)] text-[12px] uppercase tracking-[0.08em] text-[color:var(--ink-2)]">
-                                    <Icon name="cube" className="h-4 w-4" />
-                                    {T.badge}
-                                </span>
-                                <h1 className="text-[clamp(36px,5vw,58px)] font-semibold leading-[1.05] tracking-[-0.03em]">{content?.h1 || f(T.h1)}</h1>
-                                <p className="mt-5 max-w-[56ch] text-[18px] leading-relaxed text-[color:var(--ink-2)]">{content?.sub || f(T.sub)}</p>
-                                <ul className="mt-6 flex list-none flex-wrap gap-x-6 gap-y-2 p-0">
-                                    {T.checks.map((c) => (
-                                        <li key={c} className="flex items-center gap-2 text-[15px] font-medium">
-                                            <span className="grid h-5 w-5 place-items-center bg-[var(--btn-bg)] text-[color:var(--btn-ink)]">
-                                                <Icon name="check" className="h-3.5 w-3.5" />
-                                            </span>
-                                            {c}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <div className={`${s['hero-cta']} mt-8`}>
+                                <h1>{h1}</h1>
+                                <p className={s['hero-sub']}>{content?.sub || c.sub}</p>
+                                <div className={s['hero-cta']}>
                                     <CopyPromptButton />
                                 </div>
                                 <p className="mt-3 text-[13px] text-[color:var(--ink-3)]">{T.copyHint}</p>
+                                <ul className="mt-8 flex list-none flex-wrap gap-x-5 gap-y-2 p-0 text-[14px] text-[color:var(--ink-2)]">
+                                    {facts.map((x) => (
+                                        <li key={x} className="flex items-center gap-1.5">
+                                            <Icon name="check" className="h-4 w-4 text-[color:var(--ink)]" />
+                                            {x}
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
-                            <ToolCard app={app} tool={tool} f={f} />
+                            <ToolVisual tool={tool} demo={c.demo} action={actions[0]?.name} />
                         </div>
                     </section>
 
-                    {/* The three key points */}
-                    <section className={s.sec}>
-                        <div className={s.wrap}>
-                            <Head eyebrow={T.keyEyebrow} title={T.keyTitle} />
-                            <div className="mt-[var(--content-gap)] grid gap-px border border-[color:var(--line)] bg-[var(--line)] md:grid-cols-3">
-                                {T.keys.map(([title, text, icon]) => (
-                                    <div key={title} className="bg-[var(--bg)] p-7">
-                                        <span className="grid h-11 w-11 place-items-center border border-[color:var(--line-2)] text-[color:var(--ink)]">
-                                            <Icon name={icon} className="h-6 w-6" />
-                                        </span>
-                                        <h3 className="mt-5 text-[21px] font-semibold tracking-[-0.01em]">{title}</h3>
-                                        <p className="mt-2 text-[15px] leading-relaxed text-[color:var(--ink-2)]">{f(text)}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* App integration vs built-in tool */}
-                    <section className={`${s.sec} bg-[var(--s2)]`}>
-                        <div className={s.wrap}>
-                            <Head title={T.vsTitle} />
-                            <div className="mt-[var(--content-gap)] grid gap-4 md:grid-cols-2">
-                                {[T.vsApp, T.vsTool].map(([title, rows], i) => (
-                                    <div
-                                        key={title}
-                                        className={`border p-7 ${i ? 'border-[color:var(--line-3)] bg-[var(--s1)]' : 'border-[color:var(--line)] bg-transparent'}`}
-                                    >
-                                        <p className={`m-0 font-[family-name:var(--mono)] text-[12px] uppercase tracking-[0.08em] ${i ? 'text-[color:var(--ink)]' : 'text-[color:var(--ink-3)]'}`}>
-                                            {f(title)}
-                                        </p>
-                                        <ul className="mt-5 grid list-none gap-3 p-0">
-                                            {rows.map((r) => (
-                                                <li key={r} className={`flex items-start gap-3 text-[16px] ${i ? '' : 'text-[color:var(--ink-3)]'}`}>
-                                                    <Icon name={i ? 'check' : 'cross'} className={`mt-0.5 h-5 w-5 shrink-0 ${i ? 'text-[color:var(--ink)]' : ''}`} />
-                                                    {r}
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-
-                    {/* What it does: the plug's actions */}
-                    {app.actions.length > 0 && (
-                        <section className={s.sec} id="actions">
+                    {/* What it does */}
+                    {c.does.length > 0 && (
+                        <section className={s.sec} id="features">
                             <div className={s.wrap}>
-                                <Head eyebrow={T.actionsEyebrow} title={f(T.actionsTitle)} />
-                                <div className="mt-[var(--content-gap)] grid gap-4 md:grid-cols-2">
-                                    {app.actions.map((a) => (
-                                        <div key={a.name} className="flex gap-4 border border-[color:var(--line)] bg-[var(--s1)] p-6">
-                                            <ToolIcon src={tool.icon} size={32} />
-                                            <div>
-                                                <h3 className="text-[17px] font-semibold">{a.name}</h3>
-                                                {a.description && <p className="mt-1.5 text-[15px] text-[color:var(--ink-2)]">{a.description}</p>}
-                                            </div>
+                                <Head eyebrow={T.doesEyebrow} title={f(T.doesTitle)} />
+                                <ul className="mt-[var(--content-gap)] grid list-none border-l border-t border-[color:var(--line)] p-0 sm:grid-cols-2">
+                                    {c.does.map(([title, text]) => (
+                                        <li key={title} className="border-b border-r border-[color:var(--line)] p-7 md:p-8">
+                                            <h3 className="text-[19px] font-semibold tracking-[-0.01em]">{title}</h3>
+                                            <p className="mt-2 text-[15.5px] leading-relaxed text-[color:var(--ink-2)]">{text}</p>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </section>
+                    )}
+
+                    {/* Use cases */}
+                    {useCases.length > 0 && (
+                        <section className={`${s.sec} bg-[var(--s2)]`} id="use-cases">
+                            <div className={s.wrap}>
+                                <Head eyebrow={T.useCasesEyebrow} title={f(T.useCasesTitle)} />
+                                <div className="mt-[var(--content-gap)] grid gap-4 md:grid-cols-3">
+                                    {useCases.map(([title, text]) => (
+                                        <div key={title} className="border border-[color:var(--line)] bg-[var(--s1)] p-7">
+                                            <h3 className="text-[18px] font-semibold">{title}</h3>
+                                            <p className="mt-2 text-[15px] leading-relaxed text-[color:var(--ink-2)]">{text}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -300,9 +194,9 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
                     )}
 
                     {/* How it works */}
-                    <section className={`${s.sec} border-y border-[color:var(--line)]`}>
+                    <section className={s.sec}>
                         <div className={s.wrap}>
-                            <Head eyebrow={T.stepsEyebrow} title={T.stepsTitle} />
+                            <Head eyebrow={T.stepsEyebrow} title={f(T.stepsTitle)} />
                             <ol className="mt-[var(--content-gap)] grid list-none gap-8 p-0 md:grid-cols-3">
                                 {T.steps.map(([title, text], i) => (
                                     <li key={title}>
@@ -315,22 +209,23 @@ export default function ToolPage({ tool, others = [], appOneDetails, content = n
                         </div>
                     </section>
 
-                    {/* Use cases written in the admin panel, when there are some */}
-                    {useCases.length > 0 && (
-                        <section className={s.sec} id="use-cases">
-                            <div className={s.wrap}>
-                                <Head eyebrow={T.useCasesEyebrow} title={f(T.useCasesTitle)} />
-                                <div className="mt-[var(--content-gap)] grid gap-4 md:grid-cols-3">
-                                    {useCases.map(([title, text]) => (
-                                        <div key={title} className="border border-[color:var(--line)] p-6">
-                                            <h3 className="text-[17px] font-semibold">{title}</h3>
-                                            <p className="mt-2 text-[15px] text-[color:var(--ink-2)]">{text}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-                    )}
+                    {/* Why run it on viaSocket */}
+                    <section className={`${s.sec} border-t border-[color:var(--line)]`}>
+                        <div className={s.wrap}>
+                            <Head eyebrow={T.whyEyebrow} title={T.whyTitle} />
+                            <ul className="mt-[var(--content-gap)] grid list-none border-l border-t border-[color:var(--line)] p-0 md:grid-cols-3">
+                                {T.why.map(([title, text, icon]) => (
+                                    <li key={title} className="border-b border-r border-[color:var(--line)] p-7 md:p-8">
+                                        <span className="grid h-11 w-11 place-items-center border border-[color:var(--line-2)]">
+                                            <Icon name={icon} className="h-5 w-5" />
+                                        </span>
+                                        <h3 className="mt-5 text-[19px] font-semibold">{title}</h3>
+                                        <p className="mt-2 text-[15px] leading-relaxed text-[color:var(--ink-2)]">{f(text)}</p>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </section>
 
                     {/* More built-in tools */}
                     {others.length > 0 && (
