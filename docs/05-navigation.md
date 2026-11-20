@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/**/page.js", "src/app/**/route.js", "next.config.js", "src/middleware.js", "public/_redirects", "src/app/sitemap.js", "public/home-b/**", "public/home-ab.js"]
 verified_at: e886c4a1
-verified_on: 2026-11-16
+verified_on: 2026-11-20
 ---
 # 05 Navigation Structure
 
@@ -72,6 +72,8 @@ This file is the single home of the route map. A clean `npm run build` lists **6
 | `/pricing` | `src/components/IntegrationsComp/addToProduct/PricingPage.js` (`PRICING_COPY`) | For now the Free plan and a "Contact us" card; the paid plans and plan finder are kept in the code, unrendered |
 | `/privacy` | `src/app/privacy/page.js` (copy in the file) | Legal |
 | `/robots.txt` | `src/app/robots.txt/route.js:GET` | Robots, decided by env and host ([CONTRACTS](CONTRACTS.md#internal-api-routes)) |
+| `/tools` | `src/app/components/tools/ToolsIndexPage.js` (`TOOLS_COPY`); `src/app/lib/tools-data.js:getToolsIndexData` | Built-in tools index: every tool in the admin's Built-in tools list with a plug slug and a page name, with its price in credits |
+| `/tools/[name]` | `src/app/components/tools/ToolPage.js` (`TOOL_COPY`), copy and hero example per tool in `toolContent.js` (`TOOL_CONTENT`, keyed by page name), hero picture `ToolVisual.js`; `src/app/lib/tools-data.js:getToolPageData` | A built-in tool's page, written for what the tool does ("HTML to PDF tool for your product & AI agents"): its own example in the hero, what it does, use cases, how it works, why viaSocket (no authentication, runs on viaSocket, price from the admin), more tools, FAQs. Admin copy for the plug wins part by part; a tool with no `TOOL_CONTENT` entry gets generic copy from its action; unknown names 404 |
 | `/signup` | `src/app/components/customLogin/CustomLoginOptimized.js`; `src/app/lib/data.js:getSignupPageData` | MSG91 signup widget (`?redirect_to=`, `utm_*`) |
 | `/setup-prompt` | `src/app/setup-prompt/SetupPrompt.js`. The server page is a static shell; `for`, `org`, `project` and `name` are read in the browser | SDK email landing. Copies a keys or first-run prompt. No header, footer, login or API call. `noindex, nofollow, noarchive` plus a `googlebot` meta and `X-Robots-Tag: noindex, nofollow`. Not listed in `src/app/sitemap.js`, not linked from any other page, and not `Disallow`ed in robots.txt |
 | `/sitemap.xml` | `src/app/sitemap.js:STATIC_ROUTES` | Sitemap of the routes without params |
@@ -99,6 +101,8 @@ Order of evaluation: `public/_redirects`, then `src/middleware.js`, then the `be
 | `/mcp/invgate-service-desk` | `/mcp/invgateservicemanagement` | 308 | `next.config.js` |
 | `/mcp` | https://mushrooms.viasocket.com/ | 308 | `next.config.js` ([ADR-011](DECISIONS.md#adr-011-embed--developers-and-mcp--mushroomsviasocketcom)) |
 | `/embed` | `/` (live admin list, production and test, 2026-10-29). Fallback file still says `/developers` | 301 live; 308 in `src/data/redirects.json` | `src/middleware.js` |
+| `/integrations/{plug}` of a built-in tool (e.g. `/integrations/pdf_generator`) | `/tools/{page}` (e.g. `/tools/html-to-pdf`) | 301 | Admin, added to `/api/public/redirects` from Pages → Built-in tools (not a row in Pages → Redirects); the 10 current ones are also in `src/data/redirects.json` |
+| `/integrations/category/built-in-tools`, `…/page/*` | `/tools` | 308 | `src/app/integrations/[...slug]/page.js` (`permanentRedirect`); the category list links to `/tools` directly |
 | `/home` | `/` | 307 | `src/middleware.js:middleware` |
 | `/` | `/new-home/index.html` | rewrite (`beforeFiles`; version B is written in the browser) | `next.config.js` |
 | `/home-b`, `/home-b/index.html` | `/` | 302 (not for a `/home-b/index.html` request with `X-Homepage-Fetch: B`) | `src/middleware.js` |

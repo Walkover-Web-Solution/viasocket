@@ -82,6 +82,8 @@ const PATHS = {
             <path d="M10.5 9.5v5l4-2.5z" />
         </>
     ),
+    // Built-in tools (the same cube as on /tools)
+    cube: <path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12v9M12 12L4 7.5" />,
 };
 
 /** `gradient`: stroke with a diagonal gradient whose stops read --ai-g1..3 (set on the AI tiles) instead of currentColor. */
