@@ -1,7 +1,7 @@
 ---
-covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
+covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/lib/admin-builtin-tools.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
 verified_at: 2debb895
-verified_on: 2026-11-12
+verified_on: 2026-11-20
 ---
 # Module: Integrations directory
 
@@ -35,6 +35,7 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 `src/app/integrations/page.js` (base) and `src/app/integrations/[...slug]/page.js` → `src/app/components/integrations/IntegrationsMain.js:IntegrationsMain` → `src/components/IntegrationsComp/addToProduct/IntegrationsIndexPage.js`.
 - **Hero:** H1, sub-heading and "List your app" text from `INDEX_COPY` (`src/components/IntegrationsComp/addToProduct/copy.js`) (the category H1 uses `categoryH1`).
 - **`AppDirectory`:** category list (`categories`), app grid (`apps`, with the pinned app first via `CATEGORY_PINNED_APPS`), live search (`src/utils/searchApps.js:searchApps`, from the browser), Prev/Next links and a "Request an App" cell.
+- **Built-in tools category (`/integrations/category/built-in-tools`):** not a table-api category. `AppDirectory` adds it after "All" (`BUILTIN_TOOLS_CATEGORY` in `src/const/integrations.js`), and on that page shows viaSocket's own tools instead of apps: name and icon, linking to `/tools/{page}` when the tool has a plug slug and a page name (`toolHref` in `src/const/integrations.js`), else to `/integrations/{slug}` (SMS and AI agent have neither). `integration-data.js` skips the table-api category and app reads for it and calls `src/app/lib/admin-builtin-tools.js:getBuiltinTools`, which reads the admin panel's `GET {ADMIN_URL}/api/public/builtin-tools` (`{ tools: [{ id, name, icon, slug, page, credits }] }`, switched-on ones in order; edited in the admin under Pages → Built-in tools), cached for a minute, 1.5 s timeout. If the admin fails, the page shows the fallback list in that file (the admin's first list); a tool with no icon shows the viaSocket logo.
 - **Blog cards:** `BlogPosts` with `actionLayerBlogs` (RSS feed).
 - **FAQ:** `FaqSection` with `INDEX_COPY.faqs`. FAQ JSON-LD is emitted only on the base index.
 - **A–Z strip:** links to `/find-apps/{letter}`.
@@ -44,6 +45,8 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 - Breadcrumb, H1 (`RotatingWord`), "Copy setup prompt" with `promptFor({ name })`, and `OAuthDemo`.
 - "#get-started" feature grid (`COPY.feats`), "#actions-triggers" (`EventsList` over `app.actions` / `app.triggers`, each with `EventRequestLink` for a new action or trigger), blog cards, "#about" (app links via `relForApp` / `appWebsiteUrl`), FAQ and the end CTA.
 - **Beta app** (no actions and no triggers): the hero shows the beta copy and `BetaNotice.js` "Request" (`requestType=app`).
+- **Built-in tool** (a category ending "(Built-In Plug)", `isBuiltinPlug` in `copy.js`, e.g. `pdf_generator`, `speech-to-text`): `BUILTIN_COPY` over `COPY` (title "{app} API for Your Product & AI Agents", sub, features, FAQs, end CTA), a static `BuiltinDemo` instead of `OAuthDemo`, no `AuthPanel`, no triggers block when it has none, and an "About {app} on viaSocket" card (links to the Built-in tools category and `/pass`) instead of the vendor's description and website link. `generateMetadata` in `[...slug]/page.js` uses `BUILTIN_COPY.metaTitle` / `metaDesc` for these. Admin copy (Programmatic pages) still wins, part by part.
+- **Built-in tools with a page are served at `/tools/{page}`** instead (`src/app/tools/[name]/page.js` → `src/app/components/tools/ToolPage.js`, its own layout and `TOOL_COPY`, not this template). The admin 301s the plug's `/integrations/{slug}` there. This built-in form of the template remains for built-in plugs with no tool page (e.g. Resume parser). Admin copy for the plug (Programmatic pages, by slug) applies on `/tools/{page}` too: title, meta description, keywords, H1, sub, use cases, FAQs.
 - Data: `appOneDetails` from `getCombos` → `src/utils/getAppDetail.js:getAppDetails`. All copy comes from `COPY` in the same `copy.js`, via `fill`.
 
 ### 3. App pair (`/integrations/{app}/{app2}`)

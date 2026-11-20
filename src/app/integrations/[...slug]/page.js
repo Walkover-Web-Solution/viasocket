@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../../lib/getAuth';
-import { COPY as ADD_TO_PRODUCT_COPY, fill } from '@/components/IntegrationsComp/addToProduct/copy';
+import { BUILTIN_COPY, COPY as ADD_TO_PRODUCT_COPY, fill, isBuiltinPlug } from '@/components/IntegrationsComp/addToProduct/copy';
 import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
@@ -22,12 +22,14 @@ export async function generateMetadata({ params, searchParams }) {
         }
 
         // Single-app page ("Add {app} to Your Product"): its title, description and keywords come from
-        // the admin panel's copy for the app when there is some, else from the page's fixed copy.
+        // the admin panel's copy for the app when there is some, else from the page's fixed copy
+        // (BUILTIN_COPY for viaSocket's own tools).
         if (data.actionLayerBlogs && data.appOneDetails?.name) {
-            const name = data.appOneDetails.name;
+            const name = data.appOneDetails.name.trim();
             const admin = data.adminContent;
-            const title = admin?.pageTitle || fill(ADD_TO_PRODUCT_COPY.metaTitle, name);
-            const description = admin?.metaDescription || fill(ADD_TO_PRODUCT_COPY.metaDesc, name);
+            const fixed = isBuiltinPlug(data.appOneDetails.category) ? BUILTIN_COPY : ADD_TO_PRODUCT_COPY;
+            const title = admin?.pageTitle || fill(fixed.metaTitle, name);
+            const description = admin?.metaDescription || fill(fixed.metaDesc, name);
             const url = `https://viasocket.com/integrations/${data.appOneDetails.appslugname}`;
             return {
                 title,

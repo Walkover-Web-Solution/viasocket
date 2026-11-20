@@ -67,6 +67,60 @@ export const COPY = {
     endTitle: 'Bring {appName} Into Your Product & Agents',
 };
 
+// /integrations/{app} for viaSocket's own tools: plugs whose category says "(Built-In Plug)". They run
+// on viaSocket with no account to connect, so this replaces the parts of COPY about customers' accounts.
+// Copy written in the admin panel (Programmatic pages) still wins over these, part by part.
+export const isBuiltinPlug = (categories = []) => categories.some((c) => /\(built-in plug\)/i.test(String(c)));
+export const BUILTIN_COPY = {
+    metaTitle: '[appName] API for Your Product & AI Agents | viaSocket',
+    metaDesc:
+        'Use [appName] in your product & AI agents as a built-in viaSocket tool: no account or API key to connect, paid per use from your viaSocket Pass.',
+    sub: 'Use {appName} in your product & agents as a built-in viaSocket tool. It runs on viaSocket, so there is no account or API key to connect, and each use is paid from your Pass.',
+    demoTag: 'Built into viaSocket',
+    demoNote: 'No account or API key to connect',
+
+    featEyebrow: 'Built-in tool',
+    featTitle: 'Everything You Need to Run {appName}',
+    featLead: 'viaSocket runs {appName} for you. Your AI coding assistant does the setup; you call it like any other action.',
+    feats: [
+        ['No Account or API Key', 'Call {appName} straight away. viaSocket runs it, so there is nothing to sign up for, connect or keep signed in.', 'key'],
+        ['Paid Per Use', 'Each use is paid from your viaSocket Pass in AI credits. No separate subscription.', 'bolt'],
+        ['Works With 2,300+ Apps', 'Use {appName} in the same run as the apps your customers connect, and pass data between them.', 'users'],
+        ['Managed Data Mapping', 'Map data between your product & agents and the inputs {appName} expects.', 'map'],
+        ['Monitoring and Debugging', 'See every run, its cost and its errors in your logs.', 'pulse'],
+        ['Ready for AI Agents', 'Every action has an input schema, so your agent can call {appName} as a tool.', 'brand'],
+    ],
+    featsShort: [
+        ['No account needed', 'key'],
+        ['Paid per use', 'bolt'],
+        ['2,300+ apps', 'users'],
+        ['Data mapping', 'map'],
+        ['Monitoring & logs', 'pulse'],
+        ['Agent-ready', 'brand'],
+    ],
+
+    atTitle: 'Available Actions for {appName}',
+    actSub: 'Call these actions from your product & agents. viaSocket runs them for you.',
+
+    aboutTitle: 'About {appName} on viaSocket',
+    about: '{appName} is a built-in viaSocket tool. It runs on viaSocket, with no account or API key of your own, and each use is paid from your Pass. Use it on its own or together with the 2,300+ apps viaSocket connects.',
+    aboutTag: ['All built-in tools', '/tools'],
+    aboutPass: ['How the Pass works', '/pass'],
+
+    faqTitle: 'FAQs about using {appName} in your product & agents',
+    faqSub: 'Answers to common questions about using the built-in {appName} tool in your product & agents.',
+    faqs: [
+        ['What is the {appName} tool?', '{appName} is a built-in viaSocket tool. Your product & agents call it like any other action, and viaSocket runs it.'],
+        ['Do I need an account or API key for {appName}?', 'No. viaSocket runs {appName} for you, so there is no account to create and no API key to manage.'],
+        ['How is {appName} charged?', 'Each use is paid from your viaSocket Pass in AI credits, on every plan. You see the cost of every run in your logs.'],
+        ['Can my AI agent use {appName}?', 'Yes. Every action comes with an input schema, so your agent can call {appName} as a tool.'],
+        ['Can I use {appName} with other apps?', 'Yes. Use it in the same run as any of the 2,300+ apps viaSocket connects, and pass data between them.'],
+        ['How do I get started?', 'Copy the setup prompt and paste it into Cursor, Claude Code or Codex inside your project. Your coding agent sets up viaSocket and calls {appName} where your use case needs it.'],
+    ],
+
+    endTitle: 'Use {appName} in Your Product & Agents',
+};
+
 // The homepage's setup prompt (public/new-home/index.html #promptText). Keep the two copies identical.
 // Org and project stay placeholders: this site does not know a visitor's ids. /setup-prompt does, from the query.
 const ASK_LINE = 'Ask me what I want to build first.\n';
@@ -118,6 +172,7 @@ export const INDEX_COPY = {
         'Integrate 2,300+ apps into your product with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
     h1: 'Integrate 2,300+ Apps into Your Products & agents',
     categoryH1: 'Integrate {category} Apps into Your Product',
+    toolsH1: "Use viaSocket's Built-in Tools in Your Product",
     sub: 'Build and manage secure app integrations with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
     listYourApp: 'Want to list your app?',
     listYourAppLink: 'Build viaSocket integration',
