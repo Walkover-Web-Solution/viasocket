@@ -1,7 +1,6 @@
 import { ADMIN_URL } from '@/const/admin';
 
-// viaSocket's built-in tools: the "Built-in tools" category (/integrations/category/built-in-tools), /tools
-// and /tools/{page}. Managed in the admin panel (Pages → Built-in tools) and read from its public API, kept
+// viaSocket's built-in tools: /tools and /tools/{page}. Managed in the admin panel (Pages → Built-in tools) and read from its public API, kept
 // for a minute. A tool with a slug (its plug's appslugname) and a page has its page at /tools/{page},
 // which shows that plug; the admin also 301s /integrations/{slug} there. When the admin
 // is slow or fails, the page shows FALLBACK, the admin's first list (keep it in step with SEED in

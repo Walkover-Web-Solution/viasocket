@@ -7,7 +7,6 @@ import { BASE_PROMPT, COPY, INDEX_COPY } from './copy';
 import { CopyPromptProvider } from './CopyPrompt';
 import { BlogPosts, FaqSection, SiteFooter, SiteHeader } from './SiteChrome';
 import AppDirectory from './AppDirectory';
-import { BUILTIN_TOOLS_CATEGORY } from '@/const/integrations';
 
 // /integrations and /integrations/category/{name}: the app directory in the homepage design.
 
@@ -25,8 +24,7 @@ function FaqJsonLd({ faqs }) {
 export default function IntegrationsIndexPage({ data }) {
     const { integrationsInfo = {}, categoryData = {}, actionLayerBlogs = [] } = data;
     const category = integrationsInfo?.category && integrationsInfo.category !== 'all' ? decodeURIComponent(categoryData?.name || integrationsInfo.category) : null;
-    const isTools = integrationsInfo?.category === BUILTIN_TOOLS_CATEGORY.slug;
-    const h1 = isTools ? INDEX_COPY.toolsH1 : category ? INDEX_COPY.categoryH1.replace('{category}', category) : INDEX_COPY.h1;
+    const h1 = category ? INDEX_COPY.categoryH1.replace('{category}', category) : INDEX_COPY.h1;
     const sub = INDEX_COPY.sub;
 
     return (
@@ -69,7 +67,6 @@ export default function IntegrationsIndexPage({ data }) {
                             pageInfo={data.pageInfo}
                             categoryData={categoryData}
                             appCount={data.appCount}
-                            builtinTools={data.builtinTools}
                         />
                     </Suspense>
 

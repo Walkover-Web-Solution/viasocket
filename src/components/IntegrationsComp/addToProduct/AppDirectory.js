@@ -6,13 +6,13 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import s from './addToProduct.module.scss';
 import searchApps from '@/utils/searchApps';
 import createURL from '@/utils/createURL';
-import { APPERPAGE, BUILTIN_TOOLS_CATEGORY, toolHref } from '@/const/integrations';
+import { APPERPAGE, BUILTIN_TOOLS_CATEGORY } from '@/const/integrations';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 
 // The app directory on /integrations and /integrations/category/{name}: the category list on the
 // left, the apps on the right, a search over both, Prev/Next pages and "Request an App".
-// Same structure as before, in the homepage design. "Built-in tools" (from the admin panel, not table-api)
-// is added after "All" and lists viaSocket's own tools instead of apps.
+// Same structure as before, in the homepage design. "Built-in tools" (not a table-api category) is added
+// after "All" and links to /tools.
 
 const byPriority = (cats) =>
     [...(cats || [])]
@@ -42,24 +42,6 @@ function AppCard({ app }) {
             <img className={s.appicon} src={app?.iconurl || 'https://placehold.co/36x36'} alt="" width={32} height={32} style={{ width: 32, height: 32 }} loading="lazy" />
             <span>{app?.name}</span>
         </Link>
-    );
-}
-
-/** A built-in tool: its name and icon, linking to its page (toolHref) when it has one. */
-function ToolCard({ tool }) {
-    const href = toolHref(tool);
-    const inner = (
-        <>
-            <img className={s.appicon} src={tool.icon} alt="" width={32} height={32} style={{ width: 32, height: 32 }} loading="lazy" />
-            <span>{tool.name}</span>
-        </>
-    );
-    return href ? (
-        <Link href={createURL(href)} className={s['dir-app']}>
-            {inner}
-        </Link>
-    ) : (
-        <div className={s['dir-app']}>{inner}</div>
     );
 }
 
@@ -93,7 +75,7 @@ function RequestCard({ onRequest }) {
     );
 }
 
-export default function AppDirectory({ apps = [], categories = [], integrationsInfo = {}, pageInfo = {}, categoryData = {}, appCount = 0, builtinTools = null }) {
+export default function AppDirectory({ apps = [], categories = [], integrationsInfo = {}, pageInfo = {}, categoryData = {}, appCount = 0 }) {
     const [term, setTerm] = useState('');
     const [query, setQuery] = useState('');
     const [found, setFound] = useState(null); // null = not searching
@@ -103,7 +85,6 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
     const sorted = useMemo(() => withBuiltinTools(categories), [categories]);
     const current = integrationsInfo?.category && integrationsInfo.category !== 'all' ? integrationsInfo.category : null;
     const page = Number(integrationsInfo?.page) || 0;
-    const isTools = current === BUILTIN_TOOLS_CATEGORY.slug;
 
     useEffect(() => {
         const t = setTimeout(() => setQuery(term.trim()), 400);
@@ -137,7 +118,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                         {current && (
                             <>
                                 <h2 className={s.h2}>
-                                    <span className={s['dir-count']}>{isTools ? categoryData?.appcount : `${categoryData?.appcount || 300}+`}</span>{' '}
+                                    <span className={s['dir-count']}>{categoryData?.appcount || 300}+</span>{' '}
                                     {decodeURIComponent(categoryData?.name || current)}
                                 </h2>
                                 {categoryData?.subheading && <p className={s.lead}>{categoryData.subheading}</p>}
@@ -162,7 +143,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                     <div className={s['dir-side']}>
                         <nav className={s['dir-cats']} aria-label="App categories">
                             {shownCats.map((c) => (
-                                <Link key={c.slug} href={createURL(`/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
+                                <Link key={c.slug} href={createURL(c.href || `/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
                                     {c.name}
                                 </Link>
                             ))}
@@ -171,13 +152,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                     </div>
 
                     <div className={s['dir-main']}>
-                        {found === null && isTools ? (
-                            <div className={s['dir-grid']}>
-                                {(builtinTools || []).map((tool) => (
-                                    <ToolCard key={tool.id} tool={tool} />
-                                ))}
-                            </div>
-                        ) : found === null ? (
+                        {found === null ? (
                             <div className={s['dir-grid']}>
                                 {apps.map((app) => (
                                     <AppCard key={app?.rowid || app?.appslugname} app={app} />

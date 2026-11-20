@@ -6,9 +6,7 @@ export const CATEGORY_PINNED_APPS = {
     'hr-talent-and-recruitment': 'magicalapi',
 };
 
-// The "Built-in tools" category: viaSocket's own tools, managed in the admin panel (Pages → Built-in tools)
-// rather than table-api. It sits after "All" in the category list (AppDirectory).
-export const BUILTIN_TOOLS_CATEGORY = { name: 'Built-in tools', slug: 'built-in-tools' };
-
-/** A built-in tool's own URL: /tools/{page} when it has a page, else its plug's /integrations/{slug}, else null. */
-export const toolHref = (t) => (t?.slug && t?.page ? `/tools/${t.page}` : t?.slug ? `/integrations/${t.slug}` : null);
+// "Built-in tools" in the /integrations category list (after "All"): not a table-api category, it links to
+// /tools. Its old address, /integrations/category/built-in-tools (and /page/N), redirects there
+// (src/app/integrations/[...slug]/page.js).
+export const BUILTIN_TOOLS_CATEGORY = { name: 'Built-in tools', slug: 'built-in-tools', href: '/tools' };

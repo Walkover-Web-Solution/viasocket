@@ -172,7 +172,6 @@ export const INDEX_COPY = {
         'Integrate 2,300+ apps into your product with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
     h1: 'Integrate 2,300+ Apps into Your Products & agents',
     categoryH1: 'Integrate {category} Apps into Your Product',
-    toolsH1: "Use viaSocket's Built-in Tools in Your Product",
     sub: 'Build and manage secure app integrations with managed authentication, customer-specific connections, and ready-to-use actions and triggers.',
     listYourApp: 'Want to list your app?',
     listYourAppLink: 'Build viaSocket integration',

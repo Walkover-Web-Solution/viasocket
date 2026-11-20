@@ -1,4 +1,5 @@
-import { notFound, redirect } from 'next/navigation';
+import { notFound, permanentRedirect, redirect } from 'next/navigation';
+import { BUILTIN_TOOLS_CATEGORY } from '@/const/integrations';
 import { getIntegrationsPageData } from '../../lib/integration-data';
 import IntegrationsMain from '@/app/components/integrations/IntegrationsMain';
 import { getHasToken } from '../../lib/getAuth';
@@ -7,9 +8,13 @@ import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
+// /integrations/category/built-in-tools (and its /page/N) is not a table-api category: it moved to /tools.
+const isBuiltinToolsCategory = (slug) => slug[0] === 'category' && slug[1] === BUILTIN_TOOLS_CATEGORY.slug;
+
 export async function generateMetadata({ params, searchParams }) {
     const resolvedParams = await params;
     const slug = resolvedParams?.slug || [];
+    if (isBuiltinToolsCategory(slug)) return {};
 
     try {
         const data = await getIntegrationsPageData(slug, (await searchParams) || {});
@@ -84,6 +89,7 @@ export default async function IntegrationsPage({ params, searchParams }) {
     const resolvedParams = await params;
     const resolvedSearchParams = await searchParams;
     const slug = resolvedParams?.slug || [];
+    if (isBuiltinToolsCategory(slug)) permanentRedirect(BUILTIN_TOOLS_CATEGORY.href);
     const hasToken = await getHasToken();
     
     const data = await getIntegrationsPageData(slug, resolvedSearchParams);

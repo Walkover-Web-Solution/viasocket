@@ -23,8 +23,7 @@ import { getFaqData } from '@/utils/getFaqData';
 import { getMetaData } from '@/utils/getMetaData';
 import getAppDetails from '@/utils/getAppDetail';
 import { getBlogData } from '@/utils/getBlogData';
-import { BUILTIN_TOOLS_CATEGORY, CATEGORY_PINNED_APPS } from '@/const/integrations';
-import { getBuiltinTools } from './admin-builtin-tools';
+import { CATEGORY_PINNED_APPS } from '@/const/integrations';
 
 // Moves a category's pinned app to the first grid position when that app is on
 // the current page; other apps keep their existing order.
@@ -234,20 +233,18 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
             }
         } else {
             // Integrations index page (/integrations, /integrations/category/{name}): the directory,
-            // the Action Layer blog posts; copy and FAQs live in the page component. The "Built-in tools"
-            // category is not in table-api: its tools come from the admin panel instead of apps.
-            const isBuiltinTools = integrationsInfo?.category === BUILTIN_TOOLS_CATEGORY.slug;
-            const [metadata, categoryData, categories, actionLayerBlogs, builtinTools] = await Promise.all([
+            // the Action Layer blog posts; copy and FAQs live in the page component.
+            const [metadata, categoryData, categories, actionLayerBlogs] = await Promise.all([
                 getMetaData('/integrations', pageUrl),
-                isBuiltinTools ? [] : getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${integrationsInfo?.category || 'all'}'`, pageUrl),
+                getCategoryData(INTECATEGORY_FIELDS, `filter=slug='${integrationsInfo?.category || 'all'}'`, pageUrl),
                 getCategoryData(INTECATEGORYlIST_FILED, '', pageUrl),
                 getActionLayerBlogs(pageUrl),
-                isBuiltinTools ? getBuiltinTools() : null,
             ]);
 
-            const apps = isBuiltinTools
-                ? []
-                : pinCategoryApp(await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl), integrationsInfo?.category);
+            const apps = pinCategoryApp(
+                await getApps({ page: integrationsInfo?.page, categoryData }, pageUrl),
+                integrationsInfo?.category
+            );
             const categoryName = integrationsInfo?.category || 'all';
 
             return {
@@ -259,11 +256,8 @@ export async function getIntegrationsPageData(slug = [], searchParams = {}) {
                 combosData: {},
                 appOneDetails: {},
                 appTwoDetails: {},
-                categoryData: isBuiltinTools
-                    ? { ...BUILTIN_TOOLS_CATEGORY, appcount: builtinTools.length }
-                    : (categoryData?.length > 0 && categoryData[0]) || {},
+                categoryData: (categoryData?.length > 0 && categoryData[0]) || {},
                 categories: categories || [],
-                builtinTools,
                 actionLayerBlogs: actionLayerBlogs || [],
                 appCount: appCount || 0,
                 getDoFollowUrlStatusArray: getDoFollowUrlStatusArray || [],
