@@ -163,7 +163,7 @@ For how this managed auth layer compares with Nango and other API auth platforms
 
 ## Next Steps
 
-- [Embed an integration picker in your SaaS UI](/blog/multi-tenant-integration-architecture)
+- [Embed an integration picker in your SaaS UI](/blogs/multi-tenant-integration-architecture)
 - [Add AI agent tool-calling to your product](/embed/actions-for-ai)
 - [Browse the full developer documentation](/developers/docs)
 
