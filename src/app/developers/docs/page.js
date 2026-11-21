@@ -8,9 +8,11 @@ import { ogImages, twitterImages } from '@/app/lib/share-image';
 
 export const runtime = 'edge';
 
+const docLink = 'underline underline-offset-2 text-docs-ink hover:text-docs-accent';
+
 export async function generateMetadata() {
-    const title = 'Integrations Quickstart · viaSocket';
-    const description = 'From an empty project to a working integration. Let your users connect Slack, Gmail, HubSpot, Google Sheets and 2,300+ other apps.';
+    const title = 'viaSocket Integration API — Developer Quickstart (Apps, Auth & Actions)';
+    const description = 'Build app integrations into your SaaS in an afternoon. viaSocket handles OAuth, token storage, and API clients for 2,300+ apps — you write the connection logic, not the plumbing.';
     return {
         title,
         description,
@@ -70,7 +72,7 @@ export default function DocsPage() {
 
                     <section id="what" className={section}>
                         <h2 className={h2}>What viaSocket does instead</h2>
-                        <p className={p}>viaSocket sits between your product and 2,300+ applications and gives you <strong>one contract</strong> for all of them: connect an account, list options, run an action, react to an event. Same four things whether your user picked Slack, Gmail, HubSpot or Notion.</p>
+                        <p className={p}>viaSocket sits between your product and <a href="/integrations" className={docLink}>2,300+ supported apps</a> and gives you <strong>one contract</strong> for all of them: connect an account, list options, run an action, react to an event. Same four things whether your user picked Slack, Gmail, HubSpot or Notion.</p>
                         <DocTable
                             head={['The job', 'Without viaSocket', 'With viaSocket']}
                             rows={[
@@ -81,7 +83,7 @@ export default function DocsPage() {
                                 ['Adding the next app', 'Most of the work again', 'Three ids change. Nothing else.'],
                             ]}
                         />
-                        <p className={p}>This quickstart covers the <strong>Apps API</strong>: your screens, your design, your backend making the calls. The steps are identical for every app — only the ids change.</p>
+                        <p className={p}>This quickstart covers the <strong>Apps API</strong>: your screens, your design, your backend making the calls. Prefer a hosted UI? Use the <a href="/embed/app-integration" className={docLink}>embedded integration builder</a> instead. The steps are identical for every app — only the ids change.</p>
                     </section>
 
                     <section id="benefits" className={section}>
@@ -97,9 +99,9 @@ export default function DocsPage() {
                         <h3 className={h3}>Integrations stop breaking silently</h3>
                         <p className={p}>Apps change their APIs, rotate their auth, deprecate endpoints. When that happens, viaSocket absorbs it. You find out because nothing broke.</p>
                         <h3 className={h3}>Your infrastructure gets simpler, not bigger</h3>
-                        <p className={p}>No public webhook endpoint. No queue. No polling workers. No refresh cron. An event subscription carries a small handler that viaSocket runs in its own sandbox when the event fires — nothing in your product has to be reachable from the internet.</p>
+                        <p className={p}>No public webhook endpoint. No queue. No polling workers. No refresh cron. An event subscription carries a small handler that viaSocket runs in its own sandbox when the event fires — nothing in your product has to be reachable from the internet. For inbound HTTP triggers, see <a href="/embed/actions-via-webhook" className={docLink}>webhook-to-action automation</a>.</p>
                         <h3 className={h3}>One integration layer for your whole product</h3>
-                        <p className={p}>The same connection your user made works for your app features, your automations and your AI agent. They authorise once.</p>
+                        <p className={p}>The same connection your user made works for your app features, your automations and <a href="/embed/actions-for-ai" className={docLink}>AI agent tool-calling</a>. They authorise once.</p>
                     </section>
 
                     <section id="ways" className={section}>
@@ -162,7 +164,7 @@ export default function DocsPage() {
 
                     <section id="s3" className={section}>
                         <StepH2 n={3}>Sign an embed token</StepH2>
-                        <p className={p}><strong>Why this step exists.</strong> viaSocket has to know two things on every call: that the request really came from your product, and which of your end users it is for. One short signed token answers both. You sign it yourself, so viaSocket never needs a list of your users and you never need an API key in the browser.</p>
+                        <p className={p}><strong>Why this step exists.</strong> viaSocket has to know two things on every call: that the request really came from your product, and which of your end users it is for. One short signed token answers both — the same pattern as <a href="/developers/auth" className={docLink}>Managed Auth</a> for connect flows. You sign it yourself, so viaSocket never needs a list of your users and you never need an API key in the browser.</p>
                         <p className={p}>Every call below sends one header: <Code>{'authorization: <embed token>'}</Code>. It is a JWT you sign on your backend with the three values from step 1.</p>
                         <h4 className={h4}>The payload</h4>
                         <CodeBlock>{'{\n  "org_id": "<your org id>",\n  "project_id": "<your project id>",\n  "unique_identifier": "<your own id for this end user>",\n  "email": "<optional: this user\'s email for connection alerts>"\n}'}</CodeBlock>
