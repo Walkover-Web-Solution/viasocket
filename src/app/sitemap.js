@@ -22,7 +22,6 @@ const STATIC_ROUTES = [
     '/automations',
     '/black-friday-sale',
     '/blogs',
-    '/data-deletion-policy',
     '/data-retention-deletion',
     '/departments',
     '/developers',
