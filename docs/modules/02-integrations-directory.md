@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/integrations/**", "src/app/lib/integration-data.js", "src/app/lib/admin-builtin-tools.js", "src/app/components/integrations/**", "src/components/IntegrationsComp/**", "src/utils/getInterationsInfo.js", "src/utils/getAppDetail.js", "src/utils/searchApps.js", "src/app/find-apps/**", "src/app/components/find-apps/**"]
 verified_at: 2debb895
-verified_on: 2026-11-20
+verified_on: 2026-11-21
 ---
 # Module: Integrations directory
 
@@ -57,6 +57,8 @@ Route parsing, the loader branches and the failure table live in [FLOWS: Integra
 
 ### 5. A–Z index (`/find-apps/{letter}`)
 `src/app/find-apps/[...slug]/page.js` → `src/app/lib/data.js:getFindAppsPageData` (`fetchPluginData`) → `src/app/components/find-apps/FindAppsClient.js`. It renders the letter bar (`AlphabetComp`) and app links to `/integrations/{app}`. Only one segment is accepted.
+
+`/find-apps/0-9` (apps whose names start with a digit) carries `robots: noindex, follow` in `generateMetadata` until the bucket has listings worth indexing.
 
 > [!WARNING]
 > - The `IntegrationsAppOneComp` branch in `IntegrationsMain` is unreachable: the single-app loader always returns `actionLayerBlogs`. Do not edit it to change `/integrations/{app}` ([OPEN_QUESTIONS C-08](../OPEN_QUESTIONS.md)).
