@@ -58,7 +58,7 @@ per_tenant_bucket[tenant_id].capacity = min(
 
 Where fair_share is shared_pool.capacity / active_tenant_count, recalculated periodically rather than per request. burst_multiplier (typically 2–4x) lets a quiet tenant use more than their strict equal share when the pool isn't contended, without ever exceeding the shared ceiling. Before any request goes out: acquire a token from both the tenant's bucket and the shared pool. If either is empty, the request queues — against that tenant's own queue, not a global one, so one tenant's backlog doesn't block another's dequeue order.
 
-This is the same acquire-before-send discipline covered in the [multi-tenant integration architecture](https://viasocket.com/blog/multi-tenant-integration-architecture) pattern for delivery and credentials generally: rate-limit budgets are a fourth isolation dimension alongside credentials, routing, and observability, and they need the same per-connection accounting the others get.
+This is the same acquire-before-send discipline covered in the [multi-tenant integration architecture](/blogs/multi-tenant-integration-architecture) pattern for delivery and credentials generally: rate-limit budgets are a fourth isolation dimension alongside credentials, routing, and observability, and they need the same per-connection accounting the others get.
 
 ## Separate credentials beat shared credentials, where the provider allows it
 
