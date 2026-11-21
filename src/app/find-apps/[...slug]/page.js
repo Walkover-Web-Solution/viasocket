@@ -18,6 +18,7 @@ export async function generateMetadata({ params }) {
         }
 
         const { alphabet } = data;
+        const isDigitBucket = alphabet?.toLowerCase() === '0-9';
         
         let title = `Apps starting with ${alphabet?.toUpperCase()} | viaSocket`;
         let description = `Browse and discover a wide range of apps that start with the letter ${alphabet?.toUpperCase()}. Find the perfect app for your needs today!`;
@@ -30,6 +31,9 @@ export async function generateMetadata({ params }) {
         return {
             title,
             description,
+            ...(isDigitBucket && {
+                robots: { index: false, follow: true },
+            }),
             openGraph: {
                 images: ogImages(`/find-apps/${slug.join('/')}`),
                 title,
