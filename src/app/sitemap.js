@@ -6,9 +6,10 @@ export const runtime = 'edge';
 const SITE_URL = 'https://viasocket.com';
 
 // Every statically-routed page (no [param]/[...slug] segments) in src/app.
-// Dynamic pages (integrations, departments, mcp, automations, find-apps,
-// features) are covered by the backend's own sitemap instead — see
+// Dynamic pages (integrations, departments, mcp, automations, features) are
+// covered by the backend's own sitemap instead — see
 // build-utilities/generate-robots-txt.js and src/app/robots.txt/route.js.
+// The 27 /find-apps/{letter} index pages are fixed slugs and are listed below.
 // Bare /embed and bare /mcp are left out. Middleware redirects them before a
 // page renders (live admin list: /embed → / with 301, /mcp → mushrooms with
 // 308; src/data/redirects.json still sends /embed to /developers with 308 if
@@ -60,6 +61,9 @@ const STATIC_ROUTES = [
     '/workflow-automations',
 ];
 
+// Apps whose names start with a digit (slug 0-9) plus a–z — see getFindAppsPageData.
+const FIND_APPS_INDEX_SLUGS = ['0-9', ...'abcdefghijklmnopqrstuvwxyz'.split('')];
+
 export default async function sitemap() {
     const pages = STATIC_ROUTES.map((route) => ({
         url: `${SITE_URL}${route}`,
@@ -81,5 +85,11 @@ export default async function sitemap() {
         changeFrequency: 'weekly',
         priority: 0.8,
     }));
-    return [...pages, ...tools, ...posts];
+    const findApps = FIND_APPS_INDEX_SLUGS.map((slug) => ({
+        url: `${SITE_URL}/find-apps/${slug}`,
+        lastModified: new Date(),
+        changeFrequency: 'daily',
+        priority: 1.0,
+    }));
+    return [...pages, ...findApps, ...tools, ...posts];
 }
