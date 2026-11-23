@@ -142,6 +142,62 @@
         return data;
     }
 
+    function decodeCookieValue(raw) {
+        return raw ? String(raw).replace(/%3B/gi, ';') : raw;
+    }
+
+    function readUtmCookie() {
+        var data = {};
+        try {
+            data = JSON.parse(decodeCookieValue(readCookie('utmData') || '{}') || '{}') || {};
+        } catch (e) {
+            data = {};
+        }
+        return data;
+    }
+
+    function pickAttributionFrom(obj) {
+        var out = {};
+        for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key) && isAttributionParam(key)) out[key] = obj[key];
+        }
+        return out;
+    }
+
+    function landingAttribution() {
+        var out = {};
+        try {
+            new URLSearchParams(location.search).forEach(function (value, name) {
+                if (isAttributionParam(name)) out[name] = value;
+            });
+        } catch (e) {}
+        return out;
+    }
+
+    function hasAttributionKeys(obj) {
+        for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) return true;
+        }
+        return false;
+    }
+
+    // Landing keys win; missing utm_* (including utm_source) are filled from the cookie.
+    function ctaAttribution() {
+        var landing = landingAttribution();
+        var cookie = pickAttributionFrom(readUtmCookie());
+        if (!hasAttributionKeys(landing)) return cookie;
+        var out = {};
+        var key;
+        for (key in landing) {
+            if (Object.prototype.hasOwnProperty.call(landing, key)) out[key] = landing[key];
+        }
+        for (key in cookie) {
+            if (!Object.prototype.hasOwnProperty.call(out, key) && key.indexOf('utm_') === 0) out[key] = cookie[key];
+        }
+        if (!out.utm_source && cookie.utm_source) out.utm_source = cookie.utm_source;
+        return out;
+    }
+
     // Same keys src/utils/handleUtmSource.js treats as attribution.
     var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'li_fat_id', 'ttclid', 'rdt_cid'];
     var UTM_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
@@ -303,13 +359,23 @@
             return;
         }
         var changed = false;
-        if (isFlowHost(url)) {
+        if (isFlowHost(url) || isSignupPath(url)) {
             url.searchParams.set('hp_variant', variant);
             changed = true;
         }
         if (isVersionCta(link, url)) {
-            url.searchParams.set('utm_source', utmData().utm_source || '/');
-            changed = true;
+            if (isFlowHost(url) || isSignupPath(url)) {
+                var attribution = ctaAttribution();
+                for (var p in attribution) {
+                    if (Object.prototype.hasOwnProperty.call(attribution, p)) url.searchParams.set(p, attribution[p]);
+                }
+                if (!attribution.utm_source) url.searchParams.set('utm_source', '/');
+                url.searchParams.set('variant', variant);
+                changed = true;
+            } else {
+                url.searchParams.set('utm_source', utmData().utm_source || '/');
+                changed = true;
+            }
         }
         if (changed) link.href = url.toString();
     }
