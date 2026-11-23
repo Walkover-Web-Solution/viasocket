@@ -1,7 +1,7 @@
 ---
 covers: ["public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/homepage.md", "public/_headers", "src/middleware.js", "src/utils/prefersTextMarkdown.js", "next.config.js", "src/app/page.js", "src/app/home/**", "src/app/front-page/**"]
 verified_at: 8bbcaadf
-verified_on: 2026-11-16
+verified_on: 2026-11-23
 ---
 # Module: Homepage (`/`)
 
@@ -166,7 +166,7 @@ Placeholders in the mockup point at the live homepage's destination. The footer'
 
 Start free and Log in on both homepages go to flow.viasocket.com and never open `/signup`. Both homepages add `hp_variant=A` or `hp_variant=B` to every such link, and the `variant` cookie is readable on `.viasocket.com` (not HttpOnly).
 
-`public/home-ab.js` stamps each version CTA with the landing URL's attribution params (`utm_*`, click ids, `affiliate_*`, `ref`), or the same keys from the `utmData` cookie when the URL has none, plus `utm_source=/` when neither has a source, and `variant`/`hp_variant` for the homepage arm. Query parameters already on the link stay; stamped keys are added or replaced. Prompts never appear in the URL. These links carry it:
+`public/home-ab.js` tags every version CTA, but what it adds depends on the destination. Links to **flow.viasocket.com** or **`/signup`** get the landing URL's attribution params (`utm_*`, click ids, `affiliate_*`, `ref`), or the same keys from the `utmData` cookie when the URL has none, plus `utm_source=/` when neither has a source, and `variant`/`hp_variant` for the homepage arm. Every **other** version CTA (Talk to an expert, Book a demo on cal.id, and the rest) gets only `utm_source` from the landing URL, or `/` when it is missing — no click ids, affiliate ids, or `variant`. Query parameters already on the link stay; stamped keys are added or replaced. Prompts never appear in the URL. These links are tagged:
 
 - Start free, Log in, Talk to an expert, Book a demo
 - a setup-prompt link that opens another page
