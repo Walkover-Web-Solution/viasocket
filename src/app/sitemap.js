@@ -1,4 +1,5 @@
 import { getAllBlogs } from './lib/blogs';
+import { getToolsIndexData } from './lib/tools-data';
 
 export const runtime = 'edge';
 
@@ -53,12 +54,13 @@ const STATIC_ROUTES = [
     '/signup',
     '/support',
     '/terms',
+    '/tools',
     '/webinar',
     '/workflow-automation-ideas',
     '/workflow-automations',
 ];
 
-export default function sitemap() {
+export default async function sitemap() {
     const pages = STATIC_ROUTES.map((route) => ({
         url: `${SITE_URL}${route}`,
         lastModified: new Date(),
@@ -72,5 +74,12 @@ export default function sitemap() {
         changeFrequency: 'monthly',
         priority: 0.7,
     }));
-    return [...pages, ...posts];
+    // The built-in tools' pages (/tools/{page}) come from the admin panel's list (lib/tools-data.js).
+    const tools = (await getToolsIndexData()).map((t) => ({
+        url: `${SITE_URL}/tools/${t.page}`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+    }));
+    return [...pages, ...tools, ...posts];
 }

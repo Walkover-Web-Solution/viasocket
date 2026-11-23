@@ -6,17 +6,26 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import s from './addToProduct.module.scss';
 import searchApps from '@/utils/searchApps';
 import createURL from '@/utils/createURL';
-import { APPERPAGE } from '@/const/integrations';
+import { APPERPAGE, BUILTIN_TOOLS_CATEGORY } from '@/const/integrations';
 import IntegrationsRequestComp from '../IntegrationsBetaComp/integrationsRequestComp';
 
 // The app directory on /integrations and /integrations/category/{name}: the category list on the
 // left, the apps on the right, a search over both, Prev/Next pages and "Request an App".
-// Same structure as before, in the homepage design.
+// Same structure as before, in the homepage design. "Built-in tools" (not a table-api category) is added
+// after "All" and links to /tools.
 
 const byPriority = (cats) =>
     [...(cats || [])]
         .filter((c) => !c?.hidden && c?.slug)
         .sort((a, b) => (Number(a.priority) || Infinity) - (Number(b.priority) || Infinity) || a.name.localeCompare(b.name));
+
+/** The table-api categories by priority, with "Built-in tools" after "All". */
+function withBuiltinTools(cats) {
+    const list = byPriority(cats).filter((c) => c.slug !== BUILTIN_TOOLS_CATEGORY.slug);
+    const at = list.findIndex((c) => c.slug === 'all') + 1;
+    list.splice(at, 0, BUILTIN_TOOLS_CATEGORY);
+    return list;
+}
 
 function SearchIcon() {
     return (
@@ -73,7 +82,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
     const request = useRequestForm();
     const inputRef = useRef(null);
 
-    const sorted = useMemo(() => byPriority(categories), [categories]);
+    const sorted = useMemo(() => withBuiltinTools(categories), [categories]);
     const current = integrationsInfo?.category && integrationsInfo.category !== 'all' ? integrationsInfo.category : null;
     const page = Number(integrationsInfo?.page) || 0;
 
@@ -134,7 +143,7 @@ export default function AppDirectory({ apps = [], categories = [], integrationsI
                     <div className={s['dir-side']}>
                         <nav className={s['dir-cats']} aria-label="App categories">
                             {shownCats.map((c) => (
-                                <Link key={c.slug} href={createURL(`/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
+                                <Link key={c.slug} href={createURL(c.href || `/integrations/category/${c.slug}`)} className={c.slug === (current || 'all') ? s.on : undefined}>
                                     {c.name}
                                 </Link>
                             ))}
