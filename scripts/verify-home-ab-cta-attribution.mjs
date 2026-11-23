@@ -31,13 +31,24 @@ const ctaAttribution = (search, cookie) => {
     return pickAttributionFrom(cookie);
 };
 
-const stamp = (search, cookie, variant) => {
+const landingUtmSource = (search) => {
+    const landing = landingAttribution(search);
+    return landing.utm_source || '/';
+};
+
+const stampProductCta = (search, cookie, variant) => {
     const attribution = ctaAttribution(search, cookie);
     const params = new URLSearchParams();
     for (const [k, v] of Object.entries(attribution)) params.set(k, v);
     if (!attribution.utm_source) params.set('utm_source', '/');
     params.set('variant', variant);
     params.set('hp_variant', variant);
+    return params;
+};
+
+const stampThirdPartyCta = (search) => {
+    const params = new URLSearchParams();
+    params.set('utm_source', landingUtmSource(search));
     return params;
 };
 
@@ -73,7 +84,7 @@ const cases = [
 ];
 
 for (const c of cases) {
-    const got = stamp(c.search, c.cookie, c.variant);
+    const got = stampProductCta(c.search, c.cookie, c.variant);
     for (const [k, v] of Object.entries(c.want)) {
         if (got.get(k) !== v) {
             console.error(`FAIL ${c.name}: ${k} expected ${v}, got ${got.get(k)}`);
@@ -83,6 +94,21 @@ for (const c of cases) {
     if (got.get('prompt')) {
         console.error(`FAIL ${c.name}: prompt must not appear in link`);
         process.exit(1);
+    }
+}
+
+{
+    const search = '?utm_source=google&utm_medium=cpc&gclid=abc&fbclid=xyz';
+    const got = stampThirdPartyCta(search);
+    if (got.get('utm_source') !== 'google') {
+        console.error(`FAIL third-party cal.id: utm_source expected google, got ${got.get('utm_source')}`);
+        process.exit(1);
+    }
+    for (const key of ['utm_medium', 'gclid', 'fbclid', 'variant', 'hp_variant']) {
+        if (got.get(key)) {
+            console.error(`FAIL third-party cal.id: ${key} must not appear on non-product CTA links`);
+            process.exit(1);
+        }
     }
 }
 

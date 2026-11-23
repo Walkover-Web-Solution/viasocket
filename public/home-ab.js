@@ -354,13 +354,18 @@
             changed = true;
         }
         if (isVersionCta(link, url)) {
-            var attribution = ctaAttribution();
-            for (var p in attribution) {
-                if (Object.prototype.hasOwnProperty.call(attribution, p)) url.searchParams.set(p, attribution[p]);
+            if (isFlowHost(url) || isSignupPath(url)) {
+                var attribution = ctaAttribution();
+                for (var p in attribution) {
+                    if (Object.prototype.hasOwnProperty.call(attribution, p)) url.searchParams.set(p, attribution[p]);
+                }
+                if (!attribution.utm_source) url.searchParams.set('utm_source', '/');
+                url.searchParams.set('variant', variant);
+                changed = true;
+            } else {
+                url.searchParams.set('utm_source', utmData().utm_source || '/');
+                changed = true;
             }
-            if (!attribution.utm_source) url.searchParams.set('utm_source', '/');
-            url.searchParams.set('variant', variant);
-            changed = true;
         }
         if (changed) link.href = url.toString();
     }
