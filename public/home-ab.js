@@ -142,6 +142,52 @@
         return data;
     }
 
+    function decodeCookieValue(raw) {
+        return raw ? String(raw).replace(/%3B/gi, ';') : raw;
+    }
+
+    function readUtmCookie() {
+        var data = {};
+        try {
+            data = JSON.parse(decodeCookieValue(readCookie('utmData') || '{}') || '{}') || {};
+        } catch (e) {
+            data = {};
+        }
+        return data;
+    }
+
+    function pickAttributionFrom(obj) {
+        var out = {};
+        for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key) && isAttributionParam(key)) out[key] = obj[key];
+        }
+        return out;
+    }
+
+    function landingAttribution() {
+        var out = {};
+        try {
+            new URLSearchParams(location.search).forEach(function (value, name) {
+                if (isAttributionParam(name)) out[name] = value;
+            });
+        } catch (e) {}
+        return out;
+    }
+
+    function hasAttributionKeys(obj) {
+        for (var key in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, key)) return true;
+        }
+        return false;
+    }
+
+    // Landing URL first; otherwise the utmData cookie. Prompt and other keys stay out.
+    function ctaAttribution() {
+        var landing = landingAttribution();
+        if (hasAttributionKeys(landing)) return landing;
+        return pickAttributionFrom(readUtmCookie());
+    }
+
     // Same keys src/utils/handleUtmSource.js treats as attribution.
     var CLICK_IDS = ['gclid', 'gbraid', 'wbraid', 'fbclid', 'msclkid', 'li_fat_id', 'ttclid', 'rdt_cid'];
     var UTM_COOKIE_MAX_AGE = 60 * 60 * 24 * 30;
@@ -310,7 +356,12 @@
             changed = true;
         }
         if (isVersionCta(link, url)) {
-            url.searchParams.set('utm_source', utmData().utm_source || '/');
+            var attribution = ctaAttribution();
+            for (var p in attribution) {
+                if (Object.prototype.hasOwnProperty.call(attribution, p)) url.searchParams.set(p, attribution[p]);
+            }
+            if (!attribution.utm_source) url.searchParams.set('utm_source', '/');
+            url.searchParams.set('variant', variant);
             changed = true;
         }
         if (changed) link.href = url.toString();
