@@ -1,15 +1,17 @@
 /**
  * Publish step: derive the Agent Skills Discovery digest from the install markdown
  * so metadata.version and the reinstall line stay tied to one bump point.
+ *
+ * An ES module (.mjs), like the builder it imports: a CommonJS require() of an ES module only
+ * works on Node 22.12+, and the Cloudflare Pages build runs an older Node.
  */
-const { createHash } = require('node:crypto');
-const { readFileSync, writeFileSync } = require('node:fs');
-const path = require('node:path');
+import { createHash } from 'node:crypto';
+import { readFileSync, writeFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-// eslint-disable-next-line import/no-dynamic-require
-const { buildViasocketIntegrationsSkillInstallMd } = require('../src/utils/buildViasocketIntegrationsSkillInstall.js');
+import { buildViasocketIntegrationsSkillInstallMd } from '../src/utils/buildViasocketIntegrationsSkillInstall.mjs';
 
-const agentSkillsPath = path.join(__dirname, '../src/utils/agentSkills.js');
+const agentSkillsPath = fileURLToPath(new URL('../src/utils/agentSkills.js', import.meta.url));
 const md = buildViasocketIntegrationsSkillInstallMd();
 const digest = `sha256:${createHash('sha256').update(md).digest('hex')}`;
 
