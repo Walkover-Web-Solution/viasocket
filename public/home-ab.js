@@ -181,11 +181,21 @@
         return false;
     }
 
-    // Landing URL first; otherwise the utmData cookie. Prompt and other keys stay out.
+    // Landing keys win; missing utm_* (including utm_source) are filled from the cookie.
     function ctaAttribution() {
         var landing = landingAttribution();
-        if (hasAttributionKeys(landing)) return landing;
-        return pickAttributionFrom(readUtmCookie());
+        var cookie = pickAttributionFrom(readUtmCookie());
+        if (!hasAttributionKeys(landing)) return cookie;
+        var out = {};
+        var key;
+        for (key in landing) {
+            if (Object.prototype.hasOwnProperty.call(landing, key)) out[key] = landing[key];
+        }
+        for (key in cookie) {
+            if (!Object.prototype.hasOwnProperty.call(out, key) && key.indexOf('utm_') === 0) out[key] = cookie[key];
+        }
+        if (!out.utm_source && cookie.utm_source) out.utm_source = cookie.utm_source;
+        return out;
     }
 
     // Same keys src/utils/handleUtmSource.js treats as attribution.
@@ -349,7 +359,7 @@
             return;
         }
         var changed = false;
-        if (isFlowHost(url)) {
+        if (isFlowHost(url) || isSignupPath(url)) {
             url.searchParams.set('hp_variant', variant);
             changed = true;
         }
