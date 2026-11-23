@@ -1,7 +1,7 @@
 ---
 covers: ["*"]
 verified_at: cbb6d228
-verified_on: 2026-11-04
+verified_on: 2026-11-23
 ---
 # Architectural & Design Decisions (ADRs)
 
@@ -387,7 +387,7 @@ PR #1905 forwarded each accepted visitor event to the admin only when both env v
 
 ### Decision & Implementation
 - `src/app/api/track-variant/route.js` builds in the admin ingest URL (`https://viasocket-admin.embarko.app/api/public/events`) and the tracking key. `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` override them when set, for a local admin or a rotation.
-- Test and production forward with the built-in values. A local dev server forwards only when `ADMIN_TRACKING_URL` is set, so trying the site locally does not write to the live admin.
+- Production forwards with the built-in values. Test and local forward only when `ADMIN_TRACKING_URL` is set, so test and local visits do not write to the live admin (2026-11-23: test stopped forwarding, and events the table does not store now arrive batched, to cut requests to the admin on Embarko).
 - The key is not a secret. `/api/track-variant` is public and forwards the events it accepts, so a private key between this site and the admin would not stop a forged event that comes through the site. Do not prefix an override with `NEXT_PUBLIC_`.
 - Other endpoints, database ids and keys still come from env vars. Do not copy this default into another caller.
 
