@@ -1,10 +1,10 @@
-import { buildViasocketIntegrationsSkillInstallMd } from '@/utils/buildViasocketIntegrationsSkillInstall';
+import { buildViasocketIntegrationsSkillInstallMd } from '@/utils/buildViasocketIntegrationsSkillInstall.mjs';
 
-export { VIASOCKET_INTEGRATIONS_SKILL_VERSION } from '@/const/viasocketIntegrationsSkillVersion';
+export { VIASOCKET_INTEGRATIONS_SKILL_VERSION } from '@/const/viasocketIntegrationsSkillVersion.mjs';
 
 export const VIASOCKET_INTEGRATIONS_SKILL_MD = buildViasocketIntegrationsSkillInstallMd();
 
-/** Set at publish time by `node build-utilities/generate-agent-skills.js` when the version changes. */
+/** Set at publish time by `node build-utilities/generate-agent-skills.mjs` when the version changes. */
 export const VIASOCKET_INTEGRATIONS_DIGEST =
     'sha256:4e0e4875589fdfb65b5ee57a8cad6cc816dcae0d180726dd2209e8eec0dde99c';
 
