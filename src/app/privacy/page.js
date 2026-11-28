@@ -42,7 +42,7 @@ export default async function PrivacyPage() {
             <div className="container mb-4 mt-12 flex flex-col gap-16 global-top-space">
                 <div>
                     <h1 className="h1">PRIVACY POLICY</h1>
-                    <span className="font-semibold">Last updated October 13, 2025 </span>
+                    <span className="font-semibold">Last updated November 28, 2026 </span>
                 </div>
                 <div className="border custom-border p-12 !bg-white">
                     <div className="text-gray-600 text-sm mb-4">
@@ -57,6 +57,10 @@ export default async function PrivacyPage() {
                                     https://viasocket.com
                                 </a>
                                 , or any website of ours that links to this privacy notice
+                            </li>
+                            <li>
+                                Use the viaSocket platform at https://flow.viasocket.com, our APIs and SDKs, or our MCP
+                                server (https://connect.viasocket.com/mcp) from an AI assistant such as Claude or ChatGPT
                             </li>
                             <li>Engage with us in other related ways, including any sales, marketing, or events</li>
                         </ul>
@@ -95,8 +99,17 @@ export default async function PrivacyPage() {
                             </p>
 
                             <p>
-                                <strong>Do we receive any information from third parties?</strong> We do not receive any
-                                information from third parties.
+                                <strong>Do we receive any information from third parties?</strong> Only when you choose
+                                to. When you connect a third-party app to viaSocket or sign in with a social account, we
+                                receive the information that app or account shares with us. Learn more about{' '}
+                                <a href="#thirdparty" className="link">
+                                    third-party integrations
+                                </a>{' '}
+                                and{' '}
+                                <a href="#sociallogins" className="link">
+                                    social logins
+                                </a>
+                                .
                             </p>
 
                             <p>
@@ -499,6 +512,12 @@ export default async function PrivacyPage() {
                                             joint venture partners, or other companies that we control or that are under
                                             common control with us.
                                         </li>
+                                        <li>
+                                            <strong>Service Providers.</strong> We share information with vendors that
+                                            host and run our Services and, when you use an AI feature, with the AI model
+                                            provider that processes your request. They may use it only to provide their
+                                            services to us.
+                                        </li>
                                     </ul>
                                 </p>
                             </div>
@@ -540,6 +559,38 @@ export default async function PrivacyPage() {
                                     <br />
                                     Data is transmitted securely and processed only to enable the services you
                                     configure.
+                                </p>
+
+                                <p>
+                                    <strong>Connected App Accounts</strong>
+                                    <br />
+                                    When you connect an app, we store the access credentials you authorize (such as an
+                                    OAuth token or an API key) securely, and use them only to run the actions, triggers
+                                    and workflows you set up. You can disconnect an app in viaSocket at any time, and you
+                                    can also revoke access from the app's own settings.
+                                </p>
+
+                                <p>
+                                    <strong>AI Features</strong>
+                                    <br />
+                                    When you use viaSocket's AI features, such as AI steps in a workflow, AI assistants or
+                                    AI memory, the content you send to them is processed by the AI model provider you
+                                    choose, such as OpenAI, Anthropic or Google. AI memory keeps the facts, preferences
+                                    and rules saved for a user until that user, or the product that saved them, deletes
+                                    them.
+                                </p>
+
+                                <p>
+                                    <strong>Use Through AI Assistants (MCP)</strong>
+                                    <br />
+                                    When you connect viaSocket's MCP server to an AI assistant such as Claude or ChatGPT,
+                                    you sign in with your viaSocket account, and the assistant sends viaSocket the
+                                    requests it makes for you, such as listing your connected apps or creating a
+                                    workflow. We receive only what the assistant includes in those requests. We do not
+                                    receive your conversations with the assistant, and we do not use those requests to
+                                    build a profile of you. Everything the assistant does through the MCP server acts
+                                    only on your own viaSocket account. You can disconnect it at any time from the
+                                    assistant's settings.
                                 </p>
 
                                 <p>
