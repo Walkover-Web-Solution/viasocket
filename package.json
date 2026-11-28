@@ -5,7 +5,7 @@
     "scripts": {
         "predev": "node build-utilities/generate-blogs.js",
         "dev": "next dev -p 1111",
-        "prebuild": "node build-utilities/generate-robots-txt.js && node build-utilities/generate-blogs.js",
+        "prebuild": "node build-utilities/generate-robots-txt.js && node build-utilities/generate-blogs.js && node build-utilities/prebuild-agent-skills.js",
         "build": "next build",
         "start": "next start -p 1111",
         "pages:build": "npx @cloudflare/next-on-pages",
