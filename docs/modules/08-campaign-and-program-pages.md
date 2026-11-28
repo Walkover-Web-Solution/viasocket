@@ -1,7 +1,7 @@
 ---
 covers: ["src/app/migration/**", "src/app/lifetime-deal/**", "src/app/black-friday-sale/**", "src/app/components/black-friday-sale/**", "src/app/webinar/**", "src/app/components/webinar/**", "src/app/free-access-programs/**", "src/app/experts-are-live/**", "src/app/departments/**", "src/app/components/department/**", "src/app/lib/lifetime-deal-data.js", "src/app/lib/black-friday-sale-data.js", "src/app/lib/webinar-data.js", "src/app/lib/department-data.js", "src/app/privacy/**", "src/app/terms/**", "src/app/data-deletion-policy/**", "src/app/data-retention-deletion/**"]
-verified_at: 9ec4868d
-verified_on: 2026-11-03
+verified_at: 2c8eabe1
+verified_on: 2026-11-21
 ---
 # Module: Campaign, Program and Static Pages
 
@@ -78,7 +78,7 @@ Self-contained landing pages for paid campaigns and offers (migration, lifetime 
 
 ### 8. Static and legal pages
 - `/privacy` (`getPrivacyPageData`), `/terms` (`getTermsPageData`), `/data-deletion-policy`, `/data-retention-deletion` (loaders in `src/app/lib/data.js`). The legal text is JSX in each `page.js`; table-api supplies only meta, navbar and footer.
-- `/data-deletion-policy` and `/data-retention-deletion` have **identical bodies** and differ only in titles. `/data-retention-deletion-policy` 308s to `/data-retention-deletion`. Both pages are in the sitemap. The `SiteFooter` links only `/data-retention-deletion`.
+- `/data-deletion-policy` and `/data-retention-deletion` have **identical bodies** and differ only in titles. `/data-retention-deletion-policy` 308s to `/data-retention-deletion`. Only `/data-retention-deletion` is in the sitemap (`src/app/sitemap.js`). The `SiteFooter` links only `/data-retention-deletion`.
 
 ---
 
