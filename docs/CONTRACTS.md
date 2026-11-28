@@ -99,9 +99,10 @@ sequenceDiagram
     participant A as Admin POST /api/public/events
     participant T as table-api A/B table
     B->>B: TrackingCookies sets variant + visitor_id
-    B->>R: POST {event:view|click|cta,...} (cookies attached)
-    alt cookies and bot check pass, and this is not a local dev server (or ADMIN_TRACKING_URL is set)
-        R->>A: POST {events:[one event]} (built-in x-tracking-secret, 3s, errors ignored)
+    B->>R: POST {event:view|click|cta,...} at once (an event the table stores)
+    B->>R: POST {batch:[events with at]} when the page is hidden or left (every other event)
+    alt cookies and bot check pass, and this is production (or ADMIN_TRACKING_URL is set)
+        R->>A: POST {events:[the event, or the whole batch]} (built-in x-tracking-secret, 3s, errors ignored)
     end
     alt homepage view, homepage signup/login click, or signup_completed on /signup
         R->>T: GET rows by visitor_id AND environment
@@ -117,6 +118,8 @@ sequenceDiagram
 | `view` | homepage: `public/home-ab.js` when `/` is shown (version A or B). Other pages: `VariantTracker` still posts, and the route drops them | common fields + `userInfo`, `sessionId`, `isNewSession` |
 | `click` | any click inside an element with `data-track` (one capture listener) → `src/utils/trackVisitor.js:trackInteraction` | common fields + `element` = `data-track`, `label` = `data-track-label` or text, `section` = `data-track-section` or `other`, `action` = `data-track-action` or `click`, `destinationUrl` = `data-track-destination` or nearest `href` |
 | `cta` | hero CTAs: `src/app/components/home/CTAButtons.js`, `trackSignupClick` in `src/app/front-page/signup.js` → `src/utils/trackVisitor.js:trackCtaClick` | common fields + `ctaSource` (the utm tag), `section: 'hero'`, `element`, `label`, `action` (`signup_click` / `dashboard_click`), `destinationUrl` |
+
+Events the table stores (`isStoredEvent` in `src/utils/abTestVisitor.js`: a homepage view, a homepage signup/login click, `signup_completed` on `/signup`) are sent one at a time, as they happen. `trackVisitor.js` holds every other event in memory with its time (`at`) and sends them as one `{ batch: [...] }` request when the page is hidden or left, or once 20 are waiting. A batch is only copied to the admin; nothing in it reaches the table unless it is an event the table stores.
 
 Common fields: `pageUrl`, `utmData` (the `utm_*` params on the current URL, not the cookie), `referrer`. To instrument a new CTA, add `data-track="<section>_<thing>"` (lowercase, underscores) rather than new code. Per-button detail goes in `element` / `label`, never in `utm_source`. Tracking must run in all three environments; do not gate it on production. Server-side validation and response shapes: [api/track-variant.md](api/track-variant.md).
 

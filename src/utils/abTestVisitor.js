@@ -139,6 +139,19 @@ export const isSignupPath = (path) => {
 };
 
 /**
+ * Whether the A/B table stores this event: a homepage view, a homepage signup or
+ * login click, or a completed registration on /signup. Every other event is only
+ * copied to the admin. The route and the browser both ask this, so the events
+ * the table stores are always sent one at a time, as they happen, and only the
+ * rest wait in the browser to be sent together.
+ */
+export const isStoredEvent = ({ type, path, action }) => {
+    const act = typeof action === 'string' ? action.trim().toLowerCase() : '';
+    if (isHomePath(path)) return type === 'view' || (type === 'click' && (act === 'signup_click' || act === 'login_click'));
+    return isSignupPath(path) && type === 'click' && act === 'signup_completed';
+};
+
+/**
  * The referrer, only when it is another site.
  *
  * Every internal link reloads the page, so from the second page on a visitor who

@@ -1,7 +1,7 @@
 ---
 covers: ["src/middleware.js", "next.config.js", "public/_redirects", "public/_headers", "public/new-home/**", "public/home-b/**", "public/home-ab.js", "public/llms.txt", "public/AGENTS.md", "parked/llms.txt", "src/app/layout.js", "src/app/providers.js", "src/app/**/layout.js", "src/app/lib/**", "src/app/api/**", "src/app/sitemap.js", "src/app/robots.txt/**", "src/app/components/VariantTracker/**", "src/components/ConditionalLayout/**", "src/utils/**", "src/const/**", "build-utilities/**"]
 verified_at: 5b6f6569
-verified_on: 2026-11-21
+verified_on: 2026-11-23
 ---
 # Architecture & Mental Model
 
@@ -220,7 +220,7 @@ The pieces, in order:
 2. `TrackingCookies` runs from the root layout, as an inline script, on every React page. It sets a missing `variant` cookie with a coin flip and a missing `visitor_id` cookie, on domain `.viasocket.com`. Cookies are written in the browser because Cloudflare strips `Set-Cookie` from HTML responses it handles (see the comment in that file).
 3. `getVariant` reads the cookie on the server. Only `src/app/page.js` uses it, and that page is unreachable. The live homepage split is `public/home-ab.js`, which uses the same cookie ([ADR-017](DECISIONS.md#adr-017-homepage-version-b-is-a-client-side-5050-split)).
 4. `VariantTracker` calls `src/utils/trackVisitor.js:trackView` on each pathname, and `trackInteraction` for any click on a `[data-track]` element. Both send a POST to `/api/track-variant`, using `sendBeacon` when the page is unloading. The route stores a homepage view, a homepage signup/login click, and `signup_completed` from `/signup`.
-5. `src/app/api/track-variant/route.js:POST` checks the cookies and filters bots with `src/utils/isBot.js`. It then forwards a copy of that event to the admin (the URL and key built into the route, best effort, 3s; `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` only override them, and a local server forwards only when the URL override is set) and, only for a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`, looks up the visitor's row, filtered by `environment`, and merges the event in using the pure functions in `src/utils/abTestVisitor.js`, which keeps one row per visitor (`PROFILE_VERSION` 2). Finally it writes to table `ABTESTCOUNT`. A referrer on `viasocket.com`, `*.viasocket.com` or `localhost` is not stored as where the visitor came from.
+5. `src/app/api/track-variant/route.js:POST` checks the cookies and filters bots with `src/utils/isBot.js`. It then forwards a copy of that event to the admin (the URL and key built into the route, best effort, 3s; `ADMIN_TRACKING_URL` and `ADMIN_TRACKING_SECRET` only override them, and only production forwards unless the URL override is set; events the table does not store arrive from the browser as one batch per page and are forwarded as one request) and, only for a homepage view, a homepage signup/login click, or `signup_completed` on `/signup`, looks up the visitor's row, filtered by `environment`, and merges the event in using the pure functions in `src/utils/abTestVisitor.js`, which keeps one row per visitor (`PROFILE_VERSION` 2). Finally it writes to table `ABTESTCOUNT`. A referrer on `viasocket.com`, `*.viasocket.com` or `localhost` is not stored as where the visitor came from.
 
 > [!WARNING]
 > Comments in `VariantTracker.js` that say the cookies are "set by middleware" are out of date. The cookies are written in the browser. A failed lookup is still dropped (`lookup failed`), not inserted as a second row.

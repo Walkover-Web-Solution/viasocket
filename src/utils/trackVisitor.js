@@ -1,6 +1,7 @@
 import { collectUserInfo, getUtmData } from './collectUserInfo';
 import { SIGNUP_CTA_COOKIE, getCookie, setCookie } from './handleUtmSource';
 import { VISITOR_ID_COOKIE } from '@/const/abTest';
+import { getPagePath, isStoredEvent } from './abTestVisitor';
 
 /**
  * Client side of visitor tracking.
@@ -153,6 +154,9 @@ const post = (payload) => {
         .finally(() => clearTimeout(timer));
 };
 
+// A view the table stores is sent now; any other waits to go out with the rest.
+const deliver = (payload) => (isStored(payload) ? post(payload) : hold(payload));
+
 /**
  * Runs the request under a lock shared by every tab on this origin.
  *
@@ -169,14 +173,14 @@ const send = (buildPayload) => {
     const run = async () => {
         const locks = typeof navigator !== 'undefined' ? navigator.locks : null;
 
-        if (!locks?.request) return post(buildPayload());
+        if (!locks?.request) return deliver(buildPayload());
 
         try {
-            await locks.request(LOCK_NAME, () => post(buildPayload()));
+            await locks.request(LOCK_NAME, () => deliver(buildPayload()));
         } catch {
             // Locks are unavailable in this context — report without one rather
             // than dropping the event.
-            await post(buildPayload());
+            await deliver(buildPayload());
         }
     };
 
@@ -206,6 +210,42 @@ const sendNow = (payload) => {
 
     post(payload);
 };
+
+// Events the table does not store are only copied to the admin, so they wait
+// here and go out together when the page is hidden or left: about one request
+// per visit instead of one per event. The ones the table stores are never held.
+const HELD_LIMIT = 20;
+let held = [];
+let flushBound = false;
+
+const isStored = (payload) =>
+    isStoredEvent({ type: payload.event, path: getPagePath(payload.pageUrl), action: payload.action });
+
+const flushHeld = () => {
+    if (!held.length) return;
+    const batch = held;
+    held = [];
+    // The request has to carry the visitor id cookie.
+    ensureVisitorId();
+    sendNow({ batch });
+};
+
+const hold = (payload) => {
+    held.push({ ...payload, at: new Date().toISOString() });
+
+    if (!flushBound) {
+        flushBound = true;
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') flushHeld();
+        });
+        window.addEventListener('pagehide', flushHeld);
+    }
+
+    if (held.length >= HELD_LIMIT) flushHeld();
+};
+
+// An interaction the table stores is sent straight out; any other waits.
+const sendNowOrHold = (payload) => (isStored(payload) ? sendNow(payload) : hold(payload));
 
 /** Reports that this visitor has looked at a page. */
 export const trackView = () =>
@@ -239,7 +279,7 @@ export const trackInteraction = ({ element, label, section, action, destinationU
     ensureVisitorId();
     rememberSignupCta(element, action);
 
-    sendNow({
+    sendNowOrHold({
         event: 'click',
         element,
         label,
@@ -267,7 +307,7 @@ export const trackCtaClick = (source, interaction = {}) => {
     ensureVisitorId();
     rememberSignupCta(interaction.element || source, interaction.action);
 
-    sendNow({
+    sendNowOrHold({
         event: 'cta',
         ctaSource: source,
         section: 'hero',

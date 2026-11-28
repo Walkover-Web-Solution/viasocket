@@ -10,8 +10,7 @@ import {
     applyEvent,
     getPageKey,
     getPagePath,
-    isHomePath,
-    isSignupPath,
+    isStoredEvent,
     mergedRowFields,
     newProfile,
     readProfile,
@@ -110,12 +109,15 @@ const ADMIN_FORWARD_TIMEOUT_MS = 3000;
 const ADMIN_TRACKING_URL = 'https://viasocket-admin.embarko.app/api/public/events';
 const ADMIN_TRACKING_KEY = 'viasocket-website-tracking-v1';
 
-const forwardToAdmin = async (event) => {
-    // A local dev server only reaches the live admin when told to, so trying
-    // the site out never fills it with test visits.
-    const url = process.env.ADMIN_TRACKING_URL || (event.environment === 'local' ? '' : ADMIN_TRACKING_URL);
+// The most events the admin ingest accepts in one request.
+const MAX_BATCH_EVENTS = 50;
+
+const forwardToAdmin = async (events, environment) => {
+    // Only production reaches the live admin by default, so test and local
+    // visits never fill it; ADMIN_TRACKING_URL points any deployment elsewhere.
+    const url = process.env.ADMIN_TRACKING_URL || (environment === 'production' ? ADMIN_TRACKING_URL : '');
     const secret = process.env.ADMIN_TRACKING_SECRET || ADMIN_TRACKING_KEY;
-    if (!url) return;
+    if (!url || !events.length) return;
 
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), ADMIN_FORWARD_TIMEOUT_MS);
@@ -124,7 +126,7 @@ const forwardToAdmin = async (event) => {
         await fetch(url, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json', 'x-tracking-secret': secret },
-            body: JSON.stringify({ events: [event] }),
+            body: JSON.stringify({ events }),
             signal: controller.signal,
         });
     } catch {
@@ -199,32 +201,67 @@ export async function POST(request) {
         }
 
         const body = await request.json();
-        const { userInfo, pageUrl, utmData, ctaSource, sessionId, isNewSession, referrer } = body;
-        const type = EVENT_TYPES.includes(body?.event) ? body.event : 'view';
+        const environment = getEnvironment(request);
+        const country = request.headers.get('cf-ipcountry') || '';
 
-        // A hero CTA carries an interaction alongside its variant signal; a plain
-        // click is nothing but one.
-        const interaction = type === 'view' ? null : readInteraction(body);
-
-        // A click that names nothing recognisable is not worth a write.
-        if (type === 'click' && !interaction) {
-            return NextResponse.json({ success: false, reason: 'unrecognised interaction' });
-        }
-
-        // A crawler drops its cookies between hits, so every visit it makes reads
-        // as a brand new visitor and earns a row of its own. Dropping the event
-        // before the lookup keeps that traffic out of the table entirely and costs
-        // it no table read either.
-        if (isBotRequest({ userAgent: request.headers.get('user-agent'), userInfo })) {
-            return NextResponse.json({ success: false, reason: 'bot' });
+        // Events the table does not store, which the browser held and sent
+        // together when the page was hidden or left.
+        if (Array.isArray(body?.batch)) {
+            return NextResponse.json(
+                await recordBatch(request, body.batch, { visitorId, variant, environment, country })
+            );
         }
 
         const now = new Date();
-        const nowIso = now.toISOString();
-        const environment = getEnvironment(request);
-        const path = getPagePath(pageUrl || '');
+        const read = readEvent(request, body, { visitorId, variant, now });
+        if (read.reason) return NextResponse.json({ success: false, reason: read.reason });
+        const { event } = read;
 
-        const event = {
+        // The admin keeps every event, not just the homepage ones this table
+        // holds, so the copy is sent before the filter below. It is awaited on
+        // every path: an edge request that has answered may drop work in flight.
+        const forwarded = forwardToAdmin([toAdminEvent({ event, environment, country })], environment);
+
+        // Homepage exposures, the signup / login clicks on that page, and a
+        // completed registration this site saw on /signup. Every other event is
+        // acknowledged and nothing is written.
+        if (!isStoredEvent({ type: event.type, path: event.path, action: event.interaction?.action })) {
+            await forwarded;
+            return NextResponse.json({ success: false, reason: 'not a homepage event' });
+        }
+
+        const [result] = await Promise.all([storeEvent(event, environment, now), forwarded]);
+        return NextResponse.json(result);
+    } catch (error) {
+        console.error('[variant tracking] failed:', error);
+        return NextResponse.json({ success: false });
+    }
+}
+
+/**
+ * Reads one event the browser sent into the shape the table and the admin use.
+ * Returns { reason } instead when the event is not recorded at all, which also
+ * keeps it from the admin.
+ */
+function readEvent(request, body, { visitorId, variant, now }) {
+    const { userInfo, pageUrl, utmData, ctaSource, sessionId, isNewSession, referrer } = body;
+    const type = EVENT_TYPES.includes(body?.event) ? body.event : 'view';
+
+    // A hero CTA carries an interaction alongside its variant signal; a plain
+    // click is nothing but one.
+    const interaction = type === 'view' ? null : readInteraction(body);
+
+    // A click that names nothing recognisable is not worth a write.
+    if (type === 'click' && !interaction) return { reason: 'unrecognised interaction' };
+
+    // A crawler drops its cookies between hits, so every visit it makes reads
+    // as a brand new visitor and earns a row of its own. Dropping the event
+    // before the lookup keeps that traffic out of the table entirely and costs
+    // it no table read either.
+    if (isBotRequest({ userAgent: request.headers.get('user-agent'), userInfo })) return { reason: 'bot' };
+
+    return {
+        event: {
             type,
             visitorId,
             variant,
@@ -235,129 +272,157 @@ export async function POST(request) {
             utmData: utmData || {},
             ctaSource,
             ipAddress: getClientIp(request),
-            nowIso,
+            nowIso: now.toISOString(),
             interaction,
             sessionId: typeof sessionId === 'string' ? sessionId.slice(0, 64) : '',
             isNewSession: Boolean(isNewSession),
             referrer: typeof referrer === 'string' ? referrer.slice(0, 500) : '',
-        };
+        },
+    };
+}
 
-        // The admin keeps every event, not just the homepage ones this table
-        // holds, so the copy is sent before the filter below. It is awaited on
-        // every path: an edge request that has answered may drop work in flight.
-        const forwarded = forwardToAdmin(
-            toAdminEvent({ event, environment, country: request.headers.get('cf-ipcountry') || '' })
+// How far back the time a browser gives a held event is believed. It holds them
+// only until its page is hidden or left, so an older time, or one in the future,
+// is a wrong clock, and the time the batch arrived is used instead.
+const MAX_HELD_MS = 24 * 60 * 60 * 1000;
+
+const heldAt = (at, arrived) => {
+    const time = Date.parse(typeof at === 'string' ? at : '');
+    const age = arrived.getTime() - time;
+    return Number.isFinite(time) && age >= 0 && age < MAX_HELD_MS ? new Date(time) : arrived;
+};
+
+/**
+ * Records the events a browser held and sent together, each at the time it
+ * happened, and forwards them to the admin in one request.
+ *
+ * The browser holds only events the table does not store (isStoredEvent). One
+ * that the table does store is still written, in order, so a batch never costs
+ * the table an event.
+ */
+async function recordBatch(request, items, { visitorId, variant, environment, country }) {
+    const arrived = new Date();
+    const toAdmin = [];
+    let stored = 0;
+
+    for (const item of items.slice(0, MAX_BATCH_EVENTS)) {
+        if (!item || typeof item !== 'object') continue;
+
+        const now = heldAt(item.at, arrived);
+        const read = readEvent(request, item, { visitorId, variant, now });
+        if (read.reason) continue;
+
+        const { event } = read;
+        toAdmin.push(toAdminEvent({ event, environment, country }));
+
+        if (isStoredEvent({ type: event.type, path: event.path, action: event.interaction?.action })) {
+            const result = await storeEvent(event, environment, now);
+            if (result.success) stored += 1;
+        }
+    }
+
+    await forwardToAdmin(toAdmin, environment);
+
+    return { success: true, forwarded: toAdmin.length, stored };
+}
+
+/**
+ * Writes one event into the single row this visitor owns, and returns what the
+ * route answers.
+ */
+async function storeEvent(event, environment, now) {
+    const { type, visitorId, pageUrl, interaction, nowIso } = event;
+
+    const rows = await getAbTestVisitorRows(visitorId, pageUrl, environment);
+
+    // A failed lookup is not an empty history. Inserting here is exactly how a
+    // visitor ends up with two rows, so the event is dropped instead — the next
+    // one will carry the same counters forward.
+    if (rows === null) {
+        return { success: false, reason: 'lookup failed' };
+    }
+
+    const liveRows = rows.filter(isLiveRow);
+    const [canonical, ...duplicates] = liveRows;
+
+    if (canonical) {
+        let profile = readProfile(canonical);
+
+        // Rows this visitor collected before the table held one row each, or
+        // from two tabs racing, are folded into the row that survives and then
+        // emptied — the table has no delete, so a duplicate is turned into a
+        // pointer at the surviving row rather than removed.
+        const toMerge = duplicates.slice(0, MAX_MERGES_PER_REQUEST);
+        toMerge.forEach((row) => {
+            profile = absorbRow(profile, row);
+        });
+
+        const counted =
+            type === 'click'
+                ? !isDuplicateClick(profile, interaction, now)
+                : type === 'cta' || shouldCountView(profile, event.pageKey, now);
+
+        // A repeat of the same page view can still be the first view of a new
+        // visit, and that is a counter of its own — so it is asked about
+        // separately, or a returning visitor landing back on the url they left
+        // from would have their revisit dropped along with the duplicate view.
+        const opensVisit = type === 'view' && startsVisit(profile, event);
+
+        // A duplicate event with nothing to collapse has nothing to write: the
+        // counters do not move, and the details it carries cannot have changed
+        // in the seconds since the event it repeats.
+        if (!counted && !toMerge.length && !opensVisit) {
+            return {
+                success: true,
+                created: false,
+                counted: false,
+                merged: 0,
+                viewCount: profile.views?.total ?? 0,
+            };
+        }
+
+        profile = applyEvent(profile, { ...event, counted });
+
+        const updated = await updateAbTestVisit(
+            canonical.rowid,
+            toRowFields(profile, { environment: canonical.environment || environment, nowIso }),
+            pageUrl
         );
 
-        // Homepage exposures, the signup / login clicks on that page, and a
-        // completed registration this site saw on /signup. Every other event is
-        // acknowledged and nothing is written.
-        const homepageClick =
-            isHomePath(path) &&
-            type === 'click' &&
-            interaction &&
-            (interaction.action === 'signup_click' || interaction.action === 'login_click');
-        const completedSignup =
-            isSignupPath(path) && type === 'click' && interaction && interaction.action === 'signup_completed';
-        if (!(isHomePath(path) && type === 'view') && !homepageClick && !completedSignup) {
-            await forwarded;
-            return NextResponse.json({ success: false, reason: 'not a homepage event' });
-        }
-
-        const [rows] = await Promise.all([getAbTestVisitorRows(visitorId, pageUrl, environment), forwarded]);
-
-        // A failed lookup is not an empty history. Inserting here is exactly how a
-        // visitor ends up with two rows, so the event is dropped instead — the next
-        // one will carry the same counters forward.
-        if (rows === null) {
-            return NextResponse.json({ success: false, reason: 'lookup failed' });
-        }
-
-        const liveRows = rows.filter(isLiveRow);
-        const [canonical, ...duplicates] = liveRows;
-
-        if (canonical) {
-            let profile = readProfile(canonical);
-
-            // Rows this visitor collected before the table held one row each, or
-            // from two tabs racing, are folded into the row that survives and then
-            // emptied — the table has no delete, so a duplicate is turned into a
-            // pointer at the surviving row rather than removed.
-            const toMerge = duplicates.slice(0, MAX_MERGES_PER_REQUEST);
-            toMerge.forEach((row) => {
-                profile = absorbRow(profile, row);
-            });
-
-            const counted =
-                type === 'click'
-                    ? !isDuplicateClick(profile, interaction, now)
-                    : type === 'cta' || shouldCountView(profile, event.pageKey, now);
-
-            // A repeat of the same page view can still be the first view of a new
-            // visit, and that is a counter of its own — so it is asked about
-            // separately, or a returning visitor landing back on the url they left
-            // from would have their revisit dropped along with the duplicate view.
-            const opensVisit = type === 'view' && startsVisit(profile, event);
-
-            // A duplicate event with nothing to collapse has nothing to write: the
-            // counters do not move, and the details it carries cannot have changed
-            // in the seconds since the event it repeats.
-            if (!counted && !toMerge.length && !opensVisit) {
-                return NextResponse.json({
-                    success: true,
-                    created: false,
-                    counted: false,
-                    merged: 0,
-                    viewCount: profile.views?.total ?? 0,
-                });
-            }
-
-            profile = applyEvent(profile, { ...event, counted });
-
-            const updated = await updateAbTestVisit(
-                canonical.rowid,
-                toRowFields(profile, { environment: canonical.environment || environment, nowIso }),
-                pageUrl
+        // Only after the surviving row holds their views, so a failure here
+        // never loses them.
+        if (updated) {
+            await Promise.all(
+                toMerge.map((row) =>
+                    updateAbTestVisit(row.rowid, mergedRowFields(visitorId, canonical.rowid), pageUrl)
+                )
             );
-
-            // Only after the surviving row holds their views, so a failure here
-            // never loses them.
-            if (updated) {
-                await Promise.all(
-                    toMerge.map((row) =>
-                        updateAbTestVisit(row.rowid, mergedRowFields(visitorId, canonical.rowid), pageUrl)
-                    )
-                );
-            }
-
-            return NextResponse.json({
-                success: Boolean(updated),
-                created: false,
-                counted,
-                merged: updated ? toMerge.length : 0,
-                viewCount: profile.views?.total ?? 0,
-            });
         }
 
-        const profile = applyEvent(newProfile(visitorId, nowIso), { ...event, counted: true });
-
-        const saved = await saveAbTestVisit(toRowFields(profile, { environment, nowIso }), pageUrl);
-
-        // Two first-ever events can be in flight at once — a second tab, a retry —
-        // and both would insert. Re-reading settles it: every racer sees the same
-        // oldest row and folds the rest into it, so the visitor is left with one.
-        if (saved) await collapseDuplicates(visitorId, pageUrl, environment);
-
-        return NextResponse.json({
-            success: Boolean(saved),
-            created: Boolean(saved),
-            counted: true,
+        return {
+            success: Boolean(updated),
+            created: false,
+            counted,
+            merged: updated ? toMerge.length : 0,
             viewCount: profile.views?.total ?? 0,
-        });
-    } catch (error) {
-        console.error('[variant tracking] failed:', error);
-        return NextResponse.json({ success: false });
+        };
     }
+
+    const profile = applyEvent(newProfile(visitorId, nowIso), { ...event, counted: true });
+
+    const saved = await saveAbTestVisit(toRowFields(profile, { environment, nowIso }), pageUrl);
+
+    // Two first-ever events can be in flight at once — a second tab, a retry —
+    // and both would insert. Re-reading settles it: every racer sees the same
+    // oldest row and folds the rest into it, so the visitor is left with one.
+    if (saved) await collapseDuplicates(visitorId, pageUrl, environment);
+
+    return {
+        success: Boolean(saved),
+        created: Boolean(saved),
+        counted: true,
+        viewCount: profile.views?.total ?? 0,
+    };
 }
 
 /**
